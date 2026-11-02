@@ -352,7 +352,7 @@ Entity Resolution runs continuously in the background. It matches records by ide
 -   **For People:** LinkedIn URL → Email → Probabilistic matching (name + company + location + role)
 -   **For Companies:** LinkedIn URL → Domain → Probabilistic matching (name + location + industry)
 
-For person records, Entity Resolution adds data from the matched Clay profile (such as `LinkedIn URL` and `CPJ ID`) to the existing record. Entity Resolution does not merge two existing person records just because they share a LinkedIn URL or email. To combine person records from different sources that share an identifier, set up **Import record matching** (below). **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
+When a match is found, records merge into a single unified record in Audiences. **Deduplication happens in Clay only** — Audiences does not merge or alter records in your connected Salesforce org.
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
@@ -364,11 +364,10 @@ When importing from Salesforce or Snowflake, you can configure **Import record m
 
 To configure:
 
-1. In **People** (or **Companies**), open the **Sources** tab, click the **⋯** menu next to your import, and select **Settings**.
-2. Scroll to **Import record matching (optional)** and click **Set up**.
-3. Under `When`, choose an **alias field**. For People, the options are **External record ID**, **Email**, **Phone number**, **LinkedIn URL**, and **Twitter handle**. For Companies, the options are **External record ID**, **Domain**, **LinkedIn URL**, **Twitter handle**, and **Exact company name**.
-4. Under `In`, map the alias field to the corresponding field in each connected source.
-5. Save your changes. When a new record arrives with the **Same value** in the alias field as an existing record, Audiences applies **Merge record** — the only available action — and merges the new data into the existing record instead of creating a duplicate.
+1. In your import settings, find `Import record matching` and click `Edit`.
+2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+3. Under `In`, map the alias field to the corresponding field in each connected source.
+4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
 You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
 
@@ -378,12 +377,12 @@ When setting up a Snowflake or BigQuery import, you also define a `Unique Identi
 
 **Other deduplication behaviors**
 
--   **Cross-source deduplication** — merge the same person from multiple sources by setting up **Import record matching** on a shared identifier such as LinkedIn URL or Email.
+-   **Cross-source deduplication** — merge the same person from multiple sources.
 -   **Whitespace detection** — when importing from a Find People or Find Companies search, or saving results from a Clay table to your Audience, records that already exist in All People or All Companies are automatically excluded from the merge. The draft shows a banner with the count of excluded records, and clicking **All people** or **All companies** will only add net-new records. For Companies, exclusion matches on Clay's internal company identifier (CPJ ID). Existing Audience records need entity resolution to have completed — records missing a recognized domain or professional network URL may not yet have been assigned a CPJ ID, which can cause them to slip through as apparent duplicates. Ensuring your Companies audience records have accurate domains and professional network URLs helps entity resolution complete and improves deduplication coverage.
 -   **Country-code domain variants** — Clay's entity matching normalizes domains by stripping subdomains and `www` prefixes, but does not automatically merge country-code TLD variants. A company at `swarovski.co.uk` and a company at `swarovski.com` are treated as separate entities by default — this reflects how many enterprises maintain distinct regional accounts. If a regional variant appears as net new in your search results and you want to exclude it, use the **Exclude companies** filter in your Find Companies source. See [Find Companies](find-companies.md) for how to set up exclusions.
 -   **Secondary domains from your CRM** — Clay entity matching uses only the primary domain field mapped from your CRM source. If your CRM stores additional domains for a company (for example, HubSpot's secondary domain fields), those alternate domains are not imported into the Audiences company record and are not used for entity matching. A Find Companies search result for a secondary domain may appear as net new even if the same company exists in your audience under a different primary domain. To exclude known secondary domains from appearing as net new, add them to the **Exclude companies** filter in your Find Companies source.
 
-Within Salesforce, deduplication uses SFDC IDs — org duplicates are imported as separate records. However, because entity resolution matches companies by domain, Salesforce Accounts that share the same domain can be merged into a single company record in Audiences — see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
+Deduplication across sources is automatic. Within Salesforce, it uses SFDC IDs — org duplicates are imported as separate records. However, because entity resolution matches companies by domain, Salesforce Accounts that share the same domain can be merged into a single company record in Audiences — see [Why does a company in my Companies audience show the wrong Salesforce Account name, type, or owner?](#why-does-a-company-in-my-companies-audience-show-the-wrong-salesforce-account-name-type-or-owner).
 
 **Record persistence when a source is removed**
 
@@ -1008,19 +1007,6 @@ A semi-join passes Clay's **Preview** step (which uses Salesforce's standard RES
 
 **Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
 
-### Why do I have duplicate person records for the same contact in Audiences?
-
-Duplicate person records in Audiences — for example, three records with the same name, email, and LinkedIn URL — usually mean the person arrived from different sources, each with its own source record ID. By default, when Audiences imports a record it decides whether that person already exists by matching the source record ID (such as a Salesforce Contact ID, a Salesforce Lead ID, or a Clay person ID from a people search). Name, email, LinkedIn URL, and phone are stored on the record but are not used to match imports by default. Different source IDs create separate person records, even when every other field is identical.
-
-Common causes of duplicate person records:
-
--   **Salesforce Leads and Contacts** — a Salesforce Lead and a Salesforce Contact for the same person sync into Audiences as two separate person records because they have different Salesforce IDs. If the Lead is converted in Salesforce (so it has a `ConvertedContactId`), the next sync merges the Lead into the Contact's record, provided the Contact already exists in Audiences. See [Why do some of my Salesforce Lead records not appear as separate person records in Clay?](#why-do-some-of-my-salesforce-lead-records-not-appear-as-separate-person-records-in-clay).
--   **People searches (Find People)** — a search result resolves to the existing person record that already carries the same Clay person ID. A search does not merge other duplicate records that already exist, such as separate Salesforce Lead and Contact records.
-
-**To merge person records across sources going forward,** set up **Import record matching** (beta — contact your Growth Strategist to enable it) on a shared identifier such as LinkedIn URL or Email. See [Entity resolution and deduplication](#entity-resolution-and-deduplication) for setup steps. Import record matching is not retroactive: it applies only to records imported after you enable it and does not merge duplicates already in Audiences.
-
-**What happens to field values when records merge:** each field shows a single value. When sources disagree, the higher-priority source wins and, within the same priority tier, the most recent value wins. Blank values never overwrite existing data, and each field is resolved independently. See [Conflict resolution when sources provide different field values](#entity-resolution-and-deduplication).
-
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
 When Salesforce data syncs into Audiences, Leads and Contacts are not always separate Clay person records. Clay applies a built-in record-matching rule using the `ConvertedContactId` field on Lead records.
@@ -1033,7 +1019,7 @@ When Salesforce data syncs into Audiences, Leads and Contacts are not always sep
 
 - **Multiple Leads → same Contact** — If two Lead records both have a `ConvertedContactId` pointing to the same Contact, both Leads collapse into that one Clay person record. Only the Lead with the direct conversion pointer is surfaced in Clay; the other Lead is absorbed because both share the same `003…` external ID alias.
 
-- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created. That Lead appears as its own Clay person record unless a separate matching condition applies (for example, **Import record matching** configured on a shared field such as LinkedIn URL or Email).
+- **A Lead without `ConvertedContactId` does not merge this way** — Without a conversion pointer, no shared alias is created. That Lead appears as its own Clay person record unless a separate matching condition applies (for example, a shared profile URL resolved via entity resolution).
 
 - **Email address is not part of this initial import matching** — Different email addresses on two Lead records that point to the same Contact are irrelevant to the `ConvertedContactId` matching step. The `003…` alias is the sole key — not email, phone, or profile URL.
 
