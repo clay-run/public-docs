@@ -120,6 +120,18 @@ Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
+### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
+
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, only offers LinkedIn, Meta, Google Ads, and Vibe.co, minus any platform the sync already uses. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+
+To send your contacts to Reddit Ads or Bing Ads:
+
+1.  Go to **Ads** from the Clay homepage and click `New Ad Sync`.
+2.  Use your contacts as the source (for example, an Audiences People segment). There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The video linked in the Table ads banner walks through the switch.
+3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
+
+Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
+
 ### **Why are some contacts excluded when I set up an ad sync?**
 
 When you create an ad sync, you may see an **Ad sync segment filters** panel showing a breakdown of your audience segment size, excluded contacts, and syncable contacts. Some contacts are automatically filtered out based on the platform you're syncing to and where their data originally came from.
