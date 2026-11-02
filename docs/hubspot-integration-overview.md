@@ -399,12 +399,31 @@ Add a **HubSpot → Create association** column:
 No — Clay does not have a customer-facing "Create or Update" (upsert) action for HubSpot. To create new records and update existing ones in the same run, use three separate columns:
 
 1. Add a **Lookup object** column. Filter by the same field you will write to when creating (for contacts, use **Email**). This checks whether the record already exists in HubSpot.
-2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found.
+2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found. Also require the value you looked up (for example, the email) to be present, or rows with a blank email will create a new record on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
 3. Add an **Update object** column. Set an **Only run if** condition to check that the Lookup column returned a result, then map the returned `hs_object_id` to the **HubSpot Object ID** input.
 
 **Important:** Map all the fields you want to write (first name, last name, email, job title, and so on) in **both** the Create object and Update object columns. A common mistake is mapping only some fields in the Update object step — for example, mapping only Company — which means the other fields never reach HubSpot for contacts that already exist.
 
 For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
+### Why is my HubSpot Create object creating duplicate contacts even though I look them up first?
+
+If you check for existing HubSpot contacts with a **Lookup object** column and only run **Create object** when nothing is found, but HubSpot still gets duplicate contacts, look at rows where the email is blank. Those are usually the cause.
+
+**Why rows with no email create duplicates:**
+
+-   When the email mapped to the Lookup object's **Email** filter is blank for a row, the Lookup object cell doesn't search HubSpot. It shows **Missing input** and returns no value.
+-   A run condition like `!{{Look up contact}}?.totalFound` ("only run if totalFound is zero") is **true** when the lookup has no value. A Missing input lookup therefore passes the condition, the same way a lookup that searched and found nothing does.
+-   **Create object** then creates a new HubSpot contact, with no email, every time the row runs. A person with no email is never matched, so each run adds another contact.
+
+Rows that have an email aren't affected. When the email is present and no contact matches, Lookup object returns `totalFound: 0` and Create object runs once. When a contact matches, `totalFound` is 1 or more and Create object is skipped.
+
+**To stop the duplicates:**
+
+1.  Open the **Create object** column, go to **Run settings → Only run if**, and add the email to the condition so the create is skipped when the email is blank. For example: `{{Work Email}} && !{{Look up contact}}?.totalFound`. Type `/` to insert your own email column and lookup column.
+2.  *(Optional)* To update contacts that already exist, add an **Update object** column with the run condition `{{Look up contact}}?.totalFound`. Map the record ID from the lookup result (for example, `results[0].id` from your Lookup object column) to the **HubSpot Object ID** input. Without an Update object column, a found contact is skipped and nothing in HubSpot changes.
+3.  *(Optional)* For rows with no email, add a second Lookup object column that searches by another identifier, such as a professional profile URL or name plus company.
+4.  Merge the duplicate contacts with no email that were already created, in HubSpot.
 
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
@@ -422,7 +441,7 @@ If your Lookup Object filters by "Work email" but your Create Object maps data t
 To handle both new and existing contacts without hitting duplicate errors:
 
 1.  Add a **Lookup object** column. Configure it to search by the same identifier (e.g., email address) and the same field you write to when creating contacts.
-2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found.
+2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found. Also require the email you looked up to be present, or rows with a blank email will create a new contact on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
 3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
