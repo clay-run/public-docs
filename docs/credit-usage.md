@@ -135,13 +135,32 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
 -   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
 **Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+
+### What "Other" means under AI in the Integrations tab
+
+Available on all plans. In the credit usage dashboard (`Settings → Usage`), the **Integrations** tab lists an **AI** integration row. Expand the **AI** row to see your AI credit spend split into these sub-rows:
+
+-   **Named API key rows** — one row for each AI API key connected to your workspace, labeled with the account name.
+-   **Clay Auto** — credits spent by Clay Auto on your audiences (Audiences agent runs).
+-   **Other** — "Usage that wasn't tracked, or couldn't be attributed to a specific API key." In the dashboard, hover over the ⓘ icon next to **Other** to see this description.
+
+If all of your workspace's AI spend falls under **Other** (no spend from your own connected AI API keys and no Clay Auto usage in the selected period), the **AI** row has no expand arrow. In that case, the whole **AI** row total is **Other** usage.
+
+Most AI credits in the **Other** row come from AI columns, such as **Use AI** and **Claygent**, that ran on Clay's own managed models using Clay credits instead of an API key you connected. These runs aren't tied to an account, so their credits are grouped under **Other** rather than getting their own named row.
+
+The **Integrations** tab groups AI spend by API key, not by table. To find which tables drove your AI "Other" spend:
+
+1.  Open the **Workbooks** tab and set the `When` dropdown to the period you're investigating.
+2.  Filter by integration to show only spend from the **AI** integration.
+3.  Sort by `Credits used` to bring the highest-spending tables to the top.
+4.  Click the chart button next to a table's name to open its [table credit usage dashboard](#understanding-table-specific-credit-usage). Use the **Column view** to see which AI columns spent the credits, and the **Time view** to see which days the spend happened.
 
 ## Credit spike alerts
 
