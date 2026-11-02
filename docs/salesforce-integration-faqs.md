@@ -656,6 +656,26 @@ If you're using [Clay Audiences](audiences.md), create a segment filtered to onl
 
 This gives you a single place to manage field-completeness rules across your workspace, rather than maintaining run conditions in each table. Note that syncing an Audiences segment to Salesforce requires a **Growth or Enterprise** plan.
 
+## How do I update a Salesforce field only if it's blank, without a separate Update record column for every field?
+
+You can make the Salesforce **Update record** action write to a field only when that field is empty in Salesforce — and you can do it for many fields (for example, 10 mapped fields) with one **Update record** column instead of one column per field.
+
+**Why a run condition alone isn't enough:** An **Only run if** run condition applies to the whole **Update record** column. There is no per-field run condition: when the condition is met, every field mapped in that column is updated, and when it isn't, none are. That's why it can look like you need a separate **Update record** column, each with its own run condition, for every field you write back.
+
+**To fill only the blank Salesforce fields with one lookup, one formula, and one Update record column:**
+
+1.  **Get the current Salesforce values into your table.** If your rows came from a Salesforce import source, those fields are already columns. Otherwise, add a single **Lookup record** column for the object. One Lookup record column returns the whole Salesforce record, so you don't need a separate lookup for each field.
+2.  **Add a formula column that returns the new value only when the Salesforce field is empty.** For one field, describe it like this: *if /Salesforce Industry is empty, return /Enriched Industry, otherwise return blank*. To cover several fields with one formula, have the formula check each Salesforce field and return all the new values together as one object with a key per field (for example, `industry` and `employees`). Each key holds the new value when that Salesforce field is empty and is blank otherwise.
+3.  **Map each Salesforce field to the formula output in a single Update record column.** In **Map fields**, map each Salesforce field to its value from the formula — for a combined formula, reference the matching key, for example `{{Fill blank fields}}?.industry`. You can also click into a formula cell and use **Add as column** on a key to turn it into its own column, then map that column. Map the formula output, not the raw enrichment column.
+4.  **Keep Ignore blank values turned on.** In the **Update record** settings, **Ignore blank values** is on by default. With it on, blank values from Clay are not sent to Salesforce, so any field that already has a value in Salesforce is left unchanged.
+5.  **Test on a single row first.** Run the **Update record** column on one row, check the record in Salesforce to confirm each value landed in the right field, then run the rest of the table.
+
+Each row then fills in only the Salesforce fields that are empty and leaves populated fields as they are, all in one update.
+
+**Tip:** Columns from a Salesforce import source hold the values from when the records were imported. If the records may have changed in Salesforce since then, run the **Lookup record** column just before the **Update record** column so your formula checks the current Salesforce values.
+
+For more on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
 A Campaign Member in Salesforce represents the relationship between a lead or contact and a campaign. Each Campaign Member record is tied to either a `LeadId` or a `ContactId` — not both at once. Because leads or contacts might already be members of the campaign, you need a conditional workflow that handles both cases — adding new members and updating the status of existing ones.
