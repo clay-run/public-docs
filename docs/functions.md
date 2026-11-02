@@ -99,6 +99,18 @@ No. As of General Availability, functions support unlimited rows via passthrough
 
 To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
 
+### Can I set up auto-delete on a function?
+
+You don't need to set up auto-delete on a function, because functions already auto-delete. Every function is a passthrough table with auto-delete always turned on, so the **auto-delete icon** and **Enable auto-delete** option you see on regular tables aren't shown in functions. You don't need to configure anything for a function's rows to be cleaned up.
+
+How function auto-delete works:
+
+-   **Completed rows are removed automatically.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it's eligible for removal. The function's live view keeps the **1,000 most recent completed rows**.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed.
+-   **Removed rows are archived.** Click **View archive** in the function's footer, then **Export full archive** to download them as a CSV.
+
+For more detail, see [Is there a row limit for functions?](#is-there-a-row-limit-for-functions) and [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats). To turn on auto-delete for a regular table, see [Auto-delete in tables](auto-delete.md).
+
 ### Why does my function show fewer rows than the run count in "View run stats"?
 
 A function's **View run stats** chart and the function's row list measure different things, so their numbers don't match:
