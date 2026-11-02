@@ -152,7 +152,7 @@ All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the w
 
 #### Running the Clay CLI unattended (cron jobs, scheduled scripts, and servers)
 
-You can run the Clay CLI on a schedule — for example, a cron job on an internal server that calls `clay workflows runs steps` every 15–30 minutes to pull workflow run data into your data warehouse. Signing in to the Clay CLI requires the **Admin** or **Editor** role in the workspace. Viewers can't sign in to the CLI and see the error "You must be an editor of this workspace to sign in to the Clay CLI."
+You can run the Clay CLI on a schedule — for example, a cron job on an internal server that calls `clay workflows runs steps` every 15–30 minutes to pull workflow run data into your data warehouse. Signing in to the Clay CLI requires the **Admin** or **Editor** role in the workspace. Viewers can't sign in to the CLI and see the error "You must be an editor of this workspace to sign in to the Clay CLI." The Viewer role isn't enough even if your scheduled job only runs read-only commands, such as `clay workflows runs steps` — the automation user needs the Admin or Editor role to sign in at all.
 
 **Use a dedicated automation user instead of a service account.** Clay doesn't have service accounts or machine users. Every Clay CLI session and every Clay API key belongs to an individual Clay user. To keep a scheduled job from depending on one person's login, invite a dedicated non-personal user (for example, `automation@yourcompany.com`) to your workspace as an Editor or Admin, then sign in to the CLI as that user. See [Managing team members](https://university.clay.com/docs/managing-team-members) for how to send the invite. Inviting members is done in `Settings` > `Team` — there is no API or CLI command for adding workspace members.
 
@@ -169,5 +169,12 @@ You can run the Clay CLI on a schedule — for example, a cron job on an interna
 -   The automation user's role is changed to Viewer.
 
 Removal and role changes take effect at the CLI's next token refresh, when the CLI returns an authentication error. To recover, make sure the user is an Admin or Editor and run `clay login --device` again.
+
+**Running several Clay CLI processes from one config directory.** Each time the Clay CLI refreshes its access token, Clay issues a new refresh token and the old one stops working (refresh tokens are single-use). If two scheduled jobs share the same config directory and refresh at the same moment, one job's refresh can fail with an authentication error. To avoid this, use either of the following:
+
+-   Make sure jobs that share a config directory don't run at the same time — for example, wrap each job in a file lock (such as `flock`) so one finishes before the next starts.
+-   Give each job its own config directory by setting a different `CLAY_CONFIG_HOME` for each job, and run `clay login --device` once per directory.
+
+**`"onboarded": false` in `clay whoami` doesn't affect CLI access.** The `onboarded` field in `clay whoami` and `clay login` output only shows whether the user has been shown the Clay CLI's first-run onboarding. A value of `false` doesn't block any command or stop the session from refreshing, so you can ignore it for an automation user. To see the onboarding, run `clay onboard options`.
 
 **Clay API keys can't replace `clay login` for most CLI commands.** The CLI can read an API key from the `CLAY_API_KEY` environment variable, but most CLI commands — including `clay workflows runs` and `clay functions` — require the `cli:all` scope. API keys created on the **API and CLI** page or with `clay api-keys create` don't include the `cli:all` scope, so those commands return `auth_forbidden` (exit code 3) when called with an API key. Signing in with `clay login` (or `clay login --device`) gives the CLI the `cli:all` scope. Use Clay API keys for direct calls to the Public HTTP API instead.
