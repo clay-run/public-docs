@@ -122,12 +122,12 @@ Note that data source restrictions apply depending on the platform — see [Why 
 
 ### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
 
-Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, only offers the professional network, Meta, Google Ads, and Vibe.co, minus any platform the sync already uses. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, never lists Reddit Ads or Bing Ads. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
 
 To send your contacts to Reddit Ads or Bing Ads:
 
-1.  Go to **Ads** from the Clay homepage and click `New Ad Sync`.
-2.  Use your contacts as the source (for example, an Audiences People segment). There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
+1.  Go to **Ads** from the Clay homepage, click `Create ad sync`, and select **People** (not **Table**, which is marked **Deprecated** and creates a legacy Table ads sync).
+2.  Pick the Audiences People segment that holds your contacts. There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
 3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
 
 Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
