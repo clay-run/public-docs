@@ -101,7 +101,7 @@ Syncing from a table works differently. If any column in that table sourced its 
 
 ### Can I do account-based targeting on Google?
 
-No. Google Ads supports contact-level targeting only. If you need to target everyone at a set of companies, use the professional-network ads destination, which is the only destination offering account audiences.
+No. Google Ads supports contact-level targeting only. If you need to target everyone at a set of companies, use a destination that supports account audiences — see [Clay Ads](https://university.clay.com/docs/clay-ads) for which destinations offer them.
 
 ### My account isn't eligible for Customer Match
 
