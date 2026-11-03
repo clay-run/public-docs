@@ -153,6 +153,24 @@ Compare each missing person against your Find People search settings and check t
 
 To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
 
+### Why does my Find People table show job titles I excluded, like HR or Intern?
+
+If you excluded job titles in your Find People search (for example, **Job title doesn't contain** Human Resources, Intern, HR) but the **Job Title** column in your table still shows those titles, check your **Target companies** setting.
+
+Find People checks your job title, seniority, and excluded job title filters against each person's **current** role. Separately, **Target companies** controls which employment at your target companies counts:
+
+-   **Currently work at:** the person's current job must be at one of your target companies.
+-   **Previously worked at:** a past job at one of your target companies counts.
+-   **Currently or previously worked at:** either a current or a past job at one of your target companies counts.
+
+When people are imported, the **Job Title** column shows the person's role **at the target company they matched**, not necessarily the current role that passed your title filters. With **Previously worked at** or **Currently or previously worked at**, that matched role can be an old job. For example, someone whose current role passes your filters can show up with "Human Resources Generalist" as their Job Title if that was their earlier role at one of your target companies. Your exclusions are still working: they were checked against the person's current role.
+
+**To fix it:**
+
+1.  Edit your search and set **Target companies** to **Currently work at**, then re-run it. The Job Title column then shows each person's current role at your target companies.
+2.  Make sure every title you want to exclude is on your excluded job titles list. A title that isn't on the list, such as "Consultant", isn't filtered out.
+3.  To clean up rows already in your table, add a table filter on the Job Title column using **does not contain**, and join the conditions with **And**, not **Or**. See [Combine table filters with And or Or](table-columns-overview.md#combine-table-filters-with-and-or-or).
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:

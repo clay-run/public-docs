@@ -230,8 +230,21 @@ You can filter your table to show only rows that match specific criteria. Filter
 1.  Click the **Filter** button (funnel icon) in the table toolbar, above the rows.
 2.  Click **Add filter** and select a column to filter by.
 3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
-4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
+4.  To add more conditions, click **Add filter** again. Each new condition is joined to the others with an **And** or **Or** dropdown at the start of its row. See [Combine table filters with And or Or](#combine-table-filters-with-and-or-or) below.
 5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
+
+### Combine table filters with And or Or
+
+When a table filter has more than one condition, the first condition starts with **Where**. Every condition after it starts with an **And** / **Or** dropdown that controls how the conditions are combined:
+
+-   **And:** a row appears only if it matches **all** of the conditions.
+-   **Or:** a row appears if it matches **any one** of the conditions.
+
+All conditions at the same level share one And/Or setting. Changing the dropdown on any row changes it for every condition at that level. To mix And and Or logic, click **Add filter group**. Each filter group has its own And/Or setting.
+
+**Excluding several values with "does not contain":** to hide rows that contain any of several words, join the **does not contain** conditions with **And**. With **Or**, a row only has to pass one condition to stay visible. For example, with Job Title **does not contain** `intern` **Or** Job Title **does not contain** `consultant`, a "Biology Intern" row still appears because it doesn't contain "consultant". If your filter hides no rows (for example, the row count still shows **919 / 919 rows**), check that the dropdown between your **does not contain** conditions is set to **And**.
+
+**"does not contain" matches partial words and ignores capitalization.** The value can appear anywhere in the cell. For example, **does not contain** `intern` hides "Biology Intern", but it also hides "Internal Audit Manager" and "International Sales Director".
 
 ### Check whether a filter is active
 
