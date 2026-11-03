@@ -2,20 +2,20 @@
 title: Web intent
 description: Collect visitor information including pages visited, time spent,
   and traffic sources. Includes workflow for sending emails to identified visitors.
-last_synced: 2026-04-26T01:40:54.567Z
+last_synced: 2026-11-03T16:54:43.803Z
 ---
 
 # Web intent
 
 Collect visitor information including pages visited, time spent, and traffic sources.
 
-Clay's website tracking enables teams to collect visitor information in order to understand web intent — including pages visited, time spent, and traffic sources.
+Clay's web intent signal collects visitor information from your website — including pages visited, time spent, and traffic sources.
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
 **Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
 
-## Using website tracking in Clay
+## Using web intent in Clay
 
 ### **Creating the connection**
 
@@ -44,11 +44,11 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
 5.  Add filters for specific countries or pages.
     -   You can include a `*` to match any page paths (e.g., `/blog*`).
-6.  Under **Settings**, make sure **Enable connection** is selected and save your changes.
-7.  In a workbook, under `Create`, click `Website visitor tracking`.
+6.  Under **Settings**, select **Enable connection** rather than **Disable connection**, then click **Save changes**.
+7.  In a workbook, under `Create`, click `Web intent`.
 8.  Select your website connection from the dropdown and adjust your filters.
-    -   Configure your table filters using page paths, session time, referrer, or UTM tags to show only relevant visitor data.
-    -   For advanced filtering, create filter groups and adjust visit frequency parameters to refine results.
+    -   Configure your table filters to show only relevant visitor data. The available fields are `Company Domain`, `Referrer domain`, `Referrer path`, the `UTM` fields, and visit counts.
+    -   To filter on page paths or session duration, use the connection's own filters in settings instead. Adjust visit frequency parameters to refine results further.
 
 Website visitor data appears in your table grouped by company domain. Since we only display completed visitor sessions, data may be delayed up to 30 minutes after user activity.
 
@@ -380,7 +380,7 @@ Yes — add `/` to **URL paths to exclude** in your tracking settings. Because U
 
 Keep in mind that exclude filters are session-level: a session is blocked only if every page the visitor viewed during that session matches an exclude pattern. A visitor who lands on the homepage and then browses to `/pricing` in the same session will still appear in your table, because not all pages they viewed match the `/` filter.
 
-To remove homepage visits from your results without changing your tracking settings, add a view filter in your Clay table that excludes rows where the page URL is `/`. Configure table filters using the **page paths** field under your table's filter options.
+To remove homepage visits from your results without changing your tracking settings, add a view filter in your Clay table that excludes rows where the page URL is `/`.
 
 ### What cookies and local storage items does the tracking script use?
 
