@@ -124,6 +124,27 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
 -   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
 
+### "You have reached the maximum number of columns allowed"
+
+If you try to add a waterfall (for example a Work Email, Personal Email, or Mobile Phone waterfall) and see **"You have reached the maximum number of columns allowed (N total columns, M action columns). Please delete some columns before adding new ones."**, the new waterfall would take your table over one of its column limits. N is your table's total column limit (100 by default) and M is its action (enrichment) column limit. The error appears if either limit would be exceeded, and Clay checks every column the new waterfall needs before creating any of them. That means the error can appear even when your table is still below N columns.
+
+**Why waterfalls use up so many columns.** Each provider in a waterfall is its own column in your table. When validation is turned on, each provider also gets its own validation column. Clay also adds one merge column that holds the final result. All of these columns count toward your table's column limits.
+
+**Example:** A Mobile Phone waterfall with 15 providers and validation turned on uses 15 provider columns + 15 validation columns + 1 merge column = **31 columns**. Removing 10 providers you don't need frees up 20 of those columns.
+
+**How to read the column count in the toolbar.** The columns button in the table toolbar (for example **75/75 columns**) shows how many columns are visible in the current view out of all columns in the table, including hidden ones. It doesn't show your column limit. **75/75 columns** means the table has 75 columns and none of them are hidden.
+
+**To free up columns from a waterfall, remove the providers you don't need:**
+
+1.  Click the waterfall's header and select **Edit column** (or click the waterfall tab and select **Edit group**).
+2.  In the panel that opens on the right, click the **Full configuration** tab.
+3.  In the waterfall sequence, click the trash (delete) icon next to each provider you want to remove.
+4.  Click **Save**.
+
+Clay deletes each removed provider's column and its validation column from the table. To decide which providers to keep, check which ones actually return results in your table. Removing providers that rarely return results frees up far more space than deleting columns one at a time. Before you delete any columns, check whether another table looks up data from this one, because a dependency like that isn't visible from this table. See [Editing an existing waterfall](building-a-data-waterfall.md#editing-an-existing-waterfall) for more about changing a waterfall's providers.
+
+If you still need more columns after cleaning up, contact support. Clay support can raise the column limits for your workspace.
+
 ## Create child columns from a parent column
 
 When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
