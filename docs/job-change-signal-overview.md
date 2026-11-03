@@ -24,7 +24,7 @@ To set up Job Change Signals in your table:
 1.  Click `Tools`, then select `Monitor for job changes`.
 2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
     -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
-    -   **Note:** The contacts table selected here cannot be changed after the signal is saved. To monitor a different set of contacts, create a new signal.
+    -   **Note:** The contacts table and the LinkedIn URL identifier column selected here cannot be changed after the signal is saved. To monitor a different set of contacts or use a different LinkedIn URL column, create a new signal.
 3.  Optionally, enable `Initial check`.
     1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's **work history** for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
@@ -43,11 +43,28 @@ No. Clay does not have a native persistent person identifier equivalent to a thi
 
 For this reason, the Job Change Signal requires each contact's professional profile URL as input. When Clay detects that the person's current employer no longer matches your records, it fires an event so you can re-enrich or update your CRM.
 
-### Can I change which contacts my Job Change Signal monitors?
+### Can I change the contacts table or LinkedIn URL column my Job Change Signal monitors?
 
-No — the contacts table a Job Change Signal monitors is selected when the signal is first created and cannot be changed afterward via **Edit Signal**. Attempting to edit the signal will show the contacts table field as locked.
+No — the contacts table and the LinkedIn URL identifier column a Job Change Signal monitors are selected when the signal is first created and cannot be changed afterward via **Edit Signal**. In **Edit Signal**, you can still change settings such as how often the signal runs, its filters, its name, and whether it's on or off — but the contacts table and identifier column stay locked.
 
 To switch to monitoring a different contacts table, create a new signal pointing to the new table. To preserve your enrichment column configurations from the existing signal's results table, save it as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link in a new tab — the resulting table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+
+If you only need to fix incorrect or missing LinkedIn URLs for contacts the signal already monitors, you don't need a new signal — see the next FAQ.
+
+### I corrected my contacts' LinkedIn URLs — how do I get the Job Change Signal to re-check them?
+
+The Job Change Signal stores a starting snapshot for each **row** in your contacts table, not for each LinkedIn URL. If you update the LinkedIn URL on a row that's already in the table, that row keeps its original snapshot and is not checked from scratch. Clicking `Save and re-run` or `Retry` in **Edit Signal**, force running the column, or turning on `Initial check` also keeps existing snapshots — only rows newly added to the contacts table get a fresh first check.
+
+To have the Job Change Signal re-check contacts after fixing their LinkedIn URLs:
+
+1.  Correct the LinkedIn URLs in the system your contacts table imports from (for example, your CRM), so re-imported rows carry the corrected URLs.
+2.  Delete the affected rows from the signal's contacts table.
+3.  Re-import those contacts into the same contacts table using a **new** source. Re-running an existing source skips records it has already imported, so it won't bring the deleted rows back.
+4.  Let the signal run. Turn on `Initial check` if you also want job changes within your lookback window (3 months, 6 months, or 1 year) reported for these contacts.
+
+Each re-imported row is checked again as a new row, so each check consumes 1 action plus 0.2 data credits.
+
+**Convert to custom table won't re-source a signal table.** The `Convert to custom table` option in the table title menu only changes the table's type — it doesn't copy your data or columns to a new table, and it can't be undone.
 
 ### How do I track contacts who change jobs ("movers") and refresh their details?
 
