@@ -133,5 +133,4 @@ Not for this trigger. A submission has to match what the ad platform actually se
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
--   [Professional network ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
 -   [Meta Ads in Clay](https://university.clay.com/docs/meta-ads-in-clay)
