@@ -1,14 +1,14 @@
 ---
 title: Ad lead form triggers
-description: Start a Clay workflow from LinkedIn and Meta lead gen form submissions to qualify, enrich, route, or write each new lead to Audiences.
+description: Start a Clay workflow from professional network and Meta lead gen form submissions to qualify, enrich, route, or write each new lead to Audiences.
 last_synced: 2026-11-03T20:26:58.025Z
 ---
 
 # Ad lead form triggers
 
-Send LinkedIn and Meta lead gen form submissions into a Clay workflow, so each new lead is qualified, routed, or written to Audiences automatically.
+Send professional network and Meta lead gen form submissions into a Clay workflow, so each new lead is qualified, routed, or written to Audiences automatically.
 
-The `Ad lead form` trigger is a workflow source that starts a run each time someone submits one of your lead gen forms on LinkedIn or Meta. Each run carries the answers the person gave plus the ad, campaign, and form the lead came from, so the rest of the workflow can act while the lead is still warm.
+The `Ad lead form` trigger is a workflow source that starts a run each time someone submits one of your lead gen forms on the professional network or Meta. Each run carries the answers the person gave plus the ad, campaign, and form the lead came from, so the rest of the workflow can act while the lead is still warm.
 
 **Note:** Ad lead form triggers are in beta. A Workspace Admin can request access from the `Beta program` section of your workspace settings by clicking `Join beta program` — enrolling puts your workspace in line for beta features rather than switching this one on straight away.
 
@@ -25,8 +25,8 @@ Connect an ad account or page once and every lead form on it feeds the workflow,
 
 ## Before you start
 
--   **Admin access to the LinkedIn ad account or Meta page that owns your lead gen forms.** This is what you authenticate with, and it's quicker to confirm now than midway through setup.
--   **A connection with lead gen permissions.** Lead gen reads more from the ad platform than an ad sync does, so an existing LinkedIn or Meta connection usually can't be reused. Clay will ask you to create a new one when that's the case.
+-   **Admin access to the professional network ad account or Meta page that owns your lead gen forms.** This is what you authenticate with, and it's quicker to confirm now than midway through setup.
+-   **A connection with lead gen permissions.** Lead gen reads more from the ad platform than an ad sync does, so an existing professional network or Meta connection usually can't be reused. Clay will ask you to create a new one when that's the case.
 -   **(Meta) Access to Business settings for your Facebook page,** so you can let Clay receive the page's leads. Three things need to be true on the Meta side first:
     -   Your Facebook page belongs to a [business portfolio](https://www.facebook.com/business/help/1710077379203657?id=180505742745347).
     -   You're [a member of that business portfolio](https://www.facebook.com/business/help/2169003770027706?id=2190812977867143), and it's the one your ad account and page are linked to.
@@ -37,19 +37,19 @@ Connect an ad account or page once and every lead form on it feeds the workflow,
 
 1.  Create a workflow, or open the one you want your leads to run through.
 2.  In `Create trigger`, set `Type` to `On event`, pick `Ad lead form` under `Source`, and click `Add trigger`.
-3.  In `Import new lead`, choose `LinkedIn` or `Meta`.
+3.  In `Import new lead`, choose the professional network option or `Meta`.
 
 Each submission starts its own workflow run.
 
 ## Step 2: Connect the account and choose your forms
 
 1.  Under `Connection`, choose a connection or add one. If the one you pick is missing lead gen permissions, Clay asks you to create a new connection — follow that prompt rather than reconnecting the existing one.
-2.  Under `LinkedIn Ads account` or `Meta Ads account`, pick the ad account your forms run under.
+2.  Under the professional network ads account field or `Meta Ads account`, pick the ad account your forms run under.
 3.  (Meta) Under `Page`, pick the Facebook page. Meta attaches lead gen forms to a page rather than to an ad account, so the page you choose decides which forms you see.
 4.  Under `Lead forms`, keep `All forms`.
 5.  Click `Add trigger`.
 
-`All forms` captures every lead gen form on that ad account or page, including ones you create later. This holds on both LinkedIn and Meta. If you pick forms individually instead, you'll need to come back and add each new form, or its leads won't reach the workflow.
+`All forms` captures every lead gen form on that ad account or page, including ones you create later. This holds on both the professional network and Meta. If you pick forms individually instead, you'll need to come back and add each new form, or its leads won't reach the workflow.
 
 **Note:** A lead gen trigger runs on a connection that's shared with your workspace, so a private connection won't be accepted. Share the one you want to use from your connection settings, or add a new shared connection — either way the trigger keeps working when the person who created it is away.
 
@@ -75,16 +75,16 @@ Asking Clay, our global agent, to draft the rest is often faster than adding eac
 
 | Field | What it is | Available on |
 | --- | --- | --- |
-| formInput | The lead's own answers — one entry per question on the form, such as name, email, company, and title. An answer to a multiple-choice question arrives as one entry with the chosen options separated by commas | LinkedIn and Meta |
-| id | The ad platform's own ID for the submission | LinkedIn and Meta |
-| createdTime | When the form was submitted | LinkedIn and Meta |
-| provider | The ad platform the form runs on | LinkedIn and Meta |
-| formId | The ad platform's ID for the form | LinkedIn and Meta |
-| creativeId | The Clay form record the lead matched | LinkedIn and Meta |
-| adId, adName | The ad the lead clicked | LinkedIn and Meta |
-| campaignId, campaignName | The campaign the ad ran under | LinkedIn and Meta |
-| isOrganic | Whether the lead came from an unpaid placement rather than a paid ad | LinkedIn and Meta |
-| campaignGroupId, campaignGroupName | The campaign group the campaign sits in | LinkedIn |
+| formInput | The lead's own answers — one entry per question on the form, such as name, email, company, and title. An answer to a multiple-choice question arrives as one entry with the chosen options separated by commas | Professional network and Meta |
+| id | The ad platform's own ID for the submission | Professional network and Meta |
+| createdTime | When the form was submitted | Professional network and Meta |
+| provider | The ad platform the form runs on | Professional network and Meta |
+| formId | The ad platform's ID for the form | Professional network and Meta |
+| creativeId | The Clay form record the lead matched | Professional network and Meta |
+| adId, adName | The ad the lead clicked | Professional network and Meta |
+| campaignId, campaignName | The campaign the ad ran under | Professional network and Meta |
+| isOrganic | Whether the lead came from an unpaid placement rather than a paid ad | Professional network and Meta |
+| campaignGroupId, campaignGroupName | The campaign group the campaign sits in | Professional network |
 | adsetId, adsetName | The ad set the ad sits in | Meta |
 | platform | Where on Meta the ad was served | Meta |
 
@@ -107,7 +107,7 @@ The use cases teams reach for first:
 
 | Limit | What it means |
 | --- | --- |
-| One Clay workspace per ad account or page | A LinkedIn ad account or a Meta page can be connected for lead gen in one Clay workspace at a time. Picking one that another workspace holds returns This ad account is already connected in another Clay workspace. |
+| One Clay workspace per ad account or page | A professional network ad account or a Meta page can be connected for lead gen in one Clay workspace at a time. Picking one that another workspace holds returns This ad account is already connected in another Clay workspace. |
 | One workflow per ad account or page | An ad account or page already feeding a workflow shows as already in use in the picker, with a link to the workflow holding it. Ingest once and branch downstream rather than adding it twice. |
 | One connection per ad account or page | Once an ad account or page is connected through one connection, the same one can't be added again through a different connection or ad account in that workspace. |
 | Meta is scoped to a page | Meta attaches lead gen forms to a Facebook page, so the page is what you pick and what each limit above applies to. An ad account with several pages takes one lead gen workflow per page. |
@@ -133,5 +133,5 @@ Not for this trigger. A submission has to match what the ad platform actually se
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
--   [LinkedIn Ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
+-   [Professional network ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
 -   [Meta Ads in Clay](https://university.clay.com/docs/meta-ads-in-clay)
