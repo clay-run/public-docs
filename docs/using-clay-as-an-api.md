@@ -87,7 +87,7 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
-**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
+**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. Searches you run inside the Clay app (for example, Find People or Find Companies) don't count toward this search quota either. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
 
 | Plan | Results per period | Period window |
 | ---- | ------------------ | ------------- |
@@ -96,9 +96,11 @@ Use the same workspace-scoped API key in the `clay-api-key` request header. Read
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 | Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the search period limit, Clay returns `402` (Payment Required) with a message naming your limit and the number of results already requested in the current period. For example, a workspace on a legacy Pro plan sees: `This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested {N} results during the current period, which resets on January 1, {YEAR} (UTC). Contact support to raise this limit.` The CLI shows the same message with a `quota_exceeded:` prefix.
 
-**Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
+To monitor your search usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search usage** card shows `{used} of {limit} results`, a progress bar that turns orange at 70% usage and red at 90%, and either **Resets on [date]** for fixed windows or **Counts the last 30 days** for the rolling 30-day window. If you need a higher search limit, [contact Clay support](https://www.clay.com/contact-form).
+
+**Note:** Workspaces on legacy (pre-2026) non-Enterprise plans, including legacy Pro, keep the annual search quota window rather than the rolling 30-day window: 1,000,000 search results per calendar year, resetting January 1 UTC.
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
