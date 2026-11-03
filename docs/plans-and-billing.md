@@ -30,7 +30,7 @@ For more details on actions and data credits, see our comprehensive guide on [ac
 
 To upgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  In the left sidebar, navigate to `Plans & billing`, then click `Switch plan`.
 3.  Select the plan you want to upgrade to and review the details.
 4.  Confirm your selection by clicking `Review change → Continue to payment`.
@@ -91,7 +91,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 
 To downgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner, then select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar, then select `Settings`.
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
@@ -105,7 +105,7 @@ Clay subscriptions **auto-renew by default** — if you do not cancel before you
 
 To cancel your Clay subscription:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plan & billing`.
 3.  Click the `Plan options` dropdown and select `Cancel plan`.
 
@@ -136,7 +136,7 @@ For instructions on deleting tables and permanently removing them from Trash, se
 
 To update your billing address, payment method, or billing email:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
 3.  Click the `Edit` dropdown.
     -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
@@ -210,7 +210,7 @@ Each fully enriched record typically costs 6-20 data credits (including company 
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plans & billing`.
 3.  Click `Cancel plan` and follow the prompts to confirm.
 
