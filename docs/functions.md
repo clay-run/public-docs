@@ -135,6 +135,26 @@ For example, a function list showing 1,930 rows can be 1,000 recent completed ro
 
 Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
+### I ran a function through the Clay CLI, MCP, or API and there's no table — where are my results?
+
+When you call a function from outside a table, such as from Claude Code through the Clay CLI or MCP, or through the API, Clay doesn't create a regular table for the run. Every function call writes one row to **the function's own table**, and the function's results for that call are saved in that row. Function calls from tables, MCP, the CLI, and workflows all work this way.
+
+**To find which functions spent credits on a given day:**
+
+1.  Go to **Settings → Usage** and open the **Functions** tab.
+2.  Set **When** to **Custom range**, enter the dates you want to check, and click **Apply filters**.
+3.  Review the **Credits used** for each function in that period. Workspaces on current pricing plans also see an **Actions used** column.
+
+**To find and download the results of those function calls:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Add a filter on the **Created At** column for the time frame of your CLI, MCP, or API run.
+3.  If the rows you need are no longer in the function's live view, click **View archive** in the function's footer, then click **Export full archive** to download the archived rows as a CSV.
+
+The function's live view keeps the **1,000 most recent completed rows**. Older completed rows move to the archive, where they're kept for **30 days**, so export them within 30 days of the run. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for how rows are kept and archived.
+
+**Tip:** Before you run a function on thousands of records through the CLI or MCP, run it on a few records first and check the rows in the function's table. Make sure the output includes every value you need, such as the company domain you passed in. Archived function rows are read-only, so you can't add columns to them after the run.
+
 ### Why does "Go to row in function" say the function row has been archived?
 
 When you click a cell in your table that was processed by a function and see **"The corresponding function row has been archived and is no longer available to view"** on the **Go to row in function** button, the intermediate processing record for that row has aged out of the function's Live view.
