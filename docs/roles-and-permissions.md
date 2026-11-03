@@ -1,6 +1,6 @@
 ---
 title: Roles and permissions
-description: Roles, permissions, and access control tools available in Clay workspaces, including when Viewers can use credits.
+description: Roles, permissions, and access control tools available in Clay workspaces, including when Viewers can use credits and how Sales Reps bulk-enrich people from the Prospect tab.
 last_synced: 2026-10-07T01:55:09.539Z
 ---
 
@@ -84,6 +84,7 @@ The sales rep role is designed for team members who need to set up email account
 -   Look up company and contact information on demand through their AI tool
 -   Call Functions built centrally by Ops teams (for example, "find LinkedIn from email" or "generate outbound messages")
 -   Run Ops-built workflows directly from their AI chat interface
+-   Search for people and companies from the `Prospect` tab in the Sales Rep sidebar, and enrich the people they select — including every person who matches a search (see [Enrich all matching people from the Prospect tab](#enrich-all-matching-people-from-the-prospect-tab))
 
 **They cannot:**
 
@@ -91,6 +92,40 @@ The sales rep role is designed for team members who need to set up email account
 -   Create or edit workflows directly in Clay
 
 Admins control which Functions reps can access (via the Functions settings page) and can set per-user credit limits. See [MCP settings](https://university.clay.com/docs/mcp-settings) for details.
+
+### Enrich all matching people from the Prospect tab
+
+Sales Rep users can enrich people in bulk from the `Prospect` tab in the Sales Rep sidebar (next to `Home` and `Tasks`). Bulk enrichment of all matching people is available for people searches only. For company results, select the companies and click `Find people` instead.
+
+To enrich every person who matches a people search in the Prospect tab:
+
+1.  Run a people search in the `Prospect` tab.
+2.  Click `Select all matching people`. This selects every match across all result pages, not just the current page.
+3.  To leave someone out, uncheck them. Exclusions are kept as you move between result pages, and the toolbar shows the approximate selection count and how many people you excluded (for example, `All matching people selected (~N) · X excluded`).
+4.  Click `Enrich all matching people`.
+
+To enrich only specific people, check them and click `Enrich selected (N)`, where N is the number of people selected.
+
+**How many people can you enrich at once from the Prospect tab?** There's no 25-person cap on the selection. Selections of 25 people or fewer are enriched right away. Selections of more than 25 people, and every `Select all matching people` selection, run as a background enrichment job that processes people in batches of 25.
+
+An enrichment job uses the search and exclusions as they were when you clicked `Enrich all matching people`. Changing the search afterward doesn't change a job that's already running.
+
+**Paid search filters:** If your people search uses paid search filters, the Prospect tab shows: "Paid search filters use credits for all matches, including people you exclude here. Excluded people won't be enriched."
+
+### Track, stop, resume, and retry Prospect enrichment jobs
+
+Prospect enrichment jobs are saved, so a Sales Rep can leave the Prospect tab while enrichment runs and come back to check progress and results later.
+
+1.  In the `Prospect` tab, click `Enrichment jobs` in the top-right of the page. While a job is running, the button reads `Enrichment jobs · Running`.
+2.  The `Enrichment jobs` panel lists your saved jobs. Click `Load more jobs` to see older ones.
+3.  Each job shows progress for each contact channel as counts of people `found`, `not found`, `need attention`, and `running`. Open a job to see its per-person results, and click `Load more results` to page through them.
+
+Depending on a job's state, the `Enrichment jobs` panel shows these controls. Each control appears only when that action is available for the job:
+
+-   `Stop remaining work` — stops the people who haven't been processed yet. Completed results stay in place, and lookups that are already running will finish.
+-   `Resume enrichment` — resumes the job's remaining work.
+-   `Retry failures for N people` — runs only the failures that are safe to retry again. Successful lookups are reused, not repeated.
+
 **If you were assigned the Sales Rep role but need access to the standard Clay workspace**, contact your workspace admin and ask them to change your role. Admins can update roles at `Settings` → `Team`.
 
 **Note:** Currently, we do not support table-level view restriction. Members can view all tables/workbooks once invited to a workspace.
