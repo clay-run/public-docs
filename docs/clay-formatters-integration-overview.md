@@ -88,6 +88,8 @@ The action outputs a **Normalized First Name** and a **Normalized Last Name** fi
 
 Extract and standardize a domain URL to the format you need. To add this action to your table, click **+ Add Column → Enrich Data** and search for **"Normalize a Domain."**
 
+**Cost — Normalize a Domain is free:** Running the Normalize a Domain action costs 0 Data Credits and doesn't consume any Actions.
+
 To normalize a domain:
 
 **Step 1:** Input the URL you want to normalize.
