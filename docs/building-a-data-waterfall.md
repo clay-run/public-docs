@@ -247,23 +247,23 @@ When enriching a person or company, providers match on name or profile data — 
 1. Filter the table to rows where the domain-match column is `false`.
 2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
-### How do I find LinkedIn URLs for my contacts using more than one source?
+### How do I find professional profile URLs for my contacts using more than one source?
 
-A single enrichment column, such as the LiveData **Find professional profile** action, searches only one provider for each contact's LinkedIn (professional profile) URL. Rows that provider can't match come back with no profile found. To search several sources for each contact's LinkedIn URL instead of just 1, use a LinkedIn URL waterfall. The waterfall tries its providers one at a time and uses the first LinkedIn URL it finds.
+A single enrichment column, such as the LiveData **Find professional profile** action, searches only one provider for each contact's professional profile (social profile) URL. Rows that provider can't match come back with no profile found. To search several sources for each contact's professional profile URL instead of just 1, use a pre-built professional profile URL waterfall. The waterfall tries its providers one at a time and uses the first profile URL it finds.
 
-To add a LinkedIn URL waterfall:
+To add a professional profile URL waterfall:
 
 1.  In your table, click **Add column** (or click **Tools** in the top right corner and select the **Enrich** tab).
-2.  Search for `LinkedIn URL`. The waterfall results include **LinkedIn URL** and **LinkedIn Profile Finder [Waterfall + AI]**, both labeled **Waterfall · By Clay**.
-    -   **LinkedIn Profile Finder [Waterfall + AI]** also includes an AI step that searches the web for the person's LinkedIn profile, in addition to data providers.
+2.  Search for the data point you want, such as the profile URL, and select one of the results labeled **Waterfall · By Clay**.
+    -   The version whose name ends in **[Waterfall + AI]** also includes an AI step that searches the web for the person's profile, in addition to data providers.
 3.  Map your contact's inputs (for example, full name and company name) and click **Save**.
 
-**To find more LinkedIn URLs, and more of the right ones, give the LinkedIn URL lookup more information about each contact.** With only a name and company name, the lookup may find fewer LinkedIn URLs or return the wrong person. Profile finders such as **Find professional profile** also accept a work email and a company domain, which make matching more accurate. To add them:
+**To find more profile URLs, and more of the right ones, give the profile lookup more information about each contact.** With only a name and company name, the lookup may find fewer profile URLs or return the wrong person. Profile finders such as **Find professional profile** also accept a work email and a company domain, which make matching more accurate. To add them:
 
 1.  If your table doesn't have company domains yet, add the **Company Domain** waterfall (see [Company Domain waterfall](#company-domain-waterfall)).
 2.  Add the **Work Email** waterfall to find each contact's work email. It needs the person's name and company domain. See [Work Email waterfall](work-email-waterfall.md).
-3.  Open your LinkedIn URL column (your waterfall or your **Find professional profile** column), go to its configuration, and map the work email column to the work email input (for **Find professional profile**, **Person's work email**) and the domain column to the company domain input (**Company domain**).
-4.  Re-run the LinkedIn URL column on rows that didn't get a result.
+3.  Open your profile URL column (your waterfall or your **Find professional profile** column), go to its configuration, and map the work email column to the work email input (for **Find professional profile**, **Person's work email**) and the domain column to the company domain input (**Company domain**).
+4.  Re-run the profile URL column on rows that didn't get a result.
 
 ### Why did my professional profile URL waterfall return the wrong person?
 
