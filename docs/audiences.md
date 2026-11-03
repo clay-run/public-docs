@@ -896,6 +896,8 @@ The answer depends on which type of Salesforce import you are using:
 
 **All records imports:** Only fields explicitly included in the Salesforce import field mapping are brought into Audiences as columns and made available as filter options. If a Salesforce field — including custom fields like `Account_Record_ID__c` — doesn't appear in the filter dropdown, it was not included when the import was configured.
 
+**Each Salesforce object import has its own field mapping.** Your Salesforce Contacts, Leads, and Accounts imports are mapped separately, so a field mapped on one import only has values for records that come from that object. For example, if a People segment filters on a created date field mapped from your Salesforce **Leads** import (such as `Created Date → within the last → 1 day`), newly created Salesforce **Contacts** have no value for that field and won't qualify for the segment, even though they appear in **All People**. To filter new Contacts by when they were created in Salesforce, add the Contact `CreatedDate` field to the field mapping on your **Contacts** import using the steps below, then update the segment filter to use that new field. You don't need to build a Salesforce flow to copy the created date into another field.
+
 To add a missing field to an "All records" import:
 
 1.  Click **Add data** in the top toolbar.
