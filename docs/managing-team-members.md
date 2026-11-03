@@ -110,7 +110,9 @@ To remove a member from your workspace:
 
 **Transferring ownership when a team member leaves**
 
-If a former employee owns tables or workbooks in your workspace, there is no separate "transfer ownership" UI in Clay — removing the former member from the workspace is how you do it. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+If a former employee owns tables or workbooks in your workspace, removing the former member from the workspace is how you transfer their ownership. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+
+On Enterprise plan workspaces, transferring ownership of an individual workbook to a specific workspace member from the workbook's settings is currently in beta and may not be enabled in every workspace. See [Transfer ownership of a workbook](/docs/roles-and-permissions#transfer-ownership-of-a-workbook-enterprise-currently-in-beta).
 
 ## Cancel a pending invite
 
