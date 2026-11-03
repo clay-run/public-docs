@@ -87,8 +87,8 @@ Get key data about a person given a professional profile URL, email, or full nam
 
 **Optional:**
 
--   **Include Email:** Returns the person's work email. Consumes 1 Lusha Unified Credit from your Lusha account. Defaults to off.
--   **Include Phone:** Returns the person's phone number. Consumes 5 Lusha Unified Credits from your Lusha account. Defaults to off.
+-   **Include Email:** Returns the person's work email. Uses Lusha credits from your own Lusha account. Defaults to off.
+-   **Include Phone:** Returns the person's phone number. Uses Lusha credits from your own Lusha account. Defaults to off.
 -   **Partial Profile:** Returns basic profile data even when no email or phone is found. Defaults to on.
 
 **Outputs**
@@ -255,7 +255,13 @@ The recommended approach is to send your results into a separate destination tab
 
 **What happens if I toggle on additional datapoints in Enrich Person?**
 
-Turning on additional data points, like email and phone, will consume Lusha Unified Credits from your Lusha account. Emails deduct 1 credit per contact, while phone numbers deduct 5 credits per contact.
+Turning on **Include Email** or **Include Phone** in Lusha `Enrich person` tells Lusha to return those data points, and Lusha deducts Lusha credits for them from your own Lusha account. `Enrich person` only runs with your own Lusha API key, so these Lusha credits are billed by Lusha, not by Clay.
+
+**Why does Lusha Enrich person charge a different number of Lusha credits for each row?**
+
+Lusha, not Clay, sets how many Lusha credits each `Enrich person` lookup costs, so the amount isn't a flat 1 credit per email or 5 credits per phone. Clay passes your **Include Email** and **Include Phone** choices to Lusha and doesn't calculate the Lusha credit charge. Lusha's charge for a successful lookup can include a charge for the search itself, a charge for each data point revealed, and an extra charge when a data point comes from one of Lusha's external data providers. That's why the total can change from row to row depending on what Lusha finds and where the data comes from.
+
+For an exact breakdown of what each lookup charged, check your usage logs in your Lusha account or contact Lusha support.
 
 **Are Lusha's signals actions always-on monitors?**
 
