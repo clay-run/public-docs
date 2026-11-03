@@ -330,9 +330,19 @@ If you've paused a campaign but the options to add or remove messages are still 
 
 **To add follow-up messages:** Create a new campaign and set up your full sequence — including all follow-up messages — from the start. You can include up to 4 messages per campaign.
 
+### Which plans include the Clay email sequencer?
+
+The Clay email sequencer (Sequencer) is available on the Launch plan or higher, including Growth and Enterprise. It's also available during the 14-day free trial. The Clay email sequencer is **not** included on the Free plan.
+
+### Why do I see "upgrade your plan" when I open the Sequencer on the Free plan?
+
+If your workspace is on the Free plan, clicking **Sequencer** in the left sidebar (or choosing **Create Clay email sequence** from a table's export options) opens an upgrade prompt instead of the Sequencer. This is expected — the Clay email sequencer isn't included on the Free plan, so the prompt doesn't mean something is wrong with your account. This also applies if your 14-day trial has ended and your workspace has moved to the Free plan.
+
+To use the Clay email sequencer, upgrade to the Launch plan or higher: click your profile picture in the top-right corner, select `Settings`, go to `Plans & billing`, and click `Switch plan`. See [Plans & billing](plans-and-billing.md#upgrade-your-plan) for details.
+
 ### How much does the sequencer cost?
 
-The Clay email sequencer is available on all plans. Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
+The Clay email sequencer is available on the Launch plan or higher (not on the Free plan). Each lead sequenced consumes 1 Action (platform orchestration work). If you use AI snippets in your messages, those consume 1 Action per run and Data Credits for AI generation in addition to the Action for sending the email.
 
 ### Can I send multiple sequences to the same email address?
 
