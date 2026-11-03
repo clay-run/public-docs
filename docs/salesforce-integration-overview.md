@@ -494,6 +494,33 @@ The Salesforce `Create record`, `Update record`, and `Upsert object` (shown in C
 
 When **Run in batches** is enabled, Clay sends **up to 200 records per Salesforce API call**, using Salesforce's Composite API (`composite/sobjects`). With batch mode off, Clay sends one record per API call. Batches aren't sent one at a time: Clay can send up to 20 Salesforce requests at once per Salesforce connection, whether or not batching is on.
 
+### How do I choose the number of rows per batch for a Salesforce action?
+
+When you turn on **Run in batches** for the Salesforce **Create record**, **Update record**, or **Create or update record** action, you can set how many rows Clay sends to Salesforce in each API call. Batching is available on all plans. The field name depends on where you set it:
+
+-   In a table column's batching settings, the field is called **Number of rows per batch**.
+-   In the workflow editor's **Run settings**, the field is called **Number of runs per batch**.
+
+You can enter any whole number from 1 to 200. The default is 200, and Clay never sends more than 200 records per Salesforce call.
+
+**How the Salesforce batch size affects API calls.** Clay sends all the fields you map for a row in the same request, so the number of Salesforce API calls depends on how many rows you send, not how many fields you map. With batching on, each batch is one API call, so a large batch size means fewer calls. The table below shows the minimum number of Salesforce API calls needed to write 650,000 rows at each setting:
+
+| Setting | Minimum Salesforce API calls for 650,000 rows |
+| --- | --- |
+| Run in batches on, 200 rows per batch | 3,250 |
+| Run in batches on, 100 rows per batch | 6,500 |
+| Run in batches off | 650,000 |
+
+The actual number can be higher if some batches go out with fewer rows than the batch size (see the next section).
+
+**How the Salesforce batch size affects triggers and flows.** Each batch reaches Salesforce as one multi-record write. That means Apex triggers and record-triggered flows in your Salesforce org process up to the full batch (for example, 200 records) at once, not one record at a time. To pick a batch size for a large write-back:
+
+1.  Start with 200 rows per batch and test on a small set of rows (for example, 1,000) before running the full table.
+2.  Check the results for Salesforce errors such as Apex CPU time limit errors or `UNABLE_TO_LOCK_ROW` row-lock timeouts.
+3.  If you see those errors, lower the batch size to 100 or 50 and test again.
+
+**Credit cost of Salesforce batching.** The batch size doesn't change what you pay. Salesforce Create record, Update record, and Create or update record cost 1 Action per row whether **Run in batches** is on or off, and whatever batch size you choose.
+
 ### Why do some Salesforce batches contain fewer than 200 records?
 
 The 200-record batch size is a maximum, not a fixed size. Clay doesn't wait for 200 rows to be ready before sending a batch. Each time it's ready to make a call, Clay takes up to 200 of the rows queued at that moment. Depending on how quickly rows become ready, you may see batches smaller than 200 and more Salesforce API calls than your row count divided by 200.
