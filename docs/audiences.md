@@ -1160,6 +1160,27 @@ The **Last import sync** column shows when the live search last ran.
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
 
+### How do I create a lookalike audience from a segment I've synced to ad platforms?
+
+Clay's ad sync sends the records in your Audiences segment to the ad platform. It does not create a lookalike audience inside the ad platform. To build a lookalike audience on the ad platform itself, use that platform's own lookalike tools, with your synced Clay audience as the source.
+
+To find lookalike companies in Clay first, run a **Find companies** search **By similarity** from your Companies audience. You can then sync the results to your ad platforms like any other segment.
+
+**To find companies similar to a segment, table, or list of companies in Audiences:**
+
+1.  In Audiences, open **All Companies** and select the **Sources** tab.
+2.  Click **Add source**. In the **Browse sources** panel, select **Find companies**.
+3.  Switch the search from **By criteria** to **By similarity**. In some workspaces, the Find companies search instead shows a mode dropdown in the filter panel header. If you see that dropdown, choose **Find lookalikes**.
+4.  Under **Starting companies**, choose the companies you want lookalikes for:
+    -   **Table**: a Clay table of companies (up to 15,000 companies)
+    -   **Segment**: a Companies Audiences segment, such as the one you synced to your ad platform (up to 15,000 companies)
+    -   **List of URLs**: enter up to 10 company domains or company profile URLs in **Company URLs**
+5.  Set how many lookalike companies to return, from 50 to 1,000.
+6.  Save the results to your Companies audience. See [Importing from people and companies search](#importing-from-people-and-companies-search).
+7.  Create a segment from the lookalike companies. Then click **Send** → **Sync to ad platforms** to sync it. See [Syncing audiences to ad platforms](#syncing-audiences-to-ad-platforms).
+
+**Similarity search in Audiences works for companies only.** The Audiences **Find people** search doesn't offer **By similarity**. To reach people at your lookalike companies, open the lookalike companies segment and use **Find people from this list**. See [Finding people from a Companies Audience](#finding-people-from-a-companies-audience). To find people similar to a list of seed people, use the **Find People Lookalikes** source in a workbook. See [Clay Lookalikes](clay-lookalikes.md), which also covers credit costs for lookalike searches.
+
 ### How do I send audience records to another tool?
 
 Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and add an action for your destination. Map the Audience fields and enrichment outputs to that action's inputs, test the workflow on a small set of records, and check the destination before running the whole segment.
