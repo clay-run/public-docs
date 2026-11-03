@@ -755,7 +755,7 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 Export sync behavior:
 
 -   **Export frequency:** Once every 24 hours. Clay automatically assigns each Salesforce export (for example, your Contacts export and your Accounts export) its own stable daily export time, so exports for different objects can run at different times of day. The schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. Until then, the export's **Status** in the **Exports** tab shows **On** and **Last run at** shows **—**. See [How do I check whether my Salesforce export is running?](#how-do-i-check-whether-my-salesforce-export-is-running) in the FAQs below.
 -   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -1215,6 +1215,31 @@ To allow Clay to overwrite existing Salesforce values for a field:
 The updated value will be pushed to Salesforce on the next export cycle (within 24 hours).
 
 **"Bi-directional" doesn't mean every field is exported.** On your Salesforce source settings page, the **Overview** card shows **Sync direction: Bi-directional** when both **Import status** and **Export status** are **Sync on**. Even with a Bi-directional sync, the Audiences export only sends fields that are mapped to a Salesforce field and set to **Always write** or **Write if empty**. Audience fields that aren't mapped to a Salesforce field — for example, fields a workflow fills in on your Audience records — stay in Clay. To send one of those fields to Salesforce, create a matching field on the Salesforce object, map it in your Salesforce source settings, and set its write rule to **Always write** or **Write if empty**.
+
+### How do I check whether my Salesforce export is running?
+
+After you turn on Export sync for Salesforce in Audiences, you can follow each Salesforce export's progress in the **Exports** tab. Salesforce exports appear in the Exports tab only for workspaces that have the native Salesforce export enabled.
+
+To check a Salesforce export's status:
+
+1.  In Audiences, open **All Companies** (for an Accounts export) or **All People** (for a Contacts export).
+2.  Click the **Exports** tab.
+3.  Find your Salesforce export and check its **Status** and **Last run at** columns.
+
+**Last run at** shows the date and time the most recent export started, or **—** if no export has run yet.
+
+The following table lists each Salesforce export status in the Exports tab and what it means:
+
+| Status | Meaning |
+|--------|---------|
+| **Off** | The Export sync toggle is off. No data is sent to Salesforce. |
+| **Setup incomplete** | The Salesforce export isn't fully configured yet. |
+| **On** | Export sync is on and no export is running right now — either no export has run yet, or the last export succeeded. |
+| **Queued** | An export has been queued and is waiting to start (tooltip: "Waiting on Clay"). |
+| **Exporting** | A Salesforce export is running now. |
+| **Error** | The last Salesforce export failed. Hover over the badge to see the error message. |
+
+**When will my first Salesforce export run?** Each Salesforce export runs once every 24 hours at its own fixed daily time, which Clay assigns automatically. The Exports tab doesn't show the next scheduled export time. Until the first export runs — which may be up to 24 hours after you turn on Export sync — the export shows **On** with **—** under **Last run at**. This means the export is set up and waiting for its scheduled time, so you don't need to change anything. When the export starts, its status changes to **Queued** or **Exporting**, and it returns to **On** once the export succeeds.
 
 ### Will a blank Audience field overwrite my Salesforce value with NULL when the write rule is "Always write"?
 
