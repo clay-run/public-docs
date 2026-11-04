@@ -505,7 +505,7 @@ To push a function's results into a Clay workflow — for example, a workflow th
 1.  From your Clay homepage, click **Functions**, open the function, and click **Edit function**.
 2.  Click **Add column**, search for **Run workflow**, and select it.
 3.  In the **Workflow** field, select the workflow you want the function to run (for example, your Salesforce record-creation workflow).
-4.  Map each of the workflow's inputs to a column in the function — for example, the enriched person's name, title, company, email, phone, and LinkedIn URL.
+4.  Map each of the workflow's inputs to a column in the function — for example, the enriched person's name, title, company, email, phone, and social profile URL.
 5.  (Optional) Under **Run settings**, add a [run condition](conditional-runs.md) so the workflow only runs for complete contacts — for example, only when a work email was found.
 6.  Click **Review Changes**, then **Publish Changes**.
 
