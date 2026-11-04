@@ -196,14 +196,14 @@ Yes — you can add a new destination to an active sync using **Pause to edit**.
 
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
-### **Can I change a one-time Ad Sync to recurring?**
+### **Can I change a one-time Ad Sync to always-on?**
 
-No. You choose an Ad Sync's schedule (**One-time** or **Recurring**) in the **Schedule** section when you set up the sync. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (recurring syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
+No. You choose an Ad Sync's schedule (**Always-on** or **One-time**) in the **Schedule** section when you set up the sync. An always-on Ad Sync re-syncs your segment on a regular interval; the Ads page lists it as **Always-on** in the **Schedule** column. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (always-on syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
 
-To keep an audience updating on a schedule, create a new Ad Sync with **Recurring** selected and include every destination you want — including any destination the exported one-time sync already sent to, such as Meta. Because each audience segment supports only one Ad Sync, use one of these options:
+To keep an audience updating on a schedule, create a new Ad Sync with **Always-on** selected and include every destination you want — including any destination the exported one-time sync already sent to, such as Meta. Because each audience segment supports only one Ad Sync, use one of these options:
 
 1.  **Delete and recreate:** Delete the exported Ad Sync, then create a new Ad Sync from the same segment. Deletion is permanent, but it does not affect your segment or its contacts. If you used Enhanced Match, contacts that were already enriched are not enriched again — see [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync).
-2.  **Duplicate the segment:** Keep the exported Ad Sync, select **Duplicate** from the segment's menu, then create the new recurring Ad Sync from the duplicated segment.
+2.  **Duplicate the segment:** Keep the exported Ad Sync, select **Duplicate** from the segment's menu, then create the new always-on Ad Sync from the duplicated segment.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
@@ -257,7 +257,7 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
 
-For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
+For always-on Ad Syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
 
 ### **Can I see which contacts matched?**
 
