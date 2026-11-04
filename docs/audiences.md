@@ -1087,6 +1087,52 @@ The 15-minute (or daily) cadence applies to the **import direction only** — it
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
+### What updates automatically in an Audience: new records, segment membership, or record data?
+
+When people say an Audience "updates constantly," they can mean three different things. Audiences handles each one differently:
+
+-   **Segment membership — automatic for every source.** Audience segments are filter-based. Each segment recalculates its membership from every record's current data, so a record joins the segment when it starts matching the filters and leaves when it stops matching. This applies no matter how the record got into Audiences — Clay search, Clay table, CSV, CRM, or data warehouse. See [Does Audiences update automatically?](#does-audiences-update-automatically) for how often segments refresh.
+-   **New records — depends on the source.** Only sources that re-run or sync bring in new records on their own. A Find People or Find Companies search saved to Audiences has live search turned on by default and re-runs once a day, adding records that newly match the search filters.
+-   **Field data on existing records — never automatic.** Audiences doesn't re-enrich records in the background. A record's fields change only when something writes to them: a CRM or data warehouse sync, a CSV re-import, re-running a Clay table send or `Upsert Audiences Record` column, or an enrichment workflow that writes back to the record.
+
+The following table shows how each Audiences source keeps records up to date:
+
+| Source | New records added automatically | Field data on existing records refreshes automatically | Segment membership updates |
+|---|---|---|---|
+| Find People or Find Companies search | Yes — live search re-runs once a day | No | Yes |
+| Salesforce or HubSpot | Only with **Import sync** turned on | Only with **Import sync** turned on | Yes |
+| Data warehouse (Snowflake, BigQuery, Databricks, Redshift) | Yes — on each sync | Yes — on each sync | Yes |
+| Clay table | No — records are written each time you send the table or the column runs | No — re-run the send to update | Yes |
+| CSV upload | No — one-time import | No — re-import an updated file | Yes |
+
+### How do I keep my own TAM up to date in Audiences?
+
+If you brought your own total addressable market (TAM) list into Audiences instead of building it from a Clay search, how it stays current depends on where the list comes from:
+
+-   **Salesforce or HubSpot:** Turn on **Import sync** for the source (click **⋮** next to the source → **Settings** → **Import sync**). New and changed CRM records then flow into Audiences every 15 minutes on Enterprise plans, or once daily on Growth plans.
+-   **Data warehouse:** Incremental sync brings in new and changed rows on each sync. See [Importing from Snowflake](#importing-from-snowflake) and [Importing from Google BigQuery](#importing-from-google-bigquery) for sync timing.
+-   **Clay table:** A table send is a snapshot of the table at the time it runs. To keep it current, re-run the push — for example, schedule the table and use an `Upsert Audiences Record` column. `Upsert Audiences Record` matches existing records on identifiers such as email, professional network URL, or phone for people, and domain or professional network URL for companies, so re-running it updates changed fields instead of creating duplicates.
+-   **CSV:** CSV imports don't sync. Re-import an updated file using the same **Unique identifier** column to update existing records.
+
+For any source, two practices keep a TAM Audience accurate:
+
+-   **Use filter-based criteria for segments** (for example, industry, employee count, and country), so segment membership corrects itself whenever record data changes.
+-   **Fill missing or stale fields with an enrichment workflow.** Create a segment of records where a field is empty, connect an enrichment workflow to it, and write the results back to the records. Records drop out of that segment as their fields get filled in.
+
+To also catch companies that are new to your market, add a Find Companies search with the same criteria as your TAM. Its live search adds newly matching companies once a day.
+
+### Do people in my Audience update automatically when they change jobs?
+
+No. People records in Audiences don't update their title or company on their own. The **Job Change** signal doesn't rewrite them either — it records a signal event on the record and surfaces the company in the **Companies of job changers** segment, but it doesn't change the person's title or company fields.
+
+A person record in Audiences changes only when:
+
+-   a CRM or data warehouse sync brings in updated data — which only reflects a job change if your CRM or warehouse already has it,
+-   you re-run a Clay table send or `Upsert Audiences Record` column with new data, or
+-   an enrichment workflow writes new data back to the record.
+
+To catch job changes proactively, connect a workflow to your People segment that periodically re-enriches people (or reacts to the Job Change signal) and writes the updated company and title back to the record. Once the new data is written, filter-based segments such as "people at target accounts" adjust automatically.
+
 ### Why is a table connected to my audience segment updating Salesforce on its own?
 
 Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time.
