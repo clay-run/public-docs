@@ -1,6 +1,6 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors such as per-source and monthly search result limits.
+description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
 
