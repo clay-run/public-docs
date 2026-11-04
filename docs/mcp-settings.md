@@ -44,9 +44,11 @@ One prompt can turn into more than one charged operation, though. The AI tool de
 
 Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend automatically resets on the 1st of each month at midnight UTC.
 
+The same per-user MCP credit limit also applies to credits spent through the Clay CLI when you're signed in with `clay login` — for example, running a Function such as Enrich Person or running `clay workflows actions test`. The Clay CLI appears as a connected platform for that user in the `MCP users` table, and CLI spend counts toward the same `Credits used` total as their ChatGPT or Claude usage.
+
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit. Clay has no built-in default credit limit — until an admin sets one, new MCP users show `No limit`.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
@@ -54,7 +56,7 @@ There are two levels of control:
 The `MCP users` table lists all workspace members, including those who haven't yet connected Clay to an external platform. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
 
 -   **Name** — rep's name and email address
--   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
+-   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, the Clay CLI, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
@@ -185,7 +187,19 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 2.  In the `MCP users` table, find the user (search by name or email — admins can find themselves here too).
 3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
 
-The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+The **Default credit limit** card at the top of the `MCP` page (empty, with a `Set default limit` button, until an admin sets one) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+
+### Why do Clay CLI runs fail with `Monthly user credit limit reached` or `quota_exceeded`?
+
+If paid actions you start from the Clay CLI stop partway through — a Function run such as Enrich Person returns `Monthly user credit limit reached` on the remaining rows, or a command like `clay workflows actions test` returns the error code `quota_exceeded` — you've most likely reached your monthly MCP credit limit. (`quota_exceeded` is the Clay CLI's error code for any out-of-credits response, so the `Monthly user credit limit reached` message is what confirms the MCP credit limit is the cause.) This happens even when your workspace still has plenty of credits and no workspace spend limit, because the MCP credit limit is a per-user cap that covers credits spent through the Clay CLI (signed in with `clay login`) as well as through AI tools like ChatGPT and Claude.
+
+To raise the limit, a workspace admin edits the user's MCP credit limit:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  Scroll down to the `MCP users` table and find the user (search by name or email — admins can find themselves here too).
+3.  Click the pencil icon (`Edit credit limit`) next to their `Credit limit`, enter a higher amount, and save.
+
+Once saved, the user's next CLI run can spend credits up to the new limit. Only workspace admins can see the `MCP` page and edit credit limits — if you aren't an admin, ask your workspace admin. The `MCP` page is currently in beta; if you're an admin and don't see `MCP` in your sidebar, contact Clay support.
 
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
