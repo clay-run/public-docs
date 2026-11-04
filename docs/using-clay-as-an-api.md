@@ -59,6 +59,37 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
+**Public HTTP API — Advanced search with a query (query mode)**
+
+Query mode lets you search Clay's People and Company data with a written query, such as `select from people where ...`, instead of a set of filters. Use query mode when you need to combine criteria with `or` across different criteria types. For example, you can match people whose job title is similar to a list of titles **or** whose seniority is in a list of levels. Filters mode (`/search/filters-mode`) always combines different filter types with AND. Filters mode is deprecated in favor of query mode, and some workspaces can no longer create new filters-mode searches.
+
+To run a query-mode search with your workspace-scoped API key in the `clay-api-key` header:
+
+1.  `POST /search/query-mode` with the body `{"query": "select from people where ..."}`. The response returns a `search_id` and a `source_type` (`people` or `companies`).
+2.  `POST /search/query-mode/{search_id}/run` with the body `{"limit": 100}`. `limit` accepts 1 to 500 and defaults to 20. The response includes `data` (the results) and `has_more`.
+3.  Keep calling `run` with the same `search_id` while `has_more` is `true`.
+
+**Where to find the list of queryable fields and query syntax:** call `GET /search/query-mode/reference` with your `clay-api-key` header. This endpoint returns `{"reference": "<markdown>"}`. The markdown string is the full query-mode reference: every queryable field for people and companies, the allowed values for fields like seniority, and the complete query grammar. Read the reference before you build a query, or point your integration at it.
+
+**Job title and seniority are experience fields, not person fields.** In a query-mode people search, `job_title` and `seniority` belong to a person's work experiences. Put them inside `experiences.any(...)`, usually with `is_current = true` to match the current role. If you put `job_title` or `seniority` directly after `select from people where`, the query fails with an error like `Unknown field 'seniority' for entity 'people'`.
+
+Query mode supports these comparison operators: `=`, `!=`, `<`, `<=`, `>`, `>=`, `contains`, `starts_with`, `ends_with`, `in`, `not_in`, and `is_similar_to`. Group conditions with `and`, `or`, and parentheses. `is_similar_to` does fuzzy job-title matching and accepts several values at once, such as `job_title is_similar_to ("CTO", "VP Engineering")`, which matches either title. `seniority` accepts `=`, `!=`, `in`, `not_in`, `is_null`, and `is_not_null`, with these values: `Founder`, `Owner`, `Board Member`, `Partner`, `C-suite`, `VP`, `Director`, `Head`, `Manager`, `Senior`, `Mid-level`, `Entry`, `Intern / In Training`, and `Unknown`.
+
+Example — people whose current job title is similar to RevOps titles **or** whose current seniority is VP or Director:
+
+```
+select from people
+where experiences.any(
+  is_current = true
+  and (
+    job_title is_similar_to ("Revenue Operations", "Sales Operations")
+    or seniority in ("VP", "Director")
+  )
+)
+```
+
+To limit the results to people at particular companies, add the company criteria the reference describes. Put company criteria inside the same `experiences.any(...)` when they must apply to the same current role.
+
 **Public HTTP API — Routines (same beta access)**
 
 The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
