@@ -59,7 +59,7 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 
 1.  In the workbook, go to workbook settings on the right side.
 2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
-3.  Click `+ Add collaborator` and select the Viewer.
+3.  Click `Add collaborators`, select the Viewer (you can select several workspace members at once), then click `Add collaborators` in the dialog.
 
 ### Do Viewers use credits?
 
@@ -155,7 +155,7 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
 2.  Under `Edit access`, select one of the following access levels:
     -   **Admins and editors in this workspace** — all admins and editors in the workspace can access the workbook.
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
-3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
+3.  If `Admins and invited collaborators only` is selected, an `Add collaborators` button appears. Click it to open the `Add collaborators` dialog, select one or more workspace members — and user groups, if your workspace has user groups enabled — then click `Add collaborators` to add everyone you selected in one step. Members and groups who already have access to the workbook aren't listed in the dialog.
 
 **These settings control edit access only, not visibility.** All workspace members can see every workbook once they are invited to the workspace — there is no way to hide specific workbooks from specific users. If your goal is to prevent certain users from seeing a workbook entirely, that is not currently supported in Clay.
 
