@@ -251,7 +251,12 @@ To check or change "Keep existing results": click the table name → **Edit tabl
 
 **For Salesforce, HubSpot, Snowflake, Google Sheets, Google Maps searches, Find People, and other CRM or database sources, re-running the same source after deleting rows will not restore those records.** Clay's import source tracks every record it has ever introduced to the table — including rows you've since deleted. When the source runs again, it recognizes and skips any record it has already seen, preventing both duplicate imports and unintentional revival of deleted rows.
 
-When dedup blocks all records on a re-run, that run's **Rows Added** count in Source history shows **0** — not the number of records in your upstream source. The higher counts visible elsewhere in Source history are from earlier runs when those records were first imported. Your table can appear empty while Source history shows non-zero counts from past imports: the records were added in an earlier run and then deleted from the table, but the source still has them logged.
+**The import can report success even though few or no rows appear in your table.** For example, you delete every contact from a HubSpot import table and click **Run now** again. The source panel can then show *"89 rows were imported"* and *"Found 89 objects. The number of results added may be less than requested, as a result of deduping."*, but the table stays empty or gains only a few rows. Those few rows are records that are new to the source since its earlier runs. The "Found N objects" number counts every record the source found in the connected app (HubSpot or another app), including records it skipped because it had already imported them. The rows in your table are the accurate result of the run.
+
+To see what a run actually did, click the source column title and select **View Run History**. Source history has two counts:
+
+-   **Rows imported:** "The total number of rows imported by this source run, including rows that matched existing rows in your table."
+-   **Rows added:** "The number of imported rows that created new rows in your table. Deleted rows are not added again automatically. Delete and set up the source again to import them."
 
 **To restore deleted records or get a fresh import:**
 
@@ -322,7 +327,7 @@ For a full explanation of how auto-dedupe works — including column type requir
 
 A second common cause of fewer-than-expected rows is hitting the 50,000-row source limit — see [What are the row limits for Clay tables and sources?](#what-are-the-row-limits-for-clay-tables-and-sources) below.
 
-A third cause — specific to **CRM, database, and Google Sheets sources** (Salesforce, HubSpot, Snowflake, Google Sheets) that have been run at least once before — is **source record tracking**. Each CRM source definition remembers every record it has ever imported, including rows you've since deleted from the table. On subsequent runs, the source skips previously-seen records and only adds genuinely new ones. When all incoming records were previously imported by the same source definition, the run reports 0 rows added even though the source found records upstream. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for the fix.
+A third cause — specific to **CRM, database, and Google Sheets sources** (Salesforce, HubSpot, Snowflake, Google Sheets) that have been run at least once before — is **source record tracking**. Each CRM source definition remembers every record it has ever imported, including rows you've since deleted from the table. On subsequent runs, the source skips previously-seen records and only adds genuinely new ones. When all incoming records were previously imported by the same source definition, no new rows are added to your table, even though the run reports that it found records upstream. See [I deleted rows from my table and re-ran the source, but they didn't reappear](#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear) for the fix.
 
 ### **What are the row limits for Clay tables and sources?**
 
