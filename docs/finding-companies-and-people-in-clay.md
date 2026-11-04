@@ -1,6 +1,6 @@
 ---
 title: "Guide: Finding companies and people in Clay"
-description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors.
+description: Best practices to Clay's company and people search features, including valid LinkedIn URL formats for the company identifier and troubleshooting common errors such as per-source and monthly search result limits.
 last_synced: 2026-04-26T01:39:59.452Z
 ---
 
@@ -653,6 +653,18 @@ The per-source limit for Find People and Find Companies sources varies by plan a
 -   **Upgrade your plan** to access a higher per-source limit.
 
 **Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
+
+### "Your workspace has reached its monthly limit for search results" error in Find People or Find Companies
+
+If a Find People or Find Companies search shows **Enter a valid query** with the message **"Your workspace has reached its monthly limit for search results."**, your workspace has used its monthly allowance of search results. Some workspaces have a monthly cap on how many people and company results Clay searches can return. Workspaces without a cap never see this error.
+
+-   **What counts toward the monthly search results limit:** people and company results returned to you, including search previews, results added to tables, and exports. Checking how many records match your filters doesn't count.
+-   **When the monthly search results limit resets:** on the 1st of each calendar month at 00:00 UTC. This is a calendar-month reset, not a rolling 30-day window. For example, results returned on October 20 stop counting on November 1.
+-   **Your filters aren't the problem:** "Enter a valid query" is the header Clay shows above every search error. The message under it is the actual cause, and the same search works again once the monthly limit resets.
+-   **The monthly search results limit is separate from the Search API quota:** the **Search usage** section on the **API and CLI** page tracks only results returned through Clay's Public API and CLI. It doesn't include Find People or Find Companies searches in the app, so it can show low usage while this error appears.
+-   **The monthly search results limit is separate from the per-source limit** described in the section above.
+
+To review your workspace's monthly search results limit, or to ask about more results before it resets, [contact Clay support](https://www.clay.com/contact-form).
 
 ## FAQs
 
