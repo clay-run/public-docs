@@ -674,6 +674,13 @@ Each row then fills in only the Salesforce fields that are empty and leaves popu
 
 **Tip:** Columns from a Salesforce import source hold the values from when the records were imported. If the records may have changed in Salesforce since then, run the **Lookup record** column just before the **Update record** column so your formula checks the current Salesforce values.
 
+**Should I use one Update record column per field instead of the formula setup?** Both setups fill in only the blank Salesforce fields, and both evaluate each field independently. They take a similar number of columns to build when you write one formula per field. The difference is how many writes Clay sends to Salesforce:
+
+-   **One Update record column per field (simplest for a handful of fields):** Add a separate **Update record** column for each field, map only that field, and give each column its own **Only run if** condition that checks both values — for example, `/Salesforce Website is empty AND /Enriched Website is not empty`. Each **Update record** column sends its own updates to Salesforce, so 10 per-field columns send up to 10 separate updates for each row.
+-   **One Update record column for all fields (better for many fields or large tables):** Use the formula and **Ignore blank values** setup above, with no run condition on the **Update record** column. Clay sends all the fields mapped in one **Update record** column in the same request, so each row is written to Salesforce once, no matter how many fields you map.
+
+The same difference applies when **Run in batches** is on, because each **Update record** column sends its own batches. For example, writing 1,000 rows in batches of 200 takes 5 Salesforce API calls with one **Update record** column, and 50 Salesforce API calls with 10 per-field **Update record** columns. For a few "fill if blank" fields, per-field columns are fine. For 10 fields on a large table, use a single **Update record** column. See [Batch processing](salesforce-integration-overview.md#batch-processing) for how batching works.
+
 For more on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
