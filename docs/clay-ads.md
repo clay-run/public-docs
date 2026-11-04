@@ -375,3 +375,11 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 ### **How much does it cost to sync audiences?**
 
 Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+
+### **How do I see how many credits an Ad Sync will use or has used?**
+
+Clay Ads shows an estimate of an Ad Sync's Data Credit cost before you confirm the sync, and the actual Data Credits each Ad Sync has used on the **Ads** page.
+
+**Before you confirm the sync:** When you set up an Ad Sync with Enhanced Matching, clicking **Continue** on the matching step opens the **Enrich and sync** confirmation, which shows **Estimated credits**: the Data Credits Clay expects to spend enriching contacts that aren't already enriched. Contacts that are already enriched are left out of the estimate. If some of your contacts are already enriched, a badge next to the **Enrich and sync** button shows the original estimate crossed out beside the reduced estimate, and hovering over it shows how many credits Audiences saved you. Click **Enrich and sync** to confirm. If Enhanced Matching isn't set up, the button on the matching step reads **Sync** and no estimate appears.
+
+**After the sync runs:** The **Credit spend** column on the **Ads** page shows the Data Credits each Ad Sync has used during your current billing period. This figure may be delayed, and an Ad Sync that hasn't spent any credits shows 0.
