@@ -384,9 +384,21 @@ To remove homepage visits from your results without changing your tracking setti
 
 ### What cookies and local storage items does the tracking script use?
 
-All storage keys are prefixed with `claydar_`. The script uses `localStorage` by default and falls back to cookies if `localStorage` is unavailable.
+The tracking script's session and device storage keys are prefixed with `claydar_` (the separate `__sn_tld_probe` test cookie is covered in the next section). The script uses `localStorage` by default and falls back to cookies if `localStorage` is unavailable.
 
 | Key | Storage | Expires | Purpose |
 |-----|---------|---------|---------| 
 | `claydar_device_id` | localStorage / Cookie | 365 days | Unique device identifier across sessions |
 | `claydar_session` | localStorage | 60 min of inactivity | Current session data (id, start time, engagement) |
+
+### What is the `__sn_tld_probe` cookie on my website?
+
+`__sn_tld_probe` is a temporary test cookie set by Clay's Web intent tracking script — the script loaded by the Clay tracking snippet from `static.claydar.com` and `cdn.claydar.com`. If your web team finds `__sn_tld_probe` during a cookie audit on a site where the Clay tracking snippet is installed (directly or through a tag manager), it comes from Clay's Web intent tracking.
+
+The Web intent tracking script uses the `__sn_tld_probe` cookie to work out which top-level domain (for example, `.yourcompany.com`) it can store first-party cookies on:
+
+1.  The script writes `__sn_tld_probe` with a value of `1` on each parent domain in turn.
+2.  It reads the cookie back to check whether the write succeeded.
+3.  It deletes the `__sn_tld_probe` cookie immediately.
+
+The `__sn_tld_probe` cookie doesn't store any visitor or personal data — its only value is `1`. Visitor and session data is tracked separately, using the storage keys listed in the table above. If your team maintains a list of approved cookies, add `__sn_tld_probe` alongside the Web intent storage keys. For questions about consent and privacy for the Clay tracking script, see [What do I need to know about GDPR and cookie consent for web intent?](#what-do-i-need-to-know-about-gdpr-and-cookie-consent-for-web-intent).
