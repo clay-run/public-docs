@@ -109,6 +109,18 @@ redirect_uris.0: redirect_uri must be from an allowed domain
 
 There is no self-service way to add a custom redirect URI to Clay's OAuth allowlist. If your organization needs to connect Clay through a specific third-party MCP client or gateway, reach out to Clay support with the redirect URI(s) you require. Adding a new platform requires a code change on Clay's side.
 
+### Why doesn't Clay show up in ChatGPT Agent Builder?
+
+Clay connects to ChatGPT as a ChatGPT app, not as a node in ChatGPT's Agent Builder. That's why there's no Clay node or block to add in Agent Builder, even when your Clay MCP connection to ChatGPT is active. An active connection shows as a ChatGPT icon in the **Platforms** column of the `MCP users` table on the `MCP` page.
+
+To use the Clay ChatGPT app, type `@Clay` (browser) or `/Clay` (desktop) in a regular ChatGPT conversation. During authorization, sign in with the Clay account that belongs to your team workspace and select that workspace.
+
+If you want an automated agent, such as an agent you build in ChatGPT Agent Builder, to use Clay, the agent has to call Clay directly. You have these options:
+
+-   **Call Clay's Public API with a workspace API key.** Open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**. Workspace members with the Admin, Member, or Viewer role can create a key. Users with the Sales Rep role can't. Configure your agent to send the key in the `clay-api-key` request header. Public API access is enabled per workspace and isn't included with every plan, so having an API key doesn't mean your workspace can call the Public API. See [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) for the available endpoints, and contact Clay support if your workspace doesn't have access.
+-   **Send records to a Clay table's webhook.** Every Clay table has a unique webhook URL. Your agent can send records to that URL, and the table's enrichment columns process them in Clay. See the Webhooks section of [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) for setup.
+-   **Use the Clay agent plugin from a coding agent.** If you work in Codex, Claude Code, or Cursor, the **API and CLI** page includes a **Set up the Clay agent plugin** card. Copy the prompt (`Set up the Clay plugin by following the steps in https://github.com/clay-run/agent-plugins`) and paste it into your coding agent to connect it to the Clay CLI and Public API.
+
 ### What role should I assign to team members who will only use Clay through MCP?
 
 Any workspace role — Admin, Member, Viewer, or Sales Rep — can authorize Clay in AI tools like Claude, ChatGPT, or Glean. Team members must first be added to your workspace before connecting.
