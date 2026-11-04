@@ -140,6 +140,19 @@ Running an individual sub-column triggers only that provider. Other providers an
 
 **Note:** Editing the waterfall configuration — such as adding a new provider or changing provider toggles — can mark existing rows as out-of-date. Running the collapsed output on out-of-date rows re-runs all currently enabled providers for those rows, which may produce different results if your provider selection has changed since the last run.
 
+## Why does my Work Email or Mobile Phone waterfall column show as out of date right after it found a result?
+
+On a table with auto-run turned off (the top navigation bar shows **Manual** instead of **Auto-run**), a waterfall's merged output column, such as **Work Email** or **Mobile Phone**, can show the out-of-date clock icon (tooltip: "This cell is out of date.") right after a provider returns a valid email or phone number. The out-of-date flag on the waterfall column doesn't mean the email or phone number is wrong or stale.
+
+A waterfall's merged output column depends on every step in the waterfall, including the later providers and the validation steps. If only some of those steps have run on a row, Clay marks the merged waterfall column as out of date. For example, if only the first provider in the Work Email waterfall has run and the validation step after it hasn't, the **Work Email** column shows as out of date. Clay keeps the flag until the remaining steps run. With auto-run off, those remaining steps don't run on their own, so the out-of-date flag on the waterfall column stays.
+
+To clear the out-of-date flag on a Work Email or Mobile Phone waterfall column, and to keep it from coming back on new rows:
+
+-   **Run the full waterfall on those rows.** With the waterfall collapsed, click the run ▶ button in the merged waterfall column header (tooltip: "Run column"), then choose **Run [N] empty or out-of-date rows**. This runs every enabled step in the waterfall for rows that are empty, errored, or out of date. See [Running a specific provider vs. re-running the full waterfall](#running-a-specific-provider-vs-re-running-the-full-waterfall).
+-   **Turn on Auto-run for the table (optional).** With table-level **Auto-run** on, Clay automatically runs cells when their dependencies change or new rows are added, so the remaining waterfall steps run without manual triggering. Rows that are already flagged still need the full waterfall run described above. Waterfall steps use credits when they run. See [Auto-run](auto-run.md).
+
+For more on what the out-of-date indicator means across all column types, see the **Understanding the out-of-date indicator** section in [Auto-run](auto-run.md).
+
 ## Avoiding unintended credit usage
 
 By default, auto-run is **on** for every table — waterfall columns (such as a work email waterfall) fire automatically on every new row as it arrives. If rows are added to your table before your waterfall setup is finalized, all steps in the waterfall trigger immediately and consume credits.
@@ -348,6 +361,6 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 
 **Sumble** is available as a standalone enrichment action (not part of a pre-built waterfall). It validates whether a company uses specific technologies you select, charging 6 credits per technology found. Use it when you need targeted confirmation of named tools rather than a broad technology scan. See [Sumble integration](sumble-integration.md).
 
-**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
+**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found.*" See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
