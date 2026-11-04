@@ -720,10 +720,45 @@ Two main causes:
 
 The answer depends on which feature you're using:
 
--   **Enrich Person / Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Person** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Company** — Enrich Company looks up the company in Clay's own company dataset. If the company's record is missing or hasn't been updated in more than 180 days, Enrich Company can fetch fresher data at the moment of the run.
 -   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
 
-Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+Across all three, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+
+### Where does the total funding data in Enrich Company come from?
+
+The **Total Funding Amount Range Usd** field in **Enrich Company** comes from Clay's own company dataset — the same company data that powers Enrich Company's other fields, such as employee count, industry, and annual revenue. Enrich Company doesn't call a separate funding data vendor when it fills this field.
+
+The Total Funding Amount Range Usd field shows a company's total funding as a range, not an exact dollar amount. The possible values are:
+
+-   `Under $1M`
+-   `$1M - $5M`
+-   `$5M - $10M`
+-   `$10M - $25M`
+-   `$25M - $50M`
+-   `$50M - $100M`
+-   `$100M - $250M`
+-   `$250M+`
+-   `Funding unknown` — Clay's company dataset has no funding amount on record for the company
+
+### Can other data providers enrich total funding instead of Enrich Company?
+
+Yes. If you need an exact funding amount, funding round details, or a second source for companies where Enrich Company shows `Funding unknown`, you can add a funding enrichment from another data provider. To find funding enrichments:
+
+1.  In your table, click **Tools** in the top right corner and select the **Enrich** tab.
+2.  Search for `funding`.
+3.  Pick a provider's funding enrichment, map your company input (for example, the company domain), and run it.
+
+Funding enrichments available in Clay include:
+
+-   **CB Insights** — **Get company total funding**
+-   **Crunchbase** — **Enrich company's financials** and **Enrich company's latest funding round**
+-   **Harmonic** — **Get fundraising data for company**
+-   **Dealroom** — **Get fundraising data for company**
+-   **PitchBook** — **Enrich company with PitchBook**
+
+To use more than one funding provider without paying for duplicate lookups, add them to a [waterfall](building-a-data-waterfall.md) so each next provider only runs when the previous one returns no result.
 
 ### Can I run a people search only on companies that meet certain criteria?
 
