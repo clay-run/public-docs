@@ -1,6 +1,6 @@
 ---
 title: Delete content within your workspace
-description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
+description: Learn how to delete and recover tables, workbooks, rows, and workflows within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
@@ -57,6 +57,23 @@ Once you delete a table or workbook, it will end up in your Trash. You can acces
 When you restore a table, all of your row data and column configurations are fully restored — your data comes back exactly as it was when the table was deleted.
 
 When you restore a workbook, all of its tables are automatically restored as well.
+
+## Delete workflows
+
+You delete Clay Workflows from the **Workflows** tab of your workspace homepage:
+
+-   **One workflow:** click the **⋮** menu on the workflow's row and select **Delete workflow**. The confirmation dialog reads "Are you sure you want to delete [workflow name]? This action cannot be undone."
+-   **Several workflows:** select the workflows' checkboxes, then choose **Delete workflows**. The confirmation dialog reads "This action cannot be undone."
+
+## Recover deleted workflows
+
+Unlike tables and workbooks, deleted workflows do **not** go to Trash, and there is no self-serve way to restore a deleted workflow from the Clay UI.
+
+If you deleted a workflow by mistake, contact Clay support. The support team may be able to recover the deleted workflow, but recovery is **not guaranteed**. To request workflow recovery, share:
+
+-   Your workspace URL
+-   The deleted workflow's name (or its URL, if you have it)
+-   Approximately when the workflow was deleted
 
 ## Recover deleted rows
 
