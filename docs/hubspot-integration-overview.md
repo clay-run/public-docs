@@ -522,7 +522,7 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 
 1. Go to **Settings → Connected accounts**.
 2. Find your HubSpot account and click **Reconnect**.
-3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked**. They're unchecked by default on a new connection, but the reconnect modal keeps the scopes your previous HubSpot connection had, so uncheck them if they're selected.
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
@@ -537,13 +537,15 @@ The scopes in the error message are the ones Clay requested during that connecti
 -   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
 -   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
 
+**If you only need to add contacts to a HubSpot list,** you don't need the sequence scopes. The **Add record to list** action needs `crm.lists.write`, not `automation.sequences.read` or `automation.sequences.enrollments.write`. Clay only requests the optional scopes that are checked under **Optional scopes** in Clay's connection modal, so unchecking both sequence scopes when you reconnect removes them from the request. Your HubSpot super admin then only needs to approve `crm.lists.write` (and any other scopes still listed in the error). You choose which scopes Clay requests in Clay's reconnect modal; your super admin approves them in HubSpot's App Governance settings.
+
 **To fix:**
 
 1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
 2.  Find **Clay** in the list and click **Manage**.
 3.  On the app detail page, expand **App access and permissions**.
 4.  Under **Conditionally required** permissions, enable every scope listed in the error message (for example, `crm.export`, or `automation.sequences.read`, `automation.sequences.enrollments.write`, and `crm.lists.write`).
-5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal — they stay unchecked on reconnect unless you select them.
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal. If you don't use that action, make sure both sequence scopes are unchecked. The reconnect modal keeps the scopes your previous HubSpot connection had, so review the **Optional scopes** checkboxes before you continue.
 
 **Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
