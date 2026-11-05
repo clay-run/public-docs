@@ -578,6 +578,8 @@ If your server or firewall requires incoming requests to originate from a known 
 
 All requests from that column will then originate from Clay's fixed IP addresses. Your account team can provide the current list of IP addresses to add to your allow-list.
 
+**Note:** The **Use static IP** toggle only appears in the column configuration after Clay has activated the feature for your workspace (step 1). If you don't see the toggle, contact your account team or support to request activation.
+
 **Note:** Static IP for HTTP API is per column, not workspace-wide — you control exactly which columns route through fixed IPs.
 
 ### Enabling static IP for HTTP API as source
