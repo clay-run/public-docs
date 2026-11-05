@@ -231,6 +231,16 @@ Identifies records with a date value in the field.
 
 Example: Include records where `Created At is not empty`.
 
+**Date filters accept only fixed dates — no relative date ranges:** All date operators above compare against a specific date value you enter manually. There is no built-in relative or dynamic option such as "this week," "in the last N days," or "current month" — Clay table view filters do not update the comparison date automatically.
+
+**Workaround for dynamic date ranges:** If you need a view to show rows within a rolling time window (for example, only entries created in the current Sun–Sat week), use a formula column as the filter target:
+
+1.  Add an **HTTP API column** pointed at a time API (for example, `https://timeapi.io/api/time/current/zone?timeZone=UTC`) and schedule it to run daily. This column fetches today's date and updates automatically on its schedule.
+2.  Add a **formula column** that evaluates whether each row's date falls within your desired window, referencing the HTTP API column for today's date. Because formula columns re-evaluate automatically whenever a referenced enrichment column changes (with Auto-run on), the formula stays current without any manual steps.
+3.  **Filter your view** on the formula column — for example, where the formula equals `true` — so only matching rows appear.
+
+For example formulas and step-by-step setup, see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula).
+
 ## Best Practices
 
 -   Test edge cases thoroughly, including empty fields and boundary values

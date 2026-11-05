@@ -51,6 +51,53 @@ Use this action to identify a person's manager using their LinkedIn profile or w
     -   LinkedIn URL
     -   Node Type
 
+### `Source` Find company org chart
+
+Use this action to retrieve the full org chart for a company given its domain. The action returns all position nodes in the hierarchy, including names, titles, manager links, work emails, and professional profile URLs. It costs **25 credits per org chart** regardless of how many positions are returned. Clay refunds the credit if no org chart data is found for the domain.
+
+**Input**
+
+-   **Company domain:** The website domain of the company whose org chart you want to find (e.g., `clay.com`).
+
+**Output**
+
+-   **Total positions found:** Number of position nodes returned
+-   **Positions:** Array of position records, each containing:
+    -   **Full Name:** Person's full name
+    -   **Title:** Job title
+    -   **Work Email:** Work email address (if available)
+    -   **Professional profile URL:** Professional network profile URL (if available)
+    -   **Manager ID:** Internal reference ID of the person's manager (string format, e.g. `p-12345`)
+    -   **Id / Position ID:** Internal identifiers for the position node — **Id** is a string (e.g. `p-12345`) used for hierarchy linking; **Position ID** is a separate numeric identifier
+
+#### Enriching a list of companies with org charts
+
+**Find company org chart** is a source-type enrichment — the Company domain field accepts a single fixed value only and cannot be mapped to a column of domains. To pull org charts for multiple companies row-by-row, use The Org's HTTP API directly via Clay's **HTTP API** enrichment column instead:
+
+1.  Obtain your own API key from your The Org account settings.
+2.  In your Clay table, click `Add enrichment` and select **HTTP API**.
+3.  Configure the HTTP API column to call The Org's API endpoint with your API key in the request headers. Save the credentials as an HTTP API (Headers) account to reuse them across tables.
+4.  Map your company domain column as a dynamic input to the URL or request body. Unlike the source-type enrichment, the HTTP API column accepts column references and sends a separate API call for each row.
+5.  Parse the JSON response to extract the org chart fields you need.
+
+For setup details on the HTTP API enrichment column, see [HTTP API](http-api-integration-overview.md).
+
+#### Surfacing the hierarchy and building an org chart
+
+After running **Find company org chart**, the table may initially show only Name, Title, Work Email, and Professional profile URL as columns. Manager ID, Id, and Position ID are returned by the source but need to be added explicitly — click `+` to add a column and select those fields from the source output.
+
+**How the hierarchy is encoded:** Each row represents one position. The **Id** field (a string in the format `p-NNNNN`) is that person's unique node identifier. Manager ID on each row contains the **Id** of their manager — pointing to another row in the same table. The person at the top of the org — typically the CEO — has no Manager ID. Position ID is a separate numeric field and is not used for the hierarchy link.
+
+**Connecting each person to their manager by name:** Add a Lookup column that finds the row whose **Id** matches the current row's Manager ID and returns that row's Full Name. This gives you a readable "reports to" label you can group and filter by.
+
+**Clay has no built-in org chart view.** Tables display as a grid — there is no tree or hierarchical view inside Clay. To visualize the reporting structure, export the table with Full Name, Title, Id, and Manager ID, then use an external tool such as Claude or ChatGPT to generate a visual chart. The Id and Manager ID columns are all a charting tool needs to build the tree; names and titles become the labels.
+
+**Teams and departments are not available from this source.** The Org does not return team or department fields directly. To group people by function:
+-   Add a **Use AI** column that classifies each person's Title into functional labels (for example: Engineering, Sales, Marketing).
+-   Use **ZoomInfo** enrichment to add seniority, departments, and sub-departments as structured fields.
+
+**Coverage:** Manager links are not complete for every person at every company. Some rows will return without a Manager ID even where name and title are present. Coverage varies by company size and how well-indexed the company is in The Org's data.
+
 ### **Run settings**
 
 -   **Auto-update**

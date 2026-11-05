@@ -97,7 +97,7 @@ After testing a connection, Clay saves the result and shows the connected user a
 
 ### IP allowlisting
 
-On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. If your Salesforce org restricts connections by IP address, contact Clay support to request the current IP list, then allowlist them in Salesforce under `Setup` → `Network Access` → `New`.
+On **Enterprise plans**, all Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed. If your Salesforce org restricts connections by IP address, contact [Clay support](https://www.clay.com/support) to request the current IP list, then allowlist them in Salesforce under `Setup` → `Network Access` → `New`.
 
 For full instructions on setting up a restricted Salesforce user with field-level security and IP allowlisting, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
@@ -129,7 +129,7 @@ If you need your Clay list to stay in sync with Salesforce automatically — wit
 
 **Fields not in your Salesforce list view**
 
-Clay imports exactly the fields that are columns in your selected Salesforce list view. Any field not included in that list view will not appear in your Clay table, even if the data exists in Salesforce. Two types of fields commonly go missing this way:
+If your Clay table shows only a small subset of your Salesforce record's fields after a list view import, this is expected behavior. Clay imports exactly the fields that are columns in your selected Salesforce list view — no more. Any field not included as a column in that list view will not appear in your Clay table, even if the data exists on the record in Salesforce. Two types of fields commonly go missing this way:
 
 -   **Custom or optional direct fields** — fields stored on the object itself (for example, a custom LinkedIn URL field on a Contact) that weren't added as a column to your Salesforce list view.
 -   **Related (cross-object) fields** — fields stored on a related object (for example, `Account Name` shown in a Contact list view, which is actually stored on the Account object). These are never imported even if they appear as columns in the list view.
@@ -161,7 +161,7 @@ To get a missing field into Clay, use one of these approaches:
 
 ### `Action` Lookup records via SOQL
 
-Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches, when you need to filter on multiple fields at once (e.g., website AND country code), or when the Lookup record action returns **"Error: Bad Request"** (which occurs when the object's schema has more than 15 cross-object field references — see [Salesforce integration FAQs](salesforce-integration-faqs.md) for details).
+Look up records in Salesforce using a custom SOQL query. Use this when the standard **Lookup record** action returns too many matches, when you need to filter on multiple fields at once (e.g., website AND country code), when you need more than 5 results per lookup (for example, all contacts linked to a given account), or when the Lookup record action returns **"Error: Bad Request"** (which occurs when the object's schema has more than 15 cross-object field references — see [Salesforce integration FAQs](salesforce-integration-faqs.md) for details).
 
 **Inputs:**
 
@@ -188,7 +188,37 @@ LIMIT 1
 -   **Always include `LIMIT`.** If your query matches many Salesforce records (for example, a global brand with regional accounts sharing the same domain), the total response can exceed the 200 kB cell size limit, which produces a "Cell data size exceeds limit (200 kB)" error. Adding `LIMIT 1` or a small number keeps the response size manageable.
 -   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
 -   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
--   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
+-   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the result from the first SOQL column whose `foundAtLeastOne` is `true`. A SOQL column is never empty, even when nothing matched (see the next section), so "first non-empty result" always picks the first column.
+
+**What does Lookup records via SOQL return when no records are found?**
+
+The **Lookup records via SOQL** action (shown in the enrichment picker as **Look up records with SOQL**) always returns a result object, including when your query matches no Salesforce records. It doesn't leave the cell empty. The SOQL result object has these three top-level fields:
+
+| Field | When records are found | When no records are found ("No records found") |
+| --- | --- | --- |
+| `records` | List of the matching Salesforce records | Empty list: `[]` |
+| `foundAtLeastOne` | `true` | `false` |
+| `totalSize` | Number of records returned | `0` |
+
+So a no-match SOQL lookup returns `{ "records": [], "foundAtLeastOne": false, "totalSize": 0 }`. This has been the case since October 28, 2026. Before that date, a no-match SOQL lookup left the cell empty.
+
+**How do I check in a run condition whether a SOQL lookup found any records?**
+
+To make a run condition depend on whether a **Lookup records via SOQL** column found records, check one of the fields inside the result, not the whole column. In the examples below, `{{SOQL lookup}}` is your SOQL column, inserted with the `/` picker.
+
+-   **Only run when records were found:** `{{SOQL lookup}}?.records?.length`, `{{SOQL lookup}}?.foundAtLeastOne`, or `{{SOQL lookup}}?.totalSize > 0`
+-   **Only run when no records were found** (for example, a fallback lookup step): `!{{SOQL lookup}}?.records?.length` or `!{{SOQL lookup}}?.foundAtLeastOne`
+
+These checks give the right answer whether or not the SOQL query found records.
+
+Don't use checks on the whole SOQL column or on the `records` list itself:
+
+-   `!{{SOQL lookup}}` is always `false`, because the column always contains a result object. Fallback steps that use it never run.
+-   `!!{{SOQL lookup}}?.records` is always `true`, because an empty list still counts as true. Dependent steps that use it run on every row, including rows with no match, so they run on empty data.
+
+If your fallback steps stopped running or dependent columns started running on empty SOQL results, update those run conditions to one of the checks above. For more on run condition syntax, see [Conditional runs](conditional-runs.md).
+
+The **Lookup record** action also returns `records` and `foundAtLeastOne` when nothing matches (`{ "records": [], "foundAtLeastOne": false }`), but it doesn't return `totalSize`. Use `?.foundAtLeastOne` or `?.records?.length` if you want one check that works for both Salesforce lookup actions.
 
 ### `Action` Create record
 
@@ -244,6 +274,8 @@ The **Exact match?** toggle controls how Clay queries Salesforce:
 **Note:** Each "field to search for" input accepts one search value at a time. If you add multiple values to a single search field, Clay concatenates them into one string rather than treating them as separate options — for example, adding both `"Acme Corp"` and `"Acme"` to the same "Account Name to search for" field causes Clay to search for `"Acme CorpAcme"` instead of either name. To search across multiple possible values for the same field, use two separate **Lookup record** columns, each with one value.
 
 **Tip:** When using a Lookup Record column to supplement a Salesforce list view source import, make sure both use the **same Salesforce account**. If they use different accounts, the lookup queries a different Salesforce org and returns `No records found` even when the record exists.
+
+**Note:** The Lookup record action returns at most **5 matching records** per row. This limit is built into the action and cannot be changed. If you need more than 5 records from a single lookup — for example, to retrieve all contacts linked to a given account — use the **Lookup records via SOQL** action instead. See [Why does the Lookup Record action return a maximum of 5 results?](salesforce-integration-faqs.md#why-does-the-lookup-record-action-return-a-maximum-of-5-results) for details and an example SOQL query.
 
 ### `Action` Upsert object
 
@@ -332,6 +364,8 @@ When you add a Salesforce picklist field in **Map fields**, the input looks diff
 
 When using **Text with tokens** mode, the column's value is sent to Salesforce for each row. The value must still exactly match a valid Salesforce picklist option — see format requirements below.
 
+**If a picklist option isn't visible in Clay's dropdown:** Click **Refresh** in the Map fields panel to reload field definitions from Salesforce — Refresh re-fetches picklist values along with the field schema. If the option is still missing after refreshing, confirm in Salesforce that the value is **active** (Salesforce excludes inactive picklist values from the field schema Clay receives) and, for restricted picklists, that the value is assigned to the correct Record Type for the records you are updating.
+
 ### Single-select picklist (dropdown)
 
 When updating picklist fields in Salesforce from Clay, you need to match the exact format Salesforce expects.
@@ -382,6 +416,30 @@ Clay Value: `Technology;Healthcare;Finance`
 | Bad value for restricted picklist | New value not assigned to Record Type | Assign the value to the Record Type in Salesforce: Setup → Object Manager → [Object] → Record Types |
 | Values not updating | Wrong delimiter used | Use semicolons (;), not commas |
 | Field not accepting value | Using display label instead of API name | Verify API name in Salesforce Setup |
+
+### Why does a picklist value that looks correct still get rejected?
+
+If a picklist write fails with `INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST` even though the value appears correct in Salesforce, the most likely cause is that your Clay column contains the picklist **Label** rather than the **API Name**.
+
+Every Salesforce picklist entry has two identifiers:
+
+-   **Label** — the text users see in Salesforce dropdowns and record forms
+-   **API Name** (shown as **Value** in Salesforce Setup) — the identifier Salesforce validates when you write data via the API
+
+When you use Clay's built-in **Dropdown** mode for a picklist field in **Map fields**, Clay automatically sends the API Name for the option you selected. When you switch to **Text with tokens** mode and reference a Clay column, Clay passes the column's value to Salesforce exactly as-is — no translation between Label and API Name is applied. If that column contains Labels instead of API Names, Salesforce rejects the write even though the values look correct in the Salesforce UI.
+
+**Common example:** A picklist entry may display `Food & Bev` in Salesforce but have an API Name of `Food_Bev`. Sending `Food & Bev` from a Clay column fails; sending `Food_Bev` succeeds. Labels that contain spaces, slashes, ampersands, or parentheses often have API Names that replace those characters with underscores or remove them entirely.
+
+**To find the API Name for each picklist value:**
+
+1. In Salesforce, go to **Setup** → **Object Manager** → select the object (for example, `Account`).
+2. Click **Fields & Relationships** in the left sidebar, then click the picklist field name.
+3. Scroll to the **Values** section — you will see a table with both a **Label** column and a **Value** (API Name) column.
+4. Use the string in the **Value** column in your Clay table, character-for-character, including capitalization.
+
+After identifying the correct API Names, update the Clay column that feeds the picklist field and re-run the failing rows.
+
+**Note:** When the Label and API Name are identical — common for values created with simple alphanumeric text — this distinction does not matter. Mismatches are most common for picklist values whose labels include spaces, slashes, ampersands, or other special characters.
 
 ### New picklist value still rejected after being added to Salesforce
 
@@ -460,17 +518,48 @@ To fix this, add a formula column after the enrichment that converts the text ra
 
 ## Batch processing
 
-The `Create record`, `Update record`, and `Upsert object` actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to reduce the number of simultaneous Salesforce calls Clay makes.
+The Salesforce `Create record`, `Update record`, and `Upsert object` (shown in Clay as **Create or update record**) actions support a **Run in batches** mode. Batch mode is **off by default** — enable it in the action column's **Run settings** to send many rows to Salesforce in a single API call instead of one call per row.
 
-### How batch mode works
+### What batch size does Clay use to insert or update records in Salesforce?
 
-When **Run in batches** is enabled, Clay groups rows and sends them through Salesforce's Composite API in sequential batches (up to 200 records per batch) rather than firing calls for all rows concurrently. This reduces write concurrency, which can help avoid `UNABLE_TO_LOCK_ROW` errors when many rows write to Salesforce records that share a common parent (for example, contacts all belonging to the same Account). For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
+When **Run in batches** is enabled, Clay sends **up to 200 records per Salesforce API call**, using Salesforce's Composite API (`composite/sobjects`). With batch mode off, Clay sends one record per API call. Batches aren't sent one at a time: Clay can send up to 20 Salesforce requests at once per Salesforce connection, whether or not batching is on.
 
-**Benefits:**
+### How do I choose the number of rows per batch for a Salesforce action?
 
--   **Fewer concurrent calls:** Rows are sent in sequential groups rather than all at once
--   **Reduced lock contention:** Useful when bulk-writing to records that share a parent object, such as contacts in the same Account
--   **Individual error handling:** Each record in a batch is processed independently — if one fails, others in the same batch can still succeed
+When you turn on **Run in batches** for the Salesforce **Create record**, **Update record**, or **Create or update record** action, you can set how many rows Clay sends to Salesforce in each API call. Batching is available on all plans. The field name depends on where you set it:
+
+-   In a table column's batching settings, the field is called **Number of rows per batch**.
+-   In the workflow editor's **Run settings**, the field is called **Number of runs per batch**.
+
+You can enter any whole number from 1 to 200. The default is 200, and Clay never sends more than 200 records per Salesforce call.
+
+**How the Salesforce batch size affects API calls.** Clay sends all the fields you map for a row in the same request, so the number of Salesforce API calls depends on how many rows you send, not how many fields you map. With batching on, each batch is one API call, so a large batch size means fewer calls. The table below shows the minimum number of Salesforce API calls needed to write 650,000 rows at each setting:
+
+| Setting | Minimum Salesforce API calls for 650,000 rows |
+| --- | --- |
+| Run in batches on, 200 rows per batch | 3,250 |
+| Run in batches on, 100 rows per batch | 6,500 |
+| Run in batches off | 650,000 |
+
+The actual number can be higher if some batches go out with fewer rows than the batch size (see the next section).
+
+**How the Salesforce batch size affects triggers and flows.** Each batch reaches Salesforce as one multi-record write. That means Apex triggers and record-triggered flows in your Salesforce org process up to the full batch (for example, 200 records) at once, not one record at a time. To pick a batch size for a large write-back:
+
+1.  Start with 200 rows per batch and test on a small set of rows (for example, 1,000) before running the full table.
+2.  Check the results for Salesforce errors such as Apex CPU time limit errors or `UNABLE_TO_LOCK_ROW` row-lock timeouts.
+3.  If you see those errors, lower the batch size to 100 or 50 and test again.
+
+**Credit cost of Salesforce batching.** The batch size doesn't change what you pay. Salesforce Create record, Update record, and Create or update record cost 1 Action per row whether **Run in batches** is on or off, and whatever batch size you choose.
+
+### Why do some Salesforce batches contain fewer than 200 records?
+
+The 200-record batch size is a maximum, not a fixed size. Clay doesn't wait for 200 rows to be ready before sending a batch. Each time it's ready to make a call, Clay takes up to 200 of the rows queued at that moment. Depending on how quickly rows become ready, you may see batches smaller than 200 and more Salesforce API calls than your row count divided by 200.
+
+For example, 10,000 rows sent in full batches of 200 take 50 API calls. The same 10,000 rows can take more than 50 calls if some batches go out with fewer than 200 records.
+
+### How are errors handled in a Salesforce batch?
+
+Each record in a Salesforce batch is processed independently. If one record fails, for example with a validation error or an `UNABLE_TO_LOCK_ROW` row-lock error, the other records in the same batch can still succeed. Clay retries row-lock failures automatically. For troubleshooting row-lock errors, see [Salesforce integration FAQs](salesforce-integration-faqs.md).
 
 ## Best practices
 

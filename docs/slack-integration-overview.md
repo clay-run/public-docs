@@ -11,7 +11,7 @@ Team communication and collaboration platform boosting productivity with AI and 
 
 Slack is a communication platform that enables team collaboration through channels, direct messaging, and file sharing.
 
-With this integration, you can retrieve Slack user information, send messages to channels, and get channel member lists directly from Clay.
+With this integration, you can retrieve Slack user information, send messages to public channels, private channels, and direct messages, and get channel member lists directly from Clay.
 
 ## **Enriching data with Slack**
 
@@ -36,11 +36,31 @@ Use this action to send messages to Slack channels through a bot directly from C
 
 -   **Bot name (Optional):** Specify the name of the bot that will post the message.
 -   **Emoji (Optional)**
--   **Slack channel**: Select the Slack channel where you want to post the message. Both public channels and private channels the Clay bot has been invited to appear in the list. To post to a private channel, first invite the Clay bot in Slack (type `/invite @Clay` in the channel) — the private channel will then appear in the list automatically.
+-   **Slack channel**: Select the Slack channel where you want to post the message. The dropdown shows only channels — public or private — where the Clay app has been added as a member. Adding Clay to your Slack workspace alone is not enough; Clay must be added to each channel individually for that channel to appear here. To add Clay to a channel: open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then click **Refresh fields** in Clay to see the channel in the dropdown. Alternatively, click the gear icon next to the **Slack channel** field, switch to **Text with tokens**, and paste the channel ID directly.
 -   **Message (Optional):** The text body of the Slack notification (e.g., "A new lead has submitted a form"). Supports [Slack markdown](https://api.slack.com/reference/surfaces/formatting#basic-formatting).
 -   **Form information (Optional):** Add structured form data to the message (e.g., "First Name → Kareem"). The form will be sorted alphabetically by field name.
 
 > **Note:** Although both **Message** and **Form information** are displayed as optional in the UI, at least one of them must contain content for the action to run. Leaving both fields empty produces the error *"Missing input: You must include data for the person for this action to work."* Fill in the **Message** field with your notification text to resolve this.
+
+#### Sending a direct message (DM)
+
+To send a Slack direct message to an individual user instead of posting to a channel:
+
+1. In the **Slack channel** field, click the gear icon and switch to **Text with tokens** mode.
+2. Enter the recipient's Slack User ID (for example, `U012AB3CD`). User IDs start with `U` — when passed as the channel value, Slack opens a DM with that user automatically.
+3. To look up a user's Slack ID from their email address, add a **Find Slack user by email** action column and reference its result in the **Slack channel** field.
+4. Run one row first to confirm the DM reaches the correct user, then run the full table.
+
+#### Sending to a different Slack channel for each row
+
+If your Clay table stores a Slack channel ID for each row (for example, each account or domain mapped to its own channel), the **Send message to channel** action can post each row's message to that row's channel:
+
+1. In the **Slack channel** field, click the gear icon and switch to **Text with tokens** mode. The dropdown lists only channels the Clay app has been added to, so use **Text with tokens** to map channel IDs from a column.
+2. Insert the column that holds the channel IDs (for example, `C04F8AWK44T`) into the **Slack channel** field.
+3. Make sure the Clay app is a member of every private channel in that column — open each private channel in Slack and type `/invite @Clay`. Public channels don't need an invite as long as the optional `chat:write.public` scope was granted when you connected Slack (it's selected by default).
+4. Run one row first to confirm the message arrives, then run the full table.
+
+Slack delivery problems don't fail silently. If Slack rejects a message, that row's **Send message to channel** cell shows an error containing Slack's response, so you can spot delivery issues directly in the table. See [Slack errors when sending a message to a channel](#slack-errors-when-sending-a-message-to-a-channel) for what each error means.
 
 ### `Action` Find list of channel members
 
@@ -52,10 +72,14 @@ Use this action to retrieve a list of members from a specified Slack channel.
 
 ### `Action` Send for approval to Slack channel
 
+Use this action to send a Slack message with **Approve** and **Deny** buttons to a channel. The Clay cell stays in a pending state until a team member clicks a button, then updates with their response.
+
 **Inputs**
 
--   **Slack channel**: Select a public channel from the dropdown. The dropdown lists **public channels only** — private channels do not appear. For a private channel, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
+-   **Slack channel**: Select a channel from the dropdown. The dropdown lists only channels — public or private — where the Clay app has been added as a member. To add Clay to a channel: open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then click **Refresh fields** in Clay to see the channel in the dropdown. For a channel that isn't in the list, switch the input to text mode and enter the channel **ID** (for example, `C04F8AWK44T`) instead of the channel name. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID (starting with `C`) appears at the end of the copied URL.
 -   **Message**
+
+> **Approval requests do not expire.** The Approve and Deny buttons in the Slack message remain active indefinitely — Clay sets no timeout on approval requests. A rep can approve or deny a request days or weeks after the alert was sent, and the Clay cell will update when they do.
 
 ### **Run settings**
 
@@ -125,7 +149,7 @@ When you connect Slack to Clay, Clay requests the following OAuth permissions fr
 -   `users:read` — Look up Slack users by their user ID.
 -   `users:read.email` — Look up Slack users by email address. Required by the **Find Slack user by email** action.
 
-Clay does **not** request access to message history, direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
+Clay does **not** request access to message history, incoming direct messages, file uploads, or workspace administration settings. Clay does not store or harvest Slack data for its own purposes — these scopes are used solely to execute the actions you configure in your tables.
 
 For full security documentation — including SOC 2 Type II reports, data handling practices, and breach notification policies — visit [trust.clay.com](https://trust.clay.com/).
 
@@ -184,7 +208,7 @@ You can add Markdown to any Slack message, either in the Slack integration itsel
 
 ## Security and permissions
 
-When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history, send direct messages, or access files.
+When you connect Slack to Clay, Clay requests a minimal set of OAuth permissions from your Slack workspace. These are scoped to what the integration actually needs — Clay does not request permissions to read message history or access files.
 
 ### Required scopes
 
@@ -212,7 +236,7 @@ These permissions are requested by default but can be disabled during the connec
 Clay's Slack connection does **not** include permissions to:
 
 -   **Read message history** — no access to past messages in channels, group messages, or direct messages
--   **Send or read direct messages** — no DM access to individual users
+-   **Read direct messages** — no access to DM history or incoming messages
 -   **Read or upload files** — no file or attachment access
 -   **Administer your workspace** — no admin-level or workspace-management permissions
 
@@ -224,9 +248,9 @@ Clay uses these permissions only to execute the workflows you configure. Clay do
 
 Clay fetches your Slack channel list live each time you open the **Slack channel** dropdown, so newly created channels should appear automatically. If they still don't show up:
 
-1. **Check whether the channel is public or private.**
-   - **Public channels** are listed automatically as soon as they exist in your Slack workspace.
-   - **Private channels** only appear if the Clay integration bot has been explicitly invited to them. Open the private channel in Slack, go to its member settings, and invite the Clay bot — then reopen the channel dropdown in Clay.
+1. **Add the Clay app to the channel.** The Clay channel dropdown shows only channels — public or private — where the Clay app has been added as a member. Adding Clay to your Slack workspace alone is not sufficient; Clay must be added to each channel individually.
+   - Open the channel in Slack, click the channel name → **Integrations** → **Add apps**, search for **Clay**, and add it. Then return to Clay and click **Refresh fields** in the action column.
+   - Alternatively, type `/invite @Clay` in the channel's message box and press Enter, then return to Clay and refresh the channel dropdown.
 
 2. **Reconnect your Slack integration** to get a fresh OAuth token. This resolves cases where the token has become stale or lost permissions:
    - Go to **Settings → Connections** in Clay.
@@ -239,15 +263,21 @@ Clay fetches your Slack channel list live each time you open the **Slack channel
    - `groups:read` — lists private channels the bot has been invited to
    - `chat:write` — sends messages as the Clay bot
 
-### `channel_not_found` error when posting to a private channel
+### Slack errors when sending a message to a channel
 
-Two Slack error codes can appear when a Clay action can't reach a private channel — they have different causes:
+When the **Send message to channel** action can't deliver a message, it does not fail silently: the cell for that row shows an error containing Slack's full response, for example `{"ok":false,"error":"channel_not_found"}`. Clay passes Slack's error through unchanged. The most common Slack errors are:
 
-**`{"ok":false,"error":"channel_not_found"}`** — the channel ID is wrong or does not exist. Verify the ID you provided. A valid channel ID starts with `C` and looks like `C04F8AWK44T`. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID is the final segment of the copied URL.
+**`{"ok":false,"error":"channel_not_found"}`** — Slack can't find a channel the Clay bot has access to. Slack returns this same error for several different causes, so check each:
 
-**`{"ok":false,"error":"not_in_channel"}`** — the Clay bot has not been invited to the channel. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's member settings. The Clay bot must be a member of any private channel it posts to.
+-   **Private channel the Clay bot hasn't been invited to.** Slack hides private channels from apps that aren't members, so the channel looks like it doesn't exist. Open the private channel in Slack and type `/invite @Clay`, or add the Clay app through the channel's **Integrations** → **Add apps** settings. The Clay bot must be a member of any private channel it posts to.
+-   **Wrong channel ID.** A valid channel ID starts with `C` and looks like `C04F8AWK44T`. To find a channel's ID: right-click the channel name in Slack → **Copy link** — the ID is the final segment of the copied URL.
+-   **Channel in a different Slack workspace.** The channel must belong to the Slack workspace connected to the Slack account selected in the action.
 
-> **Note for "Send for approval":** The channel dropdown for this action shows only public channels. For a private channel, switch the **Slack channel** input to text mode and enter the channel ID directly.
+**`{"ok":false,"error":"not_in_channel"}`** — the channel is a public channel the Clay bot hasn't joined, and your Slack connection doesn't have the optional `chat:write.public` scope. Either add Clay to the channel (type `/invite @Clay` in the channel), or reconnect Slack in **Settings → Connections** and accept the `chat:write.public` scope.
+
+**Missing channel ID.** If a row's **Slack channel** value is empty, the Slack message isn't attempted. The cell shows a missing input error — *"You must include a destination slack channel to send your notification to."* — rather than a Slack error.
+
+> **Note for "Send for approval":** The **Send for approval to Slack channel** dropdown works the same way as **Send message to channel** — it lists public and private channels the Clay app has been added to. For a channel that isn't listed, switch the **Slack channel** input to text mode and enter the channel ID directly.
 
 ### My Slack workspace requires admin approval and the Slack Marketplace link shows an error
 

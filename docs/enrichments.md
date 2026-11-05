@@ -1,6 +1,6 @@
 ---
 title: Enrichments
-description: Learn how to run enrichments in Clay, including run settings, delay options, and custom rate limits.
+description: Learn how to run enrichments in Clay, including how enrichment search works, run settings, delay options, and custom rate limits.
 last_synced: 2026-04-26T01:39:56.840Z
 ---
 
@@ -27,6 +27,16 @@ You can run enrichments in several ways:
 3.  In the modal, select your account.
     -   Clay provides API keys for certain enrichments, but you can save [credits](https://www.clay.com/university/guide/credits) by using your own account—click `+ Add account` to set it up.
 
+## Enrichment search
+
+When you click `Add enrichment` and start typing, the search panel surfaces the most relevant options for your query.
+
+**Curated results for popular queries.** For common searches like `email`, `phone`, `linkedin`, `salesforce`, and others, Clay shows curated results with waterfall options listed first — these multi-provider sequences maximize coverage at the lowest credit cost. For other queries, results are ranked by relevance.
+
+**Row type labels.** Every result shows its type — **Waterfall**, **Enrichment**, **Template**, **Send & export**, and so on — so you can tell at a glance what you're selecting. Enrichments you created show "By me"; those from colleagues show the creator's name (for example, "By Jane Smith"); and Clay-built options show "By Clay."
+
+**Institutional knowledge badges.** Some results carry badges that surface practical provider context contributed by Clay's Solutions and Partnerships teams — for example, "EMEA Coverage" or "SMB." Click a badge to filter the result list to providers tagged with that label.
+
 ## Run settings
 
 Run settings give you control over when and how your enrichments execute. Access these settings by clicking into any enrichment column.
@@ -48,10 +58,13 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 
 ### Saving configuration changes
 
-When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
+What happens when you click **Save** after editing an enrichment column depends on whether the column's **Auto-run** toggle is on or off:
 
--   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
--   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
+-   **Auto-run ON** — A dropdown appears letting you choose how the change takes effect:
+    -   **Save and run 10 rows** — Saves your settings and queues the first 10 rows as a quick sample run. (Only shown when the view has more than 10 rows.)
+    -   **Save and run _N_ rows in this view** — Saves your settings and immediately queues all rows in the current view using the updated configuration.
+    -   **Save and don't run** — Saves your updated settings without running any rows. Because Auto-run is on, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
+-   **Auto-run OFF** — Clicking **Save** saves the configuration immediately with no dropdown. No rows are queued to run, and the column stays in manual-only mode. To run rows on demand, right-click the column header and choose **Run column → Run _N_ rows**.
 
 ## Delay run
 
@@ -66,13 +79,15 @@ Delay when an enrichment runs after its conditions are met. This is useful when 
 
 -   Waits a specified number of seconds before running (maximum 10 minutes).
 -   Delay starts after run conditions are met.
--   Useful for syncing between external systems, like waiting for Salesforce to sync data to Outreach.
+-   Does not consume an extra credit — the enrichment is charged normally when it actually runs after the delay.
+-   Useful for syncing between external systems, such as waiting for a Salesforce Account to finish being created before looking it up, or waiting for a Salesforce sync to propagate to Outreach.
 
 To configure a delay:
 
 1.  Select `Run after delay`.
-2.  Enter the number of seconds to wait (up to 600 seconds/10 minutes).
-3.  Use a formula to set different delays per row.
+2.  Enter the number of seconds to wait (up to 600 seconds/10 minutes), or use a formula (for example, `{{Delay Seconds}}`) to set a different delay per row.
+
+**If some rows still come back empty or out-of-date after the delay:** Right-click the column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results without re-charging rows that already matched.
 
 **Need a delay longer than 10 minutes?** Chain multiple enrichment columns — each set to `Run after delay` (up to 600 seconds) — and use [conditional runs](conditional-runs.md) to gate each step on the previous column completing. For example, six chained delay columns each set to 600 seconds creates a 60-minute total delay.
 
@@ -128,3 +143,33 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Work email addresses** — click `Add enrichment` and select `Work Email`. This pre-built waterfall cascades through multiple email providers in sequence. See [Work Email waterfall](work-email-waterfall.md) for full setup details.
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
+
+### "How do I enrich just one person? Can I enrich someone directly from All People?"
+
+To enrich a single person in Clay, use a Clay table. The **All People** list in Audiences doesn't have a per-record enrich option — opening a person's record there won't let you run an enrichment on just that one contact.
+
+To enrich one person:
+
+1.  Create a new table (or use an existing one) and add a row with the person's identifier. The person's professional profile URL is the best input when you have one; an email address also works.
+2.  Click `Add enrichment`, search for `Enrich person`, and add it as a column.
+3.  Map the **Professional URL** input to your profile URL column (or map the **Email** input to your email column).
+4.  Run the enrichment for only that row: check the row's checkbox, click **Actions**, and choose **Run 1 row**.
+
+The `Enrich person` column returns the person's full profile data — for example, job title, current company, and experience history — in that row.
+
+### "What accuracy or match rate can I expect from data enrichment in Clay?"
+
+Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
+
+-   **Data type** — Work emails, personal emails, mobile phone numbers, and company attributes each have different coverage rates.
+-   **Geography** — Coverage for contacts in North America typically differs from EMEA or APAC regions.
+-   **Input data quality** — More complete inputs (for example, a full name plus a verified company domain) generally produce higher match rates.
+-   **Provider selection** — Clay connects to 150+ data providers, each optimized for different data types and regions.
+
+**Using a single enrichment provider** on a challenging dataset typically yields match rates in the 40–60% range. **Using a waterfall** — which chains multiple providers in sequence and stops as soon as one returns a result — significantly increases coverage. For specific numbers by data type, see Clay's published data tests:
+
+-   [[Data test] Personal email providers](data-test-methodology-personal-emails.md) — tested across 2,354 contacts; providers collectively returned emails for 53% of contacts, with 43% confirmed valid.
+-   [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) — accuracy and coverage scores across NAMER, EMEA, and APAC.
+-   [[Data test] Work email providers](data-test-work-email-providers.md) — confidence scores comparing work email finders across SMB and enterprise datasets.
+
+**Recommendation:** Run a proof-of-concept (POC) test on a sample of your actual accounts or contacts before committing to a full run. Results vary significantly depending on your industry, persona, and geographic mix — testing with your own data gives you the most accurate picture of expected coverage.

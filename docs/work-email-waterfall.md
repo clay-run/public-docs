@@ -95,6 +95,8 @@ For a full reference on run options — including a row limit and starting row �
 
 ### What does it mean if no email is found?
 
+An empty Work Email cell after the waterfall has run is **expected behavior** — it means the waterfall completed but could not find a valid email for that person. This is different from a **"Missing input"** error, which appears only when the required inputs (such as a full name or company domain) were missing before the waterfall could attempt to run at all.
+
 If the cell shows no result, click into it to see which providers were tried and what each returned. Common reasons no email surfaces:
 
 -   The row is missing required input data. Check that the contact's full name and company domain are populated.
@@ -120,15 +122,39 @@ This is different from an *upstream column* being skipped due to a run condition
 
 See [Conditional runs](conditional-runs.md) for a full reference on how run conditions work and how to use the **Explain** button to diagnose them.
 
+### Why do some providers in my waterfall skip every row while earlier providers ran successfully?
+
+If earlier providers in your waterfall (such as Findymail, Hunter, or Prospeo) ran normally but specific later providers show **"Run condition not met"** for every single row — including rows where no earlier provider found an email — those specific provider steps have an **Only run if** condition that is evaluating to false for all rows.
+
+This is distinct from [all provider steps being blocked](#why-do-all-the-provider-steps-in-my-waterfall-show-run-condition-not-met) (every step has a blocking condition) and from [normal waterfall sequencing](#why-do-some-rows-in-my-waterfall-show-run-condition-not-met-on-provider-or-validation-columns) (an earlier provider already found an email). Here, a subset of providers have a condition that the current data in your table doesn't satisfy.
+
+**Common cause — a condition checking for LinkedIn URL:**
+
+Provider steps that accept a professional profile URL (LinkedIn URL) may have an **Only run if** condition — set automatically when the waterfall was built, or configured manually — that requires a LinkedIn URL column to be non-empty before the step runs. When no LinkedIn URLs are populated in your table, every row fails that check and those steps show "Run condition not met," while earlier providers that only need name and company domain continue running normally.
+
+**How to diagnose:**
+
+1. Click into one of the affected provider cells and look for an **Explain** button next to the "Run condition not met" status in the cell panel. This shows exactly which condition is evaluating to false.
+2. If you don't see **Explain**, click the column header → **Edit column** → **Run settings → Only run if** to review the condition directly.
+
+**How to fix:**
+
+- **Populate the missing field.** If the condition checks for a LinkedIn URL column that's empty, add a "Find LinkedIn URL" enrichment column, run it on all rows to populate person profile URLs, then re-run the waterfall. Once the URL column is populated, those provider steps will execute and increase your email coverage beyond what earlier providers alone found.
+- **Adjust or remove the condition.** If the run condition isn't needed, open each blocked provider's column settings and clear the **Only run if** field, or update it to match your available data.
+
+**Circular dependency:** If you try to map a LinkedIn URL column that is itself downstream of the Work Email waterfall — for example, a column enriched after the Work Email waterfall runs — you will see a **"Circular dependency error"**: *"You referenced downstream columns that depend on the values of this column as input."* The fix is to use a LinkedIn URL column that runs independently: add a separate "Find LinkedIn URL" enrichment that takes only name and company domain as inputs, and map that column instead.
+
 ### Why do some rows in my waterfall show "Run condition not met" on provider or validation columns?
 
-This is expected behavior when the waterfall is working correctly. **"Run condition not met"** appearing on a subset of rows — not all rows — means the waterfall's built-in sequencing logic skipped that step for those rows. There are two common reasons:
+This is expected behavior when the waterfall is working correctly. **"Run condition not met"** appearing on a subset of rows — not all rows — means the waterfall's built-in sequencing logic skipped that step for those rows. There are three common reasons:
 
 - **An earlier provider already found a valid email for that row.** The Work Email waterfall runs providers in sequence and stops as soon as one returns a valid result. Once an earlier provider succeeds for a row, all subsequent provider columns are skipped for that row — they show "Run condition not met" because the built-in condition ("only run if no valid email has been found yet") is no longer true. This is the waterfall stopping early as intended, saving credits by not running additional providers once a match is found.
 
 - **The corresponding provider returned no email, so the validation step was skipped.** Each validation column is configured to run only when the provider step before it actually returned an email. If a provider found nothing for a row, the paired validation column shows "Run condition not met" — there is no email to check. No credits are charged for skipped validation steps.
 
-In both cases, "Run condition not met" on some rows is not an error — it means the waterfall is operating as designed. You only pay credits for provider steps that run and for the validation step that checks a found email.
+- **The validation step was skipped because the same email was already confirmed invalid earlier.** If a provider cell shows the email was found (for example, "Found contact@company.com") but its paired validation column shows **"Run condition not met"**, it means a previous validation step in the waterfall already tested that same email address and confirmed it as invalid. To avoid charging credits for re-validating an already-rejected address, the waterfall skips the second validation check and treats the email as invalid. The email is not written to the merged output column, and the waterfall continues running remaining providers in case a later one returns a different, valid address. To confirm this is what happened, click the validation cell showing "Run condition not met" and use the **Explain** button — the explanation names the earlier step that flagged the address as invalid and what would need to change for the condition to pass.
+
+In all three cases, "Run condition not met" on some rows is not an error — it means the waterfall is operating as designed. You only pay credits for provider steps that run and for the validation step that checks a found email.
 
 **This is different from the case where all rows on every provider step show "Run condition not met"**, which typically indicates a misconfigured run condition rather than normal waterfall sequencing. See [Why do all the provider steps in my waterfall show "Run condition not met"?](#why-do-all-the-provider-steps-in-my-waterfall-show-run-condition-not-met) for that scenario.
 
@@ -142,17 +168,25 @@ For a well-configured Work Email waterfall with good input data, a match rate of
 
 If you're seeing rates well below 60%, see [How can I improve my email match rate?](#how-can-i-improve-my-email-match-rate) below. If you're already near 70% and have optimized your inputs and provider sequence, you may be close to the ceiling for your specific contact list — some contacts simply don't have emails findable through any commercial data provider.
 
+### Do I need a LinkedIn URL to find work emails?
+
+No. A LinkedIn URL is **not required** to run the Work Email waterfall. The minimum required inputs are a **full name** and a **company domain** — most providers in the waterfall run on those two fields alone, with no LinkedIn or personal email needed. LinkedIn URLs are optional: providing one enables more providers to run on each row and can improve your match rate, but the waterfall returns results without one.
+
+**If you only have company names, not domains:** Use the [Company Domain waterfall](building-a-data-waterfall.md) to look up each company's domain first, then run the Work Email waterfall.
+
+**If you want to find LinkedIn URLs to maximize provider coverage:** Add a Claygent column with a Google search prompt using the `site:linkedin.com/in` operator — for example, searching `site:linkedin.com/in "First Last" "Company Name"` — to locate each contact's LinkedIn profile URL. Map the returned URL to the waterfall's optional LinkedIn URL input before running.
+
 ### How can I improve my email match rate?
 
 If you want to find emails for more of your contacts, here are the most effective steps to take:
 
 1.  **Make sure Company Domain and full name are populated.** Most providers need both to run. Rows without a company domain in particular are skipped by a large portion of the waterfall. If you only have a company name, use the [Company Domain waterfall](building-a-data-waterfall.md) to find domains first.
 
-2.  **Add profile URLs for your contacts.** Mapping professional profile URLs as an additional input can expand which providers are able to run on each row, increasing your overall coverage.
+2.  **Add profile URLs for your contacts.** Mapping a person's professional profile URL (LinkedIn URL) as an additional input improves accuracy for providers that accept it. If certain provider steps in your waterfall show **"Run condition not met"** for every row — including rows where earlier providers didn't find an email — those steps may have an **Only run if** condition that checks for a LinkedIn URL column that isn't yet populated. See [Why do some providers in my waterfall skip every row while earlier providers ran successfully?](#why-do-some-providers-in-my-waterfall-skip-every-row-while-earlier-providers-ran-successfully) for how to diagnose and fix this.
 
-3.  **Check which providers are finding emails.** In the waterfall's Full Configuration, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
+3.  **Check which providers are finding emails.** Click the waterfall tab and select **Edit group**, then in the **Full configuration** tab, toggle off `Hide provider columns?` to reveal individual per-provider result columns. This shows you exactly which providers are returning emails for your list and where coverage drops off — useful for identifying whether adding new providers might help.
 
-4.  **Add more providers to your waterfall.** In Full Configuration, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
+4.  **Add more providers to your waterfall.** In the **Full configuration** tab, click **Add provider**. Different providers cover different datasets, so a longer sequence gives more chances to find emails your current providers missed.
 
 ### Why do some rows show "Invalid input" with a message about a first or last name?
 
@@ -210,7 +244,7 @@ The most common cause is validation: when `Require validation success?` is enabl
 
 The validation columns are hidden by default to keep your table clean. To review each email's validation status without re-running, click the **columns button** in the toolbar (shown as "N/N columns") and use **Show/Hide columns by color → All columns** to reveal all hidden columns. Each validation column shows what the provider returned and whether the email passed or failed.
 
-To permanently show provider and validation columns going forward, open the waterfall's `Full configuration`, turn off `Hide provider columns?`, and re-run.
+To permanently show provider and validation columns going forward, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
 **If validation is rejecting emails you want to keep:**
 
@@ -222,6 +256,40 @@ To permanently show provider and validation columns going forward, open the wate
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
+
+### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
+
+Yes — for rows that already have validation data stored. Enabling **Require validation success** and saving immediately updates the waterfall's output column by re-evaluating the merge formula against the validation results already stored in your table. No re-run is needed and no credits are charged for this update.
+
+- **Rows where validation already confirmed the email as valid** continue to show that email in the output column — no change.
+- **Rows where validation returned "invalid," "catch-all," or an inconclusive result** will have the email removed from the output column. The individual provider cell still shows the found email, but the final output column becomes blank because the stricter setting now filters it out.
+
+**To find a different email for rows that are now blank**, a re-run is needed — no re-run is required just to apply the filter, but one is required if you want to search for a new email that passes the stricter validation gate:
+
+1. Filter your table to show only the rows where the Work Email column is now empty.
+2. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, searching for a different email that passes validation.
+
+**Exception — if no validation column exists:** If your waterfall was originally configured without a validation provider (no "Validate" step was added), there is no stored validation data for the setting to evaluate against. In this case, you do need to rerun the waterfall on those rows to first collect validation data before the stricter gate can take effect.
+
+### Why does the Work Email output column show "Waiting for another column to finish"?
+
+When the Work Email output column shows **"Waiting for another column to finish"**, a provider or validation step within the waterfall is still running or queued for that row. The output column updates automatically once those steps complete — no action is needed if the waterfall is actively processing.
+
+**If you can't identify which step is blocking**, it's likely because provider and validation columns are hidden by default. To find the blocking step:
+
+1. Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
+2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
+3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
+
+**If a provider step in the Work Email waterfall stays "Queued" and isn't progressing**, the Work Email output column keeps showing "Waiting for another column to finish" until that step runs. **Run column** → **Run [N] empty or out-of-date rows** skips cells that are already Queued. To unblock the stuck waterfall rows in one go:
+
+1. Click **Filter** in the table toolbar, select the stuck provider step column, and set the condition to **is queued**. Only the stuck rows are now visible.
+2. Right-click that provider step's column header and select **Run column** → **Force run all [N] rows**. With the filter active, this re-runs only the visible queued rows, so rows that already finished aren't re-run.
+3. Repeat for any other waterfall step that shows Queued, then remove the filter.
+
+Once the stuck steps finish, the Work Email output fills in automatically. If a column that uses Work Email as an input, such as a CRM lookup, is also stuck in Queued, unblock the waterfall steps first, then use the same filter and **Force run** steps on that column. For more on stuck queues, see [Troubleshooting cells stuck in Queued status](run-progress.md#troubleshooting-cells-stuck-in-queued-status).
+
+To permanently show provider and validation columns so you can monitor waterfall progress at a glance, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
 ### Why does my own email address appear in the Work Email results?
 
@@ -262,3 +330,32 @@ You can chain as many validators as needed this way. Each column's **Only run if
 **Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
 
 For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
+
+### Does email validation confirm that a work email belongs to the right person or company?
+
+No. Validation in the Work Email waterfall checks **deliverability** — whether an address can receive mail — not **identity**, meaning whether the email actually belongs to the person and company in your row. The validation provider (for example, ZeroBounce, Debounce, NeverBounce, or Hunter) returns a status such as valid, invalid, catch-all, or unknown, and your `Validation strategy` uses that status to decide whether the waterfall stops. A deliverable email can still be the wrong email for your contact.
+
+The Work Email waterfall's validation step does **not**:
+
+-   Check that the email domain matches the company domain you mapped as an input.
+-   Exclude free or personal email domains such as `@yahoo.com` or `@gmail.com`.
+-   Check that the name in the email address matches the person's name in your row.
+
+This matters most when you use enriched emails for CRM routing — for example, matching leads to Accounts in Salesforce or Marketo by email domain. A wrong domain can route a lead to the wrong Account. Low-quality inputs, such as placeholder company names like `xxx` or `N/A`, increase the risk of a deliverable email at the wrong company.
+
+**To check work email accuracy before syncing to your CRM**, add your own "safe to sync" checks after the waterfall:
+
+1.  **Keep the original fields unchanged.** Write the enriched email and enriched company to separate columns instead of overwriting the submitted email, company name, or account fields.
+2.  **Exclude free or personal email domains.** Add a formula column that flags emails on free email domains (such as `yahoo.com`, `gmail.com`, or `hotmail.com`), and exclude those rows. See [Conditional statements](conditional-statements.md) for an example formula that matches free email domains.
+3.  **Confirm the email domain matches the company.** Add a formula column that extracts the domain after `@` and compares it to the contact's company domain or an approved subsidiary domain. See [Handling email/company domain mismatches](building-a-data-waterfall.md#handling-emailcompany-domain-mismatches) for this setup.
+4.  **Flag name mismatches.** Compare the part of the email before `@` with the person's first and last name, and send mismatches to review instead of syncing them automatically.
+5.  **Exclude risky validation results.** Use the `Conservative` validation strategy, which excludes catch-all emails. For more control, choose `Advanced`, leave `Include catch-all` off, and turn on `Exclude role-based emails` and `Exclude disposable emails`.
+6.  **Sync only rows that pass every check.** Use an **Only run if** condition on your CRM sync column so only rows that pass all checks are sent. Filter the remaining rows into a review view. See [Conditional runs](conditional-runs.md).
+
+### Is there a confidence score for work emails I can filter on?
+
+No. The Work Email waterfall does not return a single confidence score for each email. The waterfall output column contains only the email the waterfall accepted. If you turn on `Output name of successful provider?`, you also get a column showing which provider found the email, but there is no score.
+
+Some individual providers include their own score in their columns. For example, Hunter returns a `score` from 0 to 100 in its email finder and email verification results. These scores come from that provider alone, aren't available for every provider in the waterfall, and measure deliverability rather than whether the email belongs to the right person.
+
+To filter out weak matches before syncing to your CRM, build your own "safe to sync" status from the checks in [Does email validation confirm that a work email belongs to the right person or company?](#does-email-validation-confirm-that-a-work-email-belongs-to-the-right-person-or-company) instead of relying on deliverability alone. For general ways to improve reliability across waterfall enrichments, see [Waterfall results and data quality](building-a-data-waterfall.md#waterfall-results-and-data-quality).

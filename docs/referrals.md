@@ -8,7 +8,20 @@ last_synced: 2026-04-26T01:40:32.262Z
 
 Learn how you can earn 3,000 credits each time you refer someone.
 
-Clay's referral program allows you to invite others to join and earn rewards. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are not subject to the usual rollover rules, so they stay in your account until you use them.
+## Workspace referral credits or partner commissions?
+
+Clay has separate programs for **workspace referral credits** and **Solutions Partner commissions**:
+
+- **Workspace referral credits:** If you copied your link from **Settings > Referrals** in Clay, this article explains the Clay credits you and the person you referred can earn.
+- **Solutions Partner commissions:** Partner commissions are managed through **Dub** and follow the partner program's terms. The 3,000-credit reward and credit-processing guidance in this article do not describe partner commission payouts.
+
+Sharing or using a referral link alone does not establish which program applies. If you're unsure, tell Clay Support where you got the link and whether you're expecting Clay credits or a partner commission.
+
+For a partner attribution or payout issue, contact Clay Support with your partner account email, the affected referral, and the relevant dates. Support can review the applicable partner records, including questions about historical Rewardful commissions or the move to Dub.
+
+## Earn workspace referral credits
+
+Clay's workspace referral program allows you to invite others to join and earn credits. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are not subject to the usual rollover rules, so they stay in your account until you use them.
 
 To access and share your referral link:
 
@@ -20,6 +33,16 @@ To access and share your referral link:
 You can monitor your referral activity, including the number of leads, converted users, and credits earned, directly in the Referrals section.
 
 **Note:** The Referrals section in Settings shows your activity as a referrer — the people you've invited and credits you've earned. If you signed up using someone else's referral link, your 3,000 bonus credits will appear in your account balance once the referral is confirmed; there is no separate tracker in Settings for your status as a referee.
+
+## Do referral credits include Actions?
+
+No. The 3,000 referral credits are **Data Credits** only — the referral reward does not include any **Actions**, for either the referrer or the person referred.
+
+On current plans that charge for both Actions and Data Credits (such as Launch and Growth), enrichments typically use both. Spending your referral credits therefore also uses Actions from your plan's Actions allowance.
+
+Receiving referral credits does not change your plan or move your workspace to a different billing model. Whether you're charged for Actions is determined only by your plan type. See [Legacy plans](./legacy-plans.md) for how legacy and current plans differ.
+
+On current plans, you can check your Actions balance and your Data Credits balance side by side in `Settings` → `Usage`. To learn how the two meters work and how to get more Actions, see [Actions & Data Credits](./actions-data-credits.md).
 
 ## Troubleshooting referral credits
 

@@ -20,14 +20,13 @@ We recommend using [mobile phone data waterfalls](https://www.clay.com/waterfall
 
 ## **Our data test methodology**
 
-We started by amassing over 6,000 B2B contacts across North America (NAMER), Europe, the Middle East, and Africa (EMEA), and the Asia Pacific (APAC). We then [enriched](https://www.clay.com/blog/anthropic-case-study) these contacts by running them through the following B2B data providers:
+We started by amassing over 6,000 B2B contacts across North America (NAMER), Europe, the Middle East, and Africa (EMEA), and the Asia Pacific (APAC). We then [enriched](https://www.clay.com/blog/anthropic-case-study) these contacts by running them through B2B data providers including:
 
 -   Forager
 -   Nimbler
 -   Wiza
 -   Datagma
 -   Leadmagic
--   RocketReach
 -   People Data Labs
 -   ContactOut
 -   Findymail

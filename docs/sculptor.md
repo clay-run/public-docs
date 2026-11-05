@@ -35,6 +35,7 @@ Sculptor saves your conversation history so you can view and continue previous s
 History is scoped to the surface you're currently working in:
 
 -   **Table Sculptor** — only shows conversations from the table you are currently viewing.
+-   **Workflow Builder** — only shows conversations from the workflow you are currently viewing.
 -   **Claygent Builder** — only shows conversations for the Claygent you are currently viewing.
 -   **Search / Onboarding** — only shows conversations from search and onboarding sessions.
 
@@ -100,6 +101,7 @@ While Sculptor is powerful, there are a few things to keep in mind:
 -   **Daily limits apply when testing actions and code via Claude** — When using Sculptor through the [Clay connector in Claude](https://university.clay.com/docs/using-clay-in-claude), you can test-run Clay actions directly up to **25 times per day** per user, and test-run code snippets up to **10 times per day** per user. Limits reset after 24 hours. If you hit a limit, you'll see a message like "You can only test-run Clay actions directly 25 times a day — add the action to a workflow node or table column and run it there instead." Production workflow runs are not affected by these limits.
 -   **Supported sources are limited** — Sculptor can only generate sources using companies, people, jobs, Google Maps, CSV imports, or web search. If you want to use a different source, you'll need to manually create it before using Sculptor.
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
+-   **Natural language search finds new prospects, not existing data** — When you describe your ideal customer profile in plain English (from the homepage or in Sculptor), Clay searches its proprietary database to surface net-new companies and people. This natural language search does not filter or build segments within your existing Audiences or CRM data — it is a prospecting tool for finding new contacts, not a query tool for searching records you already have.
 -   **Cross-table operations are limited** — Advanced linking and workflows are still in development.
 -   **No export option** — Export functionality hasn't been integrated yet.
 -   **Column modifications use sandbox mode** — Sculptor adds new columns to existing tables via [sandbox mode](#sandbox-mode) rather than writing directly to your live table. You'll need to review and publish those changes using the **Review changes** button.
@@ -158,6 +160,27 @@ To apply the proposed column to your table:
 
 If you'd prefer to add a column directly without going through sandbox, use the **Add enrichment** or **+** button in your table toolbar instead.
 
+### My search only shows 50 rows
+
+When you use Sculptor to set up a Find People, Find Companies, or Find Jobs search, you may see 50 rows in three different situations — each with a different cause and fix.
+
+**In the Sculptor search panel (before clicking Continue):** The search results preview is limited to 50 rows. This is a preview only — it does not cap how many records are imported. When you click **Continue**, Sculptor sends your full search query to the table and imports the complete result set. The button shows the total count (for example, *"2,400 results will be imported"*) so you can confirm the full number before proceeding.
+
+**In your table after the search runs (with the Sandbox Mode badge visible):** If your table is in [Sandbox Mode](https://www.clay.com/university/guide/sandbox-mode) — shown by the **Sandbox Mode** badge in the toolbar — it is capped at a maximum of 50 rows. This is expected behavior and not a search error. Your full results exist in the production table.
+
+To access all your results from sandbox:
+
+-   **To check the full row count without publishing:** Click the **All data** tab in the tab bar above your table. The production table is read-only while sandbox is active, but you can see the total number of rows there.
+-   **To run your workflow on all rows:** Click **Review changes** → **Publish and run**. This publishes your Sculptor-built columns to the production table and runs them across all matching rows.
+
+**In your table after publishing (no Sandbox Mode badge visible):** When a search is set up and published, Clay immediately adds the first 50 matching rows to the table as a fast preview, then runs a background export to bring in the full result set. If the background export takes too long to finish — for example, because your search uses a large keyword list or filters across several fields at once — it can time out before completing, leaving the table with only those initial 50 rows.
+
+To fix this, simplify your search so the query can complete in time:
+
+-   **Search one field instead of several.** Applying keyword filters to both the bio/about section and every job description simultaneously increases query time — pick whichever field is most likely to surface relevant results.
+-   **Trim your keyword list.** Reduce to your 6–8 most distinctive terms rather than an exhaustive list of 20 or more.
+-   **Split into multiple searches.** If you need broad coverage — for example, a long list of schools or companies — break it into two or more searches with smaller filter sets and merge the results in a single table.
+
 ## FAQs
 
 ### **When should I use Sculptor instead of building manually?**
@@ -186,10 +209,19 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 
 **🔜 Limited or Coming Soon**
 
--   **Sources (CPJ, Google Maps, CSV)** — Config reading only; full support coming soon
+-   **Sources (CPJ, CSV)** — Config reading only; full support coming soon
+-   **Google Maps workflow sources** — The workflow engine fully executes Google Maps "Find local businesses" sources. Configure the Google Maps source manually in the workflow trigger; Sculptor can read the configured source but cannot set up its search inputs itself.
 -   **Run Conditions** — Read and configure on new columns; when Sculptor sets a run condition automatically, review it in column settings before running at scale to ensure it matches your data.
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported
+
+### How can I use Sculptor to replicate an existing workflow's logic in a new workflow?
+
+Open the existing workflow and click the Sculptor button to open the chat panel. Ask Sculptor to describe the workflow — for example: *"Explain step by step everything this workflow does."* Sculptor reads the full workflow graph and returns a description of each node, its configuration, and how the nodes connect.
+
+Copy that description, open Sculptor on the new workflow, and paste it in as your build instructions. Sculptor will use the description as a blueprint to recreate the logic in the new workflow.
+
+You can also use the Clay CLI to extract a workflow description without opening the Sculptor chat panel directly — ask the CLI to describe your workflow and use the output as build instructions in the same way.
 
 ### What table sources does Sculptor connect with?
 

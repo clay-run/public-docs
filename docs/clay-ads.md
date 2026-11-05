@@ -1,15 +1,15 @@
 ---
 title: Clay Ads
-description: Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for
-  precise ad targeting.
-last_synced: 2026-05-11T17:47:40.000Z
+description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
+  Ads, Reddit Ads, and Vibe.co for precise ad targeting.
+last_synced: 2026-09-29T18:57:11.306Z
 ---
 
 # Clay Ads
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co for precise ad targeting.
 
-Build and sync contact and account lists to LinkedIn, Meta, and Google Ads for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
+Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co for precise ad targeting. Import your target accounts and contacts into Clay, enrich them with personal emails for better match rates, then sync to ad platforms for campaigns and exclusions.
 
 **Key use cases:**
 
@@ -28,7 +28,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
 1.  **To start, go to `Ads`** from the Clay homepage. Then click `New Ad Sync` and select a source type:
     -   **Best practice:** Sync lists from your CRM (Salesforce, HubSpot) or data warehouse for compliance
     -   Also available: CSV upload
-    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads. For Google Ads syncs, use your CRM or data warehouse as the source.
+    -   Note: When using Clay's company/people search (CPJ) as a source, data source restrictions apply by platform — only US-origin contacts are eligible for LinkedIn and Meta; CPJ data cannot be used at all for Google Ads or Bing Ads. For Google Ads and Bing Ads syncs, use your CRM or data warehouse as the source.
 2.  **Choose your connected account** on LinkedIn or Meta and prepare your data before mapping:
     -   LinkedIn has character limits for certain fields. If needed, add a formula column to shorten longer job titles for better match rates.
     -   **Note:** Ad Sync tables have a more limited selection of enrichment providers and actions than regular Clay tables. For complex transformations (such as domain normalization), prepare the data upstream in a regular table first, then use that table or a Clay Audience as the source for your Ad Sync.
@@ -36,11 +36,12 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **For contacts:** Hashed email + first name/last name (required for optimal matching)
     -   **For accounts:** Company name + company website (required for optimal matching)
     -   **Note:** When syncing a LinkedIn **Account list**, a **Company URL** field is also available in the mapping step and can improve match rates. This field does not appear for Contact list audiences — LinkedIn does not support company URL matching for contacts.
+    -   **Note:** Meta and Reddit audiences support **Mobile Advertiser ID (MAID)** as an optional contact-matching field. If you have MAID data — for example, from mobile app installs — map it alongside email to give the platform an additional identifier to match on.
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
-    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
-    -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs.
+    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.**
+    -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs. To view the full sync history, click **Sync history** at the top of this section. The Sync history panel shows past runs grouped by date — each row displays match rate, records sent, matched count, and the change in match rate since the previous run.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
 **Note:** The Sync panel is currently in beta and rolling out progressively to Growth and Enterprise workspaces. Contact [Clay support](https://www.clay.com/contact) if you'd like early access.
@@ -115,9 +116,21 @@ Access control is enforced at the Google Ads account level — the person connec
 
 ### **What platforms are supported?**
 
-Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, and **Google Ads**.
+Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, **Bing Ads**, **Reddit Ads**, and **Vibe.co**.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
+
+### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
+
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, never lists Reddit Ads or Bing Ads. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+
+To send your contacts to Reddit Ads or Bing Ads:
+
+1.  Go to **Ads** from the Clay homepage, click `Create ad sync`, and select **People** (not **Table**, which is marked **Deprecated** and creates a legacy Table ads sync).
+2.  Pick the Audiences People segment that holds your contacts. There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
+3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
+
+Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
 
 ### **Why are some contacts excluded when I set up an ad sync?**
 
@@ -128,7 +141,7 @@ When you create an ad sync, you may see an **Ad sync segment filters** panel sho
 **Why contacts get excluded:**
 
 -   **LinkedIn and Meta:** Contacts sourced from Clay's company/people search (CPJ) are restricted to US-origin contacts only. Non-US CPJ contacts are automatically filtered out.
--   **Google Ads:** Contacts sourced from Clay's company/people search (CPJ) or any other third-party data source are excluded entirely, regardless of country. Only contacts sourced from your own CRM (Salesforce, HubSpot) or data warehouse are eligible for Google Ads syncs.
+-   **Google Ads and Bing Ads:** Contacts sourced from Clay's company/people search (CPJ) or any other third-party data source are excluded entirely, regardless of country. Only contacts sourced from your own CRM (Salesforce, HubSpot) or data warehouse are eligible for Google Ads and Bing Ads syncs.
 
 These restrictions exist for compliance reasons, as third-party sourced contact data is subject to usage limitations under each ad platform's terms of service.
 
@@ -149,27 +162,48 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
+
+Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
+
+### **Why don't I see Google Ads (or other platforms) as an option when creating an ad sync from my Companies segment?**
+
+Only the professional network supports Company (account-level) segments. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only — those platforms do not offer account-level targeting.
+
+When you open the ad sync setup from a Companies segment, only the professional network option appears as an available destination. To use any other platform, create an ad sync from a People segment instead.
+
+To target contacts at your company accounts on those platforms, use **Find people from this list** on your Companies segment to build a corresponding People segment, then sync the People segment to the ad platform of your choice.
+
 ### **Can I edit the field mapping after setting up an Ad Sync?**
 
-No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. Deactivating an Ad Sync places it in read-only history — it does not unlock the mapping for editing. To use a different field mapping, deactivate or permanently delete the current sync and create a new Ad Sync with your updated configuration. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details on the delete option.
+No. Field mapping is configured when you create the Ad Sync and cannot be changed afterward. To use a different field mapping, delete the current sync and create a new Ad Sync with your updated configuration. **Deletion is permanent — the sync cannot be restored afterward.** Deleting the sync does not affect your underlying audience segment. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for details.
 
 ### **Can I permanently delete an Ad Sync?**
 
 Yes. Workspace admins can permanently delete an Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Delete**. Deleting permanently stops all enrichment and syncing and cannot be undone — there is no way to restore a deleted Ad Sync.
 
-This is different from deactivating: deactivating places the sync in read-only history (and can be referenced later), while deleting removes it entirely. If you want to preserve the sync history, use **Deactivate** instead.
+Deleting an ad sync does **not** delete the underlying audience segment — your segment and its contacts remain intact. You can create a new Ad Sync from the same segment at any time.
 
 **Note:** Deleting an Audiences segment that is the source for an Ad Sync will automatically delete the associated Ad Sync as well.
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Yes. After your initial sync is active, an **Expand your reach** section appears below your current platform destinations. Click **Add** next to any available platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
+Yes — you can add a new destination to an active sync using **Pause to edit**. Open the sync, click **Pause to edit**, add the platform under **Sync destinations**, then continue to **Enrich and sync**. Destinations that have already synced cannot be removed from an existing sync — only new ones can be added while paused.
+
+**Pause to edit** is available when a sync is active, processing, or in a warning state. A failed sync, or a one-time sync that has finished and shows the **Exported** status on the Ads page, cannot be paused, and the **Add sync destinations** option no longer appears on it. For those syncs, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
--   If the **Expand your reach** section is not visible, no additional platforms are currently available to add for your workspace. Which platforms appear depends on which ones your workspace has been granted access to — Google Ads requires a separate access request (currently in closed beta) and will not appear as an option even if you are already actively syncing to other ad platforms. Contact [Clay support](https://www.clay.com/contact) to request Google Ads access. If you need to add a platform that is not yet available in **Expand your reach**, the workaround is to deactivate the current sync and create a new Ad Sync with all desired destinations configured from the start. See [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
--   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
--   Google Ads is only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads will appear disabled. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+-   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
+### **Can I change a one-time Ad Sync to recurring?**
+
+No. You choose an Ad Sync's schedule (**One-time** or **Recurring**) in the **Schedule** section when you set up the sync. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (recurring syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
+
+To keep an audience updating on a schedule, create a new Ad Sync with **Recurring** selected and include every destination you want — including any destination the exported one-time sync already sent to, such as Meta. Because each audience segment supports only one Ad Sync, use one of these options:
+
+1.  **Delete and recreate:** Delete the exported Ad Sync, then create a new Ad Sync from the same segment. Deletion is permanent, but it does not affect your segment or its contacts. If you used Enhanced Match, contacts that were already enriched are not enriched again — see [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync).
+2.  **Duplicate the segment:** Keep the exported Ad Sync, select **Duplicate** from the segment's menu, then create the new recurring Ad Sync from the duplicated segment.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
@@ -183,7 +217,14 @@ After sending your audience to LinkedIn or Meta, it will be created within **48 
 
 ### **Why should I use personal emails instead of work emails?**
 
-Personal emails are essential for better match rates because most users sign up for LinkedIn and Meta with personal email addresses rather than work emails. Match rates depend on your audience data quality. To maximize results, use the `Hashed Email for Ads` waterfall to find contact email addresses.
+Personal emails give much higher match rates because most people sign up for Meta and Google using personal email addresses (Gmail, Yahoo, Outlook) rather than their work address. When building your audience, pass all available signals — ad platforms try to match on each signal independently, so more data typically improves your overall match rate. The general priority order is:
+
+1.  **Personal email** — highest match rate
+2.  **Phone number** — very high match rate when available
+3.  **First name + Last name + Country** — supplemental
+4.  **Work email** — use as a fallback
+
+To find personal emails for your contacts, use the `Personal Email` waterfall or the `Hashed Email for Ads` waterfall in a regular Clay table before syncing.
 
 ### **How does the `Hashed Email for Ads` waterfall work?**
 
@@ -193,21 +234,87 @@ If the waterfall prompts for work email as input, that is normal. One or more pr
 
 The waterfall queries multiple providers and returns a **single hashed email** per contact from the first provider that finds a result.
 
+### **When should I use Enhanced Match vs the `Hashed Email for Ads` waterfall?**
+
+For contacts feeding into an ongoing ad campaign, use **Enhanced Match** via the Audiences Ads sync setup. Enhanced Match automatically queries multiple data providers to find and hash personal emails, sending up to three hashed emails per contact to the ad platform — more identifiers per contact improves match rates compared to a single-email approach. Clay stores the results on your audience records between syncs, so you are not re-enriching the same contacts on every run. Enhanced Match also scales beyond the 50,000-row limit that applies to Clay tables, because it runs within Audiences directly. It is available on Growth and Enterprise plans and is configured during the Audiences → Ads sync setup — it is not available as a standalone enrichment in a Clay table.
+
+Use the `Hashed Email for Ads` waterfall (or individual providers such as Vector or ContactLevel) in a Clay table when:
+
+-   You need a one-off hashed email enrichment.
+-   You need hashed emails outside of an Audiences Ads sync — for example, to pass to another platform or workflow — since Enhanced Match is only accessible within the Audiences Ads sync setup.
+
+The table waterfall returns a **single hashed email** per contact from the first provider that finds a result, which provides fewer matching identifiers per contact than Enhanced Match.
+
+### **What if my contacts don't have work emails? Can I still use the Personal Email waterfall?**
+
+Yes. Not all providers in the Personal Email waterfall require a work email as input. Many providers — including Forager, Wiza, Limadata, ContactOut, and Aviato — can look up personal emails using only a LinkedIn profile URL, with no work email needed.
+
+Clay's Quick Setup shows all available input fields for the waterfall (including Work Email) to simplify mapping, but each provider uses only the inputs it accepts and ignores the rest. If you map a LinkedIn URL column and leave Work Email empty, providers that accept only LinkedIn URL will still run and find results.
+
+To see exactly what each provider requires: open the waterfall setup panel, click **Full configuration**, and expand each provider in the **Waterfall sequence** section.
+
 ### **Do audiences automatically update?**
 
-Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+
+For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
 
 ### **Can I see which contacts matched?**
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
 
+### **How do I export the contacts in my ad sync to CSV?**
+
+The ad sync page does not have a CSV download button. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the contacts in an ad sync as a CSV, open the ad sync's source segment in Audiences and export it from there:
+
+1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
+2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
+3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
+4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
+
+### **Why is my matched count higher than the number of contacts I sent?**
+
+This is expected on platforms that match on multiple identifiers per contact. Clay sends up to 3 hashed personal email addresses per contact (via Enhanced Matching) rather than a single email, giving the ad platform more identifiers to match against. The platform counts each matched identifier separately in its reporting — not each unique contact. A single contact with 3 matching hashed emails contributes 3 to the matched count, which is why the matched count can exceed your total contact count.
+
+Your actual ad reach is based on the audience size (unique contacts), not the matched count. When this behavior is active, the Sync panel shows an info note explaining that matched count can exceed contacts sent.
+
 ### **Why does my ad audience show "too small for use in campaigns"?**
 
-Ad platforms report an audience as "too small" when fewer than 300 contacts matched. The most common cause is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
+Ad platforms enforce a minimum number of matched members before an audience can serve. LinkedIn requires at least 300 matched members; Meta requires at least 1,000 matched contacts. The most common cause of falling below these thresholds is that no email column was mapped in the field mapping — ad platforms match contacts by email, so without it the platform processes all sent records but matches 0.
 
 A second factor: if Enhanced Matching is enabled, it uses a professional profile URL or Work Email column you designate to look up personal emails before syncing. If those input columns are not configured, Enhanced Matching cannot improve your match rate.
 
-**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to deactivate the current sync and create a new one. Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+**To fix this:** Because field mapping cannot be changed after an Ad Sync is created, you'll need to delete the current sync and create a new one. **Note: Deletion is permanent — the sync cannot be restored afterward. Deleting the sync does not affect your underlying audience segment.** Map at least one email column, and configure Enhanced Matching inputs if using that feature. See [Why should I use personal emails instead of work emails?](#why-should-i-use-personal-emails-instead-of-work-emails) for guidance on which email type gives the best results.
+
+### **Why does my professional network ad sync show a "Timed out" status?**
+
+A **Timed out** status (yellow indicator) means Clay successfully sent your audience data to the professional network, but the platform did not return match rate data within Clay's 5-day polling window. The audience data was synced — the timeout reflects Clay stopping its wait on the platform's response, not a failure to send your contacts.
+
+When you see this status, Clay shows the message: **"Audience synced. No matches came back in time."** Check your campaign manager on the ad platform directly for the latest match rate and audience size — the platform may have processed the data without returning results to Clay in the expected window.
+
+The **Timed out** status applies only to professional network syncs. Other platforms use shorter polling windows and show a **Failed** status if they do not respond in time.
+
+### **Why am I getting a 403 error when I click Continue on an ad sync?**
+
+A 403 error when clicking **Continue** means Clay blocked the save before ever contacting the ad platform. When you click **Continue**, Clay checks whether the current user has permission to use every connection linked to the sync. If any connection is private — not shared with the workspace or with you individually — the entire save is rejected, even if you are a workspace admin.
+
+**Being a workspace admin does not automatically grant permission to use private connections.** Admin role lets you manage connections (change who they're shared with), but it does not give you permission to use connections you don't own unless they have been explicitly shared with you.
+
+**Option 1: Share the connection (can be done by a workspace admin or the connection's creator)**
+
+1. Go to **Settings → Connections**.
+2. Find the connection used by the ad sync (for example, your Google Ads or professional network connection).
+3. Under access settings, change it to **Anyone in the workspace**, or add the relevant user under **Specific people and groups**.
+4. Click **Save**.
+5. Return to the ad sync and click **Continue**.
+
+**Option 2: Have the connection's creator continue the sync**
+
+Ask the person who originally connected the ad account to open the ad sync and click **Continue** themselves.
+
+**If the ad sync has multiple destinations (for example, Google Ads, the professional network, and Meta):** Clay checks every connection on the sync, not just one. If the error persists after sharing one connection, check each destination's connection in **Settings → Connections** and share any that are still private.
 
 ### **Why is my Google Ads audience sync showing a "Failed to update audience" error?**
 
@@ -218,6 +325,17 @@ In your Google Ads account, go to **Tools & Settings → Audience Manager**. If 
 
 **If Customer Match is enabled and the error still appears:**
 Reauthenticate your Google Ads connection in Clay: disconnect the Google Ads account in your Clay connections settings, reconnect it via OAuth, then run the sync again.
+
+### **Why do Search and Display show a smaller audience size than my overall Google Ads match rate?**
+
+Google reports two different measurements in your Clay Ads sync results:
+
+-   **Match rate** — the percentage of the email hashes you sent that Google matched to any Google Account. A 30% match rate means Google identified 30% of your contacts as real Google users.
+-   **Search and Display audience size** — the subset of matched contacts who are eligible to receive ads on that specific inventory type. To count toward Search or Display, a user must be opted into personalized ads on that network and meet Google's minimum campaign requirements.
+
+This means a 30% overall match rate can coexist with a Search or Display audience size of 0 — if none of the matched contacts meet the eligibility requirements for those networks at the time of matching. This is expected behavior from Google's Customer Match API, not an indication that your sync failed.
+
+If Search and Display remain at 0 after 48 hours, check the audience status in your Google Ads account under **Tools & Settings → Audience Manager**. See [Why is my Google Ads audience sync showing a "Failed to update audience" error?](#why-is-my-google-ads-audience-sync-showing-a-failed-to-update-audience-error) if the sync itself shows an error.
 
 ### **How do I connect my LinkedIn, Meta, or Google Ads account?**
 
@@ -231,6 +349,24 @@ This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — whe
 
 -   **Reconnect your Meta account** — go to your Meta connections in Clay and click to reconnect using "Sign in with Facebook." This resets the 60-day timer.
 -   **Switch to a System User Token** — system user tokens can be configured to never expire, avoiding the need to reconnect every 60 days. This is the recommended approach for production Ad Sync workflows. See [Meta system user token authentication](#meta-system-user-token-authentication) for setup instructions.
+
+### **Why do I see "No ad accounts found" when setting up my Meta Ads destination?**
+
+"No ad accounts found" in the Configure ad accounts step means Clay authenticated with Meta successfully but no ad accounts were returned for the selected connection.
+
+**Note:** If you see a red **"Failed to load Meta Ads accounts. Please try again."** error instead, that indicates an expired or invalid token — go to **Settings → Connections**, find your Meta integration, click the **…** menu next to the account, and select **Reconnect** to re-authenticate. See [Why did I receive an email saying my Meta account will disconnect soon?](#why-did-i-receive-an-email-saying-my-meta-account-will-disconnect-soon) for more detail on OAuth token expiry.
+
+**Using a system user token:** The most common cause is that the ad account hasn't been assigned to the system user in Meta Business Manager, or was assigned with Partial Access instead of Full Control. To fix this:
+
+1.  In Meta Business Manager, go to **Business Settings → Users → System users** and open your system user.
+2.  Click **Add assets** and assign your ad account to the system user with **Full Control** — not Partial Access.
+3.  Also confirm the token was generated with the `ads_management` permission selected (step 10 of [Creating a system user token](#creating-a-system-user-token)).
+
+After updating the asset assignments in Meta, generate a new token and reconnect the account in Clay.
+
+**Using OAuth (Sign in with Facebook):** Confirm that the Meta account you authenticated with has admin access to the ad account you want to use. If you can see the account in **Manage accounts** but it doesn't appear in the dropdown, the ad account may be inactive or restricted in Meta Business Manager.
+
+**Note:** Meta Ads connections in **Settings → Connections** always show a **View in Meta** badge — this is expected and does not indicate a problem. Meta Ads does not support automated connection health checks through the Connections page; use the steps above to diagnose and fix any issues.
 
 ### **Can I sync to multiple ad accounts?**
 

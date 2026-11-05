@@ -55,11 +55,21 @@ If your security policy or compliance requirements (for example, SOC 2) mandate 
 
 ## External collaborators (non-domain email addresses)
 
-SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+SSO only applies to users whose email address matches your verified domain. If you need to give access to someone outside your organization — for example, an external contractor or partner — and their email domain is different from your SSO-configured domain, you can invite them to your Clay workspace and they will not be routed through SSO.
+
+To add an external collaborator with a different email domain:
+
+1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
+2.  Have them accept the workspace invite from their email.
+3.  They sign in using their standard Clay login (email and password, or Sign in with Google) — they are not redirected to your identity provider and do not need to be added to your IdP (for example, Microsoft Entra or Okta).
+
+Clay's SSO routing is domain-based: when a user enters their email on the Clay login page, Clay checks whether that email domain has SSO configured. If the domain does not match your configured SSO domain, Clay treats the user as a standard (non-SSO) user — no additional configuration is required on Clay's side for these external collaborators.
+
+**Note:** If an external collaborator's email address happens to share your SSO-configured domain (for example, a contractor using your company email addresses), they will be routed through SSO and must be added to your identity provider. If you are unsure how to handle that case, contact Clay support.
 
 ## User provisioning
 
-**Clay does not currently support SCIM provisioning.** SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
+**SCIM Directory Sync (automatic provisioning) is in active development and not yet generally available.** SSO (via WorkOS) is currently used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
@@ -70,7 +80,9 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
-SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
+SCIM Directory Sync is in active development — contact Clay support or your Growth Strategist for the latest status on this feature.
+
+**Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
 
 **Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
 

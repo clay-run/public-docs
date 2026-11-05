@@ -54,6 +54,27 @@ If you need different tables to have different levels of access — for example,
 
 For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
+## How much data does Clay read from Salesforce, and can I limit it to only the records I enrich?
+
+Clay does not read or sync your whole Salesforce org. The Salesforce integration only reads the records you point it at, so you control how many Salesforce rows Clay reads. For example, if you only enrich 15,000 accounts per day, you can scope Clay so that only those 15,000 accounts are read.
+
+**What Clay reads from Salesforce depends on how you use the integration:**
+
+-   **Import sources:** The **Import records from a Salesforce list**, **Import records from a Salesforce report**, and **Import records from a Salesforce SOQL query** sources read only the records returned by the list view, report, or SOQL query you select. Records outside that list view, report, or query are not read.
+-   **Lookup actions:** The **Lookup record** and **Lookup records via SOQL** actions run a separate query for each Clay row that runs, using that row's search values. Salesforce reads from lookups scale with the number of rows you run, not with the total number of records in your Salesforce org. The **Lookup record** action returns at most 5 matching records per row.
+-   **Connected user permissions:** Every read is made with the connected Salesforce user's credentials, so Clay can only read the objects, fields, and records that user can access in Salesforce.
+
+**How to limit the number of Salesforce records Clay reads:**
+
+1.  Filter the Salesforce list view or report you import so it only includes the records you want to enrich, or write a SOQL query with a `WHERE` clause and a `LIMIT` clause (for example, `SELECT Id, Name, Website FROM Account WHERE Enrich_Today__c = true LIMIT 15000`). The import sources don't have a separate "row limit" setting — the list view, report, or query is how you scope the import.
+2.  Add [run conditions](https://university.clay.com/docs/conditional-runs) to Lookup columns so they only run on rows that need them.
+
+**Import limits:** The SOQL source imports up to 50,000 records per import, and the report source imports up to 2,000 rows. See [Why did my Salesforce report import only bring in 2,000 rows when my report has more?](#why-did-my-salesforce-report-import-only-bring-in-2000-rows-when-my-report-has-more) for details.
+
+**Re-syncs:** By default, Salesforce imports re-sync every 24 hours, and each re-sync reads the records currently in your list view, report, or query. To change this, see [What are the default sync settings for CRM integrations?](#what-are-the-default-sync-settings-for-crm-integrations)
+
+**Writing to Salesforce:** Connecting Salesforce or importing records into a Clay table never writes to Salesforce. Clay tables only write to Salesforce when you add a **Create record**, **Update record**, **Create or update object** (upsert), or **Convert lead** action, and those actions only send the fields you map. [Clay Audiences](audiences.md) has its own optional Salesforce export, which is configured separately in Audiences settings.
+
 ## What Salesforce license type is required to connect Clay?
 
 The license requirement depends on which connection method you use:
@@ -62,6 +83,37 @@ The license requirement depends on which connection method you use:
 -   **Client Credentials:** Works with **Salesforce Integration User licenses and API-only licenses**. Because Client Credentials connects server-to-server without a browser login, it is not subject to the same OAuth flow restriction.
 
 If your org uses a dedicated integration or service account with an API-only or Integration User license, use the **Client Credentials** method. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
+
+## When should I use Client Credentials instead of User Sign In?
+
+Use **Client Credentials** when you want a Salesforce connection that is stable and not tied to any individual employee. Two reasons most commonly drive this choice:
+
+**Employee turnover.** A User Sign In connection stores an OAuth refresh token tied to the specific Salesforce user who authenticated. When that person leaves the company and their Salesforce account is deactivated, Salesforce revokes their tokens — and the Clay connection stops working. Client Credentials authenticates using a Connected App's consumer key and consumer secret, not a personal token. Because the app's credentials are independent of any individual, the connection remains active even when employees leave.
+
+**License cost.** User Sign In requires a full Salesforce user license. Client Credentials works with Salesforce Integration User licenses and API-only licenses, which are typically less expensive. This lets you dedicate a purpose-built service account to Clay without consuming a paid Sales seat.
+
+If both concerns apply — you want resilience to employee turnover and prefer a lower-cost license — Client Credentials is the recommended approach. For setup instructions, see [Connecting to Salesforce](https://university.clay.com/docs/salesforce-integration-overview).
+
+## How do I switch from User Sign In to Client Credentials?
+
+You can switch an existing User Sign In connection to Client Credentials in place using **Reconnect** — you do not need to add a new connection or update individual Clay tables. All tables, columns, and workflows that reference the connection automatically use the updated credentials on their next run.
+
+**Your existing Clay tables will not be disrupted**, as long as the Salesforce user configured as the "Run As" user in your Salesforce External Client App has the same object and field permissions as the user currently connected via User Sign In.
+
+**Optional — see which resources use this connection before switching.** Navigate to `Settings` → `Connections` → `Salesforce`, click `…` next to the connection, and select **View resources**. A panel lists every workbook, table, function, Claygent, Audience, Signal, and Ad that references this connection — useful to confirm the scope before changing credentials.
+
+**Step 1: Set up Client Credentials in Salesforce.** Your Salesforce admin needs to create an External Client App and configure it for Client Credentials. See [Client Credentials setup instructions](salesforce-integration-overview.md#client-credentials-integration-user) in the Salesforce integration overview for the full steps.
+
+**Step 2: Reconnect the existing connection in Clay.**
+
+1.  In the home sidebar, click `Settings` → `Connections`.
+2.  Select `Salesforce` and find the User Sign In connection you want to switch.
+3.  Click `…` next to it and choose **Reconnect**.
+4.  In the reconnect modal, select **Client Credentials**.
+5.  Fill in your **My Domain URL**, **Consumer key**, and **Consumer secret** from your External Client App.
+6.  Click `Authenticate` to save.
+
+The connection updates in place — every Clay table and column that referenced the original User Sign In connection will automatically use the new Client Credentials on its next run. No table-by-table update is needed.
 
 ## How do I verify which Salesforce user is associated with my connection?
 
@@ -97,6 +149,28 @@ The objects available in Clay are determined entirely by the permissions of the 
 Once your Salesforce admin grants the necessary permissions, the updated access will be reflected in Clay automatically. You can verify by logging into Salesforce as the connected user and confirming Account records are visible there.
 
 For guidance on setting up an integration user with the right object access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+## How do I get a field I just created in Salesforce to appear in Clay?
+
+The answer depends on where you want to use the new field in Clay.
+
+**In a Create Record or Update Record enrichment (Clay table)**
+
+Open the action column, scroll to the **Map fields** section, and click **Refresh**. This re-fetches the object's field definitions live from Salesforce. Once the field list updates, click **+ Add field** to find and add your new field.
+
+**In a Lookup Record enrichment (Clay table)**
+
+Open the Lookup Record column and click **Refresh fields** in the **Object Field(s)** section. This re-fetches the field list from Salesforce and adds any newly created fields to the selector.
+
+**In Audiences (Salesforce sync field mapping)**
+
+Open the Salesforce source settings in Audiences — Clay fetches the available field list live from Salesforce each time you open the settings panel, so no reconnect or refresh is needed. Add your new field to the import mapping, then save. When you save, Clay fills in the new field on records already in your audience from each record's most recently synced copy. Records whose value in Salesforce was set or changed after Clay last synced them get the value when they're next modified in Salesforce or at the weekly full sync — see [I added a new Salesforce field to my mapping but some records are missing data for it](audiences.md#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+
+**If the new field still doesn't appear after refreshing**
+
+The most likely cause is Field-Level Security (FLS) — the Salesforce user connected to Clay does not have Read access to the new field. Salesforce's describe API only returns fields the connected user can read, so any field blocked by FLS is absent from Clay's pickers regardless of when it was created. Ask your Salesforce admin to grant **Read** access (and **Edit** access if you plan to write data back) to the field via **Setup** → **Profiles** (or **Permission Sets**) → the user's profile → **Object Settings** → **Field Permissions**. After the permission is updated, reopen the column or the Audiences mapping settings and the field will appear.
+
+For more detail on field-level security and Clay, see [Why are some Salesforce fields missing from the Map fields panel?](#why-are-some-salesforce-fields-missing-from-the-map-fields-panel-in-the-update-record-or-create-record-action) and [Why are some Salesforce fields missing from the Object Field(s) selector?](#why-are-some-salesforce-fields-missing-from-the-object-fields-selector-in-the-lookup-record-action)
 
 ## Why is a Salesforce field not appearing in the Lookup Record field picker?
 
@@ -143,11 +217,46 @@ Clay populates the Map fields picker by calling Salesforce's object describe API
 
 **To confirm which Salesforce user your connection is authenticated as**, go to `Settings` → `Connections` → `Salesforce`, click `…` next to your connection, and select `Test Connection`. Clay displays that user's email address — confirm the user has the correct FLS permissions for the fields you need.
 
+## Why does Clay show my Salesforce checkbox field as a text field, and how do I update it?
+
+In the **Map fields** section of the Salesforce **Create record**, **Update record**, and **Create or update object** (upsert) actions, Salesforce checkbox fields are shown with a text ("T") icon instead of a checkbox. This is how Clay displays Salesforce checkbox fields — it doesn't mean your field is set up incorrectly in Salesforce.
+
+What matters is the value you send to the Salesforce checkbox field:
+
+-   **Typing `TRUE` (or `true`) directly into the Map fields box doesn't work.** Anything typed directly into a Map fields box is sent to Salesforce as text, and Salesforce rejects text for a checkbox field, so the row errors.
+-   **Mapping a column that holds a true/false value works.** Clay sends a true/false value from a column (for example, a formula column) to Salesforce as a checkbox value, which Salesforce accepts.
+
+**To update a Salesforce checkbox field from Clay:**
+
+1.  Add a formula column to your table that returns true or false. For example, if a text column called `Not_At_Company__c` holds the text `TRUE`, use the formula `{{Not_At_Company__c}} === "TRUE"`. The formula returns `true` for rows where the column says `TRUE` and `false` for every other row.
+2.  Open your **Update record** (or **Create record**) column, clear any text typed into the checkbox field's box in **Map fields**, type `/`, and select the new formula column.
+3.  Save, run a single row as a test, and confirm the checkbox is checked on that record in Salesforce.
+
+**Converting a text column to a Checkbox column:** if you change a text column's type to **Checkbox** instead of using a formula, Clay only recognizes the exact text `true` or `True` as checked and `false` or `False` as unchecked. Other values, such as `TRUE` in all caps, `yes`, or `1`, can't be converted. If your column holds values like `TRUE`, use the formula column approach above.
+
+## How do I access address fields (street, city, state) from a Salesforce Lookup Record?
+
+When a **Lookup Record** action returns a Salesforce Account or Contact, the result includes Salesforce's compound address fields as nested objects in Clay's cell details panel. These appear as **Billing Address** and **Shipping Address**, each containing individual sub-fields: Street, City, State, Postal Code, Country, State Code, Country Code, Latitude, Longitude, and Geocode Accuracy.
+
+**To find and use these sub-fields:**
+
+1.  Click into any cell in your Lookup Record column to open the cell details panel on the right.
+2.  Type `address` in the search bar at the top of the panel. **Billing Address** and **Shipping Address** appear as expandable objects.
+3.  To pull a specific sub-field into its own column, add a **formula column** to the right of the Lookup Record column. In the formula input, type `/` to open the column picker, select your Lookup Record column, then drill down to the sub-field you need — for example, `Billing Address > Street`.
+4.  To combine sub-fields into a single address string, use a formula column and describe the logic in plain language — for example: *return the billing street, city, state, and postal code joined with commas; fall back to the shipping address fields when billing is empty*.
+
+**If Salesforce has no address for a row:**
+Add a Claygent column and prompt it to find the company's street address from the company domain or name. Use a [conditional run](conditional-runs.md) to run Claygent only on rows where the Lookup Record returned an empty billing and shipping street.
+
+**Note:** Clay's native location data — from **Find Companies** or location enrichment fields — returns city, state, and country only. It does not include a street address. For street-level data, the Salesforce Lookup Record address sub-fields are the primary source when your records are already in Salesforce.
+
 ## Why does the Lookup Record action return a maximum of 5 results?
 
-The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist.
+The standard **Lookup Record** action returns a maximum of 5 records per run. This is by design — it is optimized for finding a single matching record and returns up to 5 results when multiple matches exist. The 5 records are returned in no guaranteed order (Salesforce's default retrieval order, not sorted by date or any other field), so you may not see the most recent records even when the related object has more than 5.
 
-If you need to retrieve all contacts (or other records) linked to a specific account — for example, when your CRM has 20 or more contacts per account — use the **Lookup Records via SOQL** action instead. With SOQL you control how many results are returned via your own `LIMIT` clause, or omit it to return all matches:
+If you need to retrieve all related records — or control how many are returned and in what order — use the **Lookup Records via SOQL** action instead. With SOQL you set the record count via your own `LIMIT` clause and can sort results with `ORDER BY`.
+
+**All contacts linked to an account:**
 
 ```sql
 SELECT Id, FirstName, LastName, Email, Title
@@ -155,7 +264,37 @@ FROM Contact
 WHERE AccountId = '/Account ID'
 ```
 
-Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. You can use an AI assistant to help write the query — for example: "write a SOQL query to return all contacts for a given Salesforce account ID." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
+**Most recent opportunities for an account (newest close date first):**
+
+```sql
+SELECT Id, Name, StageName, Amount, CloseDate
+FROM Opportunity
+WHERE AccountId = '/Account ID'
+ORDER BY CloseDate DESC
+LIMIT 200
+```
+
+Replace `/Account ID` with the relevant column from your Clay table using the `/` picker in the query editor. The `ORDER BY CloseDate DESC` clause in the Opportunity query returns the most recently closed opportunities first; adjust `LIMIT` to set how many you want back. You can use an AI assistant to help write the query — for example: "write a SOQL query to return the 10 most recent opportunities for a given Salesforce account ID, sorted by close date descending." For SOQL syntax reference, see [Salesforce SOQL](salesforce-soql.md).
+
+## How do I update all Salesforce records returned when a lookup finds multiple matches?
+
+The **Update Record** action updates only one Salesforce record per row — it accepts a single Record ID and cannot iterate through a list of IDs returned by a Lookup Record column. To update every record the lookup found, you need to expand that list into individual rows first using **Send Table Data**, then run **Update Record** in the new table.
+
+**Step-by-step:**
+
+1. **Keep your Lookup Record column** in the source table. It returns a list of matching records (for example, multiple accounts that share the same domain).
+2. **Add a Send Table Data column** in the same table. In the column setup:
+   - Set the method to **Send row for each item in a list**.
+   - Select your Lookup Record column as the list source, then click the `records` → arrow to target the list of matched records.
+   - Map the Salesforce Record ID and any enrichment fields you want to carry over (such as domain, funding, revenue, or location).
+   - Set the destination to a new empty table. Test with an empty table first to verify the row expansion before updating Salesforce.
+3. **In the new table, add an Update Record column:**
+   - Set **Record ID** to the Salesforce Account ID column sent from the source table.
+   - In **Map fields**, map the fields you want to update (such as funding, revenue, or location).
+
+Each matched record now has its own row in the new table, and the Update Record column updates each Salesforce record individually.
+
+**Note:** The standard Lookup Record action returns up to 5 matching records. If you expect more than 5 matches, use **Lookup Records via SOQL** with a custom query instead — see [Why does the Lookup Record action return a maximum of 5 results?](#why-does-the-lookup-record-action-return-a-maximum-of-5-results) for details.
 
 ## Why does the Lookup Record action return "Error: Bad Request"?
 
@@ -174,6 +313,8 @@ LIMIT 5
 
 By requesting only the fields you actually use, the query stays under the 15-reference limit and the error goes away. For tips on writing SOQL queries in Clay, see the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview.
 
+**If you selected "Activity History" as the Salesforce Object:** This error has a different cause. Activity History is not a directly queryable object in Salesforce — it is a read-only rollup of Tasks and Events, accessible only as a child relationship on a parent record. Salesforce rejects any query that uses `ActivityHistory` directly in a SOQL `FROM` clause, which is what the Lookup Record action does. No field selection or configuration change will fix this. Query **Task** and **Event** directly using the **Lookup records via SOQL** action instead. See [How do I look up activity records (Tasks or Events) for a Salesforce contact?](#how-do-i-look-up-activity-records-tasks-or-events-for-a-salesforce-contact) for step-by-step SOQL examples.
+
 ## Why is my Lookup Records via SOQL action returning "Invalid SOQL Query" for some rows?
 
 If only certain rows fail with **"Invalid SOQL Query. Please check your query syntax and try again."** while others succeed, the most likely cause is **special characters in the input value** for those rows. Two characters that commonly appear in company names and break SOQL string literals are:
@@ -191,9 +332,9 @@ Only rows with those characters in the matched column will fail — rows with cl
 
 ## How do I look up activity records (Tasks or Events) for a Salesforce contact?
 
-In Salesforce, activity records — Tasks and Events — are stored as separate objects, not directly on the Contact record. Because of this, the standard **Lookup Record** action (which retrieves the Contact object) won't return a contact's activities. You need to query the Task or Event object directly.
+If you select **Activity History** as the Salesforce Object in a standard **Lookup Record** column, the action returns **"Error: Bad Request"** on every row. Activity History is not a directly queryable object in Salesforce — it is a read-only rollup of Tasks and Events that Salesforce exposes only as a child relationship on Contact, Lead, Account, and other records. No field selection or configuration change in the Lookup Record action will fix this.
 
-Use the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
+To look up activity records, query the **Task** or **Event** object directly using the **Lookup records via SOQL** action and filter on the `WhoId` field, which links each Task or Event to its associated contact or lead.
 
 **For Tasks (calls, to-dos, logged emails):**
 
@@ -211,7 +352,7 @@ FROM Event
 WHERE WhoId = '/Salesforce Contact ID'
 ```
 
-Replace `/Salesforce Contact ID` with the contact's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor.
+Replace `/Salesforce Contact ID` with the contact's or lead's Salesforce ID column from your Clay table, inserted using the `/` picker in the query editor. `WhoId` accepts both contact IDs (starting with `003`) and lead IDs (starting with `00Q`) — do not use the **Related To ID** field, which links to accounts and opportunities, not to contacts or leads.
 
 **Tips:**
 
@@ -228,6 +369,62 @@ If the column holding phone numbers is set to **Number** type, Clay alters the v
 
 **To fix:** Click the phone number column header, hover over the current data type, and switch it to **Text**. Text columns preserve the exact phone number string — including the leading `+` and any separators — so the value Clay sends to Salesforce matches what Salesforce has stored.
 
+## Why does Lookup Record return "no records found" when searching by LinkedIn URL or website domain, even though the record exists in Salesforce?
+
+URL format differences between the value in your Clay table and the value stored in Salesforce — such as a `www.` prefix, a trailing slash, or `http://` versus `https://` — are enough for the lookup to return "No records found," even when the URLs point to the same page.
+
+**Why this happens:** When **Exact match?** is turned off (the default), Clay queries Salesforce using `field LIKE '%value%'`. This means the Clay search value must be a **substring** of the Salesforce field value — not the other way around. A `www.` prefix makes the Clay value longer than the Salesforce stored value, so it cannot be contained within it:
+
+- Clay has `https://www.linkedin.com/company/acme`, Salesforce has `https://linkedin.com/company/acme` → **no match** (Clay value is longer and is not a substring of the Salesforce value)
+- Clay has `https://linkedin.com/company/acme`, Salesforce has `https://www.linkedin.com/company/acme` → **match** (Clay value is shorter and is contained within the Salesforce value)
+
+The same asymmetry applies to trailing slashes (`linkedin.com/company/acme/` vs `linkedin.com/company/acme`) and protocol differences (`http://` vs `https://`).
+
+**To fix:** Add a formula column that normalizes the URL to a consistent format, then use that cleaned column as the search input instead of the raw URL column. To strip a `www.` prefix and remove a trailing slash:
+
+```javascript
+#{{LinkedIn URL}}?.replace(/^(https?:\/\/)www\./, "$1")?.replace(/\/$/, "")
+```
+
+This converts `https://www.linkedin.com/company/acme/` to `https://linkedin.com/company/acme` regardless of what prefix or trailing slash was present, so the value Clay sends matches what Salesforce has stored.
+
+If your Salesforce org stores LinkedIn URLs or website domains in inconsistent formats across records, use the **Lookup records via SOQL** action with a `LIKE` query that wraps the core URL path in `%` wildcards — this matches any prefix or suffix. See the [Lookup records via SOQL](salesforce-integration-overview.md) section of the Salesforce integration overview for details.
+
+## Why does my Salesforce Lookup return "no records found" for a record that was just created?
+
+When Clay runs a lookup column as soon as a new row arrives, the Salesforce record may not yet be visible via the API. Salesforce automations — such as LeanData routing rules or other workflow triggers that convert a Lead into an Account and Contact upon creation — can introduce a delay of seconds to several minutes before the newly created record appears in Salesforce search results.
+
+**To fix:** Open the lookup column, scroll to **Run settings**, switch **Delay run** from **Run immediately** to **Run after delay**, and enter a delay in seconds — for example, `60` seconds if your Salesforce automations typically complete within a minute (up to 600 seconds / 10 minutes). This defers the lookup until after Salesforce has finished creating the record. Setting a delay does not consume an extra credit — the lookup is charged normally when it actually runs.
+
+Because the propagation delay from your Salesforce automations may not be fixed, some rows may still come back empty even with a delay. To re-run those stragglers: right-click the lookup column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results without re-checking rows that already matched.
+
+**Avoid using a row-age run condition for this pattern.** A conditional formula that checks how long ago a row arrived will cause cells to show **"Run condition not met"** if the condition is not satisfied at run time — those cells do not retry automatically. Use Delay run instead; it defers the run without requiring condition re-evaluation.
+
+## Why doesn't my Salesforce report show up in the List View dropdown?
+
+Salesforce reports and Salesforce list views are separate things in Clay, and each one has its own import source. The **List View** dropdown only lists Salesforce list views for the Salesforce object you selected — Salesforce reports never appear there. If you're looking for a report in the **List View** dropdown, you'll only see list views (such as "My Accounts" or "All Accounts"), which can include old list views you created long ago.
+
+This applies to both places that use a **List View** dropdown:
+
+-   The **Import from CRM** flow (the "Start with CRM data" screen), which asks for **Salesforce Object** and **List View** only. The Import from CRM flow does not offer Salesforce reports.
+-   The **Import records from a Salesforce list** source.
+
+**To import a Salesforce report into Clay:**
+
+1.  In a workbook, click `+ Add` (or create a new table) and search for `Salesforce report`.
+2.  Select **Import records from a Salesforce report**.
+3.  Select your Salesforce account.
+4.  Choose your report from the **Report to Run** dropdown.
+5.  Optionally, pick **Uniqueness Fields** to prevent duplicate rows when the report re-syncs, then click `Submit`.
+
+**If your report is missing from the Report to Run dropdown:**
+
+-   **Report format:** The Report to Run dropdown only shows **Tabular** and **Matrix** reports. Summary and Joined reports are hidden. See [Why is my Salesforce report data not populating in Clay?](#why-is-my-salesforce-report-data-not-populating-in-clay) for how to change the format.
+-   **Connected user's access:** The dropdown lists the reports that the Salesforce user behind your selected Salesforce account can see. If you created the report under your own Salesforce login but Clay is connected as a different user (for example, an API or integration user), save the report in a folder that user can access, or select a Salesforce account connected as a user who can see the report.
+-   **Large orgs:** The Report to Run dropdown shows up to 2,000 reports, sorted by most recently run, then most recently modified. If your org has more than 2,000 reports, run your report in Salesforce so it moves to the top of the list, then reopen the dropdown in Clay.
+
+The same connected-user rule applies to the **List View** dropdown: it lists the list views the connected Salesforce user can see for the selected object.
+
 ## Why is my Salesforce report data not populating in Clay?
 
 The most likely cause is the report's format. Clay's **Import records from a Salesforce report** source only supports **Tabular** and **Matrix** report formats. Reports in **Summary** or **Joined** format are not supported and will return an error when Clay tries to run them.
@@ -238,14 +435,32 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
+**If the report format is correct but the report still doesn't appear in the picker**, the report's folder permissions may be the cause. Clay queries the Salesforce Report API using the connected Salesforce user's credentials, and Salesforce only returns reports in folders that user can read — making a report public in Salesforce is not sufficient if the connected user lacks read access to the folder containing the report. To fix this, ask your Salesforce admin to grant the connected Salesforce user read access to the folder where the missing report is stored.
+
 ## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
 
 This is expected behavior. The Salesforce Analytics API caps the number of records returned when running a report at **2,000 rows**. Clay's **Import records from a Salesforce report** source fetches a single page of results from this API — if your report contains more than 2,000 records, only the first 2,000 are imported into Clay. This is a Salesforce API restriction, not a Clay bug.
 
 **To import more than 2,000 records from Salesforce, use one of these alternatives:**
 
-- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
+- **Salesforce List source (recommended):** Create a Salesforce list view that matches your report criteria and use Clay's **Import records from a Salesforce list** source instead. SOQL-compatible list views support up to 50,000 records per import — list views that are not SOQL-compatible are still capped at 2,000 rows. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps.
 - **Salesforce SOQL source:** Write a custom SOQL query that pulls the exact records you need. The SOQL source also supports up to 50,000 records per import and gives you full control over filtering and field selection. See [Salesforce SOQL](salesforce-soql.md) for details.
+
+## Why does my Salesforce report import fail with "The action function output exceeded the size limit" even when the report has fewer than 2,000 rows?
+
+The error "The action function output exceeded the size limit" is a data size error, not a row count error. Clay's **Import records from a Salesforce report** source fetches all report results in a single pull. If the total payload from that pull exceeds approximately 5 MB, the run fails — regardless of whether the report is under the Salesforce 2,000-row API cap.
+
+How large the payload is depends on how many rows the report returns **and** how wide each row is. Reports that include long text fields — such as Account Description, Qualification Summary, or large URL fields — generate a much larger payload per row than reports with only short fields. A report with 1,500–1,800 rows containing several long text fields can exceed the 5 MB limit, while the same report at fewer rows or with narrower columns succeeds.
+
+**The 2,000-row Salesforce API cap and the 5 MB size limit are separate.** You can hit the size limit well before reaching 2,000 rows if your report includes wide or text-heavy columns.
+
+**To fix this:**
+
+1. **Remove unused long text columns from the Salesforce report.** In Salesforce, edit the report and remove any columns you do not actually use in Clay — especially long text fields like Account Description and Qualification Summary. This is the quickest fix and gives you significant headroom on the same report.
+
+2. **Switch to a Salesforce List or SOQL source.** The **Import records from a Salesforce list** (using a Salesforce list view) and **Import records from a Salesforce SOQL query** sources pull records in batches instead of all at once. They are not subject to the single-pull size limit and can handle up to 50,000 records. You can keep the same daily schedule after switching. See the [Salesforce integration overview](salesforce-integration-overview.md) for setup steps, or [Salesforce SOQL](salesforce-soql.md) for query-based imports.
+
+Even after switching sources, removing long text columns you do not use in Clay keeps each batch smaller and reduces the chance of hitting any per-row size limits.
 
 ## Why did my scheduled "Import records from a Salesforce list" stop running?
 
@@ -255,7 +470,7 @@ The most common cause is that the source reached the 50,000 total records proces
 
 **Options to continue importing records:**
 
-- **Audiences with bulk enrichment (recommended for ongoing syncs).** Import your Salesforce records into a Clay Audience and run bulk enrichment on a schedule. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
+- **Audiences with Workflows (for ongoing processing).** Import your Salesforce records into a Clay Audience and connect a [workflow](https://university.clay.com/docs/workflows) to the segment. Audiences are not subject to the 50,000-record source limit. For details, see [Audiences](audiences.md).
 - **Webhook source.** If you can configure Salesforce to push record changes to Clay via a webhook — for example, using a Salesforce Flow that triggers a callout when a record is saved — webhook sources do not accumulate toward the 50,000-record limit when auto-delete is enabled. This works well for event-driven workflows where Salesforce fires updates as they happen.
 - **Create a new source.** Deleting the existing source and adding a new "Import records from a Salesforce list" source on the same table resets the processed-record counter to zero, giving you a fresh 50,000 records. This is a short-term workaround — the new source will eventually reach the limit again as it processes records.
 
@@ -334,6 +549,13 @@ This error typically occurs after Salesforce accounts have been merged. When Sal
 3.  Re-run the Update Record action. Clay will now send requests using the surviving record's current Salesforce ID.
 
 To refresh IDs across multiple affected rows at once, click the Lookup Record column header and select **Run column → Run empty or out-of-date rows** before re-running your Update Record action.
+## What does a `duplicateResult` in my Create Record error details mean?
+
+If your Create Record action fails and the error details show a JSON object containing `duplicateResult` — with fields such as `duplicateRule`, `allowSave`, and `errorMessage: "Use one of these records?"` — Salesforce's duplicate rule detected an existing record matching the one Clay tried to create. Clay surfaces this as an error containing the raw Salesforce response.
+
+The `allowSave: true` value inside `duplicateResult` does **not** mean the record was saved. It means the duplicate rule is configured to warn rather than hard-block — Salesforce will allow the save, but only if the API client explicitly requests an override. Because Clay does not send that override by default, the create fails.
+
+To create the record anyway, enable the **Duplicate Rule Override** toggle in your Create Record column settings. Clay will then include the override instruction in the Salesforce API request, bypassing the duplicate warning. For additional options — including updating the existing record instead of creating a new one, or adjusting the Salesforce rule itself — see [Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?](#why-am-i-seeing-a-duplicates_detected-error-when-creating-records-in-salesforce) above.
 
 ## Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?
 
@@ -349,11 +571,60 @@ Clay does not transform field values before sending them to Salesforce — whate
 
 The same fix applies to any reference field that returns a `MALFORMED_ID` error — not just **OwnerId**.
 
+## Why am I seeing an `INVALID_CROSS_REFERENCE_KEY` error when updating a Salesforce record?
+
+This error comes from Salesforce, not Clay. When Clay's **Update Record** action sends an update request to Salesforce, Salesforce returns `INVALID_CROSS_REFERENCE_KEY` if it cannot resolve the record ID in the **Record ID** field to a record the connected user can write to. Clay passes the Salesforce error message through to the cell without modification.
+
+Three things cause this:
+
+1.  **The ID belongs to a different object type.** Salesforce record IDs carry a three-character prefix that identifies the object — `003` for Contact, `00Q` for Lead, `001` for Account. If a row's **Record ID** column contains an ID whose prefix doesn't match the object you're updating — for example, a Lead ID (`00Q...`) supplied to a Contact **Update Record** action — Salesforce rejects the update with `INVALID_CROSS_REFERENCE_KEY`.
+
+2.  **The record was deleted or merged in Salesforce after the ID was pulled into Clay.** If the Salesforce record no longer exists or was merged into another record, the stored ID is stale and Salesforce cannot find it.
+
+3.  **The connected Salesforce integration user lacks write access to that specific record.** Record-level restrictions — such as org-wide sharing defaults, sharing rules, or record ownership settings — can make a record invisible or read-only for the integration user. When the record is inaccessible to the connected user, Salesforce returns `INVALID_CROSS_REFERENCE_KEY` rather than a standard access error.
+
+**To diagnose which cause applies:**
+
+1.  Click into an erroring row in Clay to see the exact ID that was used as the **Record ID**.
+2.  Look up that ID directly in Salesforce (navigate to `https://[your-org].salesforce.com/[ID]`):
+    -   If Salesforce shows "We couldn't find the record," the record was deleted or merged — the ID is stale (cause 2).
+    -   If Salesforce opens the record but it's the wrong object type, an ID prefix mismatch is the cause (cause 1). Check that the column you mapped as **Record ID** only contains IDs for the object type you're updating.
+    -   If Salesforce opens the correct record and the record exists, the issue is a permissions restriction on the integration user for that specific record (cause 3).
+
+**Fixes by cause:**
+
+-   **Wrong object type (cause 1):** Verify the column you're using as **Record ID** only contains IDs for the object type your **Update Record** action targets. Use a formula column to check the prefix before the action runs — for example, `LEFT({{Record ID}}, 3) = "003"` to confirm Contact IDs.
+-   **Stale ID — deleted or merged record (cause 2):** Add a **Lookup Record** step to find the current record (or confirm it no longer exists) and refresh the ID in your Clay table before updating.
+-   **Permissions restriction (cause 3):** Ask your Salesforce admin to confirm the integration user has write access to the affected records through their profile, permission sets, sharing rules, or record ownership settings. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for guidance on setting up integration user permissions.
+
+## Why am I seeing "Make sure you include an upsert key. No value is mapped to the ... field." in the Salesforce Create or update record action?
+
+The Salesforce **Create or update record** (upsert) action returns `Make sure you include an upsert key. No value is mapped to the <field> field.` when the field chosen as the **Upsert Field** has no value mapped in the action's fields. The `<field>` part of the message is whatever was set as the **Upsert Field**.
+
+The **Upsert Field** must be the name of a Salesforce **external ID field** on the object. Clay matches existing records on that field's value. In the **Upsert Field** dropdown, Clay lists only fields marked as external IDs in Salesforce. The standard Salesforce record `Id` is not one of them. If a Salesforce record ID such as `003N200001O12nrIAB` appears in the error, the **Upsert Field** was pointed at a record ID value instead of a field name. For example, the **Upsert Field** may be mapped to a "Salesforce Record ID" column or function input.
+
+**If you already have the Salesforce record ID** (for example, from a **Lookup record** step or a function input), use the **Update record** action instead of **Create or update record**:
+
+1.  Add a Salesforce **Update record** action (or swap your **Create or update record** step for one).
+2.  Set **Salesforce Object** to the object you're writing to, for example **Contact**.
+3.  Map **Record ID** to the column or input that holds the Salesforce record ID.
+4.  In **Map fields**, add every field you want to write and map each one to its Clay column, for example **Email** to your work email column and **MobilePhone** to your mobile number column. Salesforce receives only the fields you map. A field that isn't mapped, such as a mobile number you enriched but never added in **Map fields**, is never sent.
+5.  If the step is inside a function, publish the function so the change takes effect.
+
+**Update record** only updates existing records. If Salesforce can't find the record ID, the row fails with an error and no new record is created.
+
+**If you need to create records that don't exist yet**, keep **Create or update record** and set **Upsert Field** to an external ID field on the object. Make sure that same field is mapped to a column with a value on every row. If the object has no external ID fields, Clay shows `No external id fields found for <object>`. In that case, either ask your Salesforce admin to add an external ID field, or use **Lookup record** followed by conditional **Create record** and **Update record** columns, as described in [Why am I seeing a `DUPLICATES_DETECTED` error when creating records in Salesforce?](#why-am-i-seeing-a-duplicates_detected-error-when-creating-records-in-salesforce)
+
 ## When creating a Salesforce contact, do I need to map Account Name in addition to Account ID?
 
 No. Mapping the **Account ID** field in the **Map fields** panel is sufficient to associate the new contact with an account. The Account Name you see displayed in Salesforce is not a separate field to create — Salesforce derives it from the Account ID relationship and shows it as a label in the record form. Because Account Name is a read-only derived field, it does not appear as an option in Clay's **Map fields** panel and cannot be mapped directly.
 
-To set the correct Account ID, use a **Lookup Record** column (with the **Account** object) to find the account by name, domain, or another identifier, then map the returned `Id` field to the **Account ID** field in your **Create Record** column. For a step-by-step example of retrieving a Salesforce ID for a reference field, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
+To set the correct Account ID, you need the Salesforce Account record's ID — not its name. How you get that ID depends on whether the Account already exists in Salesforce:
+
+-   **Account already exists:** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company name, domain, or another identifier. The returned `Id` field is the Account ID to map.
+-   **Account does not exist yet:** Add a **Create Record** column, set the Salesforce object to **Account**, and map your company name and any other required Account fields. This step returns a new Account ID you can then pass through to the Contact step.
+
+In both cases, map the returned Account ID to the **Account ID** field in your **Create Record** or **Update Record** column for the Contact — never to a text "Account Name" field. Salesforce displays the account name automatically once the Account ID is linked. For a step-by-step example of the lookup approach, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
 
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
@@ -373,7 +644,7 @@ If you have a name but not the Salesforce ID for a relationship field, add a **L
 
 **3. A field type mismatch**
 
-If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment.
+If a mapped value doesn't match the expected Salesforce field type — for example, text sent where a boolean or lookup ID is expected — the record can fail validation after creation. Review your **Map fields** configuration for type alignment. For checkbox fields, see [Why does Clay show my Salesforce checkbox field as a text field, and how do I update it?](#why-does-clay-show-my-salesforce-checkbox-field-as-a-text-field-and-how-do-i-update-it)
 
 **4. Duplicate rules on the object**
 
@@ -439,6 +710,33 @@ If you're using [Clay Audiences](audiences.md), create a segment filtered to onl
 3.  Sync this filtered segment to Salesforce. Records that don't match the filters stay in Audiences but are never written to Salesforce.
 
 This gives you a single place to manage field-completeness rules across your workspace, rather than maintaining run conditions in each table. Note that syncing an Audiences segment to Salesforce requires a **Growth or Enterprise** plan.
+
+## How do I update a Salesforce field only if it's blank, without a separate Update record column for every field?
+
+You can make the Salesforce **Update record** action write to a field only when that field is empty in Salesforce — and you can do it for many fields (for example, 10 mapped fields) with one **Update record** column instead of one column per field.
+
+**Why a run condition alone isn't enough:** An **Only run if** run condition applies to the whole **Update record** column. There is no per-field run condition: when the condition is met, every field mapped in that column is updated, and when it isn't, none are. That's why it can look like you need a separate **Update record** column, each with its own run condition, for every field you write back.
+
+**To fill only the blank Salesforce fields with one lookup, one formula, and one Update record column:**
+
+1.  **Get the current Salesforce values into your table.** If your rows came from a Salesforce import source, those fields are already columns. Otherwise, add a single **Lookup record** column for the object. One Lookup record column returns the whole Salesforce record, so you don't need a separate lookup for each field.
+2.  **Add a formula column that returns the new value only when the Salesforce field is empty.** For one field, describe it like this: *if /Salesforce Industry is empty, return /Enriched Industry, otherwise return blank*. To cover several fields with one formula, have the formula check each Salesforce field and return all the new values together as one object with a key per field (for example, `industry` and `employees`). Each key holds the new value when that Salesforce field is empty and is blank otherwise.
+3.  **Map each Salesforce field to the formula output in a single Update record column.** In **Map fields**, map each Salesforce field to its value from the formula — for a combined formula, reference the matching key, for example `{{Fill blank fields}}?.industry`. You can also click into a formula cell and use **Add as column** on a key to turn it into its own column, then map that column. Map the formula output, not the raw enrichment column.
+4.  **Keep Ignore blank values turned on.** In the **Update record** settings, **Ignore blank values** is on by default. With it on, blank values from Clay are not sent to Salesforce, so any field that already has a value in Salesforce is left unchanged.
+5.  **Test on a single row first.** Run the **Update record** column on one row, check the record in Salesforce to confirm each value landed in the right field, then run the rest of the table.
+
+Each row then fills in only the Salesforce fields that are empty and leaves populated fields as they are, all in one update.
+
+**Tip:** Columns from a Salesforce import source hold the values from when the records were imported. If the records may have changed in Salesforce since then, run the **Lookup record** column just before the **Update record** column so your formula checks the current Salesforce values.
+
+**Should I use one Update record column per field instead of the formula setup?** Both setups fill in only the blank Salesforce fields, and both evaluate each field independently. They take a similar number of columns to build when you write one formula per field. The difference is how many writes Clay sends to Salesforce:
+
+-   **One Update record column per field (simplest for a handful of fields):** Add a separate **Update record** column for each field, map only that field, and give each column its own **Only run if** condition that checks both values — for example, `/Salesforce Website is empty AND /Enriched Website is not empty`. Each **Update record** column sends its own updates to Salesforce, so 10 per-field columns send up to 10 separate updates for each row.
+-   **One Update record column for all fields (better for many fields or large tables):** Use the formula and **Ignore blank values** setup above, with no run condition on the **Update record** column. Clay sends all the fields mapped in one **Update record** column in the same request, so each row is written to Salesforce once, no matter how many fields you map.
+
+The same difference applies when **Run in batches** is on, because each **Update record** column sends its own batches. For example, writing 1,000 rows in batches of 200 takes 5 Salesforce API calls with one **Update record** column, and 50 Salesforce API calls with 10 per-field **Update record** columns. For a few "fill if blank" fields, per-field columns are fine. For 10 fields on a large table, use a single **Update record** column. See [Batch processing](salesforce-integration-overview.md#batch-processing) for how batching works.
+
+For more on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
 
 ## How do I add leads or contacts to a Salesforce campaign and update the status of existing campaign members?
 
@@ -554,9 +852,34 @@ No, once you update or create an object in Salesforce from Clay, you cannot undo
 
 Please check with your Salesforce admin before making any changes to your Salesforce CRM.
 
+## Can Clay delete records from Salesforce?
+
+No. Clay does not support deleting records from Salesforce — there is no native delete action available in standard Clay tables or Clay Audiences.
+
+Clay's supported write actions to Salesforce are:
+
+-   **Create** new records
+-   **Update** existing records
+-   **Upsert** (create or update based on an external ID)
+-   **Convert** leads
+
+If you need to delete records from Salesforce, that action must be performed directly in Salesforce. Clay can help you identify the records to remove — for example, by enriching your data and exporting a list as a CSV — but the deletion itself must happen in Salesforce.
+
 ## Do we need to create a custom Salesforce object to integrate Salesforce data?
 
 No, one of Clay's benefits is that you can update any object and any field in Salesforce.
+
+## Can I connect to a second Salesforce org or instance in Clay?
+
+Yes, for Clay table actions (Lookup Record, Create Record, Update Record, etc.), you can add as many Salesforce connections as you need — including connections to entirely different Salesforce orgs. Each connection is independent and authenticated separately. To add a second connection:
+
+1.  In Clay, go to `Settings` → `Connections`.
+2.  Click `Add connection`, search for `Salesforce`, and complete the authentication flow for the second org.
+3.  When setting up a Salesforce action column in any table, select which connection to use from the account dropdown.
+
+**Note on Audiences:** Audiences uses only one connected Salesforce account at a time. To change which Salesforce account Audiences uses, disconnect the current one from Audiences and connect the new one — see [How do I switch the Salesforce account connected to Audiences?](audiences.md#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production). If you also use the Audiences Salesforce source, adding a second connection in Clay's Connections settings does not affect which Salesforce org Audiences syncs — Audiences keeps its own reference to the originally connected account. See [Can I connect multiple Salesforce accounts to Audiences?](audiences.md#can-i-connect-multiple-salesforce-accounts-to-audiences) for the full details and workarounds.
+
+**Connected app approval for the second org:** Each Salesforce org is an independent environment, and Clay's connected app must be approved separately in each org before users in that org can authenticate. If a user from the second org cannot sign in, the org's Salesforce admin may need to install and approve Clay's connected app there. See [Do I need to install Clay's Connected App in my Salesforce org?](#do-i-need-to-install-clays-connected-app-in-my-salesforce-org) for the step-by-step setup.
 
 ## Can I use a Salesforce API-only or Integration User license with Clay?
 
@@ -613,11 +936,13 @@ A connected app only appears after a successful OAuth authorization. If it's mis
 
 ## What callback URL does Clay use for Salesforce?
 
+When configuring a Salesforce Connected App or External Client App for Clay's **User Sign In** connection, enter this URL in the **Callback URL** field:
+
 -   [https://api.clay.com/v3/app-accounts/oauth/salesforce/callback](https://api.clay.com/v3/app-accounts/oauth/salesforce/callback)
 
 ## What OAuth scopes does Clay require for Salesforce?
 
-Clay requires these scopes:
+Configure your Salesforce Connected App or External Client App to grant the following scopes for Clay's **User Sign In** connection:
 
 -   `api`
 -   `refresh_token`
@@ -646,8 +971,10 @@ In `Setup` → `Session Settings`:
 
 In `Setup` → `Manage Connected Apps` → `Clay`:
 
--   Set `IP Relaxation` to "Relax IP Restrictions" (Clay's integration calls originate from cloud IPs that may change).
+-   Set `IP Relaxation` to "Relax IP Restrictions" — this is the simplest option if your org's security policy allows it.
 -   Set `Permitted Users` to "All users may self-authorize" unless your org requires admin approval.
+
+**If your org requires strict IP restrictions:** All Salesforce connections in Clay automatically route through Clay's fixed egress IP addresses — no extra configuration is needed in Clay. Rather than relaxing IP restrictions, you can add Clay's static IPs to your Salesforce allowlist instead. Contact Clay support to request the current IP list, then add each address in Salesforce under `Setup` → `Network Access` → `New`. For full setup instructions, see [IP allowlisting](salesforce-integration-overview.md#ip-allowlisting) in the Salesforce integration overview.
 
 ## Why did the owner on my Salesforce record change when Clay updated a field?
 
@@ -667,7 +994,7 @@ If your Salesforce org has assignment rules that specifically fire on records ow
 
 **To control the owner at creation time**, add the **Owner ID** field in the **Map fields** section of your **Create Record** column and set it to the Salesforce User ID of the intended owner. If your Clay table has the owner's name rather than their Salesforce User ID, add a **Lookup Record** column (set the Salesforce object to **User** and search by name) to retrieve the ID first — see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record) for the step-by-step workflow. When the record is created with the correct owner already set, assignment rules that specifically target integration-user-owned records will not match.
 
-**Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you will need to adjust those rules on the Salesforce side.
+**Note:** Unlike the **Update Record** action — which has a **Disable auto-assignment rules** toggle for leads, cases, and accounts — the **Create Record** action does not have a built-in option to suppress assignment rules entirely. If your org has assignment rules that fire on all new records regardless of owner, you can use a two-step approach: run **Create Record** to create the lead (Salesforce fires assignment rules at this point), then run **Update Record** on the same row with **Disable auto-assignment rules** enabled and **Owner ID** mapped to the intended owner. This reassigns the record to the correct owner without triggering assignment rules a second time. If you need to prevent assignment rules from firing at all during record creation, you will need to adjust those rules on the Salesforce side.
 
 ## Why am I seeing an `INACTIVE_OWNER_OR_USER` error when creating records in Salesforce?
 
@@ -707,7 +1034,7 @@ Manual retries succeed because running one cell at a time eliminates the simulta
 
 **Workarounds**
 
--   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends rows through Salesforce's Composite API in sequential groups rather than all at once, reducing concurrent writes and lowering the chance of lock collisions.
+-   **Enable "Run in batches":** In the action column's **Run settings**, enable **Run in batches**. This sends up to 200 records per Salesforce Composite API call instead of one call per row. Each record in a batch is processed independently, so a row-lock failure on one record doesn't fail the others in the same batch. Batching doesn't lower the number of simultaneous requests: Clay runs up to 20 Salesforce requests at once per connection in both modes.
 -   **Add a run delay:** In the action column's **Run settings**, set **Delay run** to **Run after delay** and enter a delay in seconds. This staggers when each row fires, giving Salesforce time for in-flight automations (such as DLRS rollups) to finish before the next write arrives.
 -   **Map records to real parent objects:** If many rows share the same placeholder Account (or other shared parent), map them to their actual parent records instead. Each write then locks a different record, eliminating the collision.
 -   **Ask your Salesforce admin to review automations:** If your org uses DLRS or other triggers on shared parent records, your admin can investigate switching those rollups to scheduled mode — this decouples the rollup write from the original save and eliminates the lock contention entirely.
@@ -740,7 +1067,7 @@ To connect as a specific Salesforce user:
 
 Make sure the connecting user has **API Enabled** and the correct object and field permissions for everything you plan to read or write in Clay. For guidance on setting up a service account with the right access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
 
-**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. Use [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) instead — that method connects server-to-server without a browser login.
+**Note:** If your Salesforce org uses an Integration User license or API-only license, the User Sign In OAuth flow may not work. If your org enforces SSO (such as Okta, Azure AD, or Google Workspace), incognito may not resolve the issue either — SSO authenticates at the identity provider level, not the browser session level, so your personal account can be picked up automatically even in a fresh private window. In either case, use **Client Credentials** ([setup instructions](https://university.clay.com/docs/salesforce-integration-overview)) instead — it connects server-to-server with no browser login, so SSO cannot intercept it.
 
 ## Why can't I set a Salesforce connection as the default, or change which connection is the default?
 
@@ -754,17 +1081,56 @@ If you need to change the default connection, ask a workspace admin to:
 
 To change your own role to admin, ask an existing workspace admin to update it in `Settings` → `Team`.
 
+## How do I install the Clay Salesforce package to get the Launch Enrichment button on records?
+
+The Clay Salesforce managed package adds a **Launch Enrichment** button to Lead, Contact, and Account records in Salesforce. Clicking the button sends that record to Clay for enrichment and writes the results back to Salesforce automatically. Available on **Enterprise plans**.
+
+**Step 1: Install the package**
+
+In Salesforce, navigate to the Clay package installation URL and install it. When prompted, install for **Admins Only** (recommended). Contact your Clay account team or Clay support for the installation link.
+
+**Step 2: Assign permission sets** (if you installed for Admins Only)
+
+After installation, assign the appropriate permission sets to each Salesforce user who needs to use the package:
+
+-   **Enrichment Menu Usage** — allows users to click the Launch Enrichment button and trigger existing workflows.
+-   **Enrichment Menu Management** — allows users to create and configure new enrichment workflows.
+
+Users who only need to click the button need **Enrichment Menu Usage**. Users who set up or manage enrichment workflows need **Enrichment Menu Management**.
+
+**Step 3: Create a Clay table with a webhook source**
+
+In Clay, create a new table using **Import data from Webhook** as the source. Keep the webhook URL — you'll need it in the next step.
+
+**Step 4: Configure an Enrichment Menu in Salesforce**
+
+In Salesforce, open the App Launcher and search for **Enrichment Menus**. Create a new Enrichment Menu record with the following fields:
+
+-   **Enrichment Menu Name** — an internal name for this menu record in Salesforce.
+-   **Clay Table URL** — the webhook URL from the Clay table you created in Step 3.
+-   **User Label** — the action name that Salesforce users will see when they click the button (for example, "Enrich Contact").
+-   **Supported Objects** — the Salesforce object types where the button will appear (Accounts, Contacts, Leads, or a combination).
+
+**Step 5: Add the Launch Enrichment button to page layouts**
+
+1.  In Salesforce, click the gear icon (⚙️) and select **Set up for current app**.
+2.  Go to **Object Manager** and select the object type you configured (Account, Contact, or Lead).
+3.  Select **Page Layouts** and open the layout you want to update.
+4.  Drag the **Launch Enrichment** button into the **Salesforce Mobile and Lightning Actions** section.
+5.  Save the layout.
+
+The **Launch Enrichment** button now appears on records of that object type. When a Salesforce user clicks it, the record is sent to your Clay webhook table for enrichment, and results are written back to Salesforce.
+
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 
 When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
 
 **To enable enrichment notifications:**
 
-1.  In Salesforce, open the **Clay** app and go to **Object and Field Mapping**.
-2.  Under **Select Object**, choose the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
-3.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
-4.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
-5.  Save your changes.
+1.  In Salesforce, use the App Launcher to search for **Enrichment Menus** and open the menu record for the object type the Launch Enrichment button lives on — Account, Contact, or Lead.
+2.  Under **Optional (Edit Existing Workflow)**, select the specific workflow tied to that button.
+3.  Confirm that **Get Enrichment Notifications** is toggled **Active** (blue with a checkmark). If it is inactive, toggle it on.
+4.  Save your changes.
 
 Once the toggle is active, Salesforce users will receive a notification in their Salesforce notification center after each successful enrichment run triggered by that button.
 

@@ -27,8 +27,10 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 
 **Step 2 — Column-level auto-run**
 
--   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped (only runs on a manual click).
+-   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped — it will not run when new rows are added. To run cells in this column on demand, right-click the column header and choose **Run column → Run N rows**.
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
+
+**Note on enrichment and AI columns with no column references:** Auto-run for enrichment and AI columns is dependency-driven — a column fires automatically only when data arrives or changes in one of its input columns. A column whose prompt or configuration references no other columns has no input dependency to trigger, so it is **not** triggered by new row imports or upstream column changes. Only enrichment and AI columns that reference at least one other column as an input fire automatically when those inputs are populated.
 
 **Note: Adding a People, Companies, or Jobs list-builder source to an existing table auto-runs enrichments on the first 10 rows only.** When you use a People, Companies, or Jobs search source to add rows to an existing table — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns. This 10-row cap applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
 
@@ -38,10 +40,13 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 
 -   When **enabled**: Enrichments run automatically whenever rows are added or edited.
     -   New tables use **"Keep existing results" on** by default — only errored, empty, or new cells run automatically. Cells that already have existing data **will not** run automatically unless you turn off Keep existing results.
+    -   **Filtered views do not limit auto-run.** Auto-run applies to every row in the table, not just those visible in the current filtered view. If you import a large dataset into a table that has auto-run on and no run conditions set, enrichments fire on all imported rows — even if you are only viewing a filtered subset. To prevent this, turn off auto-run before importing, or add [run conditions](conditional-runs.md) to your enrichment columns to gate which rows they execute on.
 -   When **disabled**: You must manually click cells to trigger enrichments. **Auto-run only controls enrichment columns — it does not affect your data sources.** Scheduled source imports (such as a Salesforce SOQL query or any source with an auto-update schedule) continue to add new rows to the table on their normal schedule even when Auto-run is off. To also pause row ingestion, disable the source's auto-update schedule separately in the source column settings.
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
 **Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
+
+**Note:** Clay does not automatically switch a table from auto-run to manual when enrichments finish running. The Auto-run toggle is always a manual setting — there is no column completion event or rule that flips it automatically. To prevent completed rows from being re-enriched while auto-run stays on, use **Keep existing results** (on by default): only new, empty, or errored cells run automatically, and cells that already have successful results are skipped. To stop enrichments entirely, toggle Auto-run off manually via the `⛭` icon → **Run Settings**.
 
 **To enable or disable table-level auto-run:**
 
@@ -76,13 +81,26 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 -   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
 -   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
 
+**Ran an upstream column but dependent columns didn't re-run**
+
+When you trigger or force-run an upstream column and the downstream columns with auto-run on still don't re-run their existing cells, "Keep existing results" is the reason. Clay marks downstream cells as out of date but skips re-executing any cell that already has a **successful** result — even when the upstream column's output just changed. The protection is cell-scoped: empty, errored, or never-run cells still execute normally; only previously successful cells are preserved.
+
+To refresh downstream cells after running an upstream column:
+
+-   **Force-run the downstream column**: right-click the column header → **Run column → Force run all [N] rows**. Force run re-executes every cell regardless of its current state, bypassing the keep-existing check.
+-   **Turn off "Keep existing results"** (⛭ icon → **Run Settings** → uncheck **Keep existing results**), then right-click the downstream column header → **Run column → Run [N] empty or out-of-date rows**. You can re-enable "Keep existing results" after the downstream columns have finished running.
+
 ### Understanding the out-of-date indicator
 
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
 
-**Manual tables and sequential column runs:** If your table is in Manual mode and you run enrichment columns one at a time from left to right, you may see the out-of-date indicator appear across most columns — including ones you've already run. This is expected behavior, not a bug. Every time you run an upstream column, Clay immediately marks all downstream columns that depend on it as out of date, because their inputs may have changed. In a table where columns feed sequentially into each other (for example, a scoring table), running them in order creates a wave of stale indicators that propagates forward as you work. **Your data is not broken**: cell values marked out of date because auto-run is off are still valid and can be referenced by other columns without blocking downstream runs.
+**AI column prompt references create live dependencies — including hidden and optional inputs.** In AI and enrichment columns, any column you reference using the `{{Column Name}}` syntax (inserted with the `/` shortcut in the prompt editor) becomes an input dependency. This dependency is active regardless of whether the referenced column is hidden from the table view or whether the input is marked as optional (Required to run: off). Each time the referenced column writes a new value to a row, Clay marks the downstream AI column as out of date for that row. Hiding the referenced column does not remove the dependency — only removing the `{{Column Name}}` reference from the prompt itself breaks the link.
+
+**Manual tables and sequential column runs:** In Manual mode, running a column does not automatically trigger downstream columns — even if those columns have run conditions that are currently met. Without Auto-run enabled, Clay does not cascade a run from an upstream column to any column that depends on it. Each column in your workflow must be triggered separately, in the order they appear in your table (left to right).
+
+When you run enrichment columns one at a time from left to right in Manual mode, you may also see the out-of-date indicator appear across most columns — including ones you've already run. This is expected behavior, not a bug. Every time you run an upstream column, Clay immediately marks all downstream columns that depend on it as out of date, because their inputs may have changed. In a table where columns feed sequentially into each other (for example, a scoring table), running them in order creates a wave of stale indicators that propagates forward as you work. **Your data is not broken**: cell values marked out of date because auto-run is off are still valid and can be referenced by other columns without blocking downstream runs.
 
 Since the table is in Manual mode, these indicators won't auto-clear. A few options:
 
@@ -97,6 +115,14 @@ If a cell **keeps** showing as out of date even after you re-run it, check wheth
 -   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
 -   **Disable auto-run on the upstream column** — stops the cascade at its source, but means the upstream column also switches to manual-only mode.
 -   **Enable "Keep existing results"** at the table level — cells with existing results are no longer automatically re-run, so the stale indicator appears but no credits are consumed re-running the column on every upstream change.
+
+**'Run N empty or out-of-date rows' appears to do nothing for cells that already have results**
+
+If clicking **Run column → Run [N] empty or out-of-date rows** produces no visible activity — no credits consumed, no progress update, cells remain flagged — and the column has Auto-run switched off, the most likely cause is that all flagged cells already have a successful result. A standard column run targets only cells that are empty, errored, or have never run. With Auto-run off, cells that already have a result are skipped even when they are marked as out of date — the run sees nothing to do and immediately re-applies the flag instead of clearing it.
+
+To re-run these cells, use **Force run on all rows** from the column header menu (**Run column → Force run all [N] rows**). Force run bypasses the success-skip and re-executes every cell regardless of its current state. The UI shows the estimated credit cost before you confirm.
+
+**Sequencing tip:** If the upstream column driving the out-of-date flag is still actively running — for example, only a quarter of its rows have completed — force-running the downstream column now will clear the flag temporarily, but it will return on each new upstream write. Let the upstream column finish running across all its rows first, then force-run the downstream column once to settle the state. Alternatively, turn Auto-run on for the downstream column after the upstream finishes, so future updates are handled automatically.
 
 ### Understanding the manually-overwritten indicator
 
@@ -120,11 +146,15 @@ Column-level auto-run controls whether a specific enrichment runs automatically.
 1.  Click the name of the column → `Edit column`.
 2.  Toggle auto-run on/off under `Run settings`. Click `Save` to apply your changes.
 
+**Note on Save button behavior:** When column-level Auto-run is **ON**, clicking Save shows a dropdown letting you choose whether to immediately run rows or save without running. When column-level Auto-run is **OFF**, clicking Save applies the configuration directly — no dropdown appears, and the column stays in manual-only mode. See [Saving configuration changes](enrichments.md#saving-configuration-changes) for the full breakdown of each option.
+
 **Important:** Table-level auto-run acts as the parent setting:
 
 -   If table-run is **OFF**: No columns will run automatically, regardless of column settings.
 -   If table-level is **ON** + column-level is **OFF**: That specific column won't run automatically.
 -   If table-level is **ON** + column-level is **ON**: Column runs automatically. ✅
+
+**Running an auto-run-OFF column on demand:** Turning a column's auto-run off prevents it from firing automatically when new rows arrive — it does not prevent you from triggering it manually. To run an auto-run-OFF column for a set of rows, right-click the column header and choose **Run column → Run N rows** (or **Run column → Force run all N rows** to re-run cells that already have results). Each column must be triggered individually from its own column header menu.
 
 ## Conditional runs ("Only run if")
 
@@ -144,6 +174,8 @@ Add conditional logic to control when an enrichment executes. The enrichment onl
 3.  Click `Save` — the enrichment now only runs when the condition is met.
 
 **Why this matters:** Conditional runs help control costs by preventing enrichments from running when data already exists or conditions aren't met.
+
+**Note:** If "Keep existing results" is enabled (the default for new tables), cells with an existing successful result are skipped even when the "Only run if" condition evaluates to true. Clay evaluates the condition, and if it is satisfied, then applies the "Keep existing results" check — meaning a condition like `Company Size > 50` can pass, yet the cell still won't re-run automatically if it already has a value. To allow conditional re-runs on existing rows, uncheck "Keep existing results" in **Run Settings**. See [Conditional runs](conditional-runs.md) for troubleshooting.
 
 For full documentation on conditional run syntax, operators, and advanced patterns, see [Conditional runs](conditional-runs.md).
 
@@ -176,6 +208,14 @@ The **Update existing rows** toggle in your source column settings controls whet
 -   Other columns: ❌ OFF
 -   **Result**: New rows → Only email enrichment runs automatically
 
+**Selective automation with on-demand column runs:**
+
+-   Table-level: ✅ ON
+-   Some columns: ❌ OFF (auto-run)
+-   **Result**: New rows → Only auto-run-ON columns fire automatically; auto-run-OFF columns stay as "Click to run."
+-   **To run the OFF columns on demand:** Right-click the column header → **Run column → Run N rows**. This triggers that column for the specified rows without enabling auto-run on the column.
+-   **Use case:** You want Clay to automatically enrich some fields (e.g., email lookup) when new rows arrive, but want full control over when others run (e.g., a CRM write-back or a phone waterfall you trigger on a schedule).
+
 **Manual control (testing mode):**
 
 -   Table-level: ❌ OFF
@@ -186,7 +226,7 @@ The **Update existing rows** toggle in your source column settings controls whet
 
 -   Table-level: ❌ OFF (Manual mode)
 -   Source auto-update schedule: ✅ ON (source schedule is independent of Auto-run)
--   **Result**: Scheduled source imports continue adding new rows to the table; enrichment columns are paused. When ready to process, turn Auto-run back on and choose `Update cells` to queue enrichments for all rows added during the pause — or choose `Continue without running` to leave those rows unprocessed for now. Review the table before choosing `Update cells` if a large batch of rows has accumulated, since this will queue all empty or out-of-date enrichment cells including any downstream write-backs.
+-   **Result**: Scheduled source imports continue adding new rows to the table; enrichment columns are paused. When ready to process, turn Auto-run back on and choose `Update cells` to queue enrichments for all rows added during the pause — or choose `Continue without running` to leave those rows unprocessed for now. Review the table before choosing `Update cells` if a large batch of rows has accumulated, since this will queue all empty or out-of-date enrichment cells including any downstream write-backs. Either way, **rows that already have successful enrichment results will not be re-run** — "Keep existing results" is on by default, so only empty, errored, or new cells are queued. After re-enabling, future new rows added by source syncs are enriched automatically; rows that were added during the Manual-mode pause are not retroactively queued on future syncs — use `Update cells` or manually trigger the enrichment columns to process them.
 
 **Conditional execution:**
 
@@ -194,6 +234,23 @@ The **Update existing rows** toggle in your source column settings controls whet
 -   Column-level: ✅ ON
 -   Conditional run: "Only if profile URL exists"
 -   **Result**: Rows with a profile URL → Enrichment runs; Rows without → Skipped
+
+**Pasting or importing a large batch into an existing table:**
+
+-   Table-level: ❌ OFF (turn off **before** adding rows)
+-   **Result**: New rows are added to the table but enrichments do not fire automatically — you decide exactly when and which rows get enriched.
+
+**Before pasting or importing a large batch of rows into an existing table that has enrichments configured, turn off table-level auto-run first.** When auto-run is enabled, Clay queues enrichments on every new row the moment it lands — consuming credits before you can review the data.
+
+To add rows safely:
+
+1.  If the table is currently running, click **Stop** in the run summary panel at the bottom-right to cancel the active run. (The Auto-run toggle is disabled while a run is in progress — you must stop it first.)
+2.  Click the `⛭` icon → **Run Settings** → toggle **Auto-run** off.
+3.  Paste or import your rows.
+4.  Review the table to confirm the data is aligned correctly.
+5.  Re-enable Auto-run and choose `Update cells` to process all new rows — or select specific rows and right-click → **Run [N] rows** to enrich only the rows you've verified.
+
+**Note:** Clicking **Stop** is not the same as turning off Auto-run. Stop cancels cells currently in the run queue, but if Auto-run remains on, any rows you add after stopping will still trigger enrichments. Use the Auto-run toggle in Run Settings — not Stop — to prevent enrichments from running on newly added rows.
 
 ## Best practices
 
@@ -204,6 +261,13 @@ The **Update existing rows** toggle in your source column settings controls whet
 3.  Manually test enrichments by clicking cells.
 4.  Refine your setup.
 5.  Turn auto-run ON when ready for production.
+
+**When adding a large batch of rows to an existing table:**
+
+1.  If the table is actively running, click **Stop** first to cancel the current run.
+2.  Turn table-level auto-run OFF before pasting or importing rows.
+3.  Add your rows, then review the table to confirm the data is correct and columns are aligned.
+4.  Turn auto-run back ON and choose `Update cells` — or manually select rows and right-click → **Run [N] rows** to enrich only the rows you've verified.
 
 **When running production workflows:**
 

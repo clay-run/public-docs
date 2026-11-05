@@ -15,15 +15,14 @@ If the email met either of these criteria, we considered it a valid email:
 -   Opened
 -   Replied
 
-Then, we ran the same list through six personal email data providers in Clay, and cross-referenced their output with our source list to see how often they found an accurate match.
+Then, we ran the same list through multiple personal email data providers in Clay, and cross-referenced their output with our source list to see how often they found an accurate match.
 
-Here are all of the providers we tested:
+Providers we tested included:
 
 -   [Nimbler](https://www.nimbler.com/)
 -   [Mixrank](https://mixrank.com/)
 -   [People Data Labs](https://www.peopledatalabs.com/)
 -   [ContactOut](https://contactout.com/)
--   [RocketReach](https://rocketreach.co/)
 
 We followed this specific testing methodology because we wanted to start with a list of emails we knew were 100% valid, and not catchall. Even valid emails from a tool like NeverBounce can’t be fully trusted, as they can still bounce. This way, we can know for certain how accurate our data providers in questions really were.
 

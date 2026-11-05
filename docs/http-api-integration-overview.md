@@ -259,6 +259,23 @@ In token mode, every column chip inserted via the `/` picker is automatically JS
 
 **Fix:** Extract the sub-property into its own formula column first, then reference that column as a chip in the HTTP body via the `/` picker. Chip tokens are always auto-serialized, even when the column value is a complex object or array.
 
+**Passing a JSON array field from a multi-value column**
+
+When an API field expects a JSON array (e.g., `"mailboxes": ["email1@example.com", "email2@example.com"]`) and your source data is a column that stores multiple values as a single string — for example, comma-separated emails or values where each item is pre-quoted — inserting that column directly as a chip may produce malformed JSON. Pre-formatted values such as emails stored with surrounding quotes cause double-quoting when the chip is serialized.
+
+**Fix:** Create an intermediate formula column that parses and cleans the multi-value string into a proper array, then insert that formula column as a chip where the array field belongs in the body. Clay formula columns support standard JavaScript array methods (`.split()`, `.map()`, `.filter()`), which let you transform any multi-value string into a clean array.
+
+Example formula (for a column containing comma-, semicolon-, or newline-separated values):
+
+```javascript
+String({{Your Multi-Value Column}} ?? "")
+  .split(/[,;\n]+/)
+  .map(s => s.replace(/["'\[\]\s]/g, ""))
+  .filter(s => s.length > 0)
+```
+
+This formula splits the value on commas, semicolons, or newlines; strips surrounding quotes and brackets from each item; and removes empty entries. In the body, insert the formula column as a chip **without** surrounding quotes or brackets — for example, `"mailboxes": /Emails Formula Column` — and Clay auto-serializes the array into proper JSON.
+
 **Example body configuration:**
 
 ```javascript
@@ -305,6 +322,23 @@ Headers provide authentication and specify data formats. Add them as key-value p
 
 -   Key: X-API-Key
 -   Value: YOUR\_API\_KEY\_HERE
+
+**Basic authentication (username:password):**
+
+Some APIs use HTTP Basic authentication, where credentials are sent as the base64 encoding of `username:password`.
+
+-   Key: Authorization
+-   Value: Basic YOUR\_BASE64\_ENCODED\_CREDENTIALS
+
+To generate the base64 value, run this in your terminal (replacing with your actual credentials):
+
+```
+printf '%s' 'username:password' | base64
+```
+
+Set the header value to `Basic ` (note the space) followed by that output.
+
+**⚠️ Common mistake — trailing newline from `echo`**: Running `echo 'username:password' | base64` adds a newline character before encoding. The resulting value ends in `Cg==` (the base64 of a newline). Clay sends header values exactly as entered, so this trailing newline reaches the external API as part of the credential — causing a 401 even though the same credential works in tools like Postman, which strip trailing whitespace from headers automatically. Use `printf '%s'` or `echo -n` instead to produce a clean encoded value.
 
 **Content type (automatically set in Clay):**
 
@@ -646,6 +680,48 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
 
+### Token-fetch HTTP API column skipping rows — "Bearer undefined" or 401 on new rows
+
+If you use one HTTP API column to fetch a bearer token and a second HTTP API column to call the API with that token, new rows may get 401 errors or produce `"Bearer undefined"` in the Authorization header — even though the token column appears to work on some rows.
+
+**Why this happens:** Clay determines when to run a column by looking at which other columns it references (its dependency edges). A column with **no column references** anywhere in its URL, headers, query parameters, or body is treated as having no upstream dependency — Clay won't automatically trigger it when new rows are added. If your token-fetch column is fully hardcoded (every value is a static string, with no `/ColumnName` chip inserted via the picker), it has no dependency edge and won't run automatically for new rows. Those rows end up with an empty token cell, and the downstream enrichment column sends `"Bearer undefined"` to the API.
+
+**Best fix — use HTTP API with JWT Authentication:**
+
+For APIs that issue short-lived bearer tokens from a dedicated token endpoint (including ZoomInfo), the recommended solution is the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action. It fetches and refreshes the token automatically (approximately every 55 minutes) without a separate column. See [HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview) for setup instructions, including step-by-step ZoomInfo configuration.
+
+**Alternative — shared token cache table (for auth flows JWT auth doesn't cover):**
+
+For auth flows not supported by the JWT action (for example, OAuth 2.0 `client_credentials` or `refresh_token` grants — see the JWT auth FAQ), centralize the token in a dedicated single-row table instead of fetching it per row:
+
+1. Create a new table in the same workbook with a single row. This table holds one shared, always-fresh token.
+2. Move your token-fetch HTTP API column into that table. Add a formula column (e.g., `fetched_at`) with the formula `moment().toISOString()` to record when the token was last fetched. Run the token column once manually to seed an initial value.
+3. Add both columns to a scheduled refresh: click `⛭` → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select both columns. Set the frequency to stay within your token's validity window. **Hourly scheduling requires an Enterprise plan** — on other plans, the most frequent option is Daily. See [Scheduled columns](scheduled-columns.md).
+4. In your main table, add a **Lookup Single Row in Other Table** column pointed at the token cache table. For the match condition, reference any upstream column from the row (even a simple formula column) rather than using a static value — this gives Clay a dependency edge so the lookup auto-runs for each new row. See [Lookup Rows](lookup-rows.md).
+5. Update your enrichment columns to build the Authorization header from the lookup result: `"Bearer " + ({{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"] || "")`.
+6. Add a run condition on your enrichment columns so they only fire when the cached token is present: `!!{{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"]`.
+
+**Why a separate cache table — not just scheduling the token column in the same table:** Scheduled re-runs fire for **every row** in the table, not just new ones. Scheduling a token-fetch column that lives in a table with thousands of rows would fetch a separate token for each row on every cycle — thousands of token requests per hour — risking rate-limit errors on the auth endpoint. A single-row cache table fetches one token per cycle regardless of how many rows your main table has.
+
+### 401 error with Basic authentication — trailing newline in base64 credential
+
+If you're using HTTP Basic authentication and getting 401 "Unauthorized" responses — but the same credential works in Postman or another API client — the most likely cause is a trailing newline embedded in your base64-encoded credential.
+
+**How to identify it:** Check whether your `Authorization` header value ends in `Cg==`. That suffix is the base64 encoding of a newline character (`\n`). The external API receives your username and password followed by an invisible newline, which doesn't match the stored credential, so authentication fails.
+
+**Why this happens:** The shell command `echo 'username:password' | base64` appends a newline to the input before encoding. Clay sends header values exactly as entered — the trailing newline is preserved in the outgoing request. Tools like Postman generate Basic auth headers internally and strip trailing whitespace before sending, which is why the same credential appears to work elsewhere.
+
+**How to fix:**
+
+1.  Re-encode your credentials without a trailing newline:
+    ```
+    printf '%s' 'username:password' | base64
+    ```
+2.  Update the `Authorization` header value in your Clay HTTP API (Headers) account (at `Settings → Connections`) or directly in the column's header field. Set it to `Basic ` (with a space) followed by the new encoded output.
+3.  Test with a single row to confirm the API returns a successful response.
+
+If you still get a 401 after re-encoding, verify that API token access is enabled in the external platform's admin settings, and confirm that the credential format matches what the API expects (check the API's documentation for the exact format).
+
 ### "Missing authentication" — saved account deleted or unavailable
 
 This error appears on HTTP API column cells when the **HTTP API (Headers) account** previously configured for the column has been deleted from the workspace or is otherwise unavailable. The Account section at the top of the column panel will show only an **+ Add account** button, with no account selected.
@@ -890,3 +966,14 @@ Map each part as follows:
 
 -   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Tools → View all sources → Import data from an HTTP API).
 -   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).
+
+### Does Clay's HTTP API support OAuth 2.0 Client Credentials flow?
+
+No. Neither the standard HTTP API action nor the HTTP API with JWT Authentication action performs an OAuth 2.0 `client_credentials` grant. The standard HTTP API action requires static auth inputs — a fixed API key or a permanent bearer token. The JWT Authentication action fetches a fresh token from your endpoint, but its request body contains only `username` and `password` — it does not include `grant_type=client_credentials`. Endpoints that require this parameter will reject the request.
+
+**Workarounds:**
+
+-   **Chained HTTP API columns:** Use a standard HTTP API column to POST `grant_type=client_credentials`, `client_id`, and `client_secret` to your token endpoint and store the resulting access token. Reference that token in a second HTTP API column for your actual API call. Note that fetching a new token per row can affect table run performance and may hit rate limits on the auth endpoint — for large tables, the recommended pattern is to centralize the token in a dedicated single-row cache table that refreshes on a schedule, then look up that token in your main table. See [Token-fetch HTTP API column skipping rows](#token-fetch-http-api-column-skipping-rows----bearer-undefined-or-401-on-new-rows) for full setup steps including the cache table pattern.
+-   **Middleware proxy:** Use an external service (such as a serverless function) to handle the OAuth 2.0 token exchange, then have it return a ready-to-use bearer token to Clay or proxy the downstream API request on Clay's behalf.
+
+For full technical detail on the JWT Authentication action's incompatibility with `client_credentials`, see [Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview).

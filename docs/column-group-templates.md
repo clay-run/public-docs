@@ -1,20 +1,40 @@
 ---
 title: Column group templates
-description: Create, apply, edit, and delete column group templates to reuse related column sets across your workspace.
+description: Column group templates are deprecated in favor of functions. Learn
+  what changed and how to migrate an existing template to a function.
 last_synced: 2026-04-26T01:39:46.520Z
 ---
 
 # Column group templates
 
-Save columns into templates to easily reuse them.
+**Column group templates are deprecated.** [Functions](functions.md) have replaced them as the way to save and reuse enrichment logic across your workspace. Functions store reusable logic the same way templates did, but can be called from more places than just tables and add capabilities templates never had, such as permission handling and observability.
 
-Column group templates let you save and reuse related column sets across tables in your workspace. This eliminates the need to recreate complex column configurations repeatedly, saving time and maintaining consistency.
+## What changed
 
-Instead of rebuilding multi-column setups manually, you can apply saved templates quickly, helping you focus on your data rather than table structure.
+-   **You can no longer create new column group templates.** The **Save as template** option in the column right-click menu has been replaced by **Save as function**. See [Creating a function](functions.md#creating-a-function).
+-   **Existing templates can still be applied**, but when you open a template's configuration panel you'll see a notice at the top with a one-click workflow to migrate that template to a function (see below).
+-   **Public (Clay-built) column group templates** are no longer shown in the enrichment panel or Command Center. Clay-managed functions cover the same use cases.
+-   **The table template library** that previously appeared in workbook overview tabs has been removed.
+
+Single-column action templates — for example, saving a **Use AI** or **HTTP API** column configuration as a template — are a separate feature and are not affected by this deprecation.
+
+## Migrating a template to a function
+
+If you have existing column group templates, you can convert each one to a function in a few clicks:
+
+1.  Open the template's configuration panel — either by applying the template in a table, or by clicking the settings for the template from the enrichment panel or Command Center.
+2.  A notice at the top of the panel explains that templates are deprecated. Click the migration button in the notice.
+3.  Follow the guided workflow to create a function from the template.
+
+Once migrated, the function appears under the **Functions** tab on your Clay homepage and can be called from any table. See [Functions](functions.md) for how to call, edit, and manage it.
+
+**About integration accounts:** Column group templates do not include the template creator's integration credentials. When you apply an existing template, Clay automatically connects integration columns to an account you have already set up in your workspace. If your workspace does not yet have that integration connected, the columns are added but show a **Required auth account is missing** error. To fix this, open each affected column's settings, select or add your integration account in the account selector, and click **Save**.
+
+To save a new set of columns for reuse going forward, select the columns, right-click, and choose **Save as function** instead.
 
 ## Grouping columns
 
-You can group related columns together in a table to keep your workspace organized. Grouped columns appear under a shared header that you can collapse or expand to show or hide the columns within.
+Grouping columns within a table is unaffected by this deprecation. You can still group related columns together to keep your workspace organized — grouped columns appear under a shared header that you can collapse or expand to show or hide the columns within.
 
 To group columns:
 
@@ -26,53 +46,4 @@ Once grouped, click the arrow on the group header to collapse or expand the colu
 
 To add a new column to an existing group, open the dropdown menu for any column already inside the group and choose **Insert right** or **Insert left**. The new column is added to the same group, adjacent to the column you selected. If the group is collapsed when you insert, the new column is placed outside the group instead.
 
-To save a group of columns so you can reuse it in other tables, see [Creating a column group template](#creating-a-column-group-template) below.
-
-## Creating a column group template
-
-1.  While in a table, select multiple columns by clicking their title while holding `⌘` (Mac) or `ctrl` (Windows) on your keyboard.
-2.  `Right-click` on one of the titles and select `Save as template`.
-3.  Write a name and other details so your template is easier to find later.
-4.  Click `Create template`.
-
-## Using a column group template
-
-1.  While in a table, click `Tools`.
-2.  Search for your template by name, or click **View all enrichments** and select the **Templates** tab.
-3.  Click the template to open the configuration panel.
-4.  Under **Configure**, map the template's required inputs to your existing table columns.
-5.  Under **Providers**, connect any integrations the template requires.
-6.  Click **Save** to add the columns to your table.
-
-**About integration accounts:** Column group templates do not include the template creator's integration credentials. When you apply a template, Clay automatically connects integration columns to an account you have already set up in your workspace. If your workspace does not yet have that integration connected, the columns are added but show a **Required auth account is missing** error. To fix this, open each affected column's settings, select or add your integration account in the account selector, and click **Save**.
-
-## Editing a column group template
-
-A column group template stores a snapshot of your column configuration at the time it was saved. If you later change a column's prompt, model, or other settings, those changes do not automatically update the template.
-
-You can update a template's name, description, and category from the template library:
-
-1.  While in a table, click `Tools`.
-2.  Search for your template by name or click **View all enrichments** and select the **Templates** tab to find your template.
-3.  Click the `...` menu next to the template and select **Edit template settings...**.
-4.  Update the details and click **Save**.
-
-To update the columns in a template, you need to recreate it:
-
-1.  Apply the template to a table (or use an existing table where it was applied).
-2.  Edit the columns in the table as needed.
-3.  Select the updated columns by holding `⌘` (Mac) or `ctrl` (Windows) and clicking each column title.
-4.  `Right-click` on one of the selected titles and select `Save as template`.
-5.  Enter a name and click `Create template`.
-
-Saving always creates a new template — it does not replace or overwrite the original. If you want to remove the old version, delete it from the template list after saving the corrected one (see [Deleting a column group template](#deleting-a-column-group-template)).
-
-## Deleting a column group template
-
-1.  While in a table, click `Tools`.
-2.  Search for the template name or click **View all enrichments** and select the **Templates** tab to find the template you want to delete.
-3.  Click the `...` menu next to the template.
-4.  Select **Delete**.
-5.  Click **Delete template** to confirm.
-
-Deletion is permanent and cannot be undone.
+To save a group of columns so you can reuse it in other tables, save it as a [function](functions.md#creating-a-function).

@@ -24,6 +24,7 @@ To set up Job Change Signals in your table:
 1.  Click `Tools`, then select `Monitor for job changes`.
 2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
     -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
+    -   **Note:** The contacts table selected here cannot be changed after the signal is saved. To monitor a different set of contacts, create a new signal.
 3.  Optionally, enable `Initial check`.
     1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's **work history** for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
@@ -42,6 +43,12 @@ No. Clay does not have a native persistent person identifier equivalent to a thi
 
 For this reason, the Job Change Signal requires each contact's professional profile URL as input. When Clay detects that the person's current employer no longer matches your records, it fires an event so you can re-enrich or update your CRM.
 
+### Can I change which contacts my Job Change Signal monitors?
+
+No — the contacts table a Job Change Signal monitors is selected when the signal is first created and cannot be changed afterward via **Edit Signal**. Attempting to edit the signal will show the contacts table field as locked.
+
+To switch to monitoring a different contacts table, create a new signal pointing to the new table. To preserve your enrichment column configurations from the existing signal's results table, save it as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link in a new tab — the resulting table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+
 ### How do I track contacts who change jobs ("movers") and refresh their details?
 
 Use the **Job Change Signal** (see setup steps above). It monitors each contact's professional profile URL on a schedule you set. When a job change is detected, you can attach enrichment columns — such as Enrich Person, Find Work Email, or Find Phone — to pull the contact's updated company, title, and contact information automatically.
@@ -52,3 +59,11 @@ If you also want a stable custom contact ID that survives job changes, build a *
 -   **Professional profile URL** — follows the person across jobs (note: the URL's custom username portion can occasionally be edited by the user, so it is not fully immutable)
 
 Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
+
+### Why does the signal flag contacts whose company information already matches my CRM?
+
+The Initial check does not compare against your current CRM data. It scans each contact's work history for role changes within the lookback window you chose (3 months, 6 months, or 1 year) and surfaces all changes detected in that period — regardless of whether your CRM has since been updated to reflect those changes.
+
+For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
+
+To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.

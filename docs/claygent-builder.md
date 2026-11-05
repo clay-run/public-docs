@@ -1,7 +1,7 @@
 ---
 title: Claygent builder
 description: Build smarter agents faster
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-27T17:00:17.792Z
 ---
 
 # Claygent builder
@@ -121,12 +121,22 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 -   **Limit to 2–3 servers per run.** Enabling too many MCP servers at once can confuse the agent and produce inconsistent results.
 -   **Chain servers for multi-step workflows.** For example: add a lead in Salesforce, research their background online, then draft a summary doc in Notion.
 -   **OAuth is not currently supported.** Use API key authentication or open (unauthenticated) endpoints.
+-   **API key transmission format.** When an API key is provided, Clay sends it to your MCP server as `Authorization: Bearer <your-key>`. Enter the key value directly — unencoded and without any prefix. Custom header names are not configurable.
 
 ### Model selection
 
-Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+New Claygents you build in Claygent builder start on `Auto`, which routes each task to the model that fits it:
 
-**Auto model (currently in beta — contact support to enable):** If the Auto toggle is available in your workspace, it appears at the top of the model selector. Switching **Auto** on lets Clay automatically select the right model for your task — balanced quality and speed, recommended for most tasks. When Auto is on, the model list is hidden; toggle it off to choose a specific model manually. New Claygent columns default to Auto when it is available in your workspace.
+-   A fast, inexpensive one for a straightforward lookup
+-   Stronger ones for hard research
+
+Each run gets an appropriate model without you picking one.
+
+Claygents you built earlier keep the model they already use, as do duplicates of them.
+
+In the model selector, `Auto` sits at the top as a toggle. Switch it off to see the full model list, where you can choose a specific model at any time. This lets you test output quality without touching the prompt.
+
+**Note: per-row cost varies under `Auto`.** Each row is billed at the rate of whichever model ran it. For how model rates work, see [How AI is priced](ai-pricing.md).
 
 Clay's parallel models differ in power and cost:
 
@@ -154,7 +164,7 @@ When you need a Claygent to return structured data — multiple typed fields ins
 
 Common errors when writing schema by hand:
 
--   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type. Without it, the AI provider rejects the schema and you will see: `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items`. Fix it by adding `"items"`:
+-   **Missing `items` on an array field.** Every field with `"type": "array"` must include an `"items"` object that specifies the element type — AI models require `items` to produce structured array output. Without it, the column fails: you may see `Invalid schema for function 'returnData': In context=('properties', 'fieldName'), array schema missing items` in the column settings, or rows will fail with a generic **`Error. Please retry or contact Clay support.`** message. Fix it by adding `"items"`:
 
     ```json
     "keyIndicators": {
@@ -214,7 +224,13 @@ Once you're happy with the output:
 4.  Variables automatically map to your table columns.
 5.  Save and run.
 
-You can also deploy directly from Claygent builder by clicking `Add to table`.
+You can also deploy directly from Claygent builder:
+
+1.  Click **Deploy** at the top of the Claygent builder editor. The **Deploy agent** dialog opens.
+2.  Select **Tables**.
+3.  Choose the table, map the Claygent's inputs to your table columns, and click **Add to table**.
+
+**Deploy always adds a new column.** Clicking **Deploy** → **Tables** → **Add to table** creates a brand-new Claygent column every time — it never updates a column that's already in your table. If the Claygent is already used in the table you pick, Clay shows the warning "This Claygent is already being used in this table" but still lets you continue, and the new column gets a numbered name such as "Company Researcher (2)" with its own input mapping. To update a Claygent that's already on a table, click **Save** instead — see [What's the difference between Save and Deploy in Claygent builder?](#whats-the-difference-between-save-and-deploy-in-claygent-builder) below.
 
 ## Centralized management
 
@@ -252,6 +268,23 @@ Claygents handle judgment-based, nondeterministic work in your GTM stack — wor
 -   **Outbound copywriting** — write personalized emails using your ICP and enriched data.
 -   **Persona classification** — categorize contacts by tier, role, or buying persona.
 
+### What if the data I need isn't available from standard enrichment providers?
+
+Standard B2B data providers — Apollo, PDL, Clearbit, and similar — are built primarily for tech and SaaS firmographic data: job titles, company size, funding stage, technographics, and contact details. They typically don't carry niche, industry-specific fields — for example, property-level employee counts, room counts, or meeting space for hospitality; regional business data for non-tech verticals; or other domain-specific attributes that fall outside the SaaS dataset.
+
+For these gaps, use Claygent. Claygent is Clay's AI web research agent — it searches Google and visits web pages to pull data directly from public sources such as property websites, industry directories, and review platforms.
+
+To use Claygent for niche data research:
+
+1.  Add a **Use AI** column and select **Claygent** (or deploy a saved Claygent from Claygent builder).
+2.  Enable **Web search** in the **Configuration** panel. For Clay parallel models (Argon, Neon, Helium), web search is always active.
+3.  Write a prompt telling the agent what to look for and which sources to check — for example: *"Visit {Website} and return the number of guest rooms, total meeting rooms, and total meeting space in square feet."*
+4.  Map your table columns as inputs and run.
+
+For guidance on structuring an effective research prompt, see [Writing AI prompts in Clay](ai-metaprompter-guide.md).
+
+**Note:** Claygent is not a substitute for structured data lookups — email addresses, phone numbers, and standard company records should come from dedicated enrichment providers. Use Claygent to fill in the gaps where structured provider data doesn't exist.
+
 ### How do I find contact information for people who don't have professional networking profiles?
 
 Use Claygent with web search enabled to pull publicly available contact details directly from a company's website. Many organizations — especially smaller businesses — list staff contacts on a `/contact` page or in a site directory. Point Claygent at those URLs and instruct it to extract names, titles, email addresses, or phone numbers it finds there.
@@ -261,6 +294,10 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 ### Who can create or edit agents?
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
+
+### Can I duplicate a Claygent?
+
+Yes. From the Agents homepage, click the **⋯** (three-dot) menu on any agent and select **Duplicate**. Clay creates a copy named `{original name} (Copy)` in the same workspace. Duplication is available to workspace admins and members; viewers cannot duplicate agents.
 
 ### Can I move a Claygent to a different workspace or account?
 
@@ -288,25 +325,50 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### If I re-run a Claygent column on rows that already have results, am I still charged credits?
+
+Yes. Every Claygent run costs credits regardless of whether the new output matches what is already in the cell. Clay does not compare the incoming result against the existing value before charging — a re-run starts from 0 on cost every time.
+
+To limit cost when you only need to refresh one specific output field, create a separate Claygent column with a prompt scoped to just that field. Run only that slimmer column instead of the full multi-field agent, and you pay credits for that single field per row rather than for the complete set.
+
+To prevent cells that already have results from being re-run automatically when new rows arrive, confirm that **Keep existing results** is on in your table's Run Settings (`⛭` → **Run Settings**). With **Keep existing results** enabled, auto-run only fires on empty or errored cells — rows with an existing result are skipped. See [Auto-run](auto-run.md) for details.
+
 ### How much does it cost to run a Claygent in production?
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
-**Note:** If your workspace has the **Auto model** beta enabled, new Claygent columns default to Auto instead of Argon. Auto runs on a third-party model and is priced differently from Clay's fixed parallel models — see [How AI is priced](ai-pricing.md) for details once Auto is generally available, or contact support to confirm current pricing.
+**Note:** New Claygents you build in Claygent builder start on **Auto** instead of Argon. Under Auto, per-row cost varies — each row is billed at the rate of whichever model ran it. See [How AI is priced](ai-pricing.md) for model rates.
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
 When selecting a third-party model (Claude, GPT-4o, Gemini, etc.) in Claygent, the **Account** dropdown in your column settings or workflow node configuration controls how billing works. Selecting the default **Clay-managed account** means Clay's API key handles the request, and the run deducts **Data Credits** at the variable rate for that model — the `~` prefix on the cost estimate shown in the column sidebar (for example, `~4.8`) indicates a variable charge that is reconciled after each row completes. To avoid spending Data Credits on AI, click **Account** → **+ Add account** to connect your own Anthropic, OpenAI, or Gemini API key; with your own key, each Claygent row counts as **1 Action** but no Data Credits are charged. For a full model-by-model credit reference, see [How AI is priced](ai-pricing.md).
 
-**Note:** The **Account** dropdown and the option to use your own API key are available in both **table columns** and **Workflow Claygent nodes**.
+**Note:** The **Account** dropdown and the option to use your own API key are available in both **table columns** and **Workflow Claygent nodes**. In a Workflow, the account selection is in the step's configuration panel — click the Claygent step node in the workflow canvas to open it. The **Select [provider] account** dropdown (for example, **Select OpenAI account**) appears there. This is a separate panel from the Claygent Builder's Configuration panel, which shows Model, Inputs, Outputs, Skills, and Tools but does not include account selection. After connecting your own API key in a Workflow Claygent node, run a single test record before processing all your contacts to confirm the credit spend shows 0 Data Credits per row.
 
 ### Can I test different models without changing my prompt?
 
 Yes. Switch models in the configuration panel and rerun tests to compare output quality across different AI models.
 
-### What happens if I update an agent while it's running in a table?
+### Do I need to remove and re-add a Claygent from a table after updating it?
 
-In-flight runs finish on the version that started them. New runs pick up the latest version automatically.
+No — you do not need to remove and re-add a Claygent after making changes in Claygent builder. Updates are picked up automatically without any changes to the table column. New runs use the latest saved version of the agent. If a run is already in progress when you save an update, that run continues using the version it started with and completes normally before any new runs pick up the change.
+
+**Note:** The AI model is an exception — it stays with the table column. A Claygent column keeps the model selected on that column, so changing the model in Claygent builder does not change the model an existing column runs on. To change the model for an existing column, open the column settings (click the column name → **Edit column**) and update the **Model** picker there.
+
+### What's the difference between Save and Deploy in Claygent builder?
+
+Claygent builder has two buttons at the top of the editor: **Save** and **Deploy**. They do different things, and you only need **Save** to update a Claygent that's already running in your tables.
+
+-   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
+-   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
+
+To apply prompt or configuration changes to a Claygent column that's already in your table:
+
+1.  Edit the Claygent in Claygent builder.
+2.  Click **Save** (not **Deploy**).
+3.  Go back to your table and re-run the existing Claygent column, or just the cells you want to refresh.
+
+You don't need to remap inputs or add the Claygent to the table again. If you clicked **Deploy** after each edit and now see duplicate columns such as "Company Researcher (2)" or "Company Researcher (3)", those are separate copies created by Deploy — your original column was already using your latest saved changes.
 
 ### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
 
@@ -345,6 +407,20 @@ Yes. Custom MCP servers work in both standalone Claygents (built in Claygent bui
 
 This feature is available on Enterprise plans; self-serve customers can contact support to request beta access.
 
+### Why doesn't my Custom MCP Server connection appear when I search for enrichment connectors in a table?
+
+Custom MCP Server connections are not standalone enrichment providers — they will not appear in the connector or integration search when adding a new enrichment column to a table. Custom MCP servers are available only as tools inside a **Use AI** (Claygent) column.
+
+To call your Custom MCP Server from a table:
+
+1.  Add a **Use AI** column.
+2.  Select a tool-capable model (Claude Sonnet/Opus 4 series or GPT-5 series) in the **Configure** panel and connect your Anthropic, OpenAI, or Gemini API key via the **Account** dropdown.
+3.  Open **Configuration → Tools** and select your Custom MCP Server connection.
+4.  Write a prompt instructing the Claygent to use the MCP tool — for example, _"Use the [server name] tool to look up account data for \{Company Name\}."_
+5.  Save and run.
+
+The API key you entered for the Custom MCP Server connection is only the credential Clay uses to authenticate to your server. You also need a supported third-party model account connected in the **Account** dropdown for the Claygent itself.
+
 ### Why does my Claygent show "Tools are not available for the selected model"?
 
 This message appears when you have a Clay parallel model (Neon, Argon, Helium, or similar) selected. These models don't support tool calling — including custom MCP servers, the "Find contacts and jobs" tool, and other tool-based features.
@@ -357,6 +433,16 @@ To use tools with your Claygent:
 
 Once you're on a supported model with a private API key, the tools in the **Tools** section will become active.
 
+### My Claygent column appears to be spinning or stalled without producing results
+
+If Claygent rows show a loading indicator for longer than expected — or appear stuck without completing or showing a visible error — check these causes in order:
+
+**Normal processing delay on larger tables.** Claygent rows are dispatched in concurrent batches. For tables with many rows, results appear progressively as each batch completes; the loading indicator means Clay is actively processing, not that something has gone wrong. Check the column's progress bar to confirm rows are advancing. For more detail on queued and throttled states, see [Run progress](run-progress.md).
+
+**Exhausted OpenAI API credits (when using your own key).** If you are using your own OpenAI API key, check your API credit balance at **platform.openai.com → Settings → Billing**. When OpenAI API credits run out, rows can stall without displaying a clear error message in Clay. Adding credits to your OpenAI account and re-running the affected rows resolves this. For token-per-minute (TPM) rate limit issues with your key, see [My Claygent isn't working with my connected OpenAI API key](#my-claygent-isnt-working-with-my-connected-openai-api-key) below.
+
+**Active platform incident.** If rows are spinning across multiple tables or workbooks at the same time, check [status.clay.com](https://status.clay.com/) for any active Clay platform incidents.
+
 ### My Claygent isn't working with my connected OpenAI API key
 
 Your connected OpenAI API key will always appear as a selectable option in the Claygent model picker. However, Claygent requires a high token-per-minute (TPM) rate to handle web browsing and multi-step research — in practice, **OpenAI Usage Tier 2 or higher**. On Tier 1, the key's TPM limit is too low and Claygent runs will fail with rate-limit errors.
@@ -364,6 +450,21 @@ Your connected OpenAI API key will always appear as a selectable option in the C
 To check your current tier: go to **platform.openai.com → Settings → Limits**.
 
 Until your key is on Tier 2 or higher, use **Clay's managed account** (the default selection in the model picker) — Claygent runs as normal and deducts Data Credits instead of charging your API key.
+
+### My Claygent fails with "The API key is invalid" even though I'm using Clay's Claude Sonnet model — what's wrong?
+
+If a Claygent column (or a function or template built on a Claygent) fails with **"The API key is invalid. Please check your API key and try again."** while you're using a Clay-managed Claude model such as Claude Sonnet, check which account the column is connected to. The account must come from the same provider as the selected model. A Claude model only runs on an Anthropic account. If the column is connected to **Clay-managed OpenAI account** instead, Anthropic rejects the request and every row fails with this error. This is a configuration mismatch, not an outage.
+
+The Claygent account dropdown is labeled for the provider of the model you selected. For a Claude model it reads **Select Anthropic account**. Check the account shown in that dropdown, not just the label.
+
+To fix the account mismatch on a Claygent column:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  In the **API key** section, open the **Select Anthropic account** dropdown.
+3.  Select **Clay-managed Anthropic account**, or an Anthropic account with your own API key. To connect your own key, click **+ Add account**.
+4.  Click **Save** and re-run the failed rows.
+
+The same rule applies to other providers. GPT models need an OpenAI account (for example, **Clay-managed OpenAI account**), and Gemini models need a Google Gemini account. To review or add accounts, click **Manage accounts** next to the dropdown.
 
 ### How do I mark a Claygent input as optional?
 
@@ -417,6 +518,25 @@ When chaining Claygent A → Claygent B, whether B runs for a given row is contr
 This gates B on whether A returned any result for that row, regardless of which sub-fields were populated. You can also combine conditions with OR logic — for example, `/scale_signals has a value OR /other_field has a value` — for more flexibility.
 
 **To gate strictly on a specific field:** Leave that input variable's **Required to run** toggle on in B. B will only run for rows where that specific field from A has a value.
+
+### Every row in my Claygent column is failing with "Error. Please retry or contact Clay support." — what should I check?
+
+A generic **"Error. Please retry or contact Clay support."** error on every row — especially when the column was running correctly before — is almost always caused by an invalid output JSON Schema. Clay's column editor accepts and saves the schema without flagging the problem; the error only appears when the column actually runs, because the AI provider rejects the malformed schema at that point.
+
+Open the column settings (**click the column name → Edit column**) and go to the **Define column outputs** section to inspect the schema.
+
+**The fastest fix is to click Generate from prompt** in the **Define column outputs** section — Clay sends your existing prompt to AI and rebuilds the schema from scratch. This is more reliable than editing the JSON by hand, and is especially helpful if you've already tried a manual fix and the error persists.
+
+The most common underlying cause is an array field missing its `items` property. Any field with `"type": "array"` must include an `"items"` object that specifies the element type. For example:
+
+```json
+"providersFound": {
+  "type": "array",
+  "items": { "type": "string" }
+}
+```
+
+For the full list of schema issues that can produce this error — including trailing commas, `object` fields without a `properties` map, and model-specific enum restrictions — see the **Output schema** section above.
 
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 

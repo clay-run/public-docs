@@ -2,7 +2,7 @@
 title: Signals in Clay
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-04-26T01:40:40.844Z
+last_synced: 2026-09-18T03:51:09.234Z
 ---
 
 # Signals in Clay
@@ -26,7 +26,7 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 **While in your table:**
 
-1.  Click `Tools`, then select one of the `Monitor for...` options—new hires, job changes, or promotions.
+1.  In the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type — **New hire**, **Job change**, or **Promotion**.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
@@ -76,6 +76,31 @@ Most Signals — Clay's automated monitors for events like job changes, promotio
 
 Signals require a connected data source to run against — either a source table containing the companies or contacts you want to monitor, or an audience segment. Without a linked source table or audience segment (or if the linked table is empty or has been deleted), the Signal has nothing to check and will return 0 results. Confirm that your Signal is connected to an active Clay table with valid company identifiers (domain or LinkedIn URL) or contact LinkedIn URLs, or to a populated audience segment.
 
+### My signal results on an Audience segment appear read-only — how do I analyze or act on them?
+
+When a signal is attached directly to a segment in Clay Audiences, its results are written as signal data on each matching record — not as new rows in a separate editable table. The view you see on the audience surface is read-only: you cannot add AI columns to it or chain Clay table write actions (such as Slack messages, Google Sheets updates, or Salesforce writes) directly off it.
+
+To analyze, score, or act on signal results, run the signal from a Clay table instead. Create or use a Clay table that contains the same companies you are monitoring — imported from your CRM, a CSV, or the same source that populated your audience segment — then, in the workbook's **Create** panel, select **Signals** and choose the relevant signal type to set up the signal there. Each matching event lands as a new row in the table, where you can add AI scoring columns, apply filters, and chain write actions to Slack, Google Sheets, or Salesforce normally.
+
+**Two things to keep in mind:**
+
+-   **Earliest publish date advances each run.** The signal's date floor moves forward after each run by default, so earlier articles become unreachable. If you want to cover a specific time window, open the signal column header → **Edit signal** → **Filter results** → set **Earliest publish date** to the start of the window you need.
+-   **Credit limits on AI columns.** If your source table receives new rows automatically (for example, via a recurring source or [Send Table Data](send-table-data.md)), set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
+
+### My New hire signal on a company audience shows only one person per company — how do I get all the individual new hires?
+
+When a New hire signal runs on a company audience, the audience view shows only the most recent new hire per company, along with a count of how many were detected. This is a display constraint: a company record can hold one value per field, so multiple hires at the same company cannot all appear in the same column.
+
+Under the hood, Clay creates a separate signal event for each individual new hire — no data is lost. To process every hire individually through a workflow:
+
+1.  In Workflows, create a new workflow (or open an existing one).
+2.  Set the trigger to **"On a signal"** and select your New hire signal from the company audience.
+3.  The workflow now runs **once per new hire**, not once per company. Each hire's professional profile URL, job title, location, and start date are available directly in the trigger output.
+4.  Map those fields into your enrichment, scoring, or CRM steps as needed.
+5.  To keep your People audience clean, use **Write to Audiences** at the end only for hires who pass your filters.
+
+The workflow fires each time your signal runs and finds matching hires — its cadence follows the frequency you set for the signal (daily, weekly, etc.).
+
 ### How do I update or replace my master source table without breaking my signal workflows?
 
 Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
@@ -94,7 +119,7 @@ Because the table ID hasn't changed, all downstream signal workflows remain conn
 
 The signal's Company Table, View, and Company Identifier fields are locked after the signal is created and cannot be updated via **Edit signal**. If Option 1 is not feasible — for example, if you need to monitor a fundamentally different set of companies — you will need to rebuild each affected signal.
 
-**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via **Tools** → the relevant signal type), targeting the new source table.
+**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via the workbook's **Create** panel → **Signals** → the relevant signal type), targeting the new source table.
 
 ### How do I extend my signal to cover more companies?
 
@@ -113,13 +138,28 @@ When editing an existing company-based signal (New Hire, Job Posting, etc.), the
 
 Because these source fields cannot be re-pointed after creation, the fix is to rebuild the signal:
 
-1.  Open your current company table → click **Tools** → select the signal type (e.g., **Monitor for new hires**).
+1.  In the workbook, expand the **Create** panel (click `+` if collapsed), select **Signals**, then choose the signal type (e.g., **New hire**).
 2.  Configure your filters and set the desired run frequency.
 3.  Click **Save and run**.
 
 You can then delete the old signal. Rebuilding does not reprocess previously seen results.
 
 **Tip — preserve your enrichment columns during a rebuild:** If your existing signal results table has enrichment columns you've built out, save the table as a template before rebuilding. Click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+
+### Is it safe to delete a View that my Signal is using?
+
+No — deleting a View that a Signal references will break the Signal. Each Signal stores a reference to the specific View ID selected during setup and re-evaluates that View's current membership at the start of every run. If the referenced View is deleted, the Signal's next scheduled run will fail — it will not automatically fall back to the Default View or any other View in the table.
+
+**Before deleting any View, check whether a Signal is using it:**
+
+1.  Open each active Signal's column header (the `📡` icon) → **Edit signal** and note the View shown for that Signal.
+2.  If the View is not referenced by any active Signal, it is safe to delete.
+3.  If the View is referenced by an active Signal, rebuild the Signal before deleting the old View:
+    -   In the workbook's **Create** panel, set up a new Signal of the same type, selecting your new View as the source.
+    -   Confirm the new Signal is running correctly.
+    -   Delete the old Signal, then delete the old View.
+
+**Note:** Deleting a View only removes the saved filter and display configuration — it does not delete any rows, company data, enrichments, or other table settings.
 
 ### I want to find job postings by location or title — is that a Signal?
 
@@ -209,7 +249,7 @@ You can review all active signals and their individual credit spend in the `Sign
 
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
-Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from inside an existing table (via `Tools` → `Monitor for...`) or from the Signals section / Workbook overview, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
+Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
 
 Signals always add **new rows** for each matching event — one row per event, not a new column on existing rows. If your goal is to see signal data (such as a recent funding round) alongside your existing contacts, see the next FAQ.
 
@@ -224,6 +264,16 @@ Signals track events at the **company level** — each fundraising round, new hi
 
 This lets you see the latest signal event for each company directly in your contacts table without mixing signal event rows into your contacts.
 
+### How do I use a CRM record ID from my company table's Create Record action in my contact table?
+
+When a signal workflow creates company records in your CRM from the company table (using a Create Record action), the returned CRM record ID — such as a HubSpot Company ID or Salesforce Account ID — is not automatically available as a standalone column that other tables can read. To pass that ID into a contact table's Create Record action, follow these three steps:
+
+1. **In the company table**, open any populated Create Record cell and hover over the CRM record ID field in the output. Click **Add to column** to extract it as its own standalone column.
+2. **In the contact table**, re-run the company lookup (Lookup Single Row in Other Table) so it reads the updated company table row, which now includes the new standalone CRM record ID column.
+3. **In the contact table's Create Record action**, map the CRM record ID — now available through the company lookup output — to the appropriate company or account field (for example, the associated company ID or account ID in your CRM).
+
+The CRM record ID returned by Create Record lives inside the action column's output object. Extracting it as its own column (step 1) makes it visible to other tables that look up rows from the company table, which is how the contact table can reference it.
+
 ### Why did my brand mentions signal stop working?
 
 The social network brand mentions signal — along with related social listening actions — was discontinued in early March 2026. Clay's data partner for these actions updated their terms of use, and to remain aligned with their guidelines, Clay discontinued this feature.
@@ -237,9 +287,38 @@ If you had a brand mentions signal set up before the deprecation, it will show a
 -   **Google News alerts** — Integrate through Clay to track brand mentions across news and web content.
 -   **Third-party social listening tools** — Many social listening platforms can connect to Clay through API integrations, letting you route mention data into your Clay tables.
 
+### Can I use the Monitor Professional Posts signal to discover net-new contacts not already in my CRM?
+
+Yes. Unlike job change, new hire, promotion, and news signals — which check people or companies **already in your data source** — the **Monitor Professional Posts** signal discovers posts by content criteria, not by iterating over a known contact list. Every matching post can surface a contact or company you have never tracked before.
+
+You configure the signal around content, not a contact list:
+
+-   **Keywords** — posts containing a specific word or hashtag (e.g., `AI` or `#outbound`). One keyword per signal; create separate signals to track multiple topics.
+-   **Company mentions** — posts that mention a specific company. Set the Companies filter to **Mentions companies** and provide the company domain or profile URL.
+-   **Company employees' posts** — posts written by people who currently work at specific companies. Set the Companies filter to **Posted by companies' employees** and provide up to 5 company domains or profile URLs.
+-   **Individual people** — posts written by or mentioning up to 5 specific profile URLs.
+
+When the signal runs, it writes matching posts as new rows in your table — including the post URL, text, author name, author profile URL, and publication date.
+
+**Finding people who engaged with those posts:** Once posts are in your table, add these enrichments on the post URL column:
+
+-   **Get reactions on a professional post** — returns people who reacted to the post
+-   **Get comments on a professional post** — returns people who commented on the post
+
+A common net-new discovery workflow:
+
+1.  **Monitor Professional Posts** — find posts mentioning your company, a competitor, or a relevant keyword
+2.  **Get reactions / Get comments** — identify people actively engaging with that content
+3.  **Enrich person** — look up each person's role, company, and contact information
+4.  **Use AI** — score ICP fit and relevance of the post
+5.  **Lookup in CRM** — check whether the person already exists in Salesforce or HubSpot
+6.  **Route** — send qualified net-new contacts to the appropriate rep or outreach sequence
+
+**Limitation:** The signal monitors only **public** LinkedIn activity — posts, reactions, and comments. The time frame filter covers the last 24 hours or the last week; there is no custom date range option. Profile views, private messages, and Sales Navigator notifications are not accessible.
+
 ### How do I configure the Monitor Professional Posts signal?
 
-The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available under **Tools → Monitor for... → Professional Posts**.
+The **Monitor Professional Posts** signal discovers professional posts matching your criteria and adds new results to your table on a recurring schedule. It is a custom signal available in the workbook's **Create** panel under **Signals**.
 
 **Signal inputs:**
 

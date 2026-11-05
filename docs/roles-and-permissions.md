@@ -1,7 +1,7 @@
 ---
 title: Roles and permissions
-description: Roles, permissions, and access control tools available in Clay workspaces.
-last_synced: 2026-04-26T01:40:33.352Z
+description: Roles, permissions, and access control tools available in Clay workspaces, including when Viewers can use credits.
+last_synced: 2026-10-07T01:55:09.539Z
 ---
 
 # Roles and permissions
@@ -39,6 +39,8 @@ _They cannot:_
 
 Viewers have limited access to protect sensitive data. By default, they can only view workspace content and **cannot create new tables or workbooks**.
 
+Viewers can also authorize and use Clay's MCP integration to access Clay through AI tools like Claude, ChatGPT, or Glean.
+
 ### Granting Viewers additional access
 
 Viewers can be granted Editor access to specific tables or workbooks, or added as workbook collaborators. When given this access, they can:
@@ -58,6 +60,17 @@ Viewers can be granted Editor access to specific tables or workbooks, or added a
 1.  In the workbook, go to workbook settings on the right side.
 2.  Under `Access permissions`, change `Edit access` to `Admins and invited collaborators only`.
 3.  Click `+ Add collaborator` and select the Viewer.
+
+### Do Viewers use credits?
+
+Adding a Viewer to your workspace doesn't use any credits. By default, a Viewer can't spend credits in the Clay web app: Viewers can't create tables or workbooks, and they can't run enrichments or actions in tables owned by other workspace members.
+
+A Viewer can use credits in two cases:
+
+-   **Editor access to a specific table or workbook.** If you give a Viewer Editor access to a table or workbook, or add them as a workbook collaborator, they can run actions and enrichments there.
+-   **Clay MCP.** The Viewer role doesn't block Clay's MCP integration. A Viewer who connects Clay to an AI tool like Claude, ChatGPT, or Glean can run enrichments and functions from that tool.
+
+In both cases, credits come from your workspace's shared credit balance. To keep a Viewer view-only in the Clay web app, don't give them Editor access to tables or workbooks. To cap how many credits a Viewer can spend through AI tools, a workspace admin can set a per-user MCP credit limit for them on the `MCP` settings page. See [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## Sales rep _(Beta)_
 
@@ -87,9 +100,26 @@ Admins control which Functions reps can access (via the Functions settings page)
 To invite a new member to your workspace:
 
 -   Go to `Settings` → `Team`.
--   Click the `+ Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
--   Select the appropriate role from the dropdown and click `Send invite`.
+-   Click the `Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
+-   Select the appropriate role from the dropdown and click `Send invites`.
 -   The invited person will receive an email to join the workspace with the specified role.
+
+### **Invite members from a CSV file**
+
+Workspace admins can invite up to 1,000 people at once by uploading a CSV file, instead of typing email addresses one by one. This is useful when you have a list of reps exported from another tool. The only requirement is that the file has a column of email addresses.
+
+1.  Go to `Settings` → `Team` and click the `Invite` button.
+2.  In the `Invite members` window, switch from the `Invite` tab to the `Upload CSV` tab.
+3.  Upload a `.csv` file. The file must be under 1 MB and contain at most 1,000 rows. A header row is optional — Clay detects it automatically.
+4.  Choose the column that contains email addresses. Clay pre-selects the column with the most email addresses and shows example values. Click `Continue`.
+5.  Review the invite list. Set a role for each person, or use the `Apply to all` row to set the same role for everyone. If user groups or credit budgets are enabled for your workspace, you can assign those here too.
+6.  Click `Send invites` (the button shows the number of invites, for example `Send 47 invites`). A progress counter shows how many have been sent.
+
+**Which rows a CSV invite skips:** On the review step, Clay leaves out invalid email addresses, duplicates, people who are already in your workspace, your own email, and any email that isn't on your own email domain. A summary line shows how many rows were skipped and why.
+
+**CSV invites only work for your own email domain.** For example, if your email is on `@acme.com`, a CSV upload only invites `@acme.com` addresses. To invite people on other domains (such as contractors or a second company domain), invite them individually from the `Invite` tab.
+
+**If sending stops partway through:** Clay stops at the failed batch and shows a `Retry` button with the number of invites still to send — click it to send the rest. If you close the window while invites are sending, the remaining invites are not sent and Clay shows how many were invited (for example, "Invited 30 of 100. The rest were not sent."). You can re-upload the same file — people who were already invited are skipped as existing members.
 
 ### **Change a team member's role**
 
@@ -107,7 +137,7 @@ To remove a member from your workspace:
 -   Find the member you wish to remove.
 -   Click the `…` (three-dot) menu at the end of their row.
 -   Select `Remove member`.
--   Confirm the removal in the dialog that appears.
+-   Confirm the removal by clicking `Remove` in the dialog that appears.
 
 **What happens when you remove a member:**
 
@@ -117,12 +147,12 @@ To remove a member from your workspace:
 
 ## Edit access levels in a workbook _(Enterprise only)_
 
-**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit Access` settings shown below.
+**Note:** Workbook-level access restriction is available on Enterprise plan workspaces only. Non-Enterprise workspaces do not have the `Edit access` settings shown below.
 
 Workspace admins can edit access levels for specific workbooks. This helps prevent accidental changes to important tables.
 
 1.  In a workbook, click the title → `Edit workbook settings`.
-2.  Under `Edit Access`, select one of the following access levels:
+2.  Under `Edit access`, select one of the following access levels:
     -   **Admins and editors in this workspace** — all admins and editors in the workspace can access the workbook.
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
 3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
@@ -151,4 +181,4 @@ Create named credit spending pools and assign them to users or groups, so spend 
 
 **Audiences**
 
-Viewing and filtering audience data is available to all workspace roles. Most write operations require **Admin** access: creating and editing audience segments, running bulk enrichments, adding or configuring data sources, exporting individual records to Salesforce, and upserting records from a Clay table into Audiences are all Admin-only. Editors can export audience segments to Clay workbooks or campaigns. Viewers have read-only access. For the full breakdown, see [Audiences roles and permissions](https://university.clay.com/docs/audiences#roles-and-permissions). Note that connection access controls also apply to enrichment columns within Audiences — see [Access settings for connections](https://university.clay.com/docs/access-settings-for-connections) for details.
+Admins and Editors can create and edit Audience segments and create enrichment workflows. Viewers have read-only access. Managing data sources and Salesforce exports requires Admin access. See [Audiences roles and permissions](https://university.clay.com/docs/audiences#roles-and-permissions) for the permission table and [Adding enrichments](https://university.clay.com/docs/audiences#adding-enrichments) for workflow setup.

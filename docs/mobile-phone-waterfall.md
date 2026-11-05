@@ -2,7 +2,7 @@
 title: Mobile Phone waterfall
 description: Find mobile phone numbers faster — the Mobile Phone waterfall
   cascades across multiple providers in sequence, stopping as soon as a result
-  is found.
+  is found. Also explains how to find a work (corporate) direct-dial number.
 last_synced: 2026-07-22T18:46:10.000Z
 ---
 
@@ -13,6 +13,8 @@ Find mobile phone numbers faster — the Mobile Phone waterfall cascades across 
 The Mobile Phone waterfall finds a person's mobile (cell) phone number by querying phone data providers one at a time, in a set order. Instead of relying on a single provider — which typically covers only ~20–40% of contacts — the waterfall stacks providers to push coverage substantially higher.
 
 You only pay credits for the provider that finds a match, making it one of the most credit-efficient ways to build phone coverage at scale.
+
+**Plan availability:** The Mobile Phone waterfall requires the **Launch plan or above**. It is not available on the Free plan or during the free trial period — this restriction applies even if you have unused data credits. Work email enrichment, people search (Find People), and LinkedIn profile resolution (Enrich Person) work on all plans including Trial — so you can build and validate the rest of your table workflow before upgrading. To upgrade, go to **Settings → Plan & billing**. See [Plans & billing](plans-and-billing.md#trials) for details.
 
 ## Setting up the Mobile Phone waterfall
 
@@ -36,6 +38,15 @@ Map whichever of these columns you have. Providing more than one identifier impr
 ### How it works
 
 Once the enrichment starts, Clay moves through the waterfall dynamically. If a provider returns a mobile number, the process stops for that contact and (where applicable) the results of unused providers are not charged. If a provider returns nothing, Clay moves on to the next provider until a number is found or all providers are exhausted.
+
+## Editing the Mobile Phone waterfall
+
+To change the region, adjust validation settings, or add, remove, or reorder providers in a Mobile Phone waterfall you've already saved:
+
+1.  Click the waterfall tab — the labeled bar spanning your waterfall's provider columns — to open the waterfall menu, then select **Edit group**.
+2.  In the waterfall editor, click the **Full configuration** tab.
+3.  Make your changes — update **Optimized For**, **Validation**, **Waterfall sequence**, or **Additional column settings** as needed.
+4.  Click **Save**.
 
 ## Optimize for (location)
 
@@ -84,6 +95,28 @@ These optional settings control how results and intermediate data appear in your
 - **Output name of successful provider?** — When enabled, adds a column showing which provider returned the accepted number, so you can see source attribution per row.
 - **Hide provider columns?** *(enabled by default)* — Hides the intermediate per-provider columns the waterfall uses internally, keeping your table clean. Disable this if you want to inspect the raw output of each provider.
 
+## Finding a work (corporate) direct-dial phone number
+
+Clay doesn't have a dedicated work-phone or direct-dial waterfall. Every preset Mobile Phone waterfall targets a person's mobile (cell) number. No single provider reliably finds a person's corporate direct-dial line, so the best way to get one is to chain several direct-dial providers as separate enrichment columns and then validate the numbers they return.
+
+Providers that return phone numbers, such as Bytemine, require the Launch plan or above. See [Trial plan and provider restrictions](building-a-data-waterfall.md#trial-plan-and-provider-restrictions).
+
+To build a custom direct-dial cascade:
+
+1.  Click `Add enrichment` and add Bytemine's **Find contact info** enrichment. Turn on **Require direct dial**, and use its **Direct dial** output.
+2.  Add SMARTe's **Enrich contact** enrichment, which returns **Direct dial**, **Direct dial 1**, and **Direct dial 2** fields. Under its run settings, turn on **Add run condition** so it runs only when the Bytemine **Direct dial** column is empty.
+3.  Add a formula column that merges the results into one field, for example `{{Bytemine Direct dial}} || {{SMARTe Direct dial}}`.
+4.  Validate the merged number with ClearoutPhone's **Check phone line type & status** or Trestle's **Verify phone number**. Both report whether the number is valid and what line type it is (for example, mobile or landline).
+
+For the full run-condition pattern, see [Building a provider cascade with run conditions](building-a-data-waterfall.md#building-a-provider-cascade-with-run-conditions).
+
+The inputs these direct-dial providers accept:
+
+-   **Bytemine Find contact info**: any one of **Professional profile URL**, **Person's name**, **Email address**, or **Facebook profile URL**.
+-   **SMARTe Enrich contact**: **Person's professional URL** on its own, or **Person's full name** plus **Company name** or **Company URL**.
+
+Map the person's name, company, and professional profile URL when you have them, so each provider has an identifier it can match on.
+
 ## FAQs
 
 **Do I have to use validation?**
@@ -97,3 +130,8 @@ ClearoutPhone is available for every optimization option and runs on your own Cl
 
 **Will stricter validation cost more credits?**
 It can. Rejecting more numbers means the waterfall calls more providers per contact before it finds an acceptable result, which can increase spend and reduce fill rate — in exchange for higher-quality output.
+
+**Some of the phone numbers the waterfall is returning are wrong or outdated — how do I find out which provider is responsible?**
+Enable **Output name of successful provider?** in your waterfall's **Additional column settings**. This adds a column to your table showing which provider returned the accepted number for each row. When reps flag a bad number, check that column to identify a pattern — if the same provider appears repeatedly on flagged rows, that provider may have stale data for your specific audience or geography.
+
+To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).

@@ -8,7 +8,7 @@ last_synced: 2026-04-26T01:39:51.666Z
 
 Work email finders
 
-We developed a rigorous testing protocol to reveal each email provider's specialties. Here are the providers we put to the test:
+We developed a rigorous testing protocol to reveal each email provider's specialties. Providers we put to the test included:
 
 -   Dropcontact
 -   Findymail
@@ -16,7 +16,6 @@ We developed a rigorous testing protocol to reveal each email provider's special
 -   LeadMagic
 -   Nimbler
 -   People Data Labs
--   RocketReach
 -   Wiza
 -   Icy Peas
 -   Datagma

@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including turning a teammate's workspace into your company workspace, workspace name, picture, billing email, SSO setup, agency setups, AI Context, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -10,9 +10,26 @@ Use this article to create and switch between Clay workspaces, manage workspace 
 
 ## Creating a new workspace
 
-Creating an additional workspace is not available through in-app settings for most accounts. To create a new workspace, sign up using a **different email address** at [app.clay.com](https://app.clay.com) — this starts a new workspace where you are the admin from day one.
+Each Clay account can create one workspace. If your email is already associated with any workspace — whether you created it or were invited as a member — the option to create an additional workspace is blocked by default.
 
-You do not need to leave any workspaces you're already a member of. Your existing workspace memberships stay intact, and each workspace is independent with its own tables, credits, and billing.
+**To get a new workspace linked to your existing email, you have two options:**
+
+-   **Contact Clay support** via the in-app chat and ask to have multi-workspace creation enabled on your account. Once enabled, an **Add workspace** button appears in the workspace switcher. Workspaces created this way start with no trial credits; billing and credits are configured per workspace after creation.
+-   **Have a colleague create the workspace and invite you as admin.** Ask them to sign up at [app.clay.com/signup](https://app.clay.com/signup), create the workspace, then invite you from **Settings → Members**. Once you accept, the workspace appears in your workspace switcher alongside your others.
+
+If you want a completely separate Clay account with a distinct login, sign up at [app.clay.com](https://app.clay.com) with a **different email address** — this creates an independent account and workspace.
+
+## Turn a teammate's workspace into your company workspace
+
+If one person on your team signed up for Clay first and the rest of the team was later invited to their workspace, that workspace is already your company's shared team workspace. You don't need to create a new "company workspace" or move your tables anywhere. Clay has no separate personal or company workspace types: every workspace works the same way, and the tables, data, and credits in a workspace belong to the workspace, not to the person who created it.
+
+**To set up your existing workspace as your company workspace (requires the Admin role):**
+
+1.  **Rename the workspace** to your company name. See [Workspace name](#workspace-name) below.
+2.  **Give more than one teammate the Admin role** so access to the workspace doesn't depend on one person. Go to `Settings` > `Team` and change a member's role to **Admin** — see [Managing team members](./managing-team-members.md). The person who created the workspace has no special permissions beyond their current role, so another admin can change their role or remove them later (for example, if they leave the company). A workspace must always keep at least one admin.
+3.  **Switch billing to a company card.** Go to `Settings` > `Plan & billing`, click `Edit`, and select `Edit payment method...`. Only admins can see the billing page. See [Plans and billing](./plans-and-billing.md) for details.
+
+Once you've done this, your tables, data, and credits stay exactly where they are. Moving to a brand-new workspace is usually unnecessary — and if you're already a member of a workspace, you can't create another one from your account unless multi-workspace creation is enabled (see [Creating a new workspace](#creating-a-new-workspace) above).
 
 ## Switching between workspaces
 
@@ -39,6 +56,7 @@ If you log in and find yourself in a blank new workspace with none of your table
 
 1.  **Sign out and sign back in with your original credentials:** Go to [app.clay.com](https://app.clay.com), sign out, and then sign in with the email address or Google account you originally used. Your workspace and tables will be there.
 2.  **Use the workspace switcher if you have multiple workspaces under the same account:** Click your **profile picture or name in the top-right corner** and look for the **Workspaces** section in the dropdown. The switcher shows all workspaces the currently-signed-in account belongs to — it cannot show workspaces from a different Clay account (different email or Google account).
+3.  **Invite your other account to your paid workspace (permanent fix for multiple Google accounts):** If your browser regularly auto-signs you into a Google account that is not your paid workspace's account — for example, Chrome keeps signing you into your personal Gmail while your paid workspace lives under a different email — you can invite that Google account to your paid workspace as a member. Once accepted, your secondary account will see your paid workspace in the workspace switcher every time it signs in, without needing to sign out or use incognito. To set this up: from your paid workspace, go to `Settings` > `Team`, click `+ Invite`, enter your secondary email address, and click `Send invite`. Accept the invite from your secondary email address. From that point on, the paid workspace appears in the workspace switcher whenever you are signed in as your secondary account.
 
 **If you cannot find your original workspace** or you are not sure which email address or Google account you originally used, contact Clay support via the in-app chat. Having the following details ready will help the team locate your account quickly: the email address you originally signed up with, the login method you used (Google or email and password), and anything you remember about the workspace — its name, roughly when you created it, or the names of tables in it.
 
@@ -50,7 +68,7 @@ If you're managing Clay for multiple clients, the recommended approach is to use
 
 **Why separate workspaces work well for agencies:**
 
--   Each workspace has its own **AI Context** domain (configured in **Settings → AI Context**), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
+-   Each workspace has its own **AI Context** domain (accessible via **AI context** in the left sidebar of your workspace), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
 -   Credits and billing are tracked separately per workspace, making it easy to see exactly what each client is consuming.
 -   When a project ends, you can hand the workspace over to the client by ensuring they have admin access and removing yourself — all tables, workbooks, and settings remain in place.
 
@@ -106,6 +124,19 @@ To join the Beta Program:
 To leave the Beta Program, return to the same section and click **Leave beta program**.
 
 Once enrolled, beta feature announcements and discussions are shared in the [**#clay-beta-program**](https://clayrunhq.slack.com/archives/C08T0RDMBBR) channel in the Clay community Slack.
+
+## AI Context
+
+**AI Context** is where you enter your company domain and business background so Clay's AI features can tailor their output to your organization. Each workspace has its own AI Context — if you manage multiple workspaces (for example, one per client), you can set a different domain and context for each one.
+
+**AI Context is only available to workspace admins and owners.** If you are a workspace member or editor, the AI context option will not appear in your sidebar. Ask your workspace admin to configure AI Context for your workspace.
+
+**To open AI Context (admins and owners only):**
+
+-   From your Clay workspace homepage, look at the **bottom-left sidebar**.
+-   Click **AI context** — it appears as its own item below Settings, not as a sub-item inside the Settings menu.
+
+If you do not see **AI context** in the sidebar, first confirm you have an admin or owner role in the workspace (go to Settings → Team and check your role). If your role is correct, make sure you are on the main workspace view (the page showing your tables and folders). If you have navigated into a Settings sub-page (such as Settings → Team), click the back arrow or your workspace name in the breadcrumb to return to the main workspace view first, then look at the bottom-left corner for **AI context**.
 
 ## Delete your workspace
 
