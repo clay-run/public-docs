@@ -1,6 +1,6 @@
 ---
 title: Managing team members
-description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace.
+description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace, including when your company changes its email domain.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -126,6 +126,20 @@ Once removed, you can re-invite the same email address if needed. Only workspace
 ## Export your team member list
 
 Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
+
+## Change team members' email addresses after a company domain change
+
+If your company is moving to a new email domain (for example, from `yourcompany.io` to `yourcompany.ai`), Clay cannot update your team members' email addresses automatically or all at once. There is no bulk or company-wide option, and workspace admins cannot edit another member's email address in `Settings` > `Team`. Clay identifies each account by its email address, so you handle a domain change one person at a time, using one of the following approaches.
+
+**Option 1: Each person changes their own login email.** If `Change sign-in` appears on their `Settings` > `Account` > `Security` tab, each team member can move their existing Clay account to their new-domain address. They keep the same account, workspaces, and tables. They need access to their current (old-domain) inbox to receive a verification code. See [Change your account email address](./account-settings.md#change-your-account-email-address) for the steps. If `Change sign-in` is missing, or the old inbox is no longer available, contact Clay support via the in-app chat.
+
+**Option 2: Invite the new addresses, then remove the old ones (workspace admins).**
+
+1.  Go to `Settings` > `Team` and invite each team member's new-domain email address, following [Add a team member to your workspace](#add-a-team-member-to-your-workspace).
+2.  Have each person accept the invite through the invitation email link **before** they sign in to Clay with their new email address. If someone signs in with a new address that has no pending invite, Clay creates a separate account with its own empty workspace.
+3.  Once each person confirms they can access the workspace with their new address, [remove](#remove-a-team-member) their old-domain member.
+
+With Option 2, each new-domain address is a separate Clay account and is not linked to the old one. When you remove an old-domain member, the tables, workbooks, and groups that member owned transfer to the longest-tenured admin in the workspace, not to the person's new account.
 
 ## Programmatic user management
 
