@@ -158,7 +158,7 @@ Search for contact-level signals — such as promotions or company changes — f
 
 ### `Action` Enrich company headcount growth
 
-Search for a company's headcount growth over a specified time period using its domain or company name. Costs 8 Clay credits per run. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
+Search for a company's headcount growth over a specified time period using its domain or company name. In Clay, this action appears as **Find company headcount growth signal**. With Clay's Lusha connection, it costs 8 Clay Data Credits per headcount growth signal found. If no signals are found, no Data Credits are charged. With your own Lusha API key, Clay doesn't charge Data Credits for the Lusha data. For details, see the Lusha signal pricing FAQs below.
 
 **Inputs**
 
@@ -170,6 +170,8 @@ Search for a company's headcount growth over a specified time period using its d
 **Optional:**
 
 -   **Start date:** The beginning of the time window to analyze. For best results, do not go shorter than the past month. Maximum lookback is 6 months, which is also the default.
+-   **Headcount growth signals types:** The headcount signals to search for. You can select more than one: headcount increase or decrease over 3, 6, or 12 months.
+-   **Max results per signal:** The maximum number of results to return for each selected signal type. Defaults to 3.
 
 **Outputs**
 
@@ -260,6 +262,31 @@ Turning on additional data points, like email and phone, will consume Lusha Unif
 **Are Lusha's signals actions always-on monitors?**
 
 No. Lusha's signals actions (`Enrich person signals`, `Enrich company headcount growth`, `Enrich company jobs growth`, and `Enrich company news`) are retroactive lookups, not always-on monitors like Clay's native Signals. These actions check for events that occurred within a specified lookback window, but they won't notify you of future events as they happen.
+
+**How am I charged for Lusha signals when I use my own Lusha API key?**
+
+What you pay for Lusha signals depends on which Lusha account the column uses. You choose it under **Select Lusha account** in the column's **Account** section.
+
+-   **Your own Lusha API key:** Clay doesn't charge Clay Data Credits for the Lusha data. Lusha bills the usage against your Lusha plan. Each run still counts as 1 Action in Clay, the same as any enrichment that uses your own API key. See [Actions and Data Credits](actions-data-credits.md).
+-   **Clay's Lusha connection (no API key):** Lusha signals are charged in Clay Data Credits. The costs are listed in the next FAQ.
+
+The column setup panel shows a line such as "You'll be charged 8 credits per signal found." That line is the price for Clay's Lusha connection. It doesn't change when you select your own Lusha key. To confirm that no Data Credits were charged, run the column on one row and check the credit usage dashboard in **Settings**.
+
+**How many Clay credits do Lusha signals cost with Clay's Lusha connection?**
+
+When you run Lusha signals through Clay's Lusha connection, each signal action costs 8 Clay Data Credits per result, or a flat 8 per run. If no data is returned, no Data Credits are charged. This table lists the Data Credit cost of each Lusha signal action:
+
+| Lusha signal action (as shown in Clay) | Cost with Clay's Lusha connection | Maximum cost per row |
+| --- | --- | --- |
+| Find company headcount growth signal | 8 Data Credits per signal found | 8 × signal types selected × Max results per signal |
+| Find company news signal | 8 Data Credits per news signal found | 8 × signal types selected × Max results per signal |
+| Find company jobs growth by department signal | 8 Data Credits per department found | 8 × Max departments to return |
+| Find company jobs growth by location signal | 8 Data Credits per location found | 8 × Max locations to return |
+| Find company jobs growth signal | 8 Data Credits per run | 8 |
+| Find company IT spend signal | 8 Data Credits per run | 8 |
+| Find company website traffic signal | 8 Data Credits per run | 8 |
+
+For example, say you run **Find company headcount growth signal** with 2 signal types selected and **Max results per signal** at the default of 3. That row costs at most 8 × 2 × 3 = 48 Data Credits. If only 4 signals come back, the row costs 32 Data Credits. To lower costs, select only the signal types you need and reduce **Max results per signal**. With your own Lusha API key, none of these actions charge Clay Data Credits.
 
 **My Lusha enrichment column shows "[Deprecated]" in its name. What does this mean, and what do I need to do?**
 
