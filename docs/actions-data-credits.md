@@ -126,6 +126,8 @@ Each fully enriched record typically costs **6–20 Data Credits**, depending on
 -   How many of your own API keys you use.
 -   Whether you're using waterfalls with multiple providers.
 
+**Phone number enrichment is the biggest Data Credit cost driver.** Work email enrichment — via the [Work Email Waterfall](work-email-waterfall.md) — typically costs under 1 Data Credit per match on current plans, so email-only workflows sit toward the low end of the 6–20 range. Mobile phone enrichment — via the [Mobile Phone Waterfall](mobile-phone-waterfall.md) — costs significantly more: typically 2–10+ Data Credits per successful match, depending on which provider in the sequence finds the number. A workflow enriching both work email and mobile phone numbers can cost 3–15+ Data Credits per contact. On the Launch plan's base 2,500 monthly Data Credits, that yields roughly 165–830 contacts enriched with both fields, versus thousands enriched with email only.
+
 ‍**General guidelines:**
 
 | Plan | Data Credits/month | Best for |
