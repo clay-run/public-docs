@@ -726,6 +726,18 @@ The answer depends on which feature you're using:
 
 Across all three, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
+### Why do professional profile URLs from Find People show "page not found" or an error when I open them?
+
+Professional profile URLs returned by **Find people** come from Clay's stored people dataset, not from a live lookup on the professional network at the moment you search. Each Find people result reflects the profile as it was when that dataset last refreshed it. If the person later deleted or deactivated their account, or changed their profile URL (for example, from `jane-doe-12345abc` to `jane-doe`), the profile URL stored in your table still points to the old address — so opening it shows a "page not found" error.
+
+To get the current profile URL for rows with broken links:
+
+1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add it. Map the **Professional URL** input to the profile URL column from Find people.
+2.  Run Enrich person on the rows with broken links. Enrich person makes a live profile lookup each time it runs, so its **Url** output returns the person's current profile URL — including the new URL if they changed it.
+3.  Use the **Url** returned by Enrich person instead of the original Find people profile URL.
+
+If the person deleted their account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working profile URL for that person to replace the broken one.
+
 ### Where does the total funding data in Enrich Company come from?
 
 The **Total Funding Amount Range Usd** field in **Enrich Company** comes from Clay's own company dataset — the same company data that powers Enrich Company's other fields, such as employee count, industry, and annual revenue. Enrich Company doesn't call a separate funding data vendor when it fills this field.
