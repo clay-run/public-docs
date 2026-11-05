@@ -60,15 +60,18 @@ The `Optimized For` setting controls which version of the waterfall runs. You ca
 - `Middle East & Africa Mobile Phone`
 - `Mobile Phone (Every Provider)` — runs across the full provider set.
 
-Choosing a region-specific version prioritizes the providers with the strongest coverage for that geography, which can improve match rates and reduce spend when you know where your contacts are located. Your choice here also determines which validators are available (see below).
+Choosing a region-specific version prioritizes the providers with the strongest coverage for that geography, which can improve match rates and reduce spend when you know where your contacts are located.
 
 ## Validation
 
 Validation lets you verify each phone number before the waterfall accepts it, so you stop only on numbers that meet your quality bar — not just the first number any provider returns.
 
-**ClearoutPhone** is available for every optimization option. To use it, connect your own **ClearoutPhone API key** — validation cannot run until this key is connected. Once connected, ClearoutPhone checks each candidate number and reports whether it is valid and what line type it is.
+Validation is turned on by default in the Mobile Phone waterfall. Two phone validators are available for every `Optimized For` option:
 
-**Trestle** is available as a second validator **only** when you've optimized for one of the region-specific waterfalls — `APAC Mobile Phone`, `LATAM Mobile Phone`, `Middle East & Africa Mobile Phone`, or `US & Canada Mobile Phone`. It is not offered for `Mobile Phone (Global)`, `Europe Mobile Phones`, or `Mobile Phone (Every Provider)`. You can run Trestle using either **Clay credits** or your own **Trestle API key**.
+- **Trestle — Verify phone number** *(selected by default)*
+- **ClearoutPhone — Check phone line type & status**
+
+Both validators run on Clay credits by default. Connecting your own Trestle or ClearoutPhone API key is optional. Each validator checks whether a candidate number is valid and what line type it is (for example, mobile, landline, or VoIP). Phone validators do **not** confirm that the number belongs to the specific person you're enriching — to check whether a number is likely to reach that person, use SureConnect's **Verify phone number** enrichment as a separate column (see [FAQs](#faqs)).
 
 Whichever validator you use, two options control how validation behaves:
 
@@ -78,6 +81,13 @@ By default, the validator returns **all phone line types — including landline 
 
 - **Enable** when you strictly need personal mobile numbers — for example, for SMS campaigns or dialing personal cells.
 - **Leave off** to accept any valid phone line type.
+
+`Only validate mobile phone types?` is off by default. How it filters depends on your validator:
+
+- **Trestle (default validator):** turning on `Only validate mobile phone types?` is enough. Landline and VoIP numbers are rejected and the waterfall moves on to the next provider.
+- **ClearoutPhone:** turn on **both** `Only validate mobile phone types?` and `Require validation success?`. With only `Only validate mobile phone types?` on, non-mobile numbers can still be kept.
+
+Changing this setting doesn't update results already in your table. After you turn it on, click **Save**, then re-run the existing rows to apply it.
 
 ### Require validation success?
 
@@ -120,10 +130,18 @@ Map the person's name, company, and professional profile URL when you have them,
 ## FAQs
 
 **Do I have to use validation?**
-No. Validation is optional. Without it, the waterfall accepts the first number any provider returns. Connecting a validator is recommended when number quality and line type matter.
+No, but validation is on by default — the Mobile Phone waterfall selects Trestle as the validator automatically. You can remove the validator; without one, the waterfall accepts the first number any provider returns. Keeping a validator is recommended when number quality and line type matter.
 
 **Which validators can I use, and do I need my own API key?**
-ClearoutPhone is available for every optimization option and runs on your own ClearoutPhone account — connect your API key to enable it. Trestle is available as a second validator only for the region-specific waterfalls (APAC, LATAM, Middle East & Africa, and US & Canada Mobile Phone) and can be run with either Clay credits or your own Trestle API key.
+Every Mobile Phone waterfall option, including `Mobile Phone (Global)` and the regional versions, offers two validators: Trestle's **Verify phone number** (the default) and ClearoutPhone's **Check phone line type & status**. Both run on Clay credits by default, so you don't need your own API key. You can optionally connect your own Trestle or ClearoutPhone account.
+
+**Why is my Mobile Phone waterfall returning landline or VoIP numbers?**
+When `Only validate mobile phone types?` is off (the default), the validator only checks that a number is real and valid, not that it's a mobile number. So a valid landline or VoIP number can end up in your Mobile Phone waterfall results. To keep only mobile numbers:
+
+1.  Click the waterfall tab, select **Edit group**, and open the **Full configuration** tab.
+2.  Under **Validation**, turn on `Only validate mobile phone types?`. If your validator is ClearoutPhone, also turn on `Require validation success?`.
+3.  Click **Save**.
+4.  Re-run your existing rows. Saving the setting doesn't change results that are already in your table.
 
 **What's the difference between the two validation options?**
 `Only validate mobile phone types?` filters by *line type* — enable it so only mobile/cellular numbers count as valid (by default, all line types, including landline, are considered valid). `Require validation success?` gates by *validation outcome* — keep only numbers the validator confirms valid. You can use them independently or together.
@@ -135,3 +153,12 @@ It can. Rejecting more numbers means the waterfall calls more providers per cont
 Enable **Output name of successful provider?** in your waterfall's **Additional column settings**. This adds a column to your table showing which provider returned the accepted number for each row. When reps flag a bad number, check that column to identify a pattern — if the same provider appears repeatedly on flagged rows, that provider may have stale data for your specific audience or geography.
 
 To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).
+
+**The Mobile Phone waterfall didn't find a number, or the number is wrong — what else can I try?**
+If the Mobile Phone waterfall comes back empty or returns an inaccurate number, try these options:
+
+-   **Switch the `Optimized For` region** to match where your contacts are based (US & Canada, Europe, APAC, LATAM, or Middle East & Africa), or use `Mobile Phone (Every Provider)` to run across the full provider set. See [Optimize for (location)](#optimize-for-location).
+-   **Add or reorder providers** in the **Waterfall sequence**. More providers means more chances to find a match.
+-   **Keep validation on** so invalid numbers fail and the waterfall moves on to the next provider instead of keeping a bad result. See [Validation](#validation).
+-   **Check that the number belongs to the person.** Phone validators (Trestle and ClearoutPhone) confirm that a number is valid and what line type it is, but not who it belongs to. To check whether a number is likely to reach the person you're enriching, add SureConnect's **Verify phone number** enrichment as a separate column after the waterfall. It takes the phone number and the person's full name (company name is optional). SureConnect can't be selected as a validator inside the waterfall, and its results arrive asynchronously. See [SureConnect integration](sureconnect-integration-overview.md).
+-   **Search for a publicly listed number with Claygent.** Add a Claygent (AI web researcher) column that searches the web — for example the person's bio, their company website, or a business listing — for a published phone number. This can work well for small businesses whose numbers aren't in phone data providers' databases.
