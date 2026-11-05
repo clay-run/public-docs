@@ -215,21 +215,21 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
 
-### **Why does my LinkedIn Ads sync say "Expected completion" is days away?**
+### **Why does my professional network ad sync say "Expected completion" is days away?**
 
 The **Expected completion** date on a sync destination card is a fixed, conservative estimate. It is not a forecast for your specific list. Clay calculates it by adding a set processing window to the time the sync run started. The window depends on the ad platform:
 
 | Ad platform | Expected completion shown |
 | --- | --- |
-| LinkedIn Ads | 120 hours (5 days) after the sync run starts |
+| Professional network | 120 hours (5 days) after the sync run starts |
 | Meta, Google Ads, Reddit Ads, Vibe.co | 72 hours (3 days) after the sync run starts |
 | Bing Ads | 144 hours (6 days) after the sync run starts |
 
-For example, a LinkedIn Ads sync that starts on Nov 4 at 12:17 PM shows an **Expected completion** of Nov 9 at 12:17 PM. LinkedIn usually finishes processing an audience much sooner, typically within **48 hours**, so your audience is often ready well before the date shown.
+For example, a professional network ad sync that starts on Nov 4 at 12:17 PM shows an **Expected completion** of Nov 9 at 12:17 PM. The professional network usually finishes processing an audience much sooner, typically within **48 hours**, so your audience is often ready well before the date shown.
 
-While LinkedIn is processing your audience, the sync destination card shows the **Building** status, and **LinkedIn match rate** and **LinkedIn audience size** show "—". This is expected. LinkedIn only reports these numbers once the audience is ready. Hovering over the info icon next to **LinkedIn audience size** shows "The audience size will be determined once the synced audience is ready." **People sent** shows how many contacts Clay has already sent to LinkedIn.
+While the professional network is processing your audience, the sync destination card shows the **Building** status, and the match rate and audience size fields on the card show "—". This is expected. The platform only reports these numbers once the audience is ready. Hovering over the info icon next to the audience size shows "The audience size will be determined once the synced audience is ready." **People sent** shows how many contacts Clay has already sent to the platform.
 
-You don't need to do anything while a sync shows **Building**. Clay checks LinkedIn for an update every 30 minutes and updates the status, match rate, and audience size automatically once LinkedIn finishes. If LinkedIn still hasn't reported results for a People (contact-level) sync after 5 days, the sync shows a **Timed out** status — see [Why does my professional network ad sync show a "Timed out" status?](#why-does-my-professional-network-ad-sync-show-a-timed-out-status).
+You don't need to do anything while an ad sync shows **Building**. Clay checks the professional network for an update every 30 minutes and updates the status, match rate, and audience size automatically once processing finishes. If the platform still hasn't reported results for a People (contact-level) sync after 5 days, the sync shows a **Timed out** status — see [Why does my professional network ad sync show a "Timed out" status?](#why-does-my-professional-network-ad-sync-show-a-timed-out-status).
 
 ### **Why should I use personal emails instead of work emails?**
 
