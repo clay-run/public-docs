@@ -38,7 +38,7 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## What happens when SSO is enabled
 
--   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
+-   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** SSO detection happens at the email step — when you click **Continue**, Clay checks whether your domain is SSO-enabled and redirects you to your identity provider before a password field is shown. There is no option on the Clay login page to sign in with a password when SSO is enabled for your domain.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
 -   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
@@ -49,9 +49,9 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## MFA enforcement and compliance requirements
 
-Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
+Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider through the Clay login page — a password field is not shown to SSO domain users in the normal login flow. However, Clay does not have a server-side block on password-based login for SSO-configured domains, which means IdP-level MFA requirements are not enforced at the backend level.
 
-If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA, this is a current limitation: there is no workspace-level setting in Clay to disable password-based login or restrict authentication to SSO only. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
+If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA via your identity provider, this is a current limitation: there is no workspace-level setting in Clay to enforce SSO-only authentication at the server side. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
 
 ## External collaborators (non-domain email addresses)
 
@@ -91,3 +91,5 @@ SCIM Directory Sync is in active development — contact Clay support or your Gr
 If you need to temporarily disable SSO enforcement — for example, during an IdP migration, to allow a user to access their account outside of SSO, or for troubleshooting — contact Clay support. The support team can disable SSO on Clay's side without any changes to your IdP or WorkOS configuration.
 
 Your identity provider setup and WorkOS organization remain intact when SSO is disabled, so re-enabling is equally straightforward: contact Clay support and they will turn it back on. No IT reconfiguration is required for either step.
+
+**If your identity provider becomes temporarily unavailable:** Users on your domain will not be able to sign in through the Clay login page during an IdP outage — when SSO is enabled, the login page redirects your domain users to your identity provider and does not show a password option. There is no password-based fallback through the normal login flow. To restore access during an outage, contact Clay support to temporarily disable SSO enforcement. Once SSO is disabled, users can sign in using standard Clay login methods — email + password for accounts that have a Clay password set, or **Sign in with Google** for accounts originally created with Google. Re-enabling SSO afterward requires no reconfiguration — contact Clay support and they will turn it back on.
