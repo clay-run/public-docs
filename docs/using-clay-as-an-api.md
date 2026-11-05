@@ -114,7 +114,13 @@ The response includes:
 
 Use the same workspace-scoped API key in the `clay-api-key` request header. Reading balances does not consume credits.
 
-**Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
+**Note: Why does the Public HTTP API return 401 "Authentication required" even though I created an API key?** A 401 (`{"message":"Authentication required"}`) from `api.clay.com/public/v0` — for example on `GET /me` or `GET /credits/balance` — means Clay didn't recognize an API key in your request. It isn't a plan or workspace-access restriction, so asking support to enable the Public HTTP API for your workspace won't fix it. The most common cause is using the legacy personal key from `Settings` → `Account` → `API key (legacy)`, which the Public HTTP API doesn't accept. To get a key the Public HTTP API accepts:
+
+1.  Open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**.
+2.  Enter a name, make sure the **Public API** scope is checked (it's checked by default), and click **Add API key**. Copy the key right away — it's only shown once. Keys created here start with `clay_scoped_`.
+3.  Send the key in the `clay-api-key` request header (`Authorization: Bearer <key>` also works) and retry the request.
+
+If the Public HTTP API is turned off for your workspace, Clay returns a `403` with the message `The public API is not enabled for this workspace` instead of a 401.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
