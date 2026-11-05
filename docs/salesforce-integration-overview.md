@@ -188,7 +188,37 @@ LIMIT 1
 -   **Always include `LIMIT`.** If your query matches many Salesforce records (for example, a global brand with regional accounts sharing the same domain), the total response can exceed the 200 kB cell size limit, which produces a "Cell data size exceeds limit (200 kB)" error. Adding `LIMIT 1` or a small number keeps the response size manageable.
 -   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
 -   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
--   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
+-   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the result from the first SOQL column whose `foundAtLeastOne` is `true`. A SOQL column is never empty, even when nothing matched (see the next section), so "first non-empty result" always picks the first column.
+
+**What does Lookup records via SOQL return when no records are found?**
+
+The **Lookup records via SOQL** action (shown in the enrichment picker as **Look up records with SOQL**) always returns a result object, including when your query matches no Salesforce records. It doesn't leave the cell empty. The SOQL result object has these three top-level fields:
+
+| Field | When records are found | When no records are found ("No records found") |
+| --- | --- | --- |
+| `records` | List of the matching Salesforce records | Empty list: `[]` |
+| `foundAtLeastOne` | `true` | `false` |
+| `totalSize` | Number of records returned | `0` |
+
+So a no-match SOQL lookup returns `{ "records": [], "foundAtLeastOne": false, "totalSize": 0 }`. This has been the case since October 28, 2026. Before that date, a no-match SOQL lookup left the cell empty.
+
+**How do I check in a run condition whether a SOQL lookup found any records?**
+
+To make a run condition depend on whether a **Lookup records via SOQL** column found records, check one of the fields inside the result, not the whole column. In the examples below, `{{SOQL lookup}}` is your SOQL column, inserted with the `/` picker.
+
+-   **Only run when records were found:** `{{SOQL lookup}}?.records?.length`, `{{SOQL lookup}}?.foundAtLeastOne`, or `{{SOQL lookup}}?.totalSize > 0`
+-   **Only run when no records were found** (for example, a fallback lookup step): `!{{SOQL lookup}}?.records?.length` or `!{{SOQL lookup}}?.foundAtLeastOne`
+
+These checks give the right answer whether or not the SOQL query found records.
+
+Don't use checks on the whole SOQL column or on the `records` list itself:
+
+-   `!{{SOQL lookup}}` is always `false`, because the column always contains a result object. Fallback steps that use it never run.
+-   `!!{{SOQL lookup}}?.records` is always `true`, because an empty list still counts as true. Dependent steps that use it run on every row, including rows with no match, so they run on empty data.
+
+If your fallback steps stopped running or dependent columns started running on empty SOQL results, update those run conditions to one of the checks above. For more on run condition syntax, see [Conditional runs](conditional-runs.md).
+
+The **Lookup record** action also returns `records` and `foundAtLeastOne` when nothing matches (`{ "records": [], "foundAtLeastOne": false }`), but it doesn't return `totalSize`. Use `?.foundAtLeastOne` or `?.records?.length` if you want one check that works for both Salesforce lookup actions.
 
 ### `Action` Create record
 
