@@ -486,6 +486,8 @@ Workflows is in open beta. If it isn't available in your workspace, contact Clay
 
 Values written back to Audience fields are available when filtering other segments. To connect an existing workflow or review the trigger's run options, see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
 
+**Enrichment workflows (beta):** Some workspaces include a **Create enrichment workflow** option in the `Enrich` menu when viewing a People or Companies audience. This option — currently in beta — opens a workflow builder pre-configured with your audience segment as the source. Add an **Enrich** step, configure the enrichment columns you need, and click **Run**; results write permanently back to your Audience records. If you don't see this option, use `Enrich` → `Add bulk enrich` as described above. You can also set up the same enrichment directly from **Workflows**: create a new workflow, select your People or Companies audience as the source/trigger, add an **Enrich** step, configure the columns, and run it.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
