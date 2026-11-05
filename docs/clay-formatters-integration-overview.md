@@ -41,6 +41,14 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Tip — CRM date compatibility:** To push a date to a CRM or other system that requires a numeric timestamp, select **Unix Timestamp** from the Format dropdown in Step 1. After running the formatter, keep the output column type set to **Text** (not Date) — storing a Unix timestamp in a Date-type column can cause formatting issues because Clay's Date column type expects a date-formatted string, not a number.
 
+**Tip — Stamp rows with the date their enrichment completed:** Type `now` in the date input (Step 1) to capture the current date and time at the moment the formatter runs. This is useful for tracking when each row was enriched — for example, recording which webhook-triggered rows were processed today versus tomorrow, or writing a processed date back to a CRM.
+
+To set up a reliable enrichment-timestamp column using this pattern:
+
+1. Add a **Format Date/Time** column and type `now` in the date input.
+2. In **Run settings**, add a run condition so the timestamp is captured only after upstream enrichments finish — for example, *Only run when /Last Enrichment Column is not empty*. See [Conditional runs](conditional-runs.md) for setup instructions.
+3. Enable **Keep existing results** in your table's Auto-run settings (**Run Settings → Auto-run**). With this setting on, already-stamped rows are skipped on subsequent auto-runs, so each row keeps the date it was originally enriched rather than being re-stamped on every new run. See [Auto-run](auto-run.md) for details.
+
 ### `Action` Normalize Company Name
 
 Normalize your company names by removing terms like Inc., LLC, and other suffixes for a cleaner format.
