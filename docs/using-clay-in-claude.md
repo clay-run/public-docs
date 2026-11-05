@@ -94,6 +94,12 @@ Workspace admins can set credit limits and monitor rep usage from `Settings → 
 
 ## FAQ
 
+**What Clay plan do I need to use Clay in Claude?**
+
+Finding and enriching new contacts through Clay in Claude is available to all Clay workspace members — there is no plan restriction for basic contact search and enrichment.
+
+Querying your existing Clay Audiences data (accounts and contacts you've already synced to Clay) requires Clay Audiences, which is included on Launch, Growth, and Enterprise plans. It is not available on Free, Starter, Basic, or legacy Pro plans. If you're on a legacy plan and cannot query existing accounts, contact Clay support about upgrading to a modern plan.
+
 **What data sources does Clay use in Claude?**
 
 Clay in Claude pulls from a subset of its 150+ third-party data providers to provide comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
