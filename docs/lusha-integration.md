@@ -167,11 +167,14 @@ Search for a company's headcount growth over a specified time period using its d
 -   **Company Name:** The name of the company (e.g., `Clay`). Required if Company Domain is not provided.
 -   **Company Domain:** The company's domain (e.g., `clay.com`). Required if Company Name is not provided.
 
+**Required:**
+
+-   **Headcount growth signals types:** The headcount growth signals to search for. Select one or more: headcount increase or decrease in the last 3, 6, or 12 months.
+
 **Optional:**
 
 -   **Start date:** The beginning of the time window to analyze. For best results, do not go shorter than the past month. Maximum lookback is 6 months, which is also the default.
--   **Headcount growth signals types:** The headcount signals to search for. You can select more than one: headcount increase or decrease over 3, 6, or 12 months.
--   **Max results per signal:** The maximum number of results to return for each selected signal type. Defaults to 3.
+-   **Max results per signal:** The maximum number of results to return for each selected signal type. Defaults to 3, with a maximum of 100.
 
 **Outputs**
 
