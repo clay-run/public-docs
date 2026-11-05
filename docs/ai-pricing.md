@@ -26,6 +26,7 @@ The table below lists the data credit cost per task for select AI models availab
 | Provider | Model | Content Generation | Web Research |
 | --- | --- | --- | --- |
 | Clay | Helium | — | 1 |
+| Neon | — | 2 |
 | Argon | — | 3 |
 | OpenAI | GPT-4o | 1 | variable |
 | GPT-4.1 | 1 | variable |
