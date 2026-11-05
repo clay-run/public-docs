@@ -69,7 +69,7 @@ When using AI features in Clay, you'll consume both **Actions** and **Data Credi
 Clay uses two pricing structures for AI models:
 
 -   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay's own models like Neon, Helium, and Argon)
--   **Variable pricing**: Data credits based on actual token usage plus a 20% premium (applies to advanced reasoning models used for sophisticated web research)
+-   **Variable pricing**: Data credits based on actual token usage with 0% markup (applies to advanced reasoning models used for sophisticated web research)
 
 You can control AI spending by:
 
