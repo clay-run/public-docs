@@ -139,6 +139,14 @@ After the initial 500-credit welcome bonus (granted once on your first connectio
 
 Credit pricing matches standard Clay plans. ChatGPT serves as an alternative interface for using your Clay credits. Because this experience is designed for researching and enriching contacts one at a time (rather than processing bulk data), each ChatGPT interaction typically uses 20–100 credits depending on the enrichments you request.
 
+Every enrichment costs 1 action plus data credits. The three built-in contact enrichments cost the following per contact:
+
+-   **Email**: data credit cost varies by provider in the email waterfall.
+-   **Summarize Work History**: 1 data credit.
+-   **Find Thought Leadership**: 1 data credit.
+
+Pricing is the same whether you run these enrichments through ChatGPT or directly in the Clay app.
+
 **Do I need to invoke Clay manually, or will ChatGPT know to use it?**
 
 In ChatGPT, type `@Clay` (browser) or `/Clay` (desktop app) at the start of your prompt to invoke Clay. Once connected, Clay activates and pulls the relevant data immediately.
