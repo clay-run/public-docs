@@ -1085,6 +1085,8 @@ How often your CRM and data warehouse data reaches Audiences in the first place 
 
 The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
+**These frequencies apply to the import direction only** — how often Clay pulls new or changed records from Salesforce (or your data warehouse) into Audiences. The **export direction** — writing enriched data and segment membership back to Salesforce — runs on a separate fixed schedule of **once every 24 hours**, regardless of plan. The export time is assigned automatically per workspace and is not user-configurable. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for the full import vs. export timing breakdown.
+
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
 
 ### What updates automatically in an Audience: new records, segment membership, or record data?
