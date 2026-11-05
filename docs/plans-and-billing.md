@@ -145,7 +145,7 @@ To update your billing address, payment method, or billing email:
 
 ### Trials
 
-Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
+Clay offers a 14-day free trial with 1,000 data credits, giving you access to most Growth plan features — including enrichment integrations (company data, people lookups, email finding, and AI-powered research), webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
 
 Phone number enrichments aren't available on free or trial plans — this restriction applies even if you have unused data credits. To access this feature, upgrade to a paid plan. This also affects some waterfall templates: if a waterfall includes a provider that can return phone numbers (such as PDL or Bytemine), free and trial users will see "Your subscription does not allow this integration to be added" even if the goal of the waterfall is something other than a phone number (for example, a profile URL). To work around this, remove the phone-number providers from the waterfall sequence. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details.
 
