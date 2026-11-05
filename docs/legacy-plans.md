@@ -98,6 +98,10 @@ No. New features (Ads, new integrations, advanced orchestration) are only availa
 
 After April 10, 2026 11:59pm PDT, any plan change forces migration to modern plans. Legacy customers cannot switch between legacy plans or return to legacy plans once they leave.
 
+**Can I switch to a cheaper legacy plan tier (for example, from Pro Legacy to Explorer Legacy)?**
+
+No. Legacy plans are locked to preserve your original terms — you cannot switch between legacy plan tiers. Any plan change from a legacy plan, including an attempt to move to a cheaper legacy tier, migrates your workspace to a modern plan instead. Once migrated, you cannot return to legacy pricing.
+
 **What specifically changes if I move from Explorer (Legacy) to the Launch plan?**
 
 Here is a breakdown of what you gain, lose, and what changes when migrating from Explorer (Legacy) to the modern Launch plan.
