@@ -47,8 +47,10 @@ Add a column to an existing table to enrich each row with companies similar to t
 
 1.  In a Clay table, click `Add enrichment` and search for `Find Company Lookalikes`.
 2.  Map the required input to a company domain or LinkedIn URL column.
-3.  Optionally configure additional filters (industry, company size, keywords, etc.).
+3.  Optionally configure additional filters (industry, company size, keywords, etc.) and set the **Result limit** — the number of lookalike companies to return per row (must be between 1 and 50).
 4.  Run the enrichment.
+
+**Result limit:** The action supports a maximum of 50 results per row. If you need more than 50 lookalike companies for a given seed, use the [Find Company Lookalikes source](#source-find-company-lookalikes-clustered) instead — the source does not have this 50-result cap.
 
 **Credits:** 1 credit per result returned.
 
@@ -71,6 +73,8 @@ Find people similar to a seed person. In addition to the standalone **Find Peopl
 4.  Run the enrichment.
 
 **Output:** An array of matching people, each with name, LinkedIn URL, job title, company domain, seniority levels, and country.
+
+**Deduplication:** The enrichment automatically deduplicates people across all lookalike companies it searches. If you request 25 results but receive fewer, it means the same person appeared at multiple lookalike companies and was counted only once, or the unique-match pool was smaller than your limit.
 
 **Credits:** 1 credit per result returned.
 
