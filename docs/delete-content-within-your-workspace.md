@@ -1,12 +1,37 @@
 ---
 title: Delete content within your workspace
-description: Learn how to delete and recover tables, workbooks, and rows within your workspace.
+description: Find, delete, and recover tables, workbooks, and rows within your workspace.
 last_synced: 2026-04-26T01:39:53.278Z
 ---
 
 # Delete content within your workspace
 
-Learn how to delete columns, workbooks, and tables within your workspace.
+Learn how to find a missing table, delete columns, workbooks, and tables within your workspace, and recover deleted content.
+
+## Find a missing table
+
+If you can't locate a table you've worked on before, try these steps in order:
+
+**1. Search by table name**
+
+From the workspace homepage, use the search bar in the top-right corner to search by table name. Type all or part of the name you remember — the search matches against table and workbook names.
+
+**2. Check the "All files" view**
+
+Tables can be nested inside workbooks or folders, which means they won't appear directly on the homepage unless you've browsed into those containers. To see everything at once:
+
+1. Go to the workspace homepage.
+2. Click the **All files** tab at the top of the file list.
+
+The All files view lists every table, workbook, and folder in your workspace in one place, regardless of how deeply nested they are.
+
+**3. Check Trash**
+
+If you think the table may have been accidentally deleted, open the **Trash** section in the bottom-left of the workspace sidebar. Deleted tables are kept in Trash for 30 days before being permanently removed. See [Recover deleted tables and workbooks](#recover-deleted-tables-and-workbooks) below for steps to restore a table from Trash.
+
+**4. Check that you're in the right workspace**
+
+If none of the above reveals the table, you may be looking in a different workspace than the one where the table was created. Click your profile picture or name in the top-right corner to see all workspaces your account belongs to. See [Switching between workspaces](workspace-settings.md#switching-between-workspaces) for details.
 
 ## Delete columns
 
