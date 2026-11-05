@@ -181,12 +181,14 @@ Data Credit pricing varies for AI models in [Use AI](https://www.clay.com/univer
 
 ## Action and Data Credit usage
 
-To see detailed Data Credit consumption across your workspace, workbooks, and tables, visit the **credit usage** dashboard:
+To see your current Action and Data Credit balances, go to `Settings` → `Usage`:
 
-1.  Click your account name in the corner
+1.  Click your account name in the corner.
 2.  Go to `Settings` → `Usage`.
 
-For a complete guide on tracking and analyzing your Data Credit spend, see [this doc](https://www.clay.com/university/guide/credit-usage).
+Your **Action Execution Balance** — how many actions you have used versus your plan's limit, plus your renewal date — is displayed alongside your Data Credit balance. For a complete guide on tracking and analyzing your Data Credit spend across workbooks, tables, and integrations, see [this doc](https://www.clay.com/university/guide/credit-usage).
+
+**Sequencer campaign tracking:** Action and credit usage is tracked at the workspace and table level. Per-campaign tracking for individual Sequencer campaigns is not currently available — use the table-level dashboard for the source table feeding your campaign to understand costs.
 
 ### Workbook credit limits (Enterprise only)
 
@@ -236,7 +238,7 @@ When a budget's limit is reached, credit-consuming actions are blocked for all w
 
 ### Actions: No rollover
 
-Actions represent your fixed monthly capacity. Unused Actions expire at the end of each billing cycle.
+Actions represent your fixed capacity for your billing cycle. Unused Actions expire at the end of each billing cycle and do not roll over. On monthly plans, Actions renew each month; on annual plans, Actions renew annually on your plan renewal date — the same day your Data Credits renew.
 
 **Why no rollover?** Each plan tier is designed with sufficient capacity for typical use cases at that level. If you consistently hit limits, upgrade to the next tier.
 
@@ -432,6 +434,10 @@ For system errors (such as a timeout or infrastructure failure during enrichment
 AI columns complete with a success status even when the output quality is low or the column returns empty content, so no automatic credit refund fires for poor results. If an AI column produced consistently poor output due to a prompt misconfiguration or unexpected model behavior, you can contact [Clay support](https://app.clay.com) to request a review — a one-time credit exception may be granted at Clay's discretion. This is not an automated policy and is not guaranteed for future requests on the same column.
 
 To minimize the risk of this situation: use the **Generate** button in the prompt cell to test your prompt on a single row before running at scale, and write clear, specific instructions with example inputs and outputs.
+
+### How do I see my current Action balance?
+
+Go to `Settings` → `Usage` to view your **Action Execution Balance** — your actions consumed versus your plan limit — along with your renewal date. This shows how much of your action capacity remains for the current billing cycle.
 
 ### How can I see when my credits will next renew?
 
