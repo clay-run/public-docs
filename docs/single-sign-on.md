@@ -69,7 +69,7 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 
 ## User provisioning
 
-**SCIM Directory Sync (automatic provisioning) is in active development and not yet generally available.** SSO (via WorkOS) is currently used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
+**SCIM Directory Sync (automatic provisioning) is in active development and not yet generally available.** SSO (via WorkOS) is currently used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership through SSO. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
@@ -81,6 +81,8 @@ Clay's SSO routing is domain-based: when a user enters their email on the Clay l
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
 SCIM Directory Sync is in active development — contact Clay support or your Growth Strategist for the latest status on this feature.
+
+**Note:** The above provisioning behavior applies to SSO specifically. Enterprise workspaces also have a separate [Trusted domain access](./trusted-domain-access.md) feature that lets teammates join your workspace without an individual invite based on their verified email domain. Trusted domain access is configured in `Settings → Workspace settings` and operates independently of SSO.
 
 **Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
 
