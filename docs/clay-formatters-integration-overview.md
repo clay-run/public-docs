@@ -84,6 +84,15 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 The action outputs a **Normalized First Name** and a **Normalized Last Name** field.
 
+**If some outputs are blank:**
+
+The Normalize First and Last Names action returns a blank result for a field when the corresponding input column has no value for that row. Two common causes:
+
+- **The input column is empty for that row.** Click the blank output cell and check the columns you mapped as First Name or Last Name. If those cells are blank, the action has nothing to normalize and the output stays blank.
+- **A run condition is excluding those rows.** If the column has a run condition configured, rows that do not meet the condition are skipped and their output cells stay blank. Open the column's run settings to confirm whether a condition applies to those rows.
+
+If the input columns have values and no run condition is blocking the action, right-click the blank output cell and choose **Run this row** to manually trigger the action for that row.
+
 ### `Action` Normalize a Domain
 
 Extract and standardize a domain URL to the format you need. To add this action to your table, click **+ Add Column → Enrich Data** and search for **"Normalize a Domain."**
