@@ -392,6 +392,14 @@ When your plan renews, your credit balance is capped at 2× your monthly allotme
 
 No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
 
+### Why does my credit balance show more credits than my plan's monthly allotment?
+
+The credit widget in the top-right corner of Clay shows two numbers: your **current balance** (the total credits available to spend right now) and your **plan's monthly allotment** (the number of credits added to your account at each renewal). Your current balance can be higher than the monthly allotment when you have accumulated rollover credits from previous billing cycles or from a plan you upgraded from.
+
+**Example:** If your Launch plan adds 2,500 credits per renewal and you had 200 unused credits carry over (from your previous billing cycle or a prior plan), your balance is 2,700 — displayed as "2,700 / 2.5K credits available." Both numbers are correct: 2,700 is what you can spend right now; 2,500 is what renews each month.
+
+Credits accumulate up to the rollover cap of 2× your monthly plan allotment. See [Rollover Data Credits](#rollover-data-credits) for full details on how rollover works and when credits may expire.
+
 ### How do I estimate what my workflow will cost?
 
 **Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
