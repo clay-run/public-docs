@@ -77,6 +77,12 @@ Analyst mode lets you query any Clay table using natural language to uncover tre
 3.  Review the analysis. Sculptor will query your table and present insights with visualizations and explanations.
 4.  Export your findings to Notion or as a PDF.
 
+## Sculptor in the workflow builder
+
+Sculptor is also available in the **workflow builder** as an AI assistant for building and editing Clay workflows. In this context, Sculptor can read your workflow structure, validate configurations, and apply changes to nodes and connections. Any operation that modifies your workflow — such as adding or editing nodes — pauses for your explicit approval before Sculptor applies it, so you stay in control at every step.
+
+> **Currently in closed beta — open beta expected around August 11, 2026.** Contact support to request access for your workspace. Features may change before general availability.
+
 ## Use cases and examples
 
 The following table covers common Sculptor use cases and key notes for each.
