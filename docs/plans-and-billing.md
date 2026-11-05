@@ -47,9 +47,11 @@ Your new plan will activate immediately, and any applicable charges will be appl
 ### Free plan
 
 -   **Best for:** Exploring the platform and experimenting with small-scale workflows
+-   **Actions:** 500 per month
 -   **Data credits:** 100 per month (rollover cap: 200 credits)
 -   **Monthly pricing:** $0
 -   **Table limit:** 200 rows per table
+-   **Features:** Data provider integrations (using Clay-managed API keys), AI enrichment, and list building
 -   **Key limitations:**
     -   Source record limit: up to **100 records total** per source across all runs (compared to 15,000+ on paid plans). Once a source reaches this limit, it stops adding new records — create a new source to continue.
     -   Scheduled source runs are not available
