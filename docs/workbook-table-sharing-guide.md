@@ -6,7 +6,7 @@ last_synced: 2026-04-26T01:40:56.186Z
 
 # Share workbooks and tables as templates
 
-Share your Clay workbooks and tables.
+Share your Clay workbooks and tables. To migrate a workbook from one Clay account to another — for example, when moving from a personal account to a company account — see [Move a workbook to a different workspace](#move-a-workbook-to-a-different-workspace).
 
 In Clay, you can share tables and workbooks via a public link or specific emails. Follow these steps to share your table or workbook.
 
