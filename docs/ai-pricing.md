@@ -96,9 +96,16 @@ For fixed-price models, yes—the cost shown is exact. For variable-price models
 
 **Could a variable-priced task cost significantly more than the estimate?**
 
-In most cases, the final cost will be at or below the estimate. Complex, multi-step tasks can cost more, but these are a small minority of runs. Most customers pay less under variable pricing than they would under a flat rate for the same model.
+Yes. A variable-priced row can cost well above the estimate, sometimes several times more. The `~X / row` estimate next to **Save** in an AI column (for example, `~7.2 / row` for a Claygent web research column using a Clay-managed account) is not a fixed price or a cap. If you hover over the estimate, the **Variable pricing** tooltip explains what the number means: "Exact data credit costs are calculated on completion. AI tokens are billed at a 0% markup, and 75% of runs use fewer than X data credits per row."
 
-Customers who are configuring complex, multi-step web research tasks may wish to run their prompt on 10 or 50 rows so they are able to see the credit charge for each row before running the prompt across their full table.
+In other words, the estimate is the 75th percentile of past runs for that model. About 3 out of 4 rows cost less than the estimate, and about 1 out of 4 rows cost more. Clay calculates each row's final charge from the tokens the model actually used, so rows where the model does more work, such as running more searches, calling more tools, or reading more pages, cost more. For example, if a column's estimate is `~7.2 / row`, many rows may cost less than 7.2 credits, while a complex row could cost 50 credits or more.
+
+To see what your own prompt costs before you run a full table:
+
+1.  Run the AI column on 10 rows first.
+2.  Click into each completed cell in the AI column and check the **Charged** line in the cell details panel. This shows the exact data credits that row cost. While a row is still running, the line reads **Withheld** instead.
+3.  Use the per-row charges from those 10 rows to estimate the total cost for your full table.
+4.  If the cost is higher than you want, adjust your setup before running more rows. For example, switch to a lower-cost model.
 
 **What happens if I run out of data credits mid-run?**
 
