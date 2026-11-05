@@ -370,6 +370,12 @@ You must upgrade to a higher action tier. Actions cannot be topped up separately
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
+### Will I be charged extra if I go over my action limit?
+
+No. Going over your action limit does not trigger extra charges. Actions represent a fixed monthly capacity included in your plan — there is no pay-as-you-go billing or overage fee for action usage beyond that capacity.
+
+When you see an "over your usage limit" indicator, it means you've consumed more actions than your plan's monthly allotment for the current billing cycle. Unused actions don't roll over — your action balance resets in full at each renewal. If you consistently hit your limit, upgrade to a higher action tier for next month by going to `Settings` → `Plan & billing`. You can check your exact renewal date there to see when your action balance will reset.
+
 ### Why can't I top up Actions?
 
 Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
