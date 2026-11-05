@@ -38,9 +38,10 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## What happens when SSO is enabled
 
--   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page. **Note:** This redirect is handled in the browser — users who have an existing email + password Clay account can still log in using their password directly, which bypasses the SSO redirect. Clay does not block password-based login at the backend for SSO-configured domains.
+-   All users whose email address is on your verified domain are redirected to sign in through SSO when they type their email on the Clay login page.
+-   SSO is enforced for everyone on your SSO domain. Users on that domain can't sign in with an email and password, sign up with a password, or reset a password. A password sign-in attempt returns the error `Your organization requires you to sign in with SSO.` Password login is not available as a backup sign-in method once SSO is active.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
--   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them.
+-   SSO is configured at the email domain level — if your organization uses multiple Clay workspaces, users on your domain will be routed through SSO for all of them. There are no per-user exceptions: an individual user on your SSO domain can't opt out of SSO or keep password or Google sign-in.
 -   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
@@ -49,9 +50,9 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 ## MFA enforcement and compliance requirements
 
-Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
+Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, Clay blocks password and Google sign-in for users on your SSO domain, so those users authenticate through your identity provider. Any MFA requirement you configure in your IdP applies to them.
 
-If your security policy or compliance requirements (for example, SOC 2) mandate that all users authenticate through MFA, this is a current limitation: there is no workspace-level setting in Clay to disable password-based login or restrict authentication to SSO only. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
+SSO enforcement only covers your SSO-configured email domain. Users you invite with an email address on a different domain (see [External collaborators](#external-collaborators-non-domain-email-addresses)) still sign in with email and password or Google, so your IdP's MFA requirements don't apply to them. For Clay's security and compliance documentation, including the SOC 2 report, visit [trust.clay.com](https://trust.clay.com).
 
 ## External collaborators (non-domain email addresses)
 
@@ -66,6 +67,15 @@ To add an external collaborator with a different email domain:
 Clay's SSO routing is domain-based: when a user enters their email on the Clay login page, Clay checks whether that email domain has SSO configured. If the domain does not match your configured SSO domain, Clay treats the user as a standard (non-SSO) user — no additional configuration is required on Clay's side for these external collaborators.
 
 **Note:** If an external collaborator's email address happens to share your SSO-configured domain (for example, a contractor using your company email addresses), they will be routed through SSO and must be added to your identity provider. If you are unsure how to handle that case, contact Clay support.
+
+### Keeping a backup admin account that doesn't use SSO
+
+Clay doesn't support a per-user SSO exception for an account on your SSO-enforced domain. If you want a service or backup admin account that can still reach your Clay workspace settings without going through SSO, use an email address on a **different domain** that isn't configured for SSO:
+
+1.  Create the account's email address on a domain that is not your SSO-configured domain.
+2.  Invite that email address to your Clay workspace via `Settings` > `Team` > `+ Invite`, and give it the admin role you need.
+3.  Accept the workspace invite from that email address.
+4.  The account signs in with email and password or Sign in with Google. Users on your SSO domain keep signing in through your identity provider.
 
 ## User provisioning
 
