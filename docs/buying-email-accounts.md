@@ -45,6 +45,12 @@ No. Once a domain is purchased, you cannot add additional email accounts to it. 
 
 Clay does not offer partial refunds for domains cancelled before the end of their yearly billing period.
 
+### **Can I transfer a domain purchased through Clay to another provider?**
+
+No. Domains purchased through Clay's sequencer are provisioned through Smartlead's SmartSenders service, which registers and manages the domain on your behalf — including DNS, SPF, DKIM, and DMARC. Because the domain is registered and held within Smartlead's infrastructure rather than under a registrar you control, it cannot be transferred to an external provider such as Cloudflare or GoDaddy.
+
+If centralized domain control is important to you, purchase domains directly from a registrar of your choice. You can then create mailboxes through Google Workspace or Microsoft 365 and connect them to Clay under **Campaigns → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. This approach works on any Clay plan. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+
 ### **What happens if I delete one email account within a domain?**
 
 Deleting a single email account from a domain will delete **all** email accounts in that domain. Proceed with caution.
