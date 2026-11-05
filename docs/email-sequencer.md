@@ -126,7 +126,7 @@ In Sequencer v2, campaign events are captured in a single **global events table*
 
 Special sequencer enrichments available in the table include:
 
--   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
+-   `Reply to lead in campaign`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
 -   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
 -   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the column holding the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events. When using Clay-purchased SmartSender accounts, add the **Get rep data** enrichment to the campaign events table — it looks up the rep assigned to each sending account and returns their email as `repEmail`. Map that output to Recipient email addresses to route each reply directly to the recruiter's inbox without building a column on your leads table. Rep assignment is available for SmartSender accounts only — for sending accounts you connected through Outlook or Google OAuth, see [Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?](#why-does-get-rep-email-show-no-rep-assigned-for-my-outlook-or-google-sending-accounts).
@@ -750,7 +750,21 @@ Smartlead assigns leads into one of the following categories:
 
 ### How do I handle replies from leads?
 
-Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
+Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead in campaign` enrichment in the campaign events table.
+
+### Can I set a different reply-to address for my Clay Sequencer emails?
+
+No. Clay Sequencer doesn't have a reply-to setting, so you can't set a reply-to address that's different from the sending account. Replies to a Sequencer campaign email always go back to the mailbox that sent it. For example, if a rep sends from `joel@yourdomain.com`, a lead's reply arrives in the `joel@yourdomain.com` inbox — you can't have it go to a shared inbox such as `recruiter@yourdomain.com` instead.
+
+To get every lead reply into a shared inbox while the rep's sending account still sends the campaign emails, forward replies automatically with the `Forward lead email in campaign` enrichment:
+
+1.  Open your campaign's events table (click the campaign name at the top of the campaign page and select **View events**).
+2.  Add the `Forward lead email in campaign` enrichment.
+3.  Map **Campaign ID** and **Lead ID** from the event row, and set **Recipient email addresses** to the shared inbox — you can type an address such as `recruiter@yourdomain.com` directly or map a column. Recipients don't need a Clay seat.
+4.  Add an `Only run if` condition so the column only runs on rows where `Event type` is `EMAIL_REPLY`.
+5.  Run the column on one `EMAIL_REPLY` row and confirm the reply arrives in the shared inbox, then turn on `Auto-run`.
+
+You can also answer leads directly from Clay in the campaign's `Replies` tab or with the `Reply to lead in campaign` enrichment. To forward each reply to the rep assigned to the sending account instead of one shared inbox, see [Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?](#why-does-get-rep-email-show-no-rep-assigned-for-my-outlook-or-google-sending-accounts).
 
 ### Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?
 
