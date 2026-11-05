@@ -17,6 +17,7 @@ Signals are automated tracking systems that notify you of important changes rela
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+-   **Company Topic Intent** (Beta) — Monitor when companies show buying intent for topics you care about. High, Medium, and Low scoring tiers let you prioritize outreach by urgency. Company Topic Intent is a signal, not an enrichment — to add it to an audience, open the **Signals** panel (not **Add enrichment**) and select **Company Topic Intent**. Currently in beta; contact your Growth Strategist to enable it for your workspace.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
 
@@ -71,6 +72,12 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 ### What plans are Signals available on?
 
 Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
+
+### Why can't I find Company Topic Intent when I click Enrich in my audience?
+
+Company Topic Intent is a **signal**, not an enrichment. Searching for it under **Add enrichment** will not surface it. To add Company Topic Intent to an audience, open the audience's **Signals** panel — this is separate from the **Enrich** flow — and select **Company Topic Intent** from the list of signal types.
+
+Company Topic Intent is currently in beta and requires workspace enablement. If you do not see it in your Signals panel, contact your Growth Strategist to have it enabled for your workspace.
 
 ### Why is my Signal returning 0 results?
 
