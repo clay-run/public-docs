@@ -93,6 +93,25 @@ To run the waterfall on multiple contacts at once — without running the full t
 
 For a full reference on run options — including a row limit and starting row — see [Run progress](run-progress.md).
 
+### Why did my Work Email waterfall only run on the first 10 rows when it was first set up?
+
+The behavior depends on how the waterfall was added to your table:
+
+**If set up using Sculptor (Clay's AI assistant):** When Sculptor builds the Work Email waterfall and you click **Accept and Run**, Clay automatically previews it on the first 10 rows. This lets you check that your inputs are mapped correctly and results look right before committing credits to the full table. The remaining rows stay blank until you trigger them manually. Once you've reviewed the preview:
+
+1. Click the **▶** button in the Work Email waterfall column header.
+2. Select **Run empty or out-of-date rows**.
+
+**If added manually (via Tools → Enrich → Work Email):** When you add the waterfall manually to a table that already has rows, those existing rows do not auto-run — only new rows added to the table after the waterfall is set up will trigger it automatically. To enrich your existing rows, right-click the waterfall column header and select **Run column → Run empty or out-of-date rows**.
+
+For the full set of run options, see [Run progress](run-progress.md).
+
+### What do the numbers in parentheses in my waterfall column headers mean (e.g., "Find work email (7)")?
+
+When you expand the Work Email waterfall to reveal individual provider sub-columns (click the **«»** arrow on the waterfall column header), each provider column is labeled with its position in the waterfall sequence. The first provider is labeled **"Find work email"** (no number); the second is **"Find work email (2)"**, the third is **"Find work email (3)"**, and so on. So **"Find work email (7)"** means this is the 7th provider Clay will try.
+
+The waterfall tries providers in order, stopping as soon as one returns a valid email. The number is just a label showing where each provider sits in your configured sequence — you can reorder providers in the waterfall's Full Configuration to change the order.
+
 ### What does it mean if no email is found?
 
 An empty Work Email cell after the waterfall has run is **expected behavior** — it means the waterfall completed but could not find a valid email for that person. This is different from a **"Missing input"** error, which appears only when the required inputs (such as a full name or company domain) were missing before the waterfall could attempt to run at all.
