@@ -129,11 +129,11 @@ For a full breakdown of all roles, see [Roles and permissions](https://universit
 
 ### Does MCP work with SSO-enabled workspaces?
 
-Yes. Workspace membership is the access gate for MCP — SSO determines how users authenticate, not whether they can access MCP. Users on an SSO-enabled workspace must still be explicitly added to your Clay workspace via `Settings` → `Team` → `+ Invite` before they can use Clay through Claude, ChatGPT, or Glean. SSO does not automatically grant workspace access.
+Yes. Workspace membership is the access gate for MCP — SSO determines how users authenticate, not whether they can access MCP. Users on an SSO-enabled workspace must still be added to your Clay workspace — either via `Settings` → `Team` → `+ Invite` or through SCIM provisioning (Enterprise plans) — before they can use Clay through Claude, ChatGPT, or Glean. SSO does not automatically grant workspace access.
 
 When a user connects their AI tool to Clay, they go through Clay's OAuth flow, which redirects to the standard Clay login page. If SSO is configured for their email domain, they'll authenticate through your SSO provider during this step.
 
-**Important:** The invite-first rule applies in SSO workspaces — team members must accept their workspace invite before going through the MCP connection flow. If a user authenticates via SSO without first accepting the workspace invite, they'll be routed to a new personal workspace instead of your team workspace. See [Single Sign-On (SSO)](https://university.clay.com/docs/single-sign-on#user-provisioning) for details on user provisioning.
+**Important:** If your workspace doesn't use SCIM provisioning, the invite-first rule applies in SSO workspaces — team members must accept their workspace invite before going through the MCP connection flow. If a user authenticates via SSO without first accepting the workspace invite, they'll be routed to a new personal workspace instead of your team workspace. See [Single Sign-On (SSO)](https://university.clay.com/docs/single-sign-on#user-provisioning) for details on user provisioning.
 
 ### How do I disconnect Clay from an AI tool?
 
