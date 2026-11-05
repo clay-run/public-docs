@@ -444,6 +444,8 @@ There are two ways to check your credit renewal date:
 
 When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
 
+**If your workspace is set up with "Send invoice" billing:** Credits appear either when your renewal invoice is issued or after it is paid, depending on your billing arrangement with Clay. Invoice billing is configured by Clay's billing team — you cannot change this setting from within your workspace. If credits haven't appeared at renewal and you have an outstanding invoice, paying that invoice will trigger the credit refresh. Contact [Clay support](https://app.clay.com) if you have questions about your billing setup.
+
 ### Why are Data Credits being deducted unexpectedly?
 
 Common causes:
