@@ -16,6 +16,21 @@ Auto-delete is a powerful feature designed to help you process and enrich large 
 
 **Note that auto-delete does not apply to CSVs, including bulk uploads at high volumes.**
 
+## Running enrichments on more than 50,000 records
+
+A common use case for auto-delete is running an automated enrichment job — such as an enrichment waterfall — on more than 50,000 records via a webhook. Because each record is deleted after enrichment completes, new records can keep flowing in indefinitely without hitting the table limit.
+
+**How the pipeline works:**
+
+1. **Records arrive via webhook.** Your system sends records to a Clay webhook URL one at a time — one record per HTTP POST — as they are ready to be processed.
+2. **Clay enriches each record.** Enrichment columns (including waterfall lookups) run automatically as each row arrives.
+3. **Enriched data is sent to your destination.** Add an HTTP API action column to push each enriched record to your system of record, or use an Audiences action column to route records to an Audiences segment where you can filter them.
+4. **Auto-delete removes the completed row.** Once all enrichment and export actions finish, the row is deleted — freeing space for the next incoming record.
+
+When auto-delete is enabled on a webhook source, the webhook **bypasses the 50,000-submission limit entirely**. A single webhook URL can accept data indefinitely — records enrich, flush out, and make room for the next batch.
+
+**Requirements:** Enterprise plan. The table source must be **webhooks**, **send table data**, a **signal source**, or an **Audiences source** to fully bypass the row limit — see [Source compatibility](#source-compatibility) for details.
+
 ## **Enable auto-delete**
 
 Follow these steps to set up auto-delete:
