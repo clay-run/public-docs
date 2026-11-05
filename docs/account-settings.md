@@ -65,6 +65,8 @@ Changing your login email keeps your existing Clay account and workspace data.
 -   Complete the process within 30 minutes. If the request expires, restart it.
 -   For accounts managed by an organization, sign-in changes are disabled. Contact an organization admin for help. If `Change sign-in` is missing, contact Clay support; self-service changes support email-and-password and Google accounts when the option is available.
 
+**Self-serve email change (rolling out to some accounts):** A self-serve option is available to some Clay accounts. If you see a **Change sign-in** button in `Settings` > `Account` > `Security`, you can use it to update your login email address directly — no support contact required. If the button does not appear in your account, use the support process above.
+
 **If your Google account email changed externally and you now see a blank workspace**
 
 If your Google account email was updated outside of Clay — for example, a Gmail address was migrated to a Google Workspace domain — signing into Clay with the new address creates a new empty workspace. Clay matches accounts by email address at sign-in and cannot automatically link the new email to your existing account. Your original workspace is not lost; it stays tied to your original email address.
