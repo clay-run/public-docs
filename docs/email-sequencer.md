@@ -88,7 +88,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Days of the week`: Choose which days emails are sent.
     -   `Start/End times`: Set sending windows within the chosen timezone.
     -   `Min time between emails (min)`: Minimum gap between consecutive sends from a single account (3–30 minutes, Custom schedule only). Shorter gaps increase daily throughput; longer gaps improve deliverability.
-    -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
+    -   `Max new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits). Defaults to 100,000 for every schedule type and accepts any whole number of 1 or more, with no upper limit. Your value is kept when you switch schedule types.
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
@@ -251,7 +251,7 @@ To stop emailing other contacts at a company once someone there replies, use the
 
 ### Why is the expected campaign completion time so long?
 
-The **Expected time to complete campaign** shown at the top of Schedule settings estimates how many days it will take to reach all leads based on your sending window, per-account limits, and schedule.
+The campaign completion estimate shown at the top of Schedule settings (**Expected to finish in N days**, or **Expected time to complete campaign** in table-based campaigns) estimates how many days it will take to reach all leads based on your sending window, per-account limits, schedule, and **Max new leads per day** setting. The estimate uses whichever is lower: what your sender accounts can send per day, or your **Max new leads per day** value.
 
 The biggest lever is the **Min time between emails (min)** setting (Custom schedule only). It controls the minimum gap between consecutive sends from a single sender account, which caps that account's maximum daily output:
 
@@ -263,6 +263,7 @@ To shorten the estimated time:
 -   **Lower the min time between emails** — a smaller gap increases daily sends per account. Shorter intervals can raise spam risk; the [Best practices](#best-practices) section recommends pacing sends throughout the day.
 -   **Add more sender accounts** — each account adds its own independent daily capacity.
 -   **Increase the account send limit** — in `Sender accounts`, click the three-dot (⋯) menu next to an account and select `Update send limit`.
+-   **Raise Max new leads per day** — if this value is lower than what your sender accounts can send per day, it caps how many new leads are contacted each day and lengthens the estimate.
 
 ### My "Sync lead data to campaign" column is showing a warning. What does it mean?
 
