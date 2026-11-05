@@ -726,17 +726,17 @@ The answer depends on which feature you're using:
 
 Across all three, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
 
-### Why do LinkedIn URLs from Find People show "page not found" or an error when I open them?
+### Why do professional profile URLs from Find People show "page not found" or an error when I open them?
 
-LinkedIn profile URLs returned by **Find people** come from Clay's stored people dataset, not from a live LinkedIn lookup at the moment you search. Each Find people result reflects the profile as it was when that dataset last refreshed it. If the person later deleted or deactivated their LinkedIn account, or changed their profile URL (for example, from `jane-doe-12345abc` to `jane-doe`), the LinkedIn URL stored in your table still points to the old address — so LinkedIn shows a "page not found" error when you open it.
+Professional profile URLs returned by **Find people** come from Clay's stored people dataset, not from a live lookup on the professional network at the moment you search. Each Find people result reflects the profile as it was when that dataset last refreshed it. If the person later deleted or deactivated their account, or changed their profile URL (for example, from `jane-doe-12345abc` to `jane-doe`), the profile URL stored in your table still points to the old address — so opening it shows a "page not found" error.
 
-To get the current LinkedIn URL for rows with broken links:
+To get the current profile URL for rows with broken links:
 
-1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add it. Map the **Professional URL** input to the LinkedIn URL column from Find people.
-2.  Run Enrich person on the rows with broken links. Enrich person makes a live profile lookup each time it runs, so its **Url** output returns the person's current LinkedIn profile URL — including the new URL if they changed it.
-3.  Use the **Url** returned by Enrich person instead of the original Find people LinkedIn URL.
+1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add it. Map the **Professional URL** input to the profile URL column from Find people.
+2.  Run Enrich person on the rows with broken links. Enrich person makes a live profile lookup each time it runs, so its **Url** output returns the person's current profile URL — including the new URL if they changed it.
+3.  Use the **Url** returned by Enrich person instead of the original Find people profile URL.
 
-If the person deleted their LinkedIn account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working LinkedIn URL for that person to replace the broken one.
+If the person deleted their account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working profile URL for that person to replace the broken one.
 
 ### Where does the total funding data in Enrich Company come from?
 
