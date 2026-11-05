@@ -1,7 +1,7 @@
 ---
 title: Modash integration
 description: Discover and analyze social media creators.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-07-15T21:24:22.607Z
 ---
 
 # Modash integration
