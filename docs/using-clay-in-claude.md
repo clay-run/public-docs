@@ -98,9 +98,21 @@ Workspace admins can set credit limits and monitor rep usage from `Settings → 
 
 Clay in Claude pulls from a subset of its 150+ third-party data providers to provide comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
 
+**Why does Clay in Claude return different email results than my Clay table?**
+
+The built-in contact enrichment — including the email data point — runs a fixed set of enrichment steps, not the custom multi-provider waterfall you may have built in your Clay tables. A provider that returns an email in your Clay table waterfall may not be part of the built-in MCP enrichment, so results can differ.
+
+To bring your custom waterfall coverage into Claude, wrap the waterfall in a Clay Function and enable it for MCP. Once enabled, you can invoke the waterfall directly from a Claude conversation. See [MCP settings](https://university.clay.com/docs/mcp-settings) for setup instructions.
+
 **What if I need data that isn't available?**
 
 If you need additional data points or more advanced workflows, access the full Clay platform at [app.clay.com](http://app.clay.com) with your same account to unlock more powerful enrichment and workflow capabilities.
+
+**The AI research returned a confident narrative with no cited sources — is that expected?**
+
+Clay's AI research tools — including Summarize Work History, Find Thought Leadership, and any custom data points you add — generate prose using an AI model. There is no built-in confidence flag or "return empty instead of infer" setting. The AI will sometimes produce confident-sounding text when sourcing is weak; the absence of cited sources is the clearest signal that a result may not be fully grounded.
+
+To reduce this in custom data points, add explicit fallback instructions to your prompt — for example: _"If you cannot find a verified source, respond only with: 'No information found.' Do not infer or summarize without a citation."_ Prompts that name specific topics or outcomes you hope to find are more likely to produce inference without evidence; keeping prompts open-ended reduces this risk.
 
 **Can I search for companies?**
 
