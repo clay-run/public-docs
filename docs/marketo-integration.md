@@ -85,7 +85,7 @@ Use the Marketo **Lookup object** action to check a lead's existing Marketo reco
 
 The action returns the lead's full Marketo record. You can use the returned fields — such as a lead status or last-contacted date — in a Clay formula or an **Only run if** condition to skip leads who have already been reached out to.
 
-If expected custom fields are missing from the results, see [Custom fields are missing from Lookup object results](#custom-fields-are-missing-from-lookup-object-results) below.
+If expected fields are missing from the results, see [Fields are missing from Lookup object or Update object](#fields-are-missing-from-lookup-object-or-update-object) below.
 
 ### Write outreach results back to a Marketo lead after a cadence
 
@@ -120,15 +120,14 @@ Use webhooks to send data from Marketo to Clay for real-time lead enrichment. Th
 
 ## Troubleshooting
 
-### Custom fields are missing from Lookup object results
+### Fields are missing from Lookup object or Update object
 
-Clay builds the field list for the Lookup object action from Marketo's schema API. The schema API only returns fields that your API user's role has permission to read. If custom fields are missing from the lookup results, the API user's Marketo role likely lacks the required schema permissions:
+Clay builds the field list for both the Lookup object and Update object actions from Marketo's schema API. The schema API only returns fields that your API user's role has permission to read. If fields are missing — or the field list is empty — the API user's Marketo role likely lacks the required schema permissions:
 
 1.  In Marketo, go to **Admin** → **Users & Roles**.
 2.  Open the role assigned to your API user.
-3.  Confirm that both **Read-Write Schema Standard Field** and **Read-Write Schema Custom Field** are enabled for that role.
-
-Once the role permissions are updated, the schema API will return the accessible fields and they will appear in future Clay lookup results.
+3.  Confirm that both **Read-Write Schema Standard Field** and **Read-Write Schema Custom Field** are enabled for that role. Also confirm that access to the relevant objects (for example, Person/Lead or Company) is enabled.
+4.  After saving the updated permissions in Marketo, reconnect your Marketo account in Clay: go to **Settings** → **Accounts**, find your Marketo account, and click **Reconnect**. Clay re-fetches the Marketo schema on reconnect — the updated field list will appear in both actions after reconnecting.
 
 ### Field values containing special characters are split incorrectly in Clay
 
