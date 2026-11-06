@@ -391,3 +391,42 @@ This enrichment uses a third-party data provider authenticated with its own cred
 If a row returns empty or incomplete results, re-running the enrichment on that row may return more complete data on a subsequent attempt.
 
 For more control over post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
+
+## Checking whether a person was active in the last 30, 60, or 90 days
+
+Clay doesn't have a single built-in "last active" field for a person's professional profile, but you can work out how recently each person in a people table was active from the dates on their posts, shares, and comments. This uses two enrichments that are available on all plans, plus two formula columns.
+
+**Step 1: Add the activity enrichments**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**, search for `Get a person's professional posts and shares`, and select it. Map **Professional URL** to your profile URL column and click **Save**.
+2.  Click **Add enrichment** again, search for `Get a person's professional post comments`, and select it. Map **Professional URL** to the same profile URL column and click **Save**.
+3.  Run both columns on a few rows first to check the results and credit cost before running the whole table.
+
+Each enrichment returns the person's most recent activity, with a `created_at` date on every item:
+
+-   **Get a person's professional posts and shares** returns a `posts` array — original posts and reposts — with the date in `posts[N].created_at`. It returns 10 items by default and up to 25.
+-   **Get a person's professional post comments** returns a `comments` array with the date in `comments[N].created_at`. It returns 10 items by default and up to 30.
+
+**Step 2: Get the person's latest activity date**
+
+Add a formula column named `Latest activity date` and paste the formula below. It collects every date from both enrichments and returns the most recent one:
+
+```
+({{Get a person's professional posts and shares}}?.posts || []).map(p => p.created_at).concat(({{Get a person's professional post comments}}?.comments || []).map(c => c.created_at)).filter(Boolean).sort().reverse()[0]
+```
+
+**Step 3: Flag activity within 30, 60, or 90 days**
+
+Add a second formula column and paste the formula below. It compares the latest activity date with today's date using `moment()` and returns one label per person:
+
+```
+!{{Latest activity date}} ? "Unknown" : moment().diff(moment({{Latest activity date}}), 'days') <= 30 ? "Active in last 30 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 60 ? "Active in last 60 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 90 ? "Active in last 90 days" : "Not active in last 90 days"
+```
+
+For example, if today is November 6 and a person's latest comment is dated October 20, the difference is 17 days and the flag shows `Active in last 30 days`. A latest post dated August 1 is 97 days old and shows `Not active in last 90 days`.
+
+The flag only updates when the formula column re-runs. To keep it current, re-run the activity enrichments and the formula columns periodically — see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula) for how `moment()` evaluates.
+
+**When no activity is returned:** If neither enrichment finds public activity for a person, the enrichment cell shows no data and you aren't charged credits for that row. The flag formula labels these people `Unknown`. Treat them as unknown rather than inactive — the person may still be active in ways the data provider can't see. See [If the enrichment returns no data or fewer posts than expected](#getting-a-persons-posts-and-shares).
+
+**Reactions can't be used to date activity:** A **Get a person's professional post reactions** enrichment is also available, but it has no date for when the person reacted. Its only date, `post.created_at`, is when the reacted-to post was published, so a recent date doesn't mean the person reacted recently. Use posts, shares, and comments for 30, 60, or 90-day activity flags instead.
