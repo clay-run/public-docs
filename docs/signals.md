@@ -101,6 +101,33 @@ Under the hood, Clay creates a separate signal event for each individual new hir
 
 The workflow fires each time your signal runs and finds matching hires — its cadence follows the frequency you set for the signal (daily, weekly, etc.).
 
+### How do I combine two signals into one table without duplicates?
+
+Each table-based signal writes its events to its own results table. If you run two signals that look for the same kind of event in different ways — for example, a **News & fundraising** signal watching for executive appointment news and a **New hire** signal watching for new executives — you can merge both into one table by routing them through a single workflow. Workflows is currently in beta; if you don't see the **On a signal** trigger in your workspace, contact support.
+
+To merge two signals into one table:
+
+1.  In Workflows, create a new workflow.
+2.  Add an **On a signal** trigger and select the first signal. Then add a second **On a signal** trigger and select the second signal. Each trigger connects to one signal, so a workflow that uses two signals has two triggers feeding the same steps.
+3.  Map each signal's output into the same set of fields — for example, full name, job title, company, professional profile URL, and news article URL — so rows from both signals share one structure.
+4.  Add a **Write to Other Table** step that writes every row to one Clay table.
+5.  In the destination table, open Table Settings (⛭ → **Edit table settings**), enable **Auto-dedupe rows**, select the column that identifies a person (such as the professional profile URL) as the deduplication key, and choose to keep the oldest row. When the second signal later finds a person the first signal already found, Clay keeps the original row and removes the duplicate.
+
+**Tip:** Auto-dedupe only matches rows that have the same value in the deduplication column. If one signal doesn't return a professional profile URL for the person (for example, a news article that names an executive), add a step that finds the profile URL before **Write to Other Table**. This adds an enrichment step, so check its credit cost against your volume.
+
+Sculptor, Clay's AI assistant in the workflow editor (also in beta), can build these steps for you from a plain-language description.
+
+### How do I filter News & fundraising signal results by country?
+
+The **News & fundraising** signal doesn't have a country or location filter. Its filters cover news topics, how many articles to return, and the earliest publish date. By contrast, the **New hire** signal's People Filters include location filters, so you can limit new hires to specific countries in the signal setup itself.
+
+To keep only News & fundraising results that relate to specific countries (for example, the United States, Canada, and Mexico), filter them in a workflow:
+
+1.  In Workflows, create a workflow with an **On a signal** trigger that uses your News & fundraising signal.
+2.  Add a **Use AI** or **Claygent** step that reads the article and returns the country the news relates to (for example, a country name or `Unknown`).
+3.  Add a **Conditional** node after the AI step that routes on its output: send rows for your target countries down one branch to continue (for example, to **Write to Other Table**), and stop rows for other countries.
+4.  Optionally, send `Unknown` results down a separate branch for review so no rows are dropped silently.
+
 ### How do I update or replace my master source table without breaking my signal workflows?
 
 Signal columns reference their source table by its internal ID, not its name. Renaming a table won't break any connected signals — but replacing it with a different table will disconnect them unless you update each signal to point to the new one.
