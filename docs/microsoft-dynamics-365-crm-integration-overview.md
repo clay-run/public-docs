@@ -194,3 +194,15 @@ By default auto-update, any new row added to your Clay table will automatically 
 To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. Learn more about AI formulas in [this Clay University lesson](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101).
 
 **Step 6:** Run enrichment to update an object.
+
+## Import Dynamics 365 records into Clay Audiences (beta)
+
+**Currently in closed beta.** Using Microsoft Dynamics 365 CRM as a data source in Clay Audiences is available only to select workspaces. If you don't see Dynamics 365 when you add a source in Audiences, contact your Growth Strategist or Clay support to ask about access. For how to add a source in Audiences, see [Importing your data](audiences.md#importing-your-data).
+
+When the Dynamics 365 source is enabled for your workspace, you can import the following Dynamics 365 record types into Clay Audiences:
+
+-   **Accounts** — appear as companies in Audiences.
+-   **Contacts** and **Leads** — appear as people in Audiences.
+-   **Opportunities**
+
+**Qualified Dynamics 365 Leads merge into their Contacts.** When you qualify a Lead in Dynamics 365 and it creates a Contact, Clay Audiences merges the Lead and the Contact into a single person record instead of keeping two separate records. Clay matches them using the Contact's **Originating lead** lookup (`originatingleadid`).
