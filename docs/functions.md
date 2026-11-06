@@ -496,6 +496,23 @@ To duplicate a function, open the function from your Clay homepage or directly i
 
 Yes, on supported plans. The `MCP for reps` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
+### How do I send people enriched by a function into a Clay workflow without a webhook?
+
+To push a function's results into a Clay workflow — for example, a workflow that creates a Salesforce record for each person your reps enrich through the function from Claude — add a **Run workflow** column inside the function instead of calling a webhook. The **Run workflow** column starts the workflow from inside Clay, so the function doesn't need to make any outside webhook call to pass its results along. Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
+
+**To add a Run workflow column to a function:**
+
+1.  From your Clay homepage, click **Functions**, open the function, and click **Edit function**.
+2.  Click **Add column**, search for **Run workflow**, and select it.
+3.  In the **Workflow** field, select the workflow you want the function to run (for example, your Salesforce record-creation workflow).
+4.  Map each of the workflow's inputs to a column in the function — for example, the enriched person's name, title, company, email, phone, and social profile URL.
+5.  (Optional) Under **Run settings**, add a [run condition](conditional-runs.md) so the workflow only runs for complete contacts — for example, only when a work email was found.
+6.  Click **Review Changes**, then **Publish Changes**.
+
+After you publish the function, every person the function enriches — whether the function is called from a table, the API, or an MCP tool like Claude — is sent to the workflow by the **Run workflow** column. Edit mode doesn't auto-run columns (see [Editing a function](#editing-a-function)), so the workflow doesn't start on its own while you're building; to test end to end, publish the function and make a real call to it, for example from Claude.
+
+**Which version of the workflow runs:** The **Run workflow** column runs the published version of the selected workflow. If the workflow has never been published, the column runs the workflow's current draft. After you publish a workflow, later edits stay in a draft until you publish again — so publish any workflow changes before relying on them. See [Testing a new version of a workflow that your table calls](sandbox-mode.md#testing-a-new-version-of-a-workflow-that-your-table-calls).
+
 ### Can I call a function programmatically via the API?
 
 Yes — currently in beta. Clay's public API lets you invoke a function against input data without opening the app, making it useful for agent workflows, CI pipelines, and system-to-system integrations. To get access, contact your GTM engineer or [our team](https://www.clay.com/contact-form) to have the public API beta enabled for your workspace.
