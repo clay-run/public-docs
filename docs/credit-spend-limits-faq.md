@@ -111,6 +111,36 @@ It depends on whether the source itself consumes credits:
 
 So if you use a webhook to bring data into Clay (for example, from RB2B or another integration), new rows will keep flowing in even after the credit limit is hit. The enrichment steps on those rows won't run until credits are available again.
 
+## Credit spend limits on Audiences signals
+
+**Why does my Company Topic Intent signal fail with "Credit balance too low" when my workspace has plenty of credits?**
+
+An Audiences signal can have its own **Credit spend limit**, which is separate from workbook limits. Before a Company Topic Intent signal runs, Clay estimates the full cost of the run. It then checks that estimate against the lowest credit balance that applies to the signal: your workspace balance, your workspace's Audiences credit budget (if one is set), and the signal's own credit spend limit.
+
+If the signal's credit spend limit is lower than the estimated run cost, Clay blocks the run before processing any records:
+
+-   The signal's status in **Data Hub → Signals** shows **Errored**.
+-   The Edit signal panel shows **"This Signal failed to execute: Credit balance too low"**.
+-   0 credits are charged.
+
+This happens even when your workspace has hundreds of thousands of Data Credits available. Retrying the signal fails the same way until the limit changes.
+
+The same check applies to the credit budget assigned to Audiences for your workspace, if one is set. If that budget has less remaining than the estimated run cost, the run is blocked with the same error. If the signal has no credit spend limit, check your workspace's Audiences budget. See [Credit budgets](/docs/credit-budgets).
+
+For example, take a Company Topic Intent signal on 819 companies where the estimated rate is 4 credits per company. That gives an estimated run cost of about 3,276 credits (819 × 4). The per-company rate depends on your plan, which data providers you enable, and how many topics you select for each provider. Each topic adds that provider's per-topic rate, so check your signal's own estimate. With a 100-credit spend limit on the signal, Clay compares 100 against 3,276, so the run fails. The same signal on a 5-company segment costs about 20 credits (5 × 4). That's under the 100-credit limit, so the run succeeds.
+
+**How do I fix a signal blocked by its credit spend limit?**
+
+To let a Company Topic Intent signal run when its credit spend limit is blocking it:
+
+1.  Go to **Data Hub → Signals** and click the signal to open the Edit signal panel.
+2.  Note the estimated cost shown next to **Cost** at the top of the panel.
+3.  Open the **Credit spend limit** section.
+4.  Either raise the **Credit limit** field above the estimated run cost, or toggle the credit spend limit off.
+5.  Save the signal. Clay checks the next run against the new limit.
+
+**Note:** When you turn on a signal's credit spend limit, the **Credit limit** field defaults to **100** credits. That's enough for small test segments but blocks larger runs. The **Reset spend** button sets the signal's spend counter back to 0 but doesn't change the limit. To unblock the signal, raise the limit or turn it off.
+
 ## Notifications and communication
 
 **Who receives notifications when a workbook approaches or hits its limit?**
@@ -134,6 +164,6 @@ To manually monitor your monthly credit balance at any time, go to **Settings �
 
 **What's the difference between credit spend limits and credit budgets?**
 
-**Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap.
+**Credit spend limits** (covered in this guide) set workbook-level spending caps — admins define a maximum credit amount for each workbook, and all tables and campaigns within it share that cap. Audiences signals can also have their own per-signal credit spend limit — see [Credit spend limits on Audiences signals](#credit-spend-limits-on-audiences-signals).
 
 **Credit Budgets** is a related but separate feature currently in open beta for Enterprise customers. It lets admins create named budget pools, assign users or user groups to each budget, and associate workbooks, tables, and campaigns with a specific budget — providing more granular, shared credit governance as your organization scales Clay across multiple teams. To join the Credit Budgets open beta, contact your Growth Strategist.
