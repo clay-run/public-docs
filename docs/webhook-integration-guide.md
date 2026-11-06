@@ -54,7 +54,7 @@ The following limits apply to all webhook sources in your workspace:
 
 **One record per POST:** Each HTTP POST to Clay's webhook endpoint creates exactly one new row in your table — Clay does not split array payloads. If you send a JSON array (`[{...}, {...}]`), the entire array becomes the data for a single row rather than one row per element.
 
-**JSON shape:** Any valid JSON object structure is accepted. Both nested objects and flat key structures work — Clay creates columns based on whatever top-level keys you send:
+**JSON shape:** Any valid JSON object structure is accepted. Both nested objects and flat key structures work. Clay stores the full payload in the webhook column of each new row and doesn't create a column for each key — you choose which keys to map into their own columns (see [Why is my webhook data showing in the webhook cell but not in my table columns?](#why-is-my-webhook-data-showing-in-the-webhook-cell-but-not-in-my-table-columns)):
 
 - Nested: `{"contact": {"name": "Jane", "email": "jane@example.com"}}`
 - Flat: `{"contact.name": "Jane", "contact.email": "jane@example.com"}`
@@ -192,7 +192,7 @@ Clay records which webhook source sent each row at ingestion time, so you can fi
 2. Set the field to **Webhook**, the condition to **is from source**, then pick a source from the dropdown. The dropdown lists every webhook source connected to this table by name.
 3. The table now shows only the rows that arrived from that source. Switch the dropdown to a different source to see its rows instead.
 
-**To show the source on each row as a column (optional):** Add a field to the payloads you send — for example, `"source": "webhook_a"`. That field will arrive as its own column in the table, so you can see the source directly on every row without needing to filter.
+**To show the source on each row as a column (optional):** Add a field to the payloads you send — for example, `"source": "webhook_a"`. That field arrives inside the webhook cell of every row. Map it to its own column (see [Why is my webhook data showing in the webhook cell but not in my table columns?](#why-is-my-webhook-data-showing-in-the-webhook-cell-but-not-in-my-table-columns)) so you can see the source directly on every row without needing to filter.
 
 ### How do I find which table a webhook URL belongs to?
 
@@ -257,16 +257,37 @@ To recover events that were acknowledged by Clay but did not appear as rows in y
 
 **To prevent data loss going forward,** pace requests within Clay's [throughput limits](#limits) and ensure your source system implements retry logic with exponential backoff for `429` responses.
 
+### Why is my webhook data showing in the webhook cell but not in my table columns?
+
+When your webhook receives a payload, Clay stores the full JSON payload in the webhook column of the new row. Clay doesn't automatically split webhook payload fields into separate table columns — a column only populates from webhook data after you map a webhook field to it. If you click a webhook cell and see your data (for example, a lead's name and email from an outside vendor) but the other columns in that row stay empty, those columns aren't mapped to the webhook yet.
+
+**To map webhook fields to columns from a cell:**
+
+1.  Click a cell in the webhook column to open the **Cell details** panel.
+2.  Hover over the field you want (for example, `email`) and click **Add to column**. If the table has no existing columns you can map to, the button reads **Add as column**.
+3.  Choose one of the following:
+    -   **Create a new column:** type a name under **Add {field} as new column** and click **Create column**.
+    -   **Map to an existing column:** pick a column under **Map to an existing column**. If that column already holds manually entered data, see [What happens when I map a webhook field to an existing column](#what-happens-when-i-map-a-webhook-field-to-an-existing-column--and-why-did-my-data-disappear) first.
+4.  Repeat for each webhook field you want in its own column. The new or mapped column fills in with that field's value from the webhook cell.
+
+**To map webhook fields from the webhook source settings:** Click the webhook column header → **Edit source** → **Setup mapping**, hover over a field, and use the same **Add to column** options. The **Setup mapping** panel shows "Waiting for responses..." until the webhook has received at least one payload, so send a test payload first.
+
+### Will mapped webhook columns populate automatically for new webhook rows?
+
+Yes. A column you create or map from a webhook field is a formula column that reads from the webhook column, so every new row the webhook receives after you map the field fills that column automatically — no manual step is needed. Mapped webhook columns run regardless of the table's Auto-run setting.
+
+Enrichment and action columns that use your mapped webhook columns as inputs (for example, a Salesforce or Slack action at the end of an automated workflow) are different: they run automatically on new webhook rows only when the table's **Auto-run** is on **and** the column's own **Auto-run** toggle (in the column's **Run settings**) is on. See [Auto-run](auto-run.md) for details.
+
 ### What happens when I map a webhook field to an existing column — and why did my data disappear?
 
-When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add as column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
+When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add to column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
 
 -   **Manually-entered data** (typed directly or imported from a CSV): Clay shows a "Data overwrite" warning before proceeding. If you confirm, all existing values in that column are permanently replaced — the column becomes formula-driven by the webhook field, and rows that didn't arrive via the webhook will show as empty.
 -   **Enrichment-based data** (already driven by an enrichment formula): No overwrite occurs. Clay appends the webhook source as a fallback, so the column formula becomes `{{EnrichmentResult}} || {{WebhookField}}`. Existing enrichment-based values are preserved; the webhook fills in where the enrichment is empty.
 
 **To keep existing data while also bringing in webhook data,** don't map to the original column. Instead:
 
-1.  Use **Add as column → Create new column** to extract the webhook field into a separate new column (for example, "Email from webhook").
+1.  Use **Add to column**, enter a name for the new column (for example, "Email from webhook"), and click **Create column** to extract the webhook field into a separate new column.
 2.  Add a [Merge column](https://university.clay.com/docs/table-columns-overview#merge-columns) that references both the original column and the new webhook column — it returns the first non-empty value per row, preserving your original data for older rows while populating from the webhook for new arrivals.
 
 **Note:** Clay's Table Versioning feature can restore a table's column schema and formula configuration from a previous snapshot, but it cannot recover lost manually-entered or CSV-imported cell data values. If you confirmed the overwrite and lost that underlying data, re-import the original source and use the approach above going forward.
@@ -285,7 +306,7 @@ You can confirm this is the case if the field appears in the webhook column's **
 
 Once the field is selectable in your prompt, you can remove the temporary filter or sort to restore your original view.
 
-**Alternative:** If you frequently need to reference a webhook sub-field in prompts across multiple columns, extract it as a standalone column. Click a cell in the webhook column, open **Cell details**, hover over the field, and select **Add as column → Create column**. The extracted column is then always available in the `/` picker without needing to sort the view first.
+**Alternative:** If you frequently need to reference a webhook sub-field in prompts across multiple columns, extract it as a standalone column. Click a cell in the webhook column, open **Cell details**, hover over the field, and select **Add to column → Create column**. The extracted column is then always available in the `/` picker without needing to sort the view first.
 
 ### My Salesforce sandbox is sending test data to my live Clay webhook table — how do I prevent this?
 
