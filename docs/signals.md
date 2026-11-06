@@ -2,52 +2,78 @@
 title: Signals in Clay
 description: Learn about Signals, a way to monitor changes to your contacts like
   promotions, job changes, or new hires.
-last_synced: 2026-09-18T03:51:09.234Z
+last_synced: 2026-10-13T19:56:09.172Z
 ---
 
 # Signals in Clay
 
-Learn about Signals, a way to monitor changes to your contacts like promotions, job changes, or new hires.
+Learn about Signals, a way to monitor your contacts and target companies and get notified when something changes.
 
 Signals are automated tracking systems that notify you of important changes related to your contacts and target companies. They help you identify and act on key business opportunities at the right moment.
 
+**Cost:** Signals run on Clay credits. Depending on the signal, you're charged for each result it returns or for each record it checks on a run, and Clay shows an estimated cost for the cadence you pick before the signal starts running.
+
 **Signals in Clay can track these types of events:**
 
+-   Topic intent (open beta): Surface the companies and people researching the topics you care about, and hear again when their interest level changes.
 -   [New hires](https://www.clay.com/university/guide/new-hire-signal-overview): Keep track of new hires at target companies within the last three months, enabling you to engage during the crucial decision-making window.
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
+-   Job postings: Monitor when target companies open new roles, pointing to teams that are growing or picking up new initiatives.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+-   [Web intent](website-tracking.md): Identify the companies visiting your own website, along with the pages they looked at and how they arrived.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
 
 ## Setting up a Signal
 
-To start a signal, you'll **need a table with** companies or contacts you want to monitor. This **table should include** LinkedIn URLs for individuals or company identifiers (such as website or LinkedIn URLs).
+To start a signal, you'll **need a table** of the companies or contacts you want to monitor, with a column holding the identifier that signal reads.
 
-**While in your table:**
+-   New hires and job postings accept either a company domain or a company profile URL.
+-   News & fundraising needs a company domain.
+-   Job changes and promotions read a person identifier, such as a professional profile URL.
+-   Topic intent reads a company domain when you monitor companies, and a professional profile URL when you monitor people.
 
-1.  In the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type — **New hire**, **Job change**, or **Promotion**.
+**To create one:**
+
+1.  Go to `Signals`, then choose the signal you want from the quick links. The `New signal` button on the same page lists the full set of signal types.
+    -   You can also start from a workbook: in the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).
     -   **Note:** The table and view cannot be changed after the signal is saved. To monitor a different set of companies, create a new signal.
 3.  Configure filters for the Signal.
 4.  Set the frequency that the signal should run.
+    -   The options are `Quarterly`, `Monthly`, `Biweekly`, `Weekly`, and `Daily`, and a new signal starts at `Monthly`.
+    -   Topic intent is the exception: `Weekly` is both its default and the shortest interval it offers.
 5.  Optionally, add enrichments to your table to gather additional useful data.
 6.  Optionally, `Add sample results`.
     -   This lets you preview how the data will appear after any changes actually happen.
-7.  Click `Save and run X rows` to finish the Signal.
+    -   Once the sample rows are in, `Keep sample results in table` decides whether they stay. Turn it off and Clay clears them when you finish the step.
+7.  Click `Save` to finish the Signal.
 
 ### Edit an existing Signal
 
-1.  Click on the column title with the Signal.
-    -   It'll have a `📡` icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).
+1.  Click the column title for the Signal.
+    -   It carries that signal type's own icon and is named `Event: [Signal Type]` by default (e.g., `Event: Job change`, `Event: New hire`).
 2.  Click `Edit signal`.
-3.  Modify any settings as needed and click `Save and re-run` (or `Save and run` if the signal has never run before, `Save only` for scheduled signals, or `Save` for non-scheduled signals).
+3.  Modify any settings as needed, then save.
+    -   A signal that runs on a schedule gives you two buttons: `Save only` keeps your changes without running, and `Save and re-run` applies them and runs the signal again straight away.
+    -   On a signal that has never run, that second button reads `Save and run` instead.
+    -   A signal that doesn't run on a schedule has a single `Save` button.
+
+## Monitoring a segment in Audiences
+
+A signal doesn't have to run on a table. If the records you want to watch already live in Audiences, open that segment and use `Add signal` to monitor them in place.
+
+Which signals are on offer depends on what the segment holds:
+
+-   Account segments: topic intent, web intent, new hires, news & fundraising, and job postings.
+-   Contact segments: topic intent, job changes, and promotions.
 
 ## FAQs
 
 ### Can I set a signal on the first of the month?
 
-Currently, signals can only be adjusted by frequency, not set to run at specific times.
+Signals can only be adjusted by frequency, not set to run at specific times.
 
 ### Does my Signal run automatically when new rows are added to my table?
 
@@ -70,7 +96,7 @@ The signal runs on its scheduled cadence and checks all rows in the destination 
 
 ### What plans are Signals available on?
 
-Most Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on any paid plan.
+Signals — Clay's automated monitors for events like job changes, promotions, and news and fundraising — are available on every paid plan except Flex, and during a trial. Web intent is the exception: it needs a Growth or Enterprise plan, though trials include it too.
 
 ### Why is my Signal returning 0 results?
 
@@ -111,7 +137,7 @@ The safest approach is to replace the data inside your existing source table so 
 
 1.  In your existing master source table, delete the old rows.
 2.  Re-import your updated account list into the same table (via CSV, CRM sync, or any source).
-3.  In each signal table, re-run the signal column (click the 📡 column header → run) so it picks up the new account list on its next cycle.
+3.  In each signal table, re-run the signal column (click the signal column header → run) so it picks up the new account list on its next cycle.
 
 Because the table ID hasn't changed, all downstream signal workflows remain connected automatically.
 
@@ -152,7 +178,7 @@ No — deleting a View that a Signal references will break the Signal. Each Sign
 
 **Before deleting any View, check whether a Signal is using it:**
 
-1.  Open each active Signal's column header (the `📡` icon) → **Edit signal** and note the View shown for that Signal.
+1.  Open each active Signal's column header (named `Event: [Signal Type]` by default) → **Edit signal** and note the View shown for that Signal.
 2.  If the View is not referenced by any active Signal, it is safe to delete.
 3.  If the View is referenced by an active Signal, rebuild the Signal before deleting the old View:
     -   In the workbook's **Create** panel, set up a new Signal of the same type, selecting your new View as the source.
@@ -224,7 +250,7 @@ Check the **Limit results** setting inside the **Filter results** section of you
 
 To check or adjust it:
 
-1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
+1.  Click the signal column header (named `Event: [Signal Type]` by default).
 2.  Click **Edit signal**.
 3.  Expand the **Filter results** section and review the **Limit results** field. Remove the value or enter a higher number.
 4.  Click **Save and re-run**.
@@ -241,7 +267,7 @@ Credits for signal monitoring are charged based on the number of contacts or row
 
 To stop a signal from consuming credits, you must pause or disable it directly from the signal's column settings — not by pausing the table it populates:
 
-1.  Click the signal column header (the `📡` icon, named `Event: [Signal Type]` by default).
+1.  Click the signal column header (named `Event: [Signal Type]` by default).
 2.  Click `Edit signal`.
 3.  Disable or pause the signal, then save.
 
