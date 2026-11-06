@@ -76,6 +76,8 @@ The Clay CLI and Clay's Agent have the same workflow budget controls as the Clay
 -   **Create a workflow with a budget:** `clay workflows create --budget-id <budget-id>`
 -   **Change an existing workflow's budget:** `clay workflows update <workflow-id> --budget-id <budget-id>`
 
+Assigning a workflow to a budget doesn't change a user's monthly user credit limit, which also caps credits spent through the Clay CLI. If a Clay CLI command stops with a monthly credit limit error, a workspace admin raises that user's limit on the `MCP` page — see [MCP settings](https://university.clay.com/docs/mcp-settings#why-am-i-hitting-a-credit-limit-in-the-clay-cli-when-my-workspace-still-has-credits).
+
 ## Tracking spend by resource on the Budgets page
 
 Open a budget from `Settings` → `Budgets` to see its spend over time. Use the **Breakdown** option to see that budget's spend split by resource — **Workflows** and **Workbooks** — so you can tell how much of a budget's credits went to workflows versus workbooks.
