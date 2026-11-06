@@ -4,7 +4,8 @@ description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
   (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
-  from the runs dashboard, set a row limit to control which rows are processed,
+  from the runs dashboard, fetch workflow runs automatically via the Clay API
+  for monitoring, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
   stuck in Queued status when the Stop button is grayed out, diagnose enrichments
@@ -171,6 +172,50 @@ If you want an agent or script to catch and re-trigger failed workflow runs on a
 Additional `clay workflows runs` subcommands: `steps <workflowId> <runId>` (list the execution steps of a run), `pause <workflowId> <runId>` (pause an active run), `resume <workflowId> <runId>` (resume a paused run).
 
 **Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `rerun --from failed` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors (such as timeouts), and re-runs them from their failed node without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
+
+## Fetching workflow runs via the API
+
+You can pull your Clay Workflows run logs automatically through the Clay Public API instead of exporting them as a CSV from the **Runs** dashboard — for example, to monitor workflow performance or track errors from your own systems. The workflow runs endpoint (**Search runs by query**) is currently in beta and available on all plans.
+
+**To fetch workflow runs via the API:**
+
+1.  **Create a workspace API key.** In the left sidebar, under **Orchestration**, click **API and CLI**, select the **API keys** tab, click **Add API key**, and give the key the public API scope (`public-endpoints:all`). The legacy personal key in `Settings` → `Account` → `API key (legacy)` does not work with the Public API — requests made with it are rejected. See [Find your Clay API key](guide-find-clay-api-key.md) for details.
+2.  **Call the Search runs by query endpoint** with your key in the `clay-api-key` header:
+    ```
+    POST https://api.clay.com/public/v0/workflows/runs/query
+    ```
+    For the request body and the runs query syntax, see the Search runs by query reference at [developers.clay.com](https://developers.clay.com/api-reference/workflowsruns/search-runs-by-query-beta.md).
+
+Each workflow run returned by the API includes the following fields:
+
+-   `id` — the run ID
+-   `workflow_id` — the workflow the run belongs to
+-   `trigger_id` — the trigger that started the run (empty when no trigger started it)
+-   `run_status` — the run's status
+-   `started_at`, `ended_at`, and `created_at` — the run's timestamps
+-   `data_credits_used` and `action_credits_used` — the data credits and actions the run consumed
+
+### Does fetching workflow runs via the API use credits?
+
+No. Fetching workflow runs through the Clay API is read-only and does not consume data credits or actions.
+
+### Workflow runs API limits
+
+The workflow runs endpoint has the following limits:
+
+-   **Results per request:** up to 100 runs per request. To retrieve more runs, request additional pages.
+-   **Rate limit:** 300 requests per minute per workspace, with a burst capacity of 30 requests.
+-   **No period quota:** fetching workflow runs does not count toward the search results quota shown under **Search usage** on the API and CLI page. The per-request and per-period result limits in [Does Clay have an API?](using-clay-as-an-api.md) apply to the People & Company Search API, not to workflow runs.
+
+### Seeing which steps failed in a workflow run
+
+The workflow runs endpoint tells you whether a run failed. To see which specific steps failed in that run, use the Clay CLI:
+
+```
+clay workflows runs steps <workflowId> <runId> --status failed
+```
+
+The `--status` flag accepts `pending`, `active`, `waiting`, `paused`, `completed`, or `failed`. To re-run failed runs, see **Retrying failed workflow runs via the CLI** (above).
 
 ## Stopping a run
 
