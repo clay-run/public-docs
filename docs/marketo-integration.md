@@ -1,6 +1,6 @@
 ---
 title: Marketo integration
-description: Create, update, and lookup Marketo objects directly from Clay.
+description: Create, update, and lookup Marketo objects from Clay, connect Marketo sandbox and production accounts, and send Marketo leads to Clay via webhook.
 last_synced: 2026-04-26T01:40:20.477Z
 ---
 
@@ -10,6 +10,8 @@ Create, update, and lookup Marketo objects directly from Clay.
 
 Marketo is a marketing automation platform for managing leads and campaigns. With this integration, you can create, update, and look up Marketo objects directly from Clay, and connect Marketo via webhook to enrich inbound leads in real time.
 
+**Plan availability:** The Marketo integration actions (Create object, Update object, and Lookup object) are available on the **Enterprise** plan. Sending Marketo leads into Clay via webhook requires a plan that includes [webhooks](https://www.clay.com/university/guide/webhook-integration-guide).
+
 ## Enriching data with Marketo
 
 1.  While in a Clay table, click `Add enrichment` and search for `Marketo`.
@@ -18,6 +20,18 @@ Marketo is a marketing automation platform for managing leads and campaigns. Wit
     -   If you haven't already connected your Marketo account, click `+ Add account` and go through authentication.
 
 **Note:** When setting up a role in Marketo to connect with Clay, the role requires two minimum permissions: `Read-Write Schema Standard Field` and `Read-Write Schema Custom Field`. You will also need to grant access to any objects you'd like to work with in Clay (e.g., Leads, Companies). You can edit the role later to include other objects.
+
+### Connecting Marketo sandbox and production accounts
+
+You can connect more than one Marketo account to the same Clay workspace — for example, a Marketo sandbox instance for testing and your Marketo production instance. You don't need to disconnect the Marketo sandbox before connecting Marketo production; both accounts can stay connected at the same time.
+
+Each Marketo action column (Create object, Update object, Lookup object) has its own account selection, so you choose which Marketo account that column uses:
+
+1.  Connect each Marketo instance as a separate account by clicking `+ Add account` in the Marketo action's account selector. Each account asks for that instance's `Client ID`, `Client Secret`, and `Munchkin Account ID`.
+2.  In each Marketo action column, open the account selector and pick the sandbox or production account.
+3.  To move from testing to production, switch the account selected in each Marketo action column from your sandbox account to your production account.
+
+This lets you test against Marketo sandbox and run against Marketo production side by side, without switching connections back and forth.
 
 ### `Action` Create object
 
@@ -104,7 +118,7 @@ The Update object action matches on the Marketo internal ID (not email). If your
 
 Use webhooks to send data from Marketo to Clay for real-time lead enrichment. This is ideal for capturing inbound leads as they arrive — such as form fills, demo requests, or other lead events. After enrichment, you can use the Marketo enrichment actions above to write the enriched data back to Marketo.
 
-1.  **Copy the webhook URL from Clay.** In a new or existing Clay table, locate the `Webhook URL` option and copy it. This is the endpoint Marketo will POST lead data to.
+1.  **Copy the webhook URL from Clay.** In your Clay workbook, click `+ Add`, search for `Webhooks`, and add a webhook source to create a table that receives data (see [Creating a table with webhook](https://www.clay.com/university/guide/webhook-integration-guide)). Once the webhook source is added, the table sidebar shows a `Webhook URL` section with `URL` and `cURL` tabs — copy the value on the `URL` tab. This is the endpoint Marketo will POST lead data to. To find the webhook URL again later, open the table, hover over the webhook source column header, and click the **Edit source** icon.
 2.  **Go to the Admin area in Marketo.** Navigate to the `Admin` section in your Marketo instance.
 3.  **Open Webhooks.** In the Admin area, click `Webhooks` in the left-hand menu.
 4.  **Create a new webhook.** Click `New webhook` to begin configuration.
