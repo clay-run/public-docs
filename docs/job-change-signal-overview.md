@@ -49,13 +49,13 @@ No — the contacts table a Job Change Signal monitors is selected when the sign
 
 To switch to monitoring a different contacts table, create a new signal pointing to the new table. Clay creates a new results table for the new signal. To reuse the columns you built in the old results table, see [How do I keep my results table workflow when I replace a Job Change Signal?](#how-do-i-keep-my-results-table-workflow-when-i-replace-a-job-change-signal) below.
 
-### Why does "Select LinkedIn Profiles" show "Please select a valid value" when I edit my Job Change Signal?
+### Why does the profiles field show "Please select a valid value" when I edit my Job Change Signal?
 
-When you edit an existing Job Change Signal, the **Select LinkedIn Profiles** field shows "Please select a valid value" if the LinkedIn profile column the signal was set up with no longer matches a valid column in the People table — for example, because that column was deleted. The field is locked when editing an existing Job Change Signal, so you can't select a different column (such as a new LinkedIn profile column you added to the table) from this screen.
+When you edit an existing Job Change Signal, the profiles field (where you select the professional profile column the signal monitors) shows "Please select a valid value" if the professional profile URL column the signal was set up with no longer matches a valid column in the People table — for example, because that column was deleted. The profiles field is locked when editing an existing Job Change Signal, so you can't select a different column (such as a new professional profile URL column you added to the table) from this screen.
 
-To start monitoring the new LinkedIn profile column:
+To start monitoring the new professional profile URL column:
 
-1.  Create a new Job Change Signal on the same People table and choose the new column under **Select LinkedIn Profiles**.
+1.  Create a new Job Change Signal on the same People table and choose the new professional profile URL column in the profiles field.
 2.  Move the columns you built in the old results table into the new signal's results table using a function — see [How do I keep my results table workflow when I replace a Job Change Signal?](#how-do-i-keep-my-results-table-workflow-when-i-replace-a-job-change-signal) below.
 3.  To stop the old Job Change Signal from consuming credits, disable it from its column header → **Edit signal**. See [Signals in Clay](signals.md) for details.
 
@@ -76,7 +76,7 @@ Save the workflow columns from the old Job Change Signal results table as a [fun
 
 1.  Open the old Job Change Signal results table and select the workflow columns you want to keep (Shift-click the first and last column headers to select a range, or `Cmd`/`Ctrl`-click individual headers).
 2.  With the columns selected, choose `Save as function` — from the right-click menu on a column header, or from the action bar that appears above the selected columns.
-3.  Name the function and review its **Inputs** (the values it reads from the table, such as the LinkedIn URL or company) and **Outputs**, then save it.
+3.  Name the function and review its **Inputs** (the values it reads from the table, such as the professional profile URL or company) and **Outputs**, then save it.
 4.  Open the new Job Change Signal's results table, click `Add column`, go to the `Functions` tab, and select your function.
 5.  Under **Configure inputs**, map each function input to the matching column in the new results table. Checking which column fed each input in the old results table makes this mapping straightforward.
 
