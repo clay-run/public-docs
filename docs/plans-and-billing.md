@@ -191,7 +191,7 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 ### What if I need more actions or data credits?
 
-**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
+**Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. There is no option to buy one-time action credits. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plan & billing`.
 
 **Data Credits:** You have two options:
 

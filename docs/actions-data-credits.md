@@ -370,9 +370,11 @@ You must upgrade to a higher action tier. Actions cannot be topped up separately
 
 If your billing cycle resets soon, waiting is also an option — your full Actions allotment replenishes automatically at your next renewal. You can check your exact renewal date in `Settings` → `Plan & billing`.
 
-### Why can't I top up Actions?
+### Why can't I top up Actions or buy one-time action credits?
 
-Actions represent fixed platform capacity tied to your action tier. To get more Actions, you must upgrade to a higher action tier. Data Credits, however, are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
+Clay does not offer one-time top-ups for Actions — there is no way to buy one-time action credits. Actions represent fixed platform capacity tied to your action tier, so the only way to get more Actions is to upgrade to a higher action tier in `Settings` → `Plan & billing` (see [Upgrade your plan or add more credits](#upgrade-your-plan-or-add-more-credits)).
+
+The `Add one-time data credits` button in `Settings` → `Usage` adds Data Credits only, not Actions. One-time Data Credit top-ups require a paid plan and are not available on the free plan. Data Credits are consumption-based and can be purchased as one-time top-ups or by upgrading your Data Credits tier.
 
 ### Do unused Data Credits or Actions roll over?
 
