@@ -229,6 +229,25 @@ Payment refunds take up to **10 business days** to appear in your account after 
 
 Note that this applies to payment refunds only. Clay generally does not offer credit refunds — for example, for accidental credit spend or data quality issues. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
+### I upgraded the wrong workspace — can I get a refund?
+
+If your Clay account belongs to more than one workspace, a plan upgrade applies only to the workspace you're currently in. Each workspace has its own billing, tables, and credits. You can't move a paid plan from one workspace to another yourself, and refunds can't be requested in the product.
+
+To get a refund for a plan you bought in the wrong workspace:
+
+1.  Open the in-app chat (the icon in the bottom-right corner of the Clay interface) and ask for a refund for the accidental upgrade.
+2.  Say which workspace was upgraded by mistake (for example, the email address or workspace you upgraded) and which workspace you meant to upgrade.
+3.  Confirm that you understand the refund cancels that workspace's plan right away.
+
+**What happens when Clay refunds a plan upgrade:**
+
+-   The upgraded workspace's plan is canceled **immediately**, not at the end of the billing cycle, and the workspace moves to the Free plan.
+-   The Data Credits that came with the paid plan are removed and the Free plan's allocation is applied. Your Data Credit balance will be no more than **200 credits** (the Free plan's rollover cap).
+-   Your monthly Actions reset to the Free plan's allowance.
+-   The refunded payment takes up to **10 business days** to appear in your account. See [How long does a refund take?](#how-long-does-a-refund-take).
+
+After the refund, upgrade the correct workspace. Use the workspace switcher (click your profile picture in the top-right corner) to open the workspace you want, then follow the steps in [Upgrade your plan](#upgrade-your-plan). See [Workspace settings](workspace-settings.md) for help finding your workspaces.
+
 ### Why might my payment fail?
 
 Several common issues can prevent a payment from going through:
