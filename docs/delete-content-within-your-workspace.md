@@ -31,6 +31,17 @@ To delete multiple rows at once:
 
 **Note:** Deleted rows do not go to Trash. A brief **Undo** alert appears immediately after deletion — click it to restore the rows before the alert closes. See [Recover deleted rows](#recover-deleted-rows) for options after the alert has closed.
 
+## Delete rows automatically or programmatically
+
+Clay doesn't offer an API endpoint or integration action that deletes rows from a table. To erase rows from a table automatically instead of deleting them by hand — for example, in a recurring play where a table needs to be cleaned out between runs — use **auto-delete**:
+
+-   **Availability:** Auto-delete is available on the Enterprise plan.
+-   **What auto-delete does:** It removes rows once all action columns have finished running, or based on conditional rules you define (such as time created, a column's value, or column run status). You can also set how many of the most recent rows to keep.
+-   **Where to find auto-delete:** Click the table title and select **Enable auto-delete...**, or click the auto-delete icon (archive icon) in the bottom toolbar of the table.
+-   **Compatible sources:** Auto-delete is designed for tables fed by webhook, send table data, signal, or Audiences sources. For other source types, auto-delete still deletes rows, but the source keeps counting toward its 50,000-record import limit.
+
+See [Auto-delete in tables](auto-delete.md) for step-by-step setup.
+
 ## Delete tables and workbooks
 
 ### Within table or workbook
