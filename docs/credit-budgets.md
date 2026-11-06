@@ -51,6 +51,10 @@ Once a budget exists, workbooks and other resources can be assigned to it. You c
 2.  Click the **Manage** button that appears in the action bar.
 3.  Choose **Assign budget** and select the target budget.
 
+**MCP users:**
+
+Workspace admins on Enterprise plans can also route a team member's Clay MCP spend (credits used through Claude, ChatGPT, or other AI tools connected to Clay) through a budget from the `Budget` column of the `MCP users` table on the `MCP` page. See [Assigning an MCP user to a credit budget](https://university.clay.com/docs/mcp-settings#assigning-an-mcp-user-to-a-credit-budget).
+
 **Filtering by budget on the homepage:**
 
 Use the **Budget** filter on the workspace homepage to quickly see all workbooks assigned to a specific budget, making it easy to audit spend allocation across your org.
