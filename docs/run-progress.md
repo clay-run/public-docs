@@ -3,7 +3,7 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
-  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
+  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), why workflows with Claygent steps take hours to process large batches of accounts, bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
@@ -119,6 +119,18 @@ The **If an item fails** setting is available to all Workflows customers. When a
 
 -   **Continue the run** — The node completes, failed items are left out of its output, and the run keeps going.
 -   **Mark the run as failed** — The run is marked **Failed** after all items finish.
+
+## Why is my workflow taking hours to process a large batch of accounts?
+
+Workflows is currently in open beta. When you launch a large batch of workflow runs at once — for example, thousands of accounts — runs that include AI steps such as **Claygent** or **Account Agent** nodes can take several hours to finish. This is expected. Each AI step sends requests to the AI model provider (for example, Anthropic for Claude models), and the provider limits how many requests it accepts at a time. AI steps are processed through a queue, and the provider's rate limits determine how quickly that queue clears, so the workflow works through the accounts steadily rather than all at once.
+
+To speed up Claygent steps in a workflow, connect your own Anthropic account with a higher rate-limit tier:
+
+1.  Click the **Claygent** step node in the workflow canvas to open the step's configuration panel.
+2.  In the account dropdown (for example, **Select Anthropic account**), select your own Anthropic account, or add one.
+3.  Run a single test record to confirm the step runs with your account before launching the full batch.
+
+With your own Anthropic account connected, the Claygent step's requests run against your Anthropic key's rate limits instead of Clay's shared capacity, so a higher rate-limit tier on your key lets the workflow's Claygent steps clear faster. Model usage is then billed by Anthropic instead of Clay Data Credits. Clay's managed account often has higher rate limits than individual provider accounts, so connecting your own key speeds up a workflow only when your key's rate-limit tier is high — see [Using your own API keys](ai-pricing.md#using-your-own-api-keys). For more on the Claygent account dropdown in Workflows, see [Claygent](claygent-builder.md).
 
 ## Bulk re-run for Workflows
 
