@@ -115,7 +115,7 @@ The connection updates in place — the same connection is preserved with the ne
 
 If you are unsure whether a connected account is still working — for example, after a team member who set it up has left, or after a period of inactivity — you can check its status directly from Settings.
 
-1.  Click your profile picture in the top-right and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  In the sidebar, select the `Connections` tab.
 3.  Click into the integration you want to check.
 4.  Click **Verify** next to any account, if the button appears. Some integration types do not support automated verification and will show a **View in {provider}** badge instead of a Verify button.
