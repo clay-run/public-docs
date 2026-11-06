@@ -91,6 +91,17 @@ To update access for an existing budget, open it from `Settings` → `Budgets`, 
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
 
+### Do users share a budget's credits, or does each user get their own?
+
+All users on a credit budget share one pool of credits — the credit limit is not given to each user individually. For example, if 5 users have access to a budget with a 1,000-credit limit, all 5 users draw from the same 1,000 credits; they do not each get 1,000. Every resource assigned to the budget, no matter who runs it, counts against that single balance. When the shared balance runs out, processing stops for every resource assigned to that budget until an admin increases the limit or resets the spend.
+
+To give a user their own separate credit allowance — for example, a power user who would otherwise use up a shared team budget — a workspace admin can create a separate budget for that user:
+
+1.  Go to `Settings` → `Budgets` and click **Create**.
+2.  Set the budget's **credit limit** to the amount you want that user to have.
+3.  Choose **Only specific users or groups** and add only that user.
+4.  Have the user assign their workbooks and workflows to their new budget.
+
 ## Email alerts for budget usage
 
 Clay sends email alerts to workspace admins when a budget reaches specific usage thresholds:
