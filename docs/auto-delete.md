@@ -107,6 +107,19 @@ The **send table data** option in auto-delete refers to the table's **source**, 
 
 Having a Send Table Data column does not make the **sending table** compatible with auto-delete. The sending table's compatibility depends only on its own source. For example, if the sending table's source is a CSV import or a HubSpot import, it still stops importing after 50,000 records even with auto-delete enabled. If the sending table's own source is a webhook, send table data, signal, or Audiences source, auto-delete lets the sending table keep importing past 50,000 records too.
 
+### Why does my webhook table show a warning to enable auto-delete?
+
+Tables with a webhook source show a warning banner when auto-delete is turned off. The banner appears on the table as soon as a webhook source is attached and auto-delete is off — it doesn't wait until the table is close to the limit. The banner is shown in workspaces where auto-delete is available (Enterprise plans by default).
+
+The banner reads "This table is receiving data continuously without auto-delete enabled." with the description "Enable auto-delete to avoid reaching the table's 50,000 record limit." Without auto-delete, each webhook source stops accepting new records after 50,000 submissions, and Clay returns a `403 Record limit reached for webhook` error to the sending system. Enabling auto-delete lets the webhook keep accepting incoming data past 50,000 records.
+
+To act on the warning:
+
+1.  Click **Set up auto-delete** on the right side of the banner. This button is shown to users who can edit the table.
+2.  Complete the auto-delete setup as described in [Enable auto-delete](#enable-auto-delete), then click `Save changes`.
+
+Once auto-delete is enabled, the warning no longer appears. You can also dismiss the banner with the **×** button. If the table also has a source that isn't compatible with auto-delete, this banner isn't shown — see the incompatible source banner in [Source compatibility](#source-compatibility) instead.
+
 ## Archive deleted rows
 
 **Note:** Archive deleted rows is in early access. Contact your Clay account team to have it enabled for your workspace.
