@@ -141,13 +141,18 @@ To add a second Send table data column, click **Tools > Export** and select **Se
 
 Send Table Data is only available inside a Clay table, where you open it from **Tools → Export → Send table data**. Clay Workflows (currently in beta) doesn't have a Send table data node or any other node that writes rows directly into a Clay table. If you search the **Export** tab of a workflow node, or open the **Send and export** menu on the workflow canvas, you won't find an "export to table" option. This applies to every workflow, including workflows that start from a segment or run a lookalike search like **Find company lookalikes**.
 
-To get workflow results into a Clay table, send them to a table's webhook URL:
+To get workflow results into a Clay table, send them to a table's webhook URL. This also works when your workflow starts from a webhook trigger and a code node parses the request into fields. You push the parsed fields into the table the same way:
 
-1.  Create a table with a webhook source (**Pull in data from a Webhook**), or open an existing table that already has a webhook source, and copy its webhook URL. See [Webhooks in Clay](webhook-integration-guide.md) for setup steps.
-2.  In your workflow, add an **HTTP API** node after the step whose results you want to keep. Point it at the table's webhook URL and include the fields you want to send in the request body.
-3.  Run the workflow. Each request the HTTP API node sends adds a new row to the webhook table.
+1.  Create a table with a webhook source (**Pull in data from a Webhook**), or open an existing table that already has a webhook source, and copy its webhook URL. If you add an authentication token to the webhook, copy the token too. See [Webhooks in Clay](webhook-integration-guide.md) for setup steps.
+2.  In your workflow, add an **HTTP API** node after the step whose results you want to keep, such as your code node. Set it to POST to the table's webhook URL, with the fields you want to send as a JSON request body.
+3.  If the table's webhook has an authentication token, add an `x-clay-webhook-auth` header containing that token to the HTTP API request. If the header is missing or wrong, the webhook rejects the request and no row is added.
+4.  Run the workflow. Each request the HTTP API node sends adds a new row to the webhook table.
 
-This method only works with tables that have a webhook source, and each request creates a new row rather than updating an existing one. If you need Send Table Data features such as updating existing rows or `Send row for each item in a list`, run the enrichment in a Clay table instead and add a Send Table Data column there.
+**Sending a list of records from a workflow to a table:** Each POST to a table webhook creates exactly one row. If you send a JSON array of records in a single POST, the whole array lands in one row. It isn't split into one row per item. If your code node outputs a list, send one HTTP API request per item so that each record becomes its own row.
+
+This method only works with tables that have a webhook source, and it's insert-only. Each request creates a new row, and webhook requests can't update existing rows. If you need Send Table Data features such as updating existing rows or `Send row for each item in a list`, run the enrichment in a Clay table instead and add a Send Table Data column there.
+
+**Writing workflow data to Audiences instead of a table:** If your workflow data describes people or companies, you can skip the table and use the **Write to Audiences** node. It writes records into Audiences (People or Companies) directly from the workflow. The **Write to Audiences** node is available on Launch, Flex, Growth, and Enterprise plans.
 
 ## Advanced settings
 
