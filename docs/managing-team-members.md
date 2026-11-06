@@ -54,9 +54,9 @@ If a colleague needs access to your tables, workbooks, or other data in your Cla
 
 ## Add a team member to your workspace
 
-Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
+By default, a new user joins your Clay workspace only when you invite them. When a new user signs up for Clay without an invite, they are placed in their own workspace — unless your Enterprise workspace has **Trusted domain access** turned on, which lets people with your company email domain join without an invite. See [How do people get added to my workspace without an invite?](#how-do-people-get-added-to-my-workspace-without-an-invite) below.
 
-**If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
+**If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace. The exception is an Enterprise workspace with Trusted domain access turned on: a new user with a matching email domain who signs in via SSO is offered the option to join your workspace instead.
 
 **If an invited user logs in before clicking the invitation email:** When an invited user visits Clay directly (for example, by going to app.clay.com) before accepting their invitation, Clay has no invite code to act on and automatically creates a new free workspace for that user instead of routing them to your workspace. Once the free workspace exists, every subsequent login redirects the user there — they will not be able to access your workspace even after you re-send the invite. To prevent this, instruct invited users to always access Clay for the first time through the workspace invitation email link, not by logging in directly. If this has already happened, contact Clay support via the in-app chat to delete the erroneously created workspace. Once it is removed, re-send the invitation and have the user accept it through the email link.
 
@@ -82,6 +82,20 @@ This error appears when the invitee tries to sign up using a password with a plu
 2. The invitee should then sign up using that plain email address.
 
 Alternatively, if the invitee has a Google account at that email address, they can sign up using **Continue with Google** instead — the plus-address restriction applies only to password-based signup, not to Google OAuth.
+
+## How do people get added to my workspace without an invite?
+
+If people show up in `Settings` > `Team` in your Clay workspace without you inviting them, they most likely joined through **Trusted domain access**. A person can become a member of your Clay workspace in the following ways:
+
+-   **Email invite** — an admin invites the person's email address from `Settings` > `Team`.
+-   **Trusted domain access (Enterprise)** — a workspace admin adds the company email domain in `Settings` > `Workspace` > **Trusted domain access**. Anyone who signs up for Clay with a verified email address at that domain (for example, `@acme.com`) sees a **Select workspace** screen listing your workspace and can join it in one click, with no invite. Joining isn't automatic: the person must click **Join**, and can choose to create their own workspace instead. This applies whether they sign up with Google, a password, or SSO.
+-   **SCIM provisioning (Enterprise)** — if your identity provider is connected through SCIM, people you assign to Clay in your identity provider are added to the workspace automatically.
+
+People who join through Trusted domain access get the **Editor** role by default. Enterprise admins can change the default role for people who join this way in the Trusted domain access section. Any admin can change a member's role afterward from `Settings` > `Team` (see [Change a team member's role](#change-a-team-members-role)).
+
+**Does signing in through the Clay connector in Claude (or another AI tool) add someone to my workspace?** No. Connecting Claude or another AI tool to Clay through the Clay MCP sign-in only gives that tool access to workspaces the person already belongs to. It does not add them to any workspace. If someone without a Clay account signs in through the connector, they go through normal Clay signup — and if Trusted domain access is on for your workspace and their email matches your domain, they're offered the option to join your workspace at that point, the same as any other new signup.
+
+**Controlling credit spend for people who join on their own:** On Enterprise workspaces with Credit budgets, new members automatically get access to any budget whose access is set to **Anyone in the workspace**. Budgets set to **Specific people and groups** only cover the people and groups you add to them. Manage budgets in `Settings` > `Budgets` — see [Credit budgets](/docs/actions-data-credits#credit-budgets-enterprise-open-beta).
 
 ## Change a team member's role
 
