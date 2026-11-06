@@ -187,6 +187,25 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 
 The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
 
+### Why does a workflow run fail with "The user who started this run has hit their monthly credit limit"?
+
+If a workflow run stops with the message `The user who started this run has hit their monthly credit limit. A workspace admin can raise it.`, and the failed step shows `Tool execution failed with status: ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED`, the person who started the run has used up their monthly MCP credit limit. Different runs can fail on different steps, depending on which step was running when the limit was reached.
+
+Workflow runs started outside the Clay web app, such as runs started through Clay MCP from an AI tool, are charged to the monthly MCP credit limit of the person who started the run. **Currently in beta:** in some workspaces, workflow runs started from the Clay CLI or the Clay API are also charged to that person's monthly MCP credit limit. Contact Clay support if you're unsure whether this applies to your workspace. Workflow runs started in the Clay web app don't count against the monthly MCP credit limit.
+
+The monthly MCP credit limit is checked separately from workflow credit budgets. A workflow run can fail with this error even when the budget the workflow uses still has credits left. The monthly MCP credit limit applies to every workspace role, so Editors and admins can get this error too, not only users with the Sales Rep role.
+
+**Why does this user have a credit limit when other users don't?** Clay automatically gives a user the workspace's **Default credit limit** the first time they sign in to Clay from an external tool, such as connecting Clay in Claude or Codex or running `clay login` in the Clay CLI. Users who have never signed in from an external tool won't have that limit unless an admin set one for them. Signing in again doesn't overwrite a limit an admin has already changed.
+
+To fix the error, a workspace admin raises the user's monthly MCP credit limit:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, find the user who started the run (search by name or email). Their `Credits used` shows how much of their limit they've spent this month.
+3.  Click the pencil icon next to their `Credit limit` and enter a higher amount.
+4.  Re-run the workflow. The new limit applies to the next run.
+
+If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit. If no admin raises it, the monthly MCP credit limit resets on the 1st of each month at midnight UTC.
+
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
 Credits are charged per record enriched, not per MCP request or prompt. A rep who sends a small number of prompts can consume many more credits than the prompt count suggests, for two reasons:
