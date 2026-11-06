@@ -97,6 +97,24 @@ When you are ready to publish the changes in your sandbox to your regular table,
 
 Sandbox mode is for tables only. Clay Workflows has its own draft-and-publish versioning instead. This section answers a common question: *"My table triggers a workflow I've published as V1. If I edit the workflow for V2, will V1 keep working, and how do I test V2 from a table?"* Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
 
+### Where is the Publish button for my workflow?
+
+A new Clay workflow starts as a draft: the status pill next to the workflow name shows **Draft** until you publish it, then **Live**. You need edit access to the workflow to publish it. Where the **Publish** button appears in the workflow editor depends on how the workflow was built:
+
+-   **Workflows built directly on the canvas:** click **Publish** in the top-right of the workflow editor's top bar.
+-   **Workflows built with a setup guide** (for example, an audience enrichment, Find People, or Find Companies workflow): the top bar shows **Open guide** instead of a **Publish** button. Publish the workflow from the guide.
+
+To publish a workflow that was built with a setup guide:
+
+1.  Click **Open guide** in the top-right of the workflow editor.
+2.  Go to the guide's **Review & run** step.
+3.  Click the **Run** dropdown and select **Publish and run**.
+4.  In the publish dialog, name the version and choose whether to run the workflow on existing records. Click **Publish and run** to confirm — the button reads **Publish** if you turn off running after publishing.
+
+You can also ask the AI chat in the workflow editor to publish the workflow for you.
+
+Publishing a workflow makes its triggers live, so a workflow with a segment, schedule, or webhook trigger can start running automatically once it's published. To stop a published workflow from running, pause its triggers — Clay Workflows doesn't have an unpublish button.
+
 ### Does editing a published workflow change the version my table runs?
 
 No. Editing a published workflow doesn't change the version your table runs. After you publish a workflow, any edits you make go to a draft. Your table's **Invoke workflow** column (the "Run workflow" step that sends rows to a workflow) keeps running the published version until you click **Publish** again. The same is true for webhook, schedule, and segment triggers. Each workflow run is also pinned to the version it started on, so publishing a new version doesn't change runs already in progress.
