@@ -42,7 +42,7 @@ To add a data source, use the controls shown in your workspace:
 -   **If you see Records, Sources, and Exports tabs:** open **All People** or **All Companies**, select **Sources**, then click **Add source**.
 -   **If you see Add data in the top right:** click **Add data** → **Add Source**.
 
-The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot open their own source settings panel instead.
+The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce, HubSpot, and Microsoft Dynamics 365 (beta) open their own source settings panel instead.
 
 **Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
 
@@ -54,6 +54,7 @@ You can import data from:
 -   Google BigQuery
 -   Salesforce
 -   HubSpot
+-   Microsoft Dynamics 365 (beta)
 
 ### Importing from Salesforce
 
@@ -201,6 +202,35 @@ Clay syncs data from HubSpot automatically on the following schedules:
 **Record scope:** The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
 **Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a workflow with a HubSpot action — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+
+### Importing from Microsoft Dynamics 365
+
+**Note:** Microsoft Dynamics 365 import in Audiences is currently in closed beta and is only available to select workspaces. If you don't see **Import from Microsoft Dynamics 365** when you add a source, contact your Growth Strategist to ask about access.
+
+You can import all records of a Dynamics 365 object type, or import only the records in one Dynamics 365 view.
+
+**Step 1: Connect your Dynamics 365 account**
+
+1.  Open **All People** or **All Companies** → **Sources** → **Add source** (or **Add data** → **Add Source**), then select **Import from Microsoft Dynamics 365**.
+2.  Select your Dynamics 365 account and click **Connect**.
+3.  Once connected, the Dynamics 365 source settings panel shows **Add records** and **View settings** buttons.
+
+**Step 2: Add a Dynamics 365 import**
+
+1.  Click **Add records** to open the import wizard.
+2.  Select the object type to import: **Accounts**, **Contacts**, **Leads**, or **Opportunities**.
+3.  Choose how to select records:
+    -   **All records** — imports every record of the selected object type from Dynamics 365.
+    -   **Microsoft Dynamics 365 View** ("Import one CRM view") — imports only the records in one Dynamics 365 view.
+4.  If you chose **Microsoft Dynamics 365 View**, search for and pick a view in the **Microsoft Dynamics 365 View** picker. Clay shows a preview of the view's records so you can confirm it's the right view before continuing.
+5.  To add another import (a different object type or another view), click **Add records** again and repeat.
+
+**Dynamics 365 import limits and messages:**
+
+-   **"All [object] records are already added."** — Each Dynamics 365 object type can have one **All records** import. If one already exists, the **All records** option is disabled with this tooltip (for example, "All Accounts records are already added."). You can still add a **Microsoft Dynamics 365 View** import for that object type.
+-   **"Enable change tracking for this table in Dynamics 365 before importing."** — An **All records** import needs change tracking turned on for that table in Dynamics 365. Ask your Dynamics 365 administrator to enable change tracking on the table, then try the import again. This check applies to **All records** imports only, not view imports.
+
+**Changing the view on a Dynamics 365 view import:** You can replace the view used by an existing Dynamics 365 view import. When you pick a different view, Clay asks you to confirm with a **Replace Dynamics 365 view?** dialog before the import switches to the new view.
 
 ### Importing from Snowflake
 
