@@ -392,7 +392,7 @@ To remove a record from Audiences entirely, archive it manually — see [How do 
 
 **Conflict resolution when sources provide different field values**
 
-When two data sources write different values to the same field on an Audience record, Clay resolves the conflict using a fixed priority order. Higher-priority source types win; within the same priority tier, the most recently updated value wins.
+When two data sources write different values to the same field on an Audience record, Clay resolves the conflict using a fixed priority order. Higher-priority source types win; within the same priority tier, the most recently updated value wins. Blank (empty) values never overwrite an existing value, and each field is resolved independently — so one record can show the email from one source and the phone number from another.
 
 | Priority | Source types |
 |---|---|
