@@ -208,3 +208,16 @@ You can run the Clay CLI on a schedule — for example, a cron job on an interna
 Removal and role changes take effect at the CLI's next token refresh, when the CLI returns an authentication error. To recover, make sure the user is an Admin or Editor and run `clay login --device` again.
 
 **Clay API keys can't replace `clay login` for most CLI commands.** The CLI can read an API key from the `CLAY_API_KEY` environment variable, but most CLI commands — including `clay workflows runs` and `clay functions` — require the `cli:all` scope. API keys created on the **API and CLI** page or with `clay api-keys create` don't include the `cli:all` scope, so those commands return `auth_forbidden` (exit code 3) when called with an API key. Signing in with `clay login` (or `clay login --device`) gives the CLI the `cli:all` scope. Use Clay API keys for direct calls to the Public HTTP API instead.
+
+#### Troubleshooting: you signed in to the Clay CLI in your browser, but `clay whoami` says you're not signed in
+
+This section covers when you approve the Clay CLI sign-in in your browser, but `clay whoami` still says you're not signed in and running `clay login` again ends in the same loop. It applies to `clay login` and `clay login --device`, including when Claude Code or Codex runs them during Clay Agent Plugin setup. Check these two causes:
+
+**1. The Clay CLI can't save your session because its config folder isn't writable.** After you sign in, the Clay CLI saves your session to `~/.config/clay/config.json`. If the Clay CLI can't create or write that folder (for example, because your `~/.config` folder is owned by `root`), your browser sign-in succeeds but no session is saved. `clay login` exits with `validation_error` (exit code 2) and a message that starts with `Could not write`. Because nothing was saved, `clay whoami` reports that you're not signed in. To fix this, do one of the following, then run `clay login` again:
+
+-   **Take ownership of the folder:** run `sudo chown -R "$USER" ~/.config` in Terminal. It asks for your computer password.
+-   **Point the Clay CLI at a folder you own:** add `export CLAY_CONFIG_HOME="$HOME/.clay"` to `~/.zprofile`, then open a new Terminal window. `CLAY_CONFIG_HOME` sets the *parent* folder: the Clay CLI creates a `clay` folder inside it, so this example saves your session to `~/.clay/clay/config.json`.
+
+**2. `clay login` fails with `network_timeout`.** The Clay CLI returns `network_timeout` (exit code 5) when a request to Clay gets no response within 60 seconds. If you're on a VPN or company proxy, turn it off or switch to another network, such as a phone hotspot, then run `clay login` again.
+
+After `clay login` completes, run `clay whoami`. You'll see your name, email, and the Clay workspace you're signed in to. If `clay login` still fails after both fixes, [contact Clay support](https://www.clay.com/contact-form) and include the full error output.
