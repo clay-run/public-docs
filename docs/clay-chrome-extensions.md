@@ -11,7 +11,7 @@ Extract structured data from any webpage with the Clay Chrome Extension.
 Clay offers two powerful Chrome extensions that help you gather and organize information from the web:
 
 -   **Clay for Chrome** lets you extract structured data from webpages, either from a list or an individual page.
--   **Clip to Clay** allows you to quickly save entire webpages to your Clay tables.
+-   **Clip to Clay** allows you to quickly save webpage URLs to your Clay tables. Clip to Clay sends only the page URL — not the page content — see [What data does Clip to Clay send to Clay?](clip-to-clay-extension.md#what-data-does-clip-to-clay-send-to-clay).
 
 Both tools integrate seamlessly with your Clay workspace, making it easier to collect, organize, and act on web data.
 
