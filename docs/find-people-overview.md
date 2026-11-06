@@ -1,6 +1,6 @@
 ---
 title: Find People in Clay
-description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts, shares, and comments — including how to flag people who were active on their professional profile in the last 30, 60, or 90 days. Also covers how to import contacts from a LinkedIn Sales Navigator people search using Find people from external search.
+description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares. Also covers how to import contacts from a LinkedIn Sales Navigator people search using Find people from external search.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
