@@ -220,6 +220,26 @@ For custom lifecycle stages, the internal value is a numeric ID — you can find
 
 This behavior applies to all HubSpot enumeration properties (dropdowns, radio buttons), not just lifecycle stage.
 
+### Why did my HubSpot import pull in all my HubSpot data instead of just my target audience?
+
+If a HubSpot import brought every contact or company into Clay instead of only your target audience, the import wasn't limited to a HubSpot list. There are two common causes:
+
+-   **No list was selected in the Import objects from HubSpot source.** The **List to pull objects from** setting is optional. When it's left blank, the source pulls all objects of the selected **Object Type** from HubSpot.
+-   **HubSpot was connected through Audiences.** The standard Audiences HubSpot import brings in every record of the selected object type, not just the members of a specific HubSpot list. See [My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?](audiences.md#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-what-gets-imported-into-audiences) for how to scope what enters Audiences.
+
+**To import only your target audience from a HubSpot list, enrich it, and send the results back to HubSpot:**
+
+1.  In HubSpot, create or find a list that contains only the contacts (or companies) you want to enrich.
+2.  In a Clay table, add a source and select **Import objects from HubSpot**.
+3.  Select your HubSpot account, or connect it when prompted.
+4.  Set **Object Type** to **Contact** (or Company, Deal, Lead, or a custom object).
+5.  Under **List to pull objects from**, select your target list. The dropdown shows both static and active HubSpot lists for the object type you selected.
+6.  Run the source. Your table now contains only the members of that list (up to 50,000 records — see [My HubSpot list has more than 50,000 records](#my-hubspot-list-has-more-than-50000-records--how-do-i-process-all-of-them)).
+7.  Add the enrichment columns you need, such as social profile URLs or job details.
+8.  Add a **HubSpot → Update object** column. Set **Object type** to the same type you imported, map **HubSpot Object ID** to the `hs_object_id` column from the import, and map each enriched column to the HubSpot property you want to fill.
+
+**Tip:** Turn off table-level auto-run before running the import if you want to review the rows before spending credits on enrichments. See the credit and auto-run note under [Import objects from HubSpot](#source-import-objects-from-hubspot).
+
 ### What happens if I update a HubSpot list or segment filter after import?
 
 Changing a HubSpot list's membership criteria (for example, tightening segment filters so certain companies are no longer included) does **not** automatically update your Clay table. Records already imported into Clay **stay in the table** — they are not removed just because they no longer match the updated list.
