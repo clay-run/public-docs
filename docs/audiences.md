@@ -623,6 +623,23 @@ To test a workflow on hand-picked records — rather than an automatic sample �
 
 Selected records are merged with any existing test records for the trigger — duplicates across sources are removed automatically. You can add records from multiple connected audience segments.
 
+**Why does my workflow's test data include records that don't match my segment's filters?**
+
+Workflows, including the workflow test data panel, is in open beta. If Workflows or the test data panel isn't available in your workspace, contact Clay support.
+
+Workflow test data is a fixed, saved list of records stored on the workflow. Clay doesn't re-check these test records against the segment's filters when you run a test, so a test run can include records that the segment excludes. For example, a company whose **Number of People** is 66 can still appear in the test data of a workflow triggered by a segment filtered to **Number of People = 0**.
+
+A segment-triggered workflow picks records in two different ways depending on how it runs:
+
+-   **Test runs** (**Run [N] rows** in the test data panel) run only on the records saved in the workflow's test data. Test runs skip the segment membership check, so a saved test record runs even if it doesn't pass the segment's filters.
+-   **Live runs** from a segment trigger start only for records that enter the segment. A record has to pass all of the segment's filters to join the segment and start the workflow.
+
+When you first save a segment trigger, Clay fills the workflow's test data with a sample of up to **10 records** from the segment. Clay doesn't refresh these saved test records when the segment's filters or the records' data change later. To keep a workflow's test data in line with the segment:
+
+1.  In the test data panel, remove any test records that no longer match the segment's filters.
+2.  Click **Add data**, select the segment, and pick current segment members in the record picker (up to **50 records** total).
+3.  Click **Run [N] rows** to test the workflow on the updated records.
+
 **Processing audience members in batches**
 
 Scheduled audience source triggers support a **Process audience in batches** option that controls how many audience members are processed per scheduled run. When enabled, each run takes the next set of members who haven't been processed yet — the trigger pauses automatically once every member in the audience has been processed.
