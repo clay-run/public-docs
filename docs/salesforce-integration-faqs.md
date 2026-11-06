@@ -844,7 +844,14 @@ To connect to a Salesforce sandbox:
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, click `Sign in with Salesforce sandbox` and complete the OAuth sign-in flow.
 
-Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
+Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables. When you're ready to go live, switch the account selected in each Salesforce action column from your sandbox connection to your production Salesforce connection.
+
+**Keeping Salesforce sandbox test data out of Audiences:** Using your Salesforce sandbox connection in Salesforce actions in your Clay tables (such as Lookup record, Create record, or Update record) does not import anything into Clay Audiences and does not change which Salesforce account Audiences syncs from. Audiences only imports records from the one Salesforce account connected as its Salesforce source. To test Salesforce workflows in your sandbox without syncing sandbox test data into your production audiences, use the sandbox connection only in your Clay tables and connect your production Salesforce org as the Audiences Salesforce source.
+
+If you do connect your Salesforce sandbox as the Audiences Salesforce source, keep the following in mind:
+
+-   **Switching Audiences from sandbox to production means rebuilding your imports.** Audiences uses one connected Salesforce account at a time, and an existing Audiences Salesforce import can't be moved to a different Salesforce org. To move to production, disconnect the sandbox from Audiences, then set up your imports and field mappings again on the production account — see [How do I switch the Salesforce account connected to Audiences?](audiences.md#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production).
+-   **Sandbox records stay in Audiences after you disconnect.** People, companies, and other records imported from the sandbox remain in Audiences, marked as unsynced, until you archive them — see [How do I remove records from an audience?](audiences.md#how-do-i-remove-records-from-an-audience).
 
 ## Can I reverse my Salesforce enrichment?
 
