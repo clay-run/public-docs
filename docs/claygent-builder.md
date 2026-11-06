@@ -125,7 +125,7 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 ### Model selection
 
-New Claygents you build in Claygent builder start on `Auto`, which routes each task to the model that fits it:
+New Claygents you build in Claygent builder, and new Claygent nodes you add to a Workflow, start on `Auto`, which routes each task to the model that fits it:
 
 -   A fast, inexpensive one for a straightforward lookup
 -   Stronger ones for hard research
@@ -337,7 +337,7 @@ To prevent cells that already have results from being re-run automatically when 
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
-**Note:** New Claygents you build in Claygent builder start on **Auto** instead of Argon. Under Auto, per-row cost varies — each row is billed at the rate of whichever model ran it. See [How AI is priced](ai-pricing.md) for model rates.
+**Note:** New Claygents you build in Claygent builder, and new Claygent nodes you add to a Workflow, start on **Auto** instead of Argon. Under Auto, per-row cost varies — each row is billed at the rate of whichever model ran it. See [How AI is priced](ai-pricing.md) for model rates.
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
