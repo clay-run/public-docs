@@ -109,7 +109,7 @@ All views allow you to download the data as a CSV.
 
 **Note:** Workflow credit data is available from May 7, 2026. You'll see a notice about incomplete data if your selected time range begins before this date.
 
-**External API key costs:** When you use your own API key (such as an OpenAI or Anthropic key) in a workflow node, the dollar amount charged by that provider is billed directly by the provider and is not tracked in Clay's credit dashboard. Clay records the number of **Actions** consumed by your external key — not the dollar amount. To see your actual charges, check your provider's billing dashboard. To see which external API keys consumed Actions in Clay, go to **Settings → Usage → Integrations tab** and expand the relevant integration.
+**External API key costs:** When you use your own API key (such as an OpenAI or Anthropic key) in a workflow node, the dollar amount charged by that provider is billed directly by the provider and is not tracked in Clay's credit dashboard. To see your actual charges, check your provider's billing dashboard. AI runs on your own key don't consume Data Credits, so they appear in the **Settings → Usage → Integrations tab** (under **Artificial Intelligence**) only if they consumed Actions on your plan — and that tab never shows how many requests Clay sent to your provider. To find which workbooks and tables use a key, go to `Settings` → `Connections`, click the `…` menu next to the account, and select **View resources**. See [Tracing an unexpected bill from your own OpenAI or Anthropic key](/docs/actions-data-credits#tracing-an-unexpected-bill-from-your-own-openai-or-anthropic-key).
 
 ### Checking credit cost for a specific action on a row
 
