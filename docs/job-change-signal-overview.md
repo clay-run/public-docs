@@ -67,3 +67,16 @@ The Initial check does not compare against your current CRM data. It scans each 
 For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
 
 To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.
+
+### How do I make my Job Change Signal run right now on an Audiences segment?
+
+A Job Change Signal on an Audiences segment checks the people who are in the segment at the moment it runs. People added to the segment after a run aren't included in that run. For example, people who were still loading in from Snowflake when you set up the signal miss the first run. Clay checks them on the signal's next scheduled run.
+
+To run a Job Change Signal right away on everyone currently in the segment:
+
+1.  Open the Audiences segment the signal is attached to.
+2.  Click `Signals` in the segment header to open the list of signal cards.
+3.  On the `Event: Job change` card, click the **⋮** menu and select `Edit signal`.
+4.  Click `Save and re-run`. If the signal has never run, the button reads `Save and run`.
+
+The Job Change Signal then runs right away on all people currently in the segment. A re-run is charged like a scheduled run: in Audiences, a Job Change Signal costs 0.2 credits for every person checked, so re-running it on a segment of 5,000 people uses 1,000 credits. If you don't see the **⋮** menu on the signal card, your account doesn't have permission to manage signals in that audience.
