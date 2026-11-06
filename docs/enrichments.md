@@ -102,7 +102,9 @@ When supported by an enrichment, a **Custom rate limit** collapsible section app
 -   **Request limit** — The maximum number of requests to send within the time window.
 -   **Duration (in ms)** — The length of the time window in milliseconds (between 1 and 900,000 ms / up to 15 minutes).
 
-The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 2,000 ms is also valid).
+The request limit and duration together must average at least 1 request per second (for example, 60 requests per 60,000 ms is valid; 1 request per 2,000 ms is not, because it averages only 0.5 requests per second).
+
+**Custom rate limits are shared across the workspace.** Although you set a custom rate limit on an individual column, Clay enforces it per enrichment type per workspace: every column of the same enrichment type (for example, every HTTP API column) that has a custom rate limit counts toward one shared limit, across all tables in the workspace. Columns of different enrichment types (for example, HTTP API and Apollo OAuth) don't share a limit. If those columns have different values, the cap comes from whichever column most recently queued a request — so use the same values on each column. See [Is the custom rate limit shared across HTTP API columns?](http-api-integration-overview.md#is-the-custom-rate-limit-shared-across-http-api-columns) for details.
 
 **Note:** Custom rate limit is not available for Clay's built-in AI enrichments (Use AI, Claygent, etc.). It only appears for enrichments that support custom rate limiting, such as HTTP API and Apollo OAuth enrichments.
 
