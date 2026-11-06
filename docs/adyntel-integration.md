@@ -1,7 +1,7 @@
 ---
 title: Adyntel integration
 description: Analyze ad content, campaign duration, media types, and ad counts
-last_synced: 2026-04-27T18:09:11.856Z
+last_synced: 2026-09-28T16:43:58.013Z
 ---
 
 # Adyntel integration
