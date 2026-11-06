@@ -1,6 +1,6 @@
 ---
 title: Credit usage
-description: Track credit consumption across your workspace.
+description: Track credit consumption across your workspace, and learn what data you can export to build custom reporting on enrichment volume.
 last_synced: 2026-05-04T00:00:00.000Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
 ---
@@ -116,6 +116,24 @@ All views allow you to download the data as a CSV.
 The workspace and table dashboards break down spend by workbook, table, column, or run — but not by individual row. To see what a specific enrichment charged on a particular row, click on that **action cell** directly. The cell details panel shows a **Charged** line with the data credits consumed by that enrichment for that row.
 
 This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
+
+### Can I access processing logs or build custom reporting on what was enriched?
+
+Clay doesn't give customers access to its backend processing logs. There's no API or export that returns a full per-row log of every input, output, timestamp, and execution detail for a table or workbook. The credit usage dashboards on this page report credits spent, not the number of rows enriched. A single row can spend credits in several enrichment columns, so use credit usage to track spend, not enrichment volume.
+
+To report on enrichment volume, for example "this month we enriched X rows and covered Y% of our accounts for this process," use the data you can access today:
+
+-   **Cell values in a Clay table:** The current output of every row is visible in the table. You can download it with a [CSV export](csv-import-overview.md) or read it through the [Clay API and CLI](using-clay-as-an-api.md) (table reads require a paid or trial plan). These show each cell's current value and status, not a history of past runs.
+-   **Table credit usage history:** Click `History` → `Usage history` in the lower right corner of a table to see that table's credit spend by `Time`, `Column`, or `Run`, then click `Download CSV`. See [Understanding table-specific credit usage](#understanding-table-specific-credit-usage).
+-   **Workflow runs (Workflows is in open beta):** Each record that goes through a workflow gets its own run. The workflow's **Runs** dashboard shows each run's status, duration, credit usage, and start time. Click a run to see the output of each step. Narrow the list with the `All`, `1d`, `1w`, or `1m` time range, then click `Export` to download the runs. You can also pull run data through the Clay API, or with `clay workflows runs list` in the Clay CLI.
+
+To build monthly enrichment reporting from a Clay table:
+
+1.  Add a formula column that returns true when the enrichment you want to measure has a value.
+2.  Get the data out of Clay: export to CSV, read it through the API, or send each finished row to your data warehouse or reporting tool with an [HTTP API column](http-api-integration-overview.md). Sending rows out as they finish builds a dated history that you can report on by month.
+3.  Calculate your metrics. **Rows enriched** is the number of unique rows where your formula column is true and that finished in that month. **Coverage %** is rows enriched divided by the total accounts in scope for that process. For example, 1,200 rows enriched out of 4,000 accounts in scope is 30% coverage.
+
+**Note:** Clay table cells hold their current values, not a dated record of each run. Exact monthly counts for runs that already happened can't be rebuilt later unless you captured timestamps or sent rows out at the time. You can still report on the table's current coverage.
 
 ## Credit spike alerts
 
