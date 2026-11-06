@@ -976,6 +976,26 @@ In `Setup` → `Manage Connected Apps` → `Clay`:
 
 **If your org requires strict IP restrictions:** All Salesforce connections in Clay automatically route through Clay's fixed egress IP addresses — no extra configuration is needed in Clay. Rather than relaxing IP restrictions, you can add Clay's static IPs to your Salesforce allowlist instead. Contact Clay support to request the current IP list, then add each address in Salesforce under `Setup` → `Network Access` → `New`. For full setup instructions, see [IP allowlisting](salesforce-integration-overview.md#ip-allowlisting) in the Salesforce integration overview.
 
+## How does Clay encrypt and store Salesforce credentials?
+
+Clay encrypts the credentials it stores for each Salesforce connection, including OAuth access and refresh tokens, at rest. This answers the common security-review question of how Clay protects stored Salesforce credentials:
+
+-   **Encryption at rest:** Clay encrypts stored Salesforce credentials with AES-256-GCM application-layer encryption before saving them.
+-   **Key management:** Clay keeps the encryption keys as encrypted parameters in AWS Systems Manager Parameter Store, where AWS KMS protects them. Clay doesn't encrypt each Salesforce token with a direct AWS KMS call.
+-   **Customer-managed keys:** Customer-managed encryption keys (bring your own key) aren't currently available for Salesforce credentials.
+-   **Decryption:** Only Clay's backend services decrypt Salesforce credentials, when they need to call Salesforce for you. Stored Salesforce credentials are never decrypted in your browser.
+
+## Does Salesforce ever connect to Clay, and does Clay validate Salesforce's TLS certificate?
+
+The standard Salesforce connection in `Settings` → `Connections` makes outbound calls only, whether it uses User Sign In or Client Credentials. Clay calls Salesforce's APIs for imports, lookups, and create or update actions, and Salesforce never initiates a connection to Clay through this connection.
+
+Salesforce initiates a connection to Clay only if you set that up yourself:
+
+-   You install the Clay Salesforce package and use its **Launch Enrichment** button, which sends the record to Clay.
+-   You configure Salesforce to send data to a Clay webhook source, for example with a Flow.
+
+When Clay connects to Salesforce, Clay checks the TLS certificate that Salesforce's server presents against the standard set of trusted certificate authorities. Clay doesn't use custom certificate pinning for Salesforce connections.
+
 ## Why did the owner on my Salesforce record change when Clay updated a field?
 
 If a Lead, Contact, or Account owner changes unexpectedly after Clay updates a field (for example, filling in a phone number), Salesforce assignment rules are likely the cause.
