@@ -16,7 +16,7 @@ Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** 
 
 **Note:**  
 
-Credit controls and usage monitoring are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
+Credit controls, usage monitoring, and the `Allowed MCP clients` setting are available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.  
 
 Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
@@ -48,6 +48,18 @@ There are two levels of control:
 
 -   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
+
+## Restricting which AI tools can connect to Clay (Allowed MCP clients)
+
+Workspace admins can choose which AI tools (MCP clients) members are allowed to connect to your Clay workspace. Use this to limit Clay MCP access to the tools your company has approved — for example, only Claude and Cursor.
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar. (Only workspace admins see this page.)
+2.  Find the `Allowed MCP clients` section.
+3.  Turn each client on or off. The clients listed are `ChatGPT`, `Claude`, `Cursor`, and `Grok`, plus `Unknown`, which covers any other MCP client not listed above.
+
+Turning a client off in `Allowed MCP clients` blocks new connections and token refreshes from that client. A session that's already connected isn't cut off instantly. It stops working the next time it needs to refresh its access token, at most 1 hour later. After changing the allowlist, check the `Platforms` column in the `MCP users` table to see which members have existing connections.
+
+**Limitation — company-managed vs. personal accounts:** The `Allowed MCP clients` setting works per AI tool only. Clay can't tell whether a member is connecting from your company-managed Claude or Cursor account or from a personal account on the same tool. To require enterprise-managed instances, combine the Clay allowlist with that tool's own admin controls (for example, SSO or domain restrictions).
 
 ## Monitoring usage
 
@@ -116,6 +128,8 @@ Any workspace role — Admin, Member, Viewer, or Sales Rep — can authorize Cla
 For team members whose only purpose is to use Clay through AI tools — with no need to access tables, workbooks, or other workspace resources — assign the **Sales Rep** role. Sales Rep restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.).
 
 If a team member already has Viewer, Member, or Admin access to your workspace, they can also authorize Clay in Claude, ChatGPT, or Glean without a role change.
+
+A member's workspace role doesn't limit what they can do through MCP, and Clay has no "read-only" MCP setting. For example, a Viewer can still run any Function enabled with `MCP for reps` from Claude or ChatGPT. To control what members can do through MCP, choose which Functions to enable for MCP and set credit limits in the `MCP users` table.
 
 To invite MCP-only users: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
