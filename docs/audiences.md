@@ -1161,6 +1161,16 @@ When you edit a search's criteria and click **Save**, a dropdown appears with tw
 
 To work with only the narrower set, open the search, tighten your filters, click **Save**, and select **Replace existing results**.
 
+### Why does my people (or companies) search show 0 results after I edited its criteria?
+
+This applies to searches saved to Audiences as a search segment (draft). When you edit an existing search's criteria and save with **Replace existing results**, the search's earlier results drop out of the segment. The new run still skips everyone that any earlier run of this same search imported. If your updated criteria only match people the earlier run already found, the search segment shows 0 results, even though thousands of people match the criteria.
+
+For example, a search first imports 4,263 people. You then add job-title exclusions and change the industry filter, and save with **Replace existing results**. Everyone who matches the new criteria was already part of the first 4,263, so the new run adds no one and the segment shows 0.
+
+When this happens, the empty segment shows the message "Results previously added to this segment are excluded. Start a new search with the same criteria to include them."
+
+To get every person who matches the new criteria, start a new search with those criteria instead of editing the existing search.
+
 ### Why did my people (or companies) search audience count keep growing without any changes?
 
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
