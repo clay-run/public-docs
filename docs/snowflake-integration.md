@@ -274,3 +274,18 @@ After your query runs, Clay displays the columns it pulled in and lets you map t
 
 -   Click `Auto-map` to automatically match Snowflake columns to existing Clay fields.
 -   To add additional mappings, click `+ Add mapping`. If the destination Clay field doesn't exist yet, select `Create field`, choose a field type (Text, Email, URL, Number, Date, or Checkbox), and name it.
+
+### Why does my Snowflake import into Audiences fail with "This session does not have a current schema"?
+
+When you connect and map a Snowflake table in Audiences, the import can fail with an `Import error` that reads: "Failed to read staged file: Cannot perform CREATE TEMPFILE FORMAT. This session does not have a current schema. Call 'USE SCHEMA', or use a qualified name."
+
+This Snowflake import error means Snowflake opened Clay's session without a current schema. Clay needs a current schema to create a temporary file format, which it uses to read the files it staged from your query. That temporary file format is created by Clay, not by your SQL query, so fully qualifying table names in your query (`DATABASE.SCHEMA.TABLE`) won't fix this error.
+
+The Snowflake import uses the **Schema** field in the import setup. If that field is blank, it uses the **Schema** on your Snowflake Key-Pair connection. Because you're seeing this error, a schema value is set, but Snowflake couldn't use it as the session's current schema. To fix the error:
+
+1.  Find the schema value Clay is using:
+    -   **If you entered a Schema in the import setup**, that value takes priority over the connection. Update the **Schema** field in your Snowflake import setup.
+    -   **If the import setup's Schema field is blank**, update the connection. Click the `…` menu on your Snowflake source card in Audiences (or go to `Settings` > `Connections` and select **Snowflake Key-Pair**, then click the `…` menu next to your connection) and select **Reconnect**. The Reconnect modal lets you edit **Schema**, **Role**, **Database name**, and **Warehouse**.
+2.  Confirm the schema name is spelled correctly and exists in the database you're importing from.
+3.  Confirm the **Role** on your Snowflake connection has `USAGE` on that database and schema.
+4.  Save your changes. Clay uses the corrected schema on the next scheduled import sync.
