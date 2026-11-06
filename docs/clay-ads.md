@@ -343,7 +343,9 @@ When you create your first ad audience, you'll be prompted to authenticate with 
 
 ### **Why did I receive an email saying my Meta account will disconnect soon?**
 
-This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before expiry and again 1 day before expiry so you can take action before any Ad Syncs are interrupted.
+This is expected behavior. Meta enforces a 60-day expiry on OAuth tokens — when you connect your Meta account to Clay using "Sign in with Facebook," the connection stays active for 60 days before it needs to be renewed. Clay sends a warning email 7 days before the connection expires, another 1 day before, and a final email once it has expired, so you can take action before any Ad Syncs are interrupted.
+
+**Who receives the Meta connection expiry email:** the person who connected the account in Clay, the creator of each recurring Ad Sync that uses the connection and isn't paused or failed, and the creator of each scheduled or syncing ad audience that uses it. People who are no longer members of the workspace don't receive the emails. If you created an Ad Sync on a Meta connection that a teammate set up, you may receive this email even though you didn't connect the account yourself.
 
 **To resolve this, you have two options:**
 
