@@ -274,6 +274,24 @@ If the table was permanently deleted from Trash and can't be recovered, create a
 
 Deleting a campaign through the column header's settings (the **Delete campaign** option) is permanent — it removes the campaign from the sending platform and all associated columns with no recovery option.
 
+### Why does a lead in my campaign show "This lead could not be sequenced" or "missing the following required inputs"?
+
+In your campaign's `Leads` tab, a warning icon next to a lead means the email sequencer didn't add that lead to the sequence. Hover over the warning icon to see why. The tooltip can show one or both of these messages:
+
+-   **"This lead could not be sequenced."** — Clay tried to add the lead to the campaign, but the lead wasn't added.
+-   **"This lead is missing the following required inputs: …"** — one or more variables used in your campaign's message sequence are empty for this lead. The message lists each missing input by name, for example `Follow-Up Email 2 Body` or `Third Follow-Up Email Subject`.
+
+**What counts as a required input:** Every variable you insert into the subject or body of any email step in the `Message sequence` — including every follow-up step — is required for every lead. A value that is empty or contains only spaces counts as missing. Clean variables are the exception: they aren't treated as required inputs, because the campaign uses their Fallback text when the value is empty. A lead with a missing required input is skipped and isn't sequenced; the other leads in the campaign continue normally.
+
+**Why a lead shows missing inputs even though the columns in my table are filled in:** The campaign checks each lead's data as it was when the `Sync leads to campaign` column in your source table last synced that lead — not the live values in your source table. If you filled in, regenerated, or renamed columns after the leads were synced, the campaign still has the old values until you sync again. Renamed columns cause the same warning: if a step in your message sequence still references the old column (for example, `Follow-Up Email 2 Body`) but your copy now lives in a new column (for example, `Follow-Up Email 2 Body (Cleaned)`), the campaign keeps flagging the old input as missing.
+
+**To fix missing required inputs on campaign leads:**
+
+1.  Open the campaign's `Message sequence` and check that the variables in every step, including each follow-up, point to the columns that hold your final email copy. Update any variable that references an old or renamed column. If the campaign is live, pause it before editing the message sequence (see [Why can't I see or edit the Message sequence section?](#why-cant-i-see-or-edit-the-message-sequence-section)).
+2.  In your source table, re-run the `Sync leads to campaign` column for the affected rows so the current values reach the campaign.
+3.  Go back to the campaign's `Leads` tab and hover over the warning icon again. If the warning is gone, the lead is ready to be sequenced.
+4.  If the warning is still there after the sync, re-run the `Validate lead input` column and then the `Add lead to campaign` column for those leads in the table behind the campaign. Depending on that table's auto-run settings, these columns may not re-run on their own after a sync.
+
 ### I updated my campaign, but the changes didn't save.
 
 Be sure to press `Save settings` after making edits. Note: deleting a campaign step saves immediately without requiring a manual save click—all other edits require pressing `Save settings`.
