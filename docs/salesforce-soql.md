@@ -148,6 +148,14 @@ Yes. In your source settings, set **Run this source** to **On a schedule** and c
 
 **Important:** Only records returned by the SOQL query during a given run are created or updated. If a record is not returned — for example, because it no longer satisfies your `WHERE` clause — it will not be updated, and the row in your Clay table will retain its previous values. See below for details.
 
+### Can I schedule a Salesforce SOQL source to run every 15 minutes?
+
+No. The most frequent schedule for a Salesforce SOQL source is **Hourly**, and the Hourly option is only available on Enterprise plans. On other plans, the most frequent schedule for a Salesforce SOQL source is daily. A 15-minute option isn't offered for Salesforce SOQL sources or for any other Salesforce source.
+
+If the schedule dropdown on your Salesforce SOQL source shows Hourly as the fastest option, nothing has changed on your table — hourly is the expected limit for Salesforce SOQL imports. To check or change the schedule, click the source column title, select your Salesforce SOQL source, and open **Run this source** → **On a schedule**.
+
+If you need Salesforce records synced into Clay more often than hourly, see [Importing from Salesforce](audiences.md#importing-from-salesforce) in the Audiences docs for how often Audiences syncs Salesforce records.
+
 ### If I update my SOQL query to add new fields, will existing rows get those fields?
 
 Not by default. When you update your SOQL query to add fields to the SELECT clause, Clay will only bring in net-new records — those not already matched by your configured **Uniqueness fields**. Existing rows won't be updated with the new field data.
