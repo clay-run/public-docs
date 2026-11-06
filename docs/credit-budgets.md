@@ -2,6 +2,7 @@
 title: Credit budgets
 description: Create and manage named credit budgets to organize spend, prevent
   overspend, and govern how Clay credits flow across your organization.
+last_synced: 2026-11-04T19:05:24.147Z
 ---
 
 # Credit budgets
@@ -61,11 +62,18 @@ Workflow budgets are available to all Enterprise plan workspaces. Any workflow c
 
 You can assign a budget to a workflow in any of these ways:
 
--   **When you create the workflow:** pick a budget as part of creating the workflow.
+-   **When you create the workflow:** if you have access to only one budget, Clay assigns it to the new workflow automatically. If you have access to several budgets, you're prompted to choose one. If you don't have access to any budget, the new workflow is unbudgeted. Duplicating a workflow follows the same rules. Creating a workflow from version history shows a budget picker whenever you have access to at least one budget.
 -   **From workflow settings:** open the workflow's settings, find the **Budget** field, and select the budget to assign. Use this to change a workflow's budget later.
+-   **From a workflow's row menu on the Workflows list:** open the row menu for the workflow and choose **Assign budget**.
 -   **Bulk assignment from the Workflows list:** select one or more workflows (up to 100 at a time), choose **Assign budget**, and select the target budget.
 
+**Seeing workflow budgets on the Workflows list:** The workflows page has a **Budget** column and a **Budget** filter, so you can see which budget each workflow draws on and pull up every workflow assigned to a given budget.
+
 **What a workflow budget pays for:** Everything a workflow calls spends that workflow's budget — including its own steps, plus any table functions and workflow functions the workflow calls.
+
+**When a table calls a workflow:** Whatever starts a run pays for it. When a table calls a workflow, the calling workbook's budget is charged — not the workflow's own budget.
+
+**Audiences enrichment workflows:** Enrichment workflows created in Audiences draw on the workspace's Audiences budget and can't hold a budget of their own.
 
 **When a workflow's budget runs out:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
 
@@ -120,6 +128,7 @@ Deleting a credit budget removes that budget's credit limit. Anything that was a
 -   Resources you reassigned to a different budget now count against that budget's credit limit.
 -   Resources left with **No budget** spend from your workspace's credits, subject to any other limits (such as credit spend limits) that still apply.
 -   Runs already in progress keep running. Any credits they use after the deletion are no longer capped by the deleted budget.
+-   Spend already charged to the deleted budget stays with it — it doesn't move to the replacement budget. Only later runs draw on the budget you reassigned resources to.
 
 If a resource was stopped only because the budget ran out of credits, it can start processing again once the budget is deleted.
 
