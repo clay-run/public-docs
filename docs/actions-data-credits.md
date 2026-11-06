@@ -73,6 +73,7 @@ Features that use an Action:
 -   Using formulas for scoring and normalization.
 -   Sculptor.
 -   Creating audiences (only the export counts).
+-   Sending or copying rows to another Clay table with **Send table data** (enrichments that run on those rows in the destination table are charged as usual).
 
 ### How many Actions do I need?
 
@@ -504,6 +505,10 @@ To get the most out of your trial credits, use them before your trial ends.
 ### Does CSV export consume an Action?
 
 No. Exporting data to CSV does not consume an Action or any Data Credits. CSV export is a simple data download operation and does not count as platform usage or GTM execution.
+
+### Does Send table data consume Actions or Data Credits?
+
+No. Using **Send table data** to send a record to another Clay table — copying its existing values into a new or existing row in the destination table — does not consume any Actions or Data Credits. Only enrichments or other action columns that run on the copied rows in the destination table consume Actions and Data Credits. To avoid re-enriching copied rows, turn off auto-run on enrichment columns in the destination table before sending. See [Send table data](send-table-data.md) for details.
 
 ### Does Salesforce Lookup Record consume an Action credit?
 
