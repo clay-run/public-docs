@@ -176,7 +176,7 @@ A workspace admin can reset a user's MCP credit spend to 0 at any time. You don'
 3.  Click the reset icon (tooltip: `Reset credit spend to zero`) on the user's row.
 4.  In the `Reset credit spend` dialog, click `Reset spend`.
 
-The user's `Credits used` goes back to 0 for the current month, and their `Credit limit` stays the same. They can spend up to their full limit again right away. To give a user more room every month instead, click the pencil icon next to their `Credit limit` and enter a higher amount. Only workspace admins can see the `MCP` page and reset credit spend.
+The user's `Credits used` goes back to 0 for the current month, and their `Credit limit` stays the same. They can spend up to their full limit again right away. To give a user more room every month instead, click the pencil icon next to their `Credit limit` and enter a higher amount. Only workspace admins can see the `MCP` page and reset credit spend. The `MCP` page is currently in beta. If you're a workspace admin and don't see `MCP` under **Orchestration** in the left sidebar, contact Clay support.
 
 ### Is Clay MCP or Clay CLI usage unlimited or free?
 
