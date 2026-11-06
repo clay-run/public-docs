@@ -72,7 +72,7 @@ You can control AI spending by:
 -   Choosing more cost-effective models for simpler tasks
 -   Selecting fixed-price models when cost predictability is important
 
-To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://www.clay.com/university/guide/how-ai-is-priced).
+To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
 ## Clay credits vs. personal API keys
 
