@@ -238,6 +238,8 @@ When a budget's limit is reached, credit-consuming actions are blocked for all w
 
 Actions represent your fixed monthly capacity. Unused Actions expire at the end of each billing cycle.
 
+If you are on an **annual plan**, your full year's Actions allowance is granted at the start of each billing year—not in monthly installments—and unused Actions expire at the end of that billing year. They do not roll over into the next year.
+
 **Why no rollover?** Each plan tier is designed with sufficient capacity for typical use cases at that level. If you consistently hit limits, upgrade to the next tier.
 
 ### Data Credits: Yes, with limits
@@ -376,7 +378,7 @@ Actions represent fixed platform capacity tied to your action tier. To get more 
 
 ### Do unused Data Credits or Actions roll over?
 
-Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
+Actions reset each billing cycle and don't roll over, since they reflect the platform capacity your plan includes. On an annual plan, the billing cycle is the full year: your whole year's Actions are granted at the start of the billing year and reset at renewal. Each plan includes enough Actions to cover 90% of customer usage, and if you need more, you can increase your Action tier.
 
 Data Credits work more like a currency and do roll over. The billing interval determines the standard rule, including for legacy Starter, Explorer, and Pro plans. Monthly paid plans have a total balance cap of 2× the monthly allotment, including the new grant. Annual plans can carry unused credits up to 15% of the annual allotment at an eligible renewal. A plan name such as Launch, Growth, or Pro does not establish the billing interval. See [Rollover Data Credits](#rollover-data-credits) for examples and eligibility.
 
