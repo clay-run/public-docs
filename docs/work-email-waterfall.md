@@ -257,6 +257,15 @@ To permanently show provider and validation columns going forward, click the wat
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
 
+### What happens if the validation provider (such as ZeroBounce) is down or returns an error?
+
+If the Work Email waterfall's validation provider — for example, ZeroBounce — is unavailable or returns an error, the validation cell for that provider step ends in an error state instead of a "valid" or "invalid" result. What the Work Email waterfall does next depends on the `Require validation success?` setting:
+
+-   **`Require validation success?` on:** A validation error counts as a failed validation. The email from that provider step is not written to the Work Email output column, and the waterfall moves on to the next provider. If validation errors for every provider step, the Work Email output column stays empty.
+-   **`Require validation success?` off:** A validation error does not block the result. The email from that provider step is written to the Work Email output column without being validated, and the waterfall stops — later providers don't run for that row.
+
+To see which rows were affected by a validation error, reveal the hidden validation columns: click the **columns button** in the toolbar (shown as "N/N columns") and use **Show/Hide columns by color → All columns**. Validation cells that errored show an error state rather than a validation result.
+
 ### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
 
 Yes — for rows that already have validation data stored. Enabling **Require validation success** and saving immediately updates the waterfall's output column by re-evaluating the merge formula against the validation results already stored in your table. No re-run is needed and no credits are charged for this update.
