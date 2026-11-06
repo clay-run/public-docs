@@ -383,6 +383,21 @@ To apply the change:
 
 After saving, run a test row to confirm the credit cost has updated. Click the completed cell to open the **cell details** panel, which shows the credits charged for that run.
 
+### How do I see which model, reasoning effort, and API key a Claygent or Use AI run used?
+
+After a Claygent or Use AI cell finishes successfully, click the cell to open the **cell details** panel. At the top of the panel, Clay shows the execution details recorded for that run:
+
+-   **Model:** the model that actually processed the run. When the model is set to **Auto**, the model Clay picked is followed by **(chosen automatically)**.
+-   **Reasoning effort:** the reasoning effort level the run used (for example, **Low** or **Medium**). This line appears only when a reasoning effort was recorded for the run.
+-   **Connection:** which API key the run used:
+    -   **Clay's key** — the run used Clay's managed account.
+    -   The name of your connection — the run used your own API key, and you have access to that connection.
+    -   **Private API key** — the run used a private API key that you don't have access to, or that connection has since been deleted.
+
+Clay saves these execution details when the run completes, so they show what that specific run used — even if you change the column's model or account afterward. To confirm that a model or account change took effect, re-run a test row and check the **Model** and **Connection** lines in the cell details panel. Results from runs completed before Clay started recording execution details don't show these lines.
+
+The same **Model**, **Reasoning effort**, and **Connection** details also appear in Workflow run results (in the cell details sidebar of a Workflow's runs and in each step's output in a run) and in each test case's run history in Claygent builder.
+
 ### Can I still edit prompts directly in tables?
 
 Yes, but centralizing in Claygent builder gives you version control, free testing, and the ability to update once and deploy everywhere. It's the better choice for agents you'll reuse or iterate on.
