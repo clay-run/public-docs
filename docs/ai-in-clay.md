@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-10-07T03:07:33.586Z
+last_synced: 2026-10-19T18:11:22.829Z
 ---
 
 # AI in Clay
@@ -10,13 +10,13 @@ A comprehensive guide to how Clay uses AI across its features.
 
 A comprehensive guide to how Clay uses AI across its features, with a focus on data privacy, security, and responsible AI practices.
 
-**Your data is never used for AI model training.** Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
+Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
 
 ## Core AI principles
 
 Clay is committed to transparent and responsible AI use. Here's what you need to know:
 
--   **No training on your data**: Customer data is never used to train Clay's AI models or those of our AI providers.
+-   **Model training**: Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces). Your customer data is never used for, or shared with, any other customer.
 -   **Enterprise-grade security**: Industry-standard encryption for data at rest and in transit, with SOC 2 Type II and ISO 27001 compliance.
 -   **You control your data**: As a data processor, Clay only uses your data to provide services to you.
 -   **Transparent partnerships**: Full list of AI subprocessors available at [trust.clay.com](http://trust.clay.com).
@@ -38,7 +38,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
 ### Message drafting
@@ -56,7 +55,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
 ### Use AI action
@@ -82,7 +80,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Data from your table rows is only sent to AI when you explicitly run the action.
 -   You control which columns are included as context.
--   Contractual agreements prohibit training on customer data.
 
 ### Claygents
 
@@ -100,7 +97,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Claygents process data row-by-row as they run.
 -   Research results are stored in your table, under your control.
--   No customer data used for training agent capabilities.
 
 ### Sculptor
 
@@ -118,7 +114,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only accesses the specific table you're working in.
 -   Uses table metadata and visible data to provide context-aware assistance.
--   Chat history and table context are not used for training.
 -   Data is processed transiently to provide real-time assistance.
 
 ### Formula generator
@@ -135,7 +130,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your formula description and relevant table schema are sent to AI.
 -   Actual row data is not transmitted.
--   Generated formulas are not used to train models.
 
 ### API generator
 
@@ -153,7 +147,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your API description is sent to AI models.
 -   API keys and credentials are never sent to AI providers.
--   Generated configurations are not used for training.
 
 ### Debug with AI
 
@@ -169,7 +162,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only error logs and relevant system information are sent to AI.
 -   Personal data in your tables is not included in debug requests.
--   Debug data is not used to train models.
 
 ### Find companies with natural language
 
@@ -186,7 +178,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   Only your ICP description is processed by AI.
 -   Search results come from Clay's company database, not your data.
 -   Your search criteria are not shared with other customers.
--   No training occurs on your ICP descriptions.
 
 ## Data Security and Compliance
 
@@ -253,8 +244,8 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 
 ### What Clay guarantees:
 
--   Your data will never be used to train AI models.
--   Your data will not be shared with other Clay customers.
+-   Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces).
+-   Your customer data is never used for, or shared with, any other customer.
 -   All AI subprocessors have contractual prohibitions against unauthorized use.
 -   Industry-standard security and encryption protect your data.
 
