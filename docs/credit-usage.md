@@ -117,6 +117,18 @@ The workspace and table dashboards break down spend by workbook, table, column, 
 
 This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
 
+### Can I access Clay's processing logs to build custom reporting?
+
+Clay doesn't give customers access to its backend processing logs. There is no API or export that returns a per-row log of every input, output, timestamp, and execution detail for each enrichment Clay ran. To build your own reporting on Clay activity — for example, "this month we enriched X rows and covered Y% of our accounts" — use the data Clay does make available:
+
+-   **Current cell values in a table:** export the table with **Download CSV** (see [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv)). The export contains each cell's current value only, not a history of earlier runs.
+-   **Table credit spend by time, column, and run:** open the [table credit usage dashboard](#understanding-table-specific-credit-usage) (`History` → `Usage history` in the lower right corner of the table) and switch between the **Time**, **Column**, and **Run** views. Each view has a **Download CSV** button.
+-   **Clay Workflows run history:** every workflow run records its status, start time, duration, and credits used, and the run details show each node's inputs and outputs. In the workflow's runs view, filter runs by date and click **Export** to download them. With the [Clay CLI](using-clay-as-an-api.md), `clay workflows runs export start <workflowId>` exports one row per run with its status, credits, inputs, and each node's output; add `--created-after` and `--created-before` to limit the export to a date range.
+
+**Tracking how many rows a table enriched over time:** because a table export only shows current values, Clay can't rebuild counts for past periods unless you captured them when the rows were processed. To report on enrichment volume by month, record each processed row as it finishes — for example, by sending it to an append-only log table with Send Table Data (see [Tracking enrichment data changes over time](send-table-data.md#guide-tracking-enrichment-data-changes-over-time)) and exporting or reporting from that table.
+
+**Credits used isn't a count of rows enriched:** one row can use credits in several enrichment columns, and re-running a row uses credits again. Use the credit usage dashboards to track spend, and count rows with a result to track enrichment volume.
+
 ## Credit spike alerts
 
 **Note:** Credit spike alerts are available for Enterprise plan workspaces.
