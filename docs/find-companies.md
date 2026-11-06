@@ -56,7 +56,7 @@ For advanced query syntax, use [Find with query](finding-companies-and-people-in
         -   **Domain is live** — Whether the company's domain is currently active.
         -   **Domain redirects to another domain** — Whether the domain redirects elsewhere.
     -   **Exclude companies:** Exclude up to 3 different sets of companies from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 companies total (100,000 per source). Exclusions require a company domain or professional network company URL. Available on Launch plan and above.
-    -   **Limit results** — Defaults to 10,000. Maximum 10,000.
+    -   **Result limits** (labeled **Limit results** in some search setups) — Enter the maximum number of companies to import in the **Total** field. The helper text under the field shows your workspace's caps, for example "You can import up to 50K results to tables and up to 1M to Audiences." The maximum you can import into a table from one Find Companies search depends on your plan: Free 100, Trial 1,000, Starter 5,000, Launch 15,000, Explorer 25,000, and Pro, Growth, and Enterprise 50,000. When Audiences is available in your workspace, you can send up to 1,000,000 results from one search to Audiences.
 2.  Click `Preview companies` and `Import to new table` when the results look good.
 3.  Select import options:
     -   Add additional enrichments like `Company Headcount Growth` or `Most Recent News`. Any enrichments you select here run on import and **consume Data Credits** (the wizard shows the estimated cost per row). To avoid credit spend at this step, skip optional enrichments and add them as table columns after the table is created instead.
@@ -158,11 +158,11 @@ You can't use a Companies audience segment to limit which companies a Find Compa
 
 If the count still doesn't match after the import finishes, the **preview count** (e.g., "Showing 50 of ~39,869 results") is an approximate figure — the `~` tilde prefix in the UI indicates the total is estimated using a fast approximate count, not an exact query. The actual import can return a slightly different total, and this is normal.
 
-Also check your **Limit results** setting: the import won't exceed whatever limit you've configured (default 10,000).
+Also check your **Result limits** setting: the import won't exceed the number you entered in **Total**, or your plan's table limit.
 
-### My search preview shows more than 10,000 results — how do I import all of them?
+### My search preview shows more results than I can import — how do I import all of them?
 
-Find Companies caps imports at 10,000 results per search. When your filters match more than 10,000 companies, the import stops at that limit — there is no way to raise it within a single search.
+Find Companies caps each import into a table at your plan's limit — up to 50,000 results per search on Pro, Growth, and Enterprise plans (see **Result limits** above for every plan's limit). When your filters match more companies than that, the import stops at the limit, and you can't raise it within a single search.
 
 To capture the full universe, split your search into smaller segments so each import stays under the cap. Use any filter dimension to divide the space:
 
@@ -171,6 +171,8 @@ To capture the full universe, split your search into smaller segments so each im
 -   **By company size** — Split across size bands (for example, 1–50 employees, 51–200 employees, and so on).
 
 Each segmented search imports into its own table.
+
+If Audiences is available in your workspace, you can also send the results of one Find Companies search to Audiences, which accepts up to 1,000,000 results.
 
 ### What does the Estimated employee count filter measure?
 
