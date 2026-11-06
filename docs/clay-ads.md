@@ -162,7 +162,7 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
+Each audience segment supports only one ad sync, and a finished ad sync still counts — including a one-time sync that shows **Exported**. If you try to create a new ad sync from a segment that already has one, Clay opens the existing ad sync instead of creating a second one. To replace a finished one-time ad sync with one that keeps updating, delete the existing ad sync first, then create the new ad sync from the same segment. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
@@ -183,6 +183,8 @@ No. Field mapping is configured when you create the Ad Sync and cannot be change
 Yes. Workspace admins can permanently delete an Ad Sync from the **Ads** homepage by clicking the **⋮** (three-dot) menu next to a sync and selecting **Delete**. Deleting permanently stops all enrichment and syncing and cannot be undone — there is no way to restore a deleted Ad Sync.
 
 Deleting an ad sync does **not** delete the underlying audience segment — your segment and its contacts remain intact. You can create a new Ad Sync from the same segment at any time.
+
+Deleting an Ad Sync also does not delete the audiences Clay already created in your ad platforms — those audiences stay in your ad accounts but stop updating. When you create a new Ad Sync from the same segment, Clay creates a new audience in each destination on the new sync's first run. After the new Ad Sync has run, update your campaigns to target the new audience in each ad platform.
 
 **Note:** Deleting an Audiences segment that is the source for an Ad Sync will automatically delete the associated Ad Sync as well.
 
