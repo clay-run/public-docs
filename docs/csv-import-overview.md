@@ -1,6 +1,6 @@
 ---
 title: How to import your CSV into Clay
-description: Import your CSV into Clay, and download (export) your Clay table as a CSV file.
+description: Import your CSV into Clay, and download (export) your Clay table as a CSV file, including what the export does and doesn't include (table metadata such as column formulas and waterfall logic).
 last_synced: 2026-04-26T01:39:49.725Z
 ---
 
@@ -47,6 +47,18 @@ A modal appears while your export is processing. Once it is ready, the CSV file 
 The exported CSV includes only the columns and rows visible in your current view. Columns hidden in the view and rows filtered out by active view filters are not included. To export your full table, make sure no view filters are active and all columns are visible before starting the download.
 
 Downloading a table as CSV does not consume any Actions or Data Credits.
+
+### Can I export a table's metadata, such as column formulas or waterfall logic?
+
+No. Clay does not have an export for a table's metadata or column configuration. The **Download CSV** export contains only the table's data — the cell values in each row. The CSV does not include any column settings, such as formula definitions, enrichment settings, or the providers and order of steps in a waterfall. Clay has no other option in the app that exports a table's column definitions.
+
+If you need a basic list of a table's columns, the Clay table API returns each column's metadata in the `fields` object of a query response:
+
+-   `id` — the column's field ID
+-   `name` — the column's name
+-   `type` — the column's type
+
+To read a table through the API, first turn on API access for that table: open the table's settings, expand **Integrations**, and turn on **Enable for API**. For setup details and limits, see [Does Clay have an API?](using-clay-as-an-api.md). The API's field metadata does not include formula text, enrichment settings, or waterfall logic either. To keep a record of a table's column formulas and waterfall logic, write them down by hand from each column's settings.
 
 ## Next steps after importing
 
