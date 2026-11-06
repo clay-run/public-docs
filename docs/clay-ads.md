@@ -19,7 +19,22 @@ Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing Ads
 -   Advertise to executives who recently changed jobs or got promoted
 -   Target leads that aren't in your CRM to expand total addressable market
 
-**Note:** Table ads (Ad Sync tables created directly from a Clay table) are being deprecated. All existing table-based ad syncs now show a deprecation notice, and creating new recurring table ad syncs is no longer supported. For new ad targeting workflows, use Audience Ads instead — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
+## Legacy table ad syncs
+
+Table ads (Ad Sync tables created directly from a Clay table) are deprecated. In the `New Ad Sync` menu on the Ads page, the **Table** option is labeled **Deprecated**, all existing table-based ad syncs show a deprecation notice, and creating new recurring table ad syncs is no longer supported. Table ads are scheduled to be fully retired at the end of October 2026; after that, table-based ad syncs stop exporting to ad platforms. Ad syncing now runs from Clay Audiences — see [Syncing audiences to ad platforms](https://university.clay.com/docs/audiences#syncing-audiences-to-ad-platforms).
+
+### How do I sync a list I already built in a Clay table to an ad platform?
+
+You don't need to rebuild a contact list in Audiences or pay to enrich it again. If you already built and enriched a list in a Clay table — a regular table or a legacy table ad sync — you can send those rows into Audiences and run the ad sync from a segment. Ad syncs from Audiences are available on **Growth** and **Enterprise** plans.
+
+1.  In your Clay table, add a column and search for **Create or update Audiences record** (also referred to as `Upsert Audiences Record`). It's listed under **Send Data**, and it's also available in legacy table ad sync tables. The action only appears in workspaces with Audiences enabled.
+2.  Set **Record Type** to **People**. Under **Lookup Fields**, map the column Clay should use to match each contact — for example, **Email** or the contact's professional network profile URL.
+3.  Under **Fields to update**, map the table columns you want to carry over, such as work email, personal email, first name, and last name. If you already found hashed personal emails in the table, map them to **Hashed email 1**, **Hashed email 2**, and **Hashed email 3**.
+4.  Run the column on all rows. The action writes the values already in your table into Audiences — it doesn't run any enrichment, so you don't pay again for email finding.
+5.  In Audiences, open **All People**, filter to these contacts (for example, with the **Person source** filter set to your table's name — see [Why doesn't my Clay table appear in the Person source filter?](https://university.clay.com/docs/audiences#why-doesnt-my-clay-table-appear-in-the-person-source-filter)), and click **Create segment**.
+6.  With the segment open, click **Send** → **Sync to ad platforms**, choose your ad platform, and finish the setup.
+
+**Enhanced Matching and existing hashed emails:** When Enhanced Matching runs on an Audiences ad sync, records that already have a value in **Hashed email 1**, **Hashed email 2**, or **Hashed email 3** are skipped by default, so you aren't charged Enhanced Matching credits for contacts whose hashed emails you already found in your table.
 
 ## **Creating and syncing ad audiences**
 
