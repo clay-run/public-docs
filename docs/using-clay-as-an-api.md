@@ -141,6 +141,22 @@ When you exceed the period limit, Clay returns `400` with a message naming the l
 
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
 
+#### Can I duplicate a Clay table or re-run selected columns through the API?
+
+No. Clay's Public HTTP API and the Clay CLI don't have an endpoint or command that duplicates (copies) a table, and they don't have an endpoint that re-runs one column, or a set of selected columns, on rows that already exist in a table. You can only duplicate a table or re-run columns inside the Clay app.
+
+If you planned to keep one template table and copy it through the API for every new search or job, build the enrichment and scoring logic once in a workflow or function and call it with different inputs each time:
+
+-   **Webhook-triggered workflows:** Clay Workflows is currently in beta. If you don't see Workflows in your workspace, contact Clay support. Add a webhook trigger to the workflow. Clay uses any JSON object your system POSTs to the workflow's webhook URL as that run's inputs. Later steps, including AI prompt steps, can reference those input fields. This way one workflow can handle every search. For example, send the list of required skills and criteria for each role in the payload. A webhook-triggered run returns `202 Accepted` right away and doesn't return results to the caller. To get the enriched data back, add an outbound step, such as an HTTP API call, at the end of the workflow. See [Webhooks as Workflow triggers](https://university.clay.com/docs/webhook-integration-guide#webhooks-as-workflow-triggers).
+-   **Routines API:** Call `POST /routines/{routine_id}/run` with up to 100 input items, then poll `GET /routines/run/{routine_run_id}/results`. See **Public HTTP API — Routines** above.
+
+#### How can I estimate or check the credits a Clay workflow run uses?
+
+You can check a Clay workflow's credit cost before a run with the CLI, and read the credits each run actually used through the Public HTTP API:
+
+-   **Before a run:** `clay routines get <routineId>` returns `estimatedCreditCost` (`perRun`, `actionExecution`, and `containsVariablePricing`). This is an estimate per input item, not a guaranteed total. Workflow estimates count each node once and can leave out branching and fan-out multipliers. A missing or `null` price means the cost is unknown, not zero. This command needs the `cli:all` scope, so sign in with `clay login` instead of using an API key.
+-   **After a run:** `POST /workflows/runs/query` (beta) returns `data_credits_used` and `action_credits_used` for each matching run. To see the query grammar, call `GET /workflows/runs/query/reference`.
+
 ### 4\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
 
 If you're using an AI tool like Claude or ChatGPT and want it to run Clay enrichments on your behalf, Clay supports MCP (Model Context Protocol). MCP lets AI assistants look up contacts, enrich data, and invoke custom Clay Functions — without anyone opening Clay directly.
