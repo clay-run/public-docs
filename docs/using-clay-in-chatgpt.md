@@ -118,11 +118,11 @@ The integration is designed for targeted, individual account research — not bu
 
 **How many credits do I get?**
 
-When you first connect Clay to ChatGPT, you receive 500 bonus credits as a one-time welcome reward. After those are used, credits draw from your standard Clay workspace balance. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
+When you first connect Clay to ChatGPT, you receive 500 bonus credits as a one-time welcome reward (once per workspace). These credits are added directly to your standard Clay workspace balance, and all ChatGPT usage draws from that balance. If you run out of credits, you can continue searching for people without enrichments, or upgrade to a paid plan for full functionality.
 
 **Can the app be used for free?**
 
-When you first connect Clay to ChatGPT, you receive 500 bonus credits to try the integration. After those are used, credits draw from your standard Clay workspace balance. When you run out of credits, you can:
+When you first connect Clay to ChatGPT, you receive 500 bonus credits to try the integration. These credits are added directly to your standard Clay workspace balance. When you run out of credits, you can:
 
 -   Continue running people searches in ChatGPT for free, but without enrichments like email.
 -   Upgrade to a paid plan.
@@ -133,7 +133,7 @@ No, you only need to be logged in to ChatGPT.
 
 **Will this use credits from my account?**
 
-After the initial 500-credit welcome bonus (granted once on your first connection), yes — all usage draws directly from your standard Clay workspace balance.
+Yes — all ChatGPT usage draws directly from your standard Clay workspace balance. The one-time 500-credit welcome bonus (granted once per workspace on the first connection) is added to that same balance.
 
 **How does pricing work?**
 
