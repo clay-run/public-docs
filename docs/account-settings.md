@@ -1,6 +1,6 @@
 ---
 title: Account settings
-description: Update your Clay profile picture, name, email address, password, and login method, manage your legacy API key, and delete your account.
+description: Update your Clay profile picture, name, email address, password, and login method, fix the "Please use a work email" sign-up error, manage your legacy API key, and delete your account.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -132,6 +132,29 @@ To get back to your correct workspace:
 Individual Clay accounts support two login methods only: **Sign in with Google** (Google OAuth) or **email and password**. Microsoft Entra ID (Azure AD), Okta, and other corporate identity providers are not available as individual login options.
 
 If your company wants all Clay users to authenticate through a corporate IdP, a workspace admin must contact Clay support to set up workspace-wide SSO. See [Single Sign-On (SSO)](./single-sign-on.md) for details on eligibility (Enterprise plan or SSO add-on) and the setup process.
+
+## Can I sign up for Clay with a personal email address?
+
+Yes. Clay does not require a work email to create an account. You can sign up for Clay with your work email or with a personal Gmail address, using either **Continue with Google** or email and password.
+
+## "Please use a work email" error when signing up
+
+If the Clay sign-up page shows **"Please use a work email"**, Clay rejected the specific email address you entered — it does not mean Clay only accepts work emails. Clay shows this error at sign-up in the following cases:
+
+-   **The email domain is restricted for new sign-ups.** To prevent spam and abuse, Clay blocks new sign-ups from some email domains. This restriction also applies when you sign up with **Continue with Google**.
+-   **The address is from a disposable or temporary email service** (email-and-password sign-up only).
+-   **The address contains a plus sign (`+`)**, such as `alexis+clay@domain.com` (email-and-password sign-up only).
+-   **The Gmail address already belongs to a Clay account** (email-and-password sign-up only). Gmail ignores dots in the part before the `@`, and so does this check — for example, `john.doe@gmail.com` counts as the same address as `johndoe@gmail.com`.
+
+To fix the "Please use a work email" sign-up error:
+
+1.  **If your address contains a `+`**, sign up with the plain version of the address instead (for example, `alexis@domain.com` instead of `alexis+clay@domain.com`), or use **Continue with Google** if that address is a Google account.
+2.  **If you already have a Clay account with that Gmail address**, don't sign up again — log in to your existing account. If the account was created with Google, click **Continue with Google** on the Clay login page.
+3.  **Otherwise, sign up with a different email address** — your work email, or a personal Gmail address with **Continue with Google**.
+
+A workspace invitation does not get around a restricted email domain. If a workspace admin tries to invite an address on a restricted domain, the invite fails with **"Please use a valid work email for the following emails:"** followed by the address — ask the admin to invite a different email address for you.
+
+If you still see "Please use a work email" after trying a different address, contact Clay support and include the email address you tried and the exact error message.
 
 ## "Your session has expired" error
 
