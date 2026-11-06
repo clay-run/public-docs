@@ -109,6 +109,8 @@ All views allow you to download the data as a CSV.
 
 **Note:** Workflow credit data is available from May 7, 2026. You'll see a notice about incomplete data if your selected time range begins before this date.
 
+**Workflows triggered by web intent signals:** The credits and actions used to de-anonymize website visitors are charged to the web intent signal, before the workflow run starts — not to the workflow's own steps. A web intent workflow whose steps are only filters (no credits) and message alerts such as Microsoft Teams or Slack (1 action, 0 credits) can show 0 credits on its **Cost** card while the signal is still using credits. To see de-anonymization spend, go to **Settings → Usage → Signals tab**. See [Web intent](website-tracking.md#why-does-my-web-intent-workflow-show-0-credits-used) for details.
+
 **External API key costs:** When you use your own API key (such as an OpenAI or Anthropic key) in a workflow node, the dollar amount charged by that provider is billed directly by the provider and is not tracked in Clay's credit dashboard. Clay records the number of **Actions** consumed by your external key — not the dollar amount. To see your actual charges, check your provider's billing dashboard. To see which external API keys consumed Actions in Clay, go to **Settings → Usage → Integrations tab** and expand the relevant integration.
 
 ### Checking credit cost for a specific action on a row
