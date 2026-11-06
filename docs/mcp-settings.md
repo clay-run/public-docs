@@ -44,6 +44,8 @@ One prompt can turn into more than one charged operation, though. The AI tool de
 
 Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude, or Glean in a given month. Credit spend automatically resets on the 1st of each month at midnight UTC.
 
+The same per-user credit limit also covers credits a user spends through the Clay CLI and Clay's public API. Each user has one shared monthly limit across AI tools, the Clay CLI, and the API — not a separate limit per tool or per API key.
+
 There are two levels of control:
 
 -   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
@@ -186,6 +188,25 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
 
 The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+
+### Why am I hitting a credit limit in the Clay CLI when my workspace still has credits?
+
+If running Functions or other commands from the Clay CLI stops with a credit limit error while your workspace still has credits, you've reached your monthly user credit limit. This per-user limit is the same MCP credit limit described in [Setting credit limits](#setting-credit-limits), and it covers spend through the Clay CLI and the API as well as AI tools like ChatGPT and Claude. When it's reached, the request fails with `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` and one of these messages:
+
+-   For workspace admins: "You've hit your monthly MCP credit limit. To raise it, open MCP in Clay and edit your limit or the default credit limit."
+-   For everyone else: "You've hit your monthly user credit limit. Please contact your workspace admin to increase it."
+
+The Clay CLI credit limit isn't controlled by workbook credit limits (`Settings` → `Usage` → `Workbook limits`), credit budgets (`Settings` → `Budgets`), or the `API and CLI` page. Changing a workflow's budget with `clay workflows update <workflow-id> --budget-id <budget-id>` doesn't change your user credit limit either.
+
+To raise a user's Clay CLI credit limit, a workspace admin:
+
+1.  From the Clay homepage, clicks `MCP` under **Orchestration** in the left sidebar.
+2.  Finds the user in the `MCP users` table (search by name or email — admins can find themselves here too).
+3.  Clicks the pencil icon next to their `Credit limit` and enters a higher amount. To change the limit applied to new users, the admin uses the **Default credit limit** card at the top of the page instead.
+
+The higher limit applies on the user's next Clay CLI request. If you don't raise it, the limit resets on the 1st of each month at midnight UTC.
+
+**Note:** The `MCP` page is currently in beta and shows as `MCP (Beta)` in the sidebar. It's only visible to workspace admins, and only in workspaces where it's been turned on. If you're a workspace admin and you don't see `MCP` in the left sidebar, contact Clay support.
 
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
