@@ -54,7 +54,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
     -   Source record limit: up to **100 records total** per source across all runs (compared to 15,000+ on paid plans). Once a source reaches this limit, it stops adding new records — create a new source to continue.
     -   Scheduled source runs are not available
     -   Phone number enrichments are not available (see [Trials](#trials) for details)
-    -   CRM integrations (e.g., HubSpot, Salesforce, Pipedrive) require Growth plan or higher
+    -   CRM integrations (e.g., HubSpot, Salesforce, Pipedrive, Attio) require Growth plan or higher
     -   Email sequencing tools (e.g., Outreach, Salesloft) require Launch plan or higher
     -   HTTP API and webhooks require Growth plan or higher
     -   Custom API keys for certain third-party providers require a paid plan; the Free plan uses Clay-managed accounts for those providers
@@ -142,6 +142,20 @@ To update your billing address, payment method, or billing email:
     -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
     -   Select `Edit payment method...` to update your credit card or payment method. If you are outside the United States and need to update your billing address, use this option — it opens a Stripe-hosted page where you can enter your updated details.
 4.  Enter the updated information and confirm your changes.
+
+### Change the email shown at checkout and on invoices
+
+When you upgrade your Clay plan, the Stripe checkout page pre-fills the `Contact` email with your workspace's billing email — not the email of the person who is signed in — and you can't edit that email on the checkout page. Clay invoices and receipts go to the same billing email. If checkout shows the wrong email (for example, the email of a founder or teammate who has left your company), a workspace admin can change the billing email before paying.
+
+Changing the billing email requires the workspace admin role and is available on all plans.
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  In the sidebar, navigate to `Plan & billing`.
+3.  Click `Edit`, then select `Edit billing info...`.
+4.  In the `Update billing information` modal, enter the new address in the `Billing email` field and click `Save Changes`.
+5.  Go back to `Switch plan` and continue to payment. The checkout page now shows the new billing email.
+
+The `Billing email` field on the `Workspace` settings page does not change the email used on the Stripe checkout page or on invoices. To change where invoices are sent, use `Edit billing info...` in `Plan & billing` as described above.
 
 ### Trials
 
