@@ -145,7 +145,7 @@ To update your billing address, payment method, or billing email:
 
 ### Trials
 
-Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities.
+Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities. Under Clay's current pricing, every new trial workspace starts with 1,000 data credits — if you see an older reference to 2,000 trial credits, it reflects a previous trial allocation.
 
 Phone number enrichments aren't available on free or trial plans — this restriction applies even if you have unused data credits. To access this feature, upgrade to a paid plan. This also affects some waterfall templates: if a waterfall includes a provider that can return phone numbers (such as PDL or Bytemine), free and trial users will see "Your subscription does not allow this integration to be added" even if the goal of the waterfall is something other than a phone number (for example, a profile URL). To work around this, remove the phone-number providers from the waterfall sequence. See [Waterfalls](https://university.clay.com/docs/building-a-data-waterfall) for details.
 
@@ -157,7 +157,7 @@ Trial tables can hold up to **1,000 rows each**. The table view also displays on
 
 When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
 
-**Trial extension:** Clay offers a one-time self-serve extension for workspaces on a trial or free plan. While logged in, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add 14 more days to your trial. If your workspace doesn't immediately reflect the extension, refresh your browser. Each workspace can use this self-serve extension once — if you've already used it and need additional time, contact [Clay support](https://app.clay.com).
+**Trial extension:** Clay offers a one-time self-serve extension for workspaces on a trial or free plan. While logged in, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add 14 more days and 500 additional data credits to your trial. If your workspace doesn't immediately reflect the extension, refresh your browser. Each workspace can use this self-serve extension once — if you've already used it and need additional time, contact [Clay support](https://app.clay.com).
 
 ## FAQs
 
