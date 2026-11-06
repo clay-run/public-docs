@@ -204,7 +204,12 @@ You can run the Clay CLI on a schedule — for example, a cron job on an interna
 -   You run `clay logout` on that machine.
 -   The automation user is removed from the workspace.
 -   The automation user's role is changed to Viewer.
+-   The automation user resets their password.
+-   The automation user changes how they sign in to Clay (for example, changes their login email or switches to a different Google account).
+-   The automation user clicks **Log out of all sessions** in Clay under `Settings → Account`.
 
 Removal and role changes take effect at the CLI's next token refresh, when the CLI returns an authentication error. To recover, make sure the user is an Admin or Editor and run `clay login --device` again.
+
+**A password reset, sign-in change, or "Log out of all sessions" signs the Clay CLI out.** These actions revoke every Clay CLI session and every AI tool connected to Clay through MCP for that user, not just browser sessions. The CLI's next command fails with "Your Clay session has expired." and asks you to run `clay login` to sign in again. Clay API keys are not affected. If a scheduled job runs as a dedicated automation user, avoid resetting that user's password or using **Log out of all sessions** on it unless you plan to run `clay login --device` again on the server.
 
 **Clay API keys can't replace `clay login` for most CLI commands.** The CLI can read an API key from the `CLAY_API_KEY` environment variable, but most CLI commands — including `clay workflows runs` and `clay functions` — require the `cli:all` scope. API keys created on the **API and CLI** page or with `clay api-keys create` don't include the `cli:all` scope, so those commands return `auth_forbidden` (exit code 3) when called with an API key. Signing in with `clay login` (or `clay login --device`) gives the CLI the `cli:all` scope. Use Clay API keys for direct calls to the Public HTTP API instead.
