@@ -274,3 +274,15 @@ Sales tax is calculated based on the taxability of the products you purchased, y
 ### What if my business is tax-exempt?
 
 Certain organizations — such as non-profits and educational institutions — may qualify for sales tax exemptions. If your organization has an exemption certificate, contact [support@clay.com](mailto:support@clay.com) and provide a copy of the certificate.
+
+### Do you offer a nonprofit discount?
+
+Yes. Clay offers a **25% nonprofit discount** for registered 501(c)(3) nonprofit organizations. The nonprofit discount is separate from a sales tax exemption (see [What if my business is tax-exempt?](#what-if-my-business-is-tax-exempt)) — qualifying for one doesn't automatically apply the other.
+
+There is no in-app form or checkout field for the nonprofit discount. Clay's support team verifies eligibility and applies the discount manually. To apply for the nonprofit discount:
+
+1.  Contact [Clay support](https://app.clay.com) and say you'd like to apply for the nonprofit discount.
+2.  Attach your organization's IRS determination letter (the IRS letter confirming your 501(c)(3) status). Include any other supporting documents you have, such as a trade name or DBA certificate if your organization operates under a different name.
+3.  Wait for a Clay support teammate to review your documents. Sending the documents is the whole application — you don't need to start a separate verification process.
+
+Once your nonprofit status is verified, a Clay support teammate replies to confirm you've been approved, and the 25% nonprofit discount is applied to your workspace's plan. If you've already sent your IRS determination letter and haven't received a confirmation from a teammate, reply in the same support conversation to ask for a human review instead of resending your documents.
