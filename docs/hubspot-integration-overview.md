@@ -177,9 +177,6 @@ These permissions are requested by default but can be disabled:
 -   `crm.objects.contacts.write` — Create, delete, or edit contacts.
 -   `crm.objects.leads.write` — Create, delete, or edit leads.
 -   `crm.lists.write` — Create and edit lists, including adding records to a list.
--   [`crm.schemas.custom.read`](http://crm.schemas.custom.read) — View custom object definitions.
--   [`crm.objects.custom.read`](http://crm.objects.custom.read) — View custom objects.
--   `crm.objects.custom.write` — Create, delete, or edit custom objects.
 -   [`crm.objects.deals.read`](http://crm.objects.deals.read) — View deal properties and details.
 -   \[`crm.objects.deals](<http://crm.objects.deals>).write` — Create, delete, or edit deals.
 -   [`crm.schemas.deals.read`](http://crm.schemas.deals.read) — View deal property settings.
@@ -189,8 +186,13 @@ These permissions are requested by default but can be disabled:
 
 These permissions are available but not requested by default:
 
+-   [`crm.schemas.custom.read`](http://crm.schemas.custom.read) — View custom object definitions.
+-   [`crm.objects.custom.read`](http://crm.objects.custom.read) — View custom objects.
+-   `crm.objects.custom.write` — Create, delete, or edit custom objects.
 -   [`automation.sequences.read`](http://automation.sequences.read) — View sequence details.
 -   `automation.sequences.enrollments.write` — Enroll contacts in a sequence.
+
+Only check the custom object scopes if your HubSpot account is on HubSpot Enterprise, which is the HubSpot tier that includes custom objects. If you check them on a HubSpot account that doesn't include custom objects, HubSpot blocks the connection. See [Why do I get "You don't have the right permissions to install Clay"?](#why-do-i-get-you-dont-have-the-right-permissions-to-install-clay-when-connecting-hubspot)
 
 ### Run settings
 
@@ -548,6 +550,22 @@ The scopes in the error message are the ones Clay requested during that connecti
 5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal. If you don't use that action, make sure both sequence scopes are unchecked. The reconnect modal keeps the scopes your previous HubSpot connection had, so review the **Optional scopes** checkboxes before you continue.
 
 **Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
+
+### Why do I get "You don't have the right permissions to install Clay" when connecting HubSpot?
+
+HubSpot shows "You don't have the right permissions to install Clay" on its "Connecting Clay to HubSpot" page after you click `Sign in with HubSpot`. HubSpot shows this error, not Clay. You can get it even if Clay is already an installed app in your HubSpot account. It usually has one of two causes:
+
+-   **You checked optional scopes for HubSpot features your account doesn't have.** HubSpot won't let you give Clay access to features your HubSpot account doesn't include. The most common example is the custom object scopes (`crm.schemas.custom.read`, `crm.objects.custom.read`, and `crm.objects.custom.write`), which are only available on HubSpot Enterprise. The sequence scopes (`automation.sequences.read` and `automation.sequences.enrollments.write`) also need the HubSpot Sequences feature.
+-   **Your HubSpot user doesn't have permission to install or authorize apps.** HubSpot only lets users with the right app-install permissions connect an app. For example, a basic HubSpot user (not an admin) may be blocked. When you aren't a HubSpot super admin, HubSpot also checks that your user has the permission behind every scope Clay requests.
+
+**To fix:**
+
+1.  In Clay, open the HubSpot connection modal again: go to **Settings → Connections**, then click **Create** and select **HubSpot**, or click **Reconnect** on your existing HubSpot connection.
+2.  In the list of scopes, uncheck every optional scope for a HubSpot feature your account doesn't have. If you're not on HubSpot Enterprise, uncheck `crm.schemas.custom.read`, `crm.objects.custom.read`, and `crm.objects.custom.write`. If you don't use Clay to enroll contacts in HubSpot Sequences, uncheck `automation.sequences.read` and `automation.sequences.enrollments.write`. The custom object and sequence scopes are unchecked by default, so you only need to uncheck them if they were selected.
+3.  Click `Sign in with HubSpot` and complete the authorization.
+4.  If the same error still appears, ask a HubSpot super admin to connect HubSpot to Clay, or to give your HubSpot user the permissions needed to install apps. Your HubSpot admin can manage these permissions in HubSpot under **Settings → Integrations → Connected Apps**.
+
+If the error instead says "Authorization failed because this app hasn't been approved to access the required scopes," see [the App Governance FAQ above](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread). If it says "your account lacks access to the required scopes," see [the Sequences scopes FAQ](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread).
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
