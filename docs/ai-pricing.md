@@ -2,7 +2,7 @@
 title: How AI is priced
 description: This guide explains how each works, which models they apply to, and
   how credits are calculated.
-last_synced: 2026-04-26T01:39:39.981Z
+last_synced: 2026-10-27T19:44:58.087Z
 ---
 
 # How AI is priced
@@ -19,7 +19,22 @@ _Clay uses two pricing structures for AI models—fixed and variable—so you pa
 
 You can always see which pricing structure applies when selecting a model in the product.**‍**
 
+### **How `Auto` is priced**
+
+**`Auto` is currently in beta and rolling out gradually, so it may not appear in every workspace yet.** In workspaces where `Auto` is available, it's the default for new web research columns in your tables. In workspaces where `Auto` isn't available yet, new web research columns default to Argon.
+
+`Auto` is a mode rather than a model. `Auto` routes each task (each row) to the model best suited to it:
+
+-   A cheaper model for a straightforward task
+-   A stronger model for a harder task
+
+Because the model changes from task to task, `Auto` is variable-priced: each row is charged at the rate of whichever model actually ran that row, not a blended or flat rate.
+
+Withholding and reconciliation for `Auto` work the same way as they do for any variable-priced model — see **How variable pricing works** below.
+
 ## **Select model pricing reference**
+
+**Note:** `Auto` is a mode rather than a model, so it isn't listed in the table below. `Auto` routes each task to an underlying model and charges that model's rate, which makes `Auto` variable-priced.
 
 The table below lists the data credit cost per task for select AI models available in Clay, organized by provider and use case (Content Generation or Web Research).
 
@@ -99,6 +114,17 @@ For fixed-price models, yes—the cost shown is exact. For variable-price models
 In most cases, the final cost will be at or below the estimate. Complex, multi-step tasks can cost more, but these are a small minority of runs. Most customers pay less under variable pricing than they would under a flat rate for the same model.
 
 Customers who are configuring complex, multi-step web research tasks may wish to run their prompt on 10 or 50 rows so they are able to see the credit charge for each row before running the prompt across their full table.
+
+**Why did two rows in the same column cost very different amounts?**
+
+If the column uses `Auto`, each record is routed on its own before it runs, so two rows in the same column can run on different models and be charged at different rates:
+
+-   A record Clay rates as a straightforward lookup is routed to the cheaper model and charged at that model's rate
+-   A record Clay rates as harder research is routed to the stronger model, whose per-token rates are 20× higher than the cheaper model's
+
+Each row stays on the model it was routed to for its whole run, and both amounts reflect what that row actually consumed.
+
+The cost spread under `Auto` is widest on sparse or inconsistent lists, where some records resolve immediately and others take real digging. On a list like that, running `Auto` on a batch of 10 or 50 rows will show you the spread on your own data before you commit the full table.
 
 **What happens if I run out of data credits mid-run?**
 
