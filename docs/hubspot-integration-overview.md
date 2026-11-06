@@ -329,6 +329,23 @@ In your **Update object** column, map the HubSpot property (for example, Job Tit
 -   The delay in step 1 is capped at 600 seconds (10 minutes). If HubSpot fills in the property after the Lookup object column has already run, Clay sees an empty value for that row and writes the Clay-enriched value.
 -   If every property mapped in the Update object column is blank for a row, the column shows a "No properties found to update" error — see [Why does my HubSpot Update Object show "No properties found to update"?](#why-does-my-hubspot-update-object-show-no-properties-found-to-update-when-ignore-blank-values-is-enabled) for how to skip those rows with a run condition.
 
+### How do I flag HubSpot records that Clay has enriched before they sync from HubSpot to Salesforce?
+
+Clay doesn't add an enrichment status field to HubSpot records automatically. If you enrich new HubSpot contacts in Clay and want your HubSpot-to-Salesforce sync to wait until enrichment is done, write your own status values back to HubSpot with the **Update object** action. Then sync only the records that have those values.
+
+This setup is available on any plan that includes the HubSpot integration (Growth plan or higher). It uses two Formula columns in your Clay table and two custom properties in HubSpot.
+
+1.  **Create custom properties in HubSpot.** Create one property to hold a yes/no flag (for example, **Clay Enriched**). Create a second, numeric property to hold the number of fields Clay filled in (for example, **Clay Fields Enriched**). You need these properties because Clay has no built-in property for enrichment status.
+2.  **Count the enriched fields with a Formula column.** In your Clay table, add a Formula column (for example, **Fields Enriched**) that counts how many of your enrichment columns have a value. For 4 enriched fields:
+    `[{{Field 1}}, {{Field 2}}, {{Field 3}}, {{Field 4}}].filter(Boolean).length`
+    Type `/` to insert your own enrichment columns in place of `{{Field 1}}` through `{{Field 4}}`. Empty cells don't count, so the formula returns a number from 0 to 4 for each row. For example, 2 means only 2 of the 4 fields were enriched.
+3.  **Turn the count into a yes/no flag with a second Formula column.** Add a Formula column (for example, **Fully Enriched**) with `{{Fields Enriched}} === 4`. It returns `true` only when all 4 fields have a value. If you'd rather set the flag yourself, you can use a **Checkbox** column instead.
+4.  **Map both values in Update object.** In your HubSpot **Update object** column, map your enriched properties as usual. Also map **Clay Enriched** to the **Fully Enriched** column and **Clay Fields Enriched** to the **Fields Enriched** column. Clay writes the status values in the same update as the enriched data.
+5.  *(Optional)* **Hold the update until every field is enriched.** If HubSpot should receive updates only for fully enriched rows, open the Update object column's **Run settings**, check **Add run condition**, and set **Only run if** to the **Fully Enriched** column. Rows that don't meet the condition show "Run condition not met" and nothing is written to HubSpot for them.
+6.  **Filter your HubSpot-to-Salesforce sync on the flag.** In your sync settings, include only records where **Clay Enriched** is true. To find records Clay enriched only partly, filter on **Clay Fields Enriched** instead.
+
+Clay columns run based on which columns they reference, not on their left-to-right order in the table. To make sure the Update object column runs only after all your enrichment columns finish, see [Running a downstream action only after all upstream columns have finished](conditional-runs.md#running-a-downstream-action-only-after-all-upstream-columns-have-finished).
+
 ### Why does my HubSpot Update Object show "Required inputs missing" after I deleted a column?
 
 If the column that was previously mapped to the **HubSpot Object ID** field has been deleted from the table, the field retains a stale reference to that removed column. The action sees this as a missing required input and will not run.
