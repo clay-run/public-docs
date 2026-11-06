@@ -119,7 +119,7 @@ Because the table ID hasn't changed, all downstream signal workflows remain conn
 
 The signal's Company Table, View, and Company Identifier fields are locked after the signal is created and cannot be updated via **Edit signal**. If Option 1 is not feasible — for example, if you need to monitor a fundamentally different set of companies — you will need to rebuild each affected signal.
 
-**To preserve your enrichment columns when rebuilding**, save the existing signal results table as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations. Then set up your signal from scratch in your source company table (via the workbook's **Create** panel → **Signals** → the relevant signal type), targeting the new source table.
+**To preserve your enrichment columns when rebuilding**, set up your signal from scratch in your source company table (via the workbook's **Create** panel → **Signals** → the relevant signal type), targeting the new source table. Clay creates a new results table for the new signal. Then save the enrichment columns from the old signal results table as a [function](functions.md) (select the columns → `Save as function`) and add that function to the new results table (`Add column` → `Functions` tab). Saving the old results table as a template doesn't work for this: the table created from the template isn't connected to the new signal, and the new signal still writes to its own results table.
 
 ### How do I extend my signal to cover more companies?
 
@@ -144,7 +144,7 @@ Because these source fields cannot be re-pointed after creation, the fix is to r
 
 You can then delete the old signal. Rebuilding does not reprocess previously seen results.
 
-**Tip — preserve your enrichment columns during a rebuild:** If your existing signal results table has enrichment columns you've built out, save the table as a template before rebuilding. Click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link to create a new table — the new table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+**Tip — preserve your enrichment columns during a rebuild:** The rebuilt signal writes to a new results table. If your existing signal results table has enrichment columns you've built out, select those columns and choose `Save as function` (from the right-click menu or the action bar above the selected columns). Then open the new signal's results table, click `Add column`, go to the `Functions` tab, and select your function — so you don't have to rebuild the columns from scratch. See [Functions](functions.md) for details.
 
 ### Is it safe to delete a View that my Signal is using?
 
