@@ -38,7 +38,7 @@ _For more information about functions, check out our_ [_full doc_](https://unive
 
 Work a rep triggers from ChatGPT, Claude, or Glean through Clay's MCP draws on the same Actions and Data Credits as the same work run inside Clay. There's no separate MCP allowance and no MCP surcharge.
 
-One prompt can turn into more than one charged operation, though. The AI tool decides which Clay tools to call to answer a request, so a single question might run a search, enrich what it finds, and invoke a Function — each charged as it runs. That makes MCP spend per prompt more variable than a single enrichment in a table, which is why it's worth setting a default credit limit before reps start.
+One prompt can turn into more than one charged operation, though. The AI tool decides which Clay tools to call to answer a request, so a single question might run a search, enrich what it finds, and invoke a Function — each charged as it runs. That makes MCP spend per prompt more variable than a single enrichment in a table, which is why it's worth setting a default credit limit before reps start. A people or company search on its own, without added data points, is free — see [Does searching for people through Claude or ChatGPT use Actions or credits?](#does-searching-for-people-through-claude-or-chatgpt-use-actions-or-credits)
 
 ## Setting credit limits
 
@@ -162,6 +162,23 @@ To apply the same ICP check every time a rep uses Clay from Claude, put your ICP
 5.  For reps who only use Clay through AI tools, assign the **Sales Rep** role (currently in beta — contact support to request access for your workspace). This role gives them MCP access without access to tables, workbooks, or other workspace resources (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
 
 **Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
+
+### Does searching for people through Claude or ChatGPT use Actions or credits?
+
+No. Searching for people or companies through Clay's MCP from Claude, ChatGPT, or Glean is free when the search doesn't add data points. A people search with no enrichments, such as "find engineers at Stripe", uses 0 Data Credits and 0 Actions.
+
+-   **Searches still run at a credit limit of `0`.** Free searches don't count against a rep's MCP credit limit. They also run when the rep has used their full monthly limit.
+-   **Adding data points costs credits.** When Claude or ChatGPT adds paid data points to the search results, such as work emails or phone numbers, that enrichment uses Actions and Data Credits the same way it would inside Clay. Each enrichment counts toward the rep's MCP credit limit.
+
+### Is there a daily limit on how many people searches I can run through MCP?
+
+No. Clay doesn't set a daily cap on the number of people or company searches you run through MCP from Claude, ChatGPT, or Glean. These limits apply to MCP searches instead:
+
+-   **Per-minute rate limit:** Clay limits how many MCP requests and tool calls each workspace can make per minute. If an AI tool sends too many calls in a short burst, it gets the message `Too many tool calls. Please retry in 60 seconds.` or `Rate limit exceeded. Please retry in 60 seconds.` Wait 60 seconds and try again.
+-   **20 results per search call:** Each MCP people search returns up to 20 results at a time. The AI tool can load more results for the same search, up to 10,000 results in total.
+-   **Monthly search results limit (some workspaces only):** Some workspaces have a monthly cap on the total number of search results returned. When a workspace reaches it, the AI tool shows `Your workspace has reached its monthly limit for search results`, along with the date the limit resets (the start of the next month, UTC). To get a higher limit, a workspace admin can contact Clay support.
+
+People and company searches through the Clay connector in Claude, ChatGPT, or Glean don't count toward the plan-based search results quota for Clay's People & Company Search API and the Clay CLI. That quota is described in [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api).
 
 ### When do credits reset?
 
