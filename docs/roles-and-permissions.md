@@ -1,6 +1,6 @@
 ---
 title: Roles and permissions
-description: Roles, permissions, and access control tools available in Clay workspaces, including when Viewers can use credits.
+description: Roles, permissions, and access control tools available in Clay workspaces, including workbook ownership transfer and when Viewers can use credits.
 last_synced: 2026-10-07T01:55:09.539Z
 ---
 
@@ -157,7 +157,32 @@ Workspace admins can edit access levels for specific workbooks. This helps preve
     -   **Admins and invited collaborators only** — restricts access to admins and any collaborators you explicitly invite.
 3.  If `Admins and invited collaborators only` is selected, an option to `+ Add collaborators` will appear.
 
+**You can only add people who are already in your workspace as workbook collaborators.** The `+ Add collaborators` picker lists current workspace members only — you can't type in an outside email address. If the person you want to add doesn't appear, invite them to the workspace first (see [Add workspace members](#add-workspace-members)), then add them as a collaborator once they've accepted. If no one is available to add, Clay shows a message asking you to invite users to the workspace first.
+
 **These settings control edit access only, not visibility.** All workspace members can see every workbook once they are invited to the workspace — there is no way to hide specific workbooks from specific users. If your goal is to prevent certain users from seeing a workbook entirely, that is not currently supported in Clay.
+
+## Transfer ownership of a workbook _(Enterprise, currently in beta)_
+
+**Note:** Transferring workbook ownership is currently in beta on Enterprise plan workspaces and may not be enabled in every Enterprise workspace. If you don't see the `Transfer ownership` option described below, contact Clay support via the in-app chat.
+
+Workspace admins can transfer ownership of any workbook in the workspace. Editors and Viewers can transfer ownership only of workbooks they currently own. Workbook collaborators who aren't the owner can't transfer ownership.
+
+To transfer ownership of a workbook to another workspace member:
+
+1.  In the workbook, click the title → `Edit workbook settings`.
+2.  Under `Access permissions`, open the `Transfer ownership` option. Where it appears depends on the workbook's `Edit access` setting:
+    -   **Admins and editors in this workspace:** click the `⋮` (three-dot) menu on the row labeled `Owner` and select `Transfer ownership`. In the `Transfer ownership` window, select the new owner and click `Transfer ownership`.
+    -   **Admins and invited collaborators only:** the owner's row menu is disabled. Instead, click the `⋮` (three-dot) menu on the row of the collaborator who should become the owner and select `Transfer ownership`.
+3.  Clay shows a banner saying "Ownership of this workbook will be transferred to [name] when you save your changes."
+4.  Click `Save changes` at the bottom of workbook settings. The ownership transfer isn't applied until you click `Save changes`.
+
+Once saved, the new owner appears in the `Owner` row in `Access permissions`, and the tables inside the workbook are transferred to the new owner too. If the new owner doesn't appear as `Owner`, check that you clicked `Save changes` before closing workbook settings.
+
+**What to know about workbook ownership transfers:**
+
+-   The new owner must already be a member of your workspace. If they don't appear in the list, invite them to the workspace first.
+-   If the workbook's edit access is set to `Admins and invited collaborators only`, the previous owner is automatically kept on the workbook as an Editor collaborator.
+-   Removing a member from the workspace still transfers everything they own to the longest-tenured admin automatically — see [Remove a team member](#remove-a-team-member).
 
 ## Related access controls
 
