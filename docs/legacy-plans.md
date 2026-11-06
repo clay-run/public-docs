@@ -176,3 +176,27 @@ If you're on Explorer (Legacy) and considering a move to Enterprise, here is a s
 | Support | Standard support queue | Dedicated Slack channel |
 
 Modern plans also include ~50% cheaper data costs on 70+ enrichments compared to legacy pricing — your data credits go further on Enterprise.
+
+**How are workflow runs counted on a legacy plan after December 31, 2026?**
+
+Limited-time access to Workflows on legacy Starter, Explorer, and Pro plans ends on December 31, 2026. After that date, Workflows on these plans drop to free-plan limits. On free-plan limits, each workflow can have up to **100 runs**, and you get **30 days** of run history. Legacy Pro gets 180 days today.
+
+A workflow run is one record going through the workflow. How runs add up depends on the trigger:
+
+-   **Webhook trigger:** each incoming record starts its own run, so 1 record = 1 run.
+-   **CSV upload trigger:** each row in the file is its own run, so a 200-row CSV = 200 runs.
+-   **Workflow that reruns an Audiences segment on a schedule:** every record in the segment gets its own run each time the schedule fires. For example, a segment of 500 records = 500 runs each time the schedule fires. On free-plan limits, a 500-record segment reaches the 100-run limit the first time the schedule fires, and the remaining records aren't processed.
+-   **Time-only schedule with no records:** each time the schedule fires counts as 1 run.
+
+How the 100-run limit for Workflows works on free-plan limits:
+
+-   **The limit is a lifetime total per workflow.** It does not reset monthly.
+-   **Successful and in-progress runs count toward the limit.** Failed and cancelled runs don't count. Deleting runs doesn't give the allowance back.
+-   **Publishing a new version doesn't reset the count.** A new version is still the same workflow. Duplicating a workflow creates a new workflow, and the copy has its own 100-run limit.
+-   **What you'll see in the app:** when a workflow is close to the limit, it shows how many runs are left, for example "5 runs left. Extra records won't be processed." Once the limit is reached, you'll see "You have 0 runs left for this workflow." Runs started through the API return "This workflow has reached its 100-run limit. Upgrade your plan to create more runs."
+
+To run a workflow more than 100 times, or to keep run history for longer than 30 days, move to a modern plan.
+
+**Does running workflows through the API, CLI, or MCP cost extra on a legacy plan?**
+
+No. A workflow or action run through the Clay API, CLI, or MCP costs the same credits as the same work done in the Clay app. Reading table rows through the API doesn't cost extra.
