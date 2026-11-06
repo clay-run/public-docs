@@ -143,6 +143,7 @@ This usually means:
 -   The snippet isn't installed on all pages.
 -   It's placed in the `<head>` instead of before `</body>`.
 -   A Content Security Policy is blocking it.
+-   The script only loads after a visitor accepts your cookie consent banner. See [Verification says "Tracking script not found" when the script loads after cookie consent](#verification-says-tracking-script-not-found-when-the-script-loads-after-cookie-consent).
 
 Check your browser console for errors. Note that verification only checks if the script exists — a failed verification can still coexist with working data flow. Your Clay table is the ultimate proof of success.
 
@@ -151,6 +152,29 @@ To verify the script is loading at the browser level:
 -   **Network tab** — search for `claydar`. Look for `init.v1.js` and `radar.min.js` with a 200 status. If they're missing, the script isn't loading.
 -   **Console tab** — type `window.Claydar`. It should return an object, not `undefined`. If it returns `undefined`, the script failed to load or was blocked.
 -   **Application tab** — under `Local storage` and `Cookies`, look for entries starting with `claydar_`. If present, the script is running and storing session data correctly.
+
+### Verification says "Tracking script not found" when the script loads after cookie consent
+
+If you install the Clay Web intent script through Google Tag Manager (GTM) and gate it behind a cookie consent banner or consent management platform, the **Verify installation** check can show **"Tracking script not found"** even when tracking works for visitors who accept cookies.
+
+**How Verify installation checks your site:** Clay opens your connection's domain (`https://<your-domain>`) in a headless browser, waits for the page to load, and looks for the Clay script tag (`static.claydar.com/init.v1.js`) on the page. Verify installation does not click, accept, or bypass cookie consent banners. If your GTM tag for Clay only fires after marketing or advertising consent is granted, the Clay script never loads during the check, so verification reports it as not found.
+
+Verify installation only checks that the script tag is present. It does not confirm that tracking requests are sent or that visitor data reaches your Clay table. A "Tracking script not found" result on a consent-gated install doesn't mean tracking is broken.
+
+**To install Clay through GTM while respecting cookie consent:**
+
+1.  In GTM, create a `Custom HTML` tag containing the Clay tracking snippet (see [Creating the connection](#creating-the-connection)).
+2.  Set the tag to fire on `All Pages`, with your consent condition applied so the tag only fires after the visitor grants the relevant marketing or advertising consent.
+3.  Publish your GTM container.
+
+**To confirm a consent-gated install is working:**
+
+1.  Open your website in a fresh browser session (for example, a private or incognito window) and accept the cookie banner.
+2.  In GTM Preview mode, confirm the Clay tag fired after consent was granted.
+3.  Open your browser's Developer Tools → **Network** tab and search for `claydar`. Look for `init.v1.js` and `radar.min.js` with a 200 status.
+4.  Check your Web intent table for new visitor data. Clay only shows completed sessions, so data can take up to 30 minutes after the visit to appear.
+
+If these checks pass, your installation is working for visitors who consent, even if Verify installation still shows "Tracking script not found".
 
 ### Tracking filters not working as expected
 
@@ -372,7 +396,7 @@ For subdomain tracking (for example, `shop.company.com` and `blog.company.com`):
 
 ### What do I need to know about GDPR and cookie consent for web intent?
 
-The tracking script captures IP address data, which may be considered personally identifiable information in some jurisdictions. Work with your legal and web teams to confirm that your consent and privacy setup supports your intended use. In particular, make sure your Content Security Policy and any cookie consent tooling allow the Clay tracking scripts to run — if they block the script, tracking will stop working.
+The tracking script captures IP address data, which may be considered personally identifiable information in some jurisdictions. Work with your legal and web teams to confirm that your consent and privacy setup supports your intended use. In particular, make sure your Content Security Policy and any cookie consent tooling allow the Clay tracking scripts to run — if they block the script, tracking will stop working. If you gate the Clay script behind your cookie banner, Clay only tracks visitors who grant consent, and the **Verify installation** check may report the script as not found — see [Verification says "Tracking script not found" when the script loads after cookie consent](#verification-says-tracking-script-not-found-when-the-script-loads-after-cookie-consent).
 
 ### Can I exclude just the homepage?
 
