@@ -180,6 +180,25 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
 
 If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
 
+### Can I increase the webhook record limit, and why wasn't I notified when my webhook hit it?
+
+**The webhook record limit can't be increased.** Each webhook source holds up to 50,000 records, and there's no workspace or table setting that raises this limit. When webhook calls fail with `403 Forbidden — Record limit reached for webhook`, the webhook source is full. This is the webhook record limit, not the request rate limit (the rate limit returns `429`). To keep receiving data, use one of these options:
+
+-   **Enable auto-delete (Enterprise plans):** With [auto-delete](auto-delete.md) turned on, the webhook skips the 50,000 record limit and keeps accepting data indefinitely. Export any records you want to keep before you turn it on.
+-   **Delete rows from the webhook's table:** This frees capacity under the limit. See [Limits](#limits).
+-   **Create a new webhook:** A new webhook source starts with its own 50,000-record limit. Update your sending system to post to the new URL.
+
+**Clay doesn't notify you automatically when a webhook reaches its record limit.** No email, Slack, or in-app notification is sent when the limit is reached. The only signal is the `403` response returned to your sending system, so check your sending system's delivery logs for failed requests.
+
+**To get a warning before a webhook table fills up (Enterprise plans),** turn on the **Row count limit** alert in [Table alerts](table-alerts.md). Table alerts are opt-in and set up separately for each table:
+
+1.  Open the webhook table and click the **⚠️ warning icon** in the bottom-right corner.
+2.  Click `Configure alerts`, then toggle on `Enable alerts`.
+3.  Enable `Row count limit` and set the threshold. The default is **45,000 rows**.
+4.  Click `Save`.
+
+Row count alerts appear in the table's `Table alerts` panel. To get them outside Clay, click the **🔔 bell icon** in the panel header. From there you can subscribe by email, or click `Connect` under Slack alerts and enter your Slack channel ID. If Slack isn't connected to your workspace yet, the window links to **Workspace Settings** so you can connect it first. See [External notifications](table-alerts.md#external-notifications) for details.
+
 ### How can I tell which webhook source a row came from?
 
 Clay records which webhook source sent each row at ingestion time, so you can filter the table by source without any extra setup.
