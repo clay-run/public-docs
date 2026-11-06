@@ -93,6 +93,20 @@ When you are ready to publish the changes in your sandbox to your regular table,
 -   `Publish and don't run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
 -   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
 
+## Can I recover a sandbox after exiting sandbox mode?
+
+No. Once you exit sandbox mode without publishing, the discarded sandbox can't be restored. This includes every column you built in the sandbox (such as Claygent columns) and the results they produced. To keep sandbox work, publish it with **Review changes** before you exit.
+
+When you click **Exit Sandbox** and your sandbox has unpublished changes, Clay shows the warning **"You have unpublished changes in your sandbox"** with the message *"Turning off sandbox mode will discard unpublished changes. Do you want to continue?"* Clicking **Turn off sandbox mode** discards the sandbox copy of your table.
+
+What happens to a discarded sandbox:
+
+-   **The discarded sandbox doesn't go to Trash.** Unlike a deleted table, a discarded sandbox doesn't appear in your workspace Trash, so you can't restore it from there. There's no self-serve way to restore a discarded sandbox.
+-   **Your regular table stays as it was.** Discarding a sandbox doesn't change the columns or rows in your regular table — it stays exactly as it was before you entered sandbox mode, without any of the unpublished sandbox changes.
+-   **Links to the sandbox stop working.** A sandbox has its own table link, separate from your regular table. If a teammate shared a link to their sandbox and the sandbox was later discarded, opening that link shows an error such as `Table t_... does not exist`. Open the regular table instead.
+
+If you're reviewing work someone else built in a sandbox, ask them to publish it with **Review changes** before anyone exits sandbox mode.
+
 ## Testing a new version of a workflow that your table calls
 
 Sandbox mode is for tables only. Clay Workflows has its own draft-and-publish versioning instead. This section answers a common question: *"My table triggers a workflow I've published as V1. If I edit the workflow for V2, will V1 keep working, and how do I test V2 from a table?"* Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
