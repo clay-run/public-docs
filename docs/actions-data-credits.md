@@ -459,6 +459,22 @@ Common causes:
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
 
+### Why was I charged for several automatic top-ups in a row?
+
+If automatic top-ups are on (`Auto top-ups` in `Settings` → `Usage`), Clay buys Data Credits every time your Data Credit balance drops below the threshold you set. Automatic top-ups run one at a time: after each one completes, Clay checks your balance again, and if it is still below the threshold — for example, because a large run is still spending credits — another automatic top-up is triggered. Each automatic top-up is a separate charge to your card.
+
+This means one large run can trigger several automatic top-ups within minutes. For example, an AI column run on 1,000+ rows can spend more than a plan's entire monthly allowance in a single run. On a plan with 2,500 Data Credits per month, a threshold of 375 credits, and 250 credits per automatic top-up, a run that keeps spending after your balance falls below 375 triggers a new automatic top-up each time the balance drops below 375 again. If that happens five times, you see five separate charges, adding 1,250 Data Credits in total (5 × 250).
+
+The following limits cap how much automatic top-ups can charge:
+
+-   **Daily spend limit** (optional): the maximum automatic top-ups can charge in any rolling 24-hour period, if you set one in your `Auto top-ups` settings.
+-   **Rolling 7-day limit:** automatic top-ups can't charge more than $5,000 in any rolling 7-day period.
+-   **Monthly purchase limit:** shared with one-time top-ups.
+
+To find what spent the credits, open `Settings` → `Usage` and check which table and column used the most Data Credits. Make sure the date range you select covers your whole billing period — a shorter range (for example, only the last two days) won't include earlier spend that reduced your balance.
+
+To avoid repeated automatic top-up charges from a large run, test new columns on a small batch first, set a daily spend limit, or turn off automatic top-ups in `Settings` → `Usage`.
+
 ### What happens when I downgrade or cancel my plan?
 
 **During your current billing cycle:**
