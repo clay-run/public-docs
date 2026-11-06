@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-10-07T03:07:33.586Z
+last_synced: 2026-10-23T20:15:53.279Z
 ---
 
 # AI in Clay
@@ -27,7 +27,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **What it does**: Email Sequencer is Clay's built-in email outreach tool that lets you run email campaigns directly from your tables, using AI to create personalized messaging at scale.
 
-[View Email Sequencer documentation →](https://www.clay.com/university/guide/email-sequencer)
+[View Email Sequencer documentation →](https://university.clay.com/docs/email-sequencer)
 
 **How AI is used**:
 
@@ -45,7 +45,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **What it does**: AI-powered message drafting within Clay tables helps you create personalized outreach messages for individual prospects.
 
-[View Email sequencer documentation →](https://www.clay.com/university/guide/email-sequencer)
+[View Email sequencer documentation →](https://university.clay.com/docs/email-sequencer)
 
 **How AI is used**:
 
@@ -59,11 +59,11 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
-### Use AI action
+### Use AI
 
 **What it does**: A powerful table action that gives you access to AI for web research, content generation, and image generation.
 
-[View Use AI documentation →](https://www.clay.com/university/guide/use-ai-integration-overview)
+[View Use AI documentation →](https://university.clay.com/docs/use-ai-integration-overview)
 
 **How AI is used**:
 
@@ -88,7 +88,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **What it does**: Build repeatable AI agents for web research and prospecting that can navigate websites, extract information, and make decisions.
 
-[View Claygent builder documentation →](https://www.clay.com/university/guide/claygent-playground)
+[View Claygent builder documentation →](https://university.clay.com/docs/claygent-builder)
 
 **How AI is used**:
 
@@ -104,19 +104,18 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 ### Sculptor
 
-**What it does**: A chat interface for Clay that helps with table building, debugging, and analysis using conversational AI.
+**What it does**: A chat interface in your Clay tables and in Claygent Builder that helps with table building, debugging, and analysis.
 
-[View Sculptor documentation →](https://www.clay.com/university/guide/sculptor)
+[View Sculptor documentation →](https://university.clay.com/docs/sculptor)
 
 **How AI is used**:
 
--   Reads your "My Business Context" to understand your goals.
+-   In Claygent Builder, Sculptor reads your workspace AI context settings — company description, ideal customer profile, and buyer personas — to tailor its suggestions. These settings are moving to Knowledge Hub, which is currently in early access.
 -   Accesses information in your current table to provide relevant help.
 -   Suggests formulas, identifies issues, and helps analyze data.
 
 **Data privacy**:
 
--   Only accesses the specific table you're working in.
 -   Uses table metadata and visible data to provide context-aware assistance.
 -   Chat history and table context are not used for training.
 -   Data is processed transiently to provide real-time assistance.
@@ -141,7 +140,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **What it does**: Helps you build HTTP API requests using AI, making it easier to connect to external services.
 
-[View HTTP API documentation →](https://www.clay.com/university/guide/http-api-integration-overview)
+[View HTTP API documentation →](https://university.clay.com/docs/http-api-integration-overview)
 
 **How AI is used**:
 
