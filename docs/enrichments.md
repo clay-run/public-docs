@@ -157,6 +157,23 @@ To enrich one person:
 
 The `Enrich person` column returns the person's full profile data — for example, job title, current company, and experience history — in that row.
 
+### "Does Clay have an enrichment for a Job Level (seniority) field?"
+
+Clay doesn't have a standalone "Job Level" enrichment, and Clay's built-in `Enrich person` enrichment doesn't return a job level or seniority field. If you can't find a Job Level field in Clay, you can get one in either of these ways:
+
+-   **Use a provider enrichment that returns seniority.** Apollo's `Enrich Person` enrichment returns a `seniority` field, and ZoomInfo's `Enrich contact` enrichment returns a `managementLevel` field. Both require connecting your own Apollo or ZoomInfo account. See [Apollo integration overview](apollo-io-integration-overview.md) and [ZoomInfo integration](zoominfo-integration.md).
+-   **Derive the job level from a Job Title column you already have** (for example, a Job Title imported from your CRM), using a Formula column or a Use AI column as described below.
+
+**To create a Job Level column from Job Title with a formula (no credit cost):**
+
+1.  In your table, click **+ Add column** and choose **Formula**. The **Formula generator** sidebar opens.
+2.  Describe what you want, for example: *"Based on {{Job Title}}, classify the person's seniority as IC, Manager, Director, VP, or C-level."* Type `/` to insert the Job Title column.
+3.  Click **Generate**, check the preview column, then click **Save column**.
+
+A formula column runs fixed JavaScript (keyword matching on the title) and doesn't use credits, so it works best for standard titles. See [Formulas](formula-generator.md#generate-formula-with-ai).
+
+**To classify unusual or non-standard job titles, use a Use AI column instead:** click **+ Add column** → **Use AI**, and describe the same classification in the **Generate** tab. A Use AI column uses credits for each row it runs on. See [Use AI](use-ai-integration-overview.md).
+
 ### "What accuracy or match rate can I expect from data enrichment in Clay?"
 
 Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
