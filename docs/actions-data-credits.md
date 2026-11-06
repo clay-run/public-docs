@@ -459,6 +459,21 @@ Common causes:
 -   Pause AI columns that aren't providing value.
 -   Check table settings before re-running enrichments.
 
+### Why did my credits run out when I only ran company searches?
+
+If your Data Credits ran out but you only built lists with a search such as **Find Companies** and exported them to CSV, the most likely cause is an AI or enrichment column in the table with **Auto-run** on. An Auto-run column runs automatically on the new rows a search adds to the table and uses credits for every row it processes, even if you never clicked **Run**. For example, an AI column that costs 3 credits per row uses 900 credits when a search adds 300 companies. (When you first add a search source to an existing table, Auto-run only processes the first 10 imported rows. See [Auto-run](auto-run.md#how-clay-decides-whether-a-cell-runs).)
+
+Duplicated tables carry the same risk. When you duplicate a table, Clay copies every column along with its configuration and the table's Auto-run setting. An AI column you set up in the original therefore runs again on new rows added to each copy. See [Duplicate table](table-management-settings.md#duplicate-table).
+
+To stop an Auto-run column from using credits:
+
+1.  Go to `Settings` → `Usage` to see which tables used the credits (see [Action and Data Credit usage](#action-and-data-credit-usage)). Open those tables and find the AI or enrichment column that's filling in values you didn't ask for.
+2.  If you don't need that column, delete it from the table. Also delete it from the original table before you make more duplicates.
+3.  If you want to keep the column, turn off its Auto-run: click the column name → **Edit column**, toggle off **Auto-run** under **Run settings**, and click **Save**. The column then runs only when you trigger it: right-click the column header → **Run column** and choose the rows to run.
+4.  To pause every enrichment column in the table at once, click the `⛭` icon → **Run Settings** and toggle **Auto-run** off. The table then shows **Manual**.
+
+Before you duplicate a table, check its columns. Any column with Auto-run on in the original also runs on new rows in the copy.
+
 ### What happens when I downgrade or cancel my plan?
 
 **During your current billing cycle:**
