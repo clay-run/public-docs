@@ -67,6 +67,22 @@ Every organisation should set up an **opt-out process** and maintain an **intern
 
 Any new opt-outs should effectively supplement the internal email DNC list and processes should be put in place to ensure distribution lists are regularly checked against this DNC list.
 
+#### **How to handle GDPR opt-outs in Clay and sync them to Salesforce and HubSpot**
+
+Clay doesn't have a built-in GDPR opt-out or suppression list. You can still use Clay to collect opt-outs from every source, write them back to Salesforce and HubSpot, and stop opted-out contacts from being enriched or pushed anywhere. Set it up like this:
+
+1.  **Choose one system of record for consent.** Pick Salesforce, HubSpot, or a dedicated Clay opt-out table as the source of truth. Clay moves opt-out changes between systems; it shouldn't be the only place consent is recorded.
+2.  **Standardize the opt-out field in each CRM.** If you use both Salesforce and HubSpot, agree on the fields you'll write to in each one. For example, the standard Salesforce `HasOptedOutOfEmail` checkbox on Leads and Contacts, plus any custom fields for opt-out date, source, and request type.
+3.  **Create an opt-out table in Clay with a [webhook](webhook-integration-guide.md) source.** Point your forms, preference center, email sequencer, consent platform, and CRM automations at the table's webhook URL. Each POST request to the webhook creates a new row. Webhooks require a Growth or Enterprise plan (see [Plan availability](webhook-integration-guide.md)).
+4.  **Normalize each request** in the opt-out table, for example by lowercasing the email address and adding columns for the timestamp, the request source, and the request type (opt-out or erasure).
+5.  **Add CRM write-back columns.** Use the Salesforce **Update record** (or **Create or update object**) action and the HubSpot **Update object** action to write the opt-out status to the matching Lead, Contact, or HubSpot contact. Turn on [Auto-run](auto-run.md) so these columns run on each new opt-out row.
+6.  **Keep the opt-out table as your audit log.** Each row shows who opted out, where the request came from, when it arrived, and which systems were updated.
+7.  **Check every other Clay table against the opt-out table.** Add a **Lookup Single Row in Other Table** column that matches on email, then add a run condition ("Only run if") to your enrichments, AI columns, and CRM or sequencer push actions so they skip any contact found in the opt-out table. See [Lookup Rows](lookup-rows.md) and [Conditional runs](conditional-runs.md).
+
+**HubSpot subscription status limitation:** Clay's HubSpot actions write contact properties only. They can't change a contact's email subscription types or communication preferences, which HubSpot manages separately from contact properties. Manage subscription status in HubSpot itself.
+
+Clay gives you the tools to put an opt-out process into practice. Your team and legal counsel are still responsible for deciding which contacts you can reach in which regions.
+
 ### **4\. Distribution lists**
 
 It is key to ensure that distribution lists are kept up to date. Before creating or re-using an existing email distribution list:
