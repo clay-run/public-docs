@@ -14,7 +14,7 @@ Clay Lookalikes is a first-party Clay feature that uses AI-powered embeddings to
 
 The **Company Lookalikes source** (table-builder) can be accessed two ways:
 
--   **Home → Find leads → Lookalikes** — select the **Lookalikes** card from the quick-start grid on the Find Leads homepage.
+-   **In a workbook** — click `+ Add` at the bottom, search for `Lookalikes`, and select **Find lookalike companies**.
 -   **Find Companies page** — open the Find Companies setup panel and switch to **Find lookalikes** using the mode dropdown in the filter panel header.
 
 **People Lookalikes** is available both as a standalone **Find People Lookalikes source** (table-builder, powered by Lusha and runnable on Clay credits without a Lusha API key) and as an in-table enrichment. See [`Action` Find People Lookalikes](#action-find-people-lookalikes) below.
@@ -26,7 +26,7 @@ Build a new table of lookalike companies from a seed list. Results are organized
 **To create a table with company lookalikes:**
 
 1.  In a workbook, click `+ Add` at the bottom.
-2.  Search for `Lookalikes` and select **Find lookalike companies (grouped)**, or navigate to **Home → Find leads → Lookalikes**.
+2.  Search for `Lookalikes` and select **Find lookalike companies**.
 3.  Choose your seed input:
     -   **Table** — a Clay table of companies (up to 15,000 companies)
     -   **Audience** — a Clay Audiences segment (up to 15,000 companies)
