@@ -431,11 +431,23 @@ To create a new audience segment:
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
 
 -   **Text fields (T icon)** — support text-matching operators. To match multiple values at once, use **`contains any of`** and enter each value — up to 10 values per filter. For example, to include records where Industry is Health, Beauty, or Pets, set the filter to `Industry → contains any of → Health, Beauty, Pets`. If you enter more than 10 values, Clay shows "A maximum of 10 values will be accepted" and the filter can't be saved. When pasting values, separate them with commas — a comma-separated paste is split into one value per item, but a list with one value per line (for example, copied from a spreadsheet or Salesforce report column) is added as a single value and won't match any records. `contains any of` is a case-insensitive partial match: a record matches if its field value contains any of the entered values anywhere in the text. To filter by a list longer than 10 values, see [How do I filter a segment by a long list of Salesforce Account IDs?](#how-do-i-filter-a-segment-by-a-long-list-of-salesforce-account-ids) in the FAQs below. A **`does not contain any of`** multi-value exclusion operator is not available. To exclude multiple values, add a separate **`doesn't contain`** filter for each value — top-level filters are joined with AND by default, so each additional condition narrows the results.
--   **Number fields (# icon)** — support range operators: **`is greater than`**, **`is less than`**, **`is greater than or equal to`**, and **`is less than or equal to`**. For example, `Employees → is greater than → 500`.
+-   **Number fields (# icon)** — support comparison operators: **`>`** (greater than), **`<`** (less than), **`=`**, **`≥`** (greater than or equal to), **`≤`** (less than or equal to), **`is empty`**, and **`isn't empty`**. For example, `Employees → > → 500`.
 -   **Date fields** — support time-based operators: **`within the last`**, **`not within the last`**, **`before`**, and **`after`**. For "within the last" and "not within the last," specify a number of days, weeks, or months as the lookback window. For example, `Created at → within the last → 30 days` targets records created in the past 30 days.
 -   **Boolean (true/false) fields** — support **`is true`** and **`is false`** operators. To apply OR logic across two boolean conditions (for example, `field A is true OR field B is true`), add both filters inside a filter group and click the **`and`** connector between them to switch it to **`or`**.
 
-**Note:** A field that appears numeric may have been imported as text (shown by a T icon rather than #). Text fields — such as "Annual revenue range" synced from Salesforce as a string — will not show range operators. To use range filtering on a field, contact Clay support to have the field's type changed to Number (#). Range operators will then appear when you add a filter on that field.
+#### How do I filter a segment by "greater than" or "less than" (for example, Annual revenue)?
+
+A field that holds numbers, such as **Annual revenue**, may have been imported as text (shown by a **T** icon rather than **#**). A Text field only offers text operators in the segment filter (`=`, `≠`, `contains`, `doesn't contain`, `contains any of`, `starts with`, `ends with`, `is empty`, `isn't empty`). It does not offer greater than or less than. To filter the field by a numeric range, change the field's data type to **Number** in Data Hub:
+
+1.  In the left sidebar of your People or Companies Audience, click **Data Hub**.
+2.  On the **Fields** tab, click the field (for example, **Annual revenue**) to open the **Field details** panel.
+3.  In the **Data type** dropdown, select **Number**.
+4.  Click **Save**.
+
+When you next add a filter on that field in a segment, the number operators (`>`, `<`, `=`, `≥`, `≤`, `is empty`, `isn't empty`) appear in the operator dropdown.
+
+-   **Default Clay fields can't be retyped.** The data type of a default Clay field is locked. The Field details form is disabled and shows "This is a default Clay field. Only some settings can be edited."
+-   **Existing text filters on the field stop working.** Segment filters that already use a text-only operator on the field, such as `contains` or `starts with`, can't be displayed or edited after you change the field to Number. Recreate them with a number operator.
 
 ### Excluding contacts from a specific source (suppression)
 
