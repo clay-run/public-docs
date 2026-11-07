@@ -73,6 +73,14 @@ Treat a Meer **Do Not Call = true** result as a compliance signal, not a final d
 
 Federal DNC rules are separate from other rules that can apply to mobile numbers, such as rules on autodialed calls, prerecorded or artificial voice messages, and text messages. State-specific rules and your own internal opt-out list may also be stricter than federal B2B treatment. Clay's Meer integration helps with screening and suppression, but it isn't a legal determination or a guarantee of compliance — confirm how you handle DNC-flagged mobile numbers with your legal or compliance team.
 
+## Do I need a different DNC screening vendor for each region?
+
+No. You don't need a separate Do Not Call (DNC) screening vendor for each region in Clay. Meer gets its DNC lists directly from government agencies, or from third-party organizations that represent those agencies, so you can use the Meer integration as your single DNC screening tool in every country listed under **Screen phone number against DNC registries** above.
+
+A high share of **Do Not Call = true** results on US numbers doesn't mean Meer is a poor fit for the US. The US National Do Not Call Registry has more than 250 million active phone number registrations, so a high flag rate usually means the registry is being applied correctly.
+
+For phone numbers in countries Meer doesn't cover, the Meer action returns **"Error: Failed to enrich phone number"**. For those contacts, rely on your internal opt-out list and geo-based **Only run if** conditions, as described in [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance).
+
 ## Compliance notes
 
 -   You are responsible for your own compliance. Do Not Call Suppression is a risk-mitigation tool. It does not ensure compliance. It's always your job to assess your compliance obligations and ensure you meet them. For more guidance, see our [DNC compliance best practices](https://university.clay.com/docs/dnc-compliance) and [direct marketing best practices](https://university.clay.com/docs/direct-marketing-best-practices).
