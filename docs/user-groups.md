@@ -2,7 +2,7 @@
 title: User groups
 description: User groups let you share Clay workbooks and connected accounts
   with multiple members at once.
-last_synced: 2026-04-26T01:40:51.931Z
+last_synced: 2026-11-07T03:08:16.306Z
 ---
 
 # User groups
@@ -66,7 +66,7 @@ For example, to grant a group access to a connection:
 
 1.  Navigate to `Settings` → `Connections`
 2.  Find and edit the connection you want to manage
-3.  Select `Specific users and groups`
+3.  Select `Specific people and groups`
 4.  Add the user group (e.g., Engineering, RevOps) to grant access to all members of that group
 5.  Click `Save`
 
