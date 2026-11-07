@@ -149,6 +149,18 @@ Your Clay workspace data and workflows are unaffected — only the connection fr
 
 Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
 
+### Can I give someone view-only access to Clay without letting them use MCP?
+
+Not completely. Clay doesn't have a setting that turns off MCP access for a specific user or role. Every workspace role — Admin, Member, Viewer, and Sales Rep — can connect Clay to AI tools like Claude or ChatGPT. The Viewer role limits what someone can do in the Clay web app, but it doesn't block Clay's MCP integration.
+
+The closest option is to make the person a Viewer and set their MCP credit limit to `0`:
+
+1.  Invite them to your workspace with the **Viewer** role (`Settings` → `Team` → `+ Invite`). Viewers can see existing workspace content but can't create tables or workbooks. The Viewer role is available on Enterprise plans — see [Roles and permissions](https://university.clay.com/docs/roles-and-permissions).
+2.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+3.  In the `MCP users` table, find the person and click the pencil icon next to their `Credit limit`. Enter `0`. You can set this before they ever connect an AI tool.
+
+With an MCP credit limit of `0`, the person can still view your existing data in Clay, but they can't run enrichments or Functions, or spend any credits, through Claude, ChatGPT, or other AI tools. Searches that don't add paid data points still run through MCP. To block someone's MCP access entirely, remove them from your workspace.
+
 ### How do I make sure reps only send ICP accounts from Claude to Clay?
 
 Clay doesn't have a setting that limits Claude, ChatGPT, or Glean to your ideal customer profile (ICP) accounts, and Clay doesn't offer a pre-built ICP skill or Function. Every company defines its ICP differently. Writing "only send ICP accounts" in a Claude prompt is an instruction, not a guardrail, so Claude won't always follow it.
