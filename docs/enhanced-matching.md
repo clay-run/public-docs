@@ -50,9 +50,9 @@ Hashing rules differ from destination to destination, and Clay applies each one 
 
 -   **Values Clay hashes for you.** Anything a destination expects hashed is hashed with SHA-256 before upload, and anything it expects in the clear is left as it is.
 -   **Values that are already hashed.** If a column you map already holds a SHA-256 hash, Clay passes it through untouched.
--   **LinkedIn Ads gets one identifier per contact.** With Enhanced matching on, LinkedIn Ads receives the top-ranked hashed email rather than all three, because a single strongest identifier keeps targeting precise there. The sync says so on screen when LinkedIn Ads is one of your destinations.
+-   **The professional network ad platform gets one identifier per contact.** With Enhanced matching on, the professional network ad platform receives the top-ranked hashed email rather than all three, because a single strongest identifier keeps targeting precise there. The sync says so on screen when the professional network ad platform is one of your destinations.
 
-Work emails are the stronger identifier on LinkedIn Ads, and personal ones on every other destination, so it's worth mapping both and letting each platform take what it matches best on.
+Work emails are the stronger identifier on the professional network ad platform, and personal ones on every other destination, so it's worth mapping both and letting each platform take what it matches best on.
 
 ## Choosing a tier
 
@@ -101,13 +101,13 @@ No. The providers behind it return hashes, so a plaintext address never reaches 
 
 Enhanced matching needs at least one of a professional profile URL or a work email, so a contact holding neither is skipped before any provider is queried. Coverage is also deepest for people based in the US, and a contact sourced only from Clay's data marketplace is skipped when its country is set to anything outside the US. Filling in profile URLs and work emails on your segment is the most dependable way to lift coverage.
 
-### Which hashed email does LinkedIn Ads get?
+### Which hashed email does the professional network ad platform get?
 
-The top-ranked one — the hash with the most provider agreement behind it. The other two stay on the contact in Audiences and still go to every other destination in the same sync, so adding LinkedIn Ads to a sync doesn't cost you the other identifiers.
+The top-ranked one — the hash with the most provider agreement behind it. The other two stay on the contact in Audiences and still go to every other destination in the same sync, so adding the professional network ad platform to a sync doesn't cost you the other identifiers.
 
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
--   [LinkedIn Ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
+-   [Professional network ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
 -   [Meta Ads in Clay](https://university.clay.com/docs/meta-ads-in-clay)
 -   [Audiences](https://university.clay.com/docs/audiences)
