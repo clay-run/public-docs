@@ -47,7 +47,40 @@ For this reason, the Job Change Signal requires each contact's professional prof
 
 No — the contacts table a Job Change Signal monitors is selected when the signal is first created and cannot be changed afterward via **Edit Signal**. Attempting to edit the signal will show the contacts table field as locked.
 
-To switch to monitoring a different contacts table, create a new signal pointing to the new table. To preserve your enrichment column configurations from the existing signal's results table, save it as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link in a new tab — the resulting table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+To switch to monitoring a different contacts table, create a new signal pointing to the new table. Clay creates a new results table for the new signal. To reuse the columns you built in the old results table, see [How do I keep my results table workflow when I replace a Job Change Signal?](#how-do-i-keep-my-results-table-workflow-when-i-replace-a-job-change-signal) below.
+
+### Why does the profiles field show "Please select a valid value" when I edit my Job Change Signal?
+
+When you edit an existing Job Change Signal, the profiles field (where you select the professional profile column the signal monitors) shows "Please select a valid value" if the professional profile URL column the signal was set up with no longer matches a valid column in the People table — for example, because that column was deleted. The profiles field is locked when editing an existing Job Change Signal, so you can't select a different column (such as a new professional profile URL column you added to the table) from this screen.
+
+To start monitoring the new professional profile URL column:
+
+1.  Create a new Job Change Signal on the same People table and choose the new professional profile URL column in the profiles field.
+2.  Move the columns you built in the old results table into the new signal's results table using a function — see [How do I keep my results table workflow when I replace a Job Change Signal?](#how-do-i-keep-my-results-table-workflow-when-i-replace-a-job-change-signal) below.
+3.  To stop the old Job Change Signal from consuming credits, disable it from its column header → **Edit signal**. See [Signals in Clay](signals.md) for details.
+
+### Can I connect a new Job Change Signal to my existing results table?
+
+No. When you create a Job Change Signal, Clay creates its results table at the same time (named like `Job change Events from <your table> (<date>)`), and that table's `Event: Job change` column receives the signal's events. A Job Change Signal can't be re-pointed to send events to a different table, and an existing results table can't be connected to a different signal.
+
+Two common workarounds don't connect a results table to a new signal:
+
+-   **Duplicating the results table** — the copy stays connected to the original signal, not to your new one.
+-   **Saving the results table as a template (Share as template) and opening the link** — the resulting table includes your columns but isn't connected to your new signal (opened in the same workspace, it stays connected to the original signal), and the new signal still creates its own separate results table.
+
+To carry your formulas, enrichments, and conditions over to the new signal's results table, save them as a function instead (see the next FAQ).
+
+### How do I keep my results table workflow when I replace a Job Change Signal?
+
+Save the workflow columns from the old Job Change Signal results table as a [function](functions.md), then add that function to the new signal's results table. Functions are available on all paid plans (not the Free plan).
+
+1.  Open the old Job Change Signal results table and select the workflow columns you want to keep (Shift-click the first and last column headers to select a range, or `Cmd`/`Ctrl`-click individual headers).
+2.  With the columns selected, choose `Save as function` — from the right-click menu on a column header, or from the action bar that appears above the selected columns.
+3.  Name the function and review its **Inputs** (the values it reads from the table, such as the professional profile URL or company) and **Outputs**, then save it.
+4.  Open the new Job Change Signal's results table, click `Add column`, go to the `Functions` tab, and select your function.
+5.  Under **Configure inputs**, map each function input to the matching column in the new results table. Checking which column fed each input in the old results table makes this mapping straightforward.
+
+Your enrichment columns, formulas, and run conditions are stored in the function, so you don't have to rebuild them in the new results table. For more on building and editing functions, see [Functions](functions.md).
 
 ### How do I track contacts who change jobs ("movers") and refresh their details?
 
