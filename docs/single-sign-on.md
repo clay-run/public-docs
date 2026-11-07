@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO)
-description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
+description: Set up SSO for your Clay workspace, request a new configuration link to change SSO settings later, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -23,6 +23,12 @@ The typical setup process:
 5.  Clay support activates (enforces) SSO on your workspace.
 
 **Note:** The email domain used for SSO authentication is configured on Clay's side. If you receive an error during the WorkOS setup stating that your domain is not recognized or not allowed, contact Clay support — only the support team can update the allowed domain setting.
+
+### Changing your SSO configuration after setup
+
+The WorkOS configuration link Clay support sends during SSO setup is temporary — it expires and does not give your team permanent access to the WorkOS setup portal. If you later need to change the Clay-side SSO configuration — for example, to renew a SAML certificate or update the identity provider connection — contact Clay support and ask for a new SSO configuration link.
+
+Settings on your identity provider's side, such as which users are assigned the Clay app in Okta or Microsoft Entra ID, are managed directly in your IdP and do not require a new link from Clay support.
 
 ### SAML configuration details (Entity ID and ACS URL)
 
