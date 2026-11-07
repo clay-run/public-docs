@@ -283,6 +283,29 @@ Turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off
 
 See [Auto-run](auto-run.md) for full details on **Keep existing results** and column-level auto-run controls.
 
+### Charged again after re-running a column on rows that already had results
+
+If you re-run an enrichment column and are charged credits again for rows that already had a result (for example, a mobile phone or work email already found), the column was most likely force-run. A force run runs every row or cell it covers again, even rows that already ran successfully, and charges credits for each one again. Clay doesn't reuse the result already in the cell. This applies to every enrichment column, including **Execute subroutine** (Run subroutine) columns: on a force run, the subroutine runs all of its enrichments again.
+
+These run options force-run, so rows that already have results run again and use credits again:
+
+-   **Force run all [N] rows** (column header menu → **Run column**) — re-runs every row in the current view.
+-   **Choose number of rows to run** (column header menu → **Run column**) — re-runs every row in the range you enter.
+-   **Run [N] cells** (select cells in a column, then right-click) — re-runs every selected cell.
+
+These run options skip rows that already ran successfully with unchanged inputs, so those rows aren't charged again:
+
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**) — runs only rows that have never run, errored, or are out of date because their inputs changed since the last run. Rows that ran successfully, including rows where the enrichment found no data, are skipped unless they're out of date.
+-   **Run [N] rows** (select whole rows by clicking row numbers, then right-click) — runs the enrichment columns on those rows using the same rule.
+
+**To re-run only the rows that are missing data:**
+
+1.  Click **Filter** in the table toolbar and filter to the rows that are missing the data you want — for example, rows where both the mobile phone and work email columns are empty.
+2.  Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+3.  Remove the filter when the run finishes.
+
+Only use **Force run all [N] rows**, **Choose number of rows to run**, or **Run [N] cells** when you deliberately want a fresh lookup on rows that already have results. See [Run progress](run-progress.md#why-did-run-column-run-every-row-when-i-only-highlighted-a-few) for all column run options.
+
 ### Accidental credit spend
 
 Clay generally does not offer credit refunds for accidentally consumed credits — for example, from a misconfigured scheduled run or an unintended large batch. If you believe something went wrong, you can contact [Clay support](https://app.clay.com) and the team will investigate. When reaching out, include:
