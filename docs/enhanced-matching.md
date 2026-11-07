@@ -108,6 +108,5 @@ The top-ranked one — the hash with the most provider agreement behind it. The 
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
--   [Professional network ads in Clay](https://university.clay.com/docs/linkedin-ads-in-clay)
 -   [Meta Ads in Clay](https://university.clay.com/docs/meta-ads-in-clay)
 -   [Audiences](https://university.clay.com/docs/audiences)
