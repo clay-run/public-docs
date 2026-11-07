@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO)
-description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
+description: Set up SSO for your Clay workspace, view or change your existing SSO setup, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -35,6 +35,18 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 -   **SP Metadata URL** — an optional metadata file URL for automated IdP configuration
 
 **Required SAML attribute:** The user's email address is the only required attribute. The optional attributes are `firstName` and `lastName` — these are not required for authentication to work.
+
+## Viewing or changing your existing SSO setup
+
+There is nowhere in Clay to view your SSO configuration — the Clay workspace settings, including `Settings` > `Team`, do not show your identity provider, connection details, SSO domain, or SSO status. Your SSO setup is viewed and managed in WorkOS, through the configuration link Clay support provides.
+
+To view or change your existing SSO setup:
+
+1.  Contact Clay support and ask for a WorkOS link for your organization's SSO setup.
+2.  Clay support sends the link to you or your IT contact. There is no self-serve button in Clay to generate this link yourself.
+3.  Open the link to view or update your SSO connection in WorkOS.
+
+If the WorkOS link you received earlier no longer works, contact Clay support for a new one.
 
 ## What happens when SSO is enabled
 
