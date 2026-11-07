@@ -31,8 +31,8 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 2.  Click **Create**.
 3.  Enter a budget **name** and set a **credit limit**.
 4.  Choose a **default access** setting:
-    -   **All workspace members** — any member can assign their workbooks to this budget.
-    -   **Only specific users or groups** — only members you explicitly add can use the budget.
+    -   **Anyone in the workspace** — any member can assign their workbooks to this budget.
+    -   **Specific people and groups** — only members you explicitly add can use the budget.
 5.  Optionally, add specific **users** or **user groups** who should have access.
 6.  Click **Save**.
 
@@ -84,12 +84,46 @@ Open a budget from `Settings` → `Budgets` to see its spend over time. Use the 
 
 Each budget has an access rule that controls which workspace members can assign their workbooks to it:
 
--   **All workspace members (default):** Any member can use this budget. Useful for shared cost pools.
--   **Only specific users or groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
+-   **Anyone in the workspace (default):** Any member can use this budget. Useful for shared cost pools.
+-   **Specific people and groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
 
 To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit**, and adjust the access settings.
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
+
+### Is a credit budget's limit per user or shared?
+
+A credit budget's limit is shared, not per user. Every user, workbook, workflow, and MCP user assigned to a budget draws from the same credit balance — like several people using one company credit card. For example, if a budget named "Sales Team" has a 1,000-credit limit and five reps are on it, the five reps together can spend 1,000 credits from that budget, not 1,000 credits each. Clay has no per-user sub-limit inside a credit budget.
+
+When the shared balance reaches the limit, everything assigned to that budget stops spending credits, even if one person used most of it.
+
+### How do I give each person their own credit budget limit?
+
+To cap each person's spend individually with credit budgets, create a separate budget for each person:
+
+1.  Go to `Settings` → `Budgets` and click **Create**.
+2.  Name the budget after the person (for example, "Jane's budget") and set that person's credit limit.
+3.  Set default access to **Specific people and groups** and add only that person.
+4.  Click **Save**, then repeat for each person ("Joe's budget", and so on).
+5.  Assign each person's workbooks and workflows to their own budget. For spend through AI tools, pick that person's budget in the **Budget** column of the `MCP users` table on the `MCP` page.
+
+For spend through AI tools like Claude or ChatGPT, you can also set a per-user monthly MCP credit limit on the `MCP` page instead — see "How do credit budgets work with MCP credit limits?" below.
+
+## How do credit budgets work with MCP credit limits?
+
+Assigning credit budgets to MCP users is available to Enterprise workspaces with credit budgets (currently in beta). MCP credit limits on their own are available on all modern paid plans.
+
+Workspace admins can assign a credit budget to each MCP user — a workspace member who uses Clay through an AI tool such as Claude, ChatGPT, or Glean. On the `MCP` page, use the **Budget** column in the `MCP users` table to pick a budget for that user, or **No budget**. The list shows budgets the user has access to. Credits that user spends through MCP then count against the assigned budget. There is no separate "MCP budget" type — any credit budget can be assigned to MCP users, so you can create a budget just for MCP spend if you want to throttle it separately from workbooks and workflows.
+
+Every MCP call is checked against up to three independent limits at once:
+
+1.  **Workspace credits** — your workspace's overall credit balance. All spend draws from this.
+2.  **The user's MCP credit limit** — the per-user monthly cap set on the `MCP` page. See [MCP settings](https://university.clay.com/docs/mcp-settings).
+3.  **The user's assigned credit budget** — the shared budget pool, if one is assigned.
+
+All three must have enough credits remaining for an MCP call to go through. Whichever runs out first blocks the call. These limits are separate ceilings, not nested allowances: an MCP credit limit doesn't reserve part of a budget for that user. For example, a user with a 100-credit MCP credit limit on a shared 500-credit budget has two separate counters, and both go down with every MCP call. Other users and resources on the same budget also drain the 500 credits, so the budget can run out before the user reaches their 100-credit MCP limit.
+
+To let a team spend more through MCP while still capping each person, increase the shared budget's limit and set an MCP credit limit for every user on the `MCP` page.
 
 ## Email alerts for budget usage
 
