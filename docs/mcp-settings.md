@@ -167,6 +167,30 @@ To apply the same ICP check every time a rep uses Clay from Claude, put your ICP
 
 The MCP user credit limit is a rolling monthly limit. Credit spend automatically resets on the 1st of each month at midnight UTC.
 
+### How do I reset a user's MCP credit spend to zero?
+
+A workspace admin can reset a user's MCP credit spend to 0 at any time. You don't have to wait for the monthly reset or raise their limit. This is useful when a user, including an admin testing Clay through the Clay CLI or an AI tool, has hit their monthly MCP credit limit and needs to keep working.
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, find the user. You can search by name or email, and admins can find themselves here too.
+3.  Click the reset icon (tooltip: `Reset credit spend to zero`) on the user's row.
+4.  In the `Reset credit spend` dialog, click `Reset spend`.
+
+The user's `Credits used` goes back to 0 for the current month, and their `Credit limit` stays the same. They can spend up to their full limit again right away. To give a user more room every month instead, click the pencil icon next to their `Credit limit` and enter a higher amount. Only workspace admins can see the `MCP` page and reset credit spend. The `MCP` page is currently in beta. If you're a workspace admin and don't see `MCP` under **Orchestration** in the left sidebar, contact Clay support.
+
+### Is Clay MCP or Clay CLI usage unlimited or free?
+
+Usage through Clay MCP and the Clay CLI (signed in with `clay login`) isn't free. Paid actions you run through an AI tool or the Clay CLI spend the same workspace Actions and Data Credits as the same work run in the Clay web app.
+
+Clay doesn't cap total MCP or Clay CLI credit spend over time. Your credit spend is limited only by these two things:
+
+-   **Your workspace's credit balance.**
+-   **Your monthly MCP credit limit, if an admin has set one.** The limit resets on the 1st of each month at midnight UTC, or whenever an admin resets your spend to 0. Users showing `No limit` in the `MCP users` table have no per-user cap.
+
+Searches through the Clay CLI and MCP also count toward your workspace's search result quota. See [Using Clay as an API](using-clay-as-an-api.md) for the quota amounts.
+
+Clay MCP and the Clay CLI also have per-minute rate limits. These limits apply to each workspace, not to each user, and Clay MCP and the Clay CLI have separate limits so that one doesn't use up the other's. Each allows up to 600 requests per minute and up to 300 tool calls per minute. Requests over a rate limit fail with `Rate limit exceeded. Please retry in 60 seconds.` or `Too many tool calls. Please retry in 60 seconds.` Wait 60 seconds and try again.
+
 ### What happens when a rep hits their credit limit?
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
