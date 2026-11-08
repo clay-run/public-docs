@@ -9,11 +9,19 @@ last_synced: 2026-04-26T01:39:58.486Z
 
 Find companies that match your specific criteria within Clay's proprietary dataset.
 
-The `Find Companies` source lets you build targeted lists of companies using filters like industry, size, location, and keywords.
+The `Find Companies` source lets you build targeted lists of companies using filters like industry, size, location, and description keywords.
 
 It's perfect for creating sales prospect lists, identifying competitors, and conducting market research.
 
 **Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enrichments.
+
+## Where to start
+
+Open **Find leads** in the left sidebar or on your home page and choose **Companies**. In a workbook, use **+ Add → Find companies**. In a Workflow, add a **Find companies** node.
+
+Use **Find with filters** when available, or describe the companies you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
+
+For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
 
 ## **Creating a table with Find Companies**
 
@@ -26,10 +34,10 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
     -   **Industries** to include and exclude
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
-    -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
+    -   **Funding raised** — Filter by total funding raised across all known rounds, in pre-set ranges (for example, $1M–$5M, $5M–$10M). This reflects cumulative funding across all rounds, not the most recent round alone. To target companies that raised recently, use a signal (such as **Monitor for news & fundraising**) or enrich for the latest funding round with an integration like Crunchbase.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
-    -   **Keywords** to include or exclude
-        -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
+    -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
+        -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
     -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
@@ -37,10 +45,11 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies. The Audiences **Technographics** field is filled in only when the Find Companies search used at least one Technographics filter, and it holds the technologies that matched your filter — not the company's full tech stack. Companies sent to Audiences from a search without a Technographics filter have an empty Technographics field. See [Why does my Technographics filter return no results in my Companies audience?](#why-does-my-technographics-filter-return-no-results-in-my-companies-audience).
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
-        -   **Main categories** and **Parent categories**
+        -   **Categories** and **Subcategories** (labeled **Product categories** and **Product subcategories** in some search setups)
+        There is no vendor-domain filter — to target every product from one vendor, use **Vendors** and select the vendor by name.
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
@@ -75,6 +84,8 @@ Each result includes one or more **Structured Location** entries in the cell det
 A **custom table** (shown with the table icon in your workbook) is a blank canvas for data you already have — for example, a list of companies from your CRM, a CSV export, or a manually curated set of records. Create one by clicking `+ Create new` and selecting `Blank table`, or by [importing a CSV](csv-import-overview.md).
 
 **In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
+
+**Already have a company list and want to find contacts at those companies?** Once your companies are in a custom table — whether imported from a CSV, CRM export, or any other source — you can run a people search directly from it: click **Tools** → **Import** → **Find People at These Companies**, set your title, seniority, and location filters, and send results to an Audiences draft. See [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#choose-your-starting-point) for the full workflow.
 
 **Keeping related tables in the same workbook**
 
@@ -128,6 +139,19 @@ If you enable **technographics filters**, each company row that matches your cri
 
 Any enrichments you select during the import wizard, or add to the table afterward (e.g., finding emails, enriching headcount), consume their own Actions and Data Credits as usual — only pulling company records from Clay's dataset is free.
 
+### Why does my Technographics filter return no results in my Companies audience?
+
+In a Companies audience, **Technographics** is a text field (T icon) stored on each company record. The Technographics segment filter in Audiences uses the standard text operators — such as **`contains`** or **`contains any of`** — and matches against whatever value is saved in that field. It does not search Clay's technographics catalog, and it has no vendor, product, category, or vendor-domain mode.
+
+A "Technographics contains Trimble" audience filter returns no results when the companies in your audience have an empty Technographics field. The Technographics field is filled in only when companies are sent to Audiences from a Find Companies search that used at least one Technographics filter (**Vendors**, **Products**, **Categories**, or **Subcategories**). In that case, the field holds the technologies that matched your search filter, not the company's full tech stack. Companies sent to Audiences from a Find Companies search that used only other filters — for example industry, size, and location — have no technographics data in Audiences.
+
+To find companies that use a specific technology, use one of these options:
+
+-   **Run a new Find Companies search with a Technographics filter.** Reuse your industry, location, and size filters, add the **Vendors** or **Products** filter (for example, search for Trimble in **Vendors** or **Products**), and send the results to Audiences. The Technographics filter costs 3 credits per matching company row.
+-   **Fill in the Technographics field on companies already in your audience.** Bring the companies into a Clay table, run a technographics enrichment, and use `Upsert Audiences Record` to write the result to the **Technographics** field on the matching Audience records. Enrichments use credits, so test on a small batch first. See [Audiences](audiences.md#sending-data-from-clay-table).
+
+You can't use a Companies audience segment to limit which companies a Find Companies search returns. In Find Companies, audience segments can be used only to exclude companies from the results.
+
 ### Why does my table show fewer rows than the preview count?
 
 **The import may still be in progress.** Find Companies imports process asynchronously — rows are added in batches. If you check right after clicking Import, the row count will be lower than the final total. Wait a minute and refresh to see the complete count.
@@ -163,6 +187,27 @@ These two filters measure different things:
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
 
+### Why does enriched employee count differ from ZoomInfo or other sources?
+
+Large discrepancies between Clay's enriched employee count and another provider's figure typically have two causes.
+
+**The domain may have resolved to a subsidiary or child entity, not the global parent.** When you enrich a company by domain, Clay resolves the domain to whichever entity data providers associate with it — typically the company whose professional network profile lists that domain as its website. Country-specific sites, careers domains, and unit-level domains are often associated with a regional subsidiary or child entity rather than the global group. For example, `bankofchina.com` is associated with Bank of China (UK) Limited (the London subsidiary), not the global parent — which lists `boc.cn` as its domain. The same pattern applies to individual hotel or franchise sites, shared careers domains, and any domain primarily used by a subsidiary. Clay returns a real, correct company; it may just not be the entity you intended.
+
+To match the intended entity, enrich from the company's professional network company URL or its confirmed primary corporate domain instead of a regional or careers domain. For guidance on using company profile URLs as identifiers, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#use-linkedin-urls-not-domains-as-company-identifiers).
+
+**Clay's employee count methodology differs from compiled-headcount providers.** Clay's count reflects the number of professional network profiles discoverable for the matched company — the same measurement described in [What does the Estimated employee count filter measure?](#what-does-the-estimated-employee-count-filter-measure) above. Providers like ZoomInfo publish compiled or self-reported figures that may draw from regulatory filings, surveys, or other sources. For organizations with low professional-network presence — government agencies, military branches, educational institutions, and many non-Western companies — Clay's count will run substantially below a compiled headcount figure, and this is expected.
+
+For size-based segmentation (for example, filtering to companies with more than 1,000 employees), use the self-reported **Company size** band rather than an exact enriched count, or cross-validate against a second source — exact counts near a threshold are too sensitive to methodology differences to use as a reliable cut-off on their own.
+
+### What does the Funding raised filter measure?
+
+**Funding raised** reflects a company's total cumulative funding across all known rounds — not just the most recent or latest round alone. Selecting a range (for example, $1M–$5M) returns companies whose total funding falls in that range.
+
+The filter is not a recency filter — it does not narrow results by when a company raised. To target companies that raised recently, use one of these approaches instead:
+
+-   **Monitor for news & fundraising** signal — fires when a company in your table appears in fundraising-related news, including new round announcements.
+-   **Enrich a company's latest funding round** (Crunchbase integration) — returns the date, type, and amount of a company's most recent round.
+
 ### Why do companies sourced with a revenue filter have different enriched revenue values?
 
 The **Annual revenue ranges** filter in Find Companies uses estimated revenue from third-party sources stored in Clay's company database — the figure on file at search time.
@@ -186,6 +231,35 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 The **`Industry`** field in Clay's company data — returned by the Companies, People, Jobs enrichment and present in Find Companies results — reflects the industry category a company has set on its professional network profile. Clay's underlying data provider scrapes professional network company profiles; the industry values conform to the professional network's industry taxonomy naming system (for example: *Software Development*, *Financial Services*, *Technology, Information and Internet*).
 
 Because companies self-select their industry on the professional network, the values are open-ended text names rather than a fixed coded list. Clay recognizes approximately 457 common values. If a company has not set an industry on its professional network profile, the field returns empty.
+
+### Can Enrich Company classify government accounts as federal, state & local, or global government?
+
+No. The **Enrich Company** enrichment returns **Type** and **Industry** as single text values, and neither one splits government accounts into sub-categories such as Global Government, U.S. Federal, or U.S. State & Local. A government account shows a **Type** of **Government Agency**, and that is the most granular government value Enrich Company returns.
+
+The full set of **Type** values Enrich Company can return is: Educational, Government Agency, Non Profit, Partnership, Privately Held, Public Company, Self Employed, and Self Owned. These are the same values as the **Company types** filter in Find Companies.
+
+**To classify government accounts into your own categories (for example, Global Government, U.S. Federal, and U.S. State & Local):**
+
+1.  Run **Enrich Company** on your company domains.
+2.  Add a **Use AI** or Claygent column that takes the company domain (and optionally the company name and **Type**) as input.
+3.  In the prompt, list your categories and ask it to return exactly one category per company, plus a short reasoning note so you can spot-check the results. Domain endings such as `.gov` and `.mil` are useful signals for U.S. federal accounts.
+4.  To avoid spending credits on non-government companies, open **Run settings → Only run if** on the AI column and add a run condition — for example, only run when the domain ends in `.gov` or when the **Type** from Enrich Company is **Government Agency**. See [Conditional runs](conditional-runs.md) for how to write run conditions.
+
+### What country values does Enrich Company return?
+
+The **Country** field returned by the **Enrich Company** enrichment uses two-letter ISO 3166-1 alpha-2 country codes — for example, `US` (United States), `GB` (United Kingdom), `CA` (Canada), and `DE` (Germany). Enrich Company does not return full country names in the **Country** field.
+
+To match Enrich Company's **Country** values to the country values in your CRM (for example, a country picklist), map each two-letter code using the standard ISO 3166-1 alpha-2 list. The **Country** field can be empty when Clay's company data has no country on file for that company — handle blank values in your mapping.
+
+### What's the difference between Org Id, Company Id, and Clay Company Id in Enrich Company?
+
+The **Enrich Company** enrichment returns three different numeric IDs for each company. Each ID comes from a different system:
+
+-   **Org Id** — The company's ID on the professional network. It's the number that appears in the company's professional network profile URL when the URL uses a numeric ID (for example, `.../company/12345`).
+-   **Company Id** — The internal record ID used by Clay's underlying company data provider. It is not the professional network ID (that's **Org Id**) and not Clay's own ID (that's **Clay Company Id**). **Company Id** can be empty.
+-   **Clay Company Id** — Clay's own ID for the company. It's the recommended key for matching Enrich Company results to company records in your CRM.
+
+**Clay Company Id** doesn't depend on the company's domain or name, so a rebrand or domain change alone doesn't change it. In rare cases, a Clay Company Id can change when two company profiles in Clay's company data are merged — Enrich Company always returns the company's current Clay Company Id. See [Clay Company ID from Find Companies doesn't match the ID from Enrich Company](finding-companies-and-people-in-clay.md#clay-company-id-from-find-companies-doesnt-match-the-id-from-enrich-company) for how to handle older IDs.
 
 ### What are the available AI Subindustry filter values?
 

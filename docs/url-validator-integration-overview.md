@@ -25,8 +25,14 @@ The **Check if URL is Valid** action determines whether a given URL is active an
 
 ### Input fields
 
--   URL: URL of the link you want to verify.
+-   URL: URL of the link you want to verify. You can enter a full URL (for example, `https://clay.com`) or just a domain (for example, `clay.com`).
+-   Try variants (optional, off by default): If the original URL is invalid, the Check if URL is Valid action also tries other protocol and www. versions of the URL to find a valid one. For example, for `example.com` it tries `http://example.com`, `https://example.com`, and `www.example.com`.
 
 ### Output fields
 
 -   Valid:  A boolean (true or false) indicating if the URL is valid.
+-   Valid Url: The version of the URL that was found to be valid. This is useful when **Try variants** is on, because it shows which version (for example, the www. version) worked.
+
+### Domains that only load with www.
+
+Some companies' websites only load on the www. version of their domain (for example, `www.example.com` loads but `example.com` doesn't). If you check a bare domain with **Try variants** turned off, the Check if URL is Valid action only checks the `https://` version of exactly what you entered, so a domain like this can be marked invalid even though the company's website is live. Before you replace a domain that was marked invalid, turn on **Try variants** and run the Check if URL is Valid action again.

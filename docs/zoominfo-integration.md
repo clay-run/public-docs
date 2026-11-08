@@ -67,7 +67,7 @@ Enrich up to 25 contacts at once using their ZoomInfo contact IDs. Use this acti
 **Inputs**
 
 -   **Contact IDs:** ZoomInfo contact IDs to enrich, entered as a comma-separated list. Only the first 25 IDs are enriched per call.
--   **Output fields (optional):** The contact fields to return. Defaults to all available fields if none are selected.
+-   **Output fields (optional):** The contact fields to return. Defaults to all available fields if none are specified.
 
 ### **Run settings**
 
@@ -176,7 +176,7 @@ The built-in ZoomInfo integration is the easiest way to use ZoomInfo inside Clay
 -   **Enrich Contact** — Pull contact details using a name, email address, or company name
 -   **Enrich Company** — Get firmographic data like revenue, employee count, and competitors
 -   **Search contacts** — Find contacts using filters like job title, department, or country
--   **Enrich contact(s) by ID** — Bulk enrich up to 25 contacts at once using their ZoomInfo contact IDs
+-   **Enrich contact(s) by ID** — Enrich up to 25 contacts at once using their ZoomInfo contact IDs
 
 These actions handle authentication, rate limiting, and error handling automatically. Each run costs 1 Clay credit and draws on your connected ZoomInfo account. For most enrichment needs — contact data, company data, and prospecting searches — the built-in integration is the quickest path.
 
@@ -189,3 +189,18 @@ For most use cases, start with the built-in integration. Use the HTTP Connector 
 ### **Does using the ZoomInfo API via Clay's HTTP Connector require a ZoomInfo subscription?**
 
 Yes. To call the ZoomInfo API directly via Clay's HTTP Connector, you need an active ZoomInfo plan that includes API access. ZoomInfo's API access is a separate entitlement from a standard ZoomInfo subscription — even if you have ZoomInfo credits available, you may need API access specifically provisioned or purchased through your ZoomInfo Account Manager. Contact your ZoomInfo Account Manager to confirm whether your plan includes API access before setting up an HTTP API connection to ZoomInfo in Clay.
+
+### **Why is the email field blank even though ZoomInfo shows "Contact found"?**
+
+ZoomInfo's "Enrich Contact" action can return an email address in one of two different fields depending on the record:
+
+-   **`email`** — a single email value that maps directly to Clay's pre-built email output field. When ZoomInfo populates this field, your email column fills in automatically.
+-   **`emailAlt`** — an array of alternate email addresses returned in the raw ZoomInfo response. This field is not pre-mapped as a click-selectable output, so it does not automatically populate your email column.
+
+When ZoomInfo only populates `emailAlt` for a record (and leaves `email` empty), your email column will appear blank even though the row shows "Contact found" and email data is present in the enrichment result.
+
+**To capture both fields, add a formula column:**
+
+1.  Add a formula column to your table next to the ZoomInfo enrichment column.
+2.  In the formula input, describe the logic in plain language — for example: *"Return the email from the ZoomInfo result. If it's empty, return the value from the first item in the emailAlt array."* Clay's AI formula generator will write the correct formula for you.
+3.  Use this formula column as your email source everywhere downstream instead of the direct email output field.

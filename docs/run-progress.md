@@ -1,12 +1,16 @@
 ---
 title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
-  across your tables, including how to set a row limit to control which rows are
-  processed, manually trigger unrun enrichment cells, run enrichments on a
-  specific subset of rows, troubleshoot cells stuck in Queued status, diagnose
-  enrichments that aren't triggering automatically, resolve persistent error
-  messages by clearing the browser cache, and troubleshoot slow cell loading
-  when using multiple tables in a workbook.
+  across your tables and workflows, including how to use the built-in Errored
+  rows view to filter to failed rows, what happens when a workflow node fails
+  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
+  from the runs dashboard, set a row limit to control which rows are processed,
+  manually trigger unrun enrichment cells, run enrichments on a specific subset
+  of rows, troubleshoot cells stuck in Queued status, recover action column cells
+  stuck in Queued status when the Stop button is grayed out, diagnose enrichments
+  that aren't triggering automatically, resolve persistent error messages by
+  clearing the browser cache, and troubleshoot slow cell loading when using
+  multiple tables in a workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -69,6 +73,105 @@ The table-level progress bar, shown at the bottom right of a table, provides a s
     -   Table-level auto-run and scheduled run settings.
     -   A toggle to enable/disable column-level run status data.
 
+## Filtering to errored rows
+
+Every Clay table includes a built-in **Errored rows** view that instantly filters the table to show only rows where at least one enrichment cell failed. Use this view to quickly identify and investigate failed runs without manually setting up a filter.
+
+To open the Errored rows view:
+
+1.  Click the view selector dropdown at the top of the table toolbar (it shows the name of your current view, for example **Default view**).
+2.  Select **Errored rows**.
+
+The table immediately updates to display only rows with at least one 🔴 Failed cell. Click any red cell to open the **Cell Details** panel and read the specific error message for that row.
+
+To re-run only the errored rows, select them (click a row number, then **Shift+click** to extend the selection) and right-click → **Run [N] rows**. Alternatively, right-click any enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows** to re-run just that column for all currently visible errored rows.
+
+To return to the full table, click the view selector again and choose **Default view** or **All rows**.
+
+**For automated error monitoring:** Enterprise workspaces can use [table alerts](table-alerts.md) to receive notifications when a column's failure rate exceeds a configured threshold — so you're alerted to errors without checking the table manually.
+
+## What happens when a workflow node fails
+
+In Clay Workflows, when a node returns an error, the node is marked **Failed** and the whole run ends with **Failed** status. One example is an Apollo enrichment node failing because its connection needs to be re-authenticated. Nodes after the failed node don't run, and any other branches of the same run that haven't finished are stopped too.
+
+### Can a workflow continue or fall back to another provider when a node errors?
+
+Workflows don't support continuing past an errored node or routing to a backup node when a node errors. A **Conditional** node placed after the failed node never runs, because the run has already ended. This means you can't use a Conditional to build "if Apollo errors, try another provider" logic.
+
+A **Conditional** node can route on a node that succeeds but finds nothing. When a provider runs successfully but returns no data (for example, Apollo finds no phone number for the person), the node completes normally. A downstream **Conditional** can then check for the empty result and send the run to a fallback provider.
+
+To recover runs that ended because a node failed, fix the underlying issue (for example, re-authenticate the connection), then use **Bulk re-run** (below) to restart the failed runs at their failed step.
+
+### Why do workflow nodes fail with timeout errors?
+
+In Clay Workflows, an action node that calls an outside provider — for example, adding a lead to an Instantly campaign, finding a personal email, or looking up a phone number — times out if the provider doesn't respond within **100 seconds**. 100 seconds is the default limit for action nodes; some actions have longer limits. A timed-out node shows an error such as `Tool execution failed with status: ERROR_TIMEOUT`.
+
+A timed-out node is marked **Failed** like any other node error, so the run ends at that node and the nodes after it don't run. A timeout means the provider took longer than 100 seconds to answer that node's request, so changing how the node is batched doesn't change the timeout limit. Workflows don't have a setting to skip a node that times out and continue the run.
+
+To recover runs that failed with a timeout:
+
+-   **From the UI:** use **Bulk re-run** (below) to restart the failed runs at their failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating them.
+-   **On a schedule:** use the Clay CLI to find failed runs and re-run them automatically — see **Retrying failed workflow runs via the CLI** (below).
+
+### Continuing past failed items in Repeat mode
+
+The **If an item fails** setting is available to all Workflows customers. When a node has **Repeat** turned on, it runs once for each item in a list. The node's **If an item fails** setting controls what happens when individual items error:
+
+-   **Continue the run** — The node completes, failed items are left out of its output, and the run keeps going.
+-   **Mark the run as failed** — The run is marked **Failed** after all items finish.
+
+## Bulk re-run for Workflows
+
+Bulk re-run lets you re-run many workflow runs at once, straight from the workflow runs dashboard. Available on all plans.
+
+Filter or select the runs you care about, choose how to restart them, and kick them all off in a single action — without opening each run individually.
+
+**To bulk re-run workflow runs:**
+
+1.  Open the **Runs** dashboard for your workflow.
+2.  Use the dashboard filters — for example, filter by **Failed** status or by time range — to scope to the runs you want to re-run, or select individual runs by checking them manually.
+3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run** in that bar.
+4.  Choose a restart mode:
+    -   **From where they failed** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
+    -   **From a specific node** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
+    -   **From the top** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
+5.  Review the **preview** before confirming. The preview shows exactly how many new runs will be created and an estimated credit cost, so you can verify the scope before committing any credits.
+6.  Click **Confirm** to start the bulk re-run.
+
+**No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
+
+### Retrying failed workflow runs via the CLI
+
+If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins), signed in with `clay login` as a workspace Admin or Editor. API keys don't include the `cli:all` scope these commands need. To run the loop from a cron job or server, see [Running the Clay CLI unattended](using-clay-as-an-api.md#running-the-clay-cli-unattended-cron-jobs-scheduled-scripts-and-servers).
+
+**Typical agent-driven retry loop:**
+
+1.  **Find failed runs** for your workflow:
+    ```
+    clay workflows runs list <workflowId> --status failed
+    ```
+    Returns run IDs, timestamps, and status for each failed run. Paginate large result sets with `--cursor` and `--limit`.
+
+2.  **Inspect a specific failed run** to confirm the failure reason and see which step failed:
+    ```
+    clay workflows runs get <runId> --nodes
+    ```
+    Returns run status, per-node progress, and error messages. Add `--verbose` for full node inputs and outputs.
+
+3.  **Re-run the failed runs** from the node where they failed:
+    ```
+    clay workflows runs rerun <workflowId> <runIds...> --from failed
+    ```
+    `--from failed` is the default: each run restarts at the node it failed on, and runs that didn't fail are skipped. Use `--from node --node <nodeId>` to start every run at a node you choose, or `--from trigger` to recreate each run from its trigger (runs with no trigger are skipped). To re-run every failed run in one command, pipe the list into `rerun`:
+    ```
+    clay workflows runs list <workflowId> --status failed | jq -r '.data[].runId' | xargs clay workflows runs rerun <workflowId>
+    ```
+    Monitor the new runs with `clay workflows runs get <runId> --wait` or check the **Runs** dashboard in the UI.
+
+Additional `clay workflows runs` subcommands: `steps <workflowId> <runId>` (list the execution steps of a run), `pause <workflowId> <runId>` (pause an active run), `resume <workflowId> <runId>` (resume a paused run).
+
+**Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `rerun --from failed` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors (such as timeouts), and re-runs them from their failed node without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
+
 ## Stopping a run
 
 To stop a running table, click the **Stop** button in the run summary panel at the bottom-right of the table.
@@ -108,7 +211,36 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
-**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**. Use **Run [N] cells** (not **Run [N] rows**) when you want to re-run cells that already have results — **Run [N] rows** skips cells that already ran successfully with unchanged inputs.
+
+**If an enrichment column shows a clock icon after "Run [N] rows" and doesn't complete**, this typically occurs on tables with auto-run turned off (shown as **Manual** in the top navigation bar). When Clay runs a row, it dispatches upstream columns first. While upstream columns are in progress, Clay marks any downstream columns that depend on them as out-of-date. On manual tables, those downstream columns are not automatically re-triggered after the upstream run finishes — leaving a clock icon that doesn't resolve on its own. On tables with auto-run enabled, downstream cells can re-run automatically after upstream columns complete.
+
+**To run enrichments on specific rows when a column has upstream dependencies, use the filter + run column approach instead:**
+
+1.  Click **Filter** in the table toolbar and add conditions that match only the rows you want — for example, filter by name, company, or any field that identifies your target rows.
+2.  Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+
+Running the column directly rather than the rows bypasses the dependency timing issue — the column run executes as a manual trigger and processes all visible rows in the current filtered view, regardless of the table's auto-run setting.
+
+Remove the filter when the run finishes to return to the full table view.
+
+### Why did Run column run every row when I only highlighted a few?
+
+The run options on an enrichment column's header don't use the rows or cells you've highlighted. Column header runs cover every row in the current view: all rows in the table, unless you've applied a filter or [row limit](#setting-a-row-limit). For example, say you highlight rows 1–50 and then choose **Run [N] empty or out-of-date rows** from the column header. Clay runs that column on every empty, errored, or out-of-date row in the view, not just the 50 you highlighted, and uses credits for each one. If your workspace runs out of credits partway through, the remaining cells show **Not enough Clay credits 😢**.
+
+The column header has the following run options:
+
+-   **Run first [N] rows** (play button on the column header): runs the first 10 rows in the view, or every row if the view has fewer than 10.
+-   **Choose number of rows to run** (column header menu → **Run column**): opens a dialog where you enter how many rows to run and, optionally, a **Starting from row**. These rows are force-run, so rows that already have results run again and use credits again.
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**): runs every empty, errored, or out-of-date row in the view.
+-   **Force run all [N] rows** (column header menu → **Run column**): re-runs every row in the view, including rows that already have results.
+
+To run a column only on the rows you've highlighted:
+
+1.  Select the cells in that column for the rows you want.
+2.  Right-click and choose **Run [N] cells**. Only the selected cells run. **Run [N] cells** is a force run: selected cells that already have results run again and use credits again.
+
+If you select whole rows instead (by clicking row numbers), the right-click option is **Run [N] rows**. It runs every enrichment column on those rows only. **Run [N] rows** skips cells that already ran successfully with unchanged inputs, so those cells aren't charged again.
 
 ## Setting a row limit
 
@@ -127,9 +259,13 @@ To remove the limit and return to the full table, click **Show all rows** in the
 
 ## Troubleshooting cells stuck in Queued status
 
+There is no limit on how many rows you can trigger to run at once. You can queue an entire table of any size — Clay dynamically queues all rows and processes them concurrently without requiring you to batch or stagger your triggers. Very large runs take time to complete because rows queue rather than all fire at the same instant, but Clay manages this automatically. When individual enrichments use third-party APIs with their own rate limits, Clay handles those constraints through queuing as well.
+
 Cells show a **Queued** status when they are waiting to be processed. This is normal when running large tables — Clay processes many rows concurrently, but rows still queue when the system is handling prior requests or when an external API is rate-limiting responses. In most cases the queue resolves automatically.
 
 **If enrichments across multiple tables or workbooks appear stuck at the same time**, check **[status.clay.com](https://status.clay.com/)** before troubleshooting individual tables — simultaneous stalling across tables is often caused by a platform-wide incident. If an incident is active, the Clay team is already working on a fix and no further action is needed on your end.
+
+**If you need enrichment results before the incident resolves**, you can add a column using a different provider for the same enrichment type. For example, if an **Enrich Person** column is stuck, click **Tools** in the top-right corner of your table, search `Enrich person`, and select a different provider from the results — Clay connects to many providers offering the same enrichment type, including Apollo, Datagma, and others. To avoid duplicate enrichment on rows that already have a result from your primary column, open the new column's **Run settings**, expand **Add run condition**, and set the condition so it only runs when your original enrichment column is empty (for example, `[Original Enrich Column] is empty`). The alternative provider then runs only on rows the primary hasn't yet returned a result for. See [Waterfalls](building-a-data-waterfall.md) for more on chaining providers with run conditions.
 
 If cells remain Queued for an extended period, common causes include:
 
@@ -156,6 +292,15 @@ If cells remain Queued for an extended period, common causes include:
 3.  Remove the filter when the run finishes.
 
 > **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
+
+**If action column cells are stuck in Queued status and the Stop button is grayed out:** The Stop button becomes active when there are active run records in the queue. If an action column — a column that pushes data to an external system such as a CRM or marketing platform (for example, Update Marketo or Update HubSpot) — shows cells in "Queued..." status but the Stop button in the run summary panel is grayed out, those cells' run records are no longer present. There is nothing for Stop to cancel, and force-running the column will not clear these cells either.
+
+To recover from this state:
+
+1.  Right-click the action column header and select **Duplicate column**. The duplicate starts with a fresh queue state and no stuck entries.
+2.  Delete the original column. Deleting removes the stuck entries.
+
+The duplicate keeps your column settings. Once you have deleted the original, check the duplicate's auto-run setting before triggering it to confirm it is configured as expected.
 
 ## Troubleshooting: table appears stopped at a partial percentage with no credits consumed
 
@@ -189,6 +334,30 @@ Despite being a "stopped before running" state, these rows are classified as Fai
 
 -   **Make the input optional.** Open the column settings and find the input field that is blank for those rows. Turn off its **Required to run** toggle. The column will run for all rows; for rows where that input is blank, the column proceeds without it.
 -   **Add a run condition.** Add a [run condition](conditional-runs.md) so the column only fires when the required input has a value. Rows without that input will show **"Run condition not met"** instead — and unlike "Some inputs missing," that status is treated as a successful skip (🟢), so those rows no longer appear in errored row views.
+-   **Consolidate inputs spread across multiple enrichment columns using a Merge column.** If the required input value exists in your table but lands in different columns per row — for example, an Org ID that one enrichment provider returns in one column while another provider returns it in a different column — the single column you mapped as the input will be blank on rows where the other provider ran. Add a [Merge column](table-columns-overview.md#merge-columns) that combines every column holding that input value; it returns the first non-empty value per row. Then re-map the enrichment's input to the merged column so it receives the value regardless of which source populated it.
+
+## Troubleshooting: cells showing "Waiting for another column to finish"
+
+When a cell shows **"Waiting for another column to finish"**, the column depends on an upstream column that is still running or queued. The cell is blocked and will not run until the upstream column completes — no action is needed on your part if the upstream column is actively processing.
+
+This status most commonly appears on formula columns that extract values from a Clay Function column that is in **"Awaiting Callback"** state. Because the formula cannot calculate until the function returns a result, every row where the function is still processing shows **"Waiting for another column to finish"** in those dependent formula cells.
+
+"Waiting for another column to finish" also shows up in a waterfall's final output column (for example, **Work email**). That output column waits on the provider steps inside the waterfall, so its rows show "Waiting for another column to finish" until those steps return a result.
+
+**To confirm the upstream column is the cause:**
+
+1.  Look across the same row for an enrichment or function column whose cells show **"Awaiting Callback"**, **"Queued"**, or **"Running"** status.
+2.  Once that upstream column finishes processing for the row, the dependent cells automatically recalculate and the **"Waiting for another column to finish"** status clears on its own.
+
+**If the upstream column is stuck in Queued** and isn't actively processing, force-running the column that shows "Waiting for another column to finish" won't help. Clay doesn't run a cell while one of its inputs is still queued or running. Unblock the upstream column instead:
+
+1.  Click **Filter** in the table toolbar, select the upstream column (for example, the waterfall step that shows **Queued**), and set the condition to **is queued**.
+2.  Click that column's header → **Run column** → **Force run all [N] rows**. With the filter active, only the queued rows re-run.
+3.  Once the upstream cells finish, the waiting cells run automatically and the "Waiting for another column to finish" status clears.
+
+**If the upstream column is a Clay Function stuck in "Awaiting Callback"**, see [What does "Awaiting Callback" mean on a function column?](functions.md#what-does-awaiting-callback-mean-on-a-function-column) for how to re-run or unblock it.
+
+**If you need a column to run regardless of whether the upstream column has returned a value**, add or adjust a [run condition](conditional-runs.md) on the dependent column so it no longer waits on that upstream result.
 
 ## Troubleshooting: enrichments not triggering automatically despite auto-run being enabled
 

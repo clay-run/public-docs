@@ -44,7 +44,7 @@ Send Table Data **pushes** data from your current table into another table. It c
 
 To send data from one table to another:
 
-1.  While in a table, click **+ Add column** at the end of the column headers and select **Send table data** (listed under Exports). You can also reach it by opening the **Exports** tab in the command center sidebar.
+1.  While in a table, select **Tools > Export > Send table data**.
 2.  Select the destination table.
 3.  Choose the method:
     -   `Send row`: Choose which columns to send as a row to the other table.
@@ -83,6 +83,8 @@ The easiest way to configure `Send row for each item in a list` is to use the **
 
 This opens the Send Table Data configuration with the correct list field already pre-populated — so you don't need to manually identify which field to use as the list source.
 
+**Note:** When using **Send row for each item in a list** (including via the **Write each item to new row in other table** shortcut), all destination rows can still show the same contact's data even when the list source is set up correctly — for example, if "Find Contacts at Company" found 8 contacts but all 8 destination rows display the first contact repeated. This happens when formula columns in your source table that always extract a specific item from the list (such as "First Name", "Last Name", or "Title" sub-columns derived from the enrichment, whose formulas resolve to the first contact every time) are also included as additional data to send with each row. Those formula values are evaluated once per source row and stamped identically onto every fanned-out destination row. **Fix:** Uncheck those person-detail sub-columns from the additional data section of the Send Table Data configuration. The individual contact fields are already present in the destination table through the list expansion — open the destination table, click the **"rows from: [source table name]"** cell, and use **Add to column** to extract each field (first name, last name, title, and so on) into its own destination column.
+
 **Selecting the right list field manually**
 
 The list input shows a **"Type / to insert column"** placeholder when no column has been selected. Click in the field, type `/`, and pick the column that holds your array data (for example, `Job Openings` or `Contacts`). **If you save without selecting a column, the column will run but fail at runtime with `Invalid send table data inputs … "listData" … "Required"`** — meaning Clay has no list to iterate over.
@@ -92,6 +94,26 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 **If the column holds a stringified JSON array** — for example, a text value that looks like `[{"name": "Alice"}, {"name": "Bob"}]`, common when data arrives from an HTTP API call or webhook — Clay won't recognize it as a native list and will show the same **"Please add a valid list."** error. To fix this, click the **gear icon** on the right side of the list input to switch to formula mode, then enter `JSON.parse(/YourColumn)`, replacing `YourColumn` with the name of your column (use `/` to reference it). This converts the text string into a native array that Clay can iterate over.
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
+
+**Which sub-field to select when the list comes from a waterfall or a function**
+
+When your contacts come from a people waterfall, the **Send table data** list can't point at the waterfall's output as a whole. This applies both to a waterfall in your table and to a function that wraps one (for example, a "Find ICP People" function). A waterfall tries each contact provider in order, such as **Find Contacts at Company** and then **Find people at company**, and stops at the first provider that returns contacts. Each provider step keeps its own result, and that provider's contacts are in a `people` list inside it. On any given row, only the provider that found contacts has a filled `people` list. The providers after it didn't run.
+
+To pick the right sub-field in Send table data:
+
+1.  Choose **Send row for each item in a list**.
+2.  Click in the **Select a list** field and type `/`.
+3.  Open the waterfall or function column's output and pick one provider's result (for example, **Find Contacts at Company**).
+4.  Select that provider's `people` field, not the provider's whole result. Each person in the `people` list becomes its own row in the destination table.
+
+If you select a provider's whole result instead of its `people` field, Clay shows **"Please add a valid list."** because the result is an object, not a list. A function only shows per-provider sub-fields if the function returns each provider's result as an output. If the function returns a single combined `people` field, select that field instead.
+
+Because a different provider can fill the list on each row, one Send table data column only sends contacts from the provider you mapped. Rows where that provider didn't run fail with `Invalid send table data inputs … "listData" … "Required"`. To send contacts from every row, use one of these options:
+
+-   **Add one Send table data column per provider.** Map each column to a different provider's `people` field. Give each column a run condition so it only runs when that provider's `people` list has a value.
+-   **Send the first non-empty list.** Create a formula column that returns whichever provider's list is filled, for example `{{Provider A}}?.people || {{Provider B}}?.people`, with one entry per provider in waterfall order. Then select that formula column in **Select a list**. You can also enter the same expression directly in the list input's formula mode.
+
+**Avoid duplicate contacts when you re-run.** `Send row for each item in a list` always creates new rows, and **Update existing rows on re-run** doesn't apply to it. Re-running a row that already sent its contacts sends them again as duplicate rows in the destination table. When you fix the list mapping, re-run only the rows that errored or show **Sent 0 rows**. Don't re-run the whole column.
 
 ### Routing data conditionally with multiple Send table data columns
 
@@ -104,7 +126,7 @@ A common pattern with people-finding enrichments is to route contacts down one o
 -   **When few contacts are found (e.g., fewer than 3):** A "Send table data" column with a run condition like `{{Find Contacts at Company}}?.peopleCount < 3` sends the raw `People` list directly to the destination table using **Send row for each item in a list**.
 -   **When many contacts are found (e.g., 3 or more):** A second "Send table data" column with the inverse condition (`{{Find Contacts at Company}}?.peopleCount >= 3`) only fires when there are more contacts than needed. An upstream AI column first filters the full list down to the top picks — the AI column's prompt should ask for a **JSON array** of the selected contacts — and that AI column's output becomes the list source for this second Send table data column.
 
-To add a second Send table data column, click **+ Add column** and select **Send table data** again. Each column is configured and named independently (Clay auto-names them "Send table data", "Send table data (2)", etc.).
+To add a second Send table data column, click **Tools > Export** and select **Send table data** again. Each column is configured and named independently (Clay auto-names them "Send table data", "Send table data (2)", etc.).
 
 **Setting up run conditions:** In the column configuration panel, scroll to **Run settings**, enable **Only run if**, and enter the condition formula.
 
@@ -114,6 +136,18 @@ To add a second Send table data column, click **+ Add column** and select **Send
 
 -   Make the run conditions mutually exclusive so each row takes exactly one path and is sent only once.
 -   If both Send table data columns target the same destination table, be mindful of the **Update existing rows on re-run** setting — if both columns can match the same row, one could overwrite what the other sent.
+
+### Can I export to a table from Clay Workflows?
+
+Send Table Data is only available inside a Clay table, where you open it from **Tools → Export → Send table data**. Clay Workflows (currently in beta) doesn't have a Send table data node or any other node that writes rows directly into a Clay table. If you search the **Export** tab of a workflow node, or open the **Send and export** menu on the workflow canvas, you won't find an "export to table" option. This applies to every workflow, including workflows that start from a segment or run a lookalike search like **Find company lookalikes**.
+
+To get workflow results into a Clay table, send them to a table's webhook URL:
+
+1.  Create a table with a webhook source (**Pull in data from a Webhook**), or open an existing table that already has a webhook source, and copy its webhook URL. See [Webhooks in Clay](webhook-integration-guide.md) for setup steps.
+2.  In your workflow, add an **HTTP API** node after the step whose results you want to keep. Point it at the table's webhook URL and include the fields you want to send in the request body.
+3.  Run the workflow. Each request the HTTP API node sends adds a new row to the webhook table.
+
+This method only works with tables that have a webhook source, and each request creates a new row rather than updating an existing one. If you need Send Table Data features such as updating existing rows or `Send row for each item in a list`, run the enrichment in a Clay table instead and add a Send Table Data column there.
 
 ## Advanced settings
 
@@ -126,6 +160,8 @@ This setting controls row-level behavior only. It is separate from the column-le
 **Auto-extract new columns**
 
 Automatically creates new columns in the destination table for any that don't already exist.
+
+Auto-extract new columns checks the destination table's [column limit](table-columns-overview.md#column-limits) against every new column a Send table data column needs to create at once, not one column at a time. If the new columns would put the destination table over its column limit, none of them are created. See "A mapped column never appears in the destination table" under [Best practices & troubleshooting](#best-practices--troubleshooting).
 
 **Include column colors**
 
@@ -176,28 +212,108 @@ When merging data from multiple source tables into a single destination table, f
 
 **Prevent duplicate rows in the destination with auto-dedupe.** When multiple source tables push records to the same destination, the same record can arrive more than once — for example, the same company appearing in two different searches. To handle this automatically, enable [auto-dedupe](table-management-settings.md#auto-dedupe) on a unique identifier column in the destination table (such as domain, email address, or account ID). Clay detects duplicate values in that column and removes the newer duplicate row on arrival, keeping the oldest row by default. This is row-level deduplication: whichever row is kept survives in full; the duplicate row is deleted entirely. Auto-dedupe does not merge field values from the two rows. For coalescing a single best value from multiple columns into one (for example, the best available email from two enrichment sources), use a [Merge column](table-columns-overview.md#merge-columns) instead.
 
+## Guide: Tracking enrichment data changes over time
+
+Use this pattern when you want to record how enrichment values change across repeated runs — for example, tracking which companies appear on or drop off a technology-adoption list, monitoring when company headcount or funding stage shifts, or building an audit log of CRM field values over time. The pattern stores one row per company in a current-state table and builds an append-only history log in a second table using Send Table Data.
+
+**Table setup**
+
+This pattern requires two tables:
+
+-   **Table 1: Current state table** — Keep one row per company (or person, account, etc.). Run your enrichment here (for example, HG Insights technographic data). Store the current result in a field such as `HG Current Status`. Sync that field to Salesforce or your CRM.
+
+-   **Table 2: History log table** — Stores one row per enrichment snapshot. Receives new rows from Table 1 via Send Table Data. Columns typically include: Account ID, a timestamp field, the enrichment status, and any relevant details.
+
+**Configuring Send Table Data to append rather than overwrite**
+
+1.  In Table 1, select **Tools > Export > Send table data**.
+2.  Select the history log table as the destination.
+3.  Choose **Send row** and check the fields you want to log: Account ID, the enrichment status column, and any other fields you want to retain.
+4.  Open **Advanced settings** and turn off **Update existing rows on re-run**.
+5.  Click **Save**.
+
+With **Update existing rows on re-run** off, every time Send Table Data runs for a given row, it creates a new row in the history log instead of updating the previous one, building an append-only record of each enrichment check. First-time sends always create a new row regardless of this setting.
+
+**Recording when each snapshot was taken**
+
+Send Table Data does not automatically add a timestamp to each history row. To capture the date each enrichment was run, add a **Formula** column in Table 1 before configuring Send Table Data:
+
+1.  Add a new column and select **Formula**.
+2.  Enter `TODAY()` for a date or `NOW()` for a date and time.
+3.  Include this column in your Send Table Data field selection so each history row records when the snapshot was taken.
+
+**Logging only when the value changes**
+
+By default, every Send Table Data run creates a new history row — even when the enrichment value has not changed since the previous run. To log only actual changes:
+
+1.  Add a **Lookup single row** column in Table 1 that retrieves the most recently logged status from the history table for each company (matched by Account ID).
+2.  Add a **run condition** on the Send Table Data column: only run when the current enrichment value differs from the last logged value — for example, `HG Current Status != Last Logged HG Status`.
+
+This creates a new history row only when the value actually changes.
+
+**Scheduling periodic enrichment re-runs**
+
+Clay's auto-run is dependency-driven: a cell only re-runs when a column it reads as input has changed in Clay. If your company list is static — rows that already have enrichment results and unchanged input fields such as company domain — auto-run does not re-trigger the enrichment even when the provider updates their data on their end. To detect those provider-side changes, schedule the enrichment column to re-run on a recurring basis:
+
+1.  Click the `⛭` icon → **Run Settings**.
+2.  Under **Re-run columns on a schedule**, select **On a schedule** and choose a frequency (daily, weekly, or monthly).
+3.  Select **Only selected columns** and check the enrichment column (and optionally the Send Table Data column if you want both to run on the same schedule).
+
+Scheduled column re-runs force-run every row in the selected columns regardless of whether cells already have results, so each cycle fetches fresh data from the provider. See [Scheduled columns](scheduled-columns.md) for details and plan limits.
+
 ## Best practices & troubleshooting
 
--   **Enrichment columns in the destination table will run on rows you send there.** When rows arrive in a destination table via Send Table Data, they are brand-new rows from that table's perspective — even if those records were already enriched in the source table. Any enrichment columns with **auto-run enabled** will fire on every incoming row and consume credits. This is a common source of unexpected credit spend when moving or reorganizing data across tables.
+-   **Enrichment columns in the destination table will run on rows you send there.** When rows arrive in a destination table via Send Table Data, they are brand-new rows from that table's perspective — even if those records were already enriched in the source table. Any enrichment columns with **auto-run enabled** will fire on every incoming row and consume credits. This is a common source of unexpected credit spend when moving or reorganizing data across tables. Send Table Data itself costs 0 credits — only the destination enrichments that auto-run afterward consume credits.
 
     **To prevent unintended enrichments:** Before running Send Table Data, open the destination table and disable auto-run on any enrichment columns you don't want to re-run. You can re-enable auto-run selectively once the rows have arrived. Clay also shows a **"Send data to table with auto-run on"** confirmation dialog before sending — check the estimated cost displayed there before confirming.
 
--   There can be a **maximum of 20 tables** in the workspace-wide routing graph. **This includes tables across workbooks.** The limit counts unique destination tables reachable through the inter-table connection graph — not the number of Send Table Data columns. Connections made by **Write to Other Table**, **Execute Subroutine**, and **Route to Campaign** actions also count toward this same workspace-wide limit. If you exceed this limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. To work within this limit:
-    -   **Lookup Single Row / Lookup Multiple Rows do not count toward this limit.** If you're using Send Table Data primarily to check whether a record exists in another table (for example, a "Do Not Contact" or "Recently Contacted" list), replace those with Lookup Rows — they return the same match result without consuming a connection slot. See [Lookup Rows](https://university.clay.com/docs/lookup-rows) for setup instructions.
-    -   If multiple workbooks all write to the **same destination table**, that table counts as only **one** connection regardless of how many workbooks or columns point to it. Centralizing writes into a small number of shared destination tables can significantly reduce your connection count.
-    -   This limit applies across all plans.
+    **To copy enriched data without re-running enrichments (snapshot):** Use this three-step process when you want to move already-enriched rows to another table and keep those values without spending credits to re-enrich them:
+
+    1.  In the destination table, open each enrichment column you want to preserve (**Edit column → Run settings**) and turn **auto-run off**.
+    2.  Run Send Table Data from the source table. The action copies each row's existing enriched values as they are at that point in time — no credits are spent on the copy itself.
+    3.  Once the rows have landed, turn auto-run back on for those columns. Auto-run will apply only to genuinely new rows added to the destination table going forward; the rows that just arrived will not be automatically re-enriched.
+
+    **If enrichments have already started on the destination table:** Go to the destination table and click the **Stop** button in the run summary panel at the bottom-right. This cancels queued cells that haven't been dispatched yet — any enrichment calls already in progress will still run to completion and will consume credits. See [Run progress](run-progress.md) for details on Stop button behavior.
+
+    **If you deleted the destination table to stop the run:** You can recover it. Click the **Trash** icon in the bottom-left of the workspace sidebar — deleted tables are stored there for 30 days and can be fully restored with all row data and column configurations intact. See [Recover deleted tables and workbooks](delete-content-within-your-workspace.md#recover-deleted-tables-and-workbooks).
+
+-   **A Send Table Data column shows "Maximum number of table ID checks exceeded (limit: 20)":** When you save a Send Table Data column, Clay checks for loops by following the chain of tables your data can flow through after it leaves that column. The chain starts with the destination table, then takes in the tables that destination sends to, the tables those send to, and so on. Clay checks at most **20 tables** in a Send Table Data chain by default, on all plans. If the chain is longer, the column won't save and you'll see this error. The check runs only when you save the column, not when rows are sent. Saving an Execute Subroutine or Write to Other Table column runs the same check.
+    -   **How the 20-table limit is counted:** Tables in other workbooks are part of the chain too. On each downstream table, Clay follows Send Table Data and Route to Campaign columns to find the next tables. **A table that the chain reaches by more than one path counts once for each path.** For example, say your destination table sends to 5 tables and each of those 5 sends to the same 2 tables. That chain uses 16 checks: 1 for the destination table, 5 for the middle tables, and 10 for the 2 shared tables (each one counted 5 times). If 7 tables sat in the middle instead of 5, the chain would use 1 + 7 + 14 = 22 checks, which is over the limit.
+    -   **Only this column's downstream chain counts.** The limit is not a count of every table or every Send Table Data column in your workspace. Deleting Send Table Data columns that aren't part of this chain won't clear the error, and neither will deleting and recreating the column.
+    -   **To get a Send Table Data chain under the 20-table limit:**
+        1.  Start at the destination table and follow its Send Table Data columns downstream. Delete old or unused Send Table Data columns in that chain, especially ones that send to a table the chain already reaches by another path.
+        2.  If a downstream table uses Send Table Data only to check or read data from another table (for example, a "Do Not Contact" or "Recently Contacted" list), replace that column with **Lookup Single Row** or **Lookup Multiple Rows**. Lookup Rows columns don't count toward this limit. See [Lookup Rows](https://university.clay.com/docs/lookup-rows) for setup instructions.
+        3.  If your workflow needs a longer chain, contact Clay support. Support can raise the limit for your workspace.
+        4.  Save the Send Table Data column again. If the error is gone, the column saved successfully.
 -   **A Send Table Data column fails with "Destination table already has the maximum number of routing sources (20)":** Each destination table can receive data from at most **20 source tables**. When a new Send Table Data connection is attempted and the destination is already at 20, Clay rejects the registration and the column fails to save. To free up a slot, open the destination table, right-click the **"Rows from: \[source table name\]"** column header, select **Edit source**, and remove any old or unused sources. Alternatively, point this workflow at a fresh destination table, which starts with zero sources.
--   **A Send Table Data column fails at runtime with `"Invalid send table data inputs"` and the error details include `"path": ["sourceId"]` and `"message": "Required"`:** This error means the column is missing an internal value called `sourceId` — Clay generates this automatically the first time you create a Send Table Data column through the UI, and it stores the connection between the column and its destination table. If that value is absent, the column cannot find its destination and fails every time it runs. The most common cause is **copying or duplicating a workbook or table** that already contains a Send Table Data column — the duplicate loses its source connection. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **+ Add column → Send table data**, reselect your destination table, and re-map your fields. Clay regenerates the `sourceId` automatically on column creation; it cannot be repaired on an existing column. If recreating the column still shows this error, check whether the destination table has already reached its routing-source limit — see the "Destination table already has the maximum number of routing sources (20)" entry above.
--   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: click **+ Add column → Send table data** and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
+-   **A Send Table Data column fails at runtime with `"Invalid send table data inputs"` and the error details include `"path": ["sourceId"]` and `"message": "Invalid input: expected string, received undefined"`:** This error means the column is missing an internal value called `sourceId` — Clay generates this automatically the first time you create a Send Table Data column through the UI, and it stores the connection between the column and its destination table. If that value is absent, the column cannot find its destination and fails every time it runs. The most common cause is **copying or duplicating a workbook or table** that already contains a Send Table Data column — the duplicate loses its source connection. The fix is to delete the broken Send Table Data column and create a new one from scratch: select **Tools → Export → Send table data**, reselect your destination table, and re-map your fields. Clay regenerates the `sourceId` automatically on column creation; it cannot be repaired on an existing column. If recreating the column still shows this error, check whether the destination table has already reached its routing-source limit — see the "Destination table already has the maximum number of routing sources (20)" entry above. This error also appears when a Send Table Data column was blocked by a write to table cycle and then re-saved — see the "Found write to table cycle" entry below.
+-   **A Send Table Data column shows "Missing source id for routing action with destination \[table\_id\]":** This error means the column has no valid source registration linking it to the destination. The most common cause is **duplicating a table** that already contains a Send Table Data column — the copy loses its source-destination link and cannot run. The fix is to delete the broken Send Table Data column and create a new one from scratch: select **Tools → Export → Send table data** and reselect your destination table. Avoid using table duplication as a shortcut to pre-configure a Send Table Data column — duplicated columns always need to be fully reconfigured.
 -   **A Send Table Data column shows "Destination table '[table\_id]' was deleted. Please either restore that table from the trash, or create a new Send table data column.":** The destination table this column was configured to write to has been deleted. To fix it:
     -   **Restore from Trash:** Open **Trash** from the bottom-left of your workspace sidebar, browse the list of recently deleted items by name, find the deleted table, and click **Restore**. The Send Table Data column will reconnect automatically once the table is back. Deleted items remain in Trash for **30 days** before being permanently removed.
-    -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: click **+ Add column → Send table data** and select your new destination.
+    -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: select **Tools → Export → Send table data** and select your new destination.
 
     **Note:** The table ID shown in the error (e.g., `t_0tbdt...`) is an internal identifier — you cannot search for it in Trash. Browse the list of recently deleted items by name to find the right table.
+-   **Saving a Send Table Data column shows "The destination table "[table name]" is in sandbox mode. Publish or turn off its sandbox to edit this column.":** Clay blocks creating or editing a Send Table Data column while its destination table has [sandbox mode](sandbox-mode.md) turned on, because a table's regular (live) version is read-only while its sandbox is open. The column won't save until the destination table's sandbox is closed. To save the Send Table Data column:
+    1.  Open the destination table named in the error.
+    2.  Either publish its sandbox changes with **Review changes**, or click **Exit Sandbox** to turn sandbox mode off. **Exit Sandbox** discards all unpublished sandbox changes, so publish first if you want to keep them. See [Publishing sandbox changes](sandbox-mode.md#publishing-sandbox-changes).
+    3.  Return to your source table and save the Send Table Data column again. Once the destination table is out of sandbox mode, the column saves normally.
+
+    This message appears only if you have edit access to the destination table. If you don't, or if the destination table can't be edited for another reason, editing the column shows the generic error "route-row destination authorization audit failed" instead (creating the column shows "There was an error creating the column.").
+-   **The Send Table Data configuration shows a "Deleted fields — Action required" warning with one or more field names listed:** This warning appears when columns in the source table (the table that contains this Send Table Data column) that were previously included in the field mapping have since been deleted from that table. The action cannot send data from fields that no longer exist, and those stale mappings must be removed before the column can run. Click the trash icon next to each field listed under "Deleted fields" to remove it from the configuration, then save.
+-   **You want to route data to a different destination table, but the configured destination cannot be changed:** Once a Send Table Data column is created, the destination table is fixed and cannot be edited. To route data to a different table, add a new Send Table Data column: select **Tools → Export → Send table data** and choose the new destination. After confirming the new column runs correctly, delete the old Send Table Data column if it is no longer needed.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
     -   If you want to receive data in the table you're also sending data from, use one of these other actions:
         -   `Lookup Multiple Rows in Other Table`
         -   `Lookup Single Row in Other Table`
+-   **A Send Table Data column shows a warning icon with the tooltip "Found write to table cycle" and won't run:** Clay checks for loops when you save a Send Table Data column. If the column would let data flow back into a table it came from — directly (A → B → A), through a longer chain (A → B → C → A), or by sending to its own table — Clay blocks it, shows **"Found write to table cycle"** on the column header, and the column can't send any data. Its cells stay blank, even if you run them manually.
+    -   **What counts as a loop:** The loop check looks at which tables send to which across your whole workspace, including tables in other workbooks. It counts Send Table Data, deprecated Write to Other Table, Execute Subroutine, and Route to Campaign columns. It ignores auto-run settings and run conditions, so turning off auto-run on the column that sends data in the other direction does not remove the loop. `Lookup Single Row in Other Table` and `Lookup Multiple Rows in Other Table` columns are not counted.
+    -   **Re-saving the blocked column doesn't fix it:** Because the save was blocked, the Send Table Data column is never connected to its destination. If you edit and re-save the blocked column, the "Found write to table cycle" warning can go away, but the missing connection is not created — running the cells then fails with `"Invalid send table data inputs"`, `"path": ["sourceId"]`, and `"Invalid input: expected string, received undefined"`.
+    -   **To fix a write to table cycle:**
+        1.  Find the column that sends data back toward this table — for example, an older Write to Other Table or Send Table Data column in the destination table (or further down the chain) that sends rows to the table you're sending from. Delete that column. If you still need its data, replace it with a lookup (see below) or a new Send Table Data column that points at a table outside the loop.
+        2.  Delete the blocked Send Table Data column.
+        3.  Create a new one: select **Tools → Export → Send table data**, select your destination table, and re-map your fields.
+        4.  Re-run the rows.
+    -   **To get data back into the table you're sending from:** Send in one direction only, and use `Lookup Multiple Rows in Other Table` or `Lookup Single Row in Other Table` in the original table to pull the values back. Lookups don't count as loops. A lookup reads the other table at the moment it runs, so see [Timing considerations in multi-step workflows](lookup-rows.md#timing-considerations-in-multi-step-workflows) if the values you need are still being enriched.
 -   **The destination table has reached its 50,000-row limit and is no longer accepting rows — how do I continue?** Each destination table can hold a maximum of **50,000 rows** from a Send Table Data source. When the table is full, new rows from the upstream Send Table Data action will be rejected. The most reliable approach is to route the remaining rows to a **new downstream table** with a fresh source.
 
     To avoid sending duplicate rows to both tables, add a run condition to the new Send Table Data action:
@@ -211,6 +327,13 @@ When merging data from multiple source tables into a single destination table, f
 
     **For continuous high-volume workflows** that will routinely exceed 50,000 rows, consider enabling [auto-delete in passthrough mode](auto-delete.md) from the start (Enterprise plan). This bypasses the 50,000-row cap entirely for Send Table Data sources, allowing a destination table to keep accepting rows indefinitely.
 
+-   **A Send Table Data column fails with "Record limit reached" even though the destination table has fewer than 50,000 rows:** Each Send Table Data connection can send up to **50,000 records** to its destination table. A connection is one Send Table Data column plus the source it creates in the destination table. Clay tracks this limit separately for each connection, apart from the destination table's total row count. That means one Send Table Data connection can reach its 50,000-record limit while the destination table holds fewer than 50,000 rows. Webhook sources follow the same 50,000-records-per-source limit (see [Webhooks in Clay](webhook-integration-guide.md#limits)). Upgrading to a higher non-Enterprise plan does not raise the Send Table Data 50,000-record limit.
+
+    **To keep sending after a Send Table Data connection hits "Record limit reached," use one of these options:**
+
+    1.  **Create a new Send Table Data column.** Select **Tools → Export → Send table data** and choose a destination. The new column registers a new source with a fresh 50,000-record limit. In most cases, point the new column at a **new destination table**, and use a **Lookup single row** plus a run condition so rows already sent by the old connection aren't sent twice (see the lookup-and-condition steps in the entry above).
+    2.  **Enterprise plan: enable [auto-delete (passthrough)](auto-delete.md) on the destination table.** With auto-delete on, the destination table skips the 50,000-record source limit for Send Table Data sources, so a single Send Table Data connection can keep sending indefinitely.
+
 -   **Some rows fail with "Your payload is too large. Please reduce the size and try again."** This error means the combined size of all columns selected in a Send row exceeds the 100 kB per-row payload limit. Rows with smaller values in the same run succeed; only rows whose combined column values tip over 100 kB are rejected. The most common cause is sending a large free-text field — such as a full call transcript or an accumulated call history — alongside many other columns in a single Send action.
 
     **To reduce the payload size, use one or more of these approaches:**
@@ -222,7 +345,26 @@ When merging data from multiple source tables into a single destination table, f
     5. **Pass a reference instead of the full content.** If the large field already lives in an external system (Salesforce, Airtable, etc.), send only the record ID or a URL — the destination can look it up when needed.
 
 -   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically. However, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
--   **Some cells show "Run condition not met" while others appear blank — what's the difference?** "Run condition not met" means the row's run condition evaluated to false and the action was deliberately skipped — no credits are consumed for those rows (any reserved credits are automatically refunded). Blank or out-of-date cells (shown with a clock icon and the tooltip "This cell is out of date") mean the action hasn't run for that row yet — for example, the run was stopped before reaching those rows, or auto-run wasn't enabled when they were added. To process the remaining rows, right-click the column header and select **Run column → Run [N] empty or out-of-date rows**. See [Run progress](run-progress.md) for a full explanation of cell states.
+-   **A mapped column never appears in the destination table even though `Auto-extract new columns` is on, while other mapped columns work:** The destination table has most likely hit its column limit. `Auto-extract new columns` checks the column limit against the total number of new columns a Send table data column needs to create, not one column at a time. If the destination table's current column count plus those new columns is more than the table's column limit (**100** by default, or a higher custom limit if Clay support raised it for your workspace), **none** of the new columns are created, and no error message appears. Mapped fields that already have a matching column in the destination table still receive data, which is why some columns keep working while the new ones are missing.
+
+    **Example:** A destination table has 111 columns and a custom column limit of 120. A Send table data column maps 63 fields, and 51 of them don't have a matching destination column yet. 111 + 51 = 162, which is over 120, so none of the 51 new columns are created. A Send table data column that needs only 1 new column gives 111 + 1 = 112, which is within 120, so that column is created.
+
+    **To get the missing column into the destination table:**
+
+    1.  Count the destination table's columns (including hidden ones) and compare the count with the table's column limit. See [Column limits](table-columns-overview.md#column-limits).
+    2.  In the source table, select **Tools → Export → Send table data**, choose the same destination table, and select only the field (or fields) that are missing.
+    3.  Keep the number of new columns small enough that the destination table's current column count plus the new columns stays at or under the column limit, then run the new Send table data column.
+    4.  If the destination table has no room left, delete unused columns in the destination table first.
+-   **The column shows "✅ Sent" after re-running, but rows you deleted from the destination table do not reappear:** When destination rows are deleted, Clay removes the internal tracking records associated with those rows. However, each Send Table Data cell in the source table retains a cached record of the last inputs it sent. On a re-run, if the source data being sent has not changed since the previous send, the cell detects no difference and skips execution entirely — keeping its old "✅ Sent" display without actually sending anything. No new rows are created in the destination.
+
+    Using the column-level **Run column** or **Force run** option from the column header does not resolve this — those options only target cells that are empty or out of date, not cells that already have a result. To bypass the input-hash check, you must right-click an **individual cell** and select **Force run this cell**. This re-sends that row's data and creates a new row in the destination table.
+
+    **To re-send all affected rows at once, recreate the column:**
+    1. Delete the Send Table Data column from the source table.
+    2. Select **Tools → Export → Send table data**, reselect the destination table, and re-map your fields. The new column has no cached state — its first run will treat every row as new and create fresh rows in the destination table.
+    3. Before running the new column, enable [auto-dedupe](table-management-settings.md#auto-dedupe) on a unique identifier column in the destination table (such as email address or domain) to prevent duplicate rows if the destination already contains any records that overlap with what you are sending.
+-   **Some cells show "Run condition not met" while others appear blank — what's the difference?** "Run condition not met" means the row's run condition evaluated to false and the action was deliberately skipped — no credits are consumed for those rows. Blank or out-of-date cells (shown with a clock icon and the tooltip "This cell is out of date") mean the action hasn't run for that row yet — for example, the run was stopped before reaching those rows, or auto-run wasn't enabled when they were added. To process the remaining rows, right-click the column header and select **Run column → Run [N] empty or out-of-date rows**. See [Run progress](run-progress.md) for a full explanation of cell states.
+-   **Send table data shows "This cell is out of date" and upstream formula or enrichment columns in the source table also show the clock icon:** Send table data reads the current computed value of each source column at run time. If an upstream column is stale because it is actively queued to run, has a formula error, or is missing a required input field, Send table data is blocked for that row and waits until the upstream column resolves. Check the upstream formula or enrichment columns for errors or missing inputs, let any queued runs complete, and re-run those columns until they show valid outputs. Once the upstream columns have valid outputs, re-run Send table data.
 -   **The "Send data to table with auto-run on" confirmation dialog shows a higher cost estimate than you expect to pay.** The dialog calculates "Estimated total cost" by multiplying the per-row credit estimate by the total number of rows being sent — it does not filter for run conditions. If your Send table data column has a run condition, only rows where the condition evaluates to true will actually run and consume credits; rows that show "Run condition not met" are skipped at no cost. The dialog's own tooltip notes this is a *maximum* estimate: "actual usage may vary based on your data and configurations."
 -   **Some columns in the destination table are blank or show outdated values, even though the source table has the correct data:** Send Table Data is a point-in-time push — values are captured at the moment each row is sent, not kept in sync dynamically. Two common causes:
     -   **Source values changed after the row was sent:** If data in your source table was updated after the row was originally pushed (for example, a plan type, status field, or enrichment result that changes over time), the destination row still reflects what existed at send time.
@@ -236,3 +378,18 @@ When merging data from multiple source tables into a single destination table, f
 -   **A Send Table Data column fails with `"Invalid send table data inputs … 'listData' … Expected array, received string"` (using `Send row for each item in a list`):** The column selected as the list source contains plain text, not an actual array. "Send row for each item in a list" requires the source field to hold a native list — for example, the output of a "Find Contacts at Company" or "Find Active Job Openings" enrichment column. A column that holds a company name, email address, status, or other plain text value is not a list and cannot be iterated over row by row. **Fix:** Open the Send Table Data configuration and switch the method from **Send row for each item in a list** to **Send row**. "Send row" works with any column value including plain text and does not require a list. If the column does hold valid list data but it's stored as text (for example, a stringified JSON array like `[{"name": "Alice"}, {"name": "Bob"}]`), switch the list input to formula mode and enter `JSON.parse(/YourColumn)` instead — see [Selecting the right list field manually](#using-send-row-for-each-item-in-a-list) above.
 -   **Send to Table is creating new columns in the destination table instead of populating my existing ones.** By default, `Auto-extract new columns` creates a new column for each incoming field. To route incoming data into an *existing* column instead: open the destination table, click the **"rows from: [source table name]"** cell, hover over the field you want to map (e.g., an email address), and click **Add to column** — then select an existing column from the dropdown (labeled **Map to an existing column**). Repeat for each field you want to map. If the existing column is empty, dismiss the data-overwrite warning safely. To map multiple fields at once, enable **Auto-map existing columns** in the action's advanced settings — Clay will automatically set formulas on all destination columns whose names match incoming fields. Note that for columns with manually entered or CSV-imported values, this will overwrite that existing data.
 -   **Rows created by `Send row for each item in a list` don't have an automatic array-index column.** When Clay expands a list into individual rows in the destination table, it passes each item's own fields plus any additional columns you selected — but it does not include the item's numeric position in the original array. There is also no built-in row ID variable accessible in formula columns. If you need a unique identifier per expanded row — for example, to populate an External ID field for a Salesforce upsert — combine stable fields from the list item. Add a formula column in the destination table that concatenates fields which together uniquely identify each record. For employment history data, for instance, combining contact ID, company name, and start date (`{{Contact ID}} + "-" + {{Company Name}} + "-" + {{Start Date}}`) produces a stable composite key per job entry. Use enough fields to make the combination unique for your data. (Note: Clay's formula engine does not support object spread syntax like `{ ...item, _index: idx }`, so you can't pre-augment list items with an index in a formula column before sending.) **For upsert workflows, use only deterministic (stable) field values in your ID.** Avoid basing the ID on `Math.random()`: because `Math.random()` generates a new value every time the formula column re-runs, re-running the column assigns a different ID to each existing row and causes the upsert target to create duplicates instead of updating the originals.
+-   **Some fields are missing from the Selected columns list or return "No properties" in the Additional data picker when configuring a Send Table Data action:** The Send Table Data configuration discovers sub-fields from action column outputs and "rows from" cells by scanning the first **100 rows** of the current table view. Fields that have no values in those first 100 rows — because active view filters push the relevant rows beyond that range, or because only rows further down the table have data in that field — will not appear in the picker even if the data exists elsewhere in the table.
+
+    **To surface a missing field:**
+
+    -   **Temporarily remove or loosen the view's filters.** Filters determine which rows are scanned. Clearing them (or adjusting them to bring rows that contain the field into the first 100 positions) lets the picker discover the field. After selecting the field and saving the configuration, re-applying your filters does not remove it from the selected columns.
+    -   **Sort the view so rows with the missing field appear in the first 100 positions.** Sort by any column that brings rows containing the field to the top, then open or reopen the Send Table Data configuration — the picker will rescan and the field will appear. Once saved, the selection persists through any subsequent re-sorts or re-filters.
+
+-   **A field from a "rows from" cell doesn't appear as a selectable input when configuring an enrichment or function column.** When data arrives via Send Table Data, it lands in a "rows from: [source table]" cell. Because Clay has no predefined schema for what fields this cell may contain, the input picker discovers available fields by scanning the first **100 rows** of the current table view. If a field only has values in rows beyond the first 100 — for example, because only a small number of rows were re-run through Send Table Data after the field was added — it won't appear in the picker dropdown, even if it has data.
+
+    **To fix this, use either workaround:**
+
+    -   **Extract the field to a standalone column.** Click the "rows from" cell, hover over the field, and click **Add to column → Create a new column**. Once the field exists as its own column in the destination table, it will appear in the **Suggested** section of the input picker.
+    -   **Sort the view so that rows with the field value appear in the first 100 rows.** Sort the table by any column that brings rows containing your field to the top, then reopen the input configuration — Clay will scan the updated view and surface the field.
+
+    **Note:** This scanning behavior applies only to "rows from" (Send Table Data) cells, which have no fixed schema. Regular enrichment columns have a defined output schema and are always fully represented in the input picker regardless of how many rows have run.

@@ -83,24 +83,95 @@ All views allow you to download the data as a CSV for further analysis.
 
 **Note:** Historical data for the table credit dashboard begins on November 5th, 2025. You'll see a warning about incomplete data if your selected time range begins before this date.
 
+### Understanding workflow-specific credit usage
+
+For a detailed breakdown of credit spend within a specific workflow, access the workflow credit usage dashboard from two places:
+
+_From the workspace credit dashboard:_
+
+-   Go to **Settings → Usage → Workflows tab**, hover over any workflow row, and click the chart icon next to the workflow name.
+
+_From within the workflow editor (workspace admins only):_
+
+-   Click the workflow name in the topbar to open its dropdown menu, then select **Credit usage**.
+
+**Dashboard views:**
+
+The workflow credit usage dashboard offers three ways to analyze your spend:
+
+`Time view:` See a time series graph of credit spend over time. Choose your time range and aggregate by hour, day, week, or month.
+
+`Run view:` See credit spend grouped by individual workflow run.
+
+`Node view:` See credit spend broken down by each node in your workflow — useful for identifying which steps consume the most credits.
+
+All views allow you to download the data as a CSV.
+
+**Note:** Workflow credit data is available from May 7, 2026. You'll see a notice about incomplete data if your selected time range begins before this date.
+
+**External API key costs:** When you use your own API key (such as an OpenAI or Anthropic key) in a workflow node, the dollar amount charged by that provider is billed directly by the provider and is not tracked in Clay's credit dashboard. Clay records the number of **Actions** consumed by your external key — not the dollar amount. To see your actual charges, check your provider's billing dashboard. To see which external API keys consumed Actions in Clay, go to **Settings → Usage → Integrations tab** and expand the relevant integration.
+
 ### Checking credit cost for a specific action on a row
 
 The workspace and table dashboards break down spend by workbook, table, column, or run — but not by individual row. To see what a specific enrichment charged on a particular row, click on that **action cell** directly. The cell details panel shows a **Charged** line with the data credits consumed by that enrichment for that row.
 
 This is useful for spot-checking costs before scaling a workflow: run a small batch of rows, click into individual action cells to see per-enrichment charges, then use those figures to estimate total credit cost at higher volumes.
 
+## Credit spike alerts
+
+**Note:** Credit spike alerts are available for Enterprise plan workspaces.
+
+Clay automatically monitors workspace credit spend and proactively notifies workspace admins when it detects an unusually high burst of spend relative to your plan's monthly allocation. This helps catch misconfigured tables, accidental full-table reruns, or other runaway credit consumption before it quietly burns through a large portion of your credits.
+
+**How spike detection works:** Clay continuously monitors your workspace's credit spend. When a short burst of spend is detected that is outsized relative to your workspace's monthly credit allocation, a spike is flagged and workspace admins are notified.
+
+**Elevated Credit Usage Alert email:** When a spike is detected, all workspace admins receive an **"Elevated Credit Usage Alert"** email with a direct link to your Usage dashboard (`Settings → Usage`). A 24-hour cooldown between alerts prevents repeated notifications for the same sustained spend period.
+
+**Spike markers on usage graphs:** Detected spikes appear as markers on the balance and spend breakdown graphs in your Usage dashboard. Click through from the alert email to see exactly when a spike occurred and drill into what drove it. You can also look back at past spike markers when auditing historical credit spend.
+
 ## **Credit usage breakdown**
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
-**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+
+### What "Other" means under AI in the Integrations tab
+
+Available on all plans. In the credit usage dashboard (`Settings → Usage`), the **Integrations** tab lists an **AI** integration row. Expand the **AI** row to see your AI credit spend split into these sub-rows:
+
+-   **Named API key rows** — one row for each AI API key connected to your workspace, labeled with the account name.
+-   **Clay Auto** — credits spent by Clay Auto on your audiences (Audiences agent runs).
+-   **Other** — "Usage that wasn't tracked, or couldn't be attributed to a specific API key." In the dashboard, hover over the ⓘ icon next to **Other** to see this description.
+
+If all of your workspace's AI spend falls under **Other** (no spend from your own connected AI API keys and no Clay Auto usage in the selected period), the **AI** row has no expand arrow. In that case, the whole **AI** row total is **Other** usage.
+
+Most AI credits in the **Other** row come from AI columns, such as **Use AI** and **Claygent**, that ran on Clay's own managed models using Clay credits instead of an API key you connected. These runs aren't tied to an account, so their credits are grouped under **Other** rather than getting their own named row.
+
+The **Integrations** tab groups AI spend by API key, not by table. To find which tables drove your AI "Other" spend:
+
+1.  Open the **Workbooks** tab and set the `When` dropdown to the period you're investigating.
+2.  Filter by integration to show only spend from the **AI** integration.
+3.  Sort by `Credits used` to bring the highest-spending tables to the top.
+4.  Click the chart button next to a table's name to open its [table credit usage dashboard](#understanding-table-specific-credit-usage). Use the **Column view** to see which AI columns spent the credits, and the **Time view** to see which days the spend happened.
+
+## Credit spike alerts
+
+Available on Enterprise plans. Clay continuously monitors workspace credit spend and automatically sends an alert when it detects an unusually high short burst of credit consumption relative to your workspace's plan.
+
+**How credit spike alerts work:**
+
+-   **Admin email alerts:** When a spike is detected, all workspace admins receive an "Elevated Credit Usage Alert" email with a direct link to the Usage dashboard (`Settings → Usage`). A 24-hour cooldown applies between alerts — once an alert fires, no additional alerts are sent for 24 hours, even if spend continues to spike.
+-   **Spike markers on usage graphs:** Each detected spike appears as a marker on the balance and spend breakdown graphs in the Usage dashboard. You can click through from the email to see exactly when the spike occurred and drill into what drove it. Past spike markers remain visible on the graphs so you can audit historical spend.
+
+If you receive an "Elevated Credit Usage Alert" email, go to `Settings → Usage` to review the spike marker on the graphs and identify which workbook, table, or integration was responsible for the unusual spend.
 
 ## Credit estimates before running
 
@@ -112,7 +183,7 @@ Each table card in the workbook canvas displays an estimated credit cost per row
 
 To estimate your total enrichment cost for a table, multiply the per-row figure by the number of rows you still need to enrich.
 
-**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values.
+**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values. For enrichments that charge **per result returned** rather than a flat per-row fee, the estimate assumes the maximum number of results configured — so if fewer results are returned, the actual charge for that row will be proportionally lower. To check what was actually charged on a specific row, click the action cell and look at the **Charged** line in the cell details panel.
 
 ### Run cost breakdown
 
@@ -187,27 +258,62 @@ To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) befo
 
 ### Credits spiked after editing a formula or upstream column
 
-When you edit a formula in a column that other enrichments reference, Clay marks all downstream cells as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
+When an upstream column runs and its output changes — whether it's a formula, AI, or Claygent column — Clay marks all downstream cells that reference it as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
 
-Before making formula or configuration changes, verify that **Keep existing results** is on:
+A common scenario: you revise a Claygent or AI column's prompt, run the column to apply your changes, and the new output automatically triggers all downstream enrichment columns to re-run across all rows. (Saving an enrichment column's settings alone doesn't trigger a cascade — it's the column running and producing new output that does.)
+
+Before running an upstream column after making configuration changes, you have several options to prevent an unintended downstream cascade:
+
+**Option 1 — Verify Keep existing results is on (passive protection)**
 
 1.  Click `⛭` in the top toolbar to open Run Settings.
 2.  Confirm **Keep existing results** is checked. (It is on by default for new tables — turn it off only when you explicitly want all cells to re-run.)
 
-With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream formula changes. This lets you update formulas without re-running (and re-charging) your entire table.
+With **Keep existing results** on, auto-run only fires on cells that are empty or errored — cells that already have a result are skipped, even when their upstream column changes. This lets you update column configurations without re-running (and re-charging) your entire table.
 
-Alternatively, turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
+**Option 2 — Turn off auto-run on the specific downstream columns before editing (targeted)**
 
-See [Auto-run](auto-run.md) for full details on **Keep existing results** and how the auto-run mode affects which cells run.
+For each downstream enrichment column you don't want to auto-run: click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**. Make your changes to the upstream column, then manually trigger only the rows or columns you need. Re-enable auto-run on the downstream columns when you're ready. This is more targeted than disabling table-level auto-run — it stops specific downstream columns from cascading while leaving the rest of the table's behavior intact.
 
-### Requesting a goodwill credit refund
+**Option 3 — Turn off table-level auto-run before editing**
 
-If credits were accidentally consumed — for example, from a misconfigured scheduled run or an unintended large batch — you can contact [Clay support](https://app.clay.com) to request a one-time goodwill credit refund. When submitting a request, include:
+Turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off), make your changes, then manually run only the specific rows or columns you need.
+
+**Tip:** Use [Sandbox mode](sandbox-mode.md) to test configuration changes on a small subset of rows before applying them to your full table — especially useful when editing a heavily-referenced column, so you can verify the output before triggering a downstream cascade across all rows.
+
+See [Auto-run](auto-run.md) for full details on **Keep existing results** and column-level auto-run controls.
+
+### Charged again after re-running a column on rows that already had results
+
+If you re-run an enrichment column and are charged credits again for rows that already had a result (for example, a mobile phone or work email already found), the column was most likely force-run. A force run runs every row or cell it covers again, even rows that already ran successfully, and charges credits for each one again. Clay doesn't reuse the result already in the cell. This applies to every enrichment column, including **Execute subroutine** (Run subroutine) columns: on a force run, the subroutine runs all of its enrichments again.
+
+These run options force-run, so rows that already have results run again and use credits again:
+
+-   **Force run all [N] rows** (column header menu → **Run column**) — re-runs every row in the current view.
+-   **Choose number of rows to run** (column header menu → **Run column**) — re-runs every row in the range you enter.
+-   **Run [N] cells** (select cells in a column, then right-click) — re-runs every selected cell.
+
+These run options skip rows that already ran successfully with unchanged inputs, so those rows aren't charged again:
+
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**) — runs only rows that have never run, errored, or are out of date because their inputs changed since the last run. Rows that ran successfully, including rows where the enrichment found no data, are skipped unless they're out of date.
+-   **Run [N] rows** (select whole rows by clicking row numbers, then right-click) — runs the enrichment columns on those rows using the same rule.
+
+**To re-run only the rows that are missing data:**
+
+1.  Click **Filter** in the table toolbar and filter to the rows that are missing the data you want — for example, rows where both the mobile phone and work email columns are empty.
+2.  Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+3.  Remove the filter when the run finishes.
+
+Only use **Force run all [N] rows**, **Choose number of rows to run**, or **Run [N] cells** when you deliberately want a fresh lookup on rows that already have results. See [Run progress](run-progress.md#why-did-run-column-run-every-row-when-i-only-highlighted-a-few) for all column run options.
+
+### Accidental credit spend
+
+Clay generally does not offer credit refunds for accidentally consumed credits — for example, from a misconfigured scheduled run or an unintended large batch. If you believe something went wrong, you can contact [Clay support](https://app.clay.com) and the team will investigate. When reaching out, include:
 
 -   Your workspace name
 -   The table where the credits were consumed
 -   The number of credits used
 
-The support team will review your request and, if eligible, restore the credits to your account balance. Goodwill refunds are a one-time exception and are not guaranteed for repeat requests. For credits consumed due to a scheduled table run or integration issue, a partial refund may be considered depending on the circumstances.
+To prevent accidental spend, turn off auto-run while building or testing workflows, and set credit spend limits for your workspace.
 
 **Learn more:** For related information, check out our [credit limit FAQs doc](http://university.clay.com/docs/credit-spend-limits-faq).

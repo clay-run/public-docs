@@ -59,6 +59,37 @@ Clay offers a fast API for searching its proprietary People and Company data. Yo
 
 [Contact our GTM engineers for more information.](https://www.clay.com/contact-form)
 
+**Public HTTP API — Advanced search with a query (query mode)**
+
+Query mode lets you search Clay's People and Company data with a written query, such as `select from people where ...`, instead of a set of filters. Use query mode when you need to combine criteria with `or` across different criteria types. For example, you can match people whose job title is similar to a list of titles **or** whose seniority is in a list of levels. Filters mode (`/search/filters-mode`) always combines different filter types with AND. Filters mode is deprecated in favor of query mode, and some workspaces can no longer create new filters-mode searches.
+
+To run a query-mode search with your workspace-scoped API key in the `clay-api-key` header:
+
+1.  `POST /search/query-mode` with the body `{"query": "select from people where ..."}`. The response returns a `search_id` and a `source_type` (`people` or `companies`).
+2.  `POST /search/query-mode/{search_id}/run` with the body `{"limit": 100}`. `limit` accepts 1 to 500 and defaults to 20. The response includes `data` (the results) and `has_more`.
+3.  Keep calling `run` with the same `search_id` while `has_more` is `true`.
+
+**Where to find the list of queryable fields and query syntax:** call `GET /search/query-mode/reference` with your `clay-api-key` header. This endpoint returns `{"reference": "<markdown>"}`. The markdown string is the full query-mode reference: every queryable field for people and companies, the allowed values for fields like seniority, and the complete query grammar. Read the reference before you build a query, or point your integration at it.
+
+**Job title and seniority are experience fields, not person fields.** In a query-mode people search, `job_title` and `seniority` belong to a person's work experiences. Put them inside `experiences.any(...)`, usually with `is_current = true` to match the current role. If you put `job_title` or `seniority` directly after `select from people where`, the query fails with an error like `Unknown field 'seniority' for entity 'people'`.
+
+Query mode supports these comparison operators: `=`, `!=`, `<`, `<=`, `>`, `>=`, `contains`, `starts_with`, `ends_with`, `in`, `not_in`, and `is_similar_to`. Group conditions with `and`, `or`, and parentheses. `is_similar_to` does fuzzy job-title matching and accepts several values at once, such as `job_title is_similar_to ("CTO", "VP Engineering")`, which matches either title. `seniority` accepts `=`, `!=`, `in`, `not_in`, `is_null`, and `is_not_null`, with these values: `Founder`, `Owner`, `Board Member`, `Partner`, `C-suite`, `VP`, `Director`, `Head`, `Manager`, `Senior`, `Mid-level`, `Entry`, `Intern / In Training`, and `Unknown`.
+
+Example — people whose current job title is similar to RevOps titles **or** whose current seniority is VP or Director:
+
+```
+select from people
+where experiences.any(
+  is_current = true
+  and (
+    job_title is_similar_to ("Revenue Operations", "Sales Operations")
+    or seniority in ("VP", "Director")
+  )
+)
+```
+
+To limit the results to people at particular companies, add the company criteria the reference describes. Put company criteria inside the same `experiences.any(...)` when they must apply to the same current role.
+
 **Public HTTP API — Routines (same beta access)**
 
 The same workspace-level beta access also unlocks a Routines endpoint for triggering Clay enrichment functions programmatically:
@@ -66,22 +97,45 @@ The same workspace-level beta access also unlocks a Routines endpoint for trigge
 -   `POST /routines/{routine_id}/run` — submit input records to a Clay function and start an enrichment run.
 -   `GET /routines/run/{routine_run_id}/results` — poll for results once the run completes.
 
-Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. Your workspace key is under **Settings → Account → API keys** and is distinct from the personal API key on your profile page.
+Authenticate by passing your workspace-scoped API key in the `clay-api-key` request header. To create your workspace key, open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**. This key is distinct from the personal API key on your profile page.
 
-**Note:** A 401 (`Authentication required`) from `api.clay.com/public/v0` means your workspace hasn't been provisioned for the Public HTTP API — this applies even if your API key is visible in settings. Regenerating the key will not fix a provisioning 401. [Contact Clay support](https://www.clay.com/contact-form) to request workspace enablement.
+**Note:** Routine run `inputs` fields and item `id` values must not contain NUL characters (`\u0000`) or unpaired Unicode surrogates. Sending such characters to `POST /routines/{routine_id}/run` returns a `400` error — for example, `inputs: Inputs must not contain NUL characters (\u0000) or unpaired Unicode surrogates.` Batch runs with these characters produce a `validation_failed` status with a per-line field detail. If your data comes from a database export, file-parsing pipeline, or encoding-mismatched source, strip null bytes before calling the API.
+
+**Public HTTP API — Credit Balance**
+
+Check your workspace's current credit balance without consuming any credits:
+
+-   `GET /credits/balance` — returns the current credit balances for the workspace associated with your API key.
+
+The response includes:
+
+-   **`balance`** — total remaining spendable data credits, including rollover credits.
+-   **`action_execution_balance`** — remaining actions. Omitted for workspaces on legacy billing plans or without a billing plan.
+
+Use the same workspace-scoped API key in the `clay-api-key` request header. Reading balances does not consume credits.
+
+**Note: Why does the Public HTTP API return 401 "Authentication required" even though I created an API key?** A 401 (`{"message":"Authentication required"}`) from `api.clay.com/public/v0` — for example on `GET /me` or `GET /credits/balance` — means Clay didn't recognize an API key in your request. It isn't a plan or workspace-access restriction, so asking support to enable the Public HTTP API for your workspace won't fix it. The most common cause is using the legacy personal key from `Settings` → `Account` → `API key (legacy)`, which the Public HTTP API doesn't accept. To get a key the Public HTTP API accepts:
+
+1.  Open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**.
+2.  Enter a name, make sure the **Public API** scope is checked (it's checked by default), and click **Add API key**. Copy the key right away — it's only shown once. Keys created here start with `clay_scoped_`.
+3.  Send the key in the `clay-api-key` request header (`Authorization: Bearer <key>` also works) and retry the request.
+
+If the Public HTTP API is turned off for your workspace, Clay returns a `403` with the message `The public API is not enabled for this workspace` instead of a 401.
 
 **Note:** A `413` (`Payload Too Large`) from `POST /search/filters-mode/{search_id}/run` means the requested page of results exceeds the API's internal output cap. Reduce the `limit` parameter in your request and retry — the error is deterministic, so retrying at the same `limit` will always fail.
 
-**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per billing period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs.
+**Note:** Clay caps how many search results your workspace can return through the Public API, CLI, and MCP server per period. These quotas apply to Clay's People & Company Search API — they do not apply to in-app table enrichments or Routines API runs. The quota counts **results returned**, not searches run — a search that returns 0 results does not consume any quota.
 
 | Plan | Results per period | Period window |
 | ---- | ------------------ | ------------- |
 | Free | 100 | Monthly (resets on the 1st of each month, UTC) |
 | Trial | 10,000 | 14 days from plan start |
-| Paid | 1,000,000 | Annual (resets January 1 UTC) |
-| Enterprise | 10,000,000 | Annual (resets January 1 UTC) |
+| Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
+| Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit and when it resets — for example: `"This request would exceed your workspace's annual limit of 1,000,000 results. You have already requested X results during the current period, which resets on January 1, [year] (UTC). Contact support to raise this limit."` There is no in-product usage meter for this quota — your workspace will not receive a warning before hitting it. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+
+**Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
 
 **Note:** Credits consumed by Routines API runs appear in the **Workbooks** tab of the credit usage dashboard — not the **API** tab. Each run processes records in the function's table, and those credits are attributed to that table, the same as any other table enrichment. To see this credit spend, go to `Settings → Usage → Workbooks` and find the table associated with your routine. The **API** tab in the credit usage dashboard covers only direct People & Company Search API and Exportly calls — not Routines API enrichments.
 
@@ -99,10 +153,58 @@ Clay offers pre-built MCP connectors within each supported platform's app or con
 
 The Clay CLI is part of the Clay Agent Plugin — a developer tool that lets coding agents (Claude Code, Codex, or any terminal environment) build and run Clay workflows without opening the Clay UI. Install it from the [agent-plugins repository](https://github.com/clay-run/agent-plugins) and follow the setup instructions there.
 
-**System requirements:** The Clay CLI runs on **macOS and Linux only**. Windows is not currently supported — if you're on Windows you'll see an error like "no native windows binary in the plugin." There is no workaround at this time; Windows support is not yet available.
+**System requirements:** The Clay CLI runs on **macOS and Linux**. Native Windows is not supported — the CLI launcher exits with an error on Windows. Windows users can run the CLI using **WSL (Windows Subsystem for Linux)**: install WSL via [Microsoft's WSL guide](https://learn.microsoft.com/en-us/windows/wsl/install), then follow the standard Linux installation steps in the [agent-plugins repository](https://github.com/clay-run/agent-plugins). If you run into issues even with WSL, contact [Clay support](https://www.clay.com/contact-form). **Minimum version:** Clay's API requires CLI version 1.3.0 or later — older versions receive a `426 Upgrade Required` error on every request. Update to the latest release from the [agent-plugins repository](https://github.com/clay-run/agent-plugins).
 
 When you run `clay routines list` or `clay routines get`, each function-type routine in the response includes a `source` field and a `createdBy` field. `source` is `"managed"` for Clay-built default functions and `"custom"` for functions built in your workspace. `createdBy` is an object with `id`, `name`, and `email` for custom functions, and `null` for managed defaults. Both fields are omitted for workflow-type routines.
 
-**Note: All `clay tables` read commands require an Enterprise plan.** The commands `clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables columns list`, and `clay tables columns get` all require the public observability API — available on Enterprise plans only. On non-Enterprise workspaces, these commands exit with `auth_forbidden` (exit code 3) and the message: "The public observability API is not enabled for this workspace (available on Enterprise plans)." Routines, searches, and workflows via the CLI continue to work on non-Enterprise plans — only programmatic table reads require Enterprise. If you only need a table's ID and are on a non-Enterprise plan, find it in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`). To read table structure or row data programmatically, an Enterprise plan is required.
+**Note: `clay routines runs get --wait` terminates on `processing_failed`.** When polling a bulk routine run with `clay routines runs get --wait`, the command stops as soon as the run reaches any terminal status: `complete`, `validation_failed`, or `processing_failed`. `processing_failed` means the run failed after input validation passed — for example, an unexpected error occurred while processing the uploaded file — and retrying the same file may succeed. `clay routines runs list` also includes `processing_failed` as a valid `status` value alongside `in_progress`, `complete`, and `validation_failed`.
 
-**Note: The `clay tables` commands and v0 REST API do not support writing data.** The CLI's `clay tables` surface includes commands for listing, getting, and querying tables and rows (`clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables query`). Adding rows, updating cells, or deleting records is not available through the public developer platform — neither via the CLI nor the v0 REST API. The `clay tables update` command can toggle a table's query-sync configuration (`--query-enabled`), but does not write row data.
+**Note: `clay functions list` and `clay functions get` give direct access to function schemas.** `clay functions list` lists all functions in your workspace (both Clay-managed and custom). `clay functions get <functionId>` returns a single function's full context: `id`, `name`, `description`, `source` (`"managed"` or `"custom"`), a prose `schema` description of the function's table written for a model to read, and JSON Schema objects for `inputSchema` and `outputSchema`. Both schema fields are always present — a function with no declared inputs or outputs returns an empty `properties` object, not a missing field. Both commands accept either a raw table id (e.g. `tbl_abc123`) or the `function:<tableId>` form, and require the `cli:all` scope, which the CLI gets when you sign in with `clay login`. Common errors: `not_found` (exit 6) if no function with that id exists in the workspace; `auth_forbidden` (exit 3) if the credential lacks the required scope — for example, when the CLI is using an API key instead of a `clay login` session.
+
+**Note: Six `clay tables` read commands require a paid or trial plan.** The commands `clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables columns list`, and `clay tables columns get` all require the public observability API, which is available on all paid and trial plans (not the Free plan). On Free workspaces, these commands exit with `auth_forbidden` (exit code 3) and the message: "The public observability API is not enabled for this workspace (available on paid and trial plans)." Routines, searches, and workflows via the CLI are not affected by this requirement. `clay tables list` is the way to list the tables in your workspace programmatically — the v0 REST API has no list-tables endpoint. You can also find any table's ID in the table's URL: it is the segment after `/tables/` (for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`).
+
+**Note: `clay tables query-live` is an experimental command available without an Enterprise plan.** It queries a table's live Postgres data directly using ClayQL (no natural-language step), complementing `clay tables query` (which runs against the synced ClickHouse store and requires **Enable for API** to be turned on for each table you query). Results are capped at 100 rows; use `LIMIT n OFFSET m` in your query to page through more. To access it, set `CLAY_CLI_CHANNEL=experimental` before running the command. Available to workspace Admins and Editors — not Viewers or SalesRep-role users.
+
+**Note: The `clay tables` commands and v0 REST API do not support writing data.** The CLI's `clay tables` surface includes commands for listing, getting, and querying tables and rows (`clay tables list`, `clay tables get`, `clay tables rows list`, `clay tables rows get`, `clay tables query`, and `clay tables query-live` [experimental]). Adding rows, updating cells, or deleting records is not available through the public developer platform — neither via the CLI nor the v0 REST API. The `clay tables update` command can toggle a table's query-sync configuration (`--query-enabled`), but does not write row data. Every new table starts with **Enable for API** turned off, and there is no workspace-level setting or bulk option that turns on API table sync for all current and future tables — enable each table you want to read individually, either in the table's settings or with `clay tables update <tableId> --query-enabled true`.
+
+**Note: Each workspace has a default limit of 5 tables that can be enabled for API sync, and turning off "Enable for API" on a table does not always free up a slot.** The error **"Synced tables limit reached (X/X). Contact us to raise your limit."** appears in **Table Settings → Integrations → Enable for API** when your workspace is at its limit. A table counts toward this limit if the **Enable for API** toggle is currently on, *or* if it has ever completed at least one successful API sync — even if the toggle has since been turned off. Turning off the toggle stops future syncing, but the slot remains consumed as long as that table's synced data exists in Clay's store. Deleted tables also continue to hold a slot until their underlying synced data is cleaned up. To check how many slots your workspace is using, run `clay tables query-usage` from the CLI. To request a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+
+**Note: When using `group_by` in a tables query, every `select` column that is not the grouping key must use an aggregate function.** The `group_by` field accepts an array of up to 5 column-name strings. Grouping collapses many rows into one row per distinct group value, so every other column in `select` must resolve to a single value per group — either via `count`, `sum`, `avg`, `min`, or `max`. A plain column that is neither the group key nor an aggregate is ambiguous across the rows in a group — Clay rejects the query with a 400 and the message: `Select field "<field>" must appear in group_by or be aggregated — a grouped query can only project group keys and aggregate functions.` To get a row count per group, use: `"select": [{"field": "Column Name"}, {"fn": "count", "field": "*", "as": "row_count"}], "group_by": ["Column Name"]`. If you want the raw per-row values without a rollup, omit `group_by` entirely — that is why the query works without it. This behavior applies to both the REST API (`POST /public/v0/tables/query`) and the CLI (`clay tables query`).
+
+**Note: Grouped, aggregated, and custom-ordered queries return `truncated: true` when results are capped.** These query shapes cannot issue a cursor — there is no keyset to resume from after a group collapse or custom sort. When more rows matched than the configured `limit` and no cursor can be issued, the response includes `"truncated": true` at the top level. If `truncated` is absent, you received the complete result set (or a cursor was provided for continuation). To see more results, narrow the query with a `filter`, reduce the number of distinct group values, or raise the `limit`. This applies to both the REST API (`POST /public/v0/tables/query`) and the CLI (`clay tables query`).
+
+**Note: Three `clay audiences records` commands let you read Audiences data from the CLI.** All three are available in the stable channel and require Audiences to be enabled for the workspace (available on Growth and Enterprise plans — see [Audiences](https://university.clay.com/docs/audiences)):
+
+-   `clay audiences records get --entity-type <people|companies|deals> --ids <ids>` — bulk-fetch up to 100 records by id, returning each record's field values.
+-   `clay audiences records search-ids [--query <dsl> | --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>]] [--cursor <cursor>]` — return matching record ids, cursor-paginated at 50 per page. Pass `--query` with an Audiences DSL `select from …` expression (people, companies, or opportunities) to search with the DSL — the entity type is inferred from the query and `--entity-type` must be omitted. Or pass `--entity-type` with optional `--audience-id` to scope to a saved audience, `--filter` to apply an ad-hoc filter AST, or omit both to iterate all records of that entity type. Feed the returned ids to `clay audiences records get` in batches of 100 to retrieve field values. `--query`, `--audience-id`, and `--filter` are mutually exclusive, as are `--query` and `--entity-type`. When using `--entity-type deals` without `--query`, `--audience-id` and `--filter` are not accepted — use `--query` with `select from opportunities where …` for filtered deal ID searches. Activity IDs are strings and are not supported by this command.
+-   `clay audiences records search-count [--query <dsl> | --entity-type <people|companies|deals> [--audience-id <id> | --filter <file>]]` — return the count of records matching a scope without paging through ids. Pass `--query` with an Audiences DSL `count from …` expression (people, companies, opportunities, or activities) to count with the DSL — the entity type is inferred and `--entity-type` must be omitted. Or pass `--entity-type` with optional `--audience-id` or `--filter`. `--query`, `--audience-id`, and `--filter` are mutually exclusive. When using `--entity-type deals` without `--query`, `--audience-id` and `--filter` are not accepted — use `--query` with `count from opportunities where …` for filtered deal counts.
+
+All three return `auth_forbidden` (exit 3) if Audiences is not enabled for the workspace. `records get` additionally returns `rate_limited` (exit 4) if the workspace exceeds its hourly record budget or per-minute request rate — back off for `details.retryAfter` seconds before retrying.
+
+**Note: `clay workflows nodes` subcommands are now available on the stable channel.** `clay workflows nodes get <workflowId> <nodeId>` reads a single node's full configuration. `clay workflows nodes create <workflowId> --input '<json>'` creates a new node. `clay workflows nodes update <workflowId> <nodeId> --input '<json>'` updates an existing node's fields. `clay workflows nodes delete <workflowId> <nodeId>` removes a node (edge cleanup is handled server-side). `clay workflows nodes test <workflowId> <nodeId>` starts a partial test run of a single node. All five commands work on the default stable CLI without setting `CLAY_CLI_CHANNEL=experimental`. Node configuration shapes vary by node type — read a node first with `clay workflows nodes get` to see the exact shape before creating or updating.
+
+**Note: `clay workflows runs` subcommands let you list, inspect, pause, and trigger workflow runs from the CLI.** All subcommands are on the stable channel, available on all plans, and require the `cli:all` scope, which the CLI gets when you sign in with `clay login` (API keys you create don't include it — see **Running the Clay CLI unattended** below). `clay workflows runs list <workflowId>` lists runs newest-first with optional `--status` filter (`pending`, `running`, `waiting`, `paused`, `completed`, `failed`), `--created-after` datetime, `--search` text, and `--cursor`/`--limit` for pagination. `clay workflows runs get <runId>` fetches status, progress, and per-node summary for a single run; add `--nodes` to include all workflow nodes, `--verbose` for full per-node inputs and outputs, and `--wait` to poll until the run reaches a terminal state. `clay workflows runs test <workflowId>` starts a new run via the manual trigger — pass `--inputs '<json>'` to supply input values, `--audience-segment <segmentId> --limit <n>` to run members of an audience segment, or `--trigger <triggerId>` to fire a source trigger. `clay workflows runs steps <workflowId> <runId>` lists the execution steps of a run with optional `--node-id`, `--status`, `--parent-only`, and `--entries-only` filters. `clay workflows runs pause <workflowId> <runId>` pauses an active run; `clay workflows runs resume <workflowId> <runId>` resumes a paused run. Common errors: `auth_forbidden` (exit 3) if the credential lacks the required scope; `not_found` (exit 6) if no run or workflow with that id exists in the workspace. See [Run progress](run-progress.md#retrying-failed-workflow-runs-via-the-cli) for a full example of building an agent-driven retry loop using these commands.
+
+**Note: `clay workflows ensure-audience-writeback` creates or reconnects the shared Audiences upsert node for an audience enrichment workflow.** `clay workflows ensure-audience-writeback <workflowId>` calls the server-side helper to create or reuse the single `upsert-audiences-record` terminal node for a workflow of type `audience_enrichment`, and wires every eligible terminal route to it. The command is available on both the stable and experimental channels; it requires the `cli:all` scope (granted when you sign in with `clay login`) and workspace Admin or Member role (Viewers cannot use this command). Workflow commands (`clay workflows get`, `list`, `create`, `update`, `publish`) now include a `type` field in their output with three possible values: `audience_enrichment` (created by the audience enrichment experience; writes results back to Audiences), `account_agents` (managed by the account agents experience), or `null`/omitted for general workflows. Common errors: `validation_error` (exit 2) if the workflow is not of type `audience_enrichment` or has no eligible terminal route; `auth_forbidden` (exit 3) if the credential lacks the required scope or the caller does not have Admin or Member access; `not_found` (exit 6) if no workflow with that id exists.
+
+#### Running the Clay CLI unattended (cron jobs, scheduled scripts, and servers)
+
+You can run the Clay CLI on a schedule — for example, a cron job on an internal server that calls `clay workflows runs steps` every 15–30 minutes to pull workflow run data into your data warehouse. Signing in to the Clay CLI requires the **Admin** or **Editor** role in the workspace. Viewers can't sign in to the CLI and see the error "You must be an editor of this workspace to sign in to the Clay CLI."
+
+**Use a dedicated automation user instead of a service account.** Clay doesn't have service accounts or machine users. Every Clay CLI session and every Clay API key belongs to an individual Clay user. To keep a scheduled job from depending on one person's login, invite a dedicated non-personal user (for example, `automation@yourcompany.com`) to your workspace as an Editor or Admin, then sign in to the CLI as that user. See [Managing team members](https://university.clay.com/docs/managing-team-members) for how to send the invite. Inviting members is done in `Settings` > `Team` — there is no API or CLI command for adding workspace members.
+
+**Sign in to the Clay CLI with `clay login --device` on a server with no browser:**
+
+1.  On the server, run `clay login --device`.
+2.  The CLI prints a sign-in link. Open the link in a browser on any device, signed in to Clay as the automation user, and approve the request.
+3.  The CLI finishes signing in and saves the session to `~/.config/clay/config.json` (or under `$CLAY_CONFIG_HOME/clay/` or `$XDG_CONFIG_HOME/clay/` if you set either variable). Run your scheduled job as the same system user so it reads this file.
+
+**Clay CLI sessions refresh automatically and don't need periodic re-authentication.** The CLI's access token lasts 1 hour, and the CLI refreshes it automatically using a refresh token. Clay CLI refresh tokens don't expire, so a job that runs every 15–30 minutes keeps working without anyone signing in again. The Clay CLI session stops working only when:
+
+-   You run `clay logout` on that machine.
+-   The automation user is removed from the workspace.
+-   The automation user's role is changed to Viewer.
+
+Removal and role changes take effect at the CLI's next token refresh, when the CLI returns an authentication error. To recover, make sure the user is an Admin or Editor and run `clay login --device` again.
+
+**Clay API keys can't replace `clay login` for most CLI commands.** The CLI can read an API key from the `CLAY_API_KEY` environment variable, but most CLI commands — including `clay workflows runs` and `clay functions` — require the `cli:all` scope. API keys created on the **API and CLI** page or with `clay api-keys create` don't include the `cli:all` scope, so those commands return `auth_forbidden` (exit code 3) when called with an API key. Signing in with `clay login` (or `clay login --device`) gives the CLI the `cli:all` scope. Use Clay API keys for direct calls to the Public HTTP API instead.

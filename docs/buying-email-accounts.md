@@ -15,7 +15,7 @@ Cold outbound often requires sending a high volume of emails to inboxes that may
 
 ## ‍**Buying email accounts**
 
-From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
+From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
     -   Each domain supports up to 5 email accounts.
@@ -29,13 +29,13 @@ From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warm them up for approximately two weeks before use — purchased domains are not pre-warmed.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Sequencer → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 3 weeks for the warmup process to complete before using the accounts in campaigns.
 
 ## **FAQs**
 
 ### **What does "Pending fulfillment" mean?**
 
-After placing an order, you can track its progress in the `Account orders` tab (`Campaigns → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
+After placing an order, you can track its progress in the `Account orders` tab (`Sequencer → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
 
 ### **Can I add more email accounts to a domain after I've purchased it?**
 
@@ -55,7 +55,28 @@ Credit costs are calculated using your workspace's cost-per-credit (CPC) against
 
 ### **Are purchased domains pre-warmed?**
 
-No. You must still warm up purchased domains for approximately two weeks after provisioning before using them in campaigns.
+No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 3 weeks to complete — plan to wait before using purchased accounts in campaigns.
+
+### **What does Clay manage for purchased email accounts?**
+
+For email accounts purchased directly through Clay, Clay manages the core sending infrastructure for you, including:
+
+-   Provisioning the sending domains and mailboxes
+-   Configuring DNS and email authentication, including SPF, DKIM, and DMARC
+-   Automatically enabling warmup during provisioning
+-   Monitoring domain deliverability and mailbox reputation — visible as the **Reputation** percentage next to each account in `Sequencer → Email Accounts`
+
+As with any outbound email program, deliverability also depends on factors such as list quality, sending volume, bounce rates, and recipient engagement.
+
+### **How do I change the sender name or other details on a purchased email account?**
+
+From `Sequencer → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
+
+### **Can I change the email address of a provisioned mailbox?**
+
+No. The email address assigned to each mailbox at purchase (for example, `d.henriksen@cyberarkoselabs.com`) is permanent and cannot be changed after provisioning. You can update display-level details such as the **From name** and **Signature** using **Update sender variables** — see [How do I change the sender name or other details on a purchased email account?](#how-do-i-change-the-sender-name-or-other-details-on-a-purchased-email-account) for those steps — but the underlying email address is fixed.
+
+If you need a different email address, purchase a new domain and select the desired email prefix during checkout.
 
 ### **Where are the purchased email accounts from?**
 
@@ -64,3 +85,23 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 ### **How can I look up the rep's details for a purchased account?**
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+
+### **Why does my sender's name appear with extra characters in Outlook?**
+
+If a persona's first name is fewer than 4 characters (for example, "Sam"), Outlook recipients may see the name padded to 4 characters (for example, "Sama"). Zapmail, the email provisioning provider behind purchased Clay email accounts, requires all account sender names to be at least 4 characters long. Because Outlook does not allow the sender display name on a provisioned account to be updated after creation, the padded name persists for Outlook recipients.
+
+Gmail and other email clients are not affected — they display the sender name exactly as entered in Clay.
+
+To ensure the sender name appears as expected across all inboxes, use a first name of 4 or more characters when setting up personas for purchased email accounts.
+
+### **Can I provision Clay inboxes on a domain I already own?**
+
+No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
+
+If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Sequencer → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+
+### **Can I use email aliases (like name+eventname@example.com) to scale my sending?**
+
+No. An alias such as `name+eventname@example.com` routes to the same underlying mailbox as your primary address — it is not a separate mailbox. Because aliases share the same inbox, they do not provide independent sending reputation, daily send capacity, or warmup. Using multiple aliases does not increase your total daily throughput or protect your primary domain's reputation the way separate mailboxes do.
+
+To scale your campaign sending capacity, buy additional email accounts directly in Clay using the **Buy email accounts** flow described above, or connect additional mailboxes via Google OAuth, Microsoft Outlook OAuth, or SMTP. Each connected account has its own independent daily sending budget and sender reputation. See the [Email sequencer guide](email-sequencer.md) for connection options.

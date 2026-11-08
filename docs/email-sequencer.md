@@ -1,7 +1,7 @@
 ---
 title: Email sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-09-01T01:27:12.565Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
@@ -11,11 +11,32 @@ Run outbound campaigns directly from your table.
 
 Clay's email sequencer lets you run outbound email campaigns directly from your tables. This guide covers setup, campaign configuration, sending behavior, analytics, and troubleshooting tips.
 
+## Before you begin
+
+To run an email campaign in Clay, you need two things ready before creating the campaign.
+
+**1. A table with work email addresses for your leads**
+
+The campaign's lead list comes from a Clay table that has a column containing each contact's work email address. If you already have a CSV with contacts and emails, you can import it directly (see step 1 of [Create a new email campaign](#create-a-new-email-campaign)).
+
+If you're starting from a list of companies and don't yet have individual contact emails, the typical path is:
+
+1. Use the **[Find People](find-people-overview.md)** source to search for contacts at those companies — filter by job title, seniority level, or other criteria to find contacts matching your ideal customer profile.
+2. Run the **[Work Email waterfall](work-email-waterfall.md)** enrichment on your people table to find and validate each contact's work email address.
+
+Once your table has a populated email column, you're ready to create a campaign.
+
+**2. A sender account connected and warmed up**
+
+Campaigns send from a connected email account (Google Workspace, Microsoft Outlook, or SMTP). Newly connected accounts need to warm up before you can safely send cold email — the initial warmup phase typically takes **3 weeks**. The account's status shows **Warming** in `Sequencer → Email Accounts` during this phase and changes to **Ready** once warmup completes.
+
+Connect and enable warmup on your sender account as early as possible so it's ready when you're ready to launch. See [buying email accounts](buying-email-accounts.md) if you need to add a dedicated sending address.
+
 ## Connecting Google Workspace via OAuth
 
 **Note:** This setup requires Google Workspace admin access and only needs to be done once per domain. Changes can take up to 24 hours to apply.
 
-1.  In Clay, go to `Campaigns` → `Email Accounts` → `Add email accounts` → `Google OAuth`.
+1.  In Clay, go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth`.
 2.  Copy the Clay Sequencer Client ID from the `Search for Clay Sequencer` step in the modal.
 3.  Go to your [Google Workspace Admin Panel](https://admin.google.com/) and navigate to `Security` → `API Controls` → `App Access Control`.
 4.  Click `Configure new app`.
@@ -26,6 +47,7 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   **Important:** You must choose `Trusted`, not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite the name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does **not** grant Clay access to Google Drive, Calendar, Docs, or any other Google service.
 9.  Review the summary and click `Finish`.
 10.  Back in Clay, click `Continue` in the modal, then click `Connect your Google account` and complete the OAuth sign-in.
+    -   The modal asks **Is your Google Workspace already configured?** Choose `Yes, it's already set up` if your admin has already set Clay Sequencer to `Trusted`, or `No, I need to configure it now` to show the admin setup steps in the modal. Either choice takes you to the same Google sign-in step when you click `Continue`. See [Does choosing "Yes, it's already set up" skip the Google Workspace admin approval?](#does-choosing-yes-its-already-set-up-skip-the-google-workspace-admin-approval)
 
 ## Create a new email campaign
 
@@ -36,9 +58,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   Tip: You can customize the `Sync lead data to campaign` column to only send leads with an email address using `Only run if`.
 3.  In the `Setup` tab, you can set:
     -   `Lead email address`: We automatically detect email address columns, but confirm this before proceeding.
-    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links. **Note:** The `Enable HTML` toggle is currently in beta and is not available in every workspace — if the toggle appears disabled, contact support to request access.
-4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
-    -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled (beta — see note above), Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
+    -   `Enable HTML`: Campaigns default to plaintext for better deliverability. Enable HTML if you want to use formatting features like fonts, bold text, and hyperlinks. This also unlocks advanced settings such as open tracking, click tracking, and unsubscribe links. **Important:** This choice is permanent once the campaign is launched — you cannot switch a campaign between plaintext and HTML after launch. If you need HTML features (such as images in sender signatures) in an existing plaintext campaign, create a new campaign and enable HTML before launching it.
+4.  Under `Message sequence`, draft and customize your emails (up to 4 per campaign). Each follow-up step must be scheduled at least 1 day after the previous one, with a maximum of 10 days between any two steps. Sequences automatically stop when all emails are sent or when a lead replies (excluding out-of-office replies, which we detect and work around).
+    -   Toggle `Preview` mode to see real data from your source table in the message template. When HTML is enabled, Preview also renders how your formatting will appear in the recipient's inbox — the message editor shows the content structure you've built, not the final rendered output, so use Preview to verify formatting before sending.
     -   Within each message, use `/` to access features such as:
         -   `Clean variable`: Reference synced lead data with safe fallbacks and optional formatting. When configuring a Clean variable, the **Fallback** field ("Simple text to display if variable is empty") is required — the variable will not save if left blank.
         -   `Sender variable`: Reference identifying information from the sending account
@@ -52,14 +74,14 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
         -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
     -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
-    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value.
+    -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value. **Note:** Bulk CSV upload uses SMTP/IMAP credentials — it does not work for Microsoft 365 / Outlook accounts unless your Microsoft 365 admin has enabled SMTP AUTH (disabled by default). If SMTP AUTH is not enabled, use `Microsoft Outlook OAuth` to connect those accounts instead — each account must be connected one at a time via OAuth.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
     -   After setup, you can:
         -   `Enable warmup`: Sends and receives automated emails from the linked account to build reputation. Each account uses a unique two-word keyphrase (e.g., `clever-rocket`) to identify warmup emails. Follow the in-app instructions to set up a label and filter to easily ignore warmup messages.
         -   `Restrict access`: Limit the account to your use only (e.g., for a personal business address). Otherwise, accounts are available to anyone with edit access in your workspace.
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
-    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming up, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
+    -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
     -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
@@ -69,9 +91,9 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
     -   `Maximum new leads per day`: Caps the number of new leads contacted daily (in addition to account send limits).
     -   `Campaign start date` (optional): Set a future launch date, or start immediately based on your settings.
 7.  Explore `Advanced settings` if needed:
-    -   `Webhooks`: Route campaign events to a specific Webhook destination instead of the default Campaign Events Clay table. Example: Send Smartlead metrics to tools like OutboundSync or Enrichley for downstream routing.
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
+    -   `Webhooks` (table-based Sequencer v1 campaigns only): Send campaign events to your own webhook endpoint instead of the campaign events table — for example, to route Smartlead campaign events to a downstream tool. Click `Add webhook`, enter a `Webhook name` and `Webhook URL`, choose the `Event types` to send (Email sent, Email reply received, Email bounced, Lead unsubscribed, Lead category updated, Campaign status changed, Manual step reached, Email opened, Email link clicked), and click `Add webhook`. Events sent to a custom webhook won't appear in your campaign events table. Each event type can go to only one custom webhook, so event types another custom webhook already uses are greyed out. Deleting a custom webhook (`Delete webhook?` → `Delete`) can't be undone and returns its event types to the campaign events table. Workspace Admins and Members with edit access to the campaign's table can add or delete webhooks at any campaign status, including while the campaign is live. People-based (Sequencer v2) campaigns don't have a Webhooks setting.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
@@ -81,13 +103,13 @@ Clay's email sequencer lets you run outbound email campaigns directly from your 
 Once all your settings are saved, you can launch your campaign. Launching a campaign does the following:
 
 -   Emails begin sending according to your schedule, following deliverability best practices.
--   The `Analytics` tab displays detailed stats for your campaign. You can refresh data manually using the button in the top right.
+-   The `Analytics` tab shows campaign-level engagement metrics — including open rate and click-through rate — as totals across your entire campaign. You can refresh data manually using the button in the top right.
 -   The `Replies` tab shows you any incoming replies and lets you respond to them directly in Clay
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
-    -   All campaign settings become locked.
--   If you haven't set up custom webhooks in the `Advanced` section, a campaign events table will be created to capture all activity as it occurs.
+    -   All campaign settings become locked, except custom `Webhooks` in Sequencer v1 campaigns, which you can still add or delete.
+-   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)). In Sequencer v1 campaigns, event types you've sent to a custom webhook in `Advanced settings` go to that webhook instead and don't appear in the campaign events table.
 
 At any point, you can pause or complete a campaign:
 
@@ -96,25 +118,62 @@ At any point, you can pause or complete a campaign:
 
 ### Campaign events table
 
-When a campaign launches, a dedicated campaign events table is created. It records key actions such as sends, bounces, and replies. Because this is a Clay table, you can build automations around these events. Reply events may appear with a 15–30 minute delay.
+In Sequencer v2, campaign events are captured in a single **global events table** shared across all campaigns in your workspace — not a separate table per campaign. This table records key actions such as sends, bounces, and replies. Because it is a standard Clay table, you can build automations on top of it. Reply events may appear with a 15–30 minute delay.
 
-The events table can also be created before launching the campaign if you'd like to set up any automations in Clay.
+**Accessing the events table:** Click the campaign name at the top of any campaign page and select **View events** from the dropdown. Each campaign gets its own view within the shared table, pre-filtered to that campaign's events. You can also click the **Events** button in the header of the Sequencer homepage — note that the homepage Events button shows events from segment-based (Audiences-powered) sequences only; for table-based campaigns, use **View events** from the campaign menu instead.
+
+**Campaign-specific automation:** Because all campaigns share one events table, add an `Only run if` condition to your action columns and filter on the **Campaign ID** column to target automations at a single campaign's events — for example, routing replies from a specific campaign to a Slack channel or CRM.
 
 Special sequencer enrichments available in the table include:
 
 -   `Reply to lead`: Automate responses to any email reply event using a pre-built HTML template, AI-generated snippet, or booking link.
 -   `Pause lead in campaign`: This can be called from any Clay table to pause a lead on an incoming event (e.g. event signup, or if the recipient filled in a form).
--   `Add email to blocklist`: Automatically prevent unsubscribed or removed leads from being added to future campaigns.
+-   `Add email to blocklist`: Stop an email address from receiving emails across all campaigns in your workspace — including any campaigns that address is currently active in.
+-   `Forward lead email in campaign`: Route an email thread from the global inbox to any email address — including addresses outside Clay (recipients do not need a Clay seat). Map Campaign ID and Lead ID from the event row, set Recipient email addresses to the column holding the target inbox, and add a run condition so it only fires on `EMAIL_REPLY` events. When using Clay-purchased SmartSender accounts, add the **Get rep data** enrichment to the campaign events table — it looks up the rep assigned to each sending account and returns their email as `repEmail`. Map that output to Recipient email addresses to route each reply directly to the recruiter's inbox without building a column on your leads table. Rep assignment is available for SmartSender accounts only — for sending accounts you connected through Outlook or Google OAuth, see [Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?](#why-does-get-rep-email-show-no-rep-assigned-for-my-outlook-or-google-sending-accounts).
+
+## Managing leads in campaigns
+
+The `Leads` tab in your campaign lists every lead synced into it, along with a `Lead status` column showing where each lead sits in the sequence. What you can do to an individual lead depends on whether the campaign has launched yet.
+
+### Removing a lead before launch
+
+While a campaign is still a draft, you can take leads out of it completely:
+
+1.  Go to the `Leads` tab in your campaign.
+2.  Hover over the lead's row and click the three-dot (⋮) menu on the right.
+3.  Select `Remove from campaign`.
+
+To remove several leads at once, select them and click `Remove [n] leads from campaign`.
+
+**Note:** Removal is immediate — there is no confirmation step, and it can't be undone. Leads are only removed from the campaign; their rows stay in the source table they were synced from.
+
+### Pausing a lead in a launched campaign
+
+After a campaign launches, `Remove from campaign` is no longer offered. Pause the lead instead:
+
+1.  Go to the `Leads` tab in your campaign.
+2.  Hover over the lead's row and click the three-dot (⋮) menu on the right.
+3.  Select `Pause lead`.
+
+Pausing stops further emails to that lead while the rest of the campaign keeps running, and the same menu shows `Resume lead` once a lead is paused. To act on several leads at once, select them and click `Pause [n] leads` or `Resume [n] leads` — that button is disabled when your selection mixes active, paused, and completed leads.
+
+The same menu also offers `Show in leads table`, which opens the lead's row in the table it was synced from, and `Send test email`.
+
+### Lead statuses
+
+The `Lead status` column is populated by the sequencing provider behind the campaign, so leads don't carry a status until the campaign launches and they're handed off — there's no separate "pending launch" state to look for. Once sequencing begins, the values you'll see are `STARTED`, `INPROGRESS`, `PAUSED`, `COMPLETED`, `STOPPED`, and `BLOCKED`.
 
 ## Managing campaigns
 
-You can view and manage all campaigns from the `Campaigns` tab on your home screen. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
+You can view and manage all campaigns from the **Sequencer** tab in the left sidebar, under **Orchestration**. If you're looking for a "Campaigns" tab and can't find it, it was renamed to **Sequencer** — your campaigns are all still there. This view summarizes every campaign in your workspace and shows you the workbook it belongs to.
 
-In the Campaigns homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
+In the Sequencer homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
 Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
 
 To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
+
+To delete multiple draft campaigns at once, hover over any campaign row to reveal a checkbox on its left edge, then check each row you want to remove — or click the header checkbox to select all visible rows. Shift+click a row to extend your selection to a contiguous range. With campaigns selected, click **Actions** → **Bulk Delete**. Only delete-eligible campaigns are deleted: draft V2 people campaigns are permanently deleted, and draft V1 table campaigns you have permission to delete are moved to Trash. The confirmation dialog shows how many selected campaigns are eligible and how many will be skipped. The checkbox controls are available to workspace members who can create resources.
 
 ## Best practices
 
@@ -178,9 +237,17 @@ The daily send limit is set at the **email account level** and varies by account
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
 
-To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 2–3 weeks before a new account reaches full sending capacity.
+To estimate how many inboxes you need, divide your target daily send count by 20–30 — the recommended per-inbox range for cold outreach. For example, to send 200–300 emails per day, connect roughly 8–15 inboxes, each sending 20–30 emails per day. While self-connected accounts can technically be raised up to 500 emails per day, distributing volume across multiple inboxes at 20–30 each is safer for long-term deliverability than maxing out a single inbox. If you are adding new inboxes to increase capacity, [warm them up first](#what-is-email-account-warmup) — warmup typically takes 3 weeks before a new account reaches full sending capacity.
 
 Clay's sequencer is built for **targeted, personalized sales outbound** — high-quality sequences to well-researched lists. For very large-scale sends (e.g., 1M+ contacts), a dedicated bulk or marketing email platform is generally a better fit for delivery volume. Clay works well as the enrichment and list-building layer in that setup.
+
+### Does Clay limit how many emails go to the same company or domain per day?
+
+No — Clay's email sequencer has no daily cap on how many emails go to recipients at the same company or the same recipient email domain. This applies to both self-connected accounts and SmartSenders accounts purchased through Clay. The only daily sending caps are set **per email account (inbox)** — the value you set with `Update send limit` for that inbox.
+
+**Example:** If an inbox has a limit of 30 emails per day and every eligible lead queued for it works at the same company (for example, `@jpmorgan.com`), the inbox can use all 30 of its daily sends on contacts at that company. Some other sales engagement tools cap sends per target company per day; Clay's sequencer does not.
+
+To stop emailing other contacts at a company once someone there replies, use the `Pause leads at the same company on reply` campaign setting. When this setting is on and a lead replies, Clay pauses the other leads in that same campaign who share the replying lead's email domain. The setting is configured per campaign, is off by default, and does not pause leads in your other campaigns.
 
 ### Why is the expected campaign completion time so long?
 
@@ -213,6 +280,46 @@ Be sure to press `Save settings` after making edits. Note: deleting a campaign s
 
 If you added or edited a **Clean variable** and it is not appearing in your message, check that the **Fallback** field ("Simple text to display if variable is empty") is filled in — this field is required, and the variable will not save if left blank.
 
+### Why doesn't my Claygent or AI column appear as a variable in the email template?
+
+Claygent (web research AI) columns store their output as a structured object with multiple sub-fields — Response, Reasoning, Confidence, Steps Taken, and others. Even if the column appears in the email template's variable picker, its value renders as raw JSON rather than the clean text you want. To get just the response text as a usable personalization variable, extract it to a standalone plain-text column first.
+
+To use the AI output as a personalization variable in your message sequence:
+
+1. In your source table, click a populated cell in the Claygent column to open the cell details panel.
+2. Hover over the **Response** value — an **Add to column** button appears.
+3. Click **Add to column** and give the new column a name (for example, "First Name").
+4. Re-run the `Sync lead data to campaign` column in your source table so the new column's data is pushed to the campaign.
+5. Open the campaign's **Message sequence**, type `/` where you want the personalization, select **Clean variable**, and pick the new column from the list.
+
+**Editing a live campaign:** If your campaign is already running, you must pause it before changing the message template — open the campaign's `Setup` tab and click **Pause**. Make your edits to the message sequence, then relaunch the campaign.
+
+### Why is a source table column showing under a different name in the campaign variable picker?
+
+The campaign variable picker shows columns using the labels assigned in the **Sync lead data to campaign** column's field mapping — not necessarily the original column names in your source table. When you set up the mapping, each selected field has an editable label. If a field's label was left as the default placeholder ("New Column") or was manually renamed to something else, the variable picker shows that label instead of the source column name.
+
+For example, if your source table has a "First Name" column but its label was set to "New Column" during mapping setup, the variable picker lists it as "New Column" — not "First Name."
+
+**To fix this:**
+
+1. In your source table, click the **Sync lead data to campaign** column header and select **Edit column**.
+2. In the field mapping section, find the field showing the unexpected name.
+3. Click the edit icon next to it and update the label to the name you expect to see in the variable picker (for example, "First Name").
+4. Click **Save**, then re-run the `Sync lead data to campaign` column to push the updated label to the campaign.
+5. If you already referenced the old label as a variable in your message template, update those variable references in the campaign's **Message sequence** to use the corrected name.
+
+### Can I delete or remove an email step from a launched campaign?
+
+No — once a campaign has launched, the number of email steps in the sequence is locked. You cannot add, remove, or reorder steps even while the campaign is paused. Pausing a campaign only allows you to edit message copy, senders, schedule, and other settings.
+
+To run a shorter sequence, create a new campaign with just the emails you want. You can include up to 4 messages per campaign.
+
+### Can I switch my campaign from plaintext to HTML (or vice versa) after launching?
+
+No. The plaintext or HTML mode you choose in the campaign `Setup` tab is locked when the campaign launches and cannot be changed afterward. Even if the `Enable HTML` toggle appears available in a launched campaign's settings, toggling it does not change how emails are sent — HTML content such as inline images and formatted sender signatures will still be stripped from campaigns that were originally launched in plaintext mode.
+
+To use HTML features — including images in sender signatures, bold text, or hyperlinks — create a new campaign and enable HTML in the **Setup** tab before launching it. Your sender account and signature settings carry over automatically and do not need to be recreated.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
@@ -241,47 +348,131 @@ To avoid losing leads this way, deduplicate your source table before launching. 
 
 Email providers like Google and Microsoft occasionally revoke access due to inactivity, security checks, or suspicious activity detection. To fix this, delete the disconnected account from your sequencer settings and re-authenticate it.
 
+### Why aren't replies being detected for my SMTP email account? The sequence keeps sending follow-ups even after leads reply.
+
+For SMTP email accounts, Clay uses the **IMAP connection** to detect incoming replies. If the IMAP settings were not filled in correctly when the account was first added — or were left blank — replies are not tracked, and sequences continue sending follow-up emails as if no reply occurred. This can happen even if the account shows as **Ready** and outgoing emails are sending without errors: SMTP handles sending and IMAP handles reply detection independently.
+
+**The IMAP settings on an SMTP account cannot be viewed or edited after the account is created.** To fix a misconfigured IMAP connection:
+
+1. **Pause all active campaigns** that use the affected email account — open each campaign, go to `Setup`, and click **Pause**.
+2. **Delete the email account** — go to `Sequencer` → `Email Accounts`, find the account, click the ⋯ menu, and select **Remove**.
+3. **Re-add the account** via `Add email accounts` → `SMTP`. When filling in the form, carefully enter the **IMAP settings** (IMAP host, port, and encryption type) provided by your email provider — Clay uses these to detect replies. If these fields are blank or wrong, reply detection will not work.
+4. **Resume your paused campaigns** once the account is reconnected and shows as **Ready**.
+
+Your email provider's documentation lists the correct IMAP host, port, and encryption type (for example, Google Workspace uses `imap.gmail.com` on port 993 with SSL; Microsoft 365 uses `outlook.office365.com` on port 993 with SSL). If you are unsure, contact your email provider's support.
+
 ### How do I switch my campaign's sending email to a new provider or address?
 
 If you've moved to a new email provider (for example, switching from a third-party address to Google Workspace), update your Clay campaigns in these steps:
 
-1.  **Connect the new email account.** Go to `Campaigns` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
+1.  **Connect the new email account.** Go to `Sequencer` → `Email Accounts` → `Add email accounts` and choose the connection method for your new provider:
     -   Google Workspace: select `Gmail (OAuth)`. If you see an "Access blocked" error, your Google Workspace admin must first authorize Clay Sequencer for your domain — follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth).
     -   Microsoft Outlook: select `Microsoft Outlook OAuth`.
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
-2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 2–3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
+2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
 3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
+
+Changing a campaign's sender accounts only affects leads enrolled after the change. Leads that were already enrolled stay assigned to the old sending account and aren't moved to the new one. See [What happens to my campaign if a sender leaves the company mid-campaign?](#what-happens-to-my-campaign-if-a-sender-leaves-the-company-mid-campaign)
+
+### What happens to my campaign if a sender leaves the company mid-campaign?
+
+When someone who sends a campaign's emails leaves your company, their sender account is usually deleted or disconnected. What happens next depends on whether a lead was already enrolled with that sender account.
+
+**Leads already enrolled with the departed sender's account stop receiving emails.** Clay assigns each lead to one sender account when the lead is enrolled. People-based (Sequencer v2) campaigns always do this. Table-based (Sequencer v1) campaigns do it when `Assign sender account field to lead` is mapped. If a lead's sender account is later deleted or disconnected, the lead isn't moved to another sender account (even if the campaign has several) and it stops receiving the rest of its sequence. Clay doesn't have an in-product option to move already-enrolled leads to a different sender account. Pausing the campaign and changing its sender accounts only affects leads enrolled afterward.
+
+**Leads enrolled after the sender account is deleted or disconnected aren't assigned to it** (people-based campaigns). If `Assign sender account field to lead` isn't mapped, new leads are spread across the campaign's remaining active sender accounts. If it is mapped, a lead whose sender column still holds the departed sender's address isn't enrolled.
+
+**How to tell a sender account is disconnected:** the campaign header shows a red badge such as `1 sender auth error`, and the account's status in `Sequencer` → `Email accounts` shows **Auth error**.
+
+**To replace a departed sender in a campaign:**
+
+1.  **Connect the replacement sender account** and enable warmup. See [How do I switch my campaign's sending email to a new provider or address?](#how-do-i-switch-my-campaigns-sending-email-to-a-new-provider-or-address)
+2.  **Pause the campaign** (`Pause` in the campaign header) and add the replacement account in the campaign's `Sender accounts` tab.
+3.  **If you use `Assign sender account field to lead`,** update that column in your source table so leads that haven't been enrolled yet point to the replacement sender's address. Then re-run the `Sync lead data to campaign` column for those rows.
+4.  **Resume the campaign.**
+5.  **Delete the departed sender's account (optional).** Go to `Sequencer` → `Email accounts`, click the ⋯ menu on the account's row, and select `Delete account`. The confirmation warns that sequences will no longer send emails from this account.
+
+**To keep new leads flowing when a sender leaves:** If you don't need specific reps to own specific leads, add several sender accounts to the campaign (for example, 2–3) and leave `Assign sender account field to lead` empty. In people-based campaigns, new leads then keep enrolling through the remaining active accounts when one sender account is deleted or disconnected.
 
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
 
-The initial warmup phase typically takes **2–3 weeks**, during which the account's status shows as **Warming up** in Campaigns → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 2 weeks and is ready for campaigns, not that warmup has stopped.
+The initial warmup phase typically takes **3 weeks**, during which the account's status shows as **Warming** in Sequencer → Email Accounts. Once the initial phase completes, the status switches to **Ready**. Warmup emails continue to run in the background even after the status shows **Ready** — the Ready label means the account has been warming for at least 3 weeks and is ready for campaigns, not that warmup has stopped.
 
 When you add accounts via OAuth, we will automatically set up labels and filters to make it clear what emails are warmups and reduce clutter in your inbox. Your workspace has a unique two-word filter key (e.g., `clever-rocket`) that marks all warmup emails so you can apply these labels and filters.
 
 During warmup, your inbox will receive emails from other accounts in Smartlead's warmup pool. These emails often look random or spam-like in content — this is intentional, as the warmup engine simulates natural human email activity. They are automatically filed under your warmup label (named **Clay sequencer warmup email**), so they won't clutter your main inbox. Receiving them is not a sign of unauthorized account access or phishing activity.
 
-Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Campaigns` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
+Warmup is enabled during the account connection flow: after connecting your email account, Clay shows a prompt with all newly added accounts pre-selected for warmup. Clicking **Enable warming** activates it — warmup emails will then appear in your inbox (filed under your warmup label/filter) even if you haven't launched a campaign yet. If you enabled warmup by accident or want to stop it, go to `Sequencer` → `Email Accounts`, find the account, click the ⋯ options menu, and select **Disable warming**.
+
+### What does the "Warming" status mean in my campaign's Analytics tab?
+
+The orange **Warming** badge next to a sender account means email warmup is turned on for that account and it is still in its initial 3-week warmup phase. It is a warmup status, not an error or a warning (the label reads "Warming", not "Warning").
+
+In a campaign, the badge appears in the `Analytics` tab: scroll to the **Deliverability** section and open the **Email accounts** table, which lists each sender account under **Account** with its badge under **Status**. The same badge appears in `Sequencer → Email Accounts`. The possible statuses are:
+
+-   **Warming**: warmup is on and it was enabled less than 3 weeks ago.
+-   **Ready**: warmup is on and the account has been warming for at least 3 weeks.
+-   **Not warming**: warmup is turned off for the account.
+-   **Auth error**: the account's sending (SMTP) or receiving (IMAP) connection failed and needs to be fixed before the account can send reliably.
+
+A **Warming** account can still send campaign emails. Once 3 weeks have passed since warmup was enabled, the status changes to **Ready** automatically. See [What is email account warmup?](#what-is-email-account-warmup) for how warmup works.
+
+### What does the Reputation percentage mean?
+
+The **Reputation** percentage shown next to each email account in `Sequencer → Email Accounts` is the percentage of warm-up emails from that mailbox that landed in the inbox — not in spam or promotions. It reflects how successfully that specific warmed mailbox is delivering warm-up emails through Smartlead's warmup pool.
+
+A high Reputation score (for example, 100%) means the vast majority of warm-up sends for that mailbox are reaching the inbox. This is a useful directional health signal for the warmup process itself. It is **not** an authoritative, provider-level domain-reputation score from Google Postmaster Tools, Microsoft SNDS, or similar services — those reflect your actual campaign traffic, not the simulated warmup activity.
 
 ### Why did warmup turn itself off?
 
 Warmup automatically disables when your emails are being throttled by your email provider. This protects your sender reputation. You can manually turn warmup back on from the `Sender Accounts` tab once the throttling issue is resolved.
 
-### I'm getting an error that my email account is already in use. What does this mean?
+### Can I send campaign emails from an inbox that shows "Warming"?
 
-Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This error most commonly appears when the email was already connected to the sequencer in **another Clay workspace** — you don't need a separate Smartlead account for this to occur. To fix it, check your other Clay workspaces: go to `Campaigns` → `Email Accounts`, locate the address, and delete it there. Once removed from the other workspace, you can add it to the current one. If you can't identify which workspace has it, contact Clay support with the email address and we'll remove it from our end.
+Yes — a **Warming** inbox is not blocked from campaign sending. However, it is not recommended. The 3-week warmup period builds your sender reputation with email providers; sending before warmup completes risks lower deliverability and emails landing in spam. If you do send before warmup finishes, keep daily volume low to minimize the impact on your domain reputation.
+
+The only status that triggers a warning in the campaign UI is **Auth error** — that indicates a connection problem that needs to be resolved before that inbox can send reliably. **Warming** and **Not warming** inboxes carry no campaign-level block or warning.
+
+Once the 3-week warmup period is complete, the status automatically changes to **Ready**, signaling the inbox is ready for full campaign volume.
+
+### How can I tell how much longer my inbox needs to warm up?
+
+There is no countdown timer or progress indicator in the UI showing time remaining in warmup. To estimate when warmup will complete, note the date you connected the account and enabled warmup — the initial warmup phase is 3 weeks from that point. Once that window passes, the status automatically switches from **Warming** to **Ready**.
+
+### I see an error: "This email address is already connected to Smartlead." What do I do?
+
+Clay's email sequencer runs on shared Smartlead infrastructure, and Smartlead only allows each email address to be connected once across the entire system. This means the email you're trying to add is already registered in Clay's sequencer — most commonly because it was connected in a different Clay workspace. You do not need a personal Smartlead account to resolve this. You have two options:
+
+-   **If the email is connected in a Clay workspace you have access to:** Go to that workspace's `Sequencer → Email Accounts`, find the email address, click the ⋯ menu next to it, and select **Delete account**. Once removed, you can add it to your current workspace.
+-   **If you're not sure which workspace has the email, or you no longer have access to that workspace:** Contact Clay support with the email address you want to connect, and we'll locate and remove it from our system so you can reconnect it.
+
+### Why was my campaign email sent from a different sender account than I expected?
+
+If your emails are going out from an unexpected account, the most likely cause is that the **Assign sender account field to lead** setting has not been configured in the campaign's **Sender accounts** tab. When this field is not set, Clay distributes leads evenly across all configured sender accounts — even if your source table has a column that specifies which sender each lead should use, that column has no effect on the campaign until you explicitly map it here.
+
+**To route each lead to a specific sender:**
+
+1. Open the campaign's **Sender accounts** tab.
+2. Scroll to the bottom and find **Assign sender account field to lead (optional)**.
+3. Click the field and select the column in your source table that contains the sending account's email address for each lead. The values in that column must match one of the sender accounts already configured in the campaign.
+4. Click **Save settings**. Future sends will use each lead's designated sender account. Leads whose column value is blank are distributed evenly across all configured accounts.
 
 ### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
 
 This error fires in the `Sync lead data to campaign` column when the **Assign sender account field to lead** setting (in the `Sender accounts` tab) is mapped to an email column, and the email address in that column for a lead does not match any of the sender accounts configured in your campaign.
 
-A common cause: mapping this field to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your sending account addresses. When the `Sync lead data to campaign` column runs, Clay validates each row's sender email against the campaign's configured accounts — if the address isn't a connected sender, that row fails with this error.
+Two common causes:
+
+-   **Wrong column mapped:** The field is mapped to a column that contains your leads' own email addresses (such as a "Personal Email" column) rather than a column that holds one of your configured sender email addresses.
+-   **Case mismatch:** The column contains the correct sender address but with different capitalization — for example, `John.Smith@example.com` in your table vs. `john.smith@example.com` as the registered account. Matching is case-sensitive, so even a single capital letter causes this error.
 
 **To fix it:**
 
 -   **If you do not intend to route specific leads to specific senders:** Remove the field mapping — open the `Sender accounts` tab, scroll to the `Assign sender account field to lead` section, and clear the selection. Leads will then be distributed evenly across all your configured sender accounts. After clearing it, re-run the `Sync lead data to campaign` column for the affected rows to re-enroll them.
--   **If you do want to route specific leads to specific senders:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+-   **If you are using the wrong column:** Make sure the column you selected contains one of your configured sending account email addresses — not the lead's own email. Add those sender accounts to the campaign first if they are not already there, then re-run the `Sync lead data to campaign` column.
+-   **If the issue is a case mismatch:** Add a formula column in your source table — enter `{{Your Sender Email Column}}.toLowerCase()` — and select that column in **Assign sender account field to lead** instead. Re-run the `Sync lead data to campaign` column for the affected rows.
 
 ### Can I connect a third-party email provider (such as LiteMail) as a sender account?
 
@@ -289,7 +480,7 @@ Yes — Clay's email sequencer sends campaigns directly and supports any email p
 
 To connect a provider like LiteMail:
 
-1.  In your campaign, go to the **Sender accounts** tab (or `Campaigns → Email Accounts` globally).
+1.  In your campaign, go to the **Sender accounts** tab (or `Sequencer → Email Accounts` globally).
 2.  Click **Add email accounts** and select **SMTP**.
 3.  Enter the SMTP credentials your provider supplies: host, port, username, and password.
 4.  Enter your **IMAP credentials** (host and port) — Clay uses these to surface replies from recipients inside the platform. Most business email providers include IMAP access alongside SMTP.
@@ -328,18 +519,41 @@ For Google Workspace accounts on adjacent or alternate domains, you'll need to:
 1. Enable SMTP access for each domain in your Google Workspace Admin panel (Apps → Google Workspace → Gmail → End User Access → Enable IMAP and SMTP).
 2. Generate an app password for each email alias (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` column value.
 
+**For Microsoft 365 / Outlook accounts:** Bulk CSV upload transmits SMTP/IMAP credentials, which only work if your Microsoft 365 admin has enabled SMTP AUTH for your tenant. Microsoft 365 disables SMTP AUTH by default in modern tenants. If your admin can enable it, fill in the CSV with each account's SMTP and IMAP credentials as you would for any other provider. If SMTP AUTH is not available, use `Microsoft Outlook OAuth` to connect accounts instead — OAuth requires connecting each account one at a time, with no bulk option available for OAuth-connected accounts.
+
 ### Does connecting via OAuth automatically add my email aliases?
 
-No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup.
+No — connecting a mailbox via OAuth only adds the specific email account you authenticate with. Email aliases associated with that account are **not** automatically connected as separate sender accounts. Warmup and campaign rotation apply per connected account, so aliases you haven't explicitly added do not participate in sending or warmup. For example, if `name@yourcompany.com` is warming up in Clay and `name@otherdomain.com` is an alias on the same Google Workspace mailbox, warmup covers only `name@yourcompany.com`.
+
+Signing in to Google OAuth again with the same Google account does not add the alias — Clay reconnects the primary mailbox address, and no second account appears in `Sequencer` → `Email accounts`.
 
 To use an alias as a distinct sender, connect it as its own account:
 
--   **SMTP:** Go to `Settings` → `Add email accounts` → `SMTP`. Set the "From" email to the alias address and enter your primary account's server credentials (username, password, SMTP host, and port).
+-   **SMTP:** Go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`. Set **Sender email** to the alias address, set **Username** to your primary mailbox's login address, and enter your primary account's server credentials (password, SMTP host, and IMAP host). For Google Workspace aliases, see [Connecting a Google Workspace alias via SMTP](#connecting-a-google-workspace-alias-via-smtp) below.
 -   **Bulk CSV upload:** Use the `Bulk CSV upload` option to add multiple aliases at once. Set each row's `from_email` to the alias address and fill in the remaining SMTP and IMAP fields using your primary account's server settings.
 
 **For Microsoft 365 aliases:** The SMTP and bulk CSV paths work with Microsoft 365, provided your tenant has SMTP AUTH enabled and the alias has "Send As" permissions configured in your Microsoft 365 admin settings.
 
 **Note:** If your aliases are simple forwarding addresses that route to the same underlying mailbox (rather than independent inboxes with their own SMTP access), connecting them separately does not increase your total daily sending capacity — they share the same inbox. To scale sending volume, add accounts that each have a dedicated inbox. See [Buying email accounts](buying-email-accounts.md) for a faster path to additional inboxes.
+
+### Connecting a Google Workspace alias via SMTP
+
+To warm up and send from a Google Workspace alias (for example, an address on a second domain in the same Google Workspace), add the alias in Clay through the manual SMTP form, authenticating with the primary mailbox's Google login and a Google app password. Clay does not prefill Gmail server settings, so enter them yourself:
+
+1.  Go to `Sequencer` → `Email accounts` → `Add email account` → `Bring your own accounts` → `Manual SMTP & IMAP setup`.
+2.  **Sender name**: the name recipients should see.
+3.  **Sender email**: the alias address (for example, `name@otherdomain.com`).
+4.  **Username**: the primary mailbox address you sign in to Google with (for example, `name@yourcompany.com`).
+5.  **Password**: a Google app password for the primary mailbox — not your normal Google password. Generate one in your Google Account under `Security` → `2-Step Verification` → `App passwords` (2-Step Verification must be turned on).
+6.  **SMTP host**: `smtp.gmail.com`. Set **SMTP type** to `SSL` (port 465) or `TLS` (port 587) — Clay fills in the port based on the type you choose.
+7.  **IMAP host**: `imap.gmail.com`. Set **IMAP type** to `SSL` (port 993).
+8.  Submit the form. On the next screen, the new SMTP account is pre-selected for warmup — click **Enable warming**.
+
+The alias now appears as its own account in `Sequencer` → `Email accounts` and warms up independently of the primary address; the initial warmup phase typically takes **3 weeks**.
+
+If Clay shows **"Login was rejected. Check the password — Gmail accounts need an app password, not your normal password."**, Google rejected the credentials. Generate a new app password for the primary mailbox and confirm **Username** is the primary mailbox address, not the alias.
+
+If the alias is actually a separate Google Workspace mailbox with its own login (not an alias), connect it through `Google OAuth` instead by signing in as that mailbox directly.
 
 ### Are personal email accounts supported (e.g., Gmail, Hotmail)?
 
@@ -371,6 +585,31 @@ Because the campaign events table is a standard Clay table, you can add CRM enri
 
 7.  **Test before scaling.** Turn off `Auto-run` and manually run 5–10 rows first to validate your field mappings before enabling full automation.
 
+### Why does the Campaign ID in the campaign events table differ from the cam_ ID in my campaign's URL?
+
+A Clay email campaign has two IDs: the native Clay campaign ID that starts with `cam_` (shown in the campaign's URL in your browser), and the sequencing provider's numeric campaign ID. The **Campaign ID** column in the campaign events table shows the numeric provider ID, not the `cam_` ID.
+
+Every event row also carries the native `cam_` ID in a top-level `clay_campaign_id` field inside the raw event data in the **Campaign events** column. Clay adds this field to sent, open, link click, bounce, reply, unsubscribe, and lead category updated events whenever it can match the event to a Clay campaign. Use the `cam_` ID if your integration or CRM tracking record needs to match events back to Clay campaigns by the ID in the campaign URL:
+
+1.  Open the campaign events table (click the campaign name at the top of the campaign page and select **View events**).
+2.  Click any cell in the **Campaign events** column to open the Cell details panel, and find the `clay_campaign_id` field.
+3.  Click **Add as column** to extract it into its own column, or reference it in a formula as `{{Campaign events}}?.clay_campaign_id`.
+4.  Map that column (instead of **Campaign ID**) in your `Only run if` conditions, `HTTP API` columns, or CRM write-back columns.
+
+### How do I send Sequencer campaign data to Snowflake or another data warehouse?
+
+Clay's email sequencer has no native scheduled export or sync of campaign analytics to Snowflake or any other data warehouse. To report on Sequencer activity in your own warehouse and BI tool, send the data out of the [campaign events table](#campaign-events-table), which records every send, open, click, bounce, reply, and reply category across all campaigns in your workspace. Because the campaign events table is a standard Clay table, you can add an action column to it that runs on each new event row.
+
+**Option 1: Write Sequencer events directly to Snowflake (Enterprise plans only).** Add a Snowflake action column to the campaign events table — `Insert row`, `Create or update row`, or `Update row` — and map the event fields you want to report on (for example, event type, Campaign ID, campaign name, lead email, and event timestamp) to columns in a dedicated Snowflake table. Each event is its own row in the campaign events table, so `Insert row` logs one Snowflake row per event. Snowflake write actions require an Enterprise plan. See [Snowflake integration](snowflake-integration.md) for connection setup and action details.
+
+**Option 2: Send Sequencer data to Snowflake without giving Clay write access.** If your security or data team doesn't allow Clay to write to your Snowflake database, use one of these alternatives:
+
+-   **HTTP API to a webhook or middleware service:** Add an `HTTP API` action column to the campaign events table that sends each event row as JSON to an HTTPS endpoint your team controls — for example, a webhook in an approved middleware, ETL, or internal service. That service then writes the data into Snowflake with its own credentials, so Snowflake access stays outside Clay. The `HTTP API` action is available on Growth and Enterprise plans (Explorer and above on legacy plans). See [HTTP API](http-api-integration-overview.md).
+-   **Google Sheets as an intermediary:** Add a Google Sheets `Add row` action column to the campaign events table to append each event to a Google Sheet, then load the sheet into Snowflake with an approved ETL process. Google Sheets actions are available on all plans. This works well for testing or lower-volume reporting. See [Google Sheets integration](google-sheets-integration-overview.md).
+-   **CSV export:** Open the campaign events table and download it as a CSV (**Export** → **Download CSV**), then load the file into Snowflake through your existing file-ingestion process. The CSV includes only the rows and columns visible in your current view, and downloading it doesn't consume Actions or Data Credits. CSV export is a manual, point-in-time batch rather than a continuous sync. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv).
+
+**Keep the export running as events arrive.** The campaign events table keeps up to 10,000 rows for your whole workspace; once it passes that limit, the oldest rows are deleted automatically. A later CSV export or backfill only includes the events still in the table, so turn on `Auto-run` for your Snowflake, `HTTP API`, or Google Sheets column to send each event as soon as it's recorded. To export events from specific campaigns only, add an `Only run if` condition that filters on the **Campaign ID** column. Reply events can appear in the campaign events table with a 15–30 minute delay.
+
 ### How do unsubscribes work in the sequencer?
 
 When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings. This adds a hyperlinked phrase at the bottom of every email (default text: "Not interested? Click here to unsubscribe."). You can customize this text in the `Advanced` section.
@@ -383,11 +622,15 @@ When HTML is enabled, you can turn on an unsubscribe link in `Advanced` settings
 -   They are removed from all active campaigns.
 -   Future emails to that address from any campaign in your workspace are blocked.
 
-To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Campaigns** tab on your home screen and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
+To view and manually manage your blocklist—including adding individual email addresses or domains—go to the **Sequencer** tab in the left sidebar and click the `Blocklist` tab. You can also block leads programmatically using the `Add email to blocklist` enrichment in the campaign events table.
 
 **What about leads who reply asking not to be contacted?**
 
 If a lead *replies* to your email — rather than clicking an HTML unsubscribe link — their response is categorized by Smartlead (e.g., as `Do Not Contact` or `Not Interested`), but they are **not** automatically added to the blocklist. The `Add email to blocklist` column in the campaign events table is a button by default: you can click it manually for a specific row, or automate it by setting an `Only run if` condition on the column. To trigger the blocklist action for reply-based opt-outs, set the condition to run when `Event type` equals `LEAD_CATEGORY_UPDATED` — this event fires whenever Smartlead categorizes a lead's reply. See [How are replies categorized in the Campaign Events table?](#how-are-replies-categorized-in-the-campaign-events-table) for the full list of reply categories.
+
+### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
+
+Adding an email address to the Global Blocklist stops that address from receiving emails from **all** campaigns in your workspace — including leads already mid-campaign. No separate pause step is required. Emails already in Smartlead's immediate outgoing queue at the moment you add the address (typically within the next few minutes before a scheduled send time) may still be delivered, but no further emails are queued after the blocklist takes effect.
 
 ### What happens when an email to a lead bounces?
 
@@ -411,7 +654,7 @@ These are disclosed when you add your account via OAuth. Clay requests the follo
 -   `https://mail.google.com/` — full Gmail access (read, send, delete, manage)
 -   `https://www.googleapis.com/auth/gmail.settings.basic` — read/manage Gmail settings (filters, send-as aliases, etc.)
 
-Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
+Clay does not request access to Google Drive, Calendar, Docs, or any other Google Workspace service — only the Gmail-specific scopes listed above. Additionally, you will need to have a Google Workspace admin authorize our app to request these permissions for the domain(s) you want to add to the sequencer.
 
 ### I'm seeing "Access blocked: clay.com has not completed the Google verification process" when I try to connect my Google account. What does this mean?
 
@@ -425,7 +668,22 @@ If your admin has already completed those steps and you still see the error, see
 
 ### How do I authorize Clay's app in the Google Admin panel?
 
-Follow the instructions in the modal and have your Google Workspace admin set our Clay sequencer app to `Trusted` — not `Specific Google Data`. When searching in Google Admin, the app is listed as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the Clay sequencer.
+Follow the steps in [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) to complete the authorization. **Important:** Searching by the app name "Clay Sequencer" in the Google Admin Console returns no results — your admin must paste the Clay Sequencer **Client ID** into the search bar instead. Get the Client ID from within Clay: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and copy the ID shown in the **Search for Clay Sequencer** step of the modal. After pasting the Client ID and clicking Search, the app appears as **Clay Sequencer (Web)** — the `(Web)` suffix indicates the web client type and refers to the same Clay Sequencer app. Have your admin set it to `Trusted` — not `Specific Google Data`. Selecting `Specific Google Data` will not grant all the permissions Clay needs, and the access error will persist. Despite its name, `Trusted` only allows Clay to request Gmail-specific permissions (full email access, basic email settings, OpenID, and your profile) — it does not grant access to Google Drive, Calendar, Docs, or any other Google service. It can take up to 24 hours for Google to recognize the update; once it's taken hold, all accounts in your domain (e.g., [example.com](http://example.com)) can now add themselves to the clay sequencer.
+
+### Does the Trusted admin setting give Clay access to all Google accounts in my domain?
+
+No — the Trusted setting is not domain-wide delegation. Marking Clay Sequencer as Trusted in the Google Workspace Admin Console removes the verification block that would otherwise prevent users in your domain from connecting their accounts, but it does not give Clay access to any mailbox automatically. Each person who wants to use the sequencer must still connect their own Google account individually: go to `Sequencer` → `Email Accounts` → `Add email accounts` → `Google OAuth` and complete the OAuth flow for their own account. Clay can only access a mailbox after that individual user explicitly authorizes it.
+
+### Does choosing "Yes, it's already set up" skip the Google Workspace admin approval?
+
+No. When you add a Google account in Clay Sequencer (`Sequencer` → `Email accounts` → `Add email account` → `Google OAuth`), the `Add email accounts` modal asks **Is your Google Workspace already configured?** and notes that "This setup only needs to happen once per Workspace." Your answer only controls what the Clay modal shows you:
+
+-   `Yes, it's already set up` — goes straight to the Google sign-in step when you click `Continue`.
+-   `No, I need to configure it now` — shows the four admin setup steps (open the Google Workspace Admin Panel, click `Configure new app`, search for Clay Sequencer by its Client ID, and set the app to `Trusted` for the email domain(s) you want to send from), then goes to the same Google sign-in step when you click `Continue`.
+
+Choosing `Yes, it's already set up` doesn't change anything in your Google Workspace and doesn't get around your Google Workspace admin's app access controls. Google decides whether the connection is allowed during sign-in. If Clay Sequencer hasn't been set to `Trusted` for your domain, Google shows the "Access blocked" error no matter which option you chose in Clay.
+
+**How to confirm the Google Workspace setup is complete:** If Google sign-in finishes and your mailbox appears in `Sequencer` → `Email accounts` with the type `Gmail` and source `OAuth`, the connection worked and you can start using that account in Clay Sequencer. If teammates on other email domains will connect accounts later, have your admin confirm that Clay Sequencer is set to `Trusted` for each of those domains — each domain needs its own Trusted configuration.
 
 ### I followed the admin setup steps but still see "Access blocked: clay.com has not completed the Google verification process." What should I do?
 
@@ -445,6 +703,34 @@ Clay's campaign events table doesn't include a dedicated "sequence completed" ev
 -   **They received all emails** — each `EMAIL_SENT` event includes a `sequence_number` value nested inside the Campaign event data. When this number equals the total steps in your campaign, the lead has received all emails without replying. Click a Campaign event cell, find the `sequence_number` field in the Cell details panel, and click **Add as column** to extract it into a standalone column you can filter on.
 
 To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
+
+### Can I see open rate, click-through rate, or bounce rate broken out per email step in my sequence?
+
+The **Analytics** tab shows open rate, click-through rate, and other engagement metrics as campaign-level totals only — there is no per-step breakdown in that view.
+
+For per-step analysis, use the campaign events table. Each event includes a `sequence_number` value identifying which email in the sequence it came from:
+
+-   **Bounce rate per step**: `EMAIL_BOUNCE` events always carry `sequence_number`. Filter the events table by `sequence_number` and compare sent versus bounced counts for that step.
+-   **Open rate and click-through rate per step**: `EMAIL_OPEN` and `EMAIL_LINK_CLICK` events also carry `sequence_number`, but only appear when HTML email tracking is enabled (`Advanced settings` → `Email tracking`). With tracking on, filter by `sequence_number` to calculate open and click rates per step.
+
+To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
+
+### Why is the Bounce rate in my campaigns list different from the Sender and Recipient bounce rates in the Analytics tab?
+
+The **Bounce rate** column in the Sequencer campaigns list and the bounce cards in the **Deliverability** section of a campaign's `Analytics` tab count bounces differently, so the numbers often won't match. The campaigns list combines every bounce into one rate, while the Deliverability section splits bounces into sender-side and recipient-side rates.
+
+The Sequencer bounce metrics are calculated as follows:
+
+-   **Bounce rate** (campaigns list): all bounces for the campaign — sender bounces plus recipient bounces — divided by emails sent. It's shown as a percentage with the total bounce count in parentheses, for example `2.2% (4)`. This column always uses the campaign's lifetime totals and isn't affected by any date range.
+-   **Sender bounce rate** (Deliverability section): emails that bounced for sender-side reasons, such as mailbox authentication or reputation problems, divided by emails sent — shown as, for example, "2 of 180 sent". The email provider flags which bounces are sender-originated.
+-   **Recipient bounce rate** (Deliverability section): emails that bounced on the recipient side, such as bad or unreachable addresses, divided by emails sent. This is every bounce that isn't a sender bounce.
+-   **Delivery rate** (Deliverability section): emails sent minus all bounces, divided by emails sent. The number under it is the total bounce count.
+
+The Deliverability section reflects the date range selected in the campaign's `Analytics` tab; the campaigns list Bounce rate does not.
+
+**Example:** A campaign has sent 180 emails, with 2 sender bounces and 2 recipient bounces. The Deliverability section shows a Sender bounce rate of 1.1% (2 of 180 sent) and a Recipient bounce rate of 1.1% (2 of 180 sent). The campaigns list shows a Bounce rate of `2.2% (4)`, because 4 total bounces ÷ 180 sent = 2.2%. If the numbers still don't line up, check the date range in the `Analytics` tab — the campaigns list always counts the campaign's full history.
+
+The separate Sender bounce rate and Recipient bounce rate cards appear in the Analytics tab of people-based (V2) campaigns; table-based (V1) campaigns don't show this sender/recipient split.
 
 ### How are replies categorized in the Campaign Events table?
 
@@ -466,6 +752,18 @@ Smartlead assigns leads into one of the following categories:
 
 Replies are available in the `Replies` tab of your campaign and in the campaign events table. You can reply directly from Clay using the `Reply to lead` enrichment in the campaign events table.
 
+### Why does Get rep email show "No rep assigned" for my Outlook or Google sending accounts?
+
+The **Get rep data** enrichment (the `Get rep email` column in the campaign events table) only returns a rep for SmartSender accounts purchased through Clay. Assigning a rep to a sending account is supported for SmartSender accounts only — sending accounts you connect yourself through `Microsoft Outlook OAuth` or `Google OAuth` can't have a rep assigned. For those accounts, the `Get rep email` column shows **No rep assigned**, so a `Forward lead email in campaign` column that uses its output has no recipient to forward replies to.
+
+If a connected sending account is the rep's own inbox, replies already arrive in that inbox and no forwarding is needed. To forward replies from connected Outlook or Google sending accounts to each rep's primary email, build your own sender-to-rep mapping:
+
+1.  Create a separate Clay table with two columns: `Sender email` and `Rep primary email`. Add one row for each sending account. If a rep owns several sending accounts, map each one to the same primary email.
+2.  In the campaign events table, add a **Lookup single row in other table** column that matches the event's `Sender email address` column (the sending account — not the lead's email) to the `Sender email` column in your mapping table.
+3.  In your `Forward lead email in campaign` column, set **Recipient email addresses** to the `Rep primary email` value returned by the lookup, instead of the `Get rep email` output. Keep Campaign ID and Lead ID mapped from the event row.
+4.  Run the forward column on one `EMAIL_REPLY` row and confirm the email reaches the correct rep's inbox.
+5.  Add an `Only run if` condition so the forward column only runs on `EMAIL_REPLY` events where the lookup returned a primary email, then turn on `Auto-run`. Replies from sending accounts that aren't in your mapping table are skipped instead of forwarded.
+
 ### Why does the reply body show HTML instead of plain text?
 
 This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
@@ -474,6 +772,10 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 -   `Text`: a plain text version of the same content
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
+
+**To read an HTML reply the way the lead's email looked:** click the cell to open the Cell details panel, then click **View HTML** next to the `Html` value. The **HTML preview** window shows the email rendered as it would appear in an inbox. Scripts in the email don't run, and links open in a new tab. To see the raw HTML source, turn off the **HTML viewer** switch (it's on by default); a **Copy** button appears so you can copy the source.
+
+The **View HTML** button appears in the Cell details panel for any field whose name contains "html" (for example, `Html` or `body_html`) and whose value starts with `<` and ends with `>`. This includes HTML in bounce notifications and other campaign event data, not only replies.
 
 ### Useful links
 

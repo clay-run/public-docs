@@ -1,7 +1,7 @@
 ---
 title: Meta Ads in Clay
-description: Sync contact audiences from Clay to Meta Ads for advertising across Facebook, Instagram, Messenger, and WhatsApp.
-last_synced: 2026-08-04T05:01:41.328Z
+description: Sync Clay contact audiences to Meta Ads for targeting on Facebook, Instagram, Messenger, and WhatsApp, including connection setup, system user tokens, and match rates.
+last_synced: 2026-11-07T05:26:18.578Z
 ---
 
 # Meta Ads in Clay
@@ -36,7 +36,7 @@ For production workflows, use a system user token instead of OAuth — see below
 
 ## Using a system user token
 
-OAuth tokens expire every 60 days, and each expiry stops your recurring syncs until someone reconnects — the audience already in Meta stays in place and keeps serving, it just stops being updated. A system user token can be set never to expire and isn't tied to an individual employee's account.
+OAuth tokens expire every 60 days, and each expiry stops your always-on syncs until someone reconnects — the audience already in Meta stays in place and keeps serving, it just stops being updated. A system user token can be set never to expire and isn't tied to an individual employee's account.
 
 1.  In your [Meta Business account](https://business.facebook.com/), go to `Business Settings` > `Accounts` > `Apps` and click `Add`.
 2.  Choose `Create a new app ID`, name it, set the use case to `Other`, and the app type to `Business`. Click `Create app`.

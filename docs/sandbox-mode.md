@@ -1,8 +1,9 @@
 ---
 title: Sandbox mode
 description: Learn about sandbox mode, a playground to safely iterate +
-  experiment with your data!
-last_synced: 2026-04-26T01:40:36.624Z
+  experiment with your data! Also covers how to safely test a new version of a
+  Clay workflow that your table calls, without affecting the published version.
+last_synced: 2026-10-07T01:17:19.137Z
 ---
 
 # Sandbox mode
@@ -18,16 +19,19 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 
 ## **Enabling sandbox mode**
 
-1.  Click the `Sandbox mode` button in the toolbar.
+1.  Click the `Sandbox Mode` button in the toolbar.
 2.  After a few seconds, a new sandbox will be set up with sample rows, ready for you to make changes.
     -   **To discard changes and start a fresh copy of the sandbox:** Click `⚙️` → `Reset sandbox`.
-    -   **To turn off sandbox mode:** Click `Exit sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
+    -   **To turn off sandbox mode:** Click `Exit Sandbox` in the toolbar. This will return you to your normal table and discard all unpublished changes in your sandbox.
     -   **If you close your browser tab or navigate away:** Your sandbox is saved automatically — no changes are discarded. When you return to the table, Clay redirects you back to your sandbox where you left off.
+
+**Note on tables created from a source:** Sandbox mode requires a table that already has data in it — the **Sandbox Mode** button is disabled on empty tables. If you are creating a new table from a credit-consuming source (for example, a "Companies by product usage with HG Insights" table), the initial source run happens before sandbox mode is available. Use the **Maximum credit cost per run** setting in the source setup to cap spending during that first run. Once the table is created and rows are imported, enable sandbox mode before running any enrichment columns.
 
 **Note:** During sandbox mode:
 
 -   Your regular table becomes read-only and cannot be updated directly — the **All data** tab shows a **View-only** indicator while sandbox is active.
 -   You can switch between your sandbox and the read-only production table using the tabs menu.
+-   Lookup columns in other tables (`Lookup single row in other table` and `Lookup multiple rows in other table`) that point at this table keep reading your regular (live) table, not the sandbox copy. Sandbox copies don't appear in the lookup's `Table to search` picker. Edits you make in the sandbox aren't visible to those lookups until you publish them — see [Lookup Rows](lookup-rows.md#lookup-keeps-returning-old-values-after-you-edited-the-other-table-sandbox-mode).
 -   All recurring sources ([webhooks](https://www.clay.com/university/guide/webhook-integration-guide), [signals](https://www.clay.com/university/guide/signals), etc.) and [scheduled runs](https://www.clay.com/university/guide/scheduled-columns) will still run while sandbox mode is active — under the same rate limits as your production table.
 
 **Sculptor and sandbox mode:** [Sculptor](https://www.clay.com/university/guide/sculptor) automatically puts your table into sandbox mode whenever it builds new columns. This lets you review and validate Sculptor's changes before they go live.
@@ -78,12 +82,51 @@ Click `Review changes` — visible in the tab bar above your table, to the right
 **Notes on publishing changes:**
 
 -   Visual updates (such as pinned columns, column ordering, and colors) won't appear in the list, **but** **_will_** **be applied when you publish**.
--   Manually added rows and manual overrides to individual cell data **will not be published**.
+-   Cell values in your sandbox rows — including values you typed or edited manually — **are copied to the matching rows in your regular table when you publish**, replacing any updates made to those rows since the sandbox was created. Rows you added manually in the sandbox are also added to your regular table if they contain data; empty rows are skipped, and rows that are still running when you publish are not copied.
+-   Cell edits can't be published on their own. Publishing requires at least one column change, so if you've only edited cell values in the sandbox, `Review changes` stays greyed out. To change cell values in your regular table without a column change, click **Exit Sandbox** (this discards your sandbox changes) and make the edits directly in your regular table.
 -   Changes to a column that affect downstream columns are shown in a nested format to clearly indicate which other columns may be impacted.
 
 ### Publishing changes
 
 When you are ready to publish the changes in your sandbox to your regular table, you have two options:
 
--   `Publish and don't Run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
+-   `Publish and don't run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
 -   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
+
+## Testing a new version of a workflow that your table calls
+
+Sandbox mode is for tables only. Clay Workflows has its own draft-and-publish versioning instead. This section answers a common question: *"My table triggers a workflow I've published as V1. If I edit the workflow for V2, will V1 keep working, and how do I test V2 from a table?"* Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
+
+### Does editing a published workflow change the version my table runs?
+
+No. Editing a published workflow doesn't change the version your table runs. After you publish a workflow, any edits you make go to a draft. Your table's **Invoke workflow** column (the "Run workflow" step that sends rows to a workflow) keeps running the published version until you click **Publish** again. The same is true for webhook, schedule, and segment triggers. Each workflow run is also pinned to the version it started on, so publishing a new version doesn't change runs already in progress.
+
+If your table sends a field that the published workflow version doesn't use, the published version ignores that field — it doesn't cause an error.
+
+### Can a table's Invoke workflow column run the draft version of a workflow?
+
+No. A table's **Invoke workflow** column always runs the currently published version of the workflow. There's no setting to point a table column — or any other trigger outside the workflow editor, such as a webhook, schedule, or segment — at a draft.
+
+The only way to run a draft workflow without publishing it is from inside the workflow editor: start a manual run from the editor, or hover a node and click its run button to test that one step.
+
+### How do I test a new workflow version with new inputs from a test table?
+
+To test a new version of a workflow from a table — for example, a version that needs inputs your published workflow doesn't have — create a separate copy of the workflow and test the copy, so your published workflow keeps running unchanged:
+
+1.  Open your published workflow, open workflow settings, and click **History** to open the **Workflow history** panel.
+2.  On the version you want to start from, open the **⋮** menu and select **Create new workflow**. Clay creates a new workflow from that version.
+3.  In the new workflow, add the new inputs and logic, then click **Publish**.
+4.  In a copy of your table (not your live table), add or edit an **Invoke workflow** column, select the new workflow in the **Workflow** field, and map its inputs. Run the column on a few rows to test.
+5.  When the new workflow is ready, open the **Invoke workflow** column in your live table, select the new workflow in the **Workflow** field, and map its inputs again. Changing the selected workflow clears the existing input mapping, so you'll need to re-map every input.
+
+Test from a copy of your table rather than your live table. Changes to your table — its columns, or the inputs your **Invoke workflow** column sends — aren't part of the workflow's version history, so changing them in your live table immediately changes what the published workflow receives.
+
+### How do I roll a workflow back to an earlier version?
+
+To roll a workflow back to an earlier version:
+
+1.  Open workflow settings and click **History** to open the **Workflow history** panel.
+2.  On the version you want, open the **⋮** menu and select **Restore this version**, then confirm with **Restore draft**. This replaces your current draft with that version — your live workflow doesn't change yet.
+3.  Click **Publish** to make the restored version live.
+
+The **Versions** dropdown in the workflow editor's top bar switches which version you're viewing in the editor. It doesn't roll the workflow back.

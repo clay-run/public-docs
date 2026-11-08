@@ -8,7 +8,7 @@ last_synced: 2026-04-26T01:40:56.525Z
 
 Use this article to set up Single Sign-On (SSO) for your Clay workspace, understand how login behavior changes once SSO is enabled, and learn about MFA enforcement, user provisioning, and disabling or re-enabling SSO.
 
-Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Pro plan** or **annual Growth plan** — contact Clay support or your Growth Strategist to add it to your plan. SSO is not available on monthly plans, Launch plans, or free/trial plans. SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta (both SAML and OIDC), Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
+Single Sign-On (SSO) is available to **Enterprise plan** customers at no additional cost. It is also available as a paid add-on for customers on an **annual Pro plan** or **annual Growth plan** — contact Clay support or your Growth Strategist to add it to your plan. SSO is not available on monthly plans, Launch plans, or free/trial plans. The SSO add-on covers SSO sign-in only — it does not include SCIM provisioning, which is available only on Enterprise plans (see [Is SCIM provisioning included with the SSO add-on?](#is-scim-provisioning-included-with-the-sso-add-on)). SSO lets your organization authenticate Clay users through your existing identity provider (IdP). Clay uses WorkOS to manage SSO and supports any IdP that uses SAML or OIDC protocols — including Okta (both SAML and OIDC), Azure AD (Entra ID), JumpCloud, Google Workspace, and others.
 
 ## Setting up SSO
 
@@ -47,6 +47,8 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 
 **If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated by Clay support, contact Clay support to verify the configuration.
 
+**Confirming SSO enforcement is active:** To verify that SSO has been activated for your workspace, open a private or incognito browser window, navigate to the Clay login page, and enter a company email address in the email field, then click **Continue**. If SSO is active, you will be redirected to your identity provider's login page. If you are not redirected, contact Clay support to confirm that SSO activation has been completed on Clay's side.
+
 ## MFA enforcement and compliance requirements
 
 Clay does not have a workspace admin setting to require multi-factor authentication (MFA) for all users. When SSO is enabled, users on your domain are redirected to your identity provider in the browser — but this is not a backend login block. Users who have an existing email + password Clay account can log in via password and bypass the SSO redirect entirely, which means IdP-level MFA requirements are not enforced for those users.
@@ -55,11 +57,21 @@ If your security policy or compliance requirements (for example, SOC 2) mandate 
 
 ## External collaborators (non-domain email addresses)
 
-SSO only applies to users whose email address matches your verified domain. Team members with email addresses outside your domain are not affected and continue to access Clay through their regular login (Google or password).
+SSO only applies to users whose email address matches your verified domain. If you need to give access to someone outside your organization — for example, an external contractor or partner — and their email domain is different from your SSO-configured domain, you can invite them to your Clay workspace and they will not be routed through SSO.
+
+To add an external collaborator with a different email domain:
+
+1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
+2.  Have them accept the workspace invite from their email.
+3.  They sign in using their standard Clay login (email and password, or Sign in with Google) — they are not redirected to your identity provider and do not need to be added to your IdP (for example, Microsoft Entra or Okta).
+
+Clay's SSO routing is domain-based: when a user enters their email on the Clay login page, Clay checks whether that email domain has SSO configured. If the domain does not match your configured SSO domain, Clay treats the user as a standard (non-SSO) user — no additional configuration is required on Clay's side for these external collaborators.
+
+**Note:** If an external collaborator's email address happens to share your SSO-configured domain (for example, a contractor using your company email addresses), they will be routed through SSO and must be added to your identity provider. If you are unsure how to handle that case, contact Clay support.
 
 ## User provisioning
 
-**Clay does not currently support SCIM provisioning.** SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time), SCIM, or domain-join provisioning for workspace membership. If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
+SSO (via WorkOS) is used for authentication only — Clay does not add users to your workspace automatically through SSO, and there is no JIT (Just-in-Time) or domain-join provisioning for workspace membership. Automatic provisioning through SCIM is a separate feature available only on Enterprise plans — see [Is SCIM provisioning included with the SSO add-on?](#is-scim-provisioning-included-with-the-sso-add-on). If an uninvited user with your email domain signs in via SSO, they will authenticate successfully and a Clay account will be created for them, but they will not be added to your enterprise workspace — instead, they will be placed into a new standalone personal workspace. To onboard a new team member:
 
 1.  Invite them to your Clay workspace via `Settings` > `Team` > `+ Invite`.
 2.  Assign the Clay app to the user in your identity provider (for example, add them to the Clay tile in Okta).
@@ -70,7 +82,15 @@ SSO only applies to users whose email address matches your verified domain. Team
 
 **If a user has already landed in a personal workspace instead of the company workspace:** You can recover without contacting support. From your company workspace, go to `Settings` > `Team` > `+ Invite` and send them a workspace invite. Have them accept the Clay invite from their email first, then sign in through your IdP (for example, by clicking the Clay tile in Okta). SSO will match them to the workspace seat you created and place them in the correct workspace. The empty personal workspace they were initially placed in remains as an orphan but does not affect their access to the company workspace.
 
-SCIM directory sync is on Clay's roadmap — contact Clay support or your Growth Strategist for the latest status on this feature.
+**Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
+
+**Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
+
+### Is SCIM provisioning included with the SSO add-on?
+
+No. SCIM provisioning (also called Directory Sync), which automatically adds and removes Clay workspace members from your identity provider, is available only on **Enterprise plans**. The paid SSO add-on for annual Pro and Growth plans covers SSO sign-in only — buying the SSO add-on or setting up SSO does not make SCIM provisioning available on a Pro or Growth workspace. On Pro and Growth plans, add team members by inviting them from `Settings` > `Team` > `+ Invite`, as described in [User provisioning](#user-provisioning).
+
+SCIM provisioning does not depend on SSO. Enterprise workspaces can set up SCIM provisioning whether or not SSO is configured for the workspace.
 
 ## Disabling or re-enabling SSO
 

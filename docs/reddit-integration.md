@@ -25,11 +25,31 @@ Find posts on Reddit that mention specific keywords like your company, products,
 
 Inputs:
 
--   **Keywords:** Max 8 keywords
--   **Keyword logic (Optional):** Specify whether searches should match all keywords or any of them.
--   **Subreddits:** Limit searches to specific Subreddits.
--   **Time period (Optional)**
+-   **Subreddits (required):** The subreddits to search. Accepts a subreddit name (e.g., `sales`), an `r/` prefix (e.g., `r/sales`), or a full URL (e.g., `https://www.reddit.com/r/sales/`). At least one subreddit must be provided or the source will not run.
+-   **Keywords (required):** The search terms to look for. The combined query must be under 512 characters.
+-   **Keyword logic (Optional):** Whether posts must match any keyword (OR) or all keywords (AND). Defaults to OR (any keyword).
+-   **Time period (Optional):** Limit results to posts from a specific window — Hour, Day, Week, Month, or Year. Defaults to all time.
 -   **Max number of results (Optional)**
+
+**How keyword search works**
+
+Keywords are search terms sent to Reddit's search engine — they are not exact-match filters. Reddit returns posts that are relevant to your keywords, which may include posts whose title or body do not contain your exact keyword verbatim.
+
+The **Keywords** output column shows which of your search terms appeared literally in the returned post's title or body. If Reddit returns a post where none of your keywords appear verbatim, the **Keywords** column shows **Post** — indicating the result was returned by Reddit's relevance search without an exact keyword match in the post text.
+
+**Outputs**
+
+-   **Post ID**
+-   **Title**
+-   **Body Text**
+-   **Author**
+-   **Subreddit**
+-   **Created At** — Unix timestamp in milliseconds
+-   **Created At Date**
+-   **URL**
+-   **Number of Comments**
+-   **Score**
+-   **Keywords** — Which of your search terms appeared verbatim in the post's title or body. Shows **Post** if none of your keywords matched literally.
 
 ## **Enriching data with Reddit**
 

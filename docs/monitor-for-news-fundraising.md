@@ -34,6 +34,24 @@ Follow these steps to set up News & Fundraising Signals in your table:
 
 ## FAQs
 
+### Why did my signal miss a recent funding announcement even after re-running?
+
+The **Earliest publish date** setting in a News & Fundraising signal controls which articles the signal considers — it only returns articles published on or after that date.
+
+When **Auto-advance after each run** is switched on (the default), the signal automatically moves the **Earliest publish date** forward to the current date after every run. This means:
+
+-   Each re-run starts from the date of the previous run, so the signal never looks back at articles published before its last execution.
+-   If a funding round was announced yesterday but your signal already ran (and auto-advanced) today, re-running the signal will still skip that announcement — the date window has already moved past it.
+
+**To capture an announcement your signal missed:**
+
+1.  Click the signal column header (the `📡` icon).
+2.  Click **Edit signal**.
+3.  In the **Filters** section, manually set **Earliest publish date** to a date *before* the announcement was published (for example, two days ago).
+4.  Click **Save and re-run**.
+
+After that run, Clay will advance the date again automatically if **Auto-advance after each run** is still enabled. If you prefer to look back a fixed window on every run, turn off **Auto-advance after each run** and manage the date manually.
+
 ### Why is my signal returning articles where my target company isn't the main subject?
 
 This is expected behavior. When a News & Fundraising signal is configured with a company domain (e.g., `santander.com`), the signal fires any time that domain appears among the article's associated companies — not only when your company is the **primary subject** of the article.
