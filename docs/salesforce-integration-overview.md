@@ -152,6 +152,31 @@ To get a missing field into Clay, use one of these approaches:
         -   **Records no longer in the report are not removed:** When the report re-syncs, any records previously imported into your Clay table that no longer appear in the new report run **stay in your table** — they are not deleted automatically. Clay sources are additive only. If you need accounts to be removed from Clay when they fall off the report — for example, to keep a list that reflects accounts qualifying in and out of a segment each day — use [Clay Audiences](audiences.md) instead. With Audiences you connect Salesforce directly and define your criteria as a segment filter; records are added when they match and removed automatically when they no longer qualify.
         -   **Preserving run history / audit logs:** Because re-synced records that match an existing uniqueness key are skipped (not overwritten), your existing enrichment data for those rows is preserved across syncs. If you need to track every sync event — for example, to log when records entered or left the report — add a **Send Table Data** action after your enrichment columns to push a timestamped snapshot to a separate history table. See [Send table data](send-table-data.md) for setup details.
 
+### Can I use a Salesforce report I already built in Clay, or do I need to recreate its filters in Audiences?
+
+You can use an existing Salesforce report in a Clay table without recreating its filters, but Clay Audiences can't import a Salesforce report directly.
+
+**Using a Salesforce report in a Clay table:**
+
+1.  In a workbook, open the **Create** panel and click **All sources**.
+2.  In the **Create new table** search box, search for `Salesforce report` and select **Import records from a Salesforce report**.
+3.  Select your Salesforce account, then choose your report from the **Report to Run** dropdown.
+
+The **Import from CRM** option in the Create panel imports Salesforce objects and list views only — it doesn't offer Salesforce reports, so use **All sources** to find the report source. The **Import records from a Salesforce report** source has these limits:
+
+-   **Report format:** Only **Tabular** and **Matrix** reports are supported. Summary and Joined reports don't appear in the **Report to Run** dropdown. To use one, change its format to Tabular or Matrix in Salesforce.
+-   **Record limit:** A report import brings in at most 2,000 records. Records past the first 2,000 are not imported, and no error is shown. To import more, use the **Import records from a Salesforce list** source or the [Salesforce SOQL source](salesforce-soql.md) (up to 50,000 records).
+-   **Report visibility:** The **Report to Run** dropdown only lists reports that the connected Salesforce user can see. If a report is saved in a private folder under a different Salesforce login, move it to a folder that user can access, or connect Clay as a Salesforce user who can see the report.
+
+For more troubleshooting, see [Why doesn't my Salesforce report show up in the List View dropdown?](salesforce-integration-faqs.md#why-doesnt-my-salesforce-report-show-up-in-the-list-view-dropdown)
+
+**Using a Salesforce report in Clay Audiences:** Audiences doesn't support Salesforce reports or list views as an import source. The Audiences Salesforce import works on Salesforce objects (such as Accounts, Contacts, and Leads). To build an audience that matches an existing Salesforce report, either:
+
+-   Import the relevant Salesforce objects into Audiences and recreate the report's criteria as segment filters, or
+-   Use a **Record subset** import with a SOQL query that brings in only the records matching the report's criteria, where that logic can be expressed in SOQL.
+
+See [Importing from Salesforce](audiences.md#importing-from-salesforce) in the Audiences doc for setup steps.
+
 ## Enriching data with Salesforce
 
 1.  While in a Clay table, click `Add enrichment` and search for `Salesforce`.
