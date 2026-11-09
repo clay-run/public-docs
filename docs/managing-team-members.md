@@ -92,6 +92,8 @@ To update a member's role:
 -   Use the dropdown menu next to their name to select the desired role.
 -   Changes are applied immediately.
 
+**If the role dropdown is disabled for a member:** On Enterprise workspaces that use SCIM provisioning, members provisioned from your identity provider show a sync icon next to their name, and their role can't be changed in Clay. Change their role by updating their group in your identity provider — see [How SCIM maps identity provider groups to Clay roles](/docs/single-sign-on#how-scim-maps-identity-provider-groups-to-clay-roles).
+
 ## Remove a team member
 
 To remove a member from your workspace:
