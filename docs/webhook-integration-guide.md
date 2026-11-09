@@ -302,6 +302,23 @@ Create a dedicated Clay table with its own webhook URL for sandbox testing (see 
 **Option 3 — Disable the Flow in your sandbox org when not actively testing:**
 In Salesforce, deactivate the Flow in the sandbox org after each testing session. Reactivate it when you need to run tests again. This prevents any accidental sandbox submissions to your live Clay table between testing sessions.
 
+### My Salesforce sandbox (UAT) and production orgs send to the same Clay webhook — can one Salesforce column use a different connection per row?
+
+No. Each Salesforce column in a Clay table, whether it's a lookup or a write-back such as Create Record or Update Record, is tied to the one Salesforce connection you pick from its account dropdown. A Salesforce column can't switch its connection based on a value in the row, so a single column can't write to your sandbox org for some rows and your production org for others.
+
+This comes up when a Salesforce button or Flow exists in both your sandbox (UAT) and production orgs and both post to the same Clay webhook URL. If you switch every Salesforce column between the sandbox and production connections each time you test, you can't keep testing in sandbox while production runs.
+
+To handle sandbox and production rows in one Clay webhook table without reconnecting columns:
+
+1.  **Add an environment field to the webhook payload.** Ask your Salesforce admin to include a field such as `environment: UAT` or `environment: PROD` in the payload each org sends to Clay. Every row in your Clay table then shows which Salesforce org it came from.
+2.  **Keep your shared logic in one table.** Enrichments and business logic that don't touch Salesforce stay as single columns that run for every row.
+3.  **Duplicate only the Salesforce columns.** Create two copies of each Salesforce lookup and write-back column. Connect one copy to your Salesforce sandbox connection and the other to your Salesforce production connection. To add a sandbox connection, see [Is there a way I can test Salesforce enrichments?](salesforce-integration-faqs.md#is-there-a-way-i-can-test-salesforce-enrichments)
+4.  **Add a run condition to each copy.** Open the column's **Run settings** → **Only run if** and check the environment field. For example, the sandbox copy runs only when `environment` is `UAT`, and the production copy runs only when `environment` is `PROD`. See [Conditional runs](https://university.clay.com/docs/conditional-runs) for run condition syntax.
+
+With this setup, each row writes only to the Salesforce org it came from, and your builders can keep testing in sandbox without changing the production columns.
+
+**Alternative: separate webhook URLs.** You can also point the sandbox org at a second Clay table with its own webhook URL (see Option 2 in [My Salesforce sandbox is sending test data to my live Clay webhook table — how do I prevent this?](#my-salesforce-sandbox-is-sending-test-data-to-my-live-clay-webhook-table--how-do-i-prevent-this)). This means your Salesforce admin has to update the sandbox button or Flow, and you have to maintain a second table that duplicates the shared logic. Using an environment field in one table is usually the smaller change.
+
 ### How do I send data from multiple Salesforce objects to Clay using a single Named Credential?
 
 When using Salesforce Flows to send data from multiple objects — for example, Account, Lead, and Contact — into separate Clay webhook tables, each Clay table has its own unique `x-clay-webhook-auth` token. Salesforce Named Credentials do not support multiple values for the same header name, so adding all three tokens as separate `x-clay-webhook-auth` entries under one Named Credential will break the callouts for the other tables.
