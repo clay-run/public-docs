@@ -87,7 +87,7 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   Pricing varies by model (fixed or variable depending on which model you select)
 -   Cost visibility in Clay UI shows data credit consumption
 
-**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits) with a **premium model** (such as GPT-4o, Claude Sonnet, or Gemini 2.5 Pro), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** This cap does not apply to compact or budget models (such as GPT-4o mini or Claude Haiku). To work around this limit when using premium models, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (see "Personal API Keys" below).
+**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits) with a **premium model** (such as GPT-4o or Claude Sonnet), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** This cap does not apply to compact or budget models (such as GPT-4o mini or Claude Haiku). To work around this limit when using premium models, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (see "Personal API Keys" below).
 
 ### Personal API Keys
 
