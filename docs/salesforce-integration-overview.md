@@ -37,11 +37,12 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
     -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
-    -   **OAuth Scopes:** Add the following scopes:
+    -   **OAuth Scopes:** The Client Credentials connection only requires the `api` scope. If your security review requires the External Client App to have `api` only, the Client Credentials connection still works. Configure the scopes as follows:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
-        -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
-        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional, but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional. When you set up or test the connection, Clay uses `id` to load which Salesforce org and user the connection is authenticated as, so you can see them when you select the connection in Clay. Without it, the connection still saves and works; Clay just doesn't show the connected org and user.
         -   **Manage Pardot services (`pardot_api`)** — optional; only required if your org uses Pardot.
+
+        Of the scopes listed for the **User Sign In** connection (`api`, `refresh_token`, `id`, `openid`, `profile`), the Client Credentials connection only needs `api`, and `id` is optional. You don't need **Perform requests at any time (`refresh_token, offline_access`)** or `openid` for Client Credentials: Clay doesn't request these scopes on Client Credentials token requests, and a Client Credentials connection gets a new access token with a fresh Client Credentials request instead of a refresh token.
 
     Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
