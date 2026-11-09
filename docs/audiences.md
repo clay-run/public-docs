@@ -959,6 +959,24 @@ This applies to standard Salesforce object imports. For record subset (SOQL) imp
 
 **To fill in missing data immediately for specific records:** In Salesforce, make a small change to any field on the affected accounts or contacts (for example, add and remove a space in a text field, or bulk-update the affected records). This updates `SystemModstamp` and Clay will pick up those records — with all their current field values including the newly mapped field — on the next incremental sync.
 
+### Why does my Salesforce field mapping say "Employee count expects a whole number"?
+
+When you map the Clay **Employee count** field to a Salesforce field in your Salesforce Accounts import field mapping in Audiences, Clay checks the Salesforce field's type. If that Salesforce field can hold values that aren't whole numbers, a warning appears under the Salesforce field in the mapping row:
+
+-   **Percent field:** "This is a percent field. Employee count expects a whole number."
+-   **Currency field:** "This is a currency field. Employee count expects a whole number."
+-   **Number field with decimal places:** "This field allows decimals. Employee count expects a whole number."
+
+This warning usually means the wrong Salesforce field was picked for Employee count — for example, an employee growth rate (a percent field) instead of a headcount field. Employee count is meant to hold a whole number of employees. No warning appears when Employee count is mapped to a whole-number Salesforce field, such as the standard `NumberOfEmployees` field, or to a number field with no decimal places.
+
+The Employee count warning doesn't block saving — you can still save the mapping as it is. To map Employee count to a headcount field instead:
+
+1.  Open your Salesforce source settings in Audiences and select your Accounts import.
+2.  In the field mapping, find the **Employee count** row and select a whole-number Salesforce field, such as `NumberOfEmployees`.
+3.  Click **Save and review** → **Confirm**.
+
+The same Employee count check applies to record subset (SOQL) import mappings. Fields that your SOQL query selects through a relationship (for example, `Parent.Foo__c`) don't show the decimal-places warning.
+
 ### I removed and re-added my Salesforce source in Audiences and my field mappings are gone — how do I restore them?
 
 Field mappings cannot be recovered once a Salesforce import is removed. The mappings are tied to the specific import configuration — when that import is deleted and a new one is created, the previous mappings are not retained. There is no restore or mapping-history option, so you will need to add the fields back manually.
