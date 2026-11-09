@@ -831,28 +831,32 @@ The destination table serves as a processing bridge — the flattened records ar
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
-Create a custom Audience field in **Data Hub**:
+Create a custom Audience field in the Audiences **Data hub**:
 
-1.  In the left sidebar, click **Data Hub**.
-2.  Select the **Fields** tab (it opens by default).
-3.  Click the **+** button in the top right.
-4.  Name the new field, select a data type (Text, Number, Date, or Boolean), and click **Save**.
+1.  In the left sidebar, under **Audiences**, click **People** or **Companies**.
+2.  In the People or Companies sidebar that opens, click **Data hub**.
+3.  Select the **Fields** tab (it opens by default).
+4.  Click **Add field** in the top right.
+5.  Name the new field, select a data type (Text, Number, Email, URL, Date, or Checkbox), and click **Create**.
 
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
 ### How do I delete a custom field from Audiences?
 
-Clicking a column header in the Audiences view (People or Companies) only shows **Hide** — there is no "Delete column" option in the column dropdown. To delete a custom field, use the **Data Hub**:
+You delete a custom field from Audiences in the **Data hub**, which you open from the People or Companies page. Clicking a column header in the Audiences view (People or Companies) only shows **Hide** — there is no "Delete column" option in the column dropdown.
 
-1.  In the left sidebar, click **Data Hub**.
-2.  Select the **Fields** tab (it opens by default).
-3.  Click the row for the field you want to delete — this opens the field settings sidebar.
-4.  Click **Delete field** at the bottom of the sidebar.
-5.  Confirm by clicking **Delete** in the dialog that appears.
+To delete a custom field from Audiences:
 
-The field is permanently removed and cannot be recovered.
+1.  In the left sidebar, under **Audiences**, click **People** or **Companies**.
+2.  In the People or Companies sidebar that opens, click **Data hub**.
+3.  Select the **Fields** tab (it opens by default).
+4.  Click the row for the field you want to delete — this opens the field settings sidebar.
+5.  Scroll to the bottom of the field settings sidebar and click **Delete field**.
+6.  In the **Delete field** dialog, click **Delete** to confirm.
 
-**Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
+Deleting an Audiences field is permanent — the field can't be recovered. The **Delete field** dialog warns that any workflows that rely on the field may stop working. If any segments filter on the field, the dialog lists those segments, and the field is removed from their filters when you delete it. The dialog doesn't list the workflows or Clay tables that read from or write to the field, so check those yourself before you delete it.
+
+**Note:** Only custom fields can be deleted from Audiences. This includes fields created when you map a CRM property (for example, from Salesforce or HubSpot) to a new Clay field. Clay's default fields — such as **Title**, **City**, **State**, and **Country** in a People audience — don't show a **Delete field** button. If you don't see **Delete field** on a custom field, your workspace role doesn't allow managing fields: Admins and Editors can delete Audiences fields, but Viewers can't. To stop a field from appearing in your People or Companies view without deleting it, click the column header and select **Hide**.
 
 ### Why does my People audience have both Title and Job Title (or State and State/Region)?
 
