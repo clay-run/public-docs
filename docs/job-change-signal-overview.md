@@ -59,3 +59,11 @@ If you also want a stable custom contact ID that survives job changes, build a *
 -   **Professional profile URL** — follows the person across jobs (note: the URL's custom username portion can occasionally be edited by the user, so it is not fully immutable)
 
 Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
+
+### Why does the signal flag contacts whose company information already matches my CRM?
+
+The Initial check does not compare against your current CRM data. It scans each contact's work history for role changes within the lookback window you chose (3 months, 6 months, or 1 year) and surfaces all changes detected in that period — regardless of whether your CRM has since been updated to reflect those changes.
+
+For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
+
+To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.

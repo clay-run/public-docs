@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -63,9 +63,22 @@ You can add a new column to your table in a few ways:
 
 You can switch the data type of your column within your table. To do this:
 
-1.  Click on the column title.
-2.  Hover over the current data type to see the dropdown of other options.
-3.  Select your new input type.
+1.  Click the header of the column you want to change and select **Edit column** from the dropdown.
+2.  In the column settings panel, open the **Data type** dropdown and select the new data type.
+3.  Click **Save**, or click **Save and don't run enrichments** to save the new data type without re-running the enrichment columns that depend on this column.
+
+Changing a column's data type doesn't rewrite the values already stored in its cells.
+
+### Enrichment says a company domain or social profile URL input is invalid
+
+When you map a column to an enrichment input that expects a company domain or a person's social profile URL, Clay checks the values in that column against the format the input expects. If some values don't match, Clay shows the warning **"Some rows may not resemble a {input name}"**, and the enrichment fails on rows whose value isn't in a valid format.
+
+The formats each input expects:
+
+-   **Company domain:** a valid domain or URL, such as `example.com` or `https://example.com`.
+-   **Social profile URL:** a person's profile URL from the professional network, including the `/in/` profile path (for example, `.../in/jane-doe`). Company page URLs and other non-profile links aren't accepted.
+
+To fix rows flagged as an invalid domain or social profile URL, check the values in the flagged rows of your input column and correct them to match these formats. Switching the input column's data type (for example, from **Text** to **URL**) doesn't change the value Clay sends to the enrichment. A value that's in an invalid format stays invalid until you correct the value itself.
 
 ## Column input types
 
@@ -93,6 +106,7 @@ Each Clay table enforces two independent column limits — one for the total num
 -   Clay tables have a default enrichment column limit of **40**. This is a separate, independent cap — your table's enrichment column count is tracked on its own, regardless of how high the total column limit is.
 -   Tables using phone or email waterfalls can have this limit raised to a maximum of **60** (for that table only).
 -   Note: Enterprise Plans may have custom column limits. Each limit (total and enrichment) is set independently — a custom total column limit does not automatically raise the enrichment column limit.
+-   Columns that [Send table data](send-table-data.md) creates through **Auto-extract new columns** count toward the total column limit. The limit is checked against all the new columns one Send table data column needs to create at once: if they would put the table over its column limit, none of them are created. See [Send table data troubleshooting](send-table-data.md#best-practices--troubleshooting).
 
 ### "Cannot create new computable field due to table size limit"
 
@@ -109,6 +123,27 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 -   **Delete unused enrichment columns.** Click the column header dropdown → `Delete column` for any enrichment columns you no longer need. Hidden enrichment columns still count toward the limit, so open the columns panel to check for any hidden ones.
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
 -   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
+
+### "You have reached the maximum number of columns allowed"
+
+If you try to add a waterfall (for example a Work Email, Personal Email, or Mobile Phone waterfall) and see **"You have reached the maximum number of columns allowed (N total columns, M action columns). Please delete some columns before adding new ones."**, the new waterfall would take your table over one of its column limits. N is your table's total column limit (100 by default) and M is its action (enrichment) column limit. The error appears if either limit would be exceeded, and Clay checks every column the new waterfall needs before creating any of them. That means the error can appear even when your table is still below N columns.
+
+**Why waterfalls use up so many columns.** Each provider in a waterfall is its own column in your table. When validation is turned on, each provider also gets its own validation column. Clay also adds one merge column that holds the final result. All of these columns count toward your table's column limits.
+
+**Example:** A Mobile Phone waterfall with 15 providers and validation turned on uses 15 provider columns + 15 validation columns + 1 merge column = **31 columns**. Removing 10 providers you don't need frees up 20 of those columns.
+
+**How to read the column count in the toolbar.** The columns button in the table toolbar (for example **75/75 columns**) shows how many columns are visible in the current view out of all columns in the table, including hidden ones. It doesn't show your column limit. **75/75 columns** means the table has 75 columns and none of them are hidden.
+
+**To free up columns from a waterfall, remove the providers you don't need:**
+
+1.  Click the waterfall's header and select **Edit column** (or click the waterfall tab and select **Edit group**).
+2.  In the panel that opens on the right, click the **Full configuration** tab.
+3.  In the waterfall sequence, click the trash (delete) icon next to each provider you want to remove.
+4.  Click **Save**.
+
+Clay deletes each removed provider's column and its validation column from the table. To decide which providers to keep, check which ones actually return results in your table. Removing providers that rarely return results frees up far more space than deleting columns one at a time. Before you delete any columns, check whether another table looks up data from this one, because a dependency like that isn't visible from this table. See [Editing an existing waterfall](building-a-data-waterfall.md#editing-an-existing-waterfall) for more about changing a waterfall's providers.
+
+If you still need more columns after cleaning up, contact support. Clay support can raise the column limits for your workspace.
 
 ## Create child columns from a parent column
 
@@ -175,7 +210,7 @@ When you apply more than one sort, Clay applies them **in priority order**: the 
 
 — then all rows are arranged by Competitor Status first. Within any group of rows that share the same Competitor Status value, those rows are further sorted by Hiring Sales. Within rows that share both the same Competitor Status and Hiring Sales value, Has RevOps then determines the order.
 
-**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break.
+**This is expected behavior, not a bug.** If a column's sort appears to have no effect, it means the higher-priority sort columns have unique values for every row — there are no ties to break. If a sort looks correct for some rows but then jumps to different values for others — for example, a **Created At** date sort where dates appear in order for the first several rows, then reset to earlier dates — another sort is grouping rows by a different column first; your lower-priority sort only orders rows *within* each group, not across the whole table. To sort the entire table by a single column, open the **Sort** panel and remove all higher-priority sorts.
 
 To manage multiple sorts:
 
@@ -195,8 +230,21 @@ You can filter your table to show only rows that match specific criteria. Filter
 1.  Click the **Filter** button (funnel icon) in the table toolbar, above the rows.
 2.  Click **Add filter** and select a column to filter by.
 3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
-4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
+4.  To add more conditions, click **Add filter** again. Each new condition is joined to the others with an **And** or **Or** dropdown at the start of its row. See [Combine table filters with And or Or](#combine-table-filters-with-and-or-or) below.
 5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
+
+### Combine table filters with And or Or
+
+When a table filter has more than one condition, the first condition starts with **Where**. Every condition after it starts with an **And** / **Or** dropdown that controls how the conditions are combined:
+
+-   **And:** a row appears only if it matches **all** of the conditions.
+-   **Or:** a row appears if it matches **any one** of the conditions.
+
+All conditions at the same level share one And/Or setting. Changing the dropdown on any row changes it for every condition at that level. To mix And and Or logic, click **Add filter group**. Each filter group has its own And/Or setting.
+
+**Excluding several values with "does not contain":** to hide rows that contain any of several words, join the **does not contain** conditions with **And**. With **Or**, a row only has to pass one condition to stay visible. For example, with Job Title **does not contain** `intern` **Or** Job Title **does not contain** `consultant`, a "Biology Intern" row still appears because it doesn't contain "consultant". If your filter hides no rows (for example, the row count still shows **919 / 919 rows**), check that the dropdown between your **does not contain** conditions is set to **And**.
+
+**"does not contain" matches partial words and ignores capitalization.** The value can appear anywhere in the cell. For example, **does not contain** `intern` hides "Biology Intern", but it also hides "Internal Audit Manager" and "International Sales Director".
 
 ### Check whether a filter is active
 
@@ -236,7 +284,7 @@ You can merge data from multiple columns into a new column. "Merge columns" uses
 1.  Click `Add column` → `Merge columns`.
 2.  Select a `Data type` from the dropdown.
 3.  In the formula field, type `/` to open the column picker and select each column you want to include as a fallback step.
-4.  Click `Save settings`.
+4.  Click `Save`.
 
 **Note:** There is no "List" column data type in Clay. A Merge column always returns a **single value** (the first non-empty result across your columns), not an array of all values.
 

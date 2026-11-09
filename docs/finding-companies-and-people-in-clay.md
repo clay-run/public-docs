@@ -12,6 +12,30 @@ Clay's `Find Companies` and `Find People` sources give you instant access to bil
 
 > **Note:** Find People at These Companies is currently in **Beta** — a Beta badge is shown on the panel header in the product UI.
 
+## Where to start a search
+
+To discover new prospects in Clay's database, use **Find leads**:
+
+- **On the home page:** click the **Find leads** card and choose **People** or **Companies**. You can also use **Find leads** in the left sidebar.
+- **Inside a workbook:** click **+ Add** and choose **Find people** or **Find companies**.
+- **In Workflows:** add a **Find people** or **Find companies** node.
+
+The workbook's **+ Add** control is inside a workbook; on the home page, start from **Find leads** instead. The deprecated **Find AI** integration is a separate third-party source and is not the entry point for Clay's built-in search.
+
+Choose one result type at a time: **People**, **Companies**, or **Jobs**. A people search can use company criteria to find people at matching employers; it still returns people, not a combined people, companies, and jobs list. Some advanced filters depend on your workspace's access.
+
+**Already in Audiences?** The **People** and **Companies** lists there contain records already in your workspace. Segment filters organize those records. To discover additional prospects, start a **Find leads** search and import its results. See [Creating an audience](audiences.md#creating-an-audience).
+
+## Find with filters and Find with query
+
+Start with **Find with filters** when it is available, or describe what you want in the search assistant. For example: “Find sales leaders at software companies with at least 500 employees.” Review the criteria and preview before importing.
+
+For an advanced query such as `select from people ...` or `select from companies ...`, open **Find people** or **Find companies**, then use the mode menu in the search panel header to switch from **Find with filters** to **Find with query**, if offered. Enter the query in that mode's query editor. Query syntax is not a table formula or a Find AI input.
+
+**Find with query is in beta, and pricing is subject to change.** Availability and the layout of the filter/query controls vary by workspace. Some workspaces open directly in the query experience; others do not offer it. If you do not see the option, use the available filters or search assistant rather than looking for Find AI. The **Jobs** search UI uses filters and does not offer **Find with query**.
+
+Standard people and company table searches do not have a per-search Data Credit charge. Paid options, such as technographics in the standard company import flow, and enrichments can add charges. Workflow search execution can also use Actions. Review the displayed estimate before importing or running a Workflow; do not assume that every search option or follow-up action is free.
+
 ## Company search
 
 ### Anchor on description keywords
@@ -138,6 +162,7 @@ Clay gives you three ways to get contacts from a company list. Here's how they d
 -   Returns **10 contacts per row by default**, with full profile data.
 -   `Reduce data for more results` mode returns up to **500 contacts per row**, but only name, job title, and professional profile URL — run `Enrich Person` on each row afterward to get full profiles.
 -   Processes each company row independently — adding a new company row does not re-trigger the enrichment on other rows.
+-   With table auto-run enabled (the default), this column fires automatically when each new company row is added — no schedule needed. Only the new row is processed and billed.
 -   Costs **0.5 credits per row** on current pricing plans (1 credit per row on legacy plans).
 -   Best when you want contacts to stay associated with their parent company row, or when you're processing companies incrementally and only want to find contacts for specific rows.
 
@@ -391,6 +416,28 @@ When Clay resolves a domain to a company, it expands the search to include all c
 
 **Flag contacts from unrelated companies in your existing results:** Add a formula column that compares the contact's company domain against the source organization's domain using only the core domain name — strip the protocol (`http`/`https`), `www`, and TLD suffixes (`.com`, `.co`, `.pt`, etc.) from both before comparing. Rows where the stripped values don't match are contacts from a related but distinct entity. Set this column as a **run condition** on downstream enrichments to gate processing to matched contacts only.
 
+### Account (company) fields are missing after adding Find People to an existing table
+
+If your people table has no **Company Table Data** column and account fields — such as a Salesforce Account ID or other columns from your account list — are not appearing in each person's row, this is likely because the Find People search was added into a table that already existed rather than letting Clay create a new destination table.
+
+When Clay creates the destination table itself during a **Find People at These Companies** or **Find People** setup, it automatically adds a **Company Table Data** column to that new people table. This column carries all fields from the linked company row — including any columns you've added to your account table — into each person's row.
+
+When the search is instead added to a table that already exists, Clay does not add this Company Table Data column. The link between each contact and its parent company row is still created correctly, but no column surfaces those account fields — which is why they appear to be missing even though the underlying connection is intact.
+
+**To retrieve account fields without re-running the search:**
+
+Add a **Lookup single row in other table** column in your people table to pull account fields by matching on a shared identifier (such as domain):
+
+1.  In your people table, click **Add enrichment** and search for **Lookup single row in other table**.
+2.  Set **Table to search** to your account or company table.
+3.  Set **Target column** to the domain (or other identifier) column in your account table.
+4.  Set **Row value** to the corresponding domain column in your people table.
+5.  Run the lookup. From any populated cell, hover over a field — for example, your Salesforce Account ID column — and click **Add as column** to promote it.
+
+See [Lookup Rows](lookup-rows.md) for full configuration details.
+
+**To get the Company Table Data column automatically on future searches:** When setting up a new Find People search from your account table, let Clay create the destination table rather than targeting an existing one. Clay adds the Company Table Data column automatically during table creation, so account fields are populated on every row from the start.
+
 ### "Company Table Data" shows "Missing Input" in the people table
 
 The **Company Table Data** column can show **Missing Input** for two distinct reasons. Identify which applies before choosing a fix.
@@ -508,6 +555,41 @@ If the **Enrich Company** column shows **"Invalid input: Invalid company identif
 
 If you have the company's website URL (e.g., `https://www.clay.com`) but not a clean domain, strip the `https://`, `www.`, and any trailing path before mapping it — the identifier field expects a bare domain like `clay.com`.
 
+### Enrich Company returns the same company for multiple different domains
+
+When you run **Enrich Company** on multiple domains — for example, `allstate.com` and `allstatecorporation.com` — and both rows return the same company record, this is expected behavior. Clay resolves each domain (including subdomains and redirects) to one canonical company record, so any domain associated with a given company maps to the same result.
+
+The matching is one-directional: Clay can resolve a domain to a company, but the company record does not expose the full set of domains that would resolve to it. There is no way to retrieve the complete list of domains that map to a single company record.
+
+**Workaround — identify which of your candidate domains map to the same company:**
+
+If you have a list of domains and want to cluster them by the company they resolve to:
+
+1.  Add your candidate domains to a table (one per row).
+2.  Run **Enrich Company** on each row.
+3.  Group rows by the **Company Profile URL** or **Org Id** returned. Domains that share the same identifier are resolving to the same company record.
+
+This gives you clusters of matching domains from your list, even if it does not enumerate every possible domain that maps to a given company.
+
+**Tip:** When you have a company's professional profile URL available, use it as the identifier instead of a domain. Professional profile URLs map directly to the intended company profile and skip the domain resolution step — which can occasionally surface the wrong entity, especially for large companies with many subsidiary or regional domains.
+
+### Clay Company ID from Find Companies doesn't match the ID from Enrich Company
+
+A company's **Clay Company ID** can change over time — for example, when two company profiles in Clay's company data are merged. **Enrich Company** always looks up and returns the company's current Clay Company ID, while **Find Companies** (company search) can still return an older Clay Company ID for the same company. So the same company can show one Clay Company ID in your search results (for example, `44626947`) and a different one after you run Enrich Company (for example, `24682710`). Both IDs point to the same company; the one Enrich Company returns is the current ID.
+
+**To get the right company when you pass a Clay Company ID into Enrich Company:**
+
+1.  In your **Enrich Company** column, open **Column mapping**.
+2.  Under **Match companies using**, select **Clay Company ID**. The other options are the company's professional profile URL and **Company domain**.
+3.  Under **Select column**, map the column that contains the Clay Company ID (for example, the ID returned by Find Companies).
+4.  Run the column. Enrich Company converts an older Clay Company ID to the company's current ID before the lookup, and returns the current ID in its output.
+
+If **Match companies using** is left blank, Enrich Company guesses the identifier type from the value: a company profile URL is matched as a profile URL, a whole number is matched as a Clay Company ID, and anything else is matched as a company domain.
+
+**If your Enrich Company column has no "Match companies using" setting**, it's an older version of the Enrich Company action. The older version reads a plain number as a professional-network company ID, not a Clay Company ID — so a Clay Company ID can return **Company Not Found** or match an unrelated company. Add a new **Enrich Company** column that shows the **Match companies using** setting and use it instead.
+
+**Use a stable key for downstream systems:** If your data pipeline joins companies by ID, store the Clay Company ID that Enrich Company returns rather than the one from Find Companies, or key on the company's professional profile URL or domain. In rare cases where a company's ID changed very recently, Enrich Company can return **Company Not Found** for a Clay Company ID — rerun the row using the company's professional profile URL or domain instead.
+
 ### Getting "Invalid input: Invalid person identifier" from Enrich person
 
 If cells in your **Enrich person** column show this error, the value in the **Professional URL** field cannot be parsed as a valid LinkedIn profile URL, Sales Navigator URL, or LinkedIn user ID.
@@ -526,15 +608,44 @@ This most often happens when a column containing emails, names, company names, o
 
 After correcting the mapping, right-click the column header → **Run column** → **Run [N] empty or out-of-date rows** to re-run the affected cells.
 
+### Can I enrich generic emails like info@, sales@, or hr@ with Enrich person?
+
+No. Generic email aliases (also called role-based emails), such as `info@`, `sales@`, `support@`, or `hr@`, belong to a shared mailbox rather than a specific person, so **Enrich person** can't match them to a person profile:
+
+-   If a generic email is mapped to the **Professional URL** field, the cell shows **"Invalid input: Invalid person identifier"**, because an email address isn't a professional profile URL or ID.
+-   If a generic email is mapped to the **Email** field, no person is matched and the cell shows **"No Profile Found"**.
+
+**To add generic emails for a company to your table**, look them up at the company level with a domain-based action instead of enriching the alias. Both of these actions only need a company domain column as input:
+
+-   **Hunter → Find emails by company:** map your company domain column to **Company domain** and set **Type** to **Generic** to return only role-based addresses. You can also filter by **Department** (for example, HR, Sales, or Support). See [Hunter](hunter-integration-overview.md).
+-   **Icypeas → Find emails for domain:** map your company domain column to **Company domain**. This action returns valid role-based email addresses for the domain.
+
 ### "Your source has exceeded your plan's limit" error on Find Companies or Find People
 
-If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan.
+If you see **"Your source has exceeded your plan's limit of [N], so future runs will not add new records. Consider creating a new source or moving onto a higher tier plan"**, the source has reached a per-source cumulative record limit enforced by your billing plan. The error appears on the source as **Invalid input**.
+
+**Common symptom:** You click **Add new results to table** in the Find People (or Find Companies) search, the preview shows matching people, but nothing is added to your table — even when the preview shows only a handful of results. Once a source has reached its plan limit, it can't add any more records, no matter how few new results the current search returns.
 
 **The limit is cumulative across all runs of the same source** — not per search. Each time the source imports records, the count accumulates. Once the limit is hit, the source stops adding new records regardless of how many times you re-run it.
 
+**The per-source limit does not reset monthly.** It is a lifetime total for that individual source. Running the same source again next month does not free up capacity.
+
+**This limit is separate from the Limit results setting.** The **Limit results** panel in the search (for example, "You can import up to 5K results to tables and up to 1M to Audiences") caps how many results a single run imports. The per-source limit counts every record the source has added across all of its runs. Both use your plan's number, so a Starter-plan source can import up to 5,000 results in one run, but it also stops adding records once all of its runs together reach 5,000.
+
 **This limit is a row count, not a Data Credits limit.** The number shown (e.g., 100) refers to how many records the source can import in total — not how many Data Credits you have available. Your Data Credits balance is tracked separately and is used for enrichments such as finding emails or company data. Even after a source hits its row limit, your remaining Data Credits are still available for enrichments on rows already in your table.
 
-The limit varies by plan tier and is shown in the error message itself (for example, 100 on free workspaces, 25,000 on Explorer-tier plans, 50,000 on Pro plans and above).
+The per-source limit for Find People and Find Companies sources varies by plan and is shown in the error message itself. The table below lists the limit for each plan:
+
+| Plan | Per-source record limit |
+| --- | --- |
+| Free | 100 |
+| Trial | 1,000 |
+| Starter | 5,000 |
+| Launch | 15,000 |
+| Explorer | 25,000 |
+| Pro and above | 50,000 |
+
+**To check how many records a source has added:** open the table, click the Find People (or Find Companies) source column, and select **View Run History**. The run history lists each run's date and the number of rows imported and added. Run history shows only the 10 most recent runs, so older runs that also count toward the limit may not appear.
 
 **To continue importing beyond the limit:**
 
@@ -542,6 +653,18 @@ The limit varies by plan tier and is shown in the error message itself (for exam
 -   **Upgrade your plan** to access a higher per-source limit.
 
 **Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
+
+### "Your workspace has reached its monthly limit for search results" error in Find People or Find Companies
+
+If a Find People or Find Companies search shows **Enter a valid query** with the message **"Your workspace has reached its monthly limit for search results."**, your workspace has used its monthly allowance of search results. Some workspaces have a monthly cap on how many people and company results Clay searches can return. Workspaces without a cap never see this error.
+
+-   **What counts toward the monthly search results limit:** people and company results returned to you, including search previews, results added to tables, and exports. Checking how many records match your filters doesn't count.
+-   **When the monthly search results limit resets:** on the 1st of each calendar month at 00:00 UTC. This is a calendar-month reset, not a rolling 30-day window. For example, results returned on October 20 stop counting on November 1.
+-   **Your filters aren't the problem:** "Enter a valid query" is the header Clay shows above every search error. The message under it is the actual cause, and the same search works again once the monthly limit resets.
+-   **The monthly search results limit is separate from the Search API quota:** the **Search usage** section on the **API and CLI** page tracks only results returned through Clay's Public API and CLI. It doesn't include Find People or Find Companies searches in the app, so it can show low usage while this error appears.
+-   **The monthly search results limit is separate from the per-source limit** described in the section above.
+
+To review your workspace's monthly search results limit, or to ask about more results before it resets, [contact Clay support](https://www.clay.com/contact-form).
 
 ## FAQs
 
@@ -552,6 +675,19 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 ### Why am I finding people with unexpected job titles?
 
 First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
+
+### Can I prioritize certain job titles over others in a people search?
+
+No. A single Find People search (in **Find with filters** or **Find with query**) can't rank one job title above another. For example, you can't tell it to return Head of People or Head of HR first and CEO or COO only after that. Find with query doesn't support `order by` either.
+
+**Why CEOs and founders fill the slots first:** When you set **Limit per company** (or `limit N by clay_company_id` in a query), the search ranks every matching person at each company by their estimated audience size, largest first. How closely their job title matches your list doesn't change the order. CEOs and founders often have large audiences, so with a low limit such as 3 per company they tend to take every slot.
+
+**Workarounds for getting the titles you want first:**
+
+-   **Run one search per title tier.** Create one search that includes only your top-priority titles (for example, HR and People titles) with **Limit per company** set to 3. Then create a second search for the next tier (for example, CEO and COO). Use a formula or **Use AI** column to keep the first-tier results and fill any remaining slots from the second tier.
+-   **Exclude the titles you never want.** Add titles such as CEO, Founder, and Co-founder to **Job title keywords to exclude**. People whose current title contains those keywords are filtered out before the per-company limit is applied, so they can't take the slots.
+-   **Return more people, then rank them yourself.** Raise **Limit per company** (for example, to 10; the maximum is 100), then use a formula or **Use AI** column to rank the results by title and keep the top 3. This uses more credits on any enrichments you run, because more people are returned.
+-   **Search title by title with a fallback.** Add **Find Contacts at Company** columns to your company table and use run conditions so each lower-priority title search only runs when the higher-priority one found nobody. See [Target ICP contacts first with a senior fallback](#target-icp-contacts-first-with-a-senior-fallback).
 
 ### Why do I still see people with excluded job titles when they hold multiple current roles?
 
@@ -584,10 +720,57 @@ Two main causes:
 
 The answer depends on which feature you're using:
 
--   **Enrich Person / Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Person** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Company** — Enrich Company looks up the company in Clay's own company dataset. If the company's record is missing or hasn't been updated in more than 180 days, Enrich Company can fetch fresher data at the moment of the run.
 -   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
 
-Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+Across all three, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+
+### Why do professional profile URLs from Find People show "page not found" or an error when I open them?
+
+Professional profile URLs returned by **Find people** come from Clay's stored people dataset, not from a live lookup on the professional network at the moment you search. Each Find people result reflects the profile as it was when that dataset last refreshed it. If the person later deleted or deactivated their account, or changed their profile URL (for example, from `jane-doe-12345abc` to `jane-doe`), the profile URL stored in your table still points to the old address — so opening it shows a "page not found" error.
+
+To get the current profile URL for rows with broken links:
+
+1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add it. Map the **Professional URL** input to the profile URL column from Find people.
+2.  Run Enrich person on the rows with broken links. Enrich person makes a live profile lookup each time it runs, so its **Url** output returns the person's current profile URL — including the new URL if they changed it.
+3.  Use the **Url** returned by Enrich person instead of the original Find people profile URL.
+
+If the person deleted their account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working profile URL for that person to replace the broken one.
+
+### Where does the total funding data in Enrich Company come from?
+
+The **Total Funding Amount Range Usd** field in **Enrich Company** comes from Clay's own company dataset — the same company data that powers Enrich Company's other fields, such as employee count, industry, and annual revenue. Enrich Company doesn't call a separate funding data vendor when it fills this field.
+
+The Total Funding Amount Range Usd field shows a company's total funding as a range, not an exact dollar amount. The possible values are:
+
+-   `Under $1M`
+-   `$1M - $5M`
+-   `$5M - $10M`
+-   `$10M - $25M`
+-   `$25M - $50M`
+-   `$50M - $100M`
+-   `$100M - $250M`
+-   `$250M+`
+-   `Funding unknown` — Clay's company dataset has no funding amount on record for the company
+
+### Can other data providers enrich total funding instead of Enrich Company?
+
+Yes. If you need an exact funding amount, funding round details, or a second source for companies where Enrich Company shows `Funding unknown`, you can add a funding enrichment from another data provider. To find funding enrichments:
+
+1.  In your table, click **Tools** in the top right corner and select the **Enrich** tab.
+2.  Search for `funding`.
+3.  Pick a provider's funding enrichment, map your company input (for example, the company domain), and run it.
+
+Funding enrichments available in Clay include:
+
+-   **CB Insights** — **Get company total funding**
+-   **Crunchbase** — **Enrich company's financials** and **Enrich company's latest funding round**
+-   **Harmonic** — **Get fundraising data for company**
+-   **Dealroom** — **Get fundraising data for company**
+-   **PitchBook** — **Enrich company with PitchBook**
+
+To use more than one funding provider without paying for duplicate lookups, add them to a [waterfall](building-a-data-waterfall.md) so each next provider only runs when the previous one returns no result.
 
 ### Can I run a people search only on companies that meet certain criteria?
 
@@ -623,6 +806,12 @@ The source returns results in a new table and is subject to a per-source cumulat
 
 The outputs are similar. If you want contacts as individual rows without spending credits on the lookup, choose **Save results in new table** to use Find People. Choose **Save results in this table** when you need contacts stored inline with their parent company row.
 
+### Why does a large company return fewer contacts when I search from a company table than when I search it alone?
+
+**This is expected behavior.** When you use the Find People source with **Start from = Table of companies**, Clay runs a single globally-ranked query across all companies in your table at once — every company's contacts share the same result pool. A large company like Gensler that returns hundreds of matching contacts when searched individually (via **Company identifiers**) competes with all other companies for slots in the batch results. Raising the overall **Limit results** setting does not change this: result distribution across companies is determined by global ranking, not the limit ceiling.
+
+For full per-company depth across a large company list, use **Find People at These Companies** as an enrichment action in your company table rather than the source — the enrichment runs an independent search per company row, so each company's results are not constrained by the size of the list. See [Choose your starting point](#choose-your-starting-point) for setup guidance and [Source vs. enrichment — when to use each](#source-vs-enrichment--when-to-use-each) for a comparison of the two approaches.
+
 ### I added new companies to my company table — how do I get them through my Find People searches?
 
 **If using Find People as a source (a separate people table):**
@@ -656,9 +845,9 @@ If your people table has a **Company Table Data** column (created automatically 
 
 **Note:** Column deduplication removes entire rows from your table based on matching values. There is no built-in undo — export your table to CSV before running a dedupe if you want a backup you can re-import. For full rules and recovery options, see [Dedupe columns](table-columns-overview.md).
 
-### Why do "Picture URL Copy" and "Picture URL Orig" return null in Enrich Person?
+### Why do "Picture URL Copy" and "Picture URL Orig" (Picture Org URL) return null in Enrich Person?
 
-This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally).
+This is expected behavior. Clay stopped returning professional profile picture URLs through the Enrich Person enrichment for privacy and compliance reasons. Both the **Picture URL Copy** and **Picture URL Orig** output fields (sometimes read as "Picture Org URL") are present but always return null for all customer workspaces — this is not a bug and is not plan-specific (Growth, Pro, and Enterprise plans are all affected equally). If these picture fields are empty on every row of your Enrich Person column, even across thousands of rows, nothing is wrong with your table or inputs. These are the only picture fields in the Enrich Person output.
 
 If you need professional profile photos in your workflow, the alternative is to use a third-party scraping tool integrated with Clay via HTTP API or webhooks:
 

@@ -135,13 +135,32 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
 -   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
--   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the Artificial Intelligence integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
+-   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
 **Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+
+### What "Other" means under AI in the Integrations tab
+
+Available on all plans. In the credit usage dashboard (`Settings → Usage`), the **Integrations** tab lists an **AI** integration row. Expand the **AI** row to see your AI credit spend split into these sub-rows:
+
+-   **Named API key rows** — one row for each AI API key connected to your workspace, labeled with the account name.
+-   **Clay Auto** — credits spent by Clay Auto on your audiences (Audiences agent runs).
+-   **Other** — "Usage that wasn't tracked, or couldn't be attributed to a specific API key." In the dashboard, hover over the ⓘ icon next to **Other** to see this description.
+
+If all of your workspace's AI spend falls under **Other** (no spend from your own connected AI API keys and no Clay Auto usage in the selected period), the **AI** row has no expand arrow. In that case, the whole **AI** row total is **Other** usage.
+
+Most AI credits in the **Other** row come from AI columns, such as **Use AI** and **Claygent**, that ran on Clay's own managed models using Clay credits instead of an API key you connected. These runs aren't tied to an account, so their credits are grouped under **Other** rather than getting their own named row.
+
+The **Integrations** tab groups AI spend by API key, not by table. To find which tables drove your AI "Other" spend:
+
+1.  Open the **Workbooks** tab and set the `When` dropdown to the period you're investigating.
+2.  Filter by integration to show only spend from the **AI** integration.
+3.  Sort by `Credits used` to bring the highest-spending tables to the top.
+4.  Click the chart button next to a table's name to open its [table credit usage dashboard](#understanding-table-specific-credit-usage). Use the **Column view** to see which AI columns spent the credits, and the **Time view** to see which days the spend happened.
 
 ## Credit spike alerts
 
@@ -164,7 +183,7 @@ Each table card in the workbook canvas displays an estimated credit cost per row
 
 To estimate your total enrichment cost for a table, multiply the per-row figure by the number of rows you still need to enrich.
 
-**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values.
+**Note:** The `~` prefix means this is an approximation. The estimate is calculated from the configured credit cost of all active enrichment columns — actual costs are often lower, since some enrichments return no data for certain rows and conditional logic may skip columns based on existing values. For enrichments that charge **per result returned** rather than a flat per-row fee, the estimate assumes the maximum number of results configured — so if fewer results are returned, the actual charge for that row will be proportionally lower. To check what was actually charged on a specific row, click the action cell and look at the **Charged** line in the cell details panel.
 
 ### Run cost breakdown
 
@@ -263,6 +282,29 @@ Turn auto-run **off** entirely before editing (`⛭` → toggle **Auto-run** off
 **Tip:** Use [Sandbox mode](sandbox-mode.md) to test configuration changes on a small subset of rows before applying them to your full table — especially useful when editing a heavily-referenced column, so you can verify the output before triggering a downstream cascade across all rows.
 
 See [Auto-run](auto-run.md) for full details on **Keep existing results** and column-level auto-run controls.
+
+### Charged again after re-running a column on rows that already had results
+
+If you re-run an enrichment column and are charged credits again for rows that already had a result (for example, a mobile phone or work email already found), the column was most likely force-run. A force run runs every row or cell it covers again, even rows that already ran successfully, and charges credits for each one again. Clay doesn't reuse the result already in the cell. This applies to every enrichment column, including **Execute subroutine** (Run subroutine) columns: on a force run, the subroutine runs all of its enrichments again.
+
+These run options force-run, so rows that already have results run again and use credits again:
+
+-   **Force run all [N] rows** (column header menu → **Run column**) — re-runs every row in the current view.
+-   **Choose number of rows to run** (column header menu → **Run column**) — re-runs every row in the range you enter.
+-   **Run [N] cells** (select cells in a column, then right-click) — re-runs every selected cell.
+
+These run options skip rows that already ran successfully with unchanged inputs, so those rows aren't charged again:
+
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**) — runs only rows that have never run, errored, or are out of date because their inputs changed since the last run. Rows that ran successfully, including rows where the enrichment found no data, are skipped unless they're out of date.
+-   **Run [N] rows** (select whole rows by clicking row numbers, then right-click) — runs the enrichment columns on those rows using the same rule.
+
+**To re-run only the rows that are missing data:**
+
+1.  Click **Filter** in the table toolbar and filter to the rows that are missing the data you want — for example, rows where both the mobile phone and work email columns are empty.
+2.  Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+3.  Remove the filter when the run finishes.
+
+Only use **Force run all [N] rows**, **Choose number of rows to run**, or **Run [N] cells** when you deliberately want a fresh lookup on rows that already have results. See [Run progress](run-progress.md#why-did-run-column-run-every-row-when-i-only-highlighted-a-few) for all column run options.
 
 ### Accidental credit spend
 

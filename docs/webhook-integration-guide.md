@@ -22,7 +22,7 @@ Your table updates instantly with new data, eliminating manual entry. This featu
 3.  Copy the URL/cURL.
     -   **URL:** Paste this URL into the application sending data to Clay. This URL is where your data will be sent.
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
-4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request.
+4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request. Clay's webhook authentication header is named `x-clay-webhook-auth`; each webhook table generates its own unique token.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
 
 ## Limits
@@ -34,7 +34,7 @@ The following limits apply to all webhook sources in your workspace:
 | Throughput | 10 requests/second, burst up to 20 requests |
 | Rate limit scope | Per workspace — all active webhook sources share this budget |
 | Max payload size | 100 KB per request |
-| Max submissions | 50,000 per webhook source |
+| Max records | 50,000 records held by each webhook source at one time |
 
 **Throughput:** Clay accepts up to 10 incoming HTTP requests per second per workspace. A burst of up to 20 requests is allowed when capacity is available — after a burst, throughput returns to the sustained 10-per-second rate. Each POST counts as one request against this limit, regardless of how many fields or records the payload contains. Exceeding the limit returns a `429 Too Many Requests` response with a `Retry-After: 1` header and this body: `{"type":"TooManyRequests","message":"Too many requests. Wait a bit and retry.","details":null}` — records are dropped and Clay does not queue them. For event-driven integrations where you cannot control the send rate directly (for example, a webhook triggered by a form submission), implement retry logic with exponential backoff on your sending system: wait at least 1 second after receiving a `429` before retrying. To avoid data loss when sending in bulk, pace your requests to 10 per second or fewer. Multiple active webhook sources in the same workspace share this limit.
 
@@ -42,9 +42,13 @@ The following limits apply to all webhook sources in your workspace:
 
 **Payload size:** Each HTTP POST to Clay's webhook endpoint must be 100 KB or smaller.
 
-**Submission limit:** Each webhook source accepts up to 50,000 submissions. This is a cumulative lifetime count — every accepted submission increments the counter, and deleting rows from the table does **not** reduce it. Once you reach this limit, Clay returns a `403 Record limit reached for webhook` error and you'll need to create a new webhook to continue receiving data.
+**Record limit:** Each webhook source can hold up to 50,000 records at one time. The webhook record limit counts the records the source currently holds, not every submission the webhook has ever received. Every accepted payload adds one record to the count, and deleting rows from the webhook's table removes the matching webhook records and lowers the count by the same amount. Deleting rows frees up capacity: for example, a webhook source holding 50,000 records that has 10,000 rows deleted from its table can accept 10,000 more payloads.
 
-**Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 submission limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
+**What happens at the limit:** Once a webhook source holds 50,000 records, Clay rejects every new request with a `403 Forbidden` response and the message `Record limit reached for webhook`. The webhook doesn't fail silently: your sending system receives the `403` error, and no row is created for the rejected payload. Clay doesn't queue or retry rejected payloads, so re-send them from your sending system after you've freed up capacity. To start accepting data again, delete rows from the webhook's table or create a new webhook.
+
+**Monitor the webhook record limit:** The row count on the webhook source card in your workbook (for example, **673 rows**) shows how many records the source currently holds — this is the number that counts toward the 50,000 limit. The card shows **No data yet** when the source holds no records, including after you delete every row from the table. Tables that receive data continuously from a webhook without auto-delete turned on also show a warning recommending that you enable auto-delete to avoid reaching the 50,000 record limit.
+
+**Enterprise Plan — run a webhook indefinitely:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) (also called passthrough tables). When passthrough mode is active, the webhook source takes a separate code path that **bypasses the 50,000 record limit entirely** — a single webhook URL can keep accepting data indefinitely without ever hitting the cap. This is the recommended approach for automated enrichment pipelines. Auto-delete is available on Enterprise plans and only works for webhook, send-table-data, and signal sources. Learn more in [table management settings](https://www.clay.com/university/guide/table-management-settings).
 
 ## Request body format
 
@@ -80,6 +84,22 @@ For a complete example using Zapier, see [Send Clay data to Zapier](https://www.
 
 **Note:** The 10 requests/second throughput limit in the [Limits](#limits) section above applies only to data *arriving at* Clay through a webhook source. It does not apply to outbound HTTP API calls your table makes to external services.
 
+## Webhooks as Workflow triggers
+
+In Clay's Workflows feature, a webhook can be used as the trigger that starts a workflow run. This behaves differently from the **Monitor webhook** table source described above.
+
+**Response behavior — fire and forget:** When your external system POSTs to a Workflow's webhook URL, Clay immediately returns a `202 Accepted` response before the workflow begins executing. The response body is always:
+
+```json
+{"success": true, "workflowRunId": "<id>", "message": "Webhook request accepted and queued for processing"}
+```
+
+There is no way to wait for the workflow to finish or return a custom response body to the caller. Clay enqueues the workflow run and returns the `202` immediately — the workflow executes asynchronously after that point.
+
+**There is no way to customize the webhook response body in Workflows.** The `202` response shape, the `success` value, and the message are fixed. If your integration requires a specific response format or needs to receive workflow output synchronously, that is not supported today.
+
+**If you need results delivered back to your system:** Build an outbound step into the workflow itself — for example, an HTTP API call or a CRM update action — to push the processed results back to your external system once the run completes.
+
 ## FAQs
 
 ### How can I see webhook logs?
@@ -94,42 +114,61 @@ Clay does not have a built-in webhook log UI. The two places to check webhook ac
 
 ### Why does my webhook source show a higher row count than my table?
 
-The webhook source node in the workbook view shows the **total number of records stored by the source** since it was created. This count increases with every accepted payload and does not decrease when you delete rows from the table.
+The webhook source node in the workbook view shows the **number of records the webhook source currently holds**. This count increases with every accepted payload and decreases when you delete rows from the table, because deleting a row also deletes its webhook record. If you delete every row, the webhook source node shows **No data yet**.
 
 The table node shows the **current number of rows** in your table.
 
-So if your source displays more rows than your table (for example, 162 vs. 92), the difference is typically caused by one or both of the following:
-
--   **Deleted rows.** Rows that were ingested at some point but later deleted from the table are still counted by the source. Deleting a row from the table does not reduce the source count.
--   **Table filters.** If a filter is active on your table, only the rows matching that filter are shown in the table count. The source count always reflects all stored records, regardless of any filters.
+If your webhook source displays more rows than your table view (for example, 162 vs. 92), check for **table filters**. If a filter is active on your table, only the rows matching that filter are shown in the table count. The webhook source count always reflects all stored records, regardless of any filters.
 
 **Note:** Records that Clay rejected with a `429` rate limit error were never stored and do not appear in either count. See the [Limits](#limits) section above for guidance on keeping requests within the 10/second throughput limit to avoid dropped records.
 
 ### My webhook is sending data successfully but new rows aren't visible in my table
 
-If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the most likely cause is an **active view filter** hiding the incoming rows.
+If your external tool reports a successful delivery (for example, a `200 OK` response from Clay's webhook endpoint) but new rows aren't showing up in your table view, the two most common causes are an **active view filter** hiding the rows or **auto-dedupe rows** silently removing them.
 
-Filters in Clay are display-only — they control which rows appear in the current view, but they do not block or drop incoming webhook data. Every accepted payload creates a row in your table regardless of any active filters. Rows that don't match the filter criteria are still stored; they simply don't appear in the filtered view.
+**Active view filter:** Filters in Clay are display-only — they control which rows appear in the current view, but they do not block or drop incoming webhook data. Every accepted payload creates a row in your table regardless of any active filters. Rows that don't match the filter criteria are still stored; they simply don't appear in the filtered view.
 
 **To check for an active filter:** Look at the table toolbar — when a filter is active, you'll see a number badge on the filter icon and the row count will display as **X/Y rows**, where X is the filtered count and Y is the total. Open the filter panel and click **Clear filters** to remove all active filters and see every row.
 
-If you clear the filters and the expected rows still don't appear, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
+**Auto-dedupe rows:** If **Auto-dedupe rows** is enabled on the table and a webhook payload arrives with a value in the dedupe column that already exists in the table, Clay accepts the request and returns `200 OK` — but the new row is immediately removed by deduplication and never appears in the table. This is especially easy to miss because your sending tool shows a successful delivery even though no row was created.
+
+To check whether auto-dedupe is removing your rows:
+
+1. Open **Table settings → Edit table settings** (or click the gear icon in the top toolbar) and look at the **Deduplication** section. If **Auto-dedupe rows** is toggled on, note which column is selected as the dedupe column.
+2. Check whether your incoming payloads contain a value in that column that already exists in the table.
+3. To see rows that were removed by auto-dedupe, open the **History** panel (bottom-right of the table) and select **Row deduplication**.
+
+**To fix it,** open **Table settings → Edit table settings → Deduplication** and choose one of:
+
+- **Toggle auto-dedupe off** — every incoming webhook payload creates a new row, with no deduplication.
+- **Change the dedupe column** to a field that is unique per event (such as a message ID or event timestamp), so only true duplicate records are removed.
+- **Switch from Keep oldest row to Keep newest row** — when a duplicate arrives, the existing row is replaced by the new one instead of being discarded. Note that the replacement row starts empty, so any enrichment columns will re-run on it and consume credits.
+
+**Note:** A simple test payload like `{"test": "hello"}` will always create a row even when auto-dedupe is enabled — because it contains no value in the dedupe column, and blank dedupe column values are always skipped by auto-dedupe. If your test payload creates a row but your real payload does not, auto-dedupe is the likely cause.
+
+If you clear the filters and auto-dedupe is not the cause, see [Why aren't any rows arriving in my webhook table?](#why-arent-any-rows-arriving-in-my-webhook-table) for configuration-level troubleshooting.
 
 ### Why aren't any rows arriving in my webhook table?
 
 If your webhook isn't creating rows — even on a brand-new webhook that has never received a submission — check these common causes:
 
-1. **Missing `Content-Type: application/json` header** — Clay requires this header on every request. Without it, Clay rejects the request with a `400 Bad Request` error and no row is created. Make sure every request includes:
+1. **Missing or unsupported `Content-Type` header** — Clay's webhook endpoint accepts two JSON content types: `application/json` and `application/vnd.api+json` (the JSON:API media type used by platforms such as Outreach). Any other content type causes the request body to be silently ignored — the request is accepted but the row arrives with empty data. Make sure every request uses one of these accepted headers:
 
    ```
    -H "Content-Type: application/json"
    ```
 
+   For JSON:API senders (such as Outreach), use:
+
+   ```
+   -H "Content-Type: application/vnd.api+json"
+   ```
+
 2. **Incorrect URL** — Confirm you copied the full webhook endpoint URL from the **Monitor webhook** section in your table source settings (not a partial URL or the cURL command itself).
 
-3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as a header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
+3. **Missing or wrong authentication token** — If you added an auth token when creating the webhook, it must be included in every request as the `x-clay-webhook-auth` header. The token is only displayed once at creation — if you didn't copy it, you'll need to delete and recreate the webhook to generate a new one.
 
-4. **Submission limit reached** — See the [Limits](#limits) section. Once a webhook source hits 50,000 submissions, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. This limit is cumulative — it counts all submissions since the webhook was created, and deleting rows does not reset it. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
+4. **Record limit reached** — See the [Limits](#limits) section. Once a webhook source holds 50,000 records, Clay returns a `403 Record limit reached for webhook` error and stops creating rows. The limit counts the records the webhook source currently holds, so deleting rows from the table frees up capacity and the webhook starts accepting new payloads again. **Enterprise plan:** Enable [auto-delete](https://www.clay.com/university/guide/auto-delete) to bypass this limit entirely — when passthrough mode is active, the 50,000 cap is skipped and the webhook can accept data indefinitely.
 
 **Quick isolation test:** To confirm whether the issue is in your request or on Clay's side, try the simplest possible payload:
 
@@ -139,7 +178,7 @@ curl -X POST YOUR_CLAY_WEBHOOK_URL \
   -d '{"test": "hello"}'
 ```
 
-If a row appears in your table, the issue is in your original request's formatting, headers, or auth token. If no row appears on a brand-new webhook, contact support.
+If a row appears for the simple test but not for your real payload, the issue is either in your real request's formatting, headers, or auth token — or **auto-dedupe is removing rows** whose dedupe column value already exists in the table. A simple `{"test": "hello"}` payload always creates a row even when auto-dedupe is on, because blank dedupe column values are skipped. See [My webhook is sending data successfully but new rows aren't visible](#my-webhook-is-sending-data-successfully-but-new-rows-arent-visible-in-my-table) for how to diagnose and fix auto-dedupe. If no row appears on a brand-new webhook, contact support.
 
 ### How can I tell which webhook source a row came from?
 
@@ -157,17 +196,21 @@ Clay records which webhook source sent each row at ingestion time, so you can fi
 
 ### How do I find which table a webhook URL belongs to?
 
-There is no customer-facing search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, contact Clay support with the URL — the team can look it up on your behalf.
+There is no in-app search to look up a Clay table by its webhook URL. If you have a webhook URL from an external system and need to identify which Clay table it's connected to, you have two options depending on how many webhook tables you have.
+
+**Check manually (small workspaces):** The webhook URL for any table is always visible in its source settings — not just when the webhook is first created. To view a table's webhook URL: open the table, hover over the webhook source column header, and click the **Edit source** icon that appears. The source settings panel opens showing the full URL. Check each of your webhook tables this way and compare the URL against the one you're looking for.
+
+**Contact support (large workspaces):** If you have too many webhook tables to check one by one, contact Clay support with the URL — the team can look it up on your behalf.
 
 **Tip:** To avoid this situation in the future, give each webhook table a descriptive name when you create it (for example, "HubSpot MQL ingest" or "Salesforce lead flow"). Since every table generates a unique webhook URL, a clear name makes it easy to match a URL back to the right table later.
 
 ### What happens to my webhook URL if I duplicate a table?
 
-When you duplicate a table that has a webhook source, Clay generates a **brand new, unique webhook URL** for the duplicate. The original table's URL continues working as before — it is not affected by the duplication.
+When you duplicate a table that has a webhook source, Clay copies the table's **columns** but does not copy the webhook source itself. The duplicate starts with no source attached — it will not receive any incoming data until you add a source to it manually.
 
-Because the duplicate has a different URL, any external system currently sending data to the original table will not automatically send to the new table. To start receiving data in the duplicate, update your sending system (for example, Zapier, Make, a custom script, or another tool) to POST to the new URL.
+The original table's webhook URL and source continue working exactly as before — duplication does not affect them.
 
-To find the new webhook URL: open the duplicated table, click the webhook source column, and copy the URL shown there.
+To start receiving data in the duplicate, add a new webhook source to it: in the duplicated table, click **+ Add source**, choose **Monitor webhook**, copy the new URL Clay generates, and update your sending system (for example, Zapier, Make, or a custom script) to POST to that new URL.
 
 ### Does Clay prevent the same webhook record from being processed more than once?
 
@@ -191,6 +234,20 @@ When Auto-run is enabled on a table (the default for new tables), each new row t
 - **Pause the webhook source itself** — Turning off Auto-run does **not** stop the webhook from receiving new rows — the webhook source and Auto-run operate independently. To stop new rows from arriving entirely, disable the webhook source in your sending system.
 
 See [Auto-run](auto-run.md) for full details on table-level and column-level controls, and [Ways to save Clay credits](clay-credit-conservation.md) for additional cost-management strategies.
+
+### Why did my webhook table receive fewer records than I sent?
+
+If you sent records to a Clay webhook in bulk (for example, from a custom script pushing thousands of records) and your webhook table has fewer rows than you sent, the most common cause is the webhook rate limit. Clay accepts up to 10 webhook requests per second per workspace, with a burst of up to 20 requests. Any request above that limit gets a `429 Too Many Requests` response. Clay doesn't store, queue or retry rejected requests, so those records never become rows. If your sending system doesn't retry on `429`, the records are lost and have to be re-sent from your side.
+
+**To get the missing records into your webhook table:**
+
+1.  **Slow down the sending.** Send one record per request at a steady pace of 10 requests per second or fewer, rather than sending everything at once. All webhook sources in your workspace share this limit, so don't send to other webhook tables in the same workspace at the same time.
+2.  **Retry on `429`.** When Clay responds with `429`, wait at least 1 second (the response includes a `Retry-After: 1` header) and re-send that same record, increasing the wait on each retry. A `200` response means Clay accepted the record.
+3.  **Avoid duplicating the records already in the table.** Every webhook request creates a new row, so re-sending your full list would duplicate the rows that already arrived. Choose one of these options:
+    -   Send only the records that aren't in the table yet.
+    -   Turn on auto-dedupe first, then re-send the full list. Open the table name dropdown → **Edit table settings** → **Deduplication**, toggle **Auto-dedupe rows** on, and under **Dedupe via column** pick a column with a unique value per record (for example, **Domain**, an email address or a record ID). Incoming rows whose value in that column already exists in the table are deleted, and by default Clay keeps the oldest row. This setting can't be changed while the table is running. For details, see [Auto-dedupe](table-management-settings.md#auto-dedupe).
+
+**Alternative: import a CSV.** If you'd rather not change your sending script, export the missing records and import them into the same table as a CSV. CSV imports don't go through the webhook endpoint, so the webhook rate limit doesn't apply to them.
 
 ### Can Clay replay webhook events that were acknowledged but not processed?
 
@@ -229,3 +286,29 @@ You can confirm this is the case if the field appears in the webhook column's **
 Once the field is selectable in your prompt, you can remove the temporary filter or sort to restore your original view.
 
 **Alternative:** If you frequently need to reference a webhook sub-field in prompts across multiple columns, extract it as a standalone column. Click a cell in the webhook column, open **Cell details**, hover over the field, and select **Add as column → Create column**. The extracted column is then always available in the `/` picker without needing to sort the view first.
+
+### My Salesforce sandbox is sending test data to my live Clay webhook table — how do I prevent this?
+
+Clay does not distinguish between production and sandbox Salesforce orgs at the webhook level. When a Salesforce Flow in your sandbox org posts to a Clay webhook URL, it triggers your Clay table the same as a post from your production org — Clay has no built-in mechanism to detect or filter by Salesforce org type.
+
+There are three ways to prevent sandbox test data from entering your live table:
+
+**Option 1 — Add an `IsSandbox` condition to your Salesforce Flow (recommended):**
+In Salesforce Flow Builder, add a **Decision** element before the action that posts to Clay. Set the decision rule so the Flow only proceeds to the Clay callout when `{!$Organization.IsSandbox}` equals `False`. The Flow continues to run in the sandbox, but the step that sends data to Clay is skipped — so your live Clay table only receives records from your production Salesforce org.
+
+**Option 2 — Point your sandbox Flow to a separate Clay test table:**
+Create a dedicated Clay table with its own webhook URL for sandbox testing (see [Creating a table with webhook](#creating-a-table-with-webhook)). Configure your sandbox Salesforce Flow to post to that test webhook URL instead of the production one. Your live Clay table only receives data from the production Flow; sandbox test records land in the separate test table where they don't affect your live workbook.
+
+**Option 3 — Disable the Flow in your sandbox org when not actively testing:**
+In Salesforce, deactivate the Flow in the sandbox org after each testing session. Reactivate it when you need to run tests again. This prevents any accidental sandbox submissions to your live Clay table between testing sessions.
+
+### How do I send data from multiple Salesforce objects to Clay using a single Named Credential?
+
+When using Salesforce Flows to send data from multiple objects — for example, Account, Lead, and Contact — into separate Clay webhook tables, each Clay table has its own unique `x-clay-webhook-auth` token. Salesforce Named Credentials do not support multiple values for the same header name, so adding all three tokens as separate `x-clay-webhook-auth` entries under one Named Credential will break the callouts for the other tables.
+
+**Recommended approach:** Point the Named Credential at the base domain only, and supply each table's token directly on the Flow callout:
+
+1. Create one Named Credential with the base URL set to `https://api.clay.com` and **no** authentication headers configured on it.
+2. In each Flow (Account, Lead, Contact), use an HTTP Callout action that references the shared Named Credential. On the callout action itself — not on the Named Credential — set the full Clay webhook URL as the endpoint and add the `x-clay-webhook-auth` header with that specific table's token.
+
+Each Flow supplies its own token at runtime, so there is no header conflict. The Named Credential handles only the base domain; each Flow manages its own authentication.

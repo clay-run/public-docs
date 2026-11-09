@@ -22,18 +22,30 @@ To run a pre-built waterfall:
 5.  Optionally, choose to output the name of the successful provider and hide the provider columns for a cleaner table view.
 6.  Configure Run settings, including enabling auto-update or setting conditions for when the waterfall should run.
 
+## Adding a waterfall in Clay Workflows
+
+In Clay Workflows (the graph editor where you build with nodes), there's no **Tools** button and no **Add column**. You add a waterfall as an **Enrich** node instead. To add a waterfall to a workflow:
+
+1.  Click the **+** below the node the waterfall should run after.
+2.  Choose **Enrich**. A node named **New Enrich Node** is added to your workflow, and the enrichment panel opens.
+3.  Find the waterfall in either of these ways:
+    -   In the **For you** tab, click the **Waterfalls** card to see the waterfalls available in your workspace. The **Waterfalls** card only appears when your workspace has waterfalls available to workflows.
+    -   Type the data point you need, for example `Phone number`, in the search bar (**Search providers, enrichments, owners...**).
+4.  Select the waterfall you want to run. It's set up in your Enrich node.
+
+**Can't find a "Waterfalls" tab?** In both Clay tables and Clay Workflows, **Waterfalls** is a card inside the **For you** tab, not a tab of its own. In a table, click **Tools** and stay on the **For you** tab to see the **Waterfalls** card. In a workflow, the **Waterfalls** view is marked **Beta**.
+
 ## Editing an existing waterfall
 
 To add, remove, or reorder providers in a waterfall you've already saved:
 
-1.  Click the waterfall column header to open the column menu.
-2.  Select **Edit column**.
-3.  If the waterfall shows a **Quick setup** / **Full configuration** tab selector, click **Full configuration**.
-4.  In the **Waterfall sequence** section, you can:
+1.  Click the waterfall tab — the labeled bar spanning your waterfall's provider columns — to open the waterfall menu, then select **Edit group**.
+2.  In the waterfall editor, click the **Full configuration** tab if it is not already selected.
+3.  In the **Waterfall sequence** section, you can:
     -   Click **Add provider** to add a new data provider.
     -   Drag providers up or down to reorder them.
     -   Click the delete icon next to a provider to remove it.
-5.  Click **Save**.
+4.  Click **Save**.
 
 ### Preserving existing data when reorganizing providers
 
@@ -138,6 +150,30 @@ By default, auto-run is **on** for every table — waterfall columns (such as a 
 
 For more ways to control credit usage, see [Ways to save Clay credits](clay-credit-conservation.md).
 
+## How waterfall credits are charged per provider
+
+A waterfall doesn't charge you the combined cost of every provider in it. Clay runs the providers one at a time, in the order shown in the **Waterfall sequence** section, and each provider charges its own credit cost only when it runs.
+
+-   **Each provider has its own credit cost.** In the waterfall's **Waterfall sequence** section, each provider has a badge next to its name showing its credit cost per row (a coin icon plus a number, for example `2 / row`). Costs differ by provider and data point, so a waterfall's cost per row depends on which provider finds the result.
+-   **The waterfall stops at the first valid result.** Once a provider returns a result that passes validation, the providers after it don't run for that row (their cells show **Run condition not met**) and aren't charged.
+-   **Default providers refund credits when they find nothing.** The default providers in the pre-built Work Email and Mobile Phone waterfalls automatically refund their credits when they return no result. Refund behavior is set per provider, so if you add a provider that isn't in the default lineup, check how it bills before running at scale.
+-   **Email waterfalls charge for a found email even if validation rejects it.** When a provider returns an email, you pay for that provider's lookup and for the validation step that checks the email. If validation rejects it, the waterfall moves on to the next provider. See [How waterfall validation works](#how-waterfall-validation-works).
+
+To see a waterfall's total estimated cost, hover over the credit badge next to the run button at the bottom of the waterfall panel. The tooltip shows the **Average credit cost** and **Max credit cost** per row.
+
+### Should I put the most expensive providers last in my waterfall?
+
+Yes, if lowering credit spend is your goal. Because a waterfall stops at the first provider that returns a valid result, ordering providers from lowest to highest credit cost lowers your average cost per row: rows that an inexpensive provider can resolve never reach the expensive ones.
+
+For example, suppose Provider A costs 1 credit per row and Provider B costs 3 credits per row, and both would find a valid email for a given contact:
+
+-   **Provider A first:** the waterfall stops after Provider A, so the row costs 1 credit.
+-   **Provider B first:** the waterfall stops after Provider B, so the row costs 3 credits.
+
+To reorder providers, follow the steps in [Editing an existing waterfall](#editing-an-existing-waterfall) and drag providers up or down in the **Waterfall sequence** section.
+
+Cost isn't the only factor. Provider coverage and accuracy vary by region and data type, so a higher-cost provider may be worth placing earlier if it finds more valid results for your contacts. To compare providers, see [[Data test] Work email providers](data-test-work-email-providers.md) and [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
 ## How waterfall validation works
 
 Email waterfalls include a validation step after each provider to confirm whether the email found is valid. However, validators are designed to skip if the same email address has already been returned and found invalid by an earlier step in the sequence.
@@ -211,6 +247,19 @@ When enriching a person or company, providers match on name or profile data — 
 1. Filter the table to rows where the domain-match column is `false`.
 2. Re-enrich the company using the email domain as the primary input instead of the company name. A validated work email domain is a more reliable signal than a profile-based best-match result.
 
+### Why did my professional profile URL waterfall return the wrong person?
+
+A waterfall that finds a professional profile URL can return the wrong person when one of its providers finds more than one possible match for the same contact. For example, when the LiveData **Find professional profile** step finds several matches, its cell shows **✅ Found 2 profiles** (or any number above 1), and its results hold a list of candidate people.
+
+When **Find professional profile** returns several people, the waterfall uses the professional profile URL of the first person in that list. The waterfall does not compare the candidates against the contact's company, email, or email domain. If the provider lists a different person with the same name first, that person's professional profile URL ends up in your waterfall's output column. Because the waterfall stops at the first provider that returns a result, the providers after that step don't run for that row.
+
+**To check whether a row was affected:** expand the waterfall (click the **»** arrow on the column header) and open the **Find professional profile** cell for that row. If the cell shows more than 1 profile, click into it and review each person's name, company, and job titles to find the right one.
+
+**To get the right person more consistently, use one of these options:**
+
+-   **Move or remove the Find professional profile step (quickest).** Open the waterfall's **Waterfall sequence** (see [Editing an existing waterfall](#editing-an-existing-waterfall)) and drag **Find professional profile** lower in the sequence so that other providers get the first try. You can also toggle it off or delete it.
+-   **Pick the best match from all candidates (most accurate).** For rows where **Find professional profile** found more than 1 profile, add an AI column (such as Use AI or Claygent) that reads that step's full list of people and compares each candidate's name, company, and email domain against your row's inputs. Have it return the professional profile URL of the best match, and use that column's result instead of the waterfall's output for those rows.
+
 ## Trial plan and provider restrictions
 
 Waterfall enrichments are available on all plans, including the Trial plan. However, some individual providers within a waterfall require a paid plan.
@@ -253,7 +302,7 @@ This is the most common cause of unexpected results from the Company Domain wate
 
 **To reduce incorrect results:**
 
--   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`, `rocketreach.co`). Note: due to a known issue, this filtering may not work reliably in all cases.
+-   **Use the Excluded Domains field on the Google step** — In the Google provider's settings within the waterfall, expand the **Excluded Domains** optional field and enter specific domains you want to block from results (for example, `proff.no`, `tracxn.com`).
 -   **Skip the Google step** — In the waterfall's **Waterfall sequence** configuration, toggle off the Google provider. The waterfall then only queries Clearbit and HG Insights, which draw from structured company databases rather than live web search. You'll get fewer overall matches but higher accuracy on the ones you do find.
 -   **Use Claygent instead** — For the most reliable domain finding, set up a Claygent column that searches for the company name and verifies the found URL belongs to the right company before returning a domain. Claygent uses AI credits rather than standard waterfall credits.
 

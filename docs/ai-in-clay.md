@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-07T03:07:33.586Z
 ---
 
 # AI in Clay
@@ -265,18 +265,32 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Provider | Models |
 | --- | --- |
 | Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 Nanoo1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 SonnetClaude 4.5 HaikuClaude 4.6 OpusClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 Opus *(Claude 4 Sonnet, Claude 4 Opus, and Claude 4.5 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
-| Gemini | 2.0 Flash, Flash Lite2.5 Flash, Flash Lite2.5 Pro, 3.7 Flash, 3 ProImagen 3.0, 3.0 Fast *(Gemini 3 Flash and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
+| Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
+| Gemini | 2.0 Flash, Flash Lite2.5 Flash2.5 Pro, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 2.5 Flash Lite, 3 Flash, and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
 | xAI | Grok 4Grok 4.1 Fast Reasoning |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
 | Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
+| Kimi | Kimi K2.6Kimi K3 |
+| Z.ai | GLM 5.3 FlashGLM 5.3GLM 5.2 |
 | BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
 | Playground | Playground V2Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
 
-Questions?
+### Model deprecation policy
+
+Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
+
+-   **It stays visible in the model picker but can't be selected.** In the AI column model dropdown, the full model browser (**See all models**), and the agent playground model selector, deprecated models are listed after supported models, greyed out, and marked with an orange **Deprecated** badge. Hovering the badge shows "This model is being retired. Choose another model." Deprecated models cannot be selected for new columns or configurations.
+-   **A column already set to a deprecated model shows it greyed out.** If a column's current model is deprecated, the model picker still shows that model with the **Deprecated** badge, but it is not highlighted as selected and can't be re-selected. To move off it, pick a currently supported model.
+-   **Existing configurations keep running unchanged.** A deprecated model does not break your tables. Any column or configuration already using the deprecated model continues to run as-is — no action is needed to keep it running.
+-   **You can't save edits to a column that uses a deprecated model.** If you open the settings of a Use AI or Claygent column that is set to a deprecated model, the save button is disabled and you'll see "Selected model is deprecated. Please choose a different model." To save your changes, select a currently supported model from the **Model** dropdown, then save.
+-   **Fully retired models are migrated to a replacement.** Before Clay fully removes a deprecated model, Clay migrates existing Use AI columns and Claygents that still use it to a replacement model that Clay selects for that retired model. If you'd rather choose the replacement yourself, switch the column to a currently supported model before the model is removed.
+-   **Migration applies whether you use Clay credits or your own API key.** Migration is based on the model selected in the column, so Use AI columns and Claygents that run on your own provider API key (for example, a Gemini API key) are migrated to the replacement model the same way as columns that use Clay-managed credits.
+-   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
+
+## Questions?
 
 For more information about Clay's security and privacy practices:
 

@@ -42,7 +42,7 @@ To download the data in a Clay table as a CSV file:
 3.  In the sidebar that opens, click the **Export** tab.
 4.  Click **Download CSV**.
 
-A modal appears while your export is processing. Once it is ready, the CSV file downloads automatically to your browser's default download location. If the automatic download does not start, you can retrieve the file from the **Exports** tab in your workspace homepage (accessible from the profile icon in the top bar).
+A modal appears while your export is processing. Once it is ready, the CSV file downloads automatically to your browser's default download location. If the automatic download does not start, you can retrieve the file from the **Exports** tab in your workspace homepage (accessible from the profile icon in the top bar). Exports are available in the Exports tab for up to 24 hours after they complete — after that they are no longer accessible and you will need to re-run the export from the table.
 
 The exported CSV includes only the columns and rows visible in your current view. Columns hidden in the view and rows filtered out by active view filters are not included. To export your full table, make sure no view filters are active and all columns are visible before starting the download.
 
@@ -120,3 +120,49 @@ Per-table row limits by plan:
 -   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
 
 To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).
+
+**If your table shows more rows than your CSV has (for example, "1000/1000 rows" for a 10-row file):**
+
+Clay imports every row in your CSV file, including blank rows. Spreadsheet tools often leave blank rows at the end of a file, even after you clear the data in them, and Clay imports each one as an empty row in your table. The row count in the table toolbar reads **X/Y rows**: X is the number of rows in your current view and Y is the total number of rows in the table. For example, a CSV with 10 rows of data followed by 990 blank rows shows **1000/1000 rows** after import.
+
+Empty rows from a CSV import don't use credits:
+
+-   Importing a CSV doesn't consume any Actions or Data Credits, regardless of how many rows the file contains.
+-   Enrichment columns don't run on rows where a required input is blank. Those cells show **Missing input** and consume no credits.
+
+To delete the empty rows from your table:
+
+1.  Click the **No filters** button (funnel icon) in the table toolbar to open the filter panel, and add a filter on a column that's filled in for every row of your real data (for example, a name or email column), using the **is empty** operator.
+2.  Select all rows in the filtered view using the checkbox in the table's header row.
+3.  Click **Delete N rows** in the toolbar and confirm.
+4.  Remove the filter. The row count now matches the number of rows with data.
+
+To avoid this on future imports, open the CSV in a plain text editor before uploading and delete any blank lines at the end of the file.
+
+**If AI column text is cut off in the exported CSV:**
+
+Use AI and Claygent columns store their output as a structured object containing multiple fields — Response, Reasoning, Confidence, and others. Each cell in the table displays only a short text preview of the Response field, which is why longer values trail off with "..." in the table view. When you export to CSV, the exported value is that same short preview, so AI column text can be cut off mid-sentence in the downloaded file.
+
+To export the complete response text from an AI column:
+
+1.  Click any cell in the AI column to open the cell details panel.
+2.  Hover over the **Response** field.
+3.  Click **Add to column** — Clay creates a new column that extracts the full Response text for every row.
+4.  Export the table; the new column contains the complete, untruncated text.
+
+You only need to do this once per AI column — not once per row. For each additional AI column whose full output you want to export, repeat the same four steps. When you create new AI columns in the future, add the Response field to its own column before exporting so your CSV always captures the complete text.
+
+**If your imported values appear as date strings when they were not meant to be dates:**
+
+If a column in your imported table shows values like `9-Jan` when the original data was a label such as `1-9`, the conversion happened in your spreadsheet tool before the CSV was exported — not during Clay's import.
+
+Spreadsheet applications such as Excel and Google Sheets automatically reformat values that match date patterns. If you enter `1-9` into a cell whose column is formatted as General or Date, the application displays it as a date string like `9-Jan`. When you export to CSV, the file contains that already-formatted value, not the original text. Clay's CSV parser stores values exactly as they appear in the file — there is no date coercion in Clay's import — so `9-Jan` is stored as the text string `9-Jan`.
+
+**Changing the column type in Clay will not recover the original value.** Switching a column between types (for example, Text → Date → Text) preserves whatever string is already stored. Clay cannot reconstruct a value it never received.
+
+To fix affected rows without re-importing the table or re-running enrichment:
+
+-   **Add a formula column to remap the values.** Open the [Formula Generator](formula-generator.md) and describe what you need — for example: *"If the Segment column contains '9-Jan', return '1-9'. If the Segment column is empty, return blank. Otherwise return the value as-is."* Clay generates the expression and runs it row-by-row. A formula column used purely for text remapping does not re-trigger enrichment actions on other columns.
+-   **Import a corrected file and use Lookup Single Row.** If the original source spreadsheet is available, format the affected column as **Text** in Excel or Google Sheets before re-entering or re-pasting the correct labels, then re-export as a new CSV. Import the corrected file as a separate new table in Clay (choose **Create new table** at step 3 of the import flow). Then, in your original table, add a [Lookup Single Row in Other Table](lookup-rows.md) column — match on a unique identifier such as a record ID or company name — to pull the corrected values across without duplicating rows or re-running enrichments.
+
+To prevent this on future imports: in Excel or Google Sheets, format the column as **Text** before entering values that could be misread as dates (such as `1-9`, `3-4`, or `Jan`). In Excel, you can also force a cell to treat its value as text by prefixing the entry with an apostrophe (for example, type `'1-9` and Excel stores it as the text `1-9`).

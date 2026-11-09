@@ -12,6 +12,8 @@ AI-powered data enrichment for improved outreach and sales automation.
 
 ### `Action` Find Mobile Number & Social URLs using a social URL or personal email as input.
 
+**Plan requirement:** This action requires a paid plan (Launch or higher). It is not available on Free or Trial plans — attempting to add it shows "Your subscription does not allow this integration to be added." To enable phone and mobile number enrichment, upgrade via **Settings → Plans & billing**.
+
 To run Clay Enrichments:
 
 **Step 1:** Enter a social URL or email address.

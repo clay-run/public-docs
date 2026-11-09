@@ -1,6 +1,6 @@
 ---
 title: Find People in Clay
-description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares.
+description: Discover relevant contacts and professional posts using Clay's Find People and Find professional posts sources, then enrich results with work email, mobile phone, and a person's professional posts and shares. Also covers how to import contacts from a LinkedIn Sales Navigator people search using Find people from external search.
 last_synced: 2026-04-26T01:39:58.803Z
 ---
 
@@ -12,7 +12,17 @@ The `Find People` source helps you search for people using criteria like job tit
 
 This tool is ideal for building targeted sales prospect lists, identifying potential hires, and conducting market research.
 
+To import contacts from a LinkedIn Sales Navigator people search into Clay, use the **Find people from external search** source — see [Importing from a Sales Navigator search URL](#importing-from-a-sales-navigator-search-url) below.
+
 **Note:** You can get up to 500 results per cell by reducing the data you're requesting. Click the column name and select **Edit column → Reduce Data for More Results**.
+
+## Where to start
+
+Open **Find leads** in the left sidebar or on your home page and choose **People**. In a workbook, use **+ Add → Find people**. In a Workflow, add a **Find people** node.
+
+Use **Find with filters** when available, or describe the people you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
+
+For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
 
 ## **Creating a table with Find People**
 
@@ -56,7 +66,7 @@ To add more profiles from the same search to an existing people table without cr
     -   **Locked after creation:** The filter type (Clay table vs. custom list), which table is linked, and — when using a custom list — the specific company identifiers entered cannot be changed once the source exists. This is what the "Can only be changed during source creation" tooltip means. If you need to target a different set of companies (for example, to correct a mistyped domain), create a new Find People source with the corrected identifiers. The linked Clay table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
     -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
     -   **Company identifier type:** The identifier in your linked table or custom list determines how companies are resolved. **Domains** (e.g., `acme.com`) match at the root-domain level — useful for broader coverage, but may return people from a parent company or other entities that share that domain. **Company profile URLs** from the professional network match the exact company page, limiting results to that specific entity. Company profile URLs return fewer but more precise results; domains return more but may include unintended companies.
--   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by **LinkedIn URL or email** — each row in your exclusion table must contain a person-level LinkedIn URL or email address. Adding a company name, domain, company page URL, or job title to the exclusion table will **not** suppress those people from the results.
+-   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by **professional profile URL** — each row in your exclusion table must contain the person's profile URL from the professional network. Clay extracts the profile slug from the URL, so common format variations like `www.` prefixes, trailing slashes, and query parameters are automatically normalized. Email addresses, company names, domains, company page URLs, and job titles in your exclusion table will **not** suppress those people from the results.
 
     **To exclude all people at a specific company**, use a post-import lookup instead: after importing your Find People results, add a **Lookup single row in other table** action that matches each person's company domain against your company blocklist. Set a run condition on downstream enrichments (for example, `{{Company Blocklist Lookup}} is not empty` → skip) to suppress anyone whose employer appears on your list. See [Excluding records during enrichment](finding-companies-and-people-in-clay.md#excluding-records-during-enrichment) for the full pattern.
 -   **Past experiences:** Enable the **Include past experiences** toggle to extend your company, job title, and experience description keyword filters to also match against a person's past roles — not just their current one.
@@ -119,6 +129,48 @@ When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each d
 
 To limit results to a specific company only, use **company profile URLs from the professional network** instead of domains as your identifier. Profile URLs map directly to a single company page, so only people from that exact company appear in your results. See [Use profile URLs, not domains, as company identifiers](finding-companies-and-people-in-clay.md) for the full guidance and valid URL formats.
 
+### Why does someone from my exclusion list still appear in my Find People results?
+
+**Exclusion matching is based on professional profile URL only.** Clay extracts the profile slug — the identifier after `/in/` in the URL — from each row in your exclusion table. Common format variations like `www.` prefixes, trailing slashes, and query parameters are normalized automatically, so two different URL formats that resolve to the same profile slug are treated as the same person. Email addresses in your exclusion table are not used for matching.
+
+The most common cause of slip-throughs is a **profile slug change**: if a person updated their vanity URL on the professional network (for example, from `john-doe-12345abc` to `john-doe`) after you built the exclusion list, the old URL in your exclusion table no longer matches their current profile, and Clay will not exclude them.
+
+**To troubleshoot:** Check whether the URL in your exclusion table matches the person's current profile URL on the professional network. Update the row with their current URL and re-run the source.
+
+### Why isn't my Find People search finding certain people I know exist?
+
+If your Find People search doesn't return people you expected (for example, leads from your CRM who fit your target persona), the search is usually working as configured: its filters are stricter than your example list. Find People returns only people who match **every** filter in the search at the same time, so failing a single filter is enough to leave a person out.
+
+Compare each missing person against your Find People search settings and check these causes:
+
+1.  **They're already in your table.** Find People doesn't add the same person twice. Re-runs and edited searches skip anyone the search has already imported, so search your results table for the person first.
+2.  **They're on your Exclude people list.** Anyone in a table, CSV, or list under **Exclude people** is never returned. Exclude people is available on the Launch plan and above.
+3.  **The Seniority filter is set to "is exactly".** The **Seniority** filter has two modes: **is exactly** (the default) returns only people whose seniority is one of the levels you selected, and **at or above** returns the selected level and every level above it. For example, if only C-suite, VP, Director, and Head are selected with **is exactly**, people with titles like "Underwriter" or "Product Manager" aren't returned. Add the levels you need, or switch to **at or above**.
+4.  **A word in their title is on your excluded job titles list.** An excluded job title keyword removes every title that contains that word. For example, excluding "Assistant" also removes everyone titled "Assistant Vice President", and excluding "Regional" removes "Regional Director". If the same word is on both your included and excluded job title lists, the exclusion wins and those people are filtered out — remove the word from one of the two lists.
+5.  **Their title doesn't match any of your included job titles.** For example, a "President" or "CFO" isn't returned if no matching title is in your job title list. Add the missing titles.
+6.  **Their current professional profile title is different from your CRM.** Find People matches job title filters against the person's current role on their professional profile — not the title stored in your CRM or spreadsheet, and not past roles. To also match past roles, turn on **Include past experiences**.
+7.  **Another filter excludes them.** **Location**, connection count (for example, a minimum number of connections), and your **Companies** list also apply. A person outside your selected locations, below your connection minimum, or at a company that isn't in your Companies list isn't returned.
+
+To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
+
+### Why does my Find People table show job titles I excluded, like HR or Intern?
+
+If you excluded job titles in your Find People search (for example, **Job title doesn't contain** Human Resources, Intern, HR) but the **Job Title** column in your table still shows those titles, check your **Target companies** setting.
+
+Find People checks your job title, seniority, and excluded job title filters against each person's **current** role. Separately, **Target companies** controls which employment at your target companies counts:
+
+-   **Currently work at:** the person's current job must be at one of your target companies.
+-   **Previously worked at:** a past job at one of your target companies counts.
+-   **Currently or previously worked at:** either a current or a past job at one of your target companies counts.
+
+When people are imported, the **Job Title** column shows the person's role **at the target company they matched**, not necessarily the current role that passed your title filters. With **Previously worked at** or **Currently or previously worked at**, that matched role can be an old job. For example, someone whose current role passes your filters can show up with "Human Resources Generalist" as their Job Title if that was their earlier role at one of your target companies. Your exclusions are still working: they were checked against the person's current role.
+
+**To fix it:**
+
+1.  Edit your search and set **Target companies** to **Currently work at**, then re-run it. The Job Title column then shows each person's current role at your target companies.
+2.  Make sure every title you want to exclude is on your excluded job titles list. A title that isn't on the list, such as "Consultant", isn't filtered out.
+3.  To clean up rows already in your table, add a table filter on the Job Title column using **does not contain**, and join the conditions with **And**, not **Or**. See [Combine table filters with And or Or](table-columns-overview.md#combine-table-filters-with-and-or-or).
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
@@ -128,6 +180,63 @@ Your search filters are saved on the source, not on the table rows. To update th
 3. Save your changes, then run the source from the panel to re-import results with the updated criteria.
 
 **Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
+
+### Why does Enrich person show "Missing input" on people I added manually to my Find People table?
+
+If you add people to a Find People table by hand — typing or pasting their work email and professional profile URL into a new row — and then run **Enrich person** on that row, the cell can show **Missing input** even though the email and profile URL are visible in the row. The cell details message asks you to include either a professional profile URL, a professional network user ID, a Sales Navigator URL, or an email.
+
+**Why it happens:** When Clay adds the Enrich person column to a table built from a Find People search (the auto-added enrichment column may have a different name), its **Professional URL** input is mapped to the Find People source column — the people search column your table was built from — not to your own profile URL or Work email columns. Rows you add manually didn't come from that search, so their source cell is blank. Enrich person then has no Professional URL and no Email to work with, and stops with Missing input. No credits are charged for a Missing input cell.
+
+**To fix it, point Enrich person at your own profile URL and Work email columns:**
+
+1.  Add a [Merge column](table-columns-overview.md#merge-columns): click **Add column** → **Merge columns**, then in the formula field type `/` and select your profile URL column first, followed by the people search (source) column's profile URL as the fallback. A Merge column returns the first non-empty value per row, so rows imported by the search and rows you added by hand both get a profile URL. Click **Save**.
+2.  Open the **Enrich person** column settings and map the **Professional URL** input to the new Merge column.
+3.  If some manually added rows have a work email but no profile URL, either paste the profile URL into those rows or map your **Work email** column to the **Email** input. Enrich person accepts either a Professional URL or an Email — at least one is required.
+4.  Save the column, then click the column header → **Run column** → **Run [N] empty or out-of-date rows**. This option also includes cells that errored with Missing input, but skips cells that already have successful, up-to-date results — so you don't re-spend credits on rows that already worked.
+
+For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
+
+### Can I pull an org chart of a company's IT department in Clay?
+
+**Clay doesn't have a built-in org chart view, and Find People results don't include a "reports to" or manager field.** You can still pull everyone in a company's IT department with the Find People source and organize them by seniority:
+
+1.  In a workbook, click `+ Add` at the bottom and search for `Find People`.
+2.  Under **Companies**, add the company you want to map, as a custom list or from a Clay table. Company profile URLs from the professional network give the most precise match.
+3.  Under **Job title**, open **Job functions** and select **Information Technology (IT) and Computer Science**.
+4.  Optionally, use the **Seniority** filter to pick specific levels (for example `c-suite`, `vp`, `director`, `head`, `manager`), or set a minimum level to return that level and above.
+5.  Set **Limit per company** (up to 100 people per company) or **Limit results**, check the preview, and click **Import**.
+
+**Grouping the IT team into seniority tiers:** In Find People, **Seniority** is a search filter only. The imported rows include each person's job title but no seniority column. To organize the IT department by level, either run a separate Find People search for each seniority level, or add a **Use AI** column that classifies each person's job title into a tier (for example: Executive, Director, Manager, Individual contributor).
+
+**Getting actual reporting lines:** To see who reports to whom, use the **Find company org chart** source from [The Org integration](theorg-integration.md). It returns every position The Org has for a company, with a Manager ID that links each person to their manager, and costs 25 credits per org chart (refunded if no org chart data is found). The Org doesn't return a department field, so to narrow the org chart to IT, add a **Use AI** column that classifies each person's title by function and filter on it. See [Surfacing the hierarchy and building an org chart](theorg-integration.md#surfacing-the-hierarchy-and-building-an-org-chart) for how to connect each person to their manager and turn the table into a visual chart.
+
+### Can I get a contact's home address or direct mailing address in Clay?
+
+**No. Clay does not return home, residential, or personal mailing addresses for individual contacts.** This is intentional. For privacy reasons, Clay removes street-level personal addresses from person enrichment results, even when the underlying provider has them.
+
+Clay enrichments can return business addresses and work locations:
+
+-   **Company address:** Company enrichments such as **Enrich company** can return a company's headquarters or office location, including city, state, postal code, and sometimes a street address.
+-   **A contact's work location:** Some person enrichment providers return where a contact works, such as their city, state, country, or ZIP/postal code. A few providers also return the address of the office the contact works from. The output field names depend on the provider. Open a cell's details to see what that provider returned.
+
+If you already use a compliant residential address data provider, you can call it from your table with the [HTTP API](http-api-integration-overview.md) enrichment.
+
+### How do I change a workflow's Find people trigger from Manual to Scheduled?
+
+A workflow trigger's type (**Manual**, **Scheduled**, or **On event**) is set when you create the trigger and can't be changed afterward. When you click an existing trigger in the workflow editor, the **Type** picker shows the trigger's current type and greys out the other types. This applies to draft and live workflows alike, and it isn't a plan or permission limit.
+
+A Find people trigger set to **Manual** runs only when you start it. It won't keep adding people to your audience on its own, for example people at companies that newly enter the Companies segment your search targets. To run the same Find people search on a schedule, replace the Manual trigger with a new Scheduled trigger:
+
+1.  Save the current search so you can reuse it. In the workflow editor, click the existing trigger, click the **⋮** menu on the Find people source card in the trigger sidebar, and select **Edit**. In the search panel, click the save icon in the **Setup** section header and select **Save**.
+2.  Add a new Find people trigger to the workflow and choose **Scheduled** as its type while you create it. Pick a frequency (**Hourly**, **Daily**, **Weekly**, **Monthly**, **Quarterly**, or **Custom**) and set up the same search. Once you have saved searches, the save icon's dropdown in the **Setup** section includes **View saved searches**, where you can find the search you saved in step 1.
+3.  Connect the new Scheduled trigger to the same next step as the old trigger (for example, **Write to Audiences**).
+4.  Remove the old Manual trigger.
+5.  Publish the workflow. A Scheduled trigger only starts running once the workflow is published and live.
+
+Here's what happens to people the old Manual trigger already found:
+
+-   **They stay in your audience.** Removing a Find people trigger deletes that trigger's search source and schedule. It doesn't remove any contacts already written to Audiences or to your People segment.
+-   **The new trigger's first run may pull them again.** Each scheduled run of a Find people trigger adds only people that trigger hasn't already pulled. The new trigger has no record of what the old trigger found, so its first run can return people who are already in your segment. To avoid this, add your existing People segment under **Excluded people** in the new trigger's search. Clay re-checks the exclusion on every scheduled run. Audience exclusions match by professional profile URL or email only, so contacts without either can still be pulled again. See "Excluding people (or companies) from your search" under [Importing from people and companies search](audiences.md#importing-from-people-and-companies-search).
 
 ## Importing from a Sales Navigator search URL
 
@@ -146,13 +255,20 @@ If you have a saved Sales Navigator search and want to pull those results into C
 
 If the list was manually curated and cannot be recreated from search filters, export it from Sales Navigator as a CSV and [import it into Clay](csv-import-overview.md) instead.
 
-If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is enforced by LinkedIn — there is no way to raise it within a single import. To bring in a larger set, split your search into smaller segments so each stays under the limit. Use any filter dimension to divide the results:
+If your Sales Navigator search matches more than 2,500 leads, the 2,500 cap is enforced by the professional network — there is no way to raise it within a single import. To bring in a larger set, split your search into smaller segments so each stays under the limit. Use any filter dimension to divide the results:
 
 -   **By seniority level** — Run a separate import for each seniority tier (for example, Director+, Manager, Individual Contributor).
 -   **By headcount** — Filter by company size to separate results from small, mid-size, and enterprise companies.
 -   **By location** — Run separate searches for each country or region.
 
 Collect the resulting Sales Navigator URLs and add them to your Clay table one at a time.
+
+**To pick up new leads that appear in your search over time**, schedule the source to re-run periodically instead of — or in addition to — splitting:
+
+1.  Click the **source column header** in your table → **Edit column → Run settings** → switch from **Manually** to **On a schedule** and choose **Daily** or **Weekly**.
+2.  Enable **Auto-dedupe rows** in your table settings: open the table name dropdown → **Edit table settings**, turn on **Auto-dedupe rows**, and set the dedupe column to your **professional profile URL** column. This removes duplicates when the same lead is returned across multiple successive runs.
+
+Each scheduled run fetches up to 2,500 results from the same search URL and adds any leads not already in your table. To also refresh existing leads' data on each run — for example, to keep job titles current — turn on **Update existing rows** in the source column's Run settings; this re-imports and re-enriches existing rows and uses additional credits.
 
 ## Finding LinkedIn posts by keyword or profile
 
@@ -186,6 +302,8 @@ Each row includes the post URL, post text, author name, author LinkedIn URL, aut
 
 > **Important:** These actions require the original post URL — a URL containing `-activity-` in the path (e.g., `https://www.linkedin.com/posts/clay-hq_...-activity-7212099008951975937-ezPv`). Share URLs containing `-share-` are not valid and return an error. To get the original URL for any post: open the post on LinkedIn, click **•••** (three dots) at the top right of the post, and select **Copy link to post**. If the post is a repost of someone else's content, open the original underlying post first and copy its link.
 
+**Get reactions on a professional post returns up to 50 reactions per post:** The **Get reactions on a professional post** enrichment returns at most 50 reactions for each post. Use the optional **Max reactions** input to choose how many reactions to return — any number from 1 to 50 (default is 10). If a post has more than 50 reactions, reactions beyond the first 50 are not returned by this enrichment. To capture every reaction on a post with more than 50 reactions, use the **Get interactions with professional posts** source instead — see [Getting people who interacted with a post](#getting-people-who-interacted-with-a-post).
+
 ## Getting people who interacted with a post
 
 To build a table of people who liked, commented on, or shared a specific post, use the **Get interactions with professional posts** source. Each interaction is included as a separate row, and you choose how duplicate interactions are handled via the required **duplicate interaction behavior** setting:
@@ -193,6 +311,8 @@ To build a table of people who liked, commented on, or shared a specific post, u
 -   **One row per person globally** (`interactor`): a given person appears at most once across all results.
 -   **One row per person per post** (`post-interactor`): a given person appears at most once per post, but can appear across multiple posts.
 -   **Include all interactions** (`no-dedupe`): every interaction is returned as its own row, so the same person can appear in many rows.
+
+**Get interactions with professional posts is not limited to 50 reactions:** Unlike the **Get reactions on a professional post** enrichment, which returns at most 50 reactions per post, the **Get interactions with professional posts** source pages through all interactions on each post — comments, reactions, and shares, depending on which interaction types you select. The source can return up to 50,000 rows, the Clay table row limit. Because each interaction becomes its own row rather than one row per post, getting a reaction count per post requires additional processing after import.
 
 **To set up this source:**
 
@@ -271,3 +391,42 @@ This enrichment uses a third-party data provider authenticated with its own cred
 If a row returns empty or incomplete results, re-running the enrichment on that row may return more complete data on a subsequent attempt.
 
 For more control over post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
+
+## Checking whether a person was active in the last 30, 60, or 90 days
+
+Clay doesn't have a single built-in "last active" field for a person's professional profile, but you can work out how recently each person in a people table was active from the dates on their posts, shares, and comments. This uses two enrichments that are available on all plans, plus two formula columns.
+
+**Step 1: Add the activity enrichments**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**, search for `Get a person's professional posts and shares`, and select it. Map **Professional URL** to your profile URL column and click **Save**.
+2.  Click **Add enrichment** again, search for `Get a person's professional post comments`, and select it. Map **Professional URL** to the same profile URL column and click **Save**.
+3.  Run both columns on a few rows first to check the results and credit cost before running the whole table.
+
+Each enrichment returns the person's most recent activity, with a `created_at` date on every item:
+
+-   **Get a person's professional posts and shares** returns a `posts` array — original posts and reposts — with the date in `posts[N].created_at`. It returns 10 items by default and up to 25.
+-   **Get a person's professional post comments** returns a `comments` array with the date in `comments[N].created_at`. It returns 10 items by default and up to 30.
+
+**Step 2: Get the person's latest activity date**
+
+Add a formula column named `Latest activity date` and paste the formula below. It collects every date from both enrichments and returns the most recent one:
+
+```
+({{Get a person's professional posts and shares}}?.posts || []).map(p => p.created_at).concat(({{Get a person's professional post comments}}?.comments || []).map(c => c.created_at)).filter(Boolean).sort().reverse()[0]
+```
+
+**Step 3: Flag activity within 30, 60, or 90 days**
+
+Add a second formula column and paste the formula below. It compares the latest activity date with today's date using `moment()` and returns one label per person:
+
+```
+!{{Latest activity date}} ? "Unknown" : moment().diff(moment({{Latest activity date}}), 'days') <= 30 ? "Active in last 30 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 60 ? "Active in last 60 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 90 ? "Active in last 90 days" : "Not active in last 90 days"
+```
+
+For example, if today is November 6 and a person's latest comment is dated October 20, the difference is 17 days and the flag shows `Active in last 30 days`. A latest post dated August 1 is 97 days old and shows `Not active in last 90 days`.
+
+The flag only updates when the formula column re-runs. To keep it current, re-run the activity enrichments and the formula columns periodically — see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula) for how `moment()` evaluates.
+
+**When no activity is returned:** If neither enrichment finds public activity for a person, the enrichment cell shows no data and you aren't charged credits for that row. The flag formula labels these people `Unknown`. Treat them as unknown rather than inactive — the person may still be active in ways the data provider can't see. See [If the enrichment returns no data or fewer posts than expected](#getting-a-persons-posts-and-shares).
+
+**Reactions can't be used to date activity:** A **Get a person's professional post reactions** enrichment is also available, but it has no date for when the person reacted. Its only date, `post.created_at`, is when the reacted-to post was published, so a recent date doesn't mean the person reacted recently. Use posts, shares, and comments for 30, 60, or 90-day activity flags instead.

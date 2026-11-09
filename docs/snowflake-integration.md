@@ -135,7 +135,7 @@ The Lookup row action supports **Run in batches** mode. When enabled, Clay combi
 
 When batch mode is active, if any sub-query returns many rows, the combined result across all batched lookups can exceed a backend size limit — producing the error "The action function output exceeded the size limit" — even if each lookup runs without error when executed individually. To avoid this, include a `LIMIT` clause in your query to cap how many rows each sub-query returns. You can also lower the **Number of rows per batch** setting to reduce how many queries are combined per request.
 
-### `Action` Upsert row
+### `Action` Create or update row (upsert)
 
 Upsert a row into a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
 
@@ -150,7 +150,7 @@ Upsert a row into a Snowflake database using a single field as a unique identifi
 
 **Batching**
 
-The Upsert row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
+The Create or update row action supports **Run in batches** mode. When enabled, Clay groups up to 1,000 rows into a single `MERGE INTO` statement — combining one `SELECT` per row via `UNION ALL` — and sends it to Snowflake in one request instead of running each upsert individually.
 
 If a batch fails, the error message will include **"Note: Try reducing the batch size"**. This occurs when the generated SQL becomes too large for Snowflake to handle, typically when running at the default maximum of 1,000 rows with many columns. To fix it, lower the **Number of rows per batch** setting in the action's run options: 500 is a good starting point; if errors persist, try 250.
 
@@ -231,10 +231,10 @@ Once your source is connected, toggle on `Import sync` to keep your Audiences da
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports:** every **15 minutes** when a timestamp field (cursor) is configured — picks up new or changed records; every **12 hours** when no timestamp field is set — reruns the full SQL query
+-   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp changed; when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
 -   **A full sync once a week** — refreshes all data and reconciles deleted records
 
-You can also trigger a manual sync at any time from the source settings, which is useful when testing.
+There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, update their timestamp field value in Snowflake so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
 
 To check sync status or update settings, click `Add data` in your Audiences workspace, find the Snowflake integration, click the `⋯` menu, and select `Settings`.
 
@@ -255,6 +255,18 @@ Click `Edit` next to `Import record matching (optional)`, then:
 3.  Clay will merge records where the alias values match exactly.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69d69a4ceb012f4e97a8ad42_Snowflake%20Integration%20Image%20\(1\).webp)
+
+Import record matching is currently in beta — contact your Growth Strategist to enable it for your workspace. Matching settings apply only to records imported after you save them; records already in Audiences are not merged retroactively.
+
+#### What if my Snowflake source doesn't have a domain column for Import record matching?
+
+In the Import record matching dialog, each source under `In` gets one dropdown, and you can select one field per source. You don't have to map every source. If your Snowflake query doesn't return a column that matches the alias field — for example, no domain or website column when matching on `Domain` — leave the Snowflake dropdown blank and click `Done`. Import record matching still runs for the sources you did map, such as Salesforce and CSV imports.
+
+Keep in mind:
+
+-   **An unmapped Snowflake source isn't deduplicated against your other sources.** Import record matching can't merge Snowflake records with matching records from your other sources when the Snowflake dropdown is blank, so the same company may appear as separate records.
+-   **You can map the Snowflake column later.** Once your team confirms which column holds the domain (or you add one to your SQL query), click `Edit` next to `Import record matching` and select it. The change applies only to records imported after you save.
+-   **Domains are normalized before they're compared.** When the alias field is `Domain`, Clay strips the protocol (`https://`), `www.`, any path or query string, and subdomains before comparing values, so `https://www.acme.com/about` and `acme.com` match. Different top-level domains (for example, `acme.com` and `acme.io`) do not match.
 
 ### Mapping fields
 

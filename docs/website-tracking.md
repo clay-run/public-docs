@@ -44,7 +44,7 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
 5.  Add filters for specific countries or pages.
     -   You can include a `*` to match any page paths (e.g., `/blog*`).
-6.  Make sure `Connection enabled` is toggled and click `Save`.
+6.  Under **Settings**, make sure **Enable connection** is selected and save your changes.
 7.  In a workbook, under `Create`, click `Website visitor tracking`.
 8.  Select your website connection from the dropdown and adjust your filters.
     -   Configure your table filters using page paths, session time, referrer, or UTM tags to show only relevant visitor data.
@@ -185,15 +185,52 @@ Common causes:
 -   Connection-level or table-level filters are too restrictive.
 -   Your site hasn't had enough live traffic yet.
 
+### Why do I see fewer rows than website visitors (for example, after an email campaign)?
+
+It's normal for your Web intent table to show fewer rows than the number of people who clicked through to your website. Every completed visitor session goes through the following steps, and only sessions that make it through all of them become rows in your table:
+
+1.  **The tracking snippet records the visit.** Web intent only sees visits to pages where the tracking snippet is installed. If a campaign link points to a page, subdomain, or landing-page tool that doesn't have the snippet, those visits are never recorded.
+2.  **Advanced filters are checked.** Sessions shorter than your **Minimum session duration (seconds)** or with fewer pages than your **Minimum unique pages visited** are dropped. The minimum session duration defaults to 5 seconds, and minimum unique pages visited has no minimum when left blank. Dropped sessions aren't sent for company lookup and don't use credits.
+3.  **Company lookup (de-anonymization) runs.** Clay tries to match the visitor's IP address to a company using your selected de-anonymization providers. Some IP addresses — such as home or mobile connections — can't be tied to a business. When no company is found, no row is created and you aren't charged.
+4.  **A row is created or updated.** Matched sessions create a new row for the company, or update the existing row if that company has visited before.
+
+**Example:** If 20 sessions are recorded, 9 last under 5 seconds and are dropped, and 6 of the remaining 11 sessions match a company, your table shows 6 rows (or fewer, if some of those companies already have a row).
+
+**To capture more of your traffic:**
+
+-   Confirm the tracking snippet is installed on every page of your website, including the homepage and the specific pages your campaign links to.
+-   Install the snippet on any other subdomains or landing-page tools that receive traffic.
+-   Review your advanced filters. Lowering the minimum session duration mostly adds short bounce visits rather than higher-intent companies.
+
 ### Web intent connection stopped or shows as disabled
 
-This happens when:
+If your Web Intent table has stopped receiving new rows, or you see a **"Signal is disabled"** tooltip on the workbook column header while the **Enabled** toggle in Run settings is on, the website tracking connection is likely disabled. The connection and the signal's enabled state are two separate controls.
 
--   The signal hit its credit spend limit.
--   Your workspace ran out of credits.
--   The table reached the 50,000 row limit (enable passthrough tables to avoid this).
+**Why the UI looks contradictory:** Web Intent Signals have two independent settings:
 
-You'll need to manually re-enable the connection after addressing the issue — it won't resume automatically.
+-   The **Enabled** toggle (column header → **Edit signal** → **Run settings**) controls the signal's run status. When this is on and the signal is healthy, the Signals overview page shows **"Monitoring"**.
+-   The **website tracking connection** controls whether Clay's tracking script is actively processing visits. This can be turned off independently of the signal's run status. When the connection is off, the workbook column header shows **"Signal is disabled"** and the panel displays **"Your website connection is disabled. No visits will be processed."**
+
+Toggling the Enabled toggle off and back on will not fix a disabled connection — it only changes the signal's run status, not the connection's active state. You would see the status briefly flip to **"Signal is paused"** and then return to **"Signal is disabled."**
+
+**The connection is disabled automatically when:**
+
+-   Your workspace ran out of credits, or hit a workspace credit limit or budget.
+-   The table reached the 50,000-row limit (enable passthrough tables to avoid this).
+
+**Web intent does not turn back on by itself after credits are restored.** When your workspace runs out of credits, Clay switches the web intent connection to **Disable connection** and stops processing new visitor sessions. A plan refill or credit top-up does not re-enable the connection — you must set it back to **Enable connection** manually. Nobody on your team needs to have turned it off for this to happen.
+
+**Clay does not send an email or in-app notification when web intent is paused for running out of credits.** If your Web intent table suddenly stops receiving new visits, check your workspace credit balance and open **Settings → Web intent** to see whether **Disable connection** is selected.
+
+**Monthly limit for a signal works differently.** If you set a monthly limit for the signal in your web intent connection and the signal exceeds it, Clay pauses new visit sessions and shows **"Your website connection has reached the set credit limit. No visits will be processed."** This pause lifts automatically at the start of the next month (on the 1st, at 08:00 UTC) — you don't need to re-enable the connection manually.
+
+**To re-enable the website connection:**
+
+1.  Click your account name → **Settings** → **Web intent** and open your website connection. You can also click the signal column header (📡 icon) in your workbook and click **Edit website connection** in the right-hand panel.
+2.  In the **Settings** section, select **Enable connection** ("Clay will automatically identify website visitors and charge credits for successful matches").
+3.  Save your changes.
+
+New visits will start flowing into the table as they arrive. Data from the period while the connection was off will not be backfilled.
 
 ### Unexpected companies showing up in results
 
@@ -239,9 +276,13 @@ To connect Segment to Clay web intent:
 
 Using the Segment tag and Clay's own JavaScript snippet are equivalent — you get the same web intent data and features either way.
 
+### Does the tracking script work on single-page apps (SPAs)?
+
+Yes. The Claydar tracking script fires on SPA history changes using `pushState` and `replaceState`, so page views are tracked for client-side navigation in addition to full page loads. No extra configuration is needed — the same snippet that works on traditional multi-page sites automatically handles SPA routing.
+
 ### Is visitor tracking data shown in real-time?
 
-No. Clay waits for a visitor's session to finish before processing and delivering the data. Sessions are finalized after a period of inactivity, so data can be delayed up to 30 minutes after a visitor's last page view.
+No. Clay waits for a visitor's session to finish before processing and delivering the data. The session inactivity timeout is 30 minutes — after 30 minutes with no new page views, Claydar finalizes the session and passes it to the processing pipeline. This timeout is fixed and cannot be configured. Data can be delayed up to 30 minutes after a visitor's last page view.
 
 This means **same-session personalization is not supported** — if a visitor hits your website and you immediately query your Clay table, that session's data won't be there yet. The information only becomes available after the session ends and the pipeline has processed it.
 
@@ -265,6 +306,16 @@ You can view your credit spend for signals underneath the `Signals` tab of the [
 
 Clay's visitor tracking identifies unique accounts visiting your website, not individuals. Once an account is identified, you can use enrichments (like **Find People** and the Work Email Waterfall) to find specific people at those companies and get their email addresses. To send emails to those contacts, see [Sending emails to identified website visitors](#sending-emails-to-identified-website-visitors) above.
 
+**In Audiences:** If you add a web visit filter at the contact level in Audiences, it will show all contacts associated with the visiting company — not just the specific individual who visited. This is expected: Clay's web visitor tracking identifies companies by IP address (resolving to a company domain), and the visit is attributed to the company record rather than to any individual person. When Audiences evaluates that company-level signal against contacts, it surfaces every contact linked to the visiting company. The web visit record does not contain any identifier for the specific person who made the visit.
+
+To reach specific individuals after a company visit is detected, use **Find People** in your web intent table to search for the roles you want to target at that company, then enrich and sequence those contacts.
+
+### Why do I see multiple overlapping sessions from the same company?
+
+This is expected behavior, not a data error. Claydar tracks each visitor's session in their browser's `localStorage`, scoped to that specific browser. When two or more people at the same company browse your site simultaneously, each browser generates its own session with a distinct `sessionId` — resulting in multiple rows for the same company `domain` with overlapping timestamps.
+
+Clay identifies visitors at the **company level only**. The `sessionId` in each row is unique to that browser session, but the payload does not include a persistent device fingerprint or stable individual-level identifier. You can confirm that multiple concurrent sessions exist from the same company by comparing `startTime` values for rows with the same `domain`, but you cannot determine from the session data alone which specific person at the company generated each session.
+
 ### How do I send emails to my website visitors?
 
 Because Clay's visitor tracking identifies companies, not specific individuals, reaching out requires a few additional steps:
@@ -279,9 +330,21 @@ This lets you reach real people at high-intent companies, even though Clay's tra
 
 Clay can support hundreds of thousands of daily visitors for even the largest enterprise customers.
 
+### How long is visit data retained in my Web Intent table?
+
+Visit session rows are not pruned automatically. The only retention cap is the 50,000-row table limit — once reached, the website tracking connection is automatically disabled and no new sessions are recorded until you free up space. To avoid hitting the limit, enable passthrough tables in your table settings, which routes old rows out before new ones are blocked.
+
 ### Is the visitor data consistent across different providers?
 
 Yes, de-anonymized website data is in a consistent format across various providers.
+
+### What data does the Web Intent payload include?
+
+Each Web Intent session record includes the following top-level fields: `sessionId`, `domain`, `startTime`, `engagementTime`, `referrer`, `utm`, and `ipGeo`. It also contains a `websiteEvents` array where each entry represents a single page view with `url`, `path`, `title`, `domain`, `timestamp`, `totalTimeOnPage`, and `engagedTimeOnPage`.
+
+`startTime` is always the timestamp when the session began and is always reported in UTC (ISO 8601 format).
+
+The payload tracks page views only. Resource downloads, form submissions, and other on-page interactions (such as clicks on pricing pages) are not tracked and do not appear as distinct fields in the payload.
 
 ### What do "Total Time On Page" and "Engaged Time On Page" mean, and what are the units?
 
@@ -305,7 +368,7 @@ Two approaches work well for cross-session analysis:
 
 For completely separate root domains, you can create a dedicated signal per domain. Note that using the same signal across different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
 
-For subdomain tracking questions (for example, `shop.company.com` and `blog.company.com`), contact Clay support to confirm how your configuration handles cross-subdomain sessions.
+For subdomain tracking (for example, `shop.company.com` and `blog.company.com`): you can add a subdomain to your existing Web Intent connection — no separate connection or signal is needed. You do need to install the Claydar tracking snippet separately on each subdomain using the same code from your connection settings.
 
 ### What do I need to know about GDPR and cookie consent for web intent?
 

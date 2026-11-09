@@ -48,19 +48,25 @@ Clay offers three user roles with different permission levels to help manage you
 
 **Note:** The Viewer role is available on the Enterprise plan only.
 
+## Give a colleague access to your tables instead of sharing your login
+
+If a colleague needs access to your tables, workbooks, or other data in your Clay workspace, invite them to your workspace instead of having them log in with your email and password. Once they accept the invite, your colleague signs in with their own Clay account and can work in your workspace with the role you assign — Editor is the default role. Follow the steps in [Add a team member to your workspace](#add-a-team-member-to-your-workspace) below to send the invite.
+
 ## Add a team member to your workspace
 
 Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
 
 **If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
 
+**If an invited user logs in before clicking the invitation email:** When an invited user visits Clay directly (for example, by going to app.clay.com) before accepting their invitation, Clay has no invite code to act on and automatically creates a new free workspace for that user instead of routing them to your workspace. Once the free workspace exists, every subsequent login redirects the user there — they will not be able to access your workspace even after you re-send the invite. To prevent this, instruct invited users to always access Clay for the first time through the workspace invitation email link, not by logging in directly. If this has already happened, contact Clay support via the in-app chat to delete the erroneously created workspace. Once it is removed, re-send the invitation and have the user accept it through the email link.
+
 To invite a new member to your workspace:
 
 -   Go to `Settings` > `Team`.
--   Click the `+ Invite` button in the top-right corner.
+-   Click the `Invite` button in the top-right corner.
 -   Enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
 -   Select the appropriate role (Editor or Admin) from the dropdown.
--   Click `Send invite`.
+-   Click `Send invites`.
 
 The invited person will receive an email to join the workspace with the specified role. The person will appear in your team list with a **Pending** status until they accept.
 
@@ -120,3 +126,9 @@ Once removed, you can re-invite the same email address if needed. Only workspace
 ## Export your team member list
 
 Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
+
+## Programmatic user management
+
+Clay does not have a programmatic API for workspace member management. There is no API endpoint to invite users, update their roles, or remove or deactivate them from a workspace. All user management must be done manually through the workspace UI at `Settings` > `Team`.
+
+For automated user lifecycle management through an identity provider (such as automatically adding or removing users when accounts are created or deactivated in Okta), see [Single Sign-On (SSO)](/docs/single-sign-on) — SSO handles authentication only and does not provision workspace membership automatically.

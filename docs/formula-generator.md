@@ -2,7 +2,8 @@
 title: Formulas
 description: Generate formulas with AI to transform your data. Includes how to
   use today's date in a formula, pull error messages with getCellErrorMessagePreview(),
-  check cell status with getCellStatus(), and keep date comparisons current automatically.
+  check cell status with getCellStatus(), keep date comparisons current automatically,
+  and export a combined list from a formula as JSON text.
 last_synced: 2026-04-26T01:40:01.780Z
 ---
 
@@ -49,7 +50,7 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 
 **What's available in formulas:**
 
--   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more.
+-   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more. Node.js-only APIs such as `Buffer` are not available; to Base64-encode text, use `btoa()` (see the FAQ below).
 -   **Lodash**: Access the full [Lodash](https://lodash.com) library using `_` for advanced data manipulation.
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
@@ -86,6 +87,31 @@ For example, to check whether any competitor name from a known list appears in a
 > Check if any of the words ["CompetitorA", "CompetitorB", "CompetitorC"] appear in {{Call Notes}} and return matching names as a comma-separated list
 
 The formula generator will produce a JavaScript expression that performs the match row-by-row without any credit cost, regardless of how many rows your table has. For a full list of features that don't consume credits, see [Actions and data credits](actions-data-credits.md).
+
+### **Can I loop or iterate over a list of items in a formula?**
+
+Formula columns in Clay run a JavaScript expression once per row and cannot loop across rows. To process a list within a single row, use standard JavaScript array methods or Lodash utilities, both available in Clayscript.
+
+**Iterating over an array in a formula column:** Use `.map()`, `.filter()`, `.reduce()`, or `.find()` to transform or filter elements. For example, to extract one field from every object in an array:
+
+```javascript
+{{My Array Column}}.map(item => item.name)
+```
+
+To keep only elements matching a condition:
+
+```javascript
+{{My Array Column}}.filter(item => item.active === true)
+```
+
+Lodash also provides `_.sortBy()`, `_.flatMap()`, `_.groupBy()`, and `_.uniq()` for sorting, flattening, and deduplicating arrays. Formula columns run at no credit cost and do not consume actions.
+
+**Limitation:** Formula columns are for data transformation only — they reshape or filter arrays already in a cell. They cannot trigger Clay enrichment actions once per array element.
+
+**In Clay Workflows:** Clay Workflows has no standalone "for loop" or "while loop" node type. To implement iteration in a workflow, use one of these approaches:
+
+-   **Code node:** Add a code node and write a Python `handler` function. You can use `for` loops, `while` loops, list comprehensions, and any other Python iteration construct within the node. The node receives named inputs from upstream nodes and returns a dictionary to the next node.
+-   **Conditional loop:** Draw an edge from a later node back to an earlier node in the workflow. As long as the cycle includes at least one conditional node, Clay allows the loop — the conditional node controls when execution exits the loop. Conditional loops are limited to 50 uninterrupted steps; the conditional node displays a warning when this limit applies.
 
 ### **How do I use today's date in a formula?**
 
@@ -170,8 +196,22 @@ This returns a string representing the cell's current state. Possible values inc
 A few important notes:
 
 -   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
--   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET"`, not `"UNKNOWN"`.
--   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
+-   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET\"`, not `"UNKNOWN"`.
+-   The function returns the cell's **stored** status at the moment the formula evaluates, and in-progress values such as `"RETRY"` or `"QUEUED"` are possible return values. However, a formula that references an action column does not recalculate while that action is in progress — see the next question.
+
+### **Can `Clay.getCellStatus()` show a "busy" or "please wait" message while an action column is running?**
+
+No. A formula using `Clay.getCellStatus()` cannot show a busy message while the referenced action column is in progress, and it does not replace the old result when a rerun starts.
+
+A formula column that references an action column depends on that column. While the action cell is `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"RETRY"`, or `"AWAITING_CALLBACK"`, Clay holds the dependent formula and does not recalculate it. The formula keeps its previous output for the whole run. It recalculates once, after the action finishes with a final success or error status. For example, this formula will **not** show "Busy, please wait" at the start of a run:
+
+```javascript
+Clay.getCellStatus({{Action Column}}) === "RUNNING" ? "Busy, please wait" : {{Action Column}}
+```
+
+When you click to run or rerun the action, the formula column keeps its old value. When the action finishes, the formula updates to the new result on its own, without an extra click or refresh. The formula never sees the `"RUNNING"` status, so the busy branch is never shown.
+
+There is currently no setting that clears a dependent formula column's previous output when an upstream action rerun starts, and no "on start" event that writes a value to a cell before the action begins processing.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
 
@@ -191,6 +231,33 @@ Always verify regex formulas by saving the column and checking actual table resu
 The most common cause is writing `/Column Name` in the formula code instead of `{{Column Name}}`. In the formula generator prompt, typing `/` opens a column picker that *inserts* a `{{Column Name}}` token — but typing `/Column Name` literally into the JavaScript expression does not create a column reference. Clay cannot resolve it and the formula errors on every row.
 
 To fix it: expand the **Formula** section below the prompt, find any `/Column Name` patterns in the JavaScript code, and replace them with `{{Column Name}}`. For example, replace `/SFDC Company Name` with `{{SFDC Company Name}}`.
+
+**A related cause** is describing the formula with a column's name as plain text — for example, writing *"clean the company name field"* — instead of inserting the column via the `/` picker. When the AI generates a formula from a description that references a column only by plain text rather than a column chip, it may produce code with incorrect column references, causing every row to error.
+
+To fix it: in the description field, delete any plain-text column mention, type `/`, select the column from the picker to insert it as a chip, then click **Regenerate**. This gives the AI the exact column reference it needs and is more reliable than editing the formula code directly.
+
+### **Why does my Base64 formula using `Buffer` error on every row?**
+
+Clay formulas run JavaScript in a sandbox that does not include Node.js APIs, so the Node.js `Buffer` object isn't available in formula columns. A formula like `Buffer.from({{Profile URL}} || "").toString("base64")` fails on every row, and the cells show *"This formula could not be calculated"*. This applies whether you wrote the formula yourself or the formula generator produced it.
+
+To Base64-encode a value in a formula column, use `btoa()` instead:
+
+1.  Open the formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section and replace the `Buffer` expression with `btoa()`. For example:
+
+    ```javascript
+    btoa({{Profile URL}} || "")
+    ```
+
+3.  Click **Save column** and re-run the column. Each cell now shows the Base64-encoded value.
+
+**Values with non-English characters:** `btoa()` only accepts characters in the Latin-1 range. If the value can contain characters outside Latin-1, such as emoji or non-Latin scripts, encode it as UTF-8 first:
+
+```javascript
+btoa(unescape(encodeURIComponent({{Profile URL}} || "")))
+```
+
+**Decoding isn't available:** `atob()`, the matching Base64-decode function, is not available in Clay formulas.
 
 ### **Why does my formula return 0 when combining values from other formula columns?**
 
@@ -254,6 +321,22 @@ This appears when a formula references an entire enrichment or AI column — suc
 -   **Using dot notation:** Access the field directly in the expression — for example, `{{My AI Column}}.response` or `{{My Enrichment Column}}?.fieldName`.
 
 For Use AI and Claygent columns specifically, the main text output is stored in the `.response` field. See [AI column output shows as a JSON object](use-ai-integration-overview.md#troubleshooting) for more on navigating AI column fields.
+
+### **Why does my formula that combines lists show a warning on every row?**
+
+A formula that merges or dedupes lists — for example, combining the job postings returned by several job-source columns into one array — returns a JavaScript array. Formula columns don't have a **List** or **Array** data type: the options in the formula column's data type dropdown are Text, Paragraph, Number, URL, Date, Select, Multi-select, Assigned To, Email, Image from URL, Currency, and Checkbox. When an array lands in a **Text** column, Clay can't convert it, so each cell shows a yellow warning icon with the tooltip *"Whoops! This value could not be converted to this column's data type (text)"*. Cells in this state export as **blank** in a CSV export.
+
+**To fix it**, wrap the whole formula in `JSON.stringify( ... )`, keep the column's data type as **Text**, and re-run the column:
+
+```javascript
+JSON.stringify(_.uniqBy([...({{Job Source A}}?.jobs || []), ...({{Job Source B}}?.jobs || [])], "url"))
+```
+
+Each cell then holds the combined list as JSON text, and the CSV export includes that JSON exactly as it appears in the cell. To read the list back in another formula, use `JSON.parse({{Combined Jobs}})`. Keep the result under the 8 kB cell limit described below.
+
+**Tip — deduplicating:** `_.uniqBy(list, "title")` keeps only one posting per job title, so the same role posted in two cities appears once. Dedupe by a unique field such as the job URL if you want to keep both.
+
+**Formula vs. AI column for list details:** A formula column runs fixed JavaScript with no AI, at no credit cost, so it can only copy or reshape fields the source columns already return (for example, job title, link, location, posted date, and salary). Details that have to be judged or written for each item — such as seniority, job function, work arrangement, a summary, or required skills — still need an AI column. To keep costs down, use a formula for the merged list and the plain fields, and add an **Only run if** condition to the AI column so it runs only on the rows where you need the extra details. See [Conditional runs](conditional-runs.md).
 
 ### **Why does my formula column show "Cell data size exceeds limit (8 kB)"?**
 

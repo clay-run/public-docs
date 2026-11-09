@@ -109,6 +109,10 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Note:** This action normalizes the format of a single URL — it does not identify whether two different domains (for example, `meta.com` and `facebook.com`) belong to the same company. For that use case, use a [Claygent](claygent-builder.md) prompt that checks whether two domains resolve to the same organization.
 
+**Get a domain from a website URL:** To turn a full website URL into just its domain — for example, a website URL returned by a Claygent or Use AI column, such as `https://www.cdicurbs.com/` → `cdicurbs.com` — add a **Normalize a Domain** column, map it to the website column, and select the **Isolate the domain** normalization type.
+
+**Note — Normalize a Domain doesn't visit the website:** The Normalize a Domain action only cleans up the text of the URL (for example, removing the `https://`, the `www.`, and anything after the domain). It doesn't open or check the website, so a normalized domain such as `example.com` may not load in your browser even when it's the correct domain — some companies' websites only load on the www. version (`www.example.com`). To check whether a website is live, use the [Check if URL is Valid](url-validator-integration-overview.md) action with **Try variants** turned on, which also tries the www. version of the URL.
+
 ### `Action` Normalize Phone Number
 
 Format and normalize phone numbers to e164, international, and national formats.

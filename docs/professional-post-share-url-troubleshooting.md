@@ -26,6 +26,18 @@ https://www.linkedin.com/feed/update/urn:li:share:7123456789012345678/
 
 Because Share URLs point to a different URN type than the integrations expect, they need to be converted to the correct post URL before the Signal or the comments/reactions integrations will run successfully.
 
+**Impact on Signals with Live column enabled:** When the **Get interactions with professional posts** action is used as a Signal with the **Live column** toggle on, a share URL error causes the *entire signal run* to fail — not just that individual row. This means every row in the signal's source view stops being processed, and new posts added to the source table stop flowing into the interaction lookup, making the Signal appear to have stopped updating entirely. In standard enrichment-column mode (not a Signal), a share URL row is skipped but all other rows continue processing normally.
+
+## Alternative fix: filter share URLs from your source view
+
+If you don't need to track interactions on reshared posts, the simplest fix is to add a filter to the source table view that your Signal uses. The Signal only processes rows visible in its configured view — rows filtered out are never picked up and can't cause run failures.
+
+1. Open the source table your Signal reads post URLs from.
+2. On the view the Signal uses (check the Signal column's settings to see which view it references), add a filter: **Post URL** does not contain **share**.
+3. Save the view. The Signal will process only valid post URLs on its next run.
+
+Use this approach when you don't need interaction data on reshared posts. If you want to keep reshared posts in your source table and still retrieve their interaction data, follow the Enrich professional post steps below instead.
+
 ## The fix (overview)
 
 Run the **Enrich professional post** integration on any row that contains a Share URL. Its output gives you the correct post URL, which you then use in your Signal and in your Get comments / Get reactions integrations.

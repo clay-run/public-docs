@@ -59,7 +59,7 @@ To download your table data as a CSV:
 
 1.  **Uncheck all rows.** If any row checkboxes are selected, the toolbar switches to row-level bulk action mode — run, delete — and table-level functions including Export are not shown. Uncheck all rows first.
 2.  Click **Tools** in the top-right corner of your table, then click `Export`.
-3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically. The completed export is also saved to the **Exports** tab on your workspace homepage — select **Exports** from the left sidebar of your homepage to view and re-download recent exports.
+3.  Click `Download CSV`. Clay processes the export in the background and the file downloads automatically. The completed export is also saved to the **Exports** tab on your workspace homepage — select **Exports** from the left sidebar of your homepage to view and re-download recent exports. Exports are available for up to 24 hours after they complete — after that they are no longer accessible and you will need to re-run the export from the table.
 
 **Why can't I see Export?** The most common cause is having one or more rows checked. The toolbar shows different options depending on row selection state: when no rows are selected, you see the `Tools` button with table-level functions such as Export and Import; when rows are selected, an `Actions` button appears instead with bulk row operations (Run rows, Delete rows). Uncheck all rows to restore access to Export.
 
@@ -191,6 +191,17 @@ Key details:
 -   **Deduplication is cumulative across all runs.** On every re-run (including scheduled runs), the source compares against every business it has ever found — not just the most recent run. A business found in week 1 is still tracked and skipped in week 52.
 -   **Deduplication is tied to the source definition.** If you delete and re-add the source, or create a new source with the same search criteria, deduplication starts over. The new source has no history, so all businesses it finds are treated as new and credited accordingly.
 
+### Can I save my Openmart or Google Maps source inputs to reuse them in a new table?
+
+**No — source inputs for "Find local businesses using Openmart" and "Find local businesses using Google Maps" are not saved or carried over when you duplicate a table or start from a Clay template.** Business types, locations, radius, and other search criteria must be configured each time you set up a new source.
+
+The behavior differs slightly depending on how you create the new table:
+
+-   **When you duplicate a table:** The source column appears in the duplicated table, but it has no source attached. Click the source column header, select **Edit source**, and enter your search inputs — business types, locations, and any other criteria — for the new search.
+-   **When you create a table from a Clay template:** The source column is not present in the copied table. Add a new source from scratch by clicking **Tools → Import** (or by clicking **Add source** when creating a new table).
+
+**Recommended approach for running the same sourcing workflow across multiple locations or business types:** Build one table with your enrichment columns, formulas, and run settings fully configured, then duplicate it each time you want to run a new search. The duplicate preserves the table structure — you only need to enter the source inputs (business types, location, and other search criteria) for each new search.
+
 ### Why doesn't my Clay table update when I change the source filters?
 
 **Editing the source of a Clay table after it's been run won't retroactively update the results, because Clay doesn't reprocess previously generated data automatically.**
@@ -214,6 +225,27 @@ To remove rows that no longer match your filter, you have two options:
 
 -   **Delete them manually** — select the rows in the table and delete them.
 -   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM, database, Google Sheets, Google Maps, and Find People sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps, Find People):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
+
+**Note:** This additive behavior applies to CRM and filter-based sources. If you edit the SQL query text itself on a Snowflake or BigQuery source, the behavior is different — see [What happens to existing rows when I change the SQL query on my source?](#what-happens-to-existing-rows-when-i-change-the-sql-query-on-my-source) below.
+
+### What happens to existing rows when I change the SQL query on my source?
+
+**For SQL-based sources (Snowflake, BigQuery), changing the query text and re-running causes Clay to fully invalidate the existing import and reimport from the new query.** The practical result:
+
+-   **Records returned only by the old query are removed** from your table — they no longer appear in the new results and are deleted when the reimport completes.
+-   **Records returned by both the old and new query are upserted on their unique identifier** — they are updated in place, not duplicated. The unique identifier is the field you designated when configuring the source (for example, a Snowflake ID or email column).
+-   **Records returned only by the new query are added** as fresh rows.
+
+This differs from narrowing a CRM source filter, where existing rows stay in the table regardless of whether they still match the new filter.
+
+**Whether enrichment columns re-run on the matched (upserted) rows depends on your "Keep existing results" setting:**
+
+-   **Keep existing results ON** (the default for new tables): Enrichment cells that already have a successful result are preserved and skipped — only new or empty cells run automatically. Rows that existed in both the old and new query keep their enrichment data without spending credits to re-run them.
+-   **Keep existing results OFF**: All enrichment cells on reimported rows are eligible to re-run, including cells that already have results.
+
+To check or change "Keep existing results": click the table name → **Edit table settings** → scroll to **Run settings** — or click the **⛭** icon in the top toolbar.
+
+**Note:** This full-invalidation behavior applies specifically when you edit the SQL query text itself. For scheduled re-runs of the same unchanged query, Clay uses normal dedup logic — only net-new records are added by default, unless you enable **Update existing rows** in the source settings. See [Auto-run](auto-run.md#update-existing-rows-toggle-for-scheduled-source-imports) for details on how "Update existing rows" and "Keep existing results" interact on scheduled runs.
 
 ### I deleted rows from my table and re-ran the source, but they didn't reappear
 
@@ -313,7 +345,7 @@ For standard source imports (CSV, CRM, list builders), Clay stops importing sile
 -   Create a new import source — for Salesforce, HubSpot, Snowflake, and other CRM/database sources that have hit the limit, adding a new source definition starts at a fresh 0/50,000 record count (see [FAQ below](#my-salesforce-hubspot-snowflake-or-crm-import-is-returning-0-new-records))
 -   Use [Audiences](audiences.md) for large Salesforce, HubSpot, or other CRM imports that regularly exceed 50,000 records — Audiences are not subject to the per-source 50,000 record cap and scale to millions of records
 -   Use [auto-delete](https://university.clay.com/docs/table-management-settings#auto-delete-passthrough-tables) (Enterprise plan) for unlimited rows with compatible source types (webhooks, send table data, signals)
--   Use [bulk enrichment](https://www.clay.com/university/guide/bulk-enrichment) (Enterprise plan) to process millions of records
+-   Use [Workflows](https://university.clay.com/docs/workflows) to process large datasets
 
 ### Does manually deleting rows free up space toward the 50,000-row limit?
 

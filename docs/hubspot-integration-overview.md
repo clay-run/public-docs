@@ -1,7 +1,7 @@
 ---
 title: HubSpot integration
 description: All-in-one CRM platform for marketing, sales, and customer service.
-last_synced: 2026-04-26T01:40:09.362Z
+last_synced: 2026-09-29T16:17:52.785Z
 ---
 
 # HubSpot integration
@@ -13,6 +13,20 @@ HubSpot is a customer relationship management (CRM) platform that helps business
 With this integration, you can import, create, update, and manage HubSpot objects directly in Clay.
 
 **Heads up!** The HubSpot integration requires a **Growth plan** or higher. See [Plans & billing](plans-and-billing.md) for details.
+
+## Connect your HubSpot account in Settings
+
+The HubSpot integration requires a **Growth plan** or higher. You can connect your HubSpot account from **Settings → Connections** before you build anything in a table.
+
+The `Connections` list only shows accounts your workspace has already added. If you've never connected HubSpot, you won't see HubSpot in that list — you add it with the `Create` button instead:
+
+1.  Go to `Settings` > `Connections`.
+2.  Click `Create` in the top-right corner. The `Connect an account` modal opens.
+3.  Type "HubSpot" into the `Search` field and select **HubSpot**.
+4.  Click `Sign in with HubSpot` and complete the authorization in HubSpot. See [OAuth scopes](#oauth-scopes) for the permissions Clay requests.
+5.  Your HubSpot account now appears in the `Connections` list and can be selected in any HubSpot source or action.
+
+**If the `Sign in with HubSpot` button is disabled:** HubSpot still appears in the `Connect an account` modal on plans below Growth, but the modal shows an upgrade banner and the `Sign in with HubSpot` button can't be clicked. Upgrade your workspace to the Growth plan or higher to connect HubSpot.
 
 ## Enriching data with HubSpot
 
@@ -31,6 +45,10 @@ Use this source to import objects from HubSpot into Clay.
 -   **List to pull objects from (Optional):** Select a list to pull objects from. If no list is selected, all objects will be pulled.
 -   **Include read-only properties? (Optional):** Include all HubSpot calculated fields for each contact (e.g., `hs_analytics_first_timestamp`). If not selected, only editable properties will be included (e.g., `domain`).
 -   **Exclude empty properties? (Optional):** Exclude all empty properties from the response. If not selected, all properties will be included, even those with empty values.
+
+**Credit and auto-run note:** If [Auto-run](auto-run.md) is enabled on your table, every row this source imports immediately triggers any enrichment or AI column that references other columns as inputs — consuming credits for every row imported. Enrichment and AI columns with fully hardcoded configurations that reference no other columns are not triggered by new row imports. For a large HubSpot list, a single import or scheduled sync can result in significant unexpected credit usage.
+
+To import records without triggering enrichments, turn off table-level auto-run before running or scheduling this source: click the `⛭` icon → **Run Settings** → toggle **Auto-run** off. After reviewing the imported rows, re-enable auto-run and choose `Update cells` to process them — or select specific rows and right-click → **Run [N] rows**. See [Auto-run](auto-run.md) for the complete step-by-step.
 
 ### `Action` Create object
 
@@ -100,6 +118,39 @@ Use this action to find a HubSpot owner by ID or email address.
 -   **Owner ID (Optional):** The HubSpot owner ID to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 -   **Email (Optional):** The email address to search for. If both ID and email are provided, the email will be validated against the owner found by ID.
 
+### `Action` Add record to list
+
+Use this action to add a HubSpot record to a static list, so your team can work it as a segment.
+
+**Inputs**
+
+-   **Object type:** The type of HubSpot record you want to add to a list. `Company`, `Contact`, `Deal`, and `Lead` are always there, with your portal's custom objects listed after them.
+-   **List:** The list to add the record to. Pick an `Object type` first — the dropdown fills in once you have, and shows the lists built on that type.
+-   **HubSpot record ID:** The unique identifier of the record to add, such as the record ID that `Create object` returns. It has to be HubSpot's numeric ID, so a row carrying an email address or a domain here won't run.
+
+**Outputs**
+
+-   **Added to list:** `true` when the record was added to the list, `false` when it wasn't.
+
+Only lists whose membership you can edit appear in `List`. HubSpot recalculates the membership of an active list from that list's filters, so those aren't offered — create a static list in HubSpot for the records you're sending over.
+
+A row can succeed with `Added to list` set to `false`, which means HubSpot took the request but didn't add the record, because it's already in the list or isn't eligible for it. A record ID that doesn't exist in your portal fails that row instead.
+
+**Note: this action needs the `Create and edit lists, including adding records to a list` permission.** HubSpot asks for it by default when you connect. If your connection doesn't have it, `List` shows an error asking you to reconnect your account and select it.
+
+### `Action` Enroll a contact in a sequence
+
+Use this action to enroll a HubSpot contact in an automated follow-up sequence.
+
+**Note:** This action requires the `automation.sequences.read` and `automation.sequences.enrollments.write` OAuth scopes, which are **disabled by default** in Clay's HubSpot connection. If the Sequence dropdown shows no options, see [Why is the Sequence dropdown empty?](#why-is-the-sequence-dropdown-empty-when-i-set-up-enroll-a-contact-in-a-sequence) for how to enable them.
+
+**Inputs**
+
+-   **Contact ID:** The unique identifier of the HubSpot contact to enroll in the sequence.
+-   **Sequence:** The sequence to enroll the contact in. Options load dynamically from your HubSpot account once the required scopes are enabled.
+-   **Sender email:** The email address of the user who will send the sequence emails.
+-   **Sender alias address (Optional):** An alternate address from which the sequence emails will appear to be sent. Alternate email addresses must be set up in HubSpot.
+
 ## OAuth scopes
 
 When connecting your HubSpot account, Clay uses optional OAuth scopes to give you fine-grained control over permissions.
@@ -125,12 +176,14 @@ These permissions are requested by default but can be disabled:
 -   `crm.objects.companies.write` — Create, delete, or edit companies.
 -   `crm.objects.contacts.write` — Create, delete, or edit contacts.
 -   `crm.objects.leads.write` — Create, delete, or edit leads.
+-   `crm.lists.write` — Create and edit lists, including adding records to a list.
 -   [`crm.schemas.custom.read`](http://crm.schemas.custom.read) — View custom object definitions.
 -   [`crm.objects.custom.read`](http://crm.objects.custom.read) — View custom objects.
 -   `crm.objects.custom.write` — Create, delete, or edit custom objects.
 -   [`crm.objects.deals.read`](http://crm.objects.deals.read) — View deal properties and details.
 -   \[`crm.objects.deals](<http://crm.objects.deals>).write` — Create, delete, or edit deals.
 -   [`crm.schemas.deals.read`](http://crm.schemas.deals.read) — View deal property settings.
+-   `crm.export` — Export CRM records in bulk.
 
 ### Optional scopes (disabled by default)
 
@@ -198,13 +251,12 @@ For more on additive source behavior across all source types, see [Will rows alr
 
 The **Import objects from HubSpot** source is limited to 50,000 records. Enabling auto-delete does not bypass this limit for HubSpot imports — auto-delete only resets the record count for webhook and send-table-data sources, not for CRM imports.
 
-For large, one-time batch processing (for example, 100k companies), use [Bulk Enrichment](bulk-enrichment.md) instead of a standard table:
+For large, one-time batch processing, use [Workflows](https://university.clay.com/docs/workflows):
 
 1. Export your HubSpot list to CSV from HubSpot.
-2. Create a Bulk Enrichment table (`New` → `Bulk enrichment`) and select **Import from CSV** as the source type.
-3. Configure your enrichment columns and run.
+2. Use the **On CSV upload** trigger in Workflows to process the file. Follow the [Workflows setup guide](https://university.clay.com/docs/workflows) to configure your enrichment steps, test, and run.
 
-Bulk Enrichment handles large datasets without the 50,000-row limit. Note that HubSpot is not yet available as a direct Bulk Enrichment CRM import source (Salesforce and CSV only today); exporting to CSV first is the current workaround.
+For ongoing processing, connect HubSpot as an [Audiences source](audiences.md#importing-from-hubspot) and [connect a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment).
 
 ### Why does my HubSpot lifecycle stage column show an internal code instead of the display label?
 
@@ -247,6 +299,35 @@ If a property exists in HubSpot but doesn't get updated when you run the Update 
 **Blank values are silently skipped.** The **Update Object** action has an **Ignore blank values** setting that is enabled by default. When enabled, any property field that is empty or null in your Clay table is not sent to HubSpot — existing HubSpot values are left unchanged with no error shown. If the column you are mapping has no value for a given row, the update for that property is skipped. To override this, open the column settings and disable **Ignore blank values** — but note that doing so will overwrite existing HubSpot data with blank values from Clay. (This setting applies only to the Update Object action; the Create Object action does not have an equivalent option.) **Note:** If *every* property mapped in that column is blank for a row, the column shows a "No properties found to update" error rather than silently skipping — see the FAQ below for how to address this with a run condition.
 
 **A different HubSpot account is selected.** If multiple HubSpot accounts are connected to your workspace (for example, if teammates each added their own HubSpot connection), the Update Object action may be authenticating against a different instance than the one you intend to update. Open the column settings and confirm the HubSpot account shown is the correct one. You can verify by running a **Lookup object** action on the same record — if the property appears updated there, the write reached the right account.
+
+### How do I stop Clay from overwriting a HubSpot property that already has a value?
+
+If HubSpot already fills in a property on its own — for example, a contact's job title added by HubSpot's built-in enrichment — you can set up Clay to write its enriched value to HubSpot only when that HubSpot property is still empty. This setup uses three columns: a **Lookup object** column that checks the current HubSpot value, a Formula column that stays blank whenever HubSpot already has a value, and your **Update object** column with **Ignore blank values** enabled.
+
+**Step 1 — check the current HubSpot value with Lookup object**
+
+1.  Add a **HubSpot → Lookup object** column before your **Update object** column, using the same HubSpot account.
+2.  Filter by the same identifier your Update object column uses to find the record (for contacts, usually **Email**).
+3.  *(Optional)* If HubSpot fills in the property shortly after the record is created, give it time to finish first: open the Lookup object column's **Run settings**, set **Delay run** to **Run after delay**, and enter the number of seconds to wait — up to 600 seconds (10 minutes). The delay starts after the column's run conditions are met. Setting a delay doesn't cost extra credits — the lookup is charged normally when it actually runs.
+
+**Step 2 — add a Formula column that is blank when HubSpot already has a value**
+
+Add a Formula column that returns your Clay-enriched value only when the HubSpot property is empty. For a job title, the formula looks like this:
+
+`{{Lookup object}}?.jobtitle ? "" : {{Enriched title}}`
+
+Type `/` to open the column picker and insert the `jobtitle` field from your Lookup object column in place of `{{Lookup object}}?.jobtitle`, and your enriched title column in place of `{{Enriched title}}`. When HubSpot's job title is empty, the Lookup object result has no value for it — with **Remove blank values from results** on (the default), empty properties may be left out of the result entirely — so the formula returns the Clay-enriched title. When HubSpot already has a job title, the formula returns a blank value.
+
+**Step 3 — map the Formula column in Update object**
+
+In your **Update object** column, map the HubSpot property (for example, Job Title) to the Formula column from step 2 instead of the raw enrichment column, and leave **Ignore blank values** enabled (it's on by default). When the Formula column is blank, Clay doesn't send that property to HubSpot, so the existing HubSpot value stays unchanged. Any other non-blank properties mapped in the same Update object column still update normally.
+
+**If the HubSpot property shows the same value twice** (for example, a job title of "Director of Ops Director of Ops"), check whether the column you map to that property is a formula that joins two values together — such as the HubSpot title and the Clay-enriched title with a space between them. Replace it with the formula from step 2 so only one value is ever sent.
+
+**Limitations:**
+
+-   The delay in step 1 is capped at 600 seconds (10 minutes). If HubSpot fills in the property after the Lookup object column has already run, Clay sees an empty value for that row and writes the Clay-enriched value.
+-   If every property mapped in the Update object column is blank for a row, the column shows a "No properties found to update" error — see [Why does my HubSpot Update Object show "No properties found to update"?](#why-does-my-hubspot-update-object-show-no-properties-found-to-update-when-ignore-blank-values-is-enabled) for how to skip those rows with a run condition.
 
 ### Why does my HubSpot Update Object show "Required inputs missing" after I deleted a column?
 
@@ -313,6 +394,37 @@ Add a **HubSpot → Create association** column:
 
 **Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
 
+### Is there a single "Create or Update" action for HubSpot contacts or companies?
+
+No — Clay does not have a customer-facing "Create or Update" (upsert) action for HubSpot. To create new records and update existing ones in the same run, use three separate columns:
+
+1. Add a **Lookup object** column. Filter by the same field you will write to when creating (for contacts, use **Email**). This checks whether the record already exists in HubSpot.
+2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found. Also require the value you looked up (for example, the email) to be present, or rows with a blank email will create a new record on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
+3. Add an **Update object** column. Set an **Only run if** condition to check that the Lookup column returned a result, then map the returned `hs_object_id` to the **HubSpot Object ID** input.
+
+**Important:** Map all the fields you want to write (first name, last name, email, job title, and so on) in **both** the Create object and Update object columns. A common mistake is mapping only some fields in the Update object step — for example, mapping only Company — which means the other fields never reach HubSpot for contacts that already exist.
+
+For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
+### Why is my HubSpot Create object creating duplicate contacts even though I look them up first?
+
+If you check for existing HubSpot contacts with a **Lookup object** column and only run **Create object** when nothing is found, but HubSpot still gets duplicate contacts, look at rows where the email is blank. Those are usually the cause.
+
+**Why rows with no email create duplicates:**
+
+-   When the email mapped to the Lookup object's **Email** filter is blank for a row, the Lookup object cell doesn't search HubSpot. It shows **Missing input** and returns no value.
+-   A run condition like `!{{Look up contact}}?.totalFound` ("only run if totalFound is zero") is **true** when the lookup has no value. A Missing input lookup therefore passes the condition, the same way a lookup that searched and found nothing does.
+-   **Create object** then creates a new HubSpot contact, with no email, every time the row runs. A person with no email is never matched, so each run adds another contact.
+
+Rows that have an email aren't affected. When the email is present and no contact matches, Lookup object returns `totalFound: 0` and Create object runs once. When a contact matches, `totalFound` is 1 or more and Create object is skipped.
+
+**To stop the duplicates:**
+
+1.  Open the **Create object** column, go to **Run settings → Only run if**, and add the email to the condition so the create is skipped when the email is blank. For example: `{{Work Email}} && !{{Look up contact}}?.totalFound`. Type `/` to insert your own email column and lookup column.
+2.  *(Optional)* To update contacts that already exist, add an **Update object** column with the run condition `{{Look up contact}}?.totalFound`. Map the record ID from the lookup result (for example, `results[0].id` from your Lookup object column) to the **HubSpot Object ID** input. Without an Update object column, a found contact is skipped and nothing in HubSpot changes.
+3.  *(Optional)* For rows with no email, add a second Lookup object column that searches by another identifier, such as a professional profile URL or name plus company.
+4.  Merge the duplicate contacts with no email that were already created, in HubSpot.
+
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
 This almost always means the **Lookup Object** and **Create Object** columns are searching and writing to **different email fields**. HubSpot has two separate email properties:
@@ -329,10 +441,26 @@ If your Lookup Object filters by "Work email" but your Create Object maps data t
 To handle both new and existing contacts without hitting duplicate errors:
 
 1.  Add a **Lookup object** column. Configure it to search by the same identifier (e.g., email address) and the same field you write to when creating contacts.
-2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found.
+2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found. Also require the email you looked up to be present, or rows with a blank email will create a new contact on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
 3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
+
+### Does the Lookup Object check all domains on a HubSpot company record, or only the primary domain?
+
+**The Lookup Object searches only the specific HubSpot property you select** — it does not fan out to all domains associated with a company. When you filter by **Domain Name**, Clay searches HubSpot's primary **Company domain name** property (`domain`) only.
+
+HubSpot companies can have multiple domains on a single record — one primary domain and additional alternate domains. The Lookup Object does not search those alternate domains. If your input matches only a secondary domain that is not set as the primary Company domain name in HubSpot, the lookup returns no results even if that domain is associated with an existing HubSpot company record.
+
+**One exception:** When filtering by **Domain Name**, Clay automatically searches both the bare domain and its `www.` variant — for example, both `example.com` and `www.example.com`. You do not need to add the `www.` prefix manually.
+
+**Workaround:** If your contacts match a secondary domain in HubSpot rather than the primary Company domain name, the Lookup Object will not find those companies. The most practical Clay-side approach is to add a second **Lookup Object** column that searches an alternate domain property in HubSpot:
+
+1. In HubSpot, create a custom company property to store the secondary domain (for example, a text property called "Secondary Domain") and populate it for the relevant companies.
+2. In Clay, add a second **HubSpot → Lookup object** column. Set **Object type** to Company and set **Fields to filter by** to your custom secondary domain property.
+3. Set the second column to run only when the first Lookup Object returns no result: open **Run settings → Only run if** and add a condition that the first Lookup Object column is empty. This turns the second column into a fallback that fires only when the primary domain lookup finds nothing.
+
+You can also update the company's **Company domain name** in HubSpot to match the domain you are searching by, or use the HubSpot Object ID to look up the record directly.
 
 ### Why do I get an `INVALID_OWNER_ID` or `INVALID_INTEGER` error when setting `hubspot_owner_id`?
 
@@ -370,6 +498,20 @@ Each HubSpot column stores a reference to the specific connection it was configu
 1. Open each affected column's settings and change the **Account** dropdown to select the new connection. This updates the column to use the new connection ID.
 2. If re-selecting the account in the existing column doesn't resolve the error, create a new column with the same HubSpot action and configuration. New columns automatically pick up the currently active connection and will run successfully.
 
+### Why is the Sequence dropdown empty when I set up "Enroll a contact in a sequence"?
+
+The Sequence field populates dynamically from your HubSpot account, but it requires the `automation.sequences.read` OAuth scope — which is **disabled by default** in Clay's HubSpot connection. If no sequences appear in the dropdown, this scope was not enabled when you first connected.
+
+**To fix:**
+
+1.  Go to **Settings → Connections**.
+2.  Find your HubSpot connection and click **Reconnect**.
+3.  On the scopes screen, check both **`automation.sequences.read`** and **`automation.sequences.enrollments.write`**.
+4.  Complete the reconnection flow.
+5.  Return to your "Enroll a contact in a sequence" column — the Sequence dropdown will now show your available HubSpot sequences.
+
+**Note:** If after enabling these scopes you see an "Authorization failed" error, check the wording. "Your account lacks access to the required scopes" means your HubSpot plan may not include the Sequences feature — see [Why do I get "Authorization failed because your account lacks access to the required scopes"?](#why-do-i-get-authorization-failed-because-your-account-lacks-access-to-the-required-scopes-automationsequencesenrollmentswrite-automationsequencesread) below. "This app hasn't been approved to access the required scopes" means HubSpot App Governance is blocking the scopes — see [Why do I get "Authorization failed because this app hasn't been approved to access the required scopes"?](#why-do-i-get-authorization-failed-because-this-app-hasnt-been-approved-to-access-the-required-scopes-for-example-crmexport-or-automationsequencesenrollmentswrite-crmlistswrite-automationsequencesread) below.
+
 ### Why do I get "Authorization failed because your account lacks access to the required scopes [automation.sequences.enrollments.write, automation.sequences.read]"?
 
 This error comes from HubSpot when you attempt to connect an account with Sequences permissions that your HubSpot plan doesn't include. The two scopes listed — `automation.sequences.read` and `automation.sequences.enrollments.write` — are only needed to enroll contacts in HubSpot Sequences, and they are **disabled by default** in Clay's connection flow.
@@ -380,10 +522,32 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 
 1. Go to **Settings → Connected accounts**.
 2. Find your HubSpot account and click **Reconnect**.
-3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked**. They're unchecked by default on a new connection, but the reconnect modal keeps the scopes your previous HubSpot connection had, so uncheck them if they're selected.
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
+
+### Why do I get "Authorization failed because this app hasn't been approved to access the required scopes" (for example, [crm.export] or [automation.sequences.enrollments.write, crm.lists.write, automation.sequences.read])?
+
+This error comes from HubSpot when your organization has **App Governance** (also called App Permissions) enabled and the Clay app has not been approved to use one or more of the scopes listed in the error. App Governance is a HubSpot feature that lets super admins control which OAuth scopes third-party apps are permitted to access — even when your HubSpot plan supports those scopes. Until the scopes are approved for the Clay app in App Governance, the HubSpot OAuth connection fails with this error. Being a HubSpot super admin doesn't bypass App Governance: the scopes still have to be approved for the Clay app in HubSpot's App Governance settings before the connection succeeds.
+
+The scopes in the error message are the ones Clay requested during that connection attempt. Common examples:
+
+-   `crm.export` — used to export CRM records in bulk (for example, when importing records via the HubSpot source or the Audiences HubSpot import). Enabled by default in Clay's HubSpot connection.
+-   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
+-   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
+
+**If you only need to add contacts to a HubSpot list,** you don't need the sequence scopes. The **Add record to list** action needs `crm.lists.write`, not `automation.sequences.read` or `automation.sequences.enrollments.write`. Clay only requests the optional scopes that are checked under **Optional scopes** in Clay's connection modal, so unchecking both sequence scopes when you reconnect removes them from the request. Your HubSpot super admin then only needs to approve `crm.lists.write` (and any other scopes still listed in the error). You choose which scopes Clay requests in Clay's reconnect modal; your super admin approves them in HubSpot's App Governance settings.
+
+**To fix:**
+
+1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
+2.  Find **Clay** in the list and click **Manage**.
+3.  On the app detail page, expand **App access and permissions**.
+4.  Under **Conditionally required** permissions, enable every scope listed in the error message (for example, `crm.export`, or `automation.sequences.read`, `automation.sequences.enrollments.write`, and `crm.lists.write`).
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal. If you don't use that action, make sure both sequence scopes are unchecked. The reconnect modal keeps the scopes your previous HubSpot connection had, so review the **Optional scopes** checkboxes before you continue.
+
+**Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
 ### Why does my HubSpot Create Object show "Invalid input" on some rows?
 
@@ -457,3 +621,29 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 **Workaround — rollup properties:** Create HubSpot rollup properties on your Contact or Company objects to capture the activity data you need. For example, to track completed meetings for a contact, create a Contact property in HubSpot that stores the most recent completed meeting date — populated by a HubSpot workflow or rollup. Once those properties are in place, import the Contact or Company into Clay using the **Import objects from HubSpot** source or a **Lookup object** action; Clay reads the rollup property like any other contact or company field. Using date-based rollup properties (rather than booleans) lets you compute recency-based values in Clay with a formula, such as the number of days since the last completed meeting.
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
+
+### Can I create HubSpot tasks from Clay?
+
+Clay's HubSpot integration does not include a native action for creating Tasks — tasks aren't one of the object types available in the HubSpot **Create object** action. To create HubSpot tasks from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's Tasks API directly.
+
+**Setup:**
+
+1.  In HubSpot, go to **Settings → Integrations → Private Apps**, create a private app with permission to create tasks, and copy its access token.
+2.  In your Clay table, add an **HTTP API** column.
+3.  In the column's **Account** section, open **Select account** and click **Add account**. Under **API Request Headers**, add a key-value pair with the key `Authorization` and the value `Bearer <your-private-app-token>`. See [HTTP API integration](https://university.clay.com/docs/http-api-integration-overview) for details.
+4.  Set the method, endpoint, and JSON body as described in [HubSpot's Tasks API guide](https://developers.hubspot.com/docs/api-reference/legacy/crm/activities/tasks/guide).
+5.  Save the column and test it on 1 row before running it on the whole table.
+
+To create HubSpot notes instead, see [How can I create HubSpot notes from Clay?](#how-can-i-create-hubspot-notes-from-clay)
+
+### How do I find which Clay tables are creating contacts in HubSpot?
+
+If contacts, companies, or other records are arriving in your HubSpot CRM from Clay and you want to know which tables or workflows are sending them, check which resources use your HubSpot connection in **Settings → Connections**.
+
+1.  Go to `Settings` > `Connections` and type "hubspot" into the search bar.
+2.  If your workspace has more than one HubSpot connection (for example, one per teammate), repeat the next steps for each one — the **Added by** column shows who connected each account.
+3.  Click the count in the **Resources** column for a HubSpot connection (or click `…` > **View resources**). A panel opens with the message "This connection is used in the resources below."
+4.  Expand each workbook and table in the panel. Under each table you'll see the columns and sources that use this connection, listed by column or source name — for example, `Create object`, `Look up object`, or `Import objects from HubSpot`.
+5.  Tables with a column that uses the HubSpot **Create object** action are the ones creating new records in HubSpot. Click the external-link icon next to a table to open it in a new tab and review that column.
+
+The panel also lists Audiences, Claygents, Signals, Ads, workflows, and functions that use the connection. Use the **Resource type** filter to narrow the list. For more detail, see [Viewing resources that use a connection](connections-and-integration-accounts.md#viewing-resources-that-use-a-connection).

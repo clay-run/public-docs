@@ -1,6 +1,6 @@
 ---
 title: Lookup Rows
-description: Bring in data into your table from other tables.
+description: Bring in data into your table from other tables, and replicate table lookups in Clay Workflows.
 last_synced: 2026-04-26T01:40:17.543Z
 ---
 
@@ -73,6 +73,13 @@ Send Table Data **pushes** data from your current table into another table. It c
 -   **When pulling row-specific data, match on a field that's unique per row**: A company-level field like domain is stable but not unique per person — if multiple rows in the source table share the same domain, the lookup returns whichever row it finds first, and every contact at that company gets the same result. When the data you're pulling should vary per person (e.g., personalized email copy, individual contact records), use a person-level unique identifier such as email address or professional profile URL as the match key instead.
 -   Clean and normalize both sides of the match key (trim, lowercase, consistent formatting)
 -   **If expected matches aren't found, try switching to `Contains`**: The `Equals` operator requires an exact character-for-character match — minor discrepancies in spacing, casing, or formatting between the Row Value and the target column will cause it to miss valid records. Switching the Filter Operator to `Contains` is a useful diagnostic: if it finds records that `Equals` missed, normalize the upstream data so both sides match exactly, then switch back to `Equals` for precision.
+-   **Every row returns "No Record Found"? Make sure `Row value` is a real column reference, not typed text**: Typing `{{Domain}}` (or any `{{Column Name}}`) by hand into the `Row value` field of `Look up single row in other table` does not reference that column. Clay treats it as literal text and searches the target table for the string `{{Domain}}` itself, so the lookup returns **No Record Found** on every row even when matching values exist in both tables. To fix it:
+    1.  Open the lookup column's settings and delete the typed text from the `Row value` field.
+    2.  Type `/` (the field shows the hint **/ Insert column**) and select the column from your current table, for example `Domain`.
+    3.  Confirm the column appears as a column token with an icon, not as plain `{{Domain}}` text.
+    4.  Click **Save** and run the lookup on a few rows (for example, 10) to confirm matches are found.
+
+    Another sign of this problem: the column settings panel shows the warning "This column doesn't reference any other columns, so it will never run automatically. Run it manually, or reference a column in an input or run condition." The warning goes away once `Row value` contains a real column reference.
 -   **Avoid Number-type columns as lookup keys — convert to text first**: A **Number**-type `Target column` produces unreliable results. Depending on cache state, the lookup may return "No Record Found" even when identical values exist in both tables, or silently return a wrong row when the `Row value` cannot be parsed as a number. **Workaround:** In both tables, add a formula column that converts the number to a text string — for example, `String({{Clay Company Id}})` — then configure your lookup to match on those text columns instead of the number columns directly.
 -   **Checking whether a lookup found a match — use `== null` in formulas and run conditions**: When a Lookup Single Row column finds no matching record, the cell stores `null` — the "No Record Found" label you see in the table is a display indicator, not the stored value. Comparing against the string `"No Record Found"` in a formula always fails because the actual stored value is `null`. Use `== null` to test for no match and `!= null` to test for a match. For example, to label rows as "Unique" or "Duplicate" based on whether any of three lookup columns found a match: `({{Table 2}} == null && {{Table 3}} == null && {{Table 4}} == null) ? "Unique" : "Duplicate"`. The same expression works as a **Run settings → Only run if** condition to skip enrichment for rows that already exist in any of those tables.
 -   Use single row lookup instead of multiple row lookup when you only need one result — it's faster
@@ -129,6 +136,12 @@ When you want to work only with contacts that are **not** already in a reference
 
 -   **One filter column only**: The lookup matches on a single `Target column` at a time — you cannot apply multiple columns as simultaneous filter criteria. To filter by multiple attributes at once (for example, domain and industry), create a formula column in both tables that combines those values into a single string (for example, `{{Domain}} + "-" + {{Industry}}`), then use that combined column as your match key.
 -   **Match on domain, not company name**: Company names vary across tables (e.g., "Zoom" vs "Zoom Video Communications"), so using company name as the match key often returns unexpectedly low counts — sometimes just 1 match per company even when many records exist. Use a company domain (e.g., `zoom.us`) as your match key on both sides for accurate, reliable counts.
+-   **Every row returns "❌ 0 Records Found"? Make sure `Row value` is a real column reference, not typed text**: In `Look up multiple rows in other table`, anything you type by hand into the `Row value` field — for example, the words `Company Domain`, or `{{Domain}}` typed manually — is treated as literal text. The lookup then searches the target column for that exact phrase on every row, so every row shows **❌ 0 Records Found** even when matching values exist in both tables. To fix it:
+    1.  Open the lookup column's settings and delete the typed text from the `Row value` field.
+    2.  Type `/` and select the column from your current table that holds the match value, for example `Domain`.
+    3.  Confirm the column appears as a column token with an icon, not as plain text.
+    4.  Click **Save** and run the lookup on a few rows (for example, 10) to confirm matches are found.
+-   **`Row value` and `Target column` must hold the same kind of identifier**: The multiple rows lookup compares the `Row value` to the `Target column` as-is (only leading and trailing spaces are trimmed) — it doesn't convert one identifier type into another. For example, if your table only has a company professional profile URL and the other table's `Target column` holds company domains such as `acme.com`, the lookup returns **❌ 0 Records Found** for every row. To match on domain when you only have company names, first add a **Find company domain** enrichment to your table (search for **Find company domain** in the enrichment panel), map your company name column as the input, and then reference the resulting domain column in `Row value` with `/`.
 -   **Avoid Number-type columns as lookup keys — convert to text first**: A **Number**-type `Target column` produces unreliable results. The lookup may return no matches even when identical values exist in both tables, or silently return incorrect rows when the `Row value` input cannot be parsed as a number. **Workaround:** In both tables, add a formula column that converts the number to a text string — for example, `String({{Clay Company Id}})` — then match on those text columns instead.
 -   Remember the UI shows up to 10 matches, but the count reflects all matches found
 -   Only use `Add as column` for the few results you actually need to avoid clutter and keep tables readable
@@ -154,7 +167,7 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 
    Find People now only fires for accounts where you have fewer than 2 prospects on file. (Clay automatically ensures the lookup runs before this condition is evaluated — column order in the table does not matter.)
 
-3. To avoid returning contacts who are already in your prospects table, open the Find People source configuration and add your prospects table to the **Exclude people** filter. Exclusions match by LinkedIn URL or email, so your prospects table must contain a LinkedIn URL or email column for this to work. See [Find People in Clay](find-people-overview.md) for details.
+3. To avoid returning contacts who are already in your prospects table, open the Find People source configuration and add your prospects table to the **Exclude people** filter. Exclusions match by professional profile URL, so your prospects table must contain a professional profile URL column for this to work. See [Find People in Clay](find-people-overview.md) for details.
 
 4. Add a **Send Table Data → Send row for each item in a list** column and point it at your prospects table. Each contact returned by Find People becomes a new row in your prospects table, where they flow into your existing enrichment and sequencing workflow.
 
@@ -163,6 +176,18 @@ When prospecting existing accounts, contacts can leave a company, change roles, 
 ### **Using lookups in the same table**
 
 You can also use `Lookup multiple rows` within the same table to find duplicates, count related records, or group rows by shared traits.
+
+**Self-lookups don't work inside a Clay function.** When you add steps inside a function, the function runs in a background table that is not a regular workspace table — it won't appear in the "Table to search" picker. This means the Lookup multiple rows action inside a function can't search the function's own rows. If you need cross-row context (such as a duplicate count) inside a function, use the workaround below: run the self-lookup in the calling table and pass the count as a function input.
+
+**Workaround — run the lookup in the calling table and pass the result in as a function input:**
+
+1. In the calling table (the table that invokes the function), add a **Lookup multiple rows in other table** column and set **Table to search** to the calling table itself.
+2. Set **Target column** and **Row value** to your match key (e.g., Domain).
+3. Run the lookup. Each row returns a count of matching rows. The lookup always includes the current row itself, so a row with a unique value returns a count of 1 — subtract 1 if you want "other matches only."
+4. In the function configuration, map that count (or a formula derived from it) as a function input.
+5. Reference that input inside your function logic.
+
+**To set up a self-lookup in a regular table:**
 
 1.  Decide what you're trying to group/dedupe by.
 2.  Create a shared match key column in the table.
@@ -270,3 +295,44 @@ A lookup reads the target table at the exact moment it runs — it doesn't wait 
 -   **Restructure to a sequential flow:** Make sure the source table fully finishes running before the dependent table reads from it. For scheduled tables, offset the second table's schedule by enough time for the first to complete — see [Custom signals](custom-signals.md) for an example of staggering table schedules.
 -   **Use a scheduled lookup:** A table run on a schedule reads other tables that have already completed their prior runs, so it is less susceptible to this issue than a lookup triggered in real time alongside an in-progress enrichment.
 -   **Add a delay:** Insert a delay column before the lookup (up to 600 seconds). This reduces failures but does not guarantee they disappear, since enrichment time varies per row.
+
+### **Lookup keeps returning old values after you edited the other table (sandbox mode)**
+
+If you edited the table your lookup searches — for example, changed a value or filled in a column — but force running the lookup column still returns the old record, check whether you made those edits in **sandbox mode**.
+
+When you turn on [sandbox mode](sandbox-mode.md) for a table, Clay creates a separate copy of it with "(Sandbox)" added to the name — for example, "Companies (Sandbox)". Lookup Rows columns (`Lookup single row in other table` and `Lookup multiple rows in other table`) always read the original (live) table, never its sandbox copy — sandbox copies don't appear in the `Table to search` picker. Edits made only in the sandbox stay invisible to your lookup until you publish them to the live table.
+
+**Signs your lookup is reading the live table while your edits are in the sandbox:**
+
+-   Force running the lookup column returns the same old values every time.
+-   The table you've been editing has "(Sandbox)" in its name, or you've been working in its **Test data** tab.
+-   A field you filled in doesn't appear in the lookup result, so **Add as column** isn't offered for it — the field is still empty in the live table.
+
+**To get your sandbox edits into the lookup:**
+
+1.  Open the sandbox copy of the table you edited (the **Test data** tab).
+2.  Click **Review changes** in the tab bar above the table.
+3.  In the **Sandbox review** window, click **Publish and run** or **Publish and don't run**. Your column changes are applied to the live table, and the cell values in your sandbox rows are copied to the matching live rows.
+4.  Go to the table with the lookup column. Click the lookup column's header name to open its menu, hover over **Run column**, and select **Force run all N rows** (N is your row count).
+5.  Open a lookup cell and confirm it shows the new values. Fields that now have values can be added with **Add as column**.
+
+**If `Review changes` is greyed out:** Publishing requires at least one column change (adding, renaming, or reconfiguring a column). If you only edited cell values in the sandbox, those edits can't be published on their own. Click **Exit Sandbox** — this discards your sandbox changes — then make the same edits directly in the live table and force run the lookup column.
+
+Don't click **Exit Sandbox** before publishing if you want to keep your sandbox changes — exiting discards everything that hasn't been published.
+
+### **Replicating lookup columns in Clay Workflows**
+
+Clay Workflows (currently in beta) supports the same lookups you use in Clay tables. If you're rebuilding a table that uses Lookup Rows columns as a workflow, add each lookup as an Enrich node instead of a column:
+
+1.  In the workflow editor, add an **Enrich** node.
+2.  In the Enrich node's search bar, type `lookup`.
+3.  Select the lookup action you need:
+    -   `Look up single row in other table` or `Look up multiple rows in other table` (By Clay) — the same lookups as Lookup Rows columns in a table.
+    -   `Look up in Audiences` — finds a record stored in your Clay Audiences. Requires Audiences on your plan; workspaces without it see an upgrade prompt instead.
+    -   CRM lookups, such as Salesforce `Look up record`, which look up the record directly in your CRM.
+
+**Choosing where to look up records in a workflow:** A lookup node reads from wherever the data lives. If the records you used to look up in a Clay table already exist in Audiences or your CRM, look them up there directly with `Look up in Audiences` or your CRM's lookup action. When the records exist in Audiences, `Look up in Audiences` is the recommended option because it keeps your data and your workflow orchestration in one place. `Look up in Audiences` only finds values stored on Audience records — if a helper column in your table produced a value you match on, store that value in an Audiences field so the lookup can find it.
+
+**Replacing formula columns in a workflow:** Formula and normalization logic between lookups and enrichments goes in a **Code** node (searching `formula` in the node picker also finds it). Code nodes run Python (standard library only, no third-party packages) on the inputs passed from upstream nodes — for example, to clean up enrichment results or pick one item out of a comma-separated value before the next step.
+
+**Converting a whole table with Import a workbook:** When you create a new workflow, the start screen shows an **Import a workbook** option. Select an existing workbook, and Sculptor (Clay's AI assistant) builds a workflow based on that workbook's schema. Sculptor decides how to represent each column, so lookup columns aren't guaranteed to become lookup nodes one-to-one — review each node in the generated workflow and adjust it before you publish.
