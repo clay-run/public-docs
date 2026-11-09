@@ -215,6 +215,22 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
 
+### **Why does my ad sync show "Building" with an Expected completion date several days away?**
+
+While an ad platform processes your audience, that platform's card under **Sync destinations** shows a **Building** status and an **Expected completion** date. **Building** means Clay has already sent your contacts and is waiting for the ad platform to finish matching them — nothing is stuck. Clay checks with the ad platform every 30 minutes and updates the card automatically (for example, to **Ready**) as soon as the platform reports the audience is done. You don't need to take any action.
+
+The **Expected completion** date is a fixed estimate that Clay shows for every sync to a given ad platform, counted from when the sync run starts. It isn't calculated from the size or contents of your list, and the audience can be ready before that date. The following table lists the estimate Clay uses for each ad platform:
+
+| Ad platform | Expected completion estimate |
+| --- | --- |
+| Professional network | 5 days (120 hours) after the sync run starts |
+| Meta, Google Ads, Reddit Ads, Vibe.co | 3 days (72 hours) after the sync run starts |
+| Bing Ads | 6 days (144 hours) after the sync run starts |
+
+For example, a professional network sync that starts on November 5 shows an Expected completion date of November 10.
+
+There's no way to speed up the ad platform's processing from Clay — the processing time is controlled by the ad platform. If a professional network sync never receives results, it eventually shows a **Timed out** status; see [Why does my professional network ad sync show a "Timed out" status?](#why-does-my-professional-network-ad-sync-show-a-timed-out-status).
+
 ### **Why should I use personal emails instead of work emails?**
 
 Personal emails give much higher match rates because most people sign up for Meta and Google using personal email addresses (Gmail, Yahoo, Outlook) rather than their work address. When building your audience, pass all available signals — ad platforms try to match on each signal independently, so more data typically improves your overall match rate. The general priority order is:
@@ -223,6 +239,8 @@ Personal emails give much higher match rates because most people sign up for Met
 2.  **Phone number** — very high match rate when available
 3.  **First name + Last name + Country** — supplemental
 4.  **Work email** — use as a fallback
+
+**Google Ads name matching needs a zip code.** For Google Ads, Clay sends a name-based identifier for a contact only when first name, last name, country, and zip code are all mapped and filled in for that contact. If any of the four is missing, Clay skips the name-based identifier for that contact, and Google can still match the contact on email or phone number if those are mapped.
 
 To find personal emails for your contacts, use the `Personal Email` waterfall or the `Hashed Email for Ads` waterfall in a regular Clay table before syncing.
 
@@ -374,4 +392,4 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 
 ### **How much does it cost to sync audiences?**
 
-Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments used in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
