@@ -486,6 +486,20 @@ Workflows is in open beta. If it isn't available in your workspace, contact Clay
 
 Values written back to Audience fields are available when filtering other segments. To connect an existing workflow or review the trigger's run options, see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
 
+**Why can't I continue past "Map fields" in an enrichment workflow guide?**
+
+A workflow created as an enrichment workflow from an Audience segment opens with a setup guide in the right-hand panel. The guide has four steps: **Source**, **Enrich**, **Map fields**, and **Review & run**. On the **Map fields** step ("Save your data to Audiences"), the guide disables **Next** and shows **Complete each field mapping to continue** until you map the workflow's outputs to Audience fields.
+
+If you don't want the workflow to write back to Audiences, switch to the manual builder. For example, your workflow might end with Salesforce **Send & export** steps instead. To switch:
+
+1.  In the guide panel, click the **...** menu next to **Close guide**.
+2.  Select **Switch to manual builder** ("Build it yourself from now on. Your steps stay.").
+3.  In the **Switch to the manual builder?** dialog, click **Switch to manual builder**.
+
+The workflow then opens in the manual builder. All of its existing steps stay in place, and the guide's Map fields requirement no longer applies, so you can publish the workflow without an Audiences write-back step.
+
+**Note:** Switching to the manual builder is permanent. You can't switch the workflow back to the guide. **Close guide** is different: it only hides the guide panel, and the workflow stays in the guide. To leave the guide, use **Switch to manual builder**.
+
 **Using Audiences from a Clay table:**
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
