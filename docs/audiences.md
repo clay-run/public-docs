@@ -1230,6 +1230,20 @@ Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and ad
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
+### How do I export an audience segment to CSV or Excel?
+
+Audiences doesn't have a CSV or Excel download button. A People or Companies list or segment in Audiences can't be downloaded directly. To get the records into a CSV file, put them into a Clay table first, then download the table as a CSV. Clay tables export to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
+
+**To export an audience segment to CSV:**
+
+1.  Open the segment in Audiences and click `Enrich`.
+2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
+3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
+
+**If the list came from a people or companies search:** you can also run the search again and save the results to a Clay table instead of to Audiences. In the search, click **Continue** and choose **Save to new table** (or **Save to new workbook and table**) instead of **Save to People** or **Save to Companies**. Then download the table with **Tools** → **Export** → **Download CSV**.
+
 ### What happens to a contact's ad targeting when they become a customer?
 
 If your segment has an exclusion condition (e.g., Account Type ≠ "Customer"), the contact is automatically **removed** from the synced ad audience as soon as that condition is met. See [Clay Ads](https://university.clay.com/docs/clay-ads) for platform-specific guidance.
