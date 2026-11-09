@@ -176,6 +176,17 @@ You cannot look up directly into a function's background table — the **Lookup 
 
 Yes. Functions can be nested — a function can call another function as part of its enrichment sequence, letting you compose complex workflows from smaller, validated building blocks.
 
+### Can I call a Workflow Function from a table?
+
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, using a **Function** step. You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+
+Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
+
+-   **From a table:** click `Tools` and select an option under `Functions`. See [Calling a function from a table](#calling-a-function-from-a-table).
+-   **From a workflow:** add a **Table function** step.
+
+If you need the same logic in both tables and workflows, build it as a table function.
+
 ### What happens if I edit a function while it's running in a production table?
 
 While in edit mode, your function continues to process inputs it receives from production tables. When you publish an edit to your function, the changes apply to all inflight and future rows that the function processes. Note that you can pause your function before publishing changes to ensure that inflight rows are applied with the changes.
