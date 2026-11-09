@@ -1,6 +1,6 @@
 ---
 title: Single Sign-On (SSO)
-description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, and disabling SSO.
+description: Set up SSO for your Clay workspace, understand login behavior once enabled, and learn about MFA, provisioning, SCIM role mapping, and disabling SSO.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -84,13 +84,36 @@ SSO (via WorkOS) is used for authentication only — Clay does not add users to 
 
 **Clay does not have a user management API.** There is no API endpoint to programmatically create, update roles for, or deactivate workspace members. All user management must be performed through the Clay UI at `Settings` > `Team`.
 
-**Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name.
+**Clay user roles are not managed through SSO or SAML.** Enabling SSO does not change existing team members' roles in your workspace. Clay reads only the user's email address from the SAML assertion, with `firstName` and `lastName` as optional attributes — no role or group attributes from your identity provider are mapped to Clay workspace roles. To assign or update a team member's role after SSO is enabled, go to `Settings` > `Team` and use the role dropdown next to their name. On Enterprise workspaces that use SCIM provisioning, roles can instead be assigned from your identity provider — see [How SCIM maps identity provider groups to Clay roles](#how-scim-maps-identity-provider-groups-to-clay-roles).
 
 ### Is SCIM provisioning included with the SSO add-on?
 
 No. SCIM provisioning (also called Directory Sync), which automatically adds and removes Clay workspace members from your identity provider, is available only on **Enterprise plans**. The paid SSO add-on for annual Pro and Growth plans covers SSO sign-in only — buying the SSO add-on or setting up SSO does not make SCIM provisioning available on a Pro or Growth workspace. On Pro and Growth plans, add team members by inviting them from `Settings` > `Team` > `+ Invite`, as described in [User provisioning](#user-provisioning).
 
 SCIM provisioning does not depend on SSO. Enterprise workspaces can set up SCIM provisioning whether or not SSO is configured for the workspace.
+
+### How SCIM maps identity provider groups to Clay roles
+
+SCIM provisioning (available on Enterprise plans only) can assign Clay workspace roles from your identity provider. In the WorkOS admin portal, you map your IdP groups (for example, a group named `Clay: Admin`) to one of Clay's workspace roles:
+
+-   **Admin**
+-   **Editor**
+-   **Viewer**
+-   **Sales Rep** — currently in beta and available to select workspaces on request; contact Clay support or your Growth Strategist to ask about access.
+
+**Default role for SCIM users:** Any SCIM-provisioned user who is not in an IdP group mapped to a Clay role receives the default **Editor** role. The SCIM default role is always Editor — it can't be changed to a different role.
+
+**SCIM-managed members can't be edited in Clay:** On the `Settings` > `Team` page, SCIM-provisioned members show a sync icon next to their name, and their role dropdown and `Remove member` action are disabled. Hovering shows: "Managed by SCIM. Role and access changes are synced from your identity provider." To change a SCIM-managed member's role, move them to a different mapped group in your identity provider.
+
+### Why a SCIM user shows as Editor instead of the role mapped in your identity provider
+
+SCIM changes from your identity provider are synced to Clay in the background, not instantly. Clay checks for new directory changes every 1 minute and then processes them, so a newly provisioned user or a group change can take a few minutes to appear on the `Settings` > `Team` page. Until the user's group membership has synced, the user shows the default **Editor** role — for example, an admin who is correctly in the `Clay: Admin` group in your identity provider may briefly appear as Editor in Clay.
+
+If a SCIM user shows the wrong role:
+
+1.  Confirm in the WorkOS admin portal that the user is in an IdP group and that the group is mapped to the correct Clay role.
+2.  Wait a few minutes, then refresh the `Settings` > `Team` page in Clay. The role updates once the group membership has synced.
+3.  If the role still doesn't match after the sync, contact Clay support.
 
 ## Disabling or re-enabling SSO
 
