@@ -269,8 +269,8 @@ The ad sync page does not have a CSV download button. The **People** (or **Compa
 
 1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
 2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
-3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+3. Click `Enrich`, then click the **+** button at the top of the enrichment panel and select **Create enrichment table**. (If the panel shows an **Add enrichment table** button instead, click it.) The **Add enrichment** button in the middle of the "No enrichments yet" empty state creates an enrichment workflow, not a table. You don't need to add enrichment columns.
+4. Open the new table and press **Cmd+E** (Mac) or **Ctrl+E** (Windows). Click the **Export** tab, then click **Download CSV**. Enrichment tables created from a segment don't have a **Tools** button in the toolbar, so use the keyboard shortcut.
 
 Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
 
@@ -374,4 +374,4 @@ Yes, you can connect multiple LinkedIn or Meta ad accounts and choose which acco
 
 ### **How much does it cost to sync audiences?**
 
-Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments you run in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
+Each record exported or synced to an ad platform consumes 1 action (for the export/sync work). Data credits are consumed for any enrichments used in the table to build your audience (e.g., finding emails, enriching profiles). The export itself does not consume additional data credits.
