@@ -31,8 +31,8 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 2.  Click **Create**.
 3.  Enter a budget **name** and set a **credit limit**.
 4.  Choose a **default access** setting:
-    -   **Anyone in the workspace** — any member can assign their workbooks to this budget.
-    -   **Specific people and groups** — only members you explicitly add can use the budget.
+    -   **All workspace members** — any member can assign their workbooks to this budget.
+    -   **Only specific users or groups** — only members you explicitly add can use the budget.
 5.  Optionally, add specific **users** or **user groups** who should have access.
 6.  Click **Save**.
 
@@ -84,30 +84,12 @@ Open a budget from `Settings` → `Budgets` to see its spend over time. Use the 
 
 Each budget has an access rule that controls which workspace members can assign their workbooks to it:
 
--   **Anyone in the workspace (default):** Any member can use this budget. Useful for shared cost pools.
--   **Specific people and groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
+-   **All workspace members (default):** Any member can use this budget. Useful for shared cost pools.
+-   **Only specific users or groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
 
 To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit**, and adjust the access settings.
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
-
-## Can I limit how many credits each user can spend?
-
-Clay doesn't have a per-user credit cap for the work members do in workbooks, tables, and workflows. You can still cap each person's spend with credit budgets, which are available on Enterprise plans. This works by controlling which budgets each member can use:
-
-1.  Go to `Settings` → `Budgets` and create a budget for the member, with the credit limit you want for them.
-2.  Under access settings, choose **Specific people and groups** and add only that member.
-3.  Repeat for each member you want to cap, or create one budget for a team and add those members to it.
-
-The member's workbooks and workflows can only be assigned to budgets they have access to. When a member creates a workflow:
-
--   **They have access to one budget:** Clay assigns that budget to the workflow automatically.
--   **They have access to more than one budget:** they can pick which budget the workflow uses.
--   **They have access to no budgets:** the workflow is created with no budget and spends from your workspace's credits.
-
-Each member needs access to at least one budget for the per-member cap to cover their new workflows. A budget set to **Anyone in the workspace** is open to every member, so it doesn't act as a per-person cap. When a budget runs out of credits, runs in the workbooks and workflows assigned to it stop until a workspace admin raises the limit or resets the spend.
-
-For members who use Clay through AI tools such as Claude or ChatGPT over MCP, workspace admins can also set a per-user credit limit on the `MCP` page in the left sidebar. See [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## Email alerts for budget usage
 
