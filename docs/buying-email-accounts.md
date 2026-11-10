@@ -49,6 +49,28 @@ Clay does not offer partial refunds for domains cancelled before the end of thei
 
 Deleting a single email account from a domain will delete **all** email accounts in that domain. Proceed with caution.
 
+Purchased email accounts are provisioned as a single unit per domain, so you can't remove just one mailbox from a domain you bought in Clay. When you delete any one account, Clay warns you before anything is removed. The **Delete email account and related accounts?** dialog says that all SmartSender accounts from the same domain will be deleted together and shows the total number of accounts. To continue, you must check a box confirming that the accounts will be deleted, that the domain will be released, and that this is unrecoverable.
+
+After you confirm the deletion:
+
+-   All email accounts on that domain are removed from `Sequencer → Email Accounts`.
+-   The domain's order in the `Account orders` tab (`Sequencer → Account orders`) shows the **Canceled** status.
+-   No credits are refunded for the remaining subscription period.
+
+### **Can I restore or reactivate a purchased domain that shows "Canceled"?**
+
+No. Once a purchased domain's order shows **Canceled** in `Sequencer → Account orders`, its email accounts are permanently deleted. Neither you nor Clay support can reactivate or restore the domain or its email accounts. To get sending capacity back, buy a new domain through the **Buy email accounts** flow, or connect your own email accounts using Google OAuth, Microsoft Outlook OAuth, or SMTP.
+
+### **What should I do with a purchased email account when a team member leaves?**
+
+Don't delete the purchased email account when a team member leaves. Deleting one purchased email account deletes every email account on that domain and cancels the domain. Keep the mailbox and change its sender details instead:
+
+1.  Go to `Sequencer → Email Accounts` and find the team member's mailbox.
+2.  Click the **⋯** button on the far right of the account row and select **Update sender variables**.
+3.  Update the **From name** (the sender display name recipients see) and the **Signature** for the person who will use the mailbox, then click **Save**.
+
+The email address itself can't be changed. If you need an address with a different name in it, buy a new domain and choose the email prefix you want during checkout.
+
 ### **How are credit costs calculated?**
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
