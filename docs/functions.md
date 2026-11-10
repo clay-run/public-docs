@@ -505,7 +505,7 @@ To duplicate a function, open the function from your Clay homepage or directly i
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
-Yes, on supported plans. The `MCP for reps` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Yes. To enable a function for MCP tools like ChatGPT, Claude, or Glean, open the function's settings and check `Users` in the `Integrations` section, then set a `Routine name` and `Description`. If your reps have the **Sales Rep** permission type, also check `Sales rep` under `Roles`. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings#enabling-a-function-or-workflow-for-mcp).
 
 ### Can I call a function programmatically via the API?
 
