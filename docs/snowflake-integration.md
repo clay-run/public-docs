@@ -156,7 +156,9 @@ If a batch fails, the error message will include **"Note: Try reducing the batch
 
 ### `Action` Update row
 
-Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
+Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If no row matches, no row is created or changed.
+
+The Update row action updates every row that matches. If your table has duplicates — for example, the same email appears in 3 rows — all 3 rows are updated.
 
 **Inputs**
 
@@ -170,6 +172,18 @@ Update a row in a Snowflake database using a single field as a unique identifier
 **Batching**
 
 The Update row action also supports **Run in batches** mode with the same behavior: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
+
+**Checking how many rows were updated**
+
+The Update row action shows how many Snowflake rows it changed, so you can confirm in Clay whether data was written back:
+
+-   `✅ Updated N rows` — the update matched and changed N rows.
+-   `⚠️ Completed, 0 rows matched` — the update ran without an error, but no row matched, so nothing was written.
+
+The action also returns two outputs you can reference in later columns or workflow steps:
+
+-   `rowsUpdated` — the number of rows the update changed.
+-   `updateCompleted` — `true` when at least one row was updated, `false` when no row matched.
 
 ### Run settings
 

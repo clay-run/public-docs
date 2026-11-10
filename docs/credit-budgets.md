@@ -23,6 +23,8 @@ A **budget** is a named credit pool with:
 
 When a workbook (or other resource) is assigned to a budget, all credit-consuming actions in that resource count against the budget's balance. If a budget runs out of credits, processing in assigned resources stops until an admin increases the limit or resets the spend.
 
+**Credit budgets limit Data Credits only.** Actions aren't counted against a budget and aren't capped by one — the budget screen states "Budgets limit data credits only. Actions are not capped by budgets." A workbook or workflow assigned to a budget keeps using Actions even while its Data Credit spend stays under the budget's limit. Budgets for Actions aren't available yet; to see Action usage, check the `Actions used` column at `Settings` → `Usage`.
+
 **Function calls and budget attribution:** When a workbook assigned to a budget calls a Function, the credits consumed by that Function run count against the **calling workbook's budget** — not against the Function itself or the Function creator's workbook. For example, if a marketing team's workbook calls a Function built by RevOps, those credits count against the marketing workbook's budget. This means that assigning a user's workbook to a budget automatically captures all spend from that workbook, including any Function calls it makes. Note: this attribution is one level deep — if a Function calls another Function, the inner Function's spend is attributed to the outer Function rather than the original calling workbook.
 
 ## Creating a budget
