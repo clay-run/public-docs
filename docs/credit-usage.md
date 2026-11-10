@@ -240,6 +240,27 @@ To safely test a new table before committing credits at scale:
 
 See [Ways to save Clay credits](clay-credit-conservation.md) for the full recommended testing workflow.
 
+### Credits drained after a scheduled source import (no phantom table or enrichment)
+
+If your credits seem to drain as soon as you receive them and you suspect a "phantom" table or enrichment running in the background, the most common cause is a **scheduled source import** adding new rows to a table whose enrichment columns have auto-run on. Each scheduled run of a source, such as a daily **Import objects from HubSpot** source, adds the new records it finds as rows. Every enrichment, AI, or function column with auto-run on then runs automatically on each of those new rows and charges credits for each row.
+
+Scheduled source runs have no row cap on auto-run. If a daily import adds 9,000 new rows, auto-run columns run on all 9,000 rows. The 10-row auto-run limit applies only when a People, Companies, or Jobs search source is first added to an existing table (see [Auto-run](auto-run.md)).
+
+**To confirm that a scheduled import caused the credit spend:**
+
+1.  In the table, click **History** in the bottom-right corner and select **Usage history**.
+2.  Select the **Column** view and set **When** to the dates when your credits dropped. Each column is listed with its cell count and data credits. Columns you have since deleted still appear in this list with **(deleted)** after the column name, so deleting a column does not hide or reverse the credits it already spent.
+3.  Click the `⛭` icon in the bottom-right corner of the table to open **Table Settings**. Under **Source settings** → **Import schedule**, click **View import history**.
+4.  The **Source history** modal lists each source run with its **Status**, **Rows imported**, **Rows added**, and **Date**. A run with a large **Rows added** count on the same date as the credit drop is what triggered the auto-run columns. Source run history is available from March 28, 2026 onwards.
+
+**To stop a scheduled import from spending credits again**, use one or more of these options:
+
+-   **Turn off auto-run on the enrichment columns:** click the column name → **Edit column** → under **Run settings**, toggle **Auto-run** off → **Save**. The scheduled import still adds rows, but that column doesn't run on them until you trigger it manually.
+-   **Add a run condition:** in the column's **Run settings**, check **Add run condition** ("Only run if this formula resolves to true") and enter a formula. The column then runs only on rows where the formula is true. See [Conditional runs](conditional-runs.md).
+-   **Stop the scheduled import:** turning off auto-run does not stop a scheduled source. The source keeps adding rows on its schedule. To stop it, open **Table Settings** → **Source settings** → **Import schedule** and click the source. Then, under **Run this source**, switch from **On a schedule** to **Manually**. See [Scheduled sources](scheduled-sources.md).
+
+Credits used by auto-run columns that ran as configured are generally not refunded. See [Accidental credit spend](#accidental-credit-spend).
+
 ### Credits consumed while auto-run is off
 
 If table-level auto-run is disabled but credits are still being consumed, the most likely causes are manual or team-triggered actions:
