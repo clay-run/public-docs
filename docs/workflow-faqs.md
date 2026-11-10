@@ -1,7 +1,7 @@
 ---
 title: Workflow FAQs
 description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, list handling, and how Workflows works with Audiences and tables."
-last_synced: 2026-11-10T19:03:47.302Z
+last_synced: 2026-11-10T19:37:55.536Z
 ---
 
 # Workflow FAQs
@@ -50,7 +50,7 @@ A few errors have recognizable causes. A tool-not-found error usually means the 
 
 Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
 
-There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
+There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception. The `Claygent` option is rolling out gradually, so you may not see it in your workspace yet.
 
 ### Can a step run once for each item in a list?
 
