@@ -224,6 +224,8 @@ Personal emails give much higher match rates because most people sign up for Met
 3.  **First name + Last name + Country** — supplemental
 4.  **Work email** — use as a fallback
 
+**Google Ads name matching needs a zip code.** For Google Ads, Clay sends a name-based identifier for a contact only when first name, last name, country, and zip code are all mapped and filled in for that contact. If any of the four is missing, Clay skips the name-based identifier for that contact, and Google can still match the contact on email or phone number if those are mapped.
+
 To find personal emails for your contacts, use the `Personal Email` waterfall or the `Hashed Email for Ads` waterfall in a regular Clay table before syncing.
 
 ### **How does the `Hashed Email for Ads` waterfall work?**
