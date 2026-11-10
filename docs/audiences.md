@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-10-08T17:37:34.526Z
+last_synced: 2026-11-10T19:44:58.344Z
 ---
 
 # Audiences
@@ -670,6 +670,13 @@ Manual triggers and CSV Upload triggers do not have a per-trigger Pause option. 
 There is no single button to make an entire workflow "not live." To stop a workflow from processing new runs, pause each active trigger individually using the steps above.
 
 ### **Syncing audiences to ad platforms**
+
+**The Send panel:** Clicking `Send` on a saved Audiences segment opens the `Send` panel, which lists the exports already set up from that segment. Click `Export action` at the bottom of the panel to choose one of the following export options (when only one option is available in your workspace, the button shows that option's name instead of `Export action`):
+
+-   `Send to workflow` — connects the segment to a new or existing workflow. See [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
+-   `Add to workbook` — sends the segment to a Clay table. This option isn't available in every workspace.
+-   `Sync to ad platforms` — syncs the segment to an ad platform, described below.
+-   `Export to email sequence` — People segments only. Creates a new campaign in Sequencer, Clay's cold email tool, with the segment as its leads, and opens the campaign. Available on Launch, Growth, and Enterprise plans.
 
 When you have a segment ready, you can sync it to an ad platform to run account-based advertising across your highest-fit contacts and companies.
 
