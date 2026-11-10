@@ -1237,8 +1237,12 @@ Audiences doesn't have a CSV or Excel download button. A People or Companies lis
 **To export an audience segment to CSV:**
 
 1.  Open the segment in Audiences and click `Enrich`.
-2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+2.  Create an enrichment table from the segment. You don't need to add enrichment columns, so creating the table doesn't use credits.
+    -   If the enrichment panel has a **+** button at the top, click it and select **Create enrichment table**. The **Add enrichment** button in the middle of the "No enrichments yet" empty state creates an enrichment workflow, not a table — use the **+** button at the top instead.
+    -   If the enrichment panel shows an **Add enrichment table** button, click it.
+3.  Open the new table and press **Cmd+E** (Mac) or **Ctrl+E** (Windows) to open the table's enrichment panel. Click the **Export** tab, then click **Download CSV**. Enrichment tables created from a segment don't have a **Tools** button in the toolbar, so use the keyboard shortcut. The CSV includes every row in the table, whether or not any rows are selected.
+
+**If Create enrichment table doesn't appear in the + menu:** in workspaces that use enrichment workflows only, the **+** menu shows only **Create enrichment workflow**, and an enrichment table can't be created from the segment.
 
 Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
 
