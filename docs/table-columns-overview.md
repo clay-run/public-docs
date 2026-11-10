@@ -173,13 +173,24 @@ To map an endpoint from an enrichment to an existing column:
 
 If Clay blocks the save with a **Circular dependency error**, or you see a **"Dag is cyclical"** error (status 400) while a column is updating, it means two or more columns reference each other — directly or indirectly — creating a loop. Clay blocks the update or save to prevent an infinite dependency cycle.
 
+The Circular dependency error dialog lists the column(s) you just added as inputs that already depend on the column you're editing. Clicking **I understand these changes were not saved.** closes the dialog, and your edits to the column aren't saved. Run conditions count as inputs too: referencing a downstream column in a column's run condition can also trigger the Circular dependency error.
+
 A common example: you have a "Postal Code" column and a "Postal Code (AI Fallback)" column whose formula reads from "Postal Code." If you then try to update "Postal Code" to pull from "Postal Code (AI Fallback)," the cycle closes and Clay returns this error.
+
+**CRM example (adding a field mapping to a HubSpot column):** your Mobile Phone waterfall uses the `email` output of a HubSpot **Update object** column as its Personal Email input. If you then edit the HubSpot column to map Mobile Phone into it, the HubSpot column would depend on Mobile Phone and Mobile Phone on the HubSpot column, so Clay shows the Circular dependency error and lists the **Mobile Phone** column. To fix it, change the waterfall's Personal Email input to read from the original email column in your table (for example, your Work Email column) instead of the HubSpot column's output, then add the Mobile Phone mapping to the HubSpot column.
 
 **How to fix it:**
 
 -   Map the enrichment result to a **new column** instead of the existing destination.
 -   Or, open the enrichment(s) that reference the destination column as an input and remove that reference, then re-map.
 -   **Or, use a Merge column** if your goal is to fill blank values in a primary column using a fallback AI column. Create a new [Merge column](#merge-columns) that lists the primary column first and the fallback column second — it returns the first non-empty value per row, so rows with existing data are unchanged and blank rows fall back to the AI-generated value. Make sure neither of the two input columns references the new Merge column back, so the dependency graph stays acyclic.
+
+**Fixing a circular dependency without re-running rows or spending credits:** when you change a waterfall's or enrichment's input to break the loop, you don't need to re-run the column.
+
+1.  Open the waterfall or enrichment column and change the input.
+2.  Open the **Save** dropdown and choose **Save and don't run**.
+
+Existing results stay as they are, no rows run, and no credits are spent. Rows that run later (for example new rows, or rows re-run by auto-run) use the new input.
 
 To visualize the full dependency chain and identify where the loop originates, open **Graph view**: click the view selector dropdown in your table toolbar and choose **Graph view**.
 
