@@ -68,8 +68,13 @@ Clay's webhook URL works with any platform that can send HTTP POST requests in J
 ### Send data from a middleware tool into Clay
 
 1. In your Clay workbook, create a table using **Monitor webhook** as the source (see [Creating a table with webhook](#creating-a-table-with-webhook)).
-2. Copy the webhook URL Clay generates.
-3. In your middleware tool, configure your flow or recipe to POST JSON data to that Clay webhook URL.
+2. Copy the webhook URL Clay generates. If you added an authentication token, copy it too — the token is shown only once.
+3. In your middleware tool, configure your flow or recipe to send an HTTP POST request with a JSON body to that Clay webhook URL, including the header `Content-Type: application/json`. In Workato, for example, use an HTTP POST step.
+4. If your webhook has an authentication token, add it to the same request as a header named `x-clay-webhook-auth`.
+
+Each POST creates one new row in the Clay table. If Auto-run is on for the table, its enrichment columns run on the new row automatically.
+
+**Do I need a Clay API key to send data from Workato or another middleware tool into a Clay table?** No. Clay webhook URLs don't use a Clay API key — neither the **API key (legacy)** from `Settings` → `Account` → `API key (legacy)` nor a key created on the **API and CLI** page. The only authentication a Clay webhook uses is its optional `x-clay-webhook-auth` token. If you're trying to trigger a Clay table from a middleware tool with an API key, send the data to the table's webhook URL as described in the steps above instead.
 
 ### Send enriched data from Clay to a middleware tool
 

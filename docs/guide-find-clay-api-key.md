@@ -1,21 +1,16 @@
 ---
 title: Find your Clay API key
-description: Create a Clay API key via the API and CLI page or the Clay CLI to enable Clay-native integrations.
+description: Create a Clay API key via the API and CLI page or the Clay CLI, and learn how it differs from the legacy personal key in Settings → Account.
 last_synced: 2026-04-26T01:40:06.072Z
 ---
 
 # Find your Clay API key
 
-Utilize your Clay-native enrichments with your personal key.
+Create a Clay API key to connect to Clay from outside the app — for example, to call Clay's Public HTTP API.
 
-A Clay API key is required for all Clay-native integrations.
+To get started, you'll need a Clay account.
 
-To get started, you'll need a Clay account and your API key.
-
-Your Clay API key enables you to:
-
--   Look up a single row in another table
--   Look up multiple rows in another table
+You don't need a Clay API key for in-table features such as looking up a single row or multiple rows in another table, or writing to another table. Those columns run without an API key.
 
 ### Find your Clay API key
 
@@ -45,7 +40,9 @@ The **API key (legacy)** tab in `Settings` → `Account` is a separate personal 
 
 ### Using your API key with external tools
 
-This personal API key is designed for use **within Clay** — specifically for Clay-native integrations such as cross-table lookups. It is not supported for use with external CLI tools, custom MCP clients, or direct REST API calls made from outside of Clay. If you attempt to use it in those contexts, you will receive an authentication error; this is expected behavior.
+The **API key (legacy)** in `Settings` → `Account` → `API key (legacy)` is a personal single-token key used by some older integrations, such as Zapier, and early API automations. Clay's Public HTTP API doesn't accept the legacy key — if you use it there, you'll receive an authentication error; this is expected behavior. The legacy key also isn't used by in-table features such as looking up rows in another table.
+
+**Sending data into a Clay table from Workato, Make, n8n, or another tool?** Use the table's webhook instead of an API key. Clay webhooks don't use an API key — only an optional `x-clay-webhook-auth` token. See [Connecting middleware tools](webhook-integration-guide.md#connecting-middleware-tools) for the steps.
 
 If you need programmatic access to Clay from an external tool or CLI, Clay offers a Public HTTP API (`api.clay.com`) that uses a separate workspace-scoped API key — this is distinct from the personal key described above. The Public HTTP API is in public beta and available on all plans. To get a workspace-scoped key, follow the setup instructions at [developers.clay.com](https://developers.clay.com) — the Clay agent plugin creates the key for you in one step, or open **API and CLI** in the left sidebar, select the **API keys** tab, and click **Add API key**.
 
