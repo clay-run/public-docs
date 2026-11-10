@@ -20,7 +20,7 @@ Credit controls and usage monitoring are available on all modern paid plans (Lau
 
 Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
-The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
+The `Users` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay), which makes a function available in MCP clients, is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
 Glean integration is available on Enterprise plans only.
 
@@ -29,10 +29,36 @@ Glean integration is available on Enterprise plans only.
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
+2.  Click the function to open its settings, click `Configure` next to **Integrations**, and check `Users`. The `Users` option makes the function available through the Clay public API, the CLI, and MCP clients like ChatGPT and Claude.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
+
+## Making only some Clay Managed functions available in MCP
+
+Clay Managed functions are prebuilt functions that Clay maintains and updates for you. Workspace admins can choose which Clay Managed functions reps can use from ChatGPT, Claude, and other MCP clients. The `MCP` page, including the toggle below, is currently in beta.
+
+The **Hide default functions from MCP** toggle on the `MCP` page is all-or-nothing. It's off by default. When it's on:
+
+-   Every Clay Managed function is hidden from MCP clients, whatever that function's own `Users` setting is.
+-   Clay's default enrichment data points (email, website traffic, tech stack, open jobs, latest funding) are refused if an MCP client tries to add them.
+-   The functions stay in your workspace and on the `Functions` page. Only MCP access changes.
+-   Search tools, like contact and company search, stay available.
+
+To make only some Clay Managed functions available in MCP, turn the toggle off and hide the functions you don't want one by one:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar and turn off **Hide default functions from MCP**.
+2.  Go to the `Functions` tab and open a Clay Managed function you don't want reps to use in MCP.
+3.  Click `Configure` next to **Integrations**.
+4.  In the **Routines** step, uncheck `Users` under **Products**, then click `Continue` through the remaining steps to save.
+5.  Repeat for each Clay Managed function you want to hide. Leave `Users` checked on the Clay Managed functions you want reps to use.
+
+Changing the `Users` setting only changes where a function is available. The function stays Clay Managed and keeps getting Clay's updates, so you don't need to copy it. A Clay Managed function is detached from Clay's updates only if you confirm the **Detach from Clay updates?** prompt, which appears when you try to edit its steps (see [What happens when I try to edit a Clay-managed function?](https://university.clay.com/docs/functions#what-happens-when-i-try-to-edit-a-clay-managed-function)).
+
+Keep in mind:
+
+-   `Users` covers the Clay public API and CLI as well as MCP. Unchecking `Users` hides the function from all three.
+-   New Clay Managed functions that Clay releases later have `Users` checked by default. Uncheck `Users` on any new ones you don't want available in MCP.
 
 ## How Actions are spent through MCP
 
@@ -82,7 +108,7 @@ The native Clay MCP contact enrichment — including the `search-contacts` and `
 
 **To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
 
-The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
+The `Users` option on Functions requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
@@ -157,11 +183,11 @@ To apply the same ICP check every time a rep uses Clay from Claude, put your ICP
 
 1.  In the `Functions` tab, build a Function that holds your fixed ICP qualification logic.
 2.  Give the Function outputs such as `is_icp`, `icp_score`, and `qualification_reason`. When a rep runs the Function from Claude, these output fields come back in the conversation.
-3.  Check `MCP for reps` on the Function so reps can run it from Claude, ChatGPT, or Glean (see [Enabling a function for MCP](#enabling-a-function-for-mcp)).
+3.  Click `Configure` next to **Integrations** on the Function and check `Users` so reps can run it from Claude, ChatGPT, or Glean (see [Enabling a function for MCP](#enabling-a-function-for-mcp)).
 4.  Have reps run the ICP Function first, and only go on to enrichment or outreach when `is_icp` is true.
 5.  For reps who only use Clay through AI tools, assign the **Sales Rep** role (currently in beta — contact support to request access for your workspace). This role gives them MCP access without access to tables, workbooks, or other workspace resources (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
 
-**Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
+**Limitation:** Checking `Users` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and companies straight from Claude, without going through your ICP Function. Turning on **Hide default functions from MCP** hides Clay Managed functions and refuses Clay's default data points (email, website traffic, tech stack, open jobs, latest funding), but search tools stay available, and Clay has no setting that limits a rep to only specific Functions (see [Making only some Clay Managed functions available in MCP](#making-only-some-clay-managed-functions-available-in-mcp)). To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
 
 ### When do credits reset?
 
