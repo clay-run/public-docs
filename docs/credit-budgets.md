@@ -66,11 +66,10 @@ You can assign a budget to a workflow in any of these ways:
 -   **When you create the workflow:** pick a budget as part of creating the workflow.
 -   **From workflow settings:** open the workflow's settings, find the **Budget** field, and select the budget to assign. Use this to change a workflow's budget later.
 -   **Bulk assignment from the Workflows list:** select one or more workflows (up to 100 at a time), choose **Assign budget**, and select the target budget.
--   **When you duplicate a workflow:** if your workspace has more than one budget, the **Duplicate workflow** dialog asks you to choose a budget for the copy. The dialog doesn't default to the original workflow's budget, so check the selection before you confirm. With one budget, the copy is assigned to it automatically. With no budgets, the copy is created without one.
 
 **What a workflow budget pays for:** Everything a workflow calls spends that workflow's budget — including its own steps, plus any table functions and workflow functions the workflow calls.
 
-**When a workflow's budget runs out of Data Credits:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
+**When a workflow's budget runs out:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
 
 ### Setting workflow budgets from the Clay CLI and Clay's Agent
 
