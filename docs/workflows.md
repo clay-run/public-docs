@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-10T19:03:46.197Z
 ---
 
 # Workflows
@@ -40,7 +40,7 @@ Workflows is the Clay surface built for this; tables can't be created through th
 
 The empty canvas offers three ways in — `Start with a trigger`, `Start with segment`, or `Import a table` to scaffold the graph from a table's schema. From there, open the node palette with `Add` to pick from `Triggers` and `Nodes`, or drag out from a node's handle, then connect steps by drawing an edge between them.
 
-**Who can do what.** Workspace members can create, edit, and run workflows, and deleting one is admin-only. `Integrations` in workflow settings is the section that exposes a workflow as a routine, so it can be called from `API & CLI` or as a tool inside a Claygent. Everyone can see that section, but only workspace admins and editors can change what it exposes.
+**Who can do what.** Workspace members can create, edit, and run workflows, and deleting one is admin-only. `Integrations` in workflow settings is the section that exposes a workflow as a routine, so it can be called from the Clay API, CLI, and MCP clients or as a tool inside a Claygent. Everyone can see that section, but only workspace admins and editors can change what it exposes.
 
 ## Triggers
 
@@ -225,7 +225,7 @@ Clay autosaves the whole graph — nodes, edges, prompts, code, and tools — as
 What reaches your live triggers is a version you publish.
 
 1.  Build and test freely. While a published workflow has unpublished changes, the badge next to the version selector reads `Edit` rather than `Live`, and a trigger you haven't published sits in `Draft` and won't fire.
-2.  When it's ready, click `Publish`. On `Ready to go live?`, name the version in `Version name` — Clay suggests the next number, like `V4` — and confirm with `Publish`. This sets every trigger on the workflow live at that version. If `Publish` is unavailable, the workflow has no trigger yet.
+2.  When it's ready, click `Publish`. On `Ready to go live?`, name the version in `Version name` — Clay suggests the next number, like `V4` — and confirm with `Publish`. This moves the workflow's triggers to that version, and any trigger in `Draft` goes live. If `Publish` is unavailable, the workflow has no trigger yet.
 3.  For a workflow on a segment, check `Run on all members now` to also run it across the segment's current members. Clay shows how many records that covers and a credit estimate for the backfill before you confirm.
 
 The `Versions` dropdown in the topbar lists published versions by name or number alongside when each went live. For the full picture, open workflow settings and click `History` to see `Workflow history`, which shows published versions with their autosaves underneath.
@@ -236,7 +236,23 @@ From any version there you can:
 -   `Create new workflow` to spin it off rather than replace what you have.
 -   `Copy version ID`.
 
-Restoring rewrites your working copy, so it moves the workflow back into `Edit` until you publish again. Pausing and resuming a single trigger stays available independently, and a later publish resumes it.
+Restoring rewrites your working copy, so it moves the workflow back into `Edit` until you publish again.
+
+### Pausing a trigger
+
+Pausing stops a single trigger from starting runs. The workflow stays published and its other triggers keep running, so to stop a whole workflow from starting runs on its own, pause each of its triggers.
+
+1.  Click the trigger node on the canvas to open its panel, which has a card for each trigger on the node.
+2.  Click `Pause` at the bottom of the trigger's card.
+
+Once a trigger is paused:
+
+-   The card's status badge changes from `Live` to `Paused`, and the trigger node on the canvas shows a count like `1 paused` once none of its triggers are live.
+-   Runs from that trigger that are still in progress pause too.
+-   The trigger stays paused through later publishes, and runs the newest published version once you resume it.
+-   `Pause` becomes `Resume`, which starts new runs again. To continue the runs it paused from where they stopped, check `Also resume all paused runs from this trigger` as you resume.
+
+A `Segment on a schedule` trigger set to run its members in batches works through the segment one batch per run, and pauses itself once every member has been processed. Its badge reads `Completed` rather than `Paused`, and its card offers a `Restart` button to work through the segment again from the beginning.
 
 ## Credits and performance
 
