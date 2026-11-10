@@ -505,7 +505,7 @@ To duplicate a function, open the function from your Clay homepage or directly i
 
 ### Can a function be enabled for MCP tools like ChatGPT, Claude, or Glean?
 
-Yes, on supported plans. The `MCP for reps` option in the function editor panel is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the toggle does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Yes, on supported plans. The `Users` option in the function's **Integrations** settings (click `Configure` next to **Integrations**) makes the function available through the Clay public API, the CLI, and MCP clients. It's available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans. On other legacy plans (such as legacy Pro), the option does not appear in the function settings — if you do not see it, your workspace plan does not include this capability. Upgrading to a modern plan is required to enable custom Functions for MCP. For setup instructions, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ### Can I call a function programmatically via the API?
 
@@ -520,7 +520,7 @@ To enable API access and find your Routine ID:
 1.  Go to **Functions** on your Clay homepage and open the function.
 2.  If you see an "Editing function" toolbar or an orange banner reading "Changes in Edit Mode will not go live until you review and publish," click **Exit edit mode** at the bottom of the editor.
 3.  In the settings panel on the right, scroll to the **Integrations** section.
-4.  Check **API & CLI** — this exposes the function through the Clay public API and CLI. Without this enabled, API calls to the function return a 403.
+4.  Click **Configure** next to **Integrations** and check **Users** — this exposes the function through the Clay public API, the CLI, and MCP clients like ChatGPT. Without this enabled, API calls to the function return a 403.
 5.  Copy the **Routine ID** — it has the format `function:t_...`. Use this as `{routine_id}` in API calls.
 
 **Calling the function via API:**
@@ -646,6 +646,8 @@ Clay-managed functions receive automatic updates from Clay in the background —
 **When you need to detach:**
 
 Some customizations require entering edit mode — for example, adding a [run condition](conditional-runs.md) so the function only runs when a particular column is already populated. In those cases, detaching first is required.
+
+**Changing where a Clay-managed function is available doesn't detach it.** Unchecking or checking `Users` under **Integrations** only changes whether the function is available through the Clay public API, the CLI, and MCP. The function keeps receiving Clay's updates. See [Making only some Clay Managed functions available in MCP](https://university.clay.com/docs/mcp-settings#making-only-some-clay-managed-functions-available-in-mcp).
 
 **Is there a changelog for Clay-managed function updates?**
 
