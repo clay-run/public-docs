@@ -98,6 +98,18 @@ The limit is one running total across the workflow's runs, so spend keeps buildi
 
 When a run reaches the limit, it fails, and opening it shows `The workflow paying for this run has reached its credit limit. A workspace admin can increase it.` For which runs count against the limit, see [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
 
+### Can I get the credits a run used in the webhook response?
+
+No. When you start a workflow by sending a request to its webhook, the response confirms that Clay received the request. It doesn't include the credits or actions the run used.
+
+To get credit usage for each workflow run in your own system, use the workflow runs query endpoint of Clay's Public HTTP API, which is currently in beta:
+
+1.  Create a workspace API key: open **API and CLI** in the left sidebar (under **Orchestration**), select the **API keys** tab, and click **Add API key**.
+2.  Send `POST https://api.clay.com/public/v0/workflows/runs/query` with the key in the `clay-api-key` request header. For the query syntax, call `GET https://api.clay.com/public/v0/workflows/runs/query/reference`.
+3.  Each run in the response includes `data_credits_used` (data credits) and `action_credits_used` (actions) for that run.
+
+To review workflow spend in Clay instead, go to `Settings` → `Usage` and open the **Workflows** tab. It shows credit spend per workflow for the date range you choose. Click the chart icon next to a workflow to see its spend by run. See [Credit usage](https://university.clay.com/docs/credit-usage).
+
 ### Is every enrichment, source, and signal available in Workflows?
 
 The action library is at parity, so anything you can run as an enrichment in a table you can run in a `Run enrichment` step. Table data sources and signals are still being brought across, so a few aren't in Workflows yet, and which actions you see depends on your plan exactly as it does in a table.
