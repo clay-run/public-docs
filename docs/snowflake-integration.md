@@ -274,3 +274,27 @@ After your query runs, Clay displays the columns it pulled in and lets you map t
 
 -   Click `Auto-map` to automatically match Snowflake columns to existing Clay fields.
 -   To add additional mappings, click `+ Add mapping`. If the destination Clay field doesn't exist yet, select `Create field`, choose a field type (Text, Email, URL, Number, Date, or Checkbox), and name it.
+
+## Syncing an audience to Snowflake
+
+### How do I sync an audience to Snowflake without using actions on every record each time?
+
+Audiences doesn't have a native Snowflake export or destination. The Snowflake integration in Audiences only imports data from Snowflake into Clay. It doesn't push audience records back to Snowflake. You can keep a Snowflake table updated from an audience in two ways.
+
+**Option 1: Continuous one-way sync through a Clay table (uses actions only for new and changed records)**
+
+This option uses the Snowflake **Create or update row** action, which requires an Enterprise plan.
+
+1.  Send the audience segment to a Clay table (**Send** → **Add to workbook**). The table stays connected to the segment. New records that join the segment, and changes to records already in it, flow into the table automatically.
+2.  In the table, click `Add enrichment`, search for `Snowflake`, and select **Create or update row**.
+3.  Set **Lookup matching field** to a stable, unique ID, such as the record ID, domain, or email. If a row with that value already exists in your Snowflake table, Clay updates it. Otherwise Clay inserts a new row.
+4.  Leave auto-run on for the column. With auto-run on, Clay re-runs the Create or update row column for a row only when that column's input values change. Rows whose inputs haven't changed aren't sent to Snowflake again and don't use actions again.
+5.  (Optional) Click **Add run condition** in the column's run settings to limit which rows are written to Snowflake.
+
+**Cost of the audience-to-Snowflake sync:** Create or update row uses 1 action for each row it runs on. The first run backfills every record in the table. For a 300,000-record audience, that's about 300,000 actions, one time. After that, you only use actions for records that are new or whose mapped values changed. For example, if 2,000 records join or change in a week, the sync uses about 2,000 actions that week.
+
+Turning on **Run in batches** in the column's run settings sends up to 1,000 rows to Snowflake in each request. Batching makes large writes faster, but each row still uses 1 action. See [Create or update row (upsert)](#action-create-or-update-row-upsert) for batch troubleshooting.
+
+**Option 2: CSV export (no actions)**
+
+Downloading a Clay table as CSV doesn't use actions or Data Credits. Put the audience segment into a Clay table, download it with **Tools** → **Export** → **Download CSV**, then load the file into Snowflake with your own data-loading process. This is a manual export, not a live sync, so you'll need to repeat it to pick up new or changed records. See [How do I export an audience segment to CSV or Excel?](audiences.md#how-do-i-export-an-audience-segment-to-csv-or-excel) for the steps.
