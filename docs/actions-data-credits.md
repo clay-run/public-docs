@@ -2,7 +2,7 @@
 title: Actions & Data Credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-11-10T18:31:59.544Z
 ---
 
 # Actions & Data Credits
@@ -205,6 +205,22 @@ Once enabled, all Actions run within that workbook will contribute to the workbo
 **Note:** Only workspace admins can modify workbook Data Credit limits. Editors and Viewers cannot manage Data Credit limits, even if they have editing access to the workbook.
 
 For complete documentation on credit spend limits—including default workspace limits, notifications, and behavior when limits are reached—see the [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
+
+### Workflow credit limits
+
+_Workflow credit limits are available on Enterprise plans._
+
+A credit limit can also be set on an individual workflow, capping the Data Credits that workflow's runs can spend.
+
+**How to set a workflow credit limit:**
+
+1.  Open the workflow and go to `Workflow settings`.
+2.  Under `Credit limit`, switch the setting on and enter the number of credits in the `Credit limit` field.
+3.  Click `Save changes`.
+
+Spend builds up across that workflow's runs, and `Credits spent` in the same section shows the running total. When the limit is reached, credit-consuming steps stop and the run reports that the workflow has reached its limit — the workflow itself stays editable. `Reset spend` returns the counter to zero without changing the limit; click `Save changes` afterward to apply the reset.
+
+**Note: A workflow started from a Clay table spends against that table's limit rather than the workflow's.** Spend from a function or subworkflow the workflow calls counts against the workflow that started the run.
 
 ### Credit budgets (Enterprise, open beta)
 
