@@ -45,7 +45,7 @@ Enrichments configured with `Auto-enrich new records` enabled automatically proc
 
 ### **How does matching work in Audiences?**
 
-When you import a source, you choose a single identifier to match on — it's not a prioritized list that Clay falls through automatically. You pick one and Clay deduplicates and merges on that. For people records, you can match on **email**, **phone number**, **professional profile URL**, **Twitter handle**, or **external record ID**. For company records, you can match on **domain**, **professional profile URL**, **Twitter handle**, **exact company name**, or **external record ID**.
+When you import a source, you choose a single identifier to match on — it's not a prioritized list that Clay falls through automatically. You pick one and Clay deduplicates and merges on that. For people records, you can match on **email**, **phone number**, **professional profile URL**, or **external record ID**. For company records, you can match on **domain**, **professional profile URL**, **exact company name**, or **external record ID**.
 
 When a match is found, Clay merges those records into a single unified profile. The more of these fields you map when importing a source, the more accurate your overall matching will be.
 
