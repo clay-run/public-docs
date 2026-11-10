@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-10-08T17:37:34.526Z
+last_synced: 2026-11-10T18:32:04.704Z
 ---
 
 # Audiences
@@ -37,14 +37,11 @@ To change someone's role, go to **Settings** → **Team** and use the dropdown n
 
 To view your full audience, click `People` or `Companies` in the left sidebar.
 
-To add a data source, use the controls shown in your workspace:
+The `All People` and `All Companies` pages in the left sidebar each have three tabs: `Records`, `Sources`, and `Exports`. You add and manage imports on `Sources`, and exports on `Exports`.
 
--   **If you see Records, Sources, and Exports tabs:** open **All People** or **All Companies**, select **Sources**, then click **Add source**.
--   **If you see Add data in the top right:** click **Add data** → **Add Source**.
+To add a data source, open `All People` or `All Companies`, go to the `Sources` tab, and click `Add source`. This opens `Browse sources`, which lists everything you can import from. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot open their own source settings panel instead.
 
-The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot open their own source settings panel instead.
-
-**Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
+**Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access, including CSV and Clay table imports. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
 
 You can import data from:
 
@@ -65,7 +62,7 @@ The Salesforce import flow in Audiences has been redesigned. You can import **al
 
 **Step 1: Connect your Salesforce account**
 
-1.  Click `Add data` → `Add Source` → select your [**Salesforce integration**](https://university.clay.com/docs/salesforce-integration-overview).
+1.  On the `Sources` tab, click `Add source` → [**Salesforce**](https://university.clay.com/docs/salesforce-integration-overview).
     -   If you don't see a Salesforce integration listed, contact your Growth Strategist.
 2.  If no Salesforce account is connected yet, select an account from the dropdown or click `+ Add account` to authenticate one. If your workspace already has a Salesforce account connected in Audiences, the panel shows it as a read-only **Connected Salesforce account** field with **Add records** and **View settings** buttons — **Audiences uses one connected Salesforce account at a time**. You can add multiple imports (different object types or SOQL subsets) from that one connected org, but you cannot add a second Salesforce account alongside it. To use a different Salesforce account instead, disconnect the current one first — see [How do I switch the Salesforce account connected to Audiences?](#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production).
 3.  Once connected, you land on the Salesforce source settings page.
@@ -149,7 +146,7 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 **To add a record subset import:**
 
-1.  Click `Add data` → `Add Source` → select your Salesforce integration.
+1.  On the `Sources` tab, click `Add source` → `Salesforce`.
 2.  Select the Salesforce **object type** you want to import (Contact, Account, Lead, or Opportunity).
 3.  Under **Record selection**, select **Record subset** instead of **All records**.
 4.  Enter a **Subset name** — for example, `US Enterprise Accounts`. This appears as the source label in Settings and in your Sources list.
@@ -172,7 +169,7 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 **Note:** Setup must be completed separately for Contacts, Companies, and Deals. Run through the steps once per connected HubSpot account. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
 
-1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
+1.  On the `Sources` tab, click `Add source` → [**HubSpot**](https://university.clay.com/docs/hubspot-integration-overview).
 2.  Select `Contacts` at the top of the sync panel.
 3.  Enable the `Import` toggle.
 4.  Add any HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience.
@@ -204,7 +201,7 @@ Clay syncs data from HubSpot automatically on the following schedules:
 
 ### Importing from Snowflake
 
-1.  Click `Add data` → `Import from Snowflake`.
+1.  On the `Sources` tab, click `Add source` → `Snowflake`.
 2.  Enter your connection details and SQL query.
     -   Click `Test` to preview your data before continuing.
 3.  Confirm the preview looks correct, then click `Continue`.
@@ -233,7 +230,7 @@ Clay syncs data from Snowflake on the following schedules:
 
 **Note:** Google BigQuery import is currently in early access — contact your Growth Strategist to enable it for your workspace.
 
-1.  Click `Add data` → `Add Source` → select your [**Google BigQuery integration**](https://university.clay.com/docs/google-bigquery-integration).
+1.  On the `Sources` tab, click `Add source` → [**Google BigQuery**](https://university.clay.com/docs/google-bigquery-integration).
     -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. See the [Google BigQuery integration](https://university.clay.com/docs/google-bigquery-integration) for setup instructions.
 2.  Enter a SQL `SELECT` query to define which records to import (for example, `SELECT * FROM \`project.dataset.table\` WHERE created_at > "2024-01-01"`).
     -   Click `Test` to preview your data before continuing.
@@ -256,7 +253,7 @@ Clay syncs data from Google BigQuery on the following schedules:
 
 ### Importing from people and companies search
 
-1.  Click `Add data` → `Find people` or `Find companies` to open a search.
+1.  On the `Sources` tab, click `Add source` → `Find people` (on `All People`) or `Find companies` (on `All Companies`) to open a search.
 2.  Narrow your search using parameters like `Job title` and `Experience`.
 3.  Click `Continue` → `Save to People/Companies`.
     -   Note: This sends your search results to a draft version—it won't combine them with your existing Audience data.
@@ -280,7 +277,7 @@ The search setup includes an **Excluded people** panel (or **Excluded companies*
 
 You can import a CSV file of people or companies directly into Audiences as a one-time import. You do not need to create a Clay table first.
 
-1.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**. If your workspace uses the **Add data** menu, choose **Add data** → **Add Source** → **CSV** instead.
+1.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**.
 2.  Name your import, select whether you're importing **People** or **Companies**, and upload your CSV file.
 3.  On the mapping screen, set the **Unique identifier** — the CSV column that uniquely identifies each record (such as email for People or domain for Companies). This determines whether an incoming row updates an existing record or creates a new one.
     -   On a people import, a **Company association** field appears as an optional setting. Point it at the column holding each person's company ID to link them to their company records in Audiences.
@@ -304,9 +301,9 @@ You can also send contacts from any existing Clay table directly to your Audienc
 
 Records saved from tables are automatically deduplicated and merged with your existing audience data.
 
-**Starting from Audiences instead:** you can also pull a table in from the `Add data` sidebar.
+**Starting from Audiences instead:** you can also pull a table in from the `Sources` tab.
 
-1.  Click `Add data` → `Add source` → `Clay table`.
+1.  On the `Sources` tab, click `Add source` → `Clay table`.
 2.  On `Select a Clay table`, enter a `Source name` and choose the `Audience type` (People or Companies), then pick the `People table` or `Companies table` and the `View` holding the records you want.
 3.  Click `Next`, then map your columns on `Field mapping` — `Clay People` or `Clay Companies` against `Table columns`.
 4.  Click `Import`.
@@ -315,7 +312,7 @@ Records saved from tables are automatically deduplicated and merged with your ex
 
 ### Understanding source import statuses
 
-Each source listed in **Settings → Sources / Destinations** shows an **Import status** badge. The status tells you whether records are actively flowing from that source into Audiences.
+Each source listed on the **Sources** tab of **All People** or **All Companies** shows an **Import status** badge. The status tells you whether records are actively flowing from that source into Audiences.
 
 **For CRM and data warehouse sources** (Salesforce, HubSpot, Snowflake, BigQuery, Databricks):
 
@@ -339,7 +336,7 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 | **Error** | The last live search run failed. |
 | **Off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
 
-**Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
+**Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to the **Sources** tab of **All People** or **All Companies**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
 ### Entity resolution and deduplication
 
@@ -730,7 +727,7 @@ Audiences supports **bidirectional sync** with Salesforce. Write-back covers Sal
 
 **To enable Export sync (admin-only):**
 
-1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+1.  Open **All People** or **All Companies**, click the **Sources** tab, then click the **⋮** menu next to your Salesforce import and select **Settings**.
 2.  Select the object tab you want to export (for example, **Accounts**).
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Confirm your field mappings and click **Save and review** → **Confirm**.
@@ -916,8 +913,8 @@ The answer depends on which type of Salesforce import you are using:
 
 To add a missing field to an "All records" import:
 
-1.  Click **Add data** in the top toolbar.
-2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+1.  Open **All People** or **All Companies** and click the **Sources** tab.
+2.  Find your Salesforce import and click the **⋮** (three-dot) menu next to it.
 3.  Select **Settings**.
 4.  In the field mapping section, add the Salesforce field you want and name the corresponding Clay column.
 5.  Click **Save and review** → **Confirm**.
@@ -965,8 +962,8 @@ Field mappings cannot be recovered once a Salesforce import is removed. The mapp
 
 **To re-add your field mappings:**
 
-1.  Click **Add data** in the top toolbar.
-2.  Find your Salesforce integration and click the **⋮** (three-dot) menu next to it.
+1.  Open **All People** or **All Companies** and click the **Sources** tab.
+2.  Find your Salesforce import and click the **⋮** (three-dot) menu next to it.
 3.  Select **Settings**, then open the relevant object import (for example, Contacts or Accounts).
 4.  In the field-mapping section, add each field you previously had configured.
 5.  Click **Save and review** → **Confirm**.
@@ -1155,6 +1152,8 @@ To catch job changes proactively, connect a workflow to your People segment that
 
 Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time.
 
+**Note: `Add to workbook` isn't available in every workspace.** It's turned on per workspace. If you need it, contact Clay support.
+
 New rows that arrive from a connected segment behave like any other new rows in the table: every column with auto-run turned on runs for them. If the table has a Salesforce **Update Record** column with auto-run on, Clay writes to Salesforce each time new records join the segment, even if nobody has opened the table recently. In Salesforce field history, those changes show your Clay integration user as the user who made them.
 
 **To see which tables a segment feeds:**
@@ -1183,7 +1182,7 @@ To work with only the narrower set, open the search, tighten your filters, click
 
 If you saved a Find People or Find Companies search to Audiences and the count continues to grow — even though you haven't changed the search criteria — live search is likely enabled. Live search re-runs the search **once per day** and adds any new matching contacts or companies. This runs independently of any signal cadence you have set on the audience: a monthly signal and a daily live search are entirely separate schedules. Turning off or modifying the signal does not stop the live search from running.
 
-To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
+To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to the **Sources** tab of **All People** or **All Companies**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
 
 ### Does a live search keep adding new people after I save it to Audiences?
 
@@ -1227,6 +1226,8 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 ### How do I send audience records to another tool?
 
 Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and add an action for your destination. Map the Audience fields and enrichment outputs to that action's inputs, test the workflow on a small set of records, and check the destination before running the whole segment.
+
+You can also export straight from a segment with Workflows. On the `Exports` tab of `All People` or `All Companies`, click `Add workflow export` to start a workflow that reads a segment on a schedule, weekly by default, and ends in an export step where you choose the action that writes the records out.
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
 
@@ -1273,7 +1274,7 @@ The most common cause is that the **Export sync toggle is off**. Even if your fi
 
 To enable it (admin-only):
 
-1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+1.  Open **All People** or **All Companies**, click the **Sources** tab, then click the **⋮** menu next to your Salesforce import and select **Settings**.
 2.  Select the object tab you want to export (for example, **Accounts**).
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Click **Save and review** → **Confirm**.
@@ -1284,7 +1285,7 @@ If Export sync is enabled but **specific fields** are still not updating in Sale
 
 To allow Clay to overwrite existing Salesforce values for a field:
 
-1.  Go to **Settings** → **Sources / Destinations** and click your Salesforce connection.
+1.  Open **All People** or **All Companies**, click the **Sources** tab, then click the **⋮** menu next to your Salesforce import and select **Settings**.
 2.  Select the object tab (for example, **Accounts**).
 3.  Find the field that isn't updating and click the **pencil (edit) icon** next to it.
 4.  Change the write rule from **Write if empty** to **Always write**.
@@ -1555,7 +1556,7 @@ For example, a list of 19 Account IDs needs two `contains any of` filters inside
 1.  **Prepare a CSV** with one row per account and two columns:
     -   `Salesforce Account ID` — the account's existing Salesforce ID.
     -   `Target list` — the same label on every row, for example `October target accounts`.
-2.  **Start a CSV import in Audiences → Companies.** Click `Add data` → `Add Source` → **CSV**, select **Companies**, and upload the file.
+2.  **Start a CSV import in Audiences → Companies.** Open **All Companies** → **Sources** → **Add source** → **CSV file**, select **Companies**, and upload the file.
 3.  **Set the Salesforce Account ID column as the Unique identifier** so each row matches an existing Salesforce record instead of creating a new one. Choose this before you run the import, because a CSV import's identifier can't be changed afterward.
 4.  **Map `Target list` to a custom text field.** In the field mapping dropdown, pick an existing field under **Custom fields** or click **Create field**. Don't map the label onto a Salesforce-owned field.
 5.  **Test with a few known accounts first.** Check that the label appears on the existing company records rather than on new duplicate records, then import the full list with the same settings.
@@ -1665,7 +1666,7 @@ Clay does not archive **Deleted in source** records automatically, so repeat the
 Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or delete an existing CSV source from the **Sources** tab. To add new columns (fields) to records you already imported from a CSV, or to correct their values, run a new CSV import that uses the same unique identifier. You don't need to archive the old records first.
 
 1.  Prepare an updated CSV that contains the unique identifier column from your original import (for example, a company registration number such as SIREN, a domain, or an email), plus the new or corrected columns.
-2.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**. If your workspace uses the **Add data** menu, choose **Add data** → **Add Source** → **CSV** instead.
+2.  Open **All People** or **All Companies** → **Sources** → **Add source**, then select **CSV file**.
 3.  Name the import, select **People** or **Companies** (the same type as the original import), and upload the updated file.
 4.  On the mapping screen, set **Unique identifier** to the same column you used in the original import.
 5.  Map the new and corrected columns to Audience fields.
