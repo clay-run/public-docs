@@ -281,6 +281,8 @@ When the Work Email output column shows **"Waiting for another column to finish"
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
 
+**Provider rate limits can keep Work Email waterfall rows "Queued" for a long time.** When a provider step uses Clay's managed account (you haven't connected your own API key for that provider), all requests to that provider through Clay's account share one rate limit, including requests from your other tables that use the same provider. Rows in that step move out of Queued gradually as the rate limit allows. If rows in the step keep finishing over time, the waterfall is still progressing and no action is needed. To get your own rate limit for that provider instead of the shared one, connect your own API key for the provider. Using your own API keys is a paid-plan feature; see [Ways to save Clay credits](clay-credit-conservation.md) for how to add one.
+
 **If a provider step in the Work Email waterfall stays "Queued" and isn't progressing**, the Work Email output column keeps showing "Waiting for another column to finish" until that step runs. **Run column** → **Run [N] empty or out-of-date rows** skips cells that are already Queued. To unblock the stuck waterfall rows in one go:
 
 1. Click **Filter** in the table toolbar, select the stuck provider step column, and set the condition to **is queued**. Only the stuck rows are now visible.

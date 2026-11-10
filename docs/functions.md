@@ -156,6 +156,22 @@ Viewing a function in "Live" mode provides visibility to current/past function r
 -   If you want to edit/test your function logic, click `Edit function` to safely change, test, and publish your changes.
 -   If you want to re-run past rows in a function, re-run the function column/cells in the origin table that called the function itself. This will generate a new row in your function which will be automatically run on the latest configurations.
 
+### How do I re-run function rows that stopped because I ran out of credits?
+
+If enrichments inside a function stopped with **"Not enough Clay credits"**, you re-run those rows from the table that calls the function — the calling table, where the function column lives. You can't re-run them from inside the function:
+
+-   **The Live function view is read-only.** It shows current and past runs as a record of what the function processed, so there's no option to run or re-run rows there.
+-   **Edit mode is a test area.** Rows you run in the function's Edit mode stay in the sandbox and are never sent back to your calling table.
+
+**To re-run the function rows that ran out of credits:**
+
+1.  Add credits to your workspace first, so the re-run doesn't stop again. See [Actions and data credits](actions-data-credits.md).
+2.  Open the calling table and click **Filter** in the toolbar to show only the rows you want to re-run.
+3.  Right-click the function column header → **Run column** → **Choose number of rows to run**, and start with a small batch.
+4.  Once that batch looks right, run the rest the same way, or choose **Force run all [N] rows** to re-run every row in the filtered view.
+
+**Re-running a function column sends each row through the whole function again, starting from the first step.** A function re-run can't pick up from the step where the row stopped. The function doesn't reuse results from the earlier run, so paid enrichment steps inside the function that already ran are charged again. To estimate the cost before you re-run, check the estimated cost shown on the function column.
+
 ### How do I avoid re-running contacts through a function they've already been processed by?
 
 You cannot look up directly into a function's background table — the **Lookup single row** action only shows regular Clay tables in its "Table to search" dropdown, and function tables don't appear there. A function's result lives in the function column of whichever table called it, so that's the table you look up against.
