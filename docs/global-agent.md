@@ -1,7 +1,7 @@
 ---
 title: Clay (global agent)
 description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including scheduling, permissions, and credit usage.
-last_synced: 2026-11-06T22:53:03.684Z
+last_synced: 2026-11-10T18:53:14.692Z
 ---
 
 # Clay (global agent)
@@ -89,21 +89,24 @@ Every task and every schedule carries a permission level that decides what the g
 
 | Level | What it allows |
 | --- | --- |
-| Allow changes | The global agent edits freely and runs test data. It waits for your approval before running a workflow outside test data, and before deleting a workflow, a Claygent, or a schedule. |
+| Allow changes | The global agent edits, searches, and tries out an action or a piece of code without asking. It waits for your approval before it runs or publishes a workflow, test data included, and before the other actions listed below. |
 | Allow everything | Nothing waits for approval, including workflow runs and deletions. |
 
 **Note: a task or schedule set up before `View only` was retired still shows it.** Nothing breaks, and saving a change to that task or schedule means picking one of the two levels above.
 
-### What runs without asking
+### What waits for your approval
 
-`Allow changes` holds a short, specific list, so plenty of real work — including work that spends credits — goes ahead on its own. Before you leave a task running, it’s worth knowing that these need no approval:
+Before you leave a task running, it’s worth knowing which actions stop for your approval under `Allow changes`:
 
--   Runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
--   Publishing a workflow, which turns on its live triggers so runs start from new events.
--   Resuming a paused run, testing a single action or code step, function runs, and searches.
--   Creating or resuming a signal, which then checks records on a schedule.
+-   Running a workflow, test data included, or a single step of it as a test.
+-   Running a workflow on a trigger’s existing records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Re-running a run, or resuming one that’s paused.
+-   Publishing a workflow, which turns on its live triggers so runs start from new events, or turning a paused trigger back on.
+-   Running a function or an enrichment on its own, outside a workflow.
+-   Creating, changing, pausing, resuming, or deleting a signal.
+-   Archiving a segment, deleting a segment field, or deleting a workflow, a workflow alert, a Claygent, or a schedule.
 
-Deletions outside that list go ahead too: archiving a segment, deleting a segment field, a signal, a webhook, or an API key, and taking a destination off a draft ad sync.
+Plenty of real work, including some that spends credits, still goes ahead on its own: editing a workflow and its triggers, trying out an action or a piece of code before it goes into a workflow, searches, and creating or updating segments and fields. So do deleting a webhook and taking a destination off an ad sync.
 
 The same goes for credentials and billing — creating, renaming, or deleting an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself. Sending a test email from a campaign, or a test event to a webhook, needs no approval either.
 
@@ -114,9 +117,9 @@ The global agent works through a task without stopping for approval at each step
 -   **It won’t launch or send a campaign.** The global agent drafts one, edits the copy and settings, runs a spam check, and sends a single test email. Starting it, pausing it, and completing it happen in Sequencer, by you.
 -   **A signal it creates starts paused**, so you can read it back before it starts checking records and spending credits. It resumes the signal once you confirm, not on its own initiative.
 -   **It won’t create or edit a table.** Ask it to rebuild one as a workflow instead.
--   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s still a draft.
+-   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s paused or still a draft.
 
-Everywhere else the global agent acts as it goes, and that includes spending credits on enrichments and workflow runs. So the checkpoint is you reading its work, not it asking permission: open the `Artifacts` panel, check the workflow or segment it produced, then run it yourself once it looks right.
+Under `Allow changes`, a workflow, function, or enrichment run waits for your approval, so check the global agent’s work before you select `Allow once` on the approval card: open the `Artifacts` panel and look over the workflow or segment it produced.
 
 It does come back to you mid-task when a decision is genuinely yours and would change the outcome — which list to start from, which of two scoring approaches to take. It gathers those onto one card rather than interrupting you repeatedly.
 
