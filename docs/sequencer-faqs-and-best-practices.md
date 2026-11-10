@@ -1,7 +1,7 @@
 ---
 title: Sequencer FAQs and best practices
 description: Answers to common Sequencer questions on costs, limits, sequences, and leads, plus deliverability best practices and troubleshooting.
-last_synced: 2026-11-06T22:48:34.763Z
+last_synced: 2026-11-10T18:49:13.609Z
 ---
 
 # Sequencer FAQs and best practices
@@ -168,7 +168,7 @@ Work through the most common causes first:
 -   The lead is held out by the campaign's own filters: an exclusion segment, or a `Cooldown window` that an enrollment in another campaign put them inside.
 -   The same address appears more than once in the campaign — a duplicate is only sequenced once.
 -   A sender account is disconnected, or has hit its daily send limit.
--   The campaign is out of room on its credit budget, or its schedule window hasn't opened yet.
+-   The campaign's schedule window hasn't opened yet.
 -   A lead is assigned to a specific sender account that's no longer selected on the campaign.
 
 The `Activity` tab shows status per lead, including `Enrollment failed`, which usually points straight at the cause. Auth errors live elsewhere: on `Email accounts`, and on the account and domain tables in a campaign's `Deliverability` section.
