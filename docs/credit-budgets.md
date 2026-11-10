@@ -93,11 +93,11 @@ To update access for an existing budget, open it from `Settings` → `Budgets`, 
 
 ## Giving a new member a budget when you invite them
 
-Workspace admins can give a new member access to a credit budget, such as a set test budget for a new hire, directly from the `Invite members` window. The `Budgets` column in that window lists only budgets whose access is set to **Only specific users or groups**. Budgets open to all workspace members aren't listed there, because every member can already use them.
+Workspace admins can give a new member access to a credit budget, such as a set test budget for a new hire, directly from the `Invite members` window. The `Budgets` column in that window lists only budgets whose access is limited to specific people and groups. Budgets open to everyone in the workspace aren't listed there, because every member can already use them.
 
 To invite someone with a credit budget:
 
-1.  Create the budget first: go to `Settings` → `Budgets`, click **Create**, enter a name and credit limit, choose **Only specific users or groups** as the default access, and click **Save**.
+1.  Create the budget first: go to `Settings` → `Budgets`, click **Create**, enter a name and credit limit, set the default access so only specific people and groups can use it, and click **Save**.
 2.  Go to `Settings` → `Team` and click `Invite`.
 3.  Enter the person's email address and press **Enter**.
 4.  In that person's row, choose a role, then open the `Budgets` dropdown and select one or more budgets.
@@ -109,7 +109,7 @@ To give an existing member access to a budget, open the budget from `Settings` �
 
 ### Why the Budgets dropdown in the invite window says "None available"
 
-The `Budgets` dropdown in the `Invite members` window shows **None available** when your workspace has no credit budgets with access set to **Only specific users or groups**. This happens if you haven't created any budgets yet (`Settings` → `Budgets` shows "No budgets yet"), or if all of your budgets are open to all workspace members. To fix it, create a budget with **Only specific users or groups** access (or edit an existing budget to use that setting), then reopen the `Invite members` window and select it. The `Groups` dropdown shows **None available** in the same way when your workspace has no user groups.
+The `Budgets` dropdown in the `Invite members` window shows **None available** when your workspace has no credit budgets whose access is limited to specific people and groups. This happens if you haven't created any budgets yet (`Settings` → `Budgets` shows "No budgets yet"), or if all of your budgets are open to everyone in the workspace. To fix it, create a budget whose access is limited to specific people and groups (or edit an existing budget's access setting), then reopen the `Invite members` window and select it. The `Groups` dropdown shows **None available** in the same way when your workspace has no user groups.
 
 ## Email alerts for budget usage
 
