@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-10T18:32:06.862Z
 ---
 
 # Workflows
@@ -24,7 +24,7 @@ Common things people build:
 
 Workflows lives under `Orchestration` in the left sidebar. Three surfaces build the same thing, so you can start in one and continue in another.
 
-**Already using Clay tables?** `Import a table` on the empty canvas is the fastest way in. Clay scaffolds the graph from the table's schema, so your columns arrive as steps and you start from something that already matches your data rather than describing a workflow from scratch.
+**Already using Clay tables?** `Import a workbook` on a new workflow's empty canvas is the fastest way in. Clay scaffolds the graph from the workbook's schema, so your columns arrive as steps and you start from something that already matches your data rather than describing a workflow from scratch.
 
 **From your terminal or a coding agent.** The Clay CLI and agent plugin create workflows, edit steps, look up actions and their input schemas, test runs, inspect them step by step, and manage version history — and they print JSON, so they script cleanly.
 
@@ -32,28 +32,30 @@ Workflows is the Clay surface built for this; tables can't be created through th
 
 ### Build a workflow from the CLI
 
-**With the in-app assistant.** Sculptor sits in a side panel in the workflow editor and builds or edits the graph from a description of what you want. It runs in a live session, so stay on the page while it works — navigating away ends the session. It tends to reach for `Run Claygent` steps, so read what it produces before you publish.
+**With the in-app assistant.** Sculptor sits in a side panel in the workflow editor and builds or edits the graph from a description of what you want. It runs in a live session, so stay on the page while it works — navigating away ends the session.
+
+**Note: Sculptor is in beta in the workflow editor.** It tends to reach for `Run Claygent` steps, and the step types it can add depend on what your workspace has enabled, so read what it produces before you publish.
 
 ### Build a workflow with Sculptor
 
 **On the canvas.** Click `Workflows` → `New workflow`. Clay creates it as `Untitled workflow` and drops you straight onto the canvas with the name selected, so you can rename it and start building.
 
-The empty canvas offers three ways in — `Start with a trigger`, `Start with segment`, or `Import a table` to scaffold the graph from a table's schema. From there, open the node palette with `Add` to pick from `Triggers` and `Nodes`, or drag out from a node's handle, then connect steps by drawing an edge between them.
+When you open a new workflow, its empty canvas offers `Import a workbook`, plus `Build manually` to start from an empty trigger node. From there, open the node palette with `Add` and pick a step from one of its categories (`Trigger` is under `Flow`), or drag out from a node's handle, then connect steps by drawing an edge between them.
 
 **Who can do what.** Workspace members can create, edit, and run workflows, and deleting one is admin-only. `Integrations` in workflow settings is the section that exposes a workflow as a routine, so it can be called from `API & CLI` or as a tool inside a Claygent. Everyone can see that section, but changing what it exposes takes permission to manage workspace access.
 
 ## Triggers
 
-Every workflow starts at its trigger node: it defines the run's initial input, and it's the only step with nothing upstream of it. Click the node to open `Choose trigger`, and add more than one if the same logic should fire from several places.
+Every workflow starts at its trigger node: it defines the run's initial input, and it's the only step with nothing upstream of it. Click an empty trigger node to open the `Create trigger` panel, pick a `Source`, then pick a `Type` — only the types that source can run with are listed, and a source with a single type tells you which one it uses instead. Add more than one trigger if the same logic should fire from several places.
 
-Some triggers depend on your plan. `On webhook call`, `New member in segment`, and `Segment on a schedule` stay visible on a plan that doesn't include them, but show an `Upgrade` badge in place of the option to add them.
+Some sources depend on your plan. `Webhook` and `Segment` stay visible on a plan that doesn't include them, but carry an upgrade badge on their card.
 
--   `Run manually` — you click `Run workflow` and supply the input, so the trigger needs a defined input schema before a manual run becomes available. Best for testing on one record or a small batch while you build. This is also the trigger behind a workflow called from the CLI or from a Clay table. A workflow that starts from a segment can't be run manually.
--   `New member in segment` — one run for each record that joins an audience segment, and optionally each time a record already in the segment changes. Best for plays that should fire as soon as a contact or account meets a condition, like routing a new inbound lead. To act on a signal, build a segment where that signal is true, so entering the segment is the event.
--   `Segment on a schedule` — reruns the workflow for every member of a segment on a schedule you set. Best for recurring passes over a whole segment, like a nightly re-score.
--   `On a schedule` — runs on a recurring schedule that isn't tied to a segment. Best for a standalone job, like a daily digest.
--   `On webhook call` — Clay generates a URL, and each POST to it becomes a run. Best when the event starts outside Clay, like a form submission. Define the payload by pasting a sample JSON body or a cURL command and Clay infers the input schema, then copy the URL and a ready-made cURL from the trigger card.
--   `On CSV upload` — a run for each row of a file you upload. Best for a one-off list you want to push through a workflow you already have.
+-   `None`, `Manual` — you click `Run workflow` and supply the input, so the trigger needs a defined input schema before a manual run becomes available. Best for testing on one record or a small batch while you build. This is also the trigger behind a workflow called from the CLI or from a Clay table. A workflow that starts from a segment can't be run manually.
+-   `Segment`, `On event` — one run for each record that joins an audience segment, and optionally each time a record already in the segment changes. Best for plays that should fire as soon as a contact or account meets a condition, like routing a new inbound lead. To act on a signal, build a segment where that signal is true, so entering the segment is the event.
+-   `Segment`, `Scheduled` — reruns the workflow for every member of a segment on a schedule you set. Best for recurring passes over a whole segment, like a nightly re-score.
+-   `None`, `Scheduled` — runs on a recurring schedule that isn't tied to a segment. Best for a standalone job, like a daily digest.
+-   `Webhook` — Clay generates a URL, and each POST to it becomes a run. Best when the event starts outside Clay, like a form submission. Define the payload by pasting a sample JSON body or a cURL command and Clay infers the input schema, then copy the URL and a ready-made cURL from the trigger card.
+-   `CSV` — a run for each row of a file you upload. Best for a one-off list you want to push through a workflow you already have.
 
 ## Node types
 
@@ -130,7 +132,7 @@ Runs a Python `handler(context)` function for deterministic work:
 -   Iterating over data inside one record.
 -   Joining and matching records you loaded in earlier steps — the closest thing to a table formula.
 
-`Run code` is free to run. It's included on every paid plan; the free plan is the exception, where rules-based conditionals are available but `Run code` and the `Code` and `AI` conditional modes are not.
+`Run code` is free to run.
 
 Code steps run under a fixed set of limits, which is what makes them suited to logic on data the step already holds rather than to fetching anything new:
 
@@ -194,6 +196,8 @@ Pin numbers, IDs, booleans, and anything else that has to be exact: if a scoring
 
 That last one is worth committing to memory — a missing `toolResult.result` prefix is the single most common wiring mistake, and it fails quietly by handing the next step an empty value rather than raising an error. There's no autocomplete for upstream fields yet, so the reliable way to get a path right is to run the workflow once and read the actual output structure on the step you're referencing.
 
+**Running a step once per item.** An enrichment, Claygent, or code step can repeat for every entry in an upstream list. In the step's `Run options` section, set the `Run on` option to `Each item, one at a time`, pick the list under `List`, and map the step's inputs from the `Current item` source. Choosing `The whole list, all at once` goes back to running the step a single time. The `If some, but not all, list items fail` setting decides whether to `Continue the run` or `Mark the run as failed`.
+
 ## Testing and observability
 
 You can see exactly how a workflow reached any result — visually trace the path an individual account or contact took, see which conditions applied at each branch, and read an agent's reasoning where the call wasn't deterministic. That's what turns an unexpected result into something you can reverse-engineer and fix rather than guess at.
@@ -202,7 +206,7 @@ The workflow editor has two views, `Graph` and `Runs`.
 
 **Testing as you build.** Hover any node and click its run button to try that one step on its own, either against a recent run's data or with values you type in — `Recent` and `Enter manually`. The panel shows a credit estimate for the selection before you commit.
 
-This runs the step you started from rather than continuing through the rest of the graph, so use it to prove out a single step's config, and a `Run manually` trigger to prove out a whole path. Runs started this way carry a `Partial` badge in the list so they're easy to tell apart.
+This runs the step you started from rather than continuing through the rest of the graph, so use it to prove out a single step's config, and a manual trigger to prove out a whole path. Runs started this way carry a `Partial` badge in the list so they're easy to tell apart.
 
 **Data observability.** Every run is recorded, and the record is fixed once written: it keeps the version it ran against, each step's inputs and outputs, timings, and any error. `Recent runs` on the canvas is the quick view — hovering a run previews its path on the graph, and clicking pins its trace so you can step through it. `View all runs` opens the full history, where `Standard` lists runs chronologically and `Table` lays them out as a grid so you can compare outputs across many at once.
 
@@ -246,6 +250,8 @@ Workflows is available on the Enterprise, Growth, and Launch plans indefinitely,
 
 Legacy plans differ by tier. Legacy Enterprise customers keep Workflows indefinitely, with no change to their access. The legacy self-serve plans — Starter, Explorer, and Pro — have access for a limited time, after which Workflows moves to a free-plan experience rather than switching off. See [Workflows FAQs](https://university.clay.com/docs/workflow-faqs) for what changes then.
 
+**Capping a workflow's spend.** On Enterprise plans, the `Credit limit` section in workflow settings caps the data credits one workflow can spend, counted across its runs rather than per run. When the limit is reached, credit-consuming steps stop and the run fails, while the workflow itself stays editable. To see which workflows have a limit, filter the workflows homepage by `Credit limits`. For which runs count against a limit, see [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
+
 Most cost sits in the enrichment and Claygent steps, and a few habits keep it in proportion:
 
 -   Do transforms, routing, and formatting in `Run code` rather than asking a model to do them.
@@ -262,6 +268,6 @@ In practice that means you point a workflow at an entire audience rather than a 
 
 A single step also isn't the place to load a very large result set — each node handles up to 5MB of data per record, so a warehouse query returning a hundred thousand rows into one node will hit that ceiling. Land the data in [Audiences](https://university.clay.com/docs/audiences) and read it off the record instead — that's the pattern to reach for, since the result stays reusable in every other segment and workflow rather than trapped in one run. If you do need it inside the step, page through with limit and offset.
 
-A segment that changes rapidly is the one case worth planning around: a bulk import that touches thousands of records fires thousands of runs at once, which spends credits quickly and can hit a provider's rate limits. For a high-volume segment, `Segment on a schedule` gives you the same coverage at a pace you control.
+A segment that changes rapidly is the one case worth planning around: a bulk import that touches thousands of records fires thousands of runs at once, which spends credits quickly and can hit a provider's rate limits. For a high-volume segment, a `Segment` trigger set to `Scheduled` gives you the same coverage at a pace you control.
 
 Have questions about Workflows? See [Workflows FAQs](https://university.clay.com/docs/workflow-faqs).
