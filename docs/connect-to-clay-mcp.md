@@ -64,7 +64,7 @@ The `client_secret` is returned only in this response, so store it before you di
 
 Clay validates every entry in `redirect_uris` at registration:
 
--   Must use `https`, with two exceptions for native apps under [RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252): loopback HTTP (`http://localhost`, `http://127.0.0.1`, or `http://[::1]`) and private-use schemes such as `acme://callback`.
+-   Must use `https`, with two exceptions for native apps under [RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252): loopback HTTP (`http://localhost` or the IPv4 or IPv6 loopback address) and private-use schemes such as `acme://callback`.
 -   Must not contain a username or password.
 -   Must not contain a fragment.
 
