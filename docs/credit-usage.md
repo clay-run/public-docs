@@ -32,7 +32,7 @@ The columns in this view display:
 -   `Name:` The folder, workbook, or table. Click the dropdown next to a folder or workbook to see the contents.
 -   `Usage:` Marked as `Recurring` when it contains recurring credit usage (e.g., scheduled runs or signals).
 -   `Owner:` The workbook's creator or assigned owner — not necessarily who triggered the credit spend within it.
--   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total includes credits from tables that have since been deleted. Hover over the ⓘ icon on the Workspace row to see how many credits came from deleted tables.
+-   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total also includes credits from tables deleted more than 30 days ago, which no longer have their own row. Hover over the ⓘ icon on the Workspace row to see that amount ("Includes N credits from deleted tables."). These credits are already counted in the Workspace total, not added on top of it. Tables deleted within the last 30 days still have their own rows, marked `Archived`. See [Why do archived or deleted tables still show credits used?](#why-do-archived-or-deleted-tables-still-show-credits-used)
 
 Filter any of the content on this page by:
 
@@ -255,6 +255,14 @@ To identify what triggered a specific run, use the **Run view** in the [table cr
 Clicking **Stop** on a running table or canceling a column run does not immediately halt all enrichments. Clay cancels cells that are still queued (not yet dispatched), but any requests already sent to an external data provider will run to completion and consume credits. You may see a brief delay before the table fully halts while these in-progress calls finish.
 
 To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
+
+### Why do archived or deleted tables still show credits used?
+
+In the **Workbooks** tab of the credit usage dashboard (`Settings → Usage`), an `Archived` badge next to a workbook or table means it was deleted and is in Trash. Tables don't have a separate archive state. The credits shown for an archived or deleted table are the credits it used in the period selected in the `When` filter, before it was deleted. They don't mean the table is still running.
+
+-   **Tables deleted within the last 30 days:** Deleted tables stay in Trash for 30 days. During that time they still appear as their own rows in the Workbooks tab, with an `Archived` badge, and are included individually in the CSV export. To open an archived table, restore it from Trash first (see [Delete content within your workspace](delete-content-within-your-workspace.md)).
+-   **Tables deleted more than 30 days ago:** These tables no longer have their own row. Their credits are still counted in the **Workspace** row total, and you can hover over the ⓘ icon on the Workspace row to see the amount ("Includes N credits from deleted tables."). On plans that show `Actions used`, a matching tooltip shows "Includes N action executions from deleted tables." In the CSV export, these credits appear as a single row labeled "Deleted tables (unattributed)", with no table name or ID.
+-   **Deleted tables don't start new runs:** Deleting a table cancels its queued enrichments, scheduled runs, and source imports. Requests that had already been sent to a data provider when you deleted the table can still finish, so their final charge or refund may appear after the deletion time.
 
 ### Credits spiked after editing a formula or upstream column
 
