@@ -1,12 +1,12 @@
 ---
 title: Launch and manage a campaign
 description: Set a campaign's schedule and credit budget, launch it, and pause, resume, or complete it as leads move through the sequence.
-last_synced: 2026-11-06T23:41:09.596Z
+last_synced: 2026-11-10T18:48:11.641Z
 ---
 
 # Launch and manage a campaign
 
-Set a campaign's schedule and credit budget, launch it, and manage sending as leads move through the sequence.
+Set a campaign's schedule, launch it, and manage sending as leads move through the sequence.
 
 A campaign is ready to launch once it has a lead list, at least one sequence step, and at least one sender account. Launching starts sending on the schedule you've set and enrolls new leads as they arrive in your segment.
 
@@ -15,6 +15,12 @@ From there, managing a campaign comes down to three controls: pause it to make c
 ## Schedule settings
 
 A campaign's sending window lives on the `Settings` tab, in the `Schedule` section at the top. Start with `Schedule type` — it sets the shape of the window, and only `Custom schedule` exposes the individual fields.
+
+| Schedule type | What it does |
+| --- | --- |
+| Optimized for deliverability | Sends Mon–Fri, 9 AM – 5 PM, with a 20 minute minimum between emails. The default, and the right starting point for cold outbound. |
+| As fast as possible | Sends 24/7, as fast as your sender accounts’ own limits allow. Recommended for inbound or transactional use cases only. |
+| Custom schedule | You set the sending days, the daily window, and the pacing yourself. |
 
 `Timezone` applies to every schedule type but `As fast as possible`, which hides the field. `Custom schedule` opens four more:
 
@@ -36,33 +42,12 @@ As you change these fields, the line above them updates with what the schedule a
 
 One setting does shape how that capacity gets spent. `Follow-up percentage`, further down the `Settings` tab, sets the share of emails allocated to follow-ups for leads already in the sequence before Clay reaches out to new ones.
 
-## Setting a credit budget
-
-A credit budget caps what a campaign is allowed to spend. Budgets live at the workspace level rather than on a single campaign, so one budget can cover several campaigns alongside other work in the workspace. To create one:
-
-1.  Open workspace settings and go to `Budgets`.
-2.  Click `Create`.
-3.  Give the budget a `Budget name` and set its `Credit limit`.
-4.  Choose a `Reset frequency`, if the field is shown for your workspace — `Never`, `Monthly`, `Quarterly`, or `Annual`. A resetting budget renews to its full limit on the 1st of each period.
-5.  Set `Access settings` to control who can create workflows using the budget — either `Anyone in the workspace`, or `Specific people and groups`.
-6.  Click `Create budget` to save it.
-
-### Attaching and tracking a budget
-
-You attach a budget to a campaign at launch, from the `Budget` select in the `Launch campaign` modal. If your workspace has budgets you can access, choosing one is required — `Confirm and launch` stays disabled until you do. The `Resume campaign` modal offers the same select, so resuming is also your chance to move a campaign onto a different budget.
-
-Each budget shows how much room is left next to its name: `Less than 10% remaining` as it gets close, and `Limit reached` once it's spent. Clay emails the budget's alert recipients at both points, so nobody has to watch the number.
-
-When a budget hits its limit, campaigns drawing on it stop spending credits, which stops new leads enrolling. Raising the limit, waiting for the next reset, or moving the campaign onto a budget with room all get it going again.
-
-**Note:** The `Budget` select lists the budgets you have access to. If a colleague assigned a budget you can't otherwise see, it still appears by name so you can tell which budget the campaign is drawing from.
-
 ## Launching
 
-When the campaign is ready, click `Launch campaign` at the top of the campaign page.
+When the campaign is ready, click `Launch sequence` at the top of the campaign page.
 
 1.  Clay checks the campaign. If anything's missing, it takes you to the tab that needs attention with the field flagged.
-2.  The `Launch campaign` modal opens. It confirms how many leads the campaign includes, flags a warning if the spam check graded your copy poorly, and shows the `Estimated total cost` in action credits and data credits. A campaign fed by a workflow has no lead total to price against, so it shows `Estimated cost per lead` in place of a total.
+2.  The `Launch sequence` modal opens. It confirms how many leads the campaign includes, flags a warning if the spam check graded your copy poorly, and shows the `Estimated total cost` in action credits and data credits. A campaign fed by a workflow has no lead total to price against, so it shows `Estimated cost per lead` in place of a total.
 3.  Click `Confirm and launch` to start sending.
 
 The checks that have to pass are:
@@ -96,7 +81,7 @@ From there, an enrolled lead:
 
 ## Pause, resume, and complete
 
-The controls for a launched campaign sit in the same place as `Launch campaign` did, at the top of the campaign page. Which ones you see depends on where the campaign is in its lifecycle, shown as a badge next to its name.
+The controls for a launched campaign sit in the same place as `Launch sequence` did, at the top of the campaign page. Which ones you see depends on where the campaign is in its lifecycle, shown as a badge next to its name.
 
 | State | What you can do | What’s happening |
 | --- | --- | --- |
@@ -105,7 +90,7 @@ The controls for a launched campaign sit in the same place as `Launch campaign` 
 | Paused | Edit copy, senders, schedule, and settings, then resume or complete. Sequence steps can’t be added, removed, or reordered. | Sending has stopped. Lead data and statuses are preserved. |
 | Completed | View Analytics, Activity, and Replies. | The campaign has ended permanently. No new leads are enrolled and no further emails go out. |
 
-Three controls move a campaign between those states. Each one opens a confirmation modal you have to confirm — `Pause campaign`, `Resume campaign`, or `Complete campaign` — so a campaign never changes state on a single click.
+Three controls move a campaign between those states. Each one opens a confirmation modal you have to confirm — `Pause sequence`, `Resume sequence`, or `Complete sequence` — so a campaign never changes state on a single click.
 
 | Control | What it does |
 | --- | --- |

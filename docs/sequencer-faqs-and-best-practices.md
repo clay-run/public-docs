@@ -60,12 +60,7 @@ Buying email accounts in Clay is a step up from there: it needs Growth or Enterp
 
 Each lead enrolled in a campaign costs 1 action credit. AI snippets add data credits per lead on top of that, varying with the model you choose, and the campaign shows you an estimate before you launch.
 
-Two things are easy to miss:
-
--   Relaunching a paused campaign doesn't re-charge for leads that were already sequenced.
--   Credit budgets live at the workspace level and get attached to a campaign at launch. Once a budget's limit is reached, the campaigns drawing on it stop spending credits, which stops new leads enrolling.
-
-[Launch and manage a campaign](https://university.clay.com/docs/launch-and-manage-a-campaign) covers how to set a budget.
+Relaunching a paused campaign doesn't re-charge for leads that were already sequenced. [Launch and manage a campaign](https://university.clay.com/docs/launch-and-manage-a-campaign) covers how credits are charged at enrollment.
 
 ### How many leads can one campaign hold?
 
