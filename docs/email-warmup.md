@@ -1,7 +1,7 @@
 ---
 title: Email warmup
 description: How email warmup builds sending reputation, how it differs on purchased and self-connected accounts, and how to turn it on, adjust it, and filter warmup emails.
-last_synced: 2026-11-02T22:24:46.028Z
+last_synced: 2026-11-10T20:17:32.851Z
 ---
 
 # Email warmup
@@ -39,7 +39,7 @@ Because Clay manages warmup on purchased accounts, those accounts don't show war
 
 We recommend keeping warmup on at all times for every account you connect, including accounts that have been sending for a while.
 
-1.  Select `Campaigns` in the sidebar, then open `Email accounts`.
+1.  Select `Sequencer` in the sidebar, then open `Email accounts`.
 2.  Open the 3-dot menu on the account and select `Enable warming`. The option is there whenever warming isn't already running on the account.
 3.  In the `Enable email warming to improve deliverability` modal, the accounts are listed already checked. Select `Enable warming` to turn it on for everything still checked. Uncheck all of them and that same button becomes `Continue without warming`, which closes the modal and leaves the accounts as they are.
 
