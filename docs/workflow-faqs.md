@@ -1,7 +1,7 @@
 ---
 title: Workflow FAQs
 description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, list handling, and how Workflows works with Audiences and tables."
-last_synced: 2026-11-09T19:43:54.740Z
+last_synced: 2026-11-10T18:02:43.157Z
 ---
 
 # Workflow FAQs
@@ -24,7 +24,7 @@ Access to Workflows itself is separate from your role: during open beta you turn
 
 Workflows is available on every plan, including free and trial plans. On the modern Enterprise, Growth, and Launch plans it's available indefinitely, and legacy Enterprise customers keep it indefinitely as well — the time limit below applies only to the legacy self-serve plans.
 
-What varies by plan is which triggers you can use. Some triggers need a paid plan — those stay visible on the canvas with an `Upgrade` badge rather than being hidden.
+What varies by plan is which trigger sources you can use. `Webhook` and `Segment` need a paid plan, but they stay visible with an upgrade badge on their card rather than being hidden.
 
 Starter, Explorer, and Pro have full access for a limited time. After that, Workflows on those plans moves to a free-plan experience rather than switching off, with limits on runs and run history. The workflows you built and the data they've written back to Audiences stay either way, so moving to a modern plan is what restores full access. Your Growth Strategist or Clay support can tell you where your workspace stands.
 
@@ -54,15 +54,17 @@ There is one indirect route worth knowing about. Someone who can manage workspac
 
 ### Can a step run once for each item in a list?
 
-Yes, through `Run Claygent`. Give the agent the list and the function you want applied to each item, and it calls the function per item, one after another — that's how one-to-many work inside a single run gets done today. Because the agent decides the order and pacing, treat it as less predictable than a deterministic step, and keep the list modest.
+Yes. Enrichment, Claygent, and code steps each have a `Run options` section, where `Run on` decides whether the step runs once or repeats. `Each item, one at a time` repeats the step for every item in the list you choose under `List`, all inside the same run. When a people or company search feeds the step, `Each person, one at a time` or `Each company, one at a time` repeats it over that search's results without you picking a list.
 
-`Run code` is the steadier option when the work is pure logic, since it can iterate freely over data within a record. It can't call an enrichment or any other Clay action, though — that work belongs in its own step. For per-item enrichment across a long list, running that enrichment as a bulk enrichment on a segment tends to be more reliable, and the workflow can then read the results off each record.
+By default, a repeating step lets the run continue when some items fail and others succeed. Choose `Mark the run as failed` instead if a partial result shouldn't count.
+
+For pure logic, `Run code` can also work through a list on its own, since it iterates freely over data within a record. It can't call an enrichment or any other Clay action, though — that work belongs in its own step.
 
 ### Can a workflow loop back on itself?
 
-No — the graph runs one way, so there's no cycle or counting loop between steps. Iteration happens inside a step instead, either in `Run code` within a single record or in `Run Claygent` over a list.
+No — the graph runs one way, so there's no cycle or counting loop between steps. Iteration happens inside a step instead, either by setting the step to repeat over a list in its `Run options` or by looping over the data in `Run code`.
 
-If what you want is for something to happen repeatedly over time rather than within one run, that's a trigger question rather than a graph question: `Segment on a schedule` or `On a schedule` gives you a fresh run on each pass, which is usually what people are reaching for.
+If what you want is for something to happen repeatedly over time rather than within one run, that's a trigger question rather than a graph question: a trigger with its `Type` set to `Scheduled`, on a `Segment` source or with `None`, gives you a fresh run on each pass, which is usually what people are reaching for.
 
 ### Can a step query several objects at once, or join across sources?
 
@@ -78,7 +80,7 @@ When two runs genuinely need to see the same state, keep that state in Audiences
 
 You can run a single step on its own from its run button on the canvas, against a recent run's data or values you type in. That's the fast way to prove out one step's configuration without paying for the steps around it.
 
-What you can't do yet is start at a step and let the run continue through everything downstream of it — a step you run this way executes on its own and stops. So for checking a whole path, a `Run manually` trigger with one record or a handful is still the move. Running against a slice of a segment isn't available either; point a manual trigger at a few records instead.
+What you can't do yet is start at a step and let the run continue through everything downstream of it — a step you run this way executes on its own and stops. So for checking a whole path, a manual trigger with one record or a handful is still the move. Running against a slice of a segment isn't available either; point a manual trigger at a few records instead.
 
 One thing worth knowing before you publish: a manual run and a triggered run can resolve input mappings differently, so a mapping that renders correctly on a manual run is worth confirming on a real trigger.
 
