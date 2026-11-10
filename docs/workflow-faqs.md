@@ -1,7 +1,7 @@
 ---
 title: Workflow FAQs
 description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, list handling, and how Workflows works with Audiences and tables."
-last_synced: 2026-11-10T18:02:43.157Z
+last_synced: 2026-11-10T19:03:47.302Z
 ---
 
 # Workflow FAQs
@@ -16,7 +16,7 @@ Workflows is Clay's orchestration layer — a graph of connected steps that a tr
 
 Anyone with member access can create workflows, edit them, and run them. Deleting a workflow is reserved for workspace admins. View-only roles can open a workflow and read its runs but not change it. If you see `You do not have the proper access for workflows in this workspace`, your role is what's in the way.
 
-`Integrations` in workflow settings is visible to everyone, but changing what a workflow exposes there takes permission to manage workspace access.
+`Integrations` in workflow settings is visible to everyone, but only workspace admins and editors can change what a workflow exposes there.
 
 Access to Workflows itself is separate from your role: during open beta you turn it on by enrolling your workspace in the beta program from your workspace settings. If `Workflows` isn't in your left sidebar under `Orchestration` at all, check your enrollment there first. Your Growth Strategist or Clay support can help if it still doesn't appear.
 
@@ -50,7 +50,7 @@ A few errors have recognizable causes. A tool-not-found error usually means the 
 
 Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
 
-There is one indirect route worth knowing about. Someone who can manage workspace access can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
+There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
 
 ### Can a step run once for each item in a list?
 
