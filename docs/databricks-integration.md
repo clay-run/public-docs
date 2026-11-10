@@ -151,6 +151,26 @@ After you select the Databricks catalog, schema, and table, the action loads you
 
 ## Troubleshooting
 
+### "An error occurred while creating the account" when connecting with a Service Principal
+
+When you click `Authenticate` on the `Service Principal` tab of the `Add Databricks account` modal, Clay exchanges your Client ID and Client secret with Databricks for an OAuth token before saving the connection. If Databricks rejects that request, Clay shows the generic error `An error occurred while creating the account. Please check your credentials and try again.` — even when the Client ID and Client secret themselves are correct. Two common causes:
+
+**1. The service principal's OAuth credentials don't have the `all-apis` scope.**
+
+Clay's Databricks Service Principal connection requests the `all-apis` OAuth scope. If the Client ID and secret come from an OAuth app connection configured with a narrower set of scopes, Databricks refuses the token request (Databricks reports `Scopes 'all-apis' are not assigned to the client <client-id>`), and Clay shows the generic error.
+
+To fix it, a Databricks admin on your side can:
+
+1.  Give the service principal's OAuth client the `all-apis` scope. If the credentials were created as a custom OAuth app connection with limited scopes, the simplest option is usually to generate a new OAuth secret directly on the service principal in Databricks (`Settings` → `Identity and access` → `Service principals` → select the service principal → `Secrets`).
+2.  Confirm the service principal has access to your Databricks workspace and to the SQL warehouse you want Clay to query.
+3.  In Clay, open `Add Databricks account` again, choose `Service Principal`, and enter the service principal's Client ID and the new Client secret, then click `Authenticate`.
+
+**2. The Workspace URL is missing `https://`.**
+
+The Databricks `Workspace URL` field must be a full URL that starts with `https://` — for example `https://adb-1234567890123456.7.azuredatabricks.net/` (Azure) or `https://dbc-a1b2c3d4-e5f6.cloud.databricks.com/` (AWS). A hostname entered without `https://` (such as `dbc-a1b2c3d4-e5f6.cloud.databricks.com/`) can't be reached, so the connection fails with the same generic error.
+
+If you've checked both causes and still see the error when adding a Databricks Service Principal connection, contact [Clay support](https://www.clay.com/support) and include roughly when you retried.
+
 ### "Missing column data" error on Upsert Row
 
 The error `Missing input: Missing column data` on a row means the action has no column values to write — either because no columns are mapped in the Column mapping section, or because all mapped Clay columns are empty for that row.
