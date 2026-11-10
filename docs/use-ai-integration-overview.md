@@ -356,7 +356,7 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 ### Cells showing "This request exceeds your budget limit" (Clay Credit Budget)
 
-For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
+For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, or Claude Sonnet) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
 
 Before running each row, Clay estimates the row's cost from the length of your prompt, including the column values you insert into it. If the estimated cost is higher than the Clay Credit Budget, the row does not run and the cell shows an error like this one:
 
