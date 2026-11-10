@@ -23,6 +23,8 @@ A **budget** is a named credit pool with:
 
 When a workbook (or other resource) is assigned to a budget, all credit-consuming actions in that resource count against the budget's balance. If a budget runs out of credits, processing in assigned resources stops until an admin increases the limit or resets the spend.
 
+**Credit budgets limit Data Credits only.** Actions aren't counted against a budget and aren't capped by one — the budget screen states "Budgets limit data credits only. Actions are not capped by budgets." A workbook or workflow assigned to a budget keeps using Actions even while its Data Credit spend stays under the budget's limit. Budgets for Actions aren't available yet; to see Action usage, check the `Actions used` column at `Settings` → `Usage`.
+
 **Function calls and budget attribution:** When a workbook assigned to a budget calls a Function, the credits consumed by that Function run count against the **calling workbook's budget** — not against the Function itself or the Function creator's workbook. For example, if a marketing team's workbook calls a Function built by RevOps, those credits count against the marketing workbook's budget. This means that assigning a user's workbook to a budget automatically captures all spend from that workbook, including any Function calls it makes. Note: this attribution is one level deep — if a Function calls another Function, the inner Function's spend is attributed to the outer Function rather than the original calling workbook.
 
 ## Creating a budget
@@ -64,10 +66,11 @@ You can assign a budget to a workflow in any of these ways:
 -   **When you create the workflow:** pick a budget as part of creating the workflow.
 -   **From workflow settings:** open the workflow's settings, find the **Budget** field, and select the budget to assign. Use this to change a workflow's budget later.
 -   **Bulk assignment from the Workflows list:** select one or more workflows (up to 100 at a time), choose **Assign budget**, and select the target budget.
+-   **When you duplicate a workflow:** if your workspace has more than one budget, the **Duplicate workflow** dialog asks you to choose a budget for the copy. The dialog doesn't default to the original workflow's budget, so check the selection before you confirm. With one budget, the copy is assigned to it automatically. With no budgets, the copy is created without one.
 
 **What a workflow budget pays for:** Everything a workflow calls spends that workflow's budget — including its own steps, plus any table functions and workflow functions the workflow calls.
 
-**When a workflow's budget runs out:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
+**When a workflow's budget runs out of Data Credits:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
 
 ### Setting workflow budgets from the Clay CLI and Clay's Agent
 

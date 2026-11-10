@@ -59,7 +59,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 
 | Node | What it does | When to use it | Cost |
 | --- | --- | --- | --- |
-| Run enrichment | Runs one Clay action, like finding an email, enriching a company, or writing to a CRM | Any single data lookup or external action | 1 action + credit cost of enrichment |
+| Run enrichment | Runs one Clay action, like finding an email, enriching a company, or writing to a CRM | Any single enrichment, write, or external action | 1 action per record + credit cost of enrichment. Lookups that only read existing data, like Snowflake `Look up row` or Salesforce `Look up record`, don't use an action |
 | Run function | Calls a reusable Clay function | Reusing governed enrichment or qualification logic | No added credit or action cost — the steps inside it charge as usual |
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
@@ -263,5 +263,19 @@ In practice that means you point a workflow at an entire audience rather than a 
 A single step also isn't the place to load a very large result set — each node handles up to 5MB of data per record, so a warehouse query returning a hundred thousand rows into one node will hit that ceiling. Land the data in [Audiences](https://university.clay.com/docs/audiences) and read it off the record instead — that's the pattern to reach for, since the result stays reusable in every other segment and workflow rather than trapped in one run. If you do need it inside the step, page through with limit and offset.
 
 A segment that changes rapidly is the one case worth planning around: a bulk import that touches thousands of records fires thousands of runs at once, which spends credits quickly and can hit a provider's rate limits. For a high-volume segment, `Segment on a schedule` gives you the same coverage at a pace you control.
+
+### Which workflow steps use Actions?
+
+In a workflow, each `Run enrichment` step that enriches, writes, or exports a record uses 1 Action for each record it runs on. Lookup steps that only read existing data, such as Snowflake `Look up row` or Salesforce `Look up record`, don't use an Action.
+
+Write steps add up quickly. For example, a workflow with 10 separate Snowflake `Update row` steps uses 10 Actions per record, so a run over 600 records uses 6,000 Actions. Combining those 10 updates into one `Update row` step uses 1 Action per record, or 600 Actions for the same run.
+
+A scheduled workflow charges again every time a run picks up the same record. If your workflow reads from a table on a schedule, make sure each record is marked as processed (or otherwise drops out of the query) after it runs, and test on one or two records before turning on a frequent schedule.
+
+To see what each step cost, open a run and read the per-step usage on its trace, or check the `Credits used` and `Actions used` columns for each workflow at `Settings` → `Usage` → `Workflows`.
+
+### Do credit budgets limit Actions in a workflow?
+
+No. A credit budget assigned to a workflow limits Data Credits only. Actions aren't capped by budgets, so a workflow keeps running and using Actions as long as its budget's Data Credit spend is under the limit. To keep Action usage in check, pause the workflow's triggers and track the `Actions used` column at `Settings` → `Usage` → `Workflows`. See [Credit budgets](https://university.clay.com/docs/credit-budgets).
 
 Have questions about Workflows? See [Workflows FAQs](https://university.clay.com/docs/workflow-faqs).
