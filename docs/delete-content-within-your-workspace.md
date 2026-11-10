@@ -58,6 +58,8 @@ When you restore a table, all of your row data and column configurations are ful
 
 When you restore a workbook, all of its tables are automatically restored as well.
 
+**Note:** Trash only holds tables and workbooks. Deleted workflows don't go to Trash and can't be restored — see [Can I restore a deleted workflow?](workflow-faqs.md#can-i-restore-a-deleted-workflow).
+
 ## Recover deleted rows
 
 If you accidentally delete a row within a table, a brief confirmation alert appears immediately after deletion — click **Undo** in that alert to restore the row before it disappears.

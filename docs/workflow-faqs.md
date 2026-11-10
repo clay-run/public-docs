@@ -20,6 +20,12 @@ Anyone with member access can create workflows, edit them, and run them. Deletin
 
 Access to Workflows itself is separate from your role: during open beta you turn it on by enrolling your workspace in the beta program from your workspace settings. If `Workflows` isn't in your left sidebar under `Orchestration` at all, check your enrollment there first. Your Growth Strategist or Clay support can help if it still doesn't appear.
 
+### Can I restore a deleted workflow?
+
+No — a deleted workflow can't be restored. Unlike tables and workbooks, deleted workflows don't go to Trash, and Clay has no restore option for workflows, so there's no way to bring one back yourself after you delete it. The `Delete workflow?` confirmation dialog warns you about this before you confirm: `This action cannot be undone.`
+
+If you deleted a workflow by mistake, you'll need to rebuild it from scratch as a new workflow.
+
 ### Which plans include Workflows?
 
 Workflows is available on every plan, including free and trial plans. On the modern Enterprise, Growth, and Launch plans it's available indefinitely, and legacy Enterprise customers keep it indefinitely as well — the time limit below applies only to the legacy self-serve plans.
