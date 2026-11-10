@@ -44,7 +44,7 @@ To check whether upgraded search is on in your workspace:
 
 1.  In the left sidebar, click **Find leads**.
 2.  Choose **Companies** or **People**.
-3.  In the top right of the search page, click the **gear icon** (Search settings).
+3.  At the top of the sidebar, click the **gear icon** (Search settings).
 4.  The dropdown shows the upgraded search toggle with a **Beta** badge:
     -   **Upgraded search is on** — "Custom queries across people, companies, & jobs." You're using upgraded search.
     -   **Upgraded search is off** — "Less filtering, limited flexibility." Click the toggle to turn upgraded search on.
@@ -52,8 +52,6 @@ To check whether upgraded search is on in your workspace:
 You can use the same toggle to switch upgraded search off and go back to the standard search. Clay remembers your choice the next time you open Find leads.
 
 **If you don't see the gear icon or the upgraded search toggle:** your workspace either doesn't have upgraded search yet, or is set up to always use upgraded search, in which case there's no toggle to switch it off. If a Clay course or your Clay contact asked you to confirm you have upgraded search and you can't tell, contact Clay support.
-
-**Upgraded search is not Find AI or Sculptor.** The **Find AI** integration is a deprecated third-party source, and Sculptor is Clay's go-to-market co-pilot that you chat with to build workflows. Neither one is upgraded search, so you don't need to add a Find AI source or open Sculptor to turn it on.
 
 ## Company search
 
