@@ -1,7 +1,7 @@
 ---
 title: Using Clay in Microsoft 365 Copilot
 description: How to find people, enrich contacts, and draft personalized outreach using the Clay agent within Microsoft 365 Copilot.
-last_synced: 2026-07-16T15:28:26.197Z
+last_synced: 2026-11-10T19:42:44.539Z
 ---
 
 # Using Clay in Microsoft 365 Copilot
@@ -18,7 +18,7 @@ Microsoft 365 Copilot is an AI assistant embedded across Microsoft's productivit
 
 1.  Go to the [**Clay listing in the Microsoft Marketplace**](https://marketplace.microsoft.com/en-us/product/WA200011257) and click **Get it now**, or find Clay in the **Agent Store** inside Microsoft 365 Copilot at [**aka.ms/m365\_copilot\_app**](https://aka.ms/m365_copilot_app).
 2.  Deploy the Clay agent to your organization through the [**Microsoft 365 Admin Center**](https://admin.microsoft.com/). IT controls deployment, access, and governance from there.
-3.  In your Clay workspace, go to `Settings → Team` and invite reps. Then set credit limits from `Settings → MCP users`, and enable any Functions you want them to use from the `Functions` tab.
+3.  In your Clay workspace, go to `Settings → Team` and invite reps. Then set credit limits from the `MCP` page, which you open from the sidebar on the Clay homepage, and enable any Functions you want them to use from the `Functions` tab.
 
 **For reps:**
 
@@ -93,7 +93,7 @@ Microsoft 365 Copilot will find the matching function, run it, and return the re
 
 ## **MCP settings for your team**
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [**MCP settings**](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `MCP` page. The `MCP` page is currently in beta and only appears in the sidebar for workspace admins in workspaces where it's enabled — if you don't see it, contact support. For a full walkthrough of the admin controls, see [**MCP settings**](https://university.clay.com/docs/mcp-settings).
 
 ## **FAQ**
 
@@ -115,4 +115,4 @@ If you need additional data points or more advanced workflows, access the full C
 
 **How do credits work in Microsoft 365 Copilot?**
 
-Credits are consumed at the same rate as using Clay directly — if a Function that finds an email and phone number costs 12 credits in a Clay table, it costs 12 credits when triggered from Microsoft 365 Copilot. Searching for people and companies is free; enrichments consume credits. Your workspace admin controls your credit limit from `Settings → MCP users`.
+Credits are consumed at the same rate as using Clay directly — if a Function that finds an email and phone number costs 12 credits in a Clay table, it costs 12 credits when triggered from Microsoft 365 Copilot. Searching for people and companies is free; enrichments consume credits. Your workspace admin controls your credit limit from the `MCP` page.
