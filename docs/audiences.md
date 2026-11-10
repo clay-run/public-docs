@@ -1613,9 +1613,33 @@ Two behaviors to keep in mind:
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
+### Can I delete a source from All People or All Companies?
+
+No. You can't delete a source, or the records it imported, from the **Sources** tab in Audiences (**All People** or **All Companies** → **Sources**). What the **⋮** menu on a source row shows depends on the source type, and no source type has a delete option:
+
+-   **Clay table import:** **View table**, which opens the Clay table the import came from.
+-   **CRM or data warehouse integration** (for example Salesforce, HubSpot, or Snowflake): workspace Admins see **Settings**, plus **Turn off import** when import sync is on and **Reconnect** when the connected account can be reconnected.
+-   **CSV upload:** no options.
+
+The source stays listed in the Sources tab.
+
+To remove the people or companies a source added, for example after you imported a Clay table of companies into All People by mistake:
+
+1.  In **All People** or **All Companies**, click **+ Filter**, choose **Sources**, keep the operator as **contains**, and select the source.
+2.  Click **Create segment** to save the filtered list as a named segment.
+3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+4.  Select **Archive records in segment**, or, to remove the records permanently, **Delete records in segment** (in beta and available only to workspace Admins).
+
+Archiving or deleting the records in Audiences doesn't change the original Clay table the source imports from. The table and its rows stay as they are. For the difference between archiving and deleting, see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below.
+
 ### How do I remove records from an audience?
 
-To remove records from your Audience, you archive them. Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
+You can remove records from your Audience in two ways:
+
+-   **Archive records (can be restored):** available to workspace Admins and Editors.
+-   **Delete records permanently (cannot be restored):** currently in beta and available only to workspace Admins. See **To permanently delete records (beta)** later in this section.
+
+Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
 
 **Note:** Removing a data source from your import settings (for example, disconnecting HubSpot from your Sources) does not remove the contacts or companies already imported — records persist in Audiences even after their source is removed. To remove those records, archive them manually using one of the methods below.
 
@@ -1642,7 +1666,24 @@ The fastest way to archive many records at once — for example, to remove all c
 3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
 4.  Select **Archive records in segment** and confirm. All records currently in the segment are moved to the Archived section and removed from all active segments.
 
-**Note:** **Delete list** in the same segment menu removes the segment from the sidebar but does not archive the records. Use **Archive records in segment** when you want to remove the contact or company records themselves.
+**Note:** **Delete segment** in the same segment menu removes the segment from the sidebar but leaves its records in place. Use **Archive records in segment** when you want to remove the contact or company records themselves.
+
+**To permanently delete records (beta):**
+
+Permanently deleting Audiences records is currently in beta, and only workspace Admins can do it. If you don't see **Delete records in segment** in the segment menu, contact Clay support to ask about enabling it for your workspace.
+
+1.  Save the records you want to delete as a segment, as in steps 1–2 of the bulk-archive instructions above. The delete option, like the archive option, appears only on saved segments.
+2.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+3.  Select **Delete records in segment**.
+4.  In the **Permanently delete people in this segment?** dialog (it says "companies" for a Companies segment), tick the confirmation checkbox and click **Delete permanently**.
+
+How permanently deleted records differ from archived records:
+
+-   **Deleting can't be undone.** Deleted records don't go to the **Archived** section, and you can't restore them from Clay.
+-   **A syncing source can bring a deleted record back.** If the record still exists in a source that keeps syncing, such as a connected CRM, a future sync can import it again as a new record. Archived records aren't re-imported this way. Use archiving to keep records out for good while the source keeps syncing, and use deleting for cleanup, such as removing test data or a source you imported by mistake.
+-   **The original source data is unchanged.** Deleting records in Audiences doesn't delete rows from the Clay table the source imports from, or records in your CRM.
+
+Workspace Admins with this beta can also delete records in two other places: **Delete record** in the **⋮** menu of a single record's detail panel, and **Delete records** in the **Archived** section.
 
 **Note:** Archived records can be restored from the **Archived** section in the left sidebar. Archiving a record also stops sources from updating it. If a source sends an archived record again — for example, when the underlying Salesforce record is modified and re-synced, or when a CSV import includes the same **Unique identifier** value — Audiences skips it. The record isn't created again as a new record, and it stays in **Archived**. For a source to update the record again, restore it from **Archived** first.
 
