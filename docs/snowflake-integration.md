@@ -231,10 +231,29 @@ Once your source is connected, toggle on `Import sync` to keep your Audiences da
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp changed; when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
+-   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp value is later than the start time of the last successful sync (see [Why didn't my Snowflake row sync even though its timestamp field updated?](#why-didnt-my-snowflake-row-sync-even-though-its-timestamp-field-updated)); when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
 -   **A full sync once a week** — refreshes all data and reconciles deleted records
 
 There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, update their timestamp field value in Snowflake so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
+
+#### Why didn't my Snowflake row sync even though its timestamp field updated?
+
+A Snowflake Audiences import with a timestamp field only picks up a row when the row's timestamp value is **later than the start time of Clay's last successful sync**. Clay doesn't remember each row's previous timestamp value — on every incremental sync it runs a single comparison, `timestamp field > start of last successful sync`, with no lookback window. So a changed timestamp isn't enough on its own: the new value also has to be later than Clay's checkpoint at the moment the row becomes visible in your table or view.
+
+This most often happens when your load job copies the upstream "last modified" time instead of the time the row is written into the table Clay reads. For example, on an Enterprise plan (incremental syncs every 15 minutes):
+
+1.  At 05:46, the account changes in your source system, and your pipeline stamps the row's `modified_at` with `05:46`.
+2.  Clay's incremental syncs keep running — for example at 05:49, 06:04, and 06:19 — and the row isn't in the table yet.
+3.  At about 06:30, the row lands in the Snowflake table, still stamped `05:46`.
+4.  Clay's next sync (06:34) only asks for rows where `modified_at` is later than 06:19. `05:46` fails that check, so the row is skipped — and keeps being skipped on every later incremental sync.
+
+Rows skipped this way are still picked up by the **weekly full sync**, which re-reads every row returned by your query regardless of the timestamp field, or as soon as their timestamp is updated again to a later time.
+
+**To fix this for rows that were already skipped:** in Snowflake, update the timestamp column on the affected rows to the current time — for example, `UPDATE your_table SET modified_at = CURRENT_TIMESTAMP() WHERE <condition for affected rows>;`. If your import query reads from a view, run the update on the underlying table. The next incremental sync picks those rows up.
+
+**To prevent this going forward:** set your timestamp column to the time each row is written into the table Clay reads (for example, `CURRENT_TIMESTAMP()` at insert or update time in your load job), rather than copying the upstream modified time.
+
+**Don't add `CURRENT_TIMESTAMP()` to the SQL query in your Clay import settings.** Selecting something like `CURRENT_TIMESTAMP() AS modified_at` in the Clay import query gives every row a timestamp of "now" at query time, so every row is re-imported on every sync — which defeats incremental syncing and increases your Snowflake warehouse usage. The Clay import query only reads from Snowflake; it can't update the timestamp values stored in your table.
 
 To check sync status or update settings, click `Add data` in your Audiences workspace, find the Snowflake integration, click the `⋯` menu, and select `Settings`.
 
