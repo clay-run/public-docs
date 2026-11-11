@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -154,7 +154,7 @@ When you enrich data within Clay, your results will be presented as arrays of da
 To create a new column with an endpoint from an enrichment (parent column):
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
-2.  Hover over the endpoint you want to map out and to the right click `Add as column`.
+2.  Hover over the endpoint you want to map out and to the right click `Add to column`.
 3.  In the **Add description as new column** section, enter your column description and click `Create column` to generate a new column.
 
 ### Map child columns to an existing column
@@ -162,12 +162,27 @@ To create a new column with an endpoint from an enrichment (parent column):
 To map an endpoint from an enrichment to an existing column:
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
-2.  Hover over the desired endpoint and click `Add as column` on the right.
+2.  Hover over the desired endpoint and click `Add to column` on the right.
 3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to. What happens depends on the destination column's current state:
     -   **If the destination column has no formula** (for example, values you entered manually or imported from a CSV), Clay replaces the column with a formula referencing the new source column. Clay shows a **"Data overwrite"** warning before proceeding. If you confirm, that column will be blank for any rows where the new source column is empty — including rows from a different source in a multi-source table. **This cannot be undone.**
     -   **If the destination column already has a formula**, Clay automatically applies a waterfall pattern — the new source column is appended as a fallback, so existing data is preserved.
 
 **To keep manually entered or CSV-imported data while also bringing in new enrichment data:** Instead of mapping to the existing column, use **Create new column** to extract the incoming field into a separate column. Then add a [Merge column](#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data.
+
+### Split an address into separate street, city, state, country, and ZIP code columns
+
+You can only create child columns from a cell that holds structured data, such as an enrichment or Use AI result. If your address lives in a plain **Text** or formula column (for example, an "Address Locations" column holding a string like `Brooklyn, NY 11222, US`), clicking a cell doesn't open a **Cell details** panel with sub-fields, so there's nothing to add as a column. Formulas that split the address by comma position also break when part of the address is missing (for example, no street) or when the address uses an international format.
+
+To get separate street address, city, state, country, and zip code columns from a text address, have a Use AI column parse the address into named output fields, then add each field as its own column:
+
+1.  Click `Add column` and select `Use AI`.
+2.  Switch to the `Configure` tab and choose the **Create or modify content** use case. Parsing an address doesn't need web access.
+3.  Write a prompt that tells the model to split the address into its parts by meaning rather than by comma position, and to leave a part empty when it isn't in the address. Insert your address column into the prompt by typing `/` and selecting the column. Text that only looks like `/Address Locations` (for example, pasted from somewhere else) isn't a column reference, and the model won't receive the address.
+4.  Open **Define outputs**, set **Output format** to **Fields**, and add one field for each part you want — for example, `streetAddress`, `city`, `stateOrRegion`, `country`, and `postalCode`.
+5.  Save and run the column.
+6.  Click any result cell in the Use AI column to open the **Cell details** panel. For each field, hover over it, click `Add to column`, and click `Create column`.
+
+Each address part, such as city or zip code, now appears in its own column and fills in for every row the Use AI column has run on. See [Use AI](use-ai-integration-overview.md) for more on prompts, models, and output fields.
 
 ### Circular dependency error
 
