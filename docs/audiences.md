@@ -1692,19 +1692,25 @@ Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or de
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+The Audiences record limit is a cap on the number of records your workspace imports into Audiences from CRM and data warehouse sources. Growth plans cap at 250,000 CRM/DWH records; Enterprise plans cap at 25,000,000.
 
-Records that count toward the limit:
+The Audiences record limit is a running total of the records currently imported, not a monthly or yearly allowance. It does not reset at the start of a billing period.
 
--   All records in **All People** (contacts and leads from any source)
--   All records in **All Companies** (accounts from any source)
+Records that count toward the Audiences record limit:
 
-Records that do **not** count:
+-   Records imported from a CRM: Salesforce Accounts, Contacts, and Leads; HubSpot Companies and Contacts
+-   Account and Contact records imported from a data warehouse (Snowflake, Google BigQuery, Databricks, or Amazon Redshift)
 
--   Archived records (moved to the Archived section; not counted toward the limit while archived)
+Records that do **not** count toward the Audiences record limit:
+
+-   Records added by CSV upload
+-   Records added from Clay People or Company search
+-   Records sent from a Clay table (including `Upsert Audiences Record`)
 -   Segment memberships (a record in 10 different segments still counts as one record)
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+**Launch plan:** Launch workspaces have no Audiences record limit. Launch doesn't include CRM or data warehouse sources, and records added by CSV upload, Clay search, or Clay table sends are not capped.
+
+**When your workspace reaches the Audiences record limit:** Clay blocks the CRM or data warehouse import instead of skipping records, and shows: `This import would exceed your plan's Audience record limit. Disable sync or narrow the query/source to import fewer records.` To import fewer records, narrow the source's query or object selection, or disable a sync you no longer need. To raise the limit, upgrade your plan.
 
 Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 
