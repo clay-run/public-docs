@@ -18,6 +18,7 @@ Cold outbound often requires sending a high volume of emails to inboxes that may
 From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
+    -   Choose your email provider using the **Gmail** / **Outlook** toggle at the top of this step. **Gmail** gives you Google Workspace mailboxes and **Outlook** gives you Microsoft 365 mailboxes.
     -   Each domain supports up to 5 email accounts.
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
@@ -67,6 +68,12 @@ For email accounts purchased directly through Clay, Clay manages the core sendin
 -   Monitoring domain deliverability and mailbox reputation — visible as the **Reputation** percentage next to each account in `Sequencer → Email Accounts`
 
 As with any outbound email program, deliverability also depends on factors such as list quality, sending volume, bounce rates, and recipient engagement.
+
+### **Can I manage or transfer the domains I buy through Clay?**
+
+Domains you buy through Clay are registered under Clay, and Clay manages their DNS for as long as they're in the service. You don't get direct registrar or DNS access to purchased domains.
+
+If you want to own a purchased domain yourself, contact Clay support to request a manual domain transfer. Clay coordinates the transfer with its email provisioning provider. A domain generally can't be transferred until at least 60 days after purchase.
 
 ### **How do I change the sender name or other details on a purchased email account?**
 
