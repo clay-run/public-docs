@@ -42,9 +42,14 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 
 **Create function from scratch:**
 
-1.  From the homepage, click on `Functions` in the sidebar.
-2.  Click on `+ New Function` on the top right.
-3.  This will create a blank function that you can directly edit, add inputs/outputs, etc.
+Creating a new custom function from scratch is available on paid plans, including Trial. Functions aren't available on the Free plan.
+
+1.  From the homepage, click `Functions` in the sidebar.
+2.  Click `New` in the top right. (If a menu appears, select `Function`.)
+3.  The **Browse Clay managed functions** window opens. Click `Create from scratch` at the bottom left of the window.
+4.  Clay creates a blank table function named "New Function" and opens it so you can edit it directly: rename it, and add inputs, outputs, and columns.
+
+**Create a function by duplicating an existing one:** To make a second version of a function you already have (for example, the same enrichment logic with different formulas or a different destination), duplicate it instead of starting from scratch. See [How do I duplicate a function within my workspace?](#how-do-i-duplicate-a-function-within-my-workspace).
 
 ## Calling a function from a table
 
