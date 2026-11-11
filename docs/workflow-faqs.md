@@ -36,7 +36,7 @@ Tables are still the better fit when you want cell-by-cell visibility on a worki
 
 ### How do Workflows and Audiences work together?
 
-Audiences holds the records and the segments; Workflows acts on them. The usual shape is a loop — a record enters a segment, that starts a run, the run does its work, and `Update audience members` writes the result back to the profile.
+Audiences holds the records and the segments; Workflows acts on them. The usual shape is a loop — a record enters a segment, that starts a run, the run does its work, and `Write to Audiences` writes the result back to the profile.
 
 That write-back is what makes the loop useful. Results land on the record rather than in the run, so a field a workflow produced is immediately available as a filter in every other segment, including segments that trigger other workflows. Keeping Audiences as the source of truth is also what lets separate runs coordinate at all.
 
@@ -74,7 +74,7 @@ A step reads from one source at a time, so joins happen a step later rather than
 
 Each run is fully independent, which is exactly what lets a batch process thousands of records at once without them queueing behind each other. The trade-off is that a run can't read another run's output.
 
-When two runs genuinely need to see the same state, keep that state in Audiences: have the first run write it with `Update audience members`, and have the second read it off the record. Audiences is the shared memory between runs.
+When two runs genuinely need to see the same state, keep that state in Audiences: have the first run write it with `Write to Audiences`, and have the second read it off the record. Audiences is the shared memory between runs.
 
 ### Can I run just part of a workflow?
 
