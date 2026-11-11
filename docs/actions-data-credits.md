@@ -501,6 +501,19 @@ Unused trial Data Credits do not roll over. What happens to them depends on whet
 
 To get the most out of your trial credits, use them before your trial ends.
 
+### Why does my trial say "Your trial actions are almost exhausted" when I still have Data Credits left?
+
+Clay trials track two separate balances: **Actions** and **Data Credits**. The banner *"Your trial actions are almost exhausted. To continue using Clay, upgrade your plan."* is about your trial **Actions** balance, not your Data Credits. You can have hundreds of Data Credits left (for example, "507.1 / 1K credits available") and still see this banner, because the two balances are used up independently.
+
+-   **When the banner appears:** once your remaining trial Actions drop to 15% or less of your trial's Actions limit. When no Actions are left, the banner changes to *"You've exhausted your trial actions. To continue using Clay, upgrade your plan."* Similar banners appear for trial Data Credits ("Your trial credits are almost exhausted").
+-   **What happens when trial Actions run out:** enrichments, AI runs, and other Action-consuming steps stop running, even if you still have Data Credits. Affected cells show **"Action execution limit reached"**.
+-   **Where to see your Actions balance:** the **Credits** button in the top bar shows Data Credits only. To see your remaining Actions, click `See usage` in the banner, or go to `Settings` → `Usage`. The **Actions** section there shows how many Actions your trial plan includes and how many are left.
+
+**To keep using Clay after your trial Actions run out, choose one of these options:**
+
+-   **Upgrade to a paid plan** in `Settings` → `Plan & billing` (or click `View plan options` in the banner).
+-   **Extend your trial.** Extending your trial resets your trial Actions to the full trial amount and adds 500 bonus Data Credits. You can extend once yourself at [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/). After that, contact [Clay support](https://app.clay.com) through the in-app chat. See [Plans & billing](plans-and-billing.md) for details on trial extensions.
+
 ### Does CSV export consume an Action?
 
 No. Exporting data to CSV does not consume an Action or any Data Credits. CSV export is a simple data download operation and does not count as platform usage or GTM execution.
