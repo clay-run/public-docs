@@ -1300,33 +1300,21 @@ No. The Audiences export to Salesforce never sends blank values. Before each exp
 
 With **Always write**, Clay replaces an existing Salesforce value only with a non-blank Audiences value.
 
-**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export. To clear Audience fields from a workflow, see [How do I clear a field on an Audience record from a workflow?](#how-do-i-clear-a-field-on-an-audience-record-from-a-workflow) below.
+**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export. If your Audiences workflow step has no write rule option, see [Why doesn't my Audiences workflow step show a Write rule option?](#why-doesnt-my-audiences-workflow-step-show-a-write-rule-option) below.
 
-### How do I clear a field on an Audience record from a workflow?
+### Why doesn't my Audiences workflow step show a Write rule option?
 
-To clear (erase) a text, date, or other field on an existing Audience record from a Clay workflow, set that field's **Write rule** to **Always** in the Audiences step's field mapping, and map the field to a blank value. Turning off **Ignore blank values** on its own does not clear an Audience field.
+The Audiences workflow **Write rule** options (**If workflow value is present**, **If Audience field is empty**, and **Always**) are available only on Audiences write steps whose **Field mapping** (**Save your data to Audiences**) has a **Write rule** column. Older Audiences workflow steps have no write rules. These include the **Update Audiences record** step and Audiences write steps added to a workflow before write rules were introduced. Older Audiences steps always skip blank values, even with **Ignore blank values** turned off, so they can't clear a field on an Audience record.
 
-1.  Open the workflow and click the step that writes to Audiences (the **Upsert Audiences record** action).
-2.  Open the step's **Field mapping** (**Save your data to Audiences**). Each mapped row has a **Workflow field**, an **Audience field**, and a **Write rule**.
-3.  For each Audience field you want cleared, set the **Write rule** to **Always**.
-4.  Map that row's workflow field to a blank value, such as a static empty value.
-5.  Save the step and re-run the workflow, then open the record in Audiences to confirm the field is now empty.
+An older Audiences workflow step can't be upgraded in place. To get write rules, for example to clear a field by setting its write rule to **Always** and mapping it to a blank value:
 
-The following table lists the three write rules for a workflow writing to an Audience record and whether each one can clear a field:
+1.  Delete the older Audiences step from the workflow.
+2.  Add a new Audiences write step to the workflow canvas.
+3.  Open the new step's **Field mapping**. Each row now shows a **Workflow field**, an **Audience field**, and a **Write rule**.
+4.  Map your fields again, set each field's write rule, save the step, and re-run the workflow.
+5.  Open the record in Audiences to confirm the values changed.
 
-| Write rule | What it does | Clears existing data? |
-| --- | --- | --- |
-| **If workflow value is present** (default) | Overwrites the Audience field, unless the workflow value is empty. | No — existing data is never erased. |
-| **If Audience field is empty** | Only writes if the Audience field is currently empty. | No |
-| **Always** | Overwrites the Audience field with any workflow value, blanks included. | Yes |
-
-Every newly mapped field starts on **If workflow value is present**, so blank workflow values are skipped by default. With **Always**, blank values are written even if **Ignore blank values** is turned on. Only set **Always** on fields you intend to clear or fully overwrite, because a blank workflow value erases the existing Audience value.
-
-**My Audiences workflow step has no Write rule option.** Older Audiences steps — including the **Update Audiences record** step and Audiences write steps added to a workflow before write rules were introduced — have no write rules. These older steps always skip blank values, even with **Ignore blank values** turned off, so they cannot clear a field. An existing step can't be upgraded in place: delete the old step, add a new Audiences write step to the workflow canvas, and the new step's field mapping includes the **Write rule** column.
-
-**Why does my workflow run show success but the Audience value didn't change?** The **Fields Updated Count** in the step's output counts the fields the workflow sent to Audiences, not the fields whose stored value actually changed. A run with the default **If workflow value is present** write rule can report every field as updated while blank values left the existing Audience data in place.
-
-**Can I run the Audiences write action from the Clay CLI?** No. The Audiences write actions only run from a Clay table column or a workflow step. Running one directly, for example from the CLI, fails with an error such as "Upsert Segment Record can only be run from an action cell or workflow tool node".
+**Why does my Audiences workflow run show success when the Audience value didn't change?** The **Fields Updated Count** in an Audiences step's output counts the fields the workflow sent to Audiences, not the fields whose stored value changed. A step that skips blank values — an older Audiences step, or a step using the default **If workflow value is present** write rule — can report every field as updated while the existing Audience values stay in place.
 
 ### How do I make my Salesforce export conditional on a field match?
 
