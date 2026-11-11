@@ -105,6 +105,14 @@ Enhanced matching needs at least one of a professional profile URL or a work ema
 
 The top-ranked one — the hash with the most provider agreement behind it. The other two stay on the contact in Audiences and still go to every other destination in the same sync, so adding LinkedIn Ads to a sync doesn't cost you the other identifiers.
 
+### Can I delete the Hashed email 1, 2, and 3 fields from my data hub?
+
+No. `Hashed email 1`, `Hashed email 2`, and `Hashed email 3` are default fields that Clay adds to the People data hub in every Audiences workspace, because they're where Enhanced matching stores the hashed emails it finds. Like Clay's other default fields, the hashed email fields don't show a **Delete field** button in the **Data hub**, and they can't be removed — even when a CRM import, such as a Salesforce source, wrote values into them.
+
+The hashed email fields are hidden in the People view by default. If one is showing and you want it out of the way, click its column header and select **Hide**.
+
+Deleting a source from Audiences doesn't clear the values that source already wrote into `Hashed email 1`, `Hashed email 2`, or `Hashed email 3`. Values stored in these fields stay on the contact and can be sent to ad platforms by later contact syncs, so check them before you run an ad sync if a source may have filled them in by mistake.
+
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
