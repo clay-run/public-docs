@@ -263,5 +263,5 @@ Rows written by **Add row** end up out of order or mixed together for these reas
 To keep rows written by the **Add row** step together and in order:
 
 1.  **Keep the sheet as one clean table.** Put headers in row 1, leave no blank rows or columns, keep nothing below the data, and don't rename or reorder headers while runs are active. After changing headers, wait at least 3 minutes before writing again.
-2.  **Map a sort key.** Add a column such as a row number or a unique person ID (for example, LinkedIn URL) to the sheet and map it in the **Add row** step, so you can sort the sheet back into input order and group each person's rows together.
+2.  **Map a sort key.** Add a column such as a row number or a unique person ID (for example, email address or profile URL) to the sheet and map it in the **Add row** step, so you can sort the sheet back into input order and group each person's rows together.
 3.  **Turn on batching in the workflow.** On the Google Sheets **Add row** step, turn on **Run in batches** and set **Number of runs per batch** (up to 100). Records in the same batch are written in a single append, so they land together as one block of rows. Separate batches and overlapping workflow runs can still arrive in any order, so keep the sort key from step 2 if you need strict ordering.
