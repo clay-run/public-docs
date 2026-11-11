@@ -12,12 +12,38 @@ Import records from BigQuery into Clay using SQL queries, and send enriched data
 
 Google BigQuery is a fully managed, serverless data warehouse built for large-scale analytics. With this integration, you can import records from BigQuery into Clay using SQL queries, and send enriched data back by inserting, looking up, updating, or upserting rows in your BigQuery tables.
 
+## Get a service account JSON key for BigQuery
+
+Clay connects to Google BigQuery with a Google Cloud service account JSON key file. You create this key in Google Cloud, not in Clay. If you don't manage your company's Google Cloud project, ask whoever does (often your data, IT, or security team) to create the key for you.
+
+To create a service account JSON key for the Clay BigQuery integration:
+
+1.  In Google Cloud, go to **IAM & Admin** → **Service Accounts** and create a service account in the Google Cloud project that contains your BigQuery dataset.
+2.  Grant the service account these IAM roles:
+    -   `BigQuery Job User` on the project, so Clay can run queries.
+    -   `BigQuery Data Editor` on the dataset, so Clay can insert, update, and upsert rows. If you only import or look up data in Clay, `BigQuery Data Viewer` is enough.
+3.  Open the service account, go to **Keys** → **Add key** → **Create new key**, choose **JSON**, and download the file.
+4.  In Clay, open the Google BigQuery source or enrichment, click `Add account` under `Select Google BigQuery account`, and upload the JSON file.
+
+For more detail on the Google Cloud side, see [Google's service account docs](https://developers.google.com/workspace/guides/create-credentials#service-account).
+
+## Connect BigQuery datasets in another Google Cloud project
+
+Each Google BigQuery account in Clay is tied to one Google Cloud project: the `project_id` in the service account JSON key file. The `Dataset ID` dropdown, and the Insert, Lookup, Update, and Upsert row actions, only work with datasets in that project. There is no separate project ID setting in these actions.
+
+To connect a new BigQuery dataset when you already have a Google BigQuery account in Clay:
+
+-   **Dataset in the same project as your existing key:** grant your existing service account access to the new dataset in Google Cloud IAM. You don't need a new key.
+-   **Dataset in a different project:** create a service account and JSON key in the project that contains the dataset (see [Get a service account JSON key for BigQuery](#get-a-service-account-json-key-for-bigquery)), then add it in Clay with `Add account`.
+
+You can keep your existing Google BigQuery connection. Clay supports multiple Google BigQuery accounts in one workspace, and you pick the account for each source or enrichment column under `Select Google BigQuery account`.
+
 ## Create a table with Google BigQuery
 
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Google BigQuery` and select it from the results.
 3.  In the modal, you will be asked to `Select Google BigQuery account`.
-    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. Follow the prompts to assign the required IAM roles, or use [Google's service account docs](https://developers.google.com/workspace/guides/create-credentials#service-account).
+    -   If you haven't connected BigQuery yet, click `Add account` and upload your service account JSON key file. If you don't have a key yet, see [Get a service account JSON key for BigQuery](#get-a-service-account-json-key-for-bigquery).
 
 ### `Source` Import data from BigQuery
 
@@ -35,7 +61,7 @@ Imports records from Google BigQuery into a Clay table using a custom SQL query.
 1.  While in a Clay table, click `Add enrichment` and search for `Google BigQuery`.
 2.  Under `Integrations`, select one of the options.
 3.  In the modal, you will be asked to `Select Google BigQuery account`.
-    -   If you haven't already connected your Google BigQuery account, click `+ Add account` and upload your service account JSON key file.
+    -   If you haven't already connected your Google BigQuery account, click `Add account` and upload your service account JSON key file.
 
 ### `Action` Insert row into BigQuery
 
