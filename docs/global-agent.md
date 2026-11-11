@@ -91,7 +91,7 @@ The two permission levels you can pick are:
 
 | Level | Subtitle in the picker | What it allows |
 | --- | --- | --- |
-| Ask for approval (default) | Pauses before runs, sends, and deletes | The global agent builds and edits freely. It waits for your approval before it runs, sends, publishes, or deletes anything — including test data runs. |
+| Ask for approval (default) | Pauses before runs, sends, and deletes | The global agent builds and edits freely. It waits for your approval before most runs, sends, publishes, and deletes — including test data runs. See the lists below for exactly what waits and what doesn’t. |
 | Allow everything | Won’t stop to ask permission | Nothing waits for approval, including workflow runs, sends, and deletions. |
 
 **Note: a task or schedule set up before `View only` was retired still shows it.** Nothing breaks, and saving a change to that task or schedule means picking one of the two levels above.
