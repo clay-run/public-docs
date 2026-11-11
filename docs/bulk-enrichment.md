@@ -20,7 +20,7 @@ The archived run view loads up to 1,000 rows. The toolbar shows how many rows ar
 
 ## How do I reuse data from a bulk enrichment's archived run in another table?
 
-To reuse enriched values from a bulk enrichment's archived run — for example, a company's LinkedIn headquarters — without re-running the enrichment on every record, export the archived run and write the values to your Audience records from a Clay table. The **Update Audiences record** action requires Audiences on your workspace (Launch, Flex, Growth, and Enterprise plans).
+To reuse enriched values from a bulk enrichment's archived run — for example, a company's headquarters location — without re-running the enrichment on every record, export the archived run and write the values to your Audience records from a Clay table. The **Update Audiences record** action requires Audiences on your workspace (Launch, Flex, Growth, and Enterprise plans).
 
 1.  Open the archived run and click **Export full archive** to download it as a CSV file.
 2.  Remove any columns you don't need from the CSV, but keep the **Audiences ID** column. Clay uses the Audiences ID to find the record to update.
