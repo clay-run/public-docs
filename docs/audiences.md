@@ -1476,6 +1476,19 @@ The 24-hour export schedule is fixed and cannot be triggered manually. Two optio
 -   **Export a single record on demand (admin-only):** Open any record in Audiences and click **Export** in the top right of the record panel. This sends that record to Salesforce immediately, without waiting for the next scheduled sync. The button appears only when the record has a Salesforce export configured.
 -   **Export many records immediately:** Add a **Salesforce Update Record** action to a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) above.
 
+### Why is the Company column blank on my People records, and why can't I map a Company field from Salesforce?
+
+In a People audience, the **Company** column isn't a regular field that you map. Company is Clay's built-in link between a person record and a company record in your Companies audience. That's why Company doesn't appear in the Salesforce Contacts field mapping dropdown. Mapping a text field instead, such as a custom "Clay Company Name" field, brings the company name in as text but doesn't create the Company link, so the Company column stays blank.
+
+For Salesforce Contacts, Clay creates the Company link automatically. There's no company key setting to configure. Clay reads each Contact's `AccountId` and links the person to the company record whose Salesforce Account `Id` exactly matches it. The Company column fills in when both of the following are true:
+
+1. **Your Salesforce Accounts are imported into Audiences.** The company records, and the Salesforce Account `Id` that each person is matched against, come from an Accounts import on your Salesforce source. If you haven't added one, click **Add records** in your Salesforce source settings and select **Account** (see [Importing from Salesforce](#importing-from-salesforce) above). If your Accounts import was removed or the company records were archived, people can't be linked to those companies until the companies are restored or imported again.
+2. **The Contact has an Account in Salesforce.** A Contact with an empty `AccountId` has no company to link to. If you import Contacts with a SOQL record subset, the query must include `AccountId`.
+
+You don't need to re-import your Contacts after you add your Accounts. Clay links people to their companies in the background once the matching company records exist, and the Company column then fills in on its own.
+
+**Salesforce Leads aren't linked to a company.** Salesforce Leads don't have an `AccountId` field, so the Company column stays blank for people imported from a Leads import, even when your Accounts are imported. To filter Lead records by company details, map the Lead's own company fields instead. For details, see [How do I access Account-level fields (like Company Name or Company Domain) from a People audience?](#how-do-i-access-account-level-fields-like-company-name-or-company-domain-from-a-people-audience) below.
+
 ### How do I access Account-level fields (like Company Name or Company Domain) from a People audience?
 
 When you import Salesforce Contacts into a People audience, only fields from the **Contact object** are available as columns — Account-level fields (Company Name, Company Domain, and any custom Account object fields) are not included automatically, even if the Contact has a linked Salesforce Account.
