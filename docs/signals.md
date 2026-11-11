@@ -282,6 +282,26 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
 
+### Why is the "View results" button missing from my signal card in the Signals panel?
+
+In the **Signals** panel on an Audience segment, a signal card hides its **View results** button once the signal has used 80% or more of its credit spend limit. Your signal results are still there and are not deleted. The card shows a credit warning where the **View results** button normally appears:
+
+-   **80% or more of the limit:** "This signal is nearing its credit limit. Edit signal to reset spend or increase limit."
+-   **100% of the limit:** "Credit spend limit reached. Edit signal to reset spend or increase limit."
+
+**Signal credit spend limits are currently in beta** and may not be available in every workspace.
+
+The credit warning can appear on both active and paused signals, because pausing a signal does not reset its credit spend. A signal's credit spend also doesn't reset on its own. It keeps counting until someone clicks **Reset spend**. The **Results (last 90 days)** count on the signal card still shows how many results exist, but you can't click it to open them.
+
+To bring back the **View results** button, reset the signal's credit spend or raise its credit limit (you must be a workspace admin to manage signal credit limits):
+
+1.  On the signal card, click the credit warning, or click the `⋯` menu → **Edit signal**.
+2.  Open the **Credit spend limit** section.
+3.  Click **Reset spend** to set the signal's credit spend back to 0, or enter a higher number in the **Credit limit** field.
+4.  Save the signal.
+
+Once the signal's credit spend is below 80% of its credit limit, the warning clears and the **View results** button shows on the signal card again. If the warning says "Contact admin to reset spend or increase limit" instead, you don't have permission to change signal credit limits. Ask a workspace admin to reset the spend or raise the limit.
+
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
 Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
