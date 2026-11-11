@@ -1425,11 +1425,11 @@ This means: if you clear or change a field in Salesforce that was previously pop
 
 **Note:** If your workspace requires Salesforce values to always take precedence over enriched values for a given field, contact Clay support — a workspace-level field precedence configuration is available.
 
-### How do I clear (blank out) a field on Audience records, like the LinkedIn URL?
+### How do I clear (blank out) a field on Audience records, like the professional network URL?
 
 To blank out a field on Audience records, use a workflow that writes an empty value to the field with the **Always** write rule. Clearing the value in Salesforce (or another connected source), or writing a blank from a Clay table, does not empty the field in Audiences.
 
-**Why clearing the field in Salesforce doesn't blank it in Audiences:** When Audiences decides which value to show for a field, it ignores empty values from every source. If any other source (or another record from the same source, such as a second Salesforce Contact) still has a value for that field, Audiences keeps showing that value. A value written by a workflow or a table action also outranks Salesforce. For more on that, see [I changed a field value in Salesforce but it's not updating in Clay](#i-changed-a-field-value-in-salesforce-but-its-not-updating-in-clay). For person fields such as LinkedIn URL, Audiences can also fill the field from Clay's people data when your own sources leave it empty. See [Why does a contact in my audience show a professional network URL for a different person?](#why-does-a-contact-in-my-audience-show-a-professional-network-url-for-a-different-person). There is no setting that makes blanks from Salesforce or another source clear the field in Audiences automatically.
+**Why clearing the field in Salesforce doesn't blank it in Audiences:** When Audiences decides which value to show for a field, it ignores empty values from every source. If any other source (or another record from the same source, such as a second Salesforce Contact) still has a value for that field, Audiences keeps showing that value. A value written by a workflow or a table action also outranks Salesforce. For more on that, see [I changed a field value in Salesforce but it's not updating in Clay](#i-changed-a-field-value-in-salesforce-but-its-not-updating-in-clay). For person fields such as the professional network URL, Audiences can also fill the field from Clay's people data when your own sources leave it empty. See [Why does a contact in my audience show a professional network URL for a different person?](#why-does-a-contact-in-my-audience-show-a-professional-network-url-for-a-different-person). There is no setting that makes blanks from Salesforce or another source clear the field in Audiences automatically.
 
 **Why turning off "Ignore blank values" in a table doesn't clear the field:** When you write to Audiences from a Clay table or workbook with **Ignore blank values** turned off, Clay sends the blank values, but a blank sent from a table still doesn't clear the Audience field. Audiences keeps the existing value. The table action has no per-field write rule. The **Always** write rule that clears fields is available only in workflows.
 
@@ -1437,13 +1437,13 @@ To blank out a field on Audience records, use a workflow that writes an empty va
 
 1.  Create a workflow that runs on the records you want to update. For example, [connect a workflow to a segment](#connecting-a-workflow-to-a-segment) containing those records.
 2.  Add a step that outputs an empty value for the field, for example a code step that returns a blank value.
-3.  In the step that writes to Audiences, open **Field mapping** and map the blank workflow field to the Audience field you want to clear (for example, **LinkedIn URL**).
+3.  In the step that writes to Audiences, open **Field mapping** and map the blank workflow field to the Audience field you want to clear (for example, the person's professional network URL field).
 4.  Set the **Write rule** for that mapping to **Always**, then click **Save**.
 5.  Run the workflow. On each record's **Fields** tab, the cleared field now shows **—** (empty).
 
 If the field still shows a value after the run, check that the mapping's write rule is **Always**. The default write rule skips blank values.
 
-**A cleared field can fill in again later.** Clearing a field with the **Always** write rule removes every value written to that field before the clear. If any source writes a new value after the clear, Audiences shows that new value. For person fields such as LinkedIn URL, that includes Clay's people data: when the record syncs again, for example on the next Salesforce sync, Clay's people-data match can fill the field again if it has a value for that person.
+**A cleared field can fill in again later.** Clearing a field with the **Always** write rule removes every value written to that field before the clear. If any source writes a new value after the clear, Audiences shows that new value. For person fields such as the professional network URL, that includes Clay's people data: when the record syncs again, for example on the next Salesforce sync, Clay's people-data match can fill the field again if it has a value for that person.
 
 The workflow **Write rule** dropdown has three options:
 
