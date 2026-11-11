@@ -50,6 +50,7 @@ Enter the **Company Domain** search for the tech stack.
 
 Optionally, apply filters for **Keyword or Category** and **Last Detected Date** to narrow results, and use toggles to refine the search criteria as needed:
 
+-   **Last Detected Date Filter** — Only returns technologies that BuiltWith last detected on or after the date you enter. Accepts a specific date (e.g., "2025-01-01") or a relative date (e.g., "5 days ago").
 -   **Only Return Exact Technology Names?** — When enabled, only technologies whose name exactly matches your keyword are returned. Useful when you want to confirm a company uses a specific product (e.g., "Salesforce") without returning related products (e.g., "Salesforce IQ").
 -   **Use Description in Keyword or Category Match?** — When enabled, keyword matching also checks the technology's description, not just its name. Enabled by default.
 -   **Show additional fields** — Returns first and last detected dates, tags, and whether the technology requires a premium BuiltWith account to view. Enabled by default.
@@ -61,6 +62,17 @@ Auto-update: BuiltWith will automatically enrich any new rows that get added to 
 Conditional runs: To run enrichment only under specific conditions, use formulas that trigger the column when the formula is true. See [this Clay University lesson](<https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101#:~:text=Conditional runs \(which make use,personal emails for all rows\).\)>).
 
 If needed, you can later break out entries from the list format using [Send Table Data](https://university.clay.com/docs/send-table-data) (choose **Send row for each item in a list**).
+
+## How often are BuiltWith "first detected" and "last detected" dates updated?
+
+The **First Detected** and **Last Detected** dates in BuiltWith **Find Technology Stack** results come directly from BuiltWith's own dataset. They are BuiltWith's crawl dates — the date BuiltWith first saw a technology on the website and the date it most recently saw it. They are **not** the date your Clay column ran, and Clay does not change or recalculate them.
+
+What this means in practice:
+
+-   **Running or re-running the Find Technology Stack column does not reset the dates to today.** Each run requests fresh results from BuiltWith and returns whatever detection dates BuiltWith currently has on record.
+-   **The Last Detected date only moves forward when BuiltWith's crawler sees the technology on the site again.** If BuiltWith hasn't re-crawled the site since your last run, re-running the column returns the same dates.
+-   **Results can include technologies a company no longer uses.** BuiltWith returns its detection history for the domain, with no separate "currently live" flag. To focus on technologies seen recently, set the **Last Detected Date Filter** (for example, "90 days ago") so older detections are excluded.
+-   **The dates only appear when Show additional fields is enabled.** This toggle is on by default; if your results don't show First Detected or Last Detected, open the column settings and turn **Show additional fields** back on.
 
 ## Finding all companies that use a specific technology
 
