@@ -122,6 +122,27 @@ To analyze, score, or act on signal results, run the signal from a Clay table in
 -   **Earliest publish date advances each run.** The signal's date floor moves forward after each run by default, so earlier articles become unreachable. If you want to cover a specific time window, open the signal column header → **Edit signal** → **Filter results** → set **Earliest publish date** to the start of the window you need.
 -   **Credit limits on AI columns.** If your source table receives new rows automatically (for example, via a recurring source or [Send Table Data](send-table-data.md)), set a credit limit on any AI columns in the results table to avoid unexpected charges as new rows auto-run.
 
+### Why is the "View results" button missing from my signal card on an Audience?
+
+The signal results are still there. On the **Signals** panel of an Audience segment, each signal card has one footer spot. That spot shows either the **View results** button or a credit limit message, never both. When a signal has a credit limit set and has used **80% or more** of that limit, the credit message replaces the **View results** button. Signals below 80% of their limit, or with no credit limit set, still show **View results**. This includes paused signals.
+
+The signal card shows one of these credit limit messages:
+
+-   **Nearing the limit (80% or more):** "This signal is nearing its credit limit. Edit signal to reset spend or increase limit."
+-   **Limit reached (100% or more):** "Credit spend limit reached. Edit signal to reset spend or increase limit." When a signal goes over its credit limit, it is automatically paused.
+
+Non-admin members see "Contact admin to reset spend or increase limit" instead, because only workspace admins can manage a signal's credit limit.
+
+**To bring back the View results button on a signal card (workspace admins only):**
+
+1.  On the signal card, click the **⋯** menu and select **Edit signal**. You can also click the arrow on the right of the credit limit message, which opens the same Edit signal panel.
+2.  In the **Credit spend limit** section, do one of the following:
+    -   Click **Reset spend** to set the signal's credit spend back to zero.
+    -   Enter a higher value in the **Credit limit** field.
+3.  Save your changes. The credit limit message clears and the **View results** button appears again on the signal card.
+
+A signal's credit limit is a running total, not a monthly allowance. Credit spend does not reset on its own each month. It goes back to zero only when an admin clicks **Reset spend**.
+
 ### My New hire signal on a company audience shows only one person per company — how do I get all the individual new hires?
 
 When a New hire signal runs on a company audience, the audience view shows only the most recent new hire per company, along with a count of how many were detected. This is a display constraint: a company record can hold one value per field, so multiple hires at the same company cannot all appear in the same column.
