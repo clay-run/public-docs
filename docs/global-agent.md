@@ -180,6 +180,18 @@ Yes. Select `Dictate`, the microphone in the message box, and speak. It works wh
 
 When you finish, what you said lands in the message box as text you can edit, and nothing sends until you send it. A recording finishes on its own after five minutes.
 
+### Why did the global agent give me a CSV to download instead of creating a table?
+
+The global agent can’t create or edit a Clay table, so when you ask it for a list — contacts or companies a workflow found, for example — it delivers the results as a CSV file in the conversation instead of adding them to a table. The file appears as a card in the task with the file name and a `Download` button.
+
+To get the global agent’s CSV into a new Clay table:
+
+1.  Select `Download` on the file card in the task to save the CSV.
+2.  On your workspace home, select `Import data`, then choose `Import CSV`.
+3.  Upload the file. A new table from a CSV doesn’t need column mapping — Clay adds each column in the CSV as a column in the new table.
+
+If you’d rather add the rows to a table you already have, open that table and import the CSV there instead; in that case you map the CSV’s columns to the table’s fields. The global agent’s CSV is a standard file, so it imports the same way as any other CSV. See [How to import your CSV into Clay](csv-import-overview.md) for the full import options.
+
 ### Why don’t I see `Agent` in my workspace?
 
 The global agent is rolling out gradually during Beta, so you may not see it yet even once it has reached other people.
