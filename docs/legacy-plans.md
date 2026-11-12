@@ -138,7 +138,7 @@ Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on mod
 
 **Can legacy annual customers renew early?**
 
-Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or support intervention, which may be used as an upsell opportunity to Enterprise.
+Not from your billing settings. Legacy Starter, Explorer, and Pro annual plans can't renew early themselves. Self-serve early renewal for Starter and Explorer annual plans ended on April 11, 2026; Pro annual plans aren't eligible for self-serve early renewal. Self-serve early renewal is only available on annual Launch and Growth plans. To renew a legacy annual plan early, contact [Clay support](https://app.clay.com) or your Growth Strategist. For how self-serve early renewal works on modern plans, see [Can I renew my annual plan early?](./plans-and-billing.md#can-i-renew-my-annual-plan-early).
 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 

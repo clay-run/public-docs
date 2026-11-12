@@ -189,6 +189,30 @@ Upgrading also resets your billing cycle to the date of the upgrade — for exam
 
 If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
 
+### Can I renew my annual plan early?
+
+Workspaces on an annual **Launch** or **Growth** plan can renew early from their own billing settings. Self-serve early renewal isn't available on monthly plans, Enterprise plans, or legacy plans (Starter, Explorer, and Pro).
+
+To renew your annual plan early:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  Navigate to `Plans & billing`.
+3.  Click the `Plan options` dropdown and select `Renew current plan`.
+4.  In the **Are you sure you want to renew now?** dialog, review how many new Data Credits and Actions you'll get and how many unused credits will roll over. Then click `Continue to renew`. To move to a bigger plan instead, click `Upgrade instead`.
+5.  Confirm the payment on the checkout page that opens.
+
+**How early renewal works:** Early renewal starts a new annual term on the day you renew. Your payment method is charged when you confirm checkout. Your plan's full annual Data Credits and Actions are added right away. Unused Data Credits roll over up to your plan's rollover cap, and the confirmation dialog shows the exact number of credits that will carry over.
+
+**Why don't I see `Renew current plan`?** The `Renew current plan` option only appears in `Plan options` when all of the following are true:
+
+-   You're on an annual Launch or Growth plan.
+-   Your plan is paid by card (charged automatically), not by invoice.
+-   Your remaining Data Credit balance is below your rollover cap. On standard annual plans, that cap is 15% of your annual Data Credit allotment. For example, on a 100,000-credit annual plan, the option appears once your balance drops below 15,000 credits.
+-   Your plan isn't set to cancel at the end of the billing cycle.
+-   You don't have a pending plan change, such as a scheduled downgrade.
+
+If the option doesn't appear, or you want a different start date or to pay by invoice, contact [Clay support](https://app.clay.com) or your Growth Strategist to arrange the renewal.
+
 ### What if I need more actions or data credits?
 
 **Actions:** Actions cannot be purchased as one-time top-ups — they represent fixed platform capacity tied to your action tier. To increase your Actions limit, you must upgrade to a higher action tier in `Settings` → `Plans & billing`.
