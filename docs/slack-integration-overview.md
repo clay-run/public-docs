@@ -309,9 +309,22 @@ Clay uses two separate Slack apps. Each one needs its own approval from your Sla
 | Slack app name | Used for | Where you connect it in Clay |
 |---|---|---|
 | **Clay** | Slack actions in your tables: **Send message to channel**, **Send for approval to Slack channel**, **Find Slack user by email**, **Find list of channel members**, and **Get channel ID from channel name** | **Settings → Connections → + Create → Slack**, or **Add enrichment → Slack → + Add account** in a table |
-| **Clay Alerts Bot** | Workspace alerts sent to Slack (see [Table alerts](table-alerts.md)) | **Settings → Alerts** |
+| **Clay Alerts Bot** | Workspace alerts sent to Slack (see [Table alerts](table-alerts.md)), including workflow run alerts where available | **Settings → Workspace → Notifications → Connect to Slack** (workspace admins only) |
 
-Approving the **Clay** app in Slack doesn't approve **Clay Alerts Bot**. If you connect Slack from **Settings → Alerts** and Slack shows *"You are not authorized to install Clay Alerts Bot"* with a message that it "is restricted for this workspace," your Slack admin has to approve **Clay Alerts Bot** as well. You only need Clay Alerts Bot if you want Clay's workspace alerts delivered to Slack. Slack actions in your tables need only the **Clay** app.
+Approving the **Clay** app in Slack doesn't approve **Clay Alerts Bot**. If you connect Slack from **Settings → Workspace → Notifications** and Slack shows *"You are not authorized to install Clay Alerts Bot"* with a message that it "is restricted for this workspace," your Slack admin has to approve **Clay Alerts Bot** as well. You only need Clay Alerts Bot if you want Clay's workspace alerts delivered to Slack. Slack actions in your tables need only the **Clay** app.
+
+### Slack alerts say "Slack is not connected for this workspace" even though Slack shows in Connections
+
+When you click **Connect** next to **Slack alerts** in a table's or workflow's alert notifications and Clay shows *"Slack is not connected for this workspace"*, your Clay workspace doesn't have the alerts Slack connection yet. A Slack account in **Settings → Connections** (even one marked **Connected** and **Default**) and the **Clay** app being installed in your Slack channel don't satisfy this. Those are used only for Slack actions in tables. Searching for "Clay Alerts Bot" in **Connect an account** also returns no results, because the alerts connection isn't managed from Connections.
+
+To connect Slack for alerts:
+
+1. In Clay, go to **Settings → Workspace** and scroll to the **Notifications** section. There is no separate **Alerts** page in Settings.
+2. Click **Connect to Slack** and authorize the app in Slack. You must be a workspace admin in Clay. Other members see the button disabled with *"Only workspace admins can configure notifications. Contact your admin to set this up."*
+3. After Slack redirects you back to the **Workspace** settings page, the section shows **Disconnect from Slack**, which confirms the connection.
+4. Return to the table or workflow alerts, click **Connect** next to **Slack alerts**, and choose the channel.
+
+Alerts for workflow runs (the **Notifications** button in a workflow's alerts panel) are currently in beta and may not be available in every workspace. Contact support if you don't see them.
 
 ### Bot name or Emoji inputs have no effect
 
