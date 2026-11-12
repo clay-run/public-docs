@@ -2,14 +2,14 @@
 title: Using Clay in Claude
 description: Find people, enrich contacts, and draft personalized outreach—all
   within a Claude conversation
-last_synced: 2026-04-26T01:40:52.929Z
+last_synced: 2026-11-10T19:42:42.823Z
 ---
 
 # Using Clay in Claude
 
 Find people, enrich contacts, and draft personalized outreach—all within a Claude conversation
 
-The Clay connector in Claude lets you find people, enrich contacts, and draft personalized outreach—all within a conversation. Clay pulls data from over 150 providers and AI-powered research agents directly into Claude, so you can move from research to action in seconds.
+The Clay connector in Claude lets you find people, enrich contacts, and draft personalized outreach—all within a conversation. Clay pulls data from over 200 providers and AI-powered research agents directly into Claude, so you can move from research to action in seconds.
 
 ## Getting started
 
@@ -90,13 +90,13 @@ Claude will find the matching function, run it, and return the results directly 
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `MCP` page, which they open from the sidebar on the Clay homepage. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
 **What data sources does Clay use in Claude?**
 
-Clay in Claude pulls from a subset of its 150+ third-party data providers to provide comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
+Clay in Claude pulls from a subset of its 200+ third-party data providers to provide comprehensive coverage across contact data, company intelligence, and web research. If you want to enable additional enrichments, add a function for them and enable it for MCP.
 
 **What if I need data that isn't available?**
 
@@ -220,4 +220,4 @@ For batch workflows like running an email-finder waterfall on a list of companie
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `MCP` page. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
