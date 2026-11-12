@@ -549,7 +549,7 @@ After you add a signal:
 
 -   Results write to a `dedicated signal column` on each matching record — stored permanently and globally (not scoped to this segment).
 -   Clay **automatically creates a draft segment** for each signal type — named **New hires** (for New Hire signals), **Companies of job changers** (for Job Change signals), or **Web visitors** (for Web Intent signals). This segment is pinned at the top of the Audiences left sidebar and shows all records in your workspace that matched that signal type. It is a segment within Audiences, not a separate table.
--   Multiple signals each get their own column. Click any row to see per-signal detail.
+-   Multiple signals each get their own column; the `Signal Summary` column aggregates all results. Click any row to see per-signal detail.
 -   Any other segment that filters on this signal type will also surface these results.
 
 **Note:** The three auto-created draft segments have different entity types. **New hires** is a **People** segment — each record is an individual new hire contact detected at a monitored company. **Companies of job changers** and **Web visitors** are **Companies** segments — each record is a company where a job change or website visit was detected.
