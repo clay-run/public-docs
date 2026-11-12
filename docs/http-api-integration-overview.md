@@ -566,7 +566,7 @@ Pagination always stops at 50,000 rows regardless of other settings.
 
 ## IP allowlisting
 
-If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API columns. This routes requests from those columns through Clay's fixed egress IP addresses, which you can add to your server's allow-list.
+If your server or firewall requires incoming requests to originate from a known set of IP addresses, you can enable **Use static IP** on HTTP API enrichment columns, HTTP API sources, and HTTP API steps in Clay Workflows. This routes those requests through Clay's fixed egress IP addresses, which you can add to your server's allow-list. **Use static IP** is off by default.
 
 **Availability:** This feature is available for Enterprise customers. Contact your Clay account team or support before enabling — static IP must be activated for your workspace first.
 
@@ -574,7 +574,10 @@ If your server or firewall requires incoming requests to originate from a known 
 
 1.  Contact your Clay account team or support to have static IP enabled for your workspace.
 2.  Open the HTTP API column settings in your Clay table.
-3.  At the bottom of the column configuration, toggle on **Use static IP**.
+3.  Scroll down the column configuration and expand the **Static IP** section (it appears below **Custom rate limit**).
+4.  Toggle on **Use static IP**.
+
+If the **Static IP** section doesn't appear in your HTTP API column settings, static IP hasn't been enabled for your workspace yet — contact your Clay account team or support.
 
 All requests from that column will then originate from Clay's fixed IP addresses. Your account team can provide the current list of IP addresses to add to your allow-list.
 
@@ -583,6 +586,10 @@ All requests from that column will then originate from Clay's fixed IP addresses
 ### Enabling static IP for HTTP API as source
 
 In Step 5 of the source configuration (**Configure optional settings**), toggle on **Use static IP**.
+
+### Enabling static IP for an HTTP API step in Workflows
+
+Static IP is also supported for HTTP API steps in Clay Workflows, not just table columns. After static IP is enabled for your workspace, open the HTTP API step's settings in your workflow and toggle on **Use static IP**. Requests from that workflow step then originate from Clay's fixed IP addresses. Contact your Clay account team or support for the current list of IP addresses to add to your allow-list.
 
 ### Other integrations
 
