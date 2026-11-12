@@ -103,6 +103,20 @@ Yes. Within one sync, add LinkedIn Ads under `Sync destinations` once for each a
 
 Give it the full 48-hour processing window first — that's usually all it needs. If it's still there, check the segment has at least 300 matchable records. A people sync that re-sends the full list stops with an error when it's short, but an incremental or company sync uploads the smaller audience, and LinkedIn won't serve one under 300.
 
+### My LinkedIn Ads sync says the segment is below the minimum size, but the segment has thousands of contacts
+
+A LinkedIn Ads people sync fails with `The segment is below the ad destination's minimum size. Widen the segment before your next sync.` when fewer than 300 records are left after validation. The message below it gives the exact count, for example: `LinkedIn requires at least 300 matchable entries in an audience list, but this sync produced 21 after validation.` That count is the number of records that still have an identifier LinkedIn can match on after Clay checks your mapped fields. It isn't the size of your segment. A segment of 5,000 contacts where only 21 have an email can still fall short of the LinkedIn minimum.
+
+LinkedIn profile URLs don't count toward the 300. Clay doesn't send a person's LinkedIn profile URL to LinkedIn Ads, so a profile URL column alone won't raise the count. Profile URLs only help when `Enhanced matching` is on. Enhanced matching uses each contact's profile URL or work email to find a hashed personal email, then sends that email to LinkedIn.
+
+To get a LinkedIn Ads people sync to 300 matchable records, do one of the following, then sync again:
+
+- **Turn on Enhanced matching.** On the `Match` stage of the ad sync, choose `Best match rates` or `Good match rates` under `Enhanced matching`. Before the sync runs, an `Enrich and sync` window shows `Contacts to enrich` and `Estimated credits`, so you can check the cost first. Enhanced matching uses credits, but a contact that comes back with no hashed email isn't charged. See [Enhanced matching](https://university.clay.com/docs/enhanced-matching).
+- **Add emails to more contacts.** Get emails onto at least 300 contacts in the segment, for example with a work email enrichment, and map that column under `Email and hashed email inputs`.
+- **Widen the segment** to include more contacts that already have an email.
+
+The 300 minimum applies only to the LinkedIn Ads destination. If the same sync also sends to other destinations and they succeed, the LinkedIn Ads card shows `Failed` and the sync as a whole shows `Warning`.
+
 ### Match rates are lower than expected
 
 This usually comes down to work emails without enrichment — running `Enhanced matching` to add a hashed personal email is the fastest way to improve it. For account audiences, company page URL and domain match far more reliably than company name alone.
