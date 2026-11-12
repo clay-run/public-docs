@@ -34,6 +34,20 @@ Every Clay table includes two automatically maintained system columns: **Created
 
 Both fields are system-managed: you cannot delete them, edit their settings, or manually change their values.
 
+### Show the Created At column on all tables
+
+There is no workspace or account setting that shows the **Created At** (or **Updated At**) column on all tables by default. Clay hides both system columns automatically on every new table and on every new view you add to an existing table.
+
+Column visibility is saved per view, so you need to unhide **Created At** once in each view where you want to see it:
+
+1.  Open the table and switch to the view you want to change.
+2.  Click the column count button in the toolbar (for example, **15/31 columns**) to open the columns panel.
+3.  Find **Created At** in the list and toggle it on.
+
+**Created At** now appears in that view. Other views of the same table, and other tables, keep it hidden until you unhide it there too.
+
+If you create new tables often, set up one table with **Created At** visible and duplicate it whenever you need a new table. Duplicating a table (or a workbook) copies each view's column visibility, so **Created At** stays visible in the copy.
+
 ### Tracking who created a row
 
 Clay's system columns record *when* rows were created and modified, but there is no built-in column that records *who* added a row to the table. If you need to track which team member or process created each record, add a **Text** column (click **Add column** → select **Text**) and manually enter the creator's name for each row as records are added.
