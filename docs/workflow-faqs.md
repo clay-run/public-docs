@@ -86,7 +86,7 @@ One thing worth knowing before you publish: a manual run and a triggered run can
 
 ### How much will a run cost before I run it?
 
-Estimates show up in three places: each step's configuration panel as you set it up, the panel when you run a single step, and next to `Run on all members now` when you publish a workflow onto a segment. Between them you can size most things before committing.
+Estimates show up in three places: each step's configuration panel as you set it up, the panel when you run a single step, and on the `Run after publishing` step when you check `Run workflow after publishing` while publishing a workflow. Between them you can size most things before committing.
 
 What there isn't yet is a whole-graph estimate or a per-run cost breakdown after the fact beyond the per-step credit usage on the trace. For anything large, run a small test batch first, read the actual credit usage on those runs, and scale up from there rather than relying on the estimate alone.
 

@@ -225,8 +225,8 @@ Clay autosaves the whole graph — nodes, edges, prompts, code, and tools — as
 What reaches your live triggers is a version you publish.
 
 1.  Build and test freely. While a published workflow has unpublished changes, the badge next to the version selector reads `Edit` rather than `Live`, and a trigger you haven't published sits in `Draft` and won't fire.
-2.  When it's ready, click `Publish`. On `Ready to go live?`, name the version in `Version name` — Clay suggests the next number, like `V4` — and confirm with `Publish`. This sets every trigger on the workflow live at that version. If `Publish` is unavailable, the workflow has no trigger yet.
-3.  For a workflow on a segment, check `Run on all members now` to also run it across the segment's current members. Clay shows how many records that covers and a credit estimate for the backfill before you confirm.
+2.  When it's ready, click `Publish`. In the publish dialog, name the version in `Version name` — Clay suggests the next number, like `V4`. To publish without running the workflow, leave `Run workflow after publishing` unchecked and confirm with `Publish`. This sets every trigger on the workflow live at that version. If `Publish` is unavailable, the workflow has no trigger yet.
+3.  To also run the workflow when you publish — for example, across a segment's current members — check `Run workflow after publishing` and click `Next`. On the `Run after publishing` step, choose which records to run; Clay shows how many records that covers and a credit estimate before you confirm with `Publish and run`. If your workspace has reached its workflow run limit, `Run workflow after publishing` isn't shown and you can only publish.
 
 The `Versions` dropdown in the topbar lists published versions by name or number alongside when each went live. For the full picture, open workflow settings and click `History` to see `Workflow history`, which shows published versions with their autosaves underneath.
 
