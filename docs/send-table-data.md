@@ -75,7 +75,7 @@ You can also select additional data to send along with the flattened list, just 
 
 **Getting each contact's details (name, email, title) into columns in the destination table**
 
-When you use `Send row for each item in a list`, each new row in the destination table holds that one list item's own fields. For example, if you flatten a `records` or `People` list of contacts, each destination row holds one contact's name, email, title, and LinkedIn URL. These fields are stored in the destination table's leftmost **"rows from: [source table name]"** cell. Any additional data you selected (such as the account name or account ID) is stored in the same cell under a `parent` field.
+When you use `Send row for each item in a list`, each new row in the destination table holds that one list item's own fields. For example, if you flatten a `records` or `People` list of contacts, each destination row holds one contact's name, email, title, and profile URL. These fields are stored in the destination table's leftmost **"rows from: [source table name]"** cell. Any additional data you selected (such as the account name or account ID) is stored in the same cell under a `parent` field.
 
 **Auto-extract new columns** only creates destination columns for the additional data you selected. It doesn't create columns for the list item's own fields. So after the first send, you may see your account-level columns in the destination table but no columns for each contact's details. To add a list item's fields as columns in the destination table:
 
