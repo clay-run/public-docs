@@ -192,6 +192,15 @@ Table functions, which are the table-based functions described on this page, can
 
 If you need the same logic in both tables and workflows, build it as a table function.
 
+### Can I build or edit a function through the Clay CLI?
+
+It depends on the type of function. The Clay CLI (`clay`) handles table functions and Workflow Functions differently.
+
+-   **Table functions (the table-based functions described on this page):** the CLI is read-only. You can list and inspect table functions with `clay functions list` and `clay functions get`, but you can't create a table function or edit its inputs, outputs, or enrichment steps from the CLI. Build and edit table functions in the Function Editor in the Clay web app. See [Creating a function](#creating-a-function) and [Editing a function](#editing-a-function).
+-   **Workflow Functions (functions built in Clay Workflows):** a Workflow Function is backed by a workflow, not a table. You can edit its steps from the CLI with the same `clay workflows` commands you use for any other workflow, so you can change the function's internal logic, not only the steps that call it. Workflow Functions are currently in beta and aren't enabled on every workspace. Contact support to ask about access. Workflows in the CLI are also in Alpha. See [Clay API & CLI](clay-api-cli.md).
+
+Managing which functions a workflow calls (adding, swapping, or moving function steps in a workflow) is different from editing a function's own logic. If you have large-scale changes to make to a table function's logic, make them in the Function Editor. Clay has no way to convert a table function into a Workflow Function.
+
 ### What happens if I edit a function while it's running in a production table?
 
 While in edit mode, your function continues to process inputs it receives from production tables. When you publish an edit to your function, the changes apply to all inflight and future rows that the function processes. Note that you can pause your function before publishing changes to ensure that inflight rows are applied with the changes.
