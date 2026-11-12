@@ -231,14 +231,42 @@ Once your source is connected, toggle on `Import sync` to keep your Audiences da
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp changed; when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
+-   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp value is later than the start time of the last successful sync (see [My Snowflake timestamp field updated, but the new value isn't showing in Audiences — why?](#my-snowflake-timestamp-field-updated-but-the-new-value-isnt-showing-in-audiences--why)); when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
 -   **A full sync once a week** — refreshes all data and reconciles deleted records
 
-There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, update their timestamp field value in Snowflake so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
+There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, set their timestamp field value in Snowflake to the current time so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
 
 To check sync status or update settings, click `Add data` in your Audiences workspace, find the Snowflake integration, click the `⋯` menu, and select `Settings`.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69d69a5b28b82f127cdc128d_Snowflake%20Integration%20Image%20\(2\).webp)
+
+#### My Snowflake timestamp field updated, but the new value isn't showing in Audiences — why?
+
+A Snowflake row can have a newer value in its timestamp field (for example, `modified_at`) and still not be picked up by Snowflake incremental syncs. This happens when the row is written into your Snowflake table or view *after* the time stored in its timestamp.
+
+**How Snowflake incremental syncs choose rows:** Each incremental sync asks Snowflake only for rows where the timestamp field is later than the time Clay's last successful sync started. Clay doesn't remember each row's previous timestamp value, so it doesn't re-sync a row just because its timestamp is different from last time. A row is picked up only if its timestamp is later than that sync start time. Incremental syncs run every **15 minutes** on Enterprise plans and once **daily** on Growth plans.
+
+**Example (Enterprise plan, 15-minute syncs):**
+
+1.  Clay starts an incremental sync at 05:45.
+2.  Your nightly load job stamps a row with `modified_at = 05:46:53`, the time the account changed upstream.
+3.  Clay starts the next incremental sync at 06:00. The row hasn't landed in your Snowflake table yet, so it isn't returned.
+4.  The row lands in your Snowflake table at about 06:05, still stamped 05:46:53.
+5.  Clay starts the next incremental sync at 06:15 and asks for rows with `modified_at` later than 06:00. 05:46:53 is earlier than 06:00, so the row is skipped. Every later incremental sync skips it too.
+
+The row's current values reach Audiences only at the next weekly full sync (every **7 days**), which re-reads all rows regardless of the timestamp field.
+
+**To get skipped rows into Audiences now:** set the timestamp field on the affected rows to the current time, and the next incremental sync picks them up. For example:
+
+```sql
+UPDATE your_table
+SET modified_at = CURRENT_TIMESTAMP()
+WHERE <condition matching the affected rows>;
+```
+
+If your import reads from a view, run the update on the table the view is built from.
+
+**To prevent skipped rows going forward:** set your timestamp field to the time the row is written into the Snowflake table Clay reads from (for example, `CURRENT_TIMESTAMP()` in your load job), not a timestamp copied from the upstream system. If your load job copies an upstream timestamp, any row that lands after Clay's next sync has started is skipped by incremental syncs. Use a UTC `updated_at`-style column, as the **Timestamp field** setting recommends.
 
 ### Setting a unique identifier
 
