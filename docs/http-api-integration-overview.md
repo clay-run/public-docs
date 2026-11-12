@@ -938,6 +938,22 @@ Yes. Use the **HTTP API enrichment** with a **POST** method to send enriched rec
 
 **Note:** HTTP API enrichment processes one row at a time — each cell sends a separate POST request to your endpoint. There is no native batch mode.
 
+### Does Clay send a run ID or event ID with HTTP API requests?
+
+No. When an HTTP API enrichment column calls your service, Clay doesn't include a run ID, event ID, row ID, or request ID in the request. The run ID you may see in Clay is only available on Clay's side — it can't be inserted into the HTTP API URL, query parameters, body, or headers. The only values you can insert with the `/` picker are your table's columns, and Clay doesn't add an ID header of its own. The headers Clay sends are the ones you enter in the column plus any from a selected HTTP API (Headers) account.
+
+**Workaround — send your own unique key for de-duplication:** If your service needs an ID to match or de-duplicate the requests it receives from Clay, build one from the row's own data and send it with each request:
+
+1.  Add a formula column that combines values that don't change for each row — for example, the company domain and the person's email, or a record ID that already comes from your own source data.
+2.  In the HTTP API enrichment column, insert that formula column (using the `/` picker) into the request body or into a custom header, such as `X-Event-Id`.
+
+Because the key is built from the row's data, it stays the same when the row is re-run. It also stays the same when Clay resends a failed request because **Retry on failure** is turned on (see [Step 9: Retry on failure](#step-9-retry-on-failure)), so your service can recognize the repeat as the same request. Keep these points in mind:
+
+-   **Don't use random values in the key formula.** A retry or re-run would generate a different key, which defeats de-duplication.
+-   **Build the key from fields that stay fixed.** If someone later edits a column the key is built from, the key changes too.
+
+**If your service starts the run instead:** When your service triggers a Clay Workflow by calling its webhook URL, the `202 Accepted` response to that call includes a `workflowRunId` you can store on your side. This only applies when your system calls Clay, not when an HTTP API column calls your system. See [Webhooks as Workflow triggers](webhook-integration-guide.md#webhooks-as-workflow-triggers).
+
 ### Can I paste a cURL request directly into Clay?
 
 There is no "paste cURL" button, but you can replicate any cURL request by manually mapping its components to the HTTP API configuration fields.
