@@ -1,7 +1,7 @@
 ---
 title: Email sequencer
 description: Run outbound campaigns directly from your table.
-last_synced: 2026-09-01T01:27:12.565Z
+last_synced: 2026-11-10T20:23:45.095Z
 upstream_hash: 3d3db81ae3036812b3d4dc0b56f1ae7fff367acb652370008e4fdffc6f91fa96
 ---
 
@@ -82,7 +82,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
-    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
+    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` tab, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -208,7 +208,7 @@ The daily send limit is set at the **email account level**, not per campaign. If
 
 To increase your total daily sending capacity:
 -   **Add more email accounts** — each additional account has its own independent daily budget. With two accounts you can send up to twice as many emails per day.
--   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` section, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
+-   **Increase the send limit** on an existing account — open the campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to the account, and select `Update send limit`.
 
 Keep in mind that sending high volumes of cold email from a single inbox puts your domain at risk. Starting near the default (20 emails/day) and scaling by adding accounts rather than increasing individual limits is safer for deliverability.
 
@@ -222,7 +222,7 @@ Several factors work together to pace delivery over multiple days rather than se
 
 **To speed up delivery, you can:**
 
--   **Increase the send limit on existing accounts** — open the campaign's `Sender accounts` section, click the three-dot (⋯) menu next to the account, and select `Update send limit`. Keep in mind that raising individual limits aggressively can hurt deliverability; adding more accounts is generally safer for long-term inbox health.
+-   **Increase the send limit on existing accounts** — open the campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to the account, and select `Update send limit`. Keep in mind that raising individual limits aggressively can hurt deliverability; adding more accounts is generally safer for long-term inbox health.
 -   **Add more sender accounts** — each additional account has its own independent daily budget.
 -   **Widen your sending window** — a broader time range gives more hours per day for sends to go out.
 
@@ -232,7 +232,7 @@ If all your sender accounts have hit their daily limit, the campaign resumes aut
 
 The daily send limit is set at the **email account level** and varies by account type:
 
--   **Self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) default to 20 emails per day and can be adjusted from 10 to 500. Go to your campaign's `Sender accounts` section, click the three-dot (⋯) menu next to an account, and select `Update send limit`.
+-   **Self-connected accounts** (Google Workspace OAuth, Microsoft Outlook OAuth, or SMTP) default to 20 emails per day and can be adjusted from 10 to 500. Go to your campaign's `Sender accounts` tab, click the three-dot (⋯) menu next to an account, and select `Update send limit`.
 -   **SmartSenders accounts** purchased through Clay (currently in beta; available on Growth and Enterprise plans) have a maximum of 30 emails per day. Newly provisioned accounts start at a lower send limit and can be increased up to 30 via `Update send limit`. See [Buying email accounts](buying-email-accounts.md).
 
 Total daily throughput scales with the number of connected accounts — each account has its own independent daily budget.
