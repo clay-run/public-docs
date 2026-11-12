@@ -1,7 +1,7 @@
 ---
 title: Clay (global agent)
 description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including scheduling, permissions, and credit usage.
-last_synced: 2026-11-10T19:37:58.476Z
+last_synced: 2026-11-11T22:38:05.334Z
 ---
 
 # Clay (global agent)
@@ -130,6 +130,19 @@ The global agent spends data credits as it works, and the work it sets up spends
 Working with the global agent spends data credits only; it doesn’t consume actions. What you pay for its own work doesn’t change with the model behind it, so a model change on our side never changes your cost.
 
 **Tip:** If you’re not sure what a task will take, ask the global agent to plan it before it builds. Planning is cheap, and you get to check the approach first.
+
+### Estimated credits for common tasks
+
+These are rough estimates of what the global agent’s own work spends on some common tasks. Your costs will vary with what a task involves, how long the conversation runs, and how much data the global agent works through.
+
+| Task | What it covers | Estimated data credits |
+| --- | --- | --- |
+| Build and run a search | Create or refine a company or people search and check its preview. | 4–12 |
+| Build a segment | Turn your criteria into a saved segment and check who’s in it. | 6–12 |
+| Answer a question about your records | Count, filter, compare, or summarize records already in Audiences. | 3–12 |
+| Build and test a simple workflow | A short workflow, such as a CSV feeding a code step, sits at the low end. Setting up enrichments and checking the results moves it up. | 6–30 |
+
+The estimates don’t include enrichments or other work the global agent runs for you, which spend credits and actions as usual.
 
 ### Bonus credits in Beta
 
