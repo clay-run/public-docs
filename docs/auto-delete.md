@@ -69,6 +69,22 @@ To have auto-delete remove contacts who are no longer in your HubSpot list:
 
 **Tip:** Test your rule on a small batch of rows before applying it to the whole table. Deleted rows are not recoverable.
 
+### Why isn't auto-delete removing rows after they pass a date threshold in my formula?
+
+A common auto-delete setup uses a checkbox formula column (for example, "Should be auto deleted") that uses today's date to flag rows sent more than 2 days ago or created more than 7 days ago. The conditional rule then deletes rows where that checkbox **is checked**. Rows can cross the threshold and still stay in the table, because the formula doesn't update just because time passes:
+
+-   **A formula column only recalculates when a column it references is updated, or when you run the formula column yourself.** Time passing doesn't trigger a recalculation, even if the formula uses today's date (`Date.now()`, `new Date()`, or `moment()`). **Created At** never changes after a row is added, so it never triggers a recalculation either.
+-   **Auto-delete reads the values stored in the table when its cleanup job runs.** The cleanup job runs about 1 minute (60 seconds) after rows are created, updated, or run in the table. It doesn't run on a timer. A row whose checkbox is still unchecked isn't deleted.
+
+This explains why rows often disappear right after you run the formula column manually. The manual run recalculates the formula, the checkbox becomes checked for rows that now qualify, and auto-delete removes them about 1 minute later.
+
+Formula columns can't be added to a table's run schedule. Only action columns can. To keep a date-based auto-delete rule working without manual runs, give the formula an action column that re-runs on a schedule:
+
+1.  Add an action column that the formula can reference. For example, add an HTTP API column that returns the current date. See [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula) for the setup.
+2.  Reference that column in your checkbox formula, for example by comparing dates against its value instead of `Date.now()`. Each time a referenced action column finishes running, the formula recalculates, even if the action returns the same value as before.
+3.  Test it on a few rows that should already qualify. Re-run only the action column on those rows. The checkbox should become checked, and auto-delete should remove those rows about 1 minute later.
+4.  Schedule the action column to re-run (for example, daily). See [Scheduled columns](scheduled-columns.md). Each scheduled run recalculates the formula and triggers the auto-delete cleanup job, so rows that have aged past your thresholds are removed automatically.
+
 ## Keeping space for incoming records
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
