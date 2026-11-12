@@ -1,7 +1,7 @@
 ---
 title: Credit usage
 description: Track credit consumption across your workspace.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-11-10T19:47:55.528Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
 ---
 
@@ -137,7 +137,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see the `MCP users` table on the `MCP` page in the homepage sidebar. The `MCP` page is currently in beta and is only visible to workspace admins — see [MCP settings](/docs/mcp-settings).
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
