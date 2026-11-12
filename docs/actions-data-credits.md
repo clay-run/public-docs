@@ -171,6 +171,7 @@ Two options:
 -   Available for emergency needs during your billing cycle.
 -   **30% premium** applies (on modern plans; **50% premium** on legacy plans).
 -   On monthly plans, subject to the 2× rollover cap: at renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap — including purchased top-ups — are dropped.
+-   Subject to a monthly top-up limit — by default, 4× your plan's monthly Data Credits per billing month. See [Monthly limit on one-time top-ups](#monthly-limit-on-one-time-top-ups).
 
 ### Data Credits for AI
 
@@ -274,12 +275,29 @@ For emergency Data Credit needs during your billing cycle (not available for Act
 
 1.  Go to `Settings` → `Usage`.
 2.  Click `Add one-time data credits`.
-3.  Select the amount you need (subject to rollover limits).
+3.  Select the amount you need (subject to rollover limits and your [monthly top-up limit](#monthly-limit-on-one-time-top-ups)).
 4.  Confirm your purchase.
 
 Credits are added to your balance immediately upon purchase. Top-ups do not change your plan or billing cycle — your existing subscription and renewal date are unaffected.
 
 **Note:** One-time top-ups have a **30% premium** on modern plans (**50% premium** on legacy plans). Top-up credits are subject to your plan’s rollover rules. On monthly plans, the 2× cap applies: at your next renewal, your total balance cannot exceed 2× your monthly credit limit, and any credits above that cap are dropped — including credits you purchased. For example, on a plan with 2,500 credits/month, your maximum balance at renewal is 5,000; if you buy a 15,000-credit top-up and don't spend it all before renewal, only up to 5,000 credits carry over. Check your current balance and upcoming renewal date before purchasing a large top-up. For regular needs, upgrading your Data Credits tier is more cost-effective.
+
+### Monthly limit on one-time top-ups
+
+The number of one-time Data Credits you can purchase is capped each billing month. If you've hit that cap, Clay shows: _"You’ve reached your monthly limit for additional data credits. Upgrade your plan to purchase more credits."_ This limit is separate from the rollover caps above — it counts the Data Credits you've **purchased** this billing month, not your current balance.
+
+**How the monthly top-up limit is calculated:** by default, the limit is **4× your plan's monthly Data Credits**. On annual plans, your monthly Data Credits are your annual allotment divided by 12. For example:
+
+-   Monthly plan with 10,000 Data Credits per month: you can purchase up to 40,000 one-time Data Credits per billing month.
+-   Annual plan with 120,000 Data Credits per year (10,000 per month): you can purchase up to 40,000 one-time Data Credits per billing month.
+
+**When the monthly top-up limit resets:** the limit is not a rolling 30-day window, it does not reset at the start of the calendar month, and it isn't based on the date of your last purchase. It resets on the same day of the month that your plan's billing period started — on both monthly and annual plans. For example, if your annual plan started on August 14, your top-up limit resets on the 14th of every month (September 14, October 14, November 14, and so on). You can find your plan's billing date in `Settings` → `Plan & billing`.
+
+**What to do if you've reached the monthly top-up limit:**
+
+-   Upgrade your Data Credits tier in `Settings` → `Plan & billing` — this raises your monthly Data Credits and, with them, your top-up limit.
+-   Wait until your top-up limit resets on your next monthly billing date.
+-   Contact [Clay support](https://app.clay.com) if you need a higher limit without changing plans. Limit increases are reviewed case by case and aren't guaranteed.
 
 ### Downgrade or cancel your plan
 
