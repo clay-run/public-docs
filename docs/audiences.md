@@ -1168,6 +1168,26 @@ The **Send** sidebar has no pause or disconnect option for a connected table. To
 -   **Turn off auto-run on the Update Record column** to stop only the Salesforce writes. New segment records still arrive in the table, but they're no longer pushed to Salesforce.
 -   **Turn off auto-run for the whole table** in the table toolbar to stop every action column from running on new rows. New segment records still arrive in the table.
 
+### I deleted rows from a table connected to my audience segment. Why don't they come back?
+
+This applies to tables created from an Audiences segment with **Send** → **Add to workbook**. When the table is created, Clay imports the segment's current records into it once, up to the first 50,000 records. After that, only records that newly join the segment are added to the table, within about 15 minutes of joining. Deleting rows from the table doesn't make the segment send those records again, so the table doesn't repopulate on its own. The table's segment source has no re-sync or re-import button.
+
+**Duplicating the table doesn't reconnect it.** Duplicating a table that's connected to a segment copies the rows the original table had at that moment. The duplicate isn't connected to the segment and doesn't receive new segment records.
+
+To get all of a segment's records back into a table:
+
+1.  Open the segment in Audiences and click **Send** → **Add to workbook**. Clay creates a new table and imports every current segment member, up to the first 50,000 records.
+2.  Rebuild your columns in the new table. To avoid rebuilding them by hand, open the original table, select the columns you want to reuse, and save them as a [function](functions.md#creating-a-function). Then add that function to the new table as a single column.
+
+### Can I add another segment to an existing table?
+
+No. A table created with **Send** → **Add to workbook** receives records only from the one segment it was created from. You can't add a second segment to the table or change which segment it uses. **Add to workbook** always creates a new table, so you can't send a segment into a table that already exists.
+
+To run the same enrichments and formulas on records from more than one segment:
+
+-   **Use a workflow.** Build your enrichments and formulas as workflow steps instead of table columns, then connect each segment to the same workflow. See [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment). The workflow's segment trigger shows how many segments are connected, for example **2 segments**. Records from every connected segment run through the same steps, and you can keep connecting more segments over time.
+-   **Reuse your columns as a function.** Create a new table from each segment with **Send** → **Add to workbook**, then add the same [function](functions.md#creating-a-function) to each table.
+
 ### Why didn't my audience count change after I tightened my search filters?
 
 By default, audience searches (Find People and Find Companies sources) use **Add new results** mode — the search only adds net-new contacts going forward and never removes contacts from an earlier, broader search. To narrow your results, use the **Replace existing results** option when saving.
