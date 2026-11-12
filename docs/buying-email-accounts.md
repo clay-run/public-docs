@@ -53,6 +53,28 @@ Deleting a single email account from a domain will delete **all** email accounts
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
 
+### **What happens if I don't have enough credits when my email accounts or domains renew?**
+
+Purchased email accounts and domains renew on their own schedule, separate from your plan's monthly credit refresh. So a renewal can come due before your new credits arrive. If your workspace doesn't have enough credits to cover a renewal:
+
+-   The order is not cancelled. Clay records the renewal as a failed billing attempt.
+-   Your purchased email accounts keep working: they still send and receive email, so replies keep coming in.
+-   Clay retries the charge once a day until it succeeds. There is no limit on retries, and Clay doesn't suspend or cancel the email accounts while it retries.
+-   When your workspace has enough credits again, for example after your plan's monthly credits refresh or after you buy more credits, the next daily retry charges the renewal.
+
+**Example:** Your email account renewals are due November 18, but your plan's credits refresh November 20. The November 18 charge fails and Clay retries it once a day. Once the November 20 credits arrive, the next daily retry goes through, and your email accounts keep working the whole time.
+
+### **Can I change the renewal date of my purchased email accounts or domains?**
+
+No. You can't change the renewal date of purchased email accounts or domains. If a renewal is due before your monthly credits refresh, Clay retries the charge once a day until it succeeds, and your email accounts stay active in the meantime (see [What happens if I don't have enough credits when my email accounts or domains renew?](#what-happens-if-i-dont-have-enough-credits-when-my-email-accounts-or-domains-renew)).
+
+### **What happens to my purchased email accounts if I downgrade my plan?**
+
+Buying email accounts requires a Growth or Enterprise plan, but what happens to accounts you've already bought depends on the plan you downgrade to:
+
+-   **Downgrading to Launch (or another plan that includes Sequencer):** Your purchased email accounts and domains stay active and keep renewing in credits. You can keep using them in campaigns and receiving replies. You just can't buy new email accounts until you upgrade back to Growth or Enterprise. Make sure your new plan gives you enough credits to cover the renewals.
+-   **Downgrading to the Free plan:** The Free plan doesn't include Sequencer. All campaigns are paused, warmup is turned off, and your purchased email accounts are cancelled and deleted permanently. Their recurring charges stop and there's no prorated refund. Upgrading again later doesn't bring the deleted email accounts back.
+
 ### **Are purchased domains pre-warmed?**
 
 No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 3 weeks to complete — plan to wait before using purchased accounts in campaigns.
