@@ -64,6 +64,14 @@ To see how much of your search limit you've used, open the `API and CLI` page in
 
 No. API and CLI calls consume the same credits and actions as the equivalent work done in-product. There is no additional cost because work is triggered via the developer platform instead of the UI.
 
+### Does the CLI spend credits during the beta?
+
+The Clay CLI itself doesn't charge for its reasoning: the planning and chat happen in your own coding agent (such as Claude Code or Codex), on your own subscription, not on Clay credits. The November 19 change, when Clay's global agent starts spending data credits on its own work, applies only to the global agent you chat with under `Agent` in Clay, not to the Clay CLI.
+
+What the CLI runs for you does spend credits. Enrichments, functions, and workflow runs started from the CLI are billed at the same rates as running them in a table.
+
+To see what the CLI and the API have spent, go to `Settings` → `Usage` and open the `API` tab. CLI spend appears on its own `CLI` row, and spend from API-key requests (including functions run by your scripts) appears on the `API` row. The API tab isn't broken down by user or API key. See [Credit usage](/docs/credit-usage) for the rest of the dashboard, and [Clay (global agent)](/docs/global-agent#credits-and-pricing) for global agent pricing.
+
 ### What's the difference between the Clay Plugin and the Public API?
 
 The Clay Plugin gives agent environments (Claude Code, Codex, Cursor) both Clay's MCP server and the Clay CLI — the fastest path for agent-first and interactive coding workflows. The Public API is better suited for backend services, queue workers, batch jobs, and custom app integrations where you want direct HTTP access without a CLI layer.
