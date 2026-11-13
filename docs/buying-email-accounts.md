@@ -37,9 +37,14 @@ From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 After placing an order, you can track its progress in the `Account orders` tab (`Sequencer → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
 
-### **Can I add more email accounts to a domain after I've purchased it?**
+### **Can I add more email accounts (inboxes) to a domain after I've purchased it?**
 
-No. Once a domain is purchased, you cannot add additional email accounts to it. Select your desired number of accounts (up to 5 per domain) before confirming your order.
+No. Once you place an order, you cannot add more email accounts (inboxes) to a domain you bought through Clay, even if you bought fewer than 5 on that domain. Each domain supports up to 5 email accounts, so select the number of accounts you want on each domain before confirming your order. Domains you've already bought don't appear in the **Buy email accounts** flow, which is why the flow always asks you to pick a new domain.
+
+To get another email account after your order is placed, you can:
+
+-   **Buy a new domain** with the number of email accounts you need in the **Buy email accounts** flow.
+-   **Connect a mailbox you already have** under `Sequencer → Email Accounts` using Gmail (OAuth), Outlook (OAuth), or SMTP & IMAP. Connecting your own email accounts doesn't cost Clay credits. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
 
 ### **What happens if I cancel a domain before the year is up? Will I get a refund?**
 
