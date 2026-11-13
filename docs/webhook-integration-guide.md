@@ -226,13 +226,34 @@ To start receiving data in the duplicate, add a new webhook source to it: in the
 
 ### Does Clay prevent the same webhook record from being processed more than once?
 
-**No — unlike CRM sources, webhooks do not deduplicate by record identity.** Every HTTP POST creates a new row, regardless of whether identical data already exists in the table. Clay assigns each incoming payload a fresh unique identifier, so sending the same contact or event a second time will create a second row and trigger enrichments again.
+**Not by default — unlike CRM sources, webhooks do not deduplicate by record identity unless you send an idempotency key.** Without the `X-Clay-Webhook-Idempotency-Key` header (see [Use an idempotency key to stop retries from creating duplicate rows](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows) below), every HTTP POST creates a new row, regardless of whether identical data already exists in the table. Clay assigns each incoming payload a fresh unique identifier, so sending the same contact or event a second time will create a second row and trigger enrichments again.
 
 This is different from CRM sources such as HubSpot and Salesforce, which track every record they have ever imported and automatically skip any record they have already seen — even if you delete the row from the table.
 
 **To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row.
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
+
+### Use an idempotency key to stop retries from creating duplicate rows
+
+If your sending system retries the same event (for example, after a timeout or a `429` response), you can stop each retry from adding another row by sending an idempotency key. Add the optional `X-Clay-Webhook-Idempotency-Key` header to your webhook requests, with a value that is unique per event — for example, an order ID or event ID from your sending system:
+
+```
+curl -X POST YOUR_CLAY_WEBHOOK_URL \
+  -H "Content-Type: application/json" \
+  -H "X-Clay-Webhook-Idempotency-Key: order-123" \
+  -d '{"order_id": "order-123", "email": "jane@example.com"}'
+```
+
+When a webhook source receives an idempotency key it has already received, what happens depends on where the webhook sends data:
+
+- **Webhook tables:** Clay updates the existing row instead of adding a new one. If the new request body is identical to the one already stored, nothing changes. If the body is different, the row's webhook data is replaced with the new body, and enrichment columns set to auto-run run again on that row, which can consume credits.
+- **Workflow webhook triggers:** Clay doesn't start a new workflow run for a key the trigger has already received, and the new request body isn't applied.
+- **Tables with [auto-delete](https://www.clay.com/university/guide/auto-delete) turned on:** the idempotency key is ignored, and each request still creates a new row.
+
+Requests without the `X-Clay-Webhook-Idempotency-Key` header always create a new row, one per POST. Idempotency keys are tracked per webhook source, so the same key sent to two different webhook URLs creates a row in each.
+
+**Idempotency key format:** The key must be 1 to 250 visible ASCII characters (letters, numbers, and symbols, with no spaces). If the value is empty, contains a space or a non-ASCII character, is longer than 250 characters, or the header is sent more than once in the same request, Clay returns `400 Bad Request` with the message `X-Clay-Webhook-Idempotency-Key must be 1 to 250 visible ASCII characters` and doesn't store the payload.
 
 ### Why are my credits being consumed faster than expected?
 
@@ -255,7 +276,7 @@ If you sent records to a Clay webhook in bulk (for example, from a custom script
 
 1.  **Slow down the sending.** Send one record per request at a steady pace of 10 requests per second or fewer, rather than sending everything at once. All webhook sources in your workspace share this limit, so don't send to other webhook tables in the same workspace at the same time.
 2.  **Retry on `429`.** When Clay responds with `429`, wait at least 1 second (the response includes a `Retry-After: 1` header) and re-send that same record, increasing the wait on each retry. A `200` response means Clay accepted the record.
-3.  **Avoid duplicating the records already in the table.** Every webhook request creates a new row, so re-sending your full list would duplicate the rows that already arrived. Choose one of these options:
+3.  **Avoid duplicating the records already in the table.** Unless your requests include an [idempotency key](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows), every webhook request creates a new row, so re-sending your full list would duplicate the rows that already arrived. Choose one of these options:
     -   Send only the records that aren't in the table yet.
     -   Turn on auto-dedupe first, then re-send the full list. Open the table name dropdown → **Edit table settings** → **Deduplication**, toggle **Auto-dedupe rows** on, and under **Dedupe via column** pick a column with a unique value per record (for example, **Domain**, an email address or a record ID). Incoming rows whose value in that column already exists in the table are deleted, and by default Clay keeps the oldest row. This setting can't be changed while the table is running. For details, see [Auto-dedupe](table-management-settings.md#auto-dedupe).
 
