@@ -84,6 +84,16 @@ The native Clay MCP contact enrichment — including the `search-contacts` and `
 
 The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
+### Why doesn't my function appear in MCP for reps?
+
+If a Clay Function doesn't show up for reps in ChatGPT, Claude, or Glean, or you can't find it when trying to enable it for MCP, check the following:
+
+-   **The function has never been published.** A brand-new function that has only ever been a draft doesn't appear in MCP. Open the function, click `Review changes`, then click `Publish`. After the first publish, the function can be enabled for MCP.
+-   **The function isn't enabled for MCP.** Open the function's settings sidebar, expand `Integrations`, and check `Users` (see [Enabling a function for MCP](#enabling-a-function-for-mcp)). The `Integrations` section shows `Users` as `Enabled` when the function is available in MCP.
+-   **The function was deleted.** Deleted functions don't appear in MCP.
+
+Editing a function doesn't hide it from MCP. When you open a published function in Edit mode (the `Edit draft configuration` button appears while you have unpublished draft changes), the function stays available in MCP, and reps keep running the published (live) version. Your draft changes reach MCP only after you click `Review changes` → `Publish to function`.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
