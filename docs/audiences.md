@@ -1522,6 +1522,14 @@ If you need company name alongside each person in a table workflow, the recommen
 
 This gives you company context directly alongside each person in the table without requiring company name to be stored as a field in Audiences.
 
+### Why aren't my people linked to companies when my Salesforce org uses Person Accounts?
+
+This applies to Salesforce Contacts imports in Audiences, available on Growth and Enterprise plans.
+
+Clay links each Salesforce Contact in your People audience to a Company record using only the Contact's standard `AccountId` field: the person is linked to the Company record imported from the Salesforce Account with that ID. If your Salesforce org uses Person Accounts, a Contact's `AccountId` points to that person's own Person Account, not to the business account you imported into your Companies audience. Clay doesn't link the person to the business account's Company record, so the **Company** column on that People record stays blank.
+
+**Custom lookup fields can't be used to link people to companies.** Audiences doesn't support linking people to companies through a custom lookup field on the Contact, such as `Business_Account__c`. Salesforce imports have no setting to choose a different field for the company link. Mapping the custom lookup field in your Salesforce Contacts field mapping brings the business account's Salesforce ID in as a text field on each person, which you can filter segments on, but it doesn't fill in the Company column.
+
 ### Are linked Company fields (like Industry) available in a workflow triggered by a People segment?
 
 When a workflow runs from a **Segment on a schedule** trigger on a **Person** segment, the trigger's inputs are the person record's own Audiences fields. Fields from the person's linked Company record — for example, an Account-sourced field like Industry — are not included by default. Each person's trigger input does include an `accounts` list with the Clay Company ID (`id`) of each linked Company record, but not the company's field values.
