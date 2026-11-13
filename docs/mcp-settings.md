@@ -51,12 +51,13 @@ There are two levels of control:
 
 ## Monitoring usage
 
-The `MCP users` table lists all workspace members, including those who haven't yet connected Clay to an external platform. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
+The `MCP users` table lists all workspace members who have accepted their workspace invite, including those who haven't yet connected Clay to an external platform. People whose invite is still pending don't appear in the `MCP users` table, even when you search for them by name or email. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
 
 -   **Name** — rep's name and email address
 -   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
+-   **Budget** — the [credit budget](https://university.clay.com/docs/credit-budgets) the rep's MCP spend is charged to, or `No budget`. The `Budget` column appears only on Enterprise plan workspaces, where credit budgets are available. See [Why isn't a budget showing in a rep's Budget dropdown?](#why-isnt-a-budget-showing-in-a-reps-budget-dropdown-in-the-mcp-users-table)
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
@@ -121,7 +122,7 @@ To invite MCP-only users: go to `Settings` → `Team`, click `+ Invite`, enter t
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
-If this happens: have the rep disconnect Clay in their AI tool (remove and re-add the connector), then during re-authorization select your team workspace instead of "Personal Workspace." If invite links have expired, remove the user from `Settings → Team` and resend the invite before they reconnect.
+If this happens: have the rep disconnect Clay in their AI tool (remove and re-add the connector), then during re-authorization select your team workspace instead of "Personal Workspace." If invite links have expired, remove the user from `Settings → Team` and invite them again before they reconnect (Clay has no resend button for invites).
 
 **Note:** The Sales Rep role is currently in beta — contact support to request access for your workspace.
 
@@ -134,6 +135,35 @@ Yes. Workspace membership is the access gate for MCP — SSO determines how user
 When a user connects their AI tool to Clay, they go through Clay's OAuth flow, which redirects to the standard Clay login page. If SSO is configured for their email domain, they'll authenticate through your SSO provider during this step.
 
 **Important:** The invite-first rule applies in SSO workspaces — team members must accept their workspace invite before going through the MCP connection flow. If a user authenticates via SSO without first accepting the workspace invite, they'll be routed to a new personal workspace instead of your team workspace. See [Single Sign-On (SSO)](https://university.clay.com/docs/single-sign-on#user-provisioning) for details on user provisioning.
+
+### Why does Invite MCP users say someone "is already a member" when they don't appear in the MCP users table?
+
+When you add an email in the `Invite MCP users` modal, Clay shows `"<email>" is already a member.` if that email already belongs to your workspace — either as an active member or as a pending invite the person hasn't accepted yet. Clay counts a pending invite as workspace membership for this check.
+
+The `MCP users` table only lists members who have accepted their workspace invite. So a person with a pending invite triggers "is already a member" in the `Invite MCP users` modal but returns `No results found` when you search for them in the `MCP users` table.
+
+To get the person into the `MCP users` table:
+
+1.  Ask them to accept the workspace invite email from Clay.
+2.  Once they accept, they appear in the `MCP users` table, and you can set their credit limit and budget before they connect Claude or ChatGPT. Remind them to accept the invite *before* connecting Clay from their AI tool (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
+3.  If they can't find the invite email, Clay has no resend button. Instead, go to `Settings` → `Team`, find their row marked `Pending`, choose **Remove member**, then invite them again. To re-invite them with the Sales Rep role, use the `Invite users` button on the `MCP` page — the `+ Invite` button in `Settings` → `Team` doesn't default to Sales Rep, so you'd need to select it from the role dropdown.
+
+### Why isn't a budget showing in a rep's Budget dropdown in the MCP users table?
+
+The `Budget` dropdown on a rep's row in the `MCP users` table only lists credit budgets that rep has access to. Credit budgets are available on Enterprise plan workspaces. A budget appears in a rep's `Budget` dropdown when any of the following is true:
+
+-   The budget's access is set to **Anyone in the workspace**.
+-   The rep is added to the budget directly.
+-   The rep belongs to a user group that's added to the budget.
+
+If the budget you want isn't in the dropdown (for example, it only shows `No budget`), the budget is set to **Specific people and groups** and the rep isn't on it. To assign the budget:
+
+1.  Go to `Settings` → `Budgets`, open the budget, and click **Edit budget**.
+2.  Add the rep, or a user group they belong to, and save.
+3.  Click `MCP` under **Orchestration** in the left sidebar, find the rep in the `MCP users` table, and open the `Budget` dropdown on their row.
+4.  Select the budget and click **Change budget** in the confirmation dialog. The rep's MCP spend from Claude, ChatGPT, or Glean is now charged to that budget.
+
+Giving a rep access to a budget doesn't assign it to them automatically — even if they're in a user group that has access. Each rep's budget has to be picked on their row in the `MCP users` table. To clear a rep's budget, select `No budget` and click **Remove budget**.
 
 ### How do I disconnect Clay from an AI tool?
 
