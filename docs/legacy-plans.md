@@ -1,6 +1,6 @@
 ---
 title: Legacy plans
-description: Comparing legacy plans to our new plans, which new features legacy plans can use through December 31, 2026, and how to renew a legacy annual plan early
+description: Comparing legacy plans to our new plans, which new features legacy plans can use through December 31, 2026, and how support-processed early renewals are billed
 last_synced: 2026-04-26T01:40:14.933Z
 ---
 
@@ -154,13 +154,11 @@ Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on mod
 
 **Can legacy annual customers renew early?**
 
-Not in-app. Since April 11, 2026, no legacy annual plan (Starter, Explorer, or Pro) can be renewed early in-app. To renew a legacy annual plan early, contact Clay support (or your Growth Strategist), who can process the early renewal for you — there's nothing you need to do in-app.
+Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or support intervention, which may be used as an upsell opportunity to Enterprise.
 
-An early renewal starts your new annual term and adds your plan's full annual credit allotment. Unused credits carry over only up to your plan's rollover limit — see [Actions & Data Credits](./actions-data-credits.md#rollover-data-credits).
+**How am I billed when Clay support renews my legacy plan early?**
 
-**How am I billed when support renews my legacy plan early?**
-
-How you're billed for a support-processed early renewal depends on how your subscription is paid:
+When Clay support renews a legacy annual plan early for you, how you're billed depends on how your subscription is paid:
 
 -   **Card on file:** If your subscription is charged to a card, that card is charged immediately when support processes the renewal.
 -   **Invoice:** If your subscription is billed by invoice, Clay sends an invoice instead of charging a card. Depending on your account, the new credits may only be added once the invoice is paid.
