@@ -81,14 +81,31 @@ For example, you can find out if a company uses Salesforce for their CRM or Nets
 **Inputs:**
 
 -   **Company domain or HG company ID**
--   **Vendor domains (Optional)**
+-   **Products (Optional):** Select specific products from HG Insights' product catalog.
+-   **Product names (substring match) (Optional):** Type up to **10** product names. Matches every product whose name contains the text (case-insensitive).
+-   **Vendors (Optional):** Select specific vendors from HG Insights' vendor catalog.
+-   **Vendor names (substring match) (Optional):** Type vendor names. Matches every vendor whose name contains the text (case-insensitive).
 -   **Product categories (Optional)**
+-   **Product category names (substring match) (Optional)**
 -   **Product attributes (Optional)**
--   **Products**
--   **Include total product locations count (Optional)**
--   **Include total product signals count (Optional)**
--   **Include product first verified date (Optional)**
+-   **Country codes (Optional)**
+-   **Localized installs only (Optional)**
+-   **Product last verified date (min) / (max) (Optional):** Dates in `YYYY-MM-DD` format.
 -   **Limit (Optional):** The maximum number of technology results returned per row. Defaults to **10**; maximum **100**.
+-   **Offset (Optional)**
+-   **Fields (Optional, Clay-provided key only):** Opt in to **Include total product locations count**, **Include total product signals count**, and **Include product first verified date**. Each adds an extra credit cost per result. If you use your own HG Insights API key, these fields are included automatically and the **Fields** input doesn't appear.
+
+**Similar product names in the Verify technology usage Products list**
+
+The options in the **Products** list of the HG Insights `Verify technology usage` action come directly from HG Insights' product catalog. HG Insights, not Clay, decides which products exist and what they're called, and HG Insights adds new products to its catalog over time, so new options can show up in the list.
+
+Each product you select in **Products** matches only that exact product. Selecting one product doesn't also match the vendor's other products, even if their names are similar. To choose the right filter:
+
+-   **To check for one specific product** (for example, a CRM check), select that exact product in **Products**.
+-   **To check for any product from a vendor**, leave **Products** empty and select the vendor under **Vendors**, or type the vendor's name in **Vendor names (substring match)**.
+-   **To match every product whose name includes a word**, type it in **Product names (substring match)** — for example, entering a vendor's name matches all of that vendor's products whose names include it.
+
+To see how HG Insights defines a product before you pick it, look it up in [HG Data Discovery](https://discovery.hgdata.com/).
 
 **Checking an existing account list for technology usage**
 
