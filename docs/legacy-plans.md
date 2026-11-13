@@ -1,6 +1,6 @@
 ---
 title: Legacy plans
-description: Comparing legacy plans to our new plans
+description: Comparing legacy plans to our new plans, which new features legacy plans can use through December 31, 2026, and how to renew a legacy annual plan early
 last_synced: 2026-04-26T01:40:14.933Z
 ---
 
@@ -10,7 +10,7 @@ Comparing legacy plans to our new plans
 
 In March 2026, Clay introduced a new pricing model to give you more flexibility and value. The new model uses two simple usage meters: **Actions** (measures platform usage of enrichments and GTM execution) and **Data credits** (for accessing data from our marketplace).
 
-**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
+**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and your legacy plan's features. However, you won't have access to new features and integrations that we build going forward. Some newer features — Audiences, Account Agents, Workflows, the Clay Plugin, and Sequencer on Audiences — are available on legacy plans only through December 31, 2026. For details, see the [FAQs](#faqs) below.
 
 ## **Key differences between legacy and modern plans**
 
@@ -35,7 +35,7 @@ The table below compares feature availability between legacy plans and modern pl
 
 | Feature Category | Legacy Plans | Modern Plans |
 | --- | --- | --- |
-| New Features (post-Feb 2026) | ❌ Not available | ✅ Available |
+| New Features (post-Feb 2026) | ❌ Not available (except Audiences, Account Agents, Workflows, Clay Plugin, and Sequencer on Audiences through December 31, 2026) | ✅ Available |
 | Ads (Clay Ads) | ❌ Not available | ✅ Growth (1 sync), Enterprise (2 syncs) |
 | New Integrations | ❌ Future integrations blocked | ✅ All new integrations |
 | Advanced Orchestration | Current features only | ✅ New releases prioritized |
@@ -92,7 +92,23 @@ Legacy plans will be supported for the foreseeable future with bug fixes, securi
 
 **Can legacy customers get new features if they pay extra?**
 
-No. New features (Ads, new integrations, advanced orchestration) are only available on modern plans. Legacy customers must migrate to modern plans to access them.
+No. New features (Ads, new integrations, advanced orchestration) are only available on modern plans. Legacy customers must migrate to modern plans to access them. The only exception is the set of features available on legacy plans through December 31, 2026, described below.
+
+**Which new features can I use on a legacy plan until December 31, 2026?**
+
+Through **December 31, 2026**, customers on legacy Starter, Explorer, and Pro plans can use these newer Clay features:
+
+-   **Audiences** — legacy Starter and Explorer get Launch-level Audiences access, which doesn't include CRM or data warehouse syncs. Legacy Pro gets Growth-level Audiences access, including up to 250,000 synced CRM and data warehouse records with daily syncs.
+-   **Account Agents**
+-   **Workflows**
+-   **Clay Plugin** (MCP, CLI, and API)
+-   **Sequencer on Audiences**
+
+After December 31, 2026, legacy plans lose access to these features. Workflows stays in your workspace: you can still create and run workflows on a legacy plan, but unlimited runs, code and conditional AI nodes, and run history beyond 1 month require a Launch, Growth, or Enterprise plan. To keep using these features after December 31, 2026, move to a modern Launch, Growth, or Enterprise plan.
+
+**Does renewing my legacy plan keep these features until the end of my contract?**
+
+No. December 31, 2026 is a fixed date for all legacy plans. Renewing a legacy plan — including renewing early — doesn't extend access to Audiences, Account Agents, Workflows, the Clay Plugin, or Sequencer on Audiences past that date, even if your renewed term runs longer. You can still stay on your legacy plan after December 31, 2026, and you keep your legacy pricing and your legacy plan's features.
 
 **What happens if a legacy customer changes their plan?**
 
@@ -138,7 +154,18 @@ Legacy plans carry a **50% premium** on top-up purchases (compared to 30% on mod
 
 **Can legacy annual customers renew early?**
 
-Yes for Starter and Explorer annual plans. No for Pro annual plans — requires GS or support intervention, which may be used as an upsell opportunity to Enterprise.
+Not in-app. Since April 11, 2026, no legacy annual plan (Starter, Explorer, or Pro) can be renewed early in-app. To renew a legacy annual plan early, contact Clay support (or your Growth Strategist), who can process the early renewal for you — there's nothing you need to do in-app.
+
+An early renewal starts your new annual term and adds your plan's full annual credit allotment. Unused credits carry over only up to your plan's rollover limit — see [Actions & Data Credits](./actions-data-credits.md#rollover-data-credits).
+
+**How am I billed when support renews my legacy plan early?**
+
+How you're billed for a support-processed early renewal depends on how your subscription is paid:
+
+-   **Card on file:** If your subscription is charged to a card, that card is charged immediately when support processes the renewal.
+-   **Invoice:** If your subscription is billed by invoice, Clay sends an invoice instead of charging a card. Depending on your account, the new credits may only be added once the invoice is paid.
+
+If you're not sure which applies to your workspace, ask support before they process the renewal.
 
 **What's the difference between priority support on Growth vs. legacy Pro?**
 
