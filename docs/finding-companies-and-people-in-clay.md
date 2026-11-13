@@ -755,6 +755,20 @@ To get the current profile URL for rows with broken links:
 
 If the person deleted their account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working profile URL for that person to replace the broken one.
 
+### Where does Enrich Company data come from, and can it be out of date?
+
+**Enrich Company** looks up the company in Clay's own company dataset. It doesn't call a third-party vendor on every run. If the company's record is missing from that dataset, or hasn't been updated in more than 180 days, Enrich Company fetches fresher data at the moment of the run. Enrich Company returns firmographics such as employee count, company size, industry, location, annual revenue, and total funding range.
+
+**To check how current an Enrich Company result is**, look at the **Last Refresh** field. When Enrich Company returns a company from Clay's stored company dataset, the result includes **Last Refresh**, the date that company record was last updated. When Enrich Company fetches fresher data at the moment of the run (because the stored record was missing or more than 180 days old), the result may not include Last Refresh.
+
+**If you need more recent data than Enrich Company returns** (for example, for headcount), add another provider's company enrichment after Enrich Company and only run it when the Enrich Company record is empty or older than your cutoff:
+
+1.  Click a populated **Enrich Company** cell, hover over **Last Refresh**, and click **Add as column**.
+2.  Add the other provider's company enrichment to your table.
+3.  On that enrichment, open **Run settings → Only run if** and add a condition such as `!{{Enrich Company}} || moment().diff(moment({{Last Refresh}}), "days") > 90`. Replace the column names with your own and `90` with your cutoff in days. The enrichment then runs only on rows where Enrich Company returned no data or where Last Refresh is more than 90 days old. See [Conditional runs](conditional-runs.md).
+
+To try several providers in sequence instead, use a [waterfall](building-a-data-waterfall.md). In a waterfall, each next provider only runs when the previous one returns no result.
+
 ### Where does the total funding data in Enrich Company come from?
 
 The **Total Funding Amount Range Usd** field in **Enrich Company** comes from Clay's own company dataset — the same company data that powers Enrich Company's other fields, such as employee count, industry, and annual revenue. Enrich Company doesn't call a separate funding data vendor when it fills this field.
