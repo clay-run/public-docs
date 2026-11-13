@@ -142,7 +142,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
-**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. Credits spent on paid Audiences imports aren't tied to a table either, so they don't appear in the Workbooks tab or its CSV export (see [Why don't my Audiences import credits show up in the Workbooks tab?](#why-dont-my-audiences-import-credits-show-up-in-the-workbooks-tab)). To see your complete workspace credit spend for a given period, review the totals across all relevant tabs, or use the **Overview** chart.
+**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. Credits spent on paid Audiences imports aren't tied to a table either, so they don't appear in the Workbooks tab or its CSV export (see [Why don't my Audiences import credits show up in the Workbooks tab?](#why-dont-my-audiences-import-credits-show-up-in-the-workbooks-tab)). Credits spent by signals that aren't linked to a table also don't appear in the Workbooks tab or its CSV export — find them in the **Signals** tab (see [Why don't my signal credits show up in the Workbooks tab?](#why-dont-my-signal-credits-show-up-in-the-workbooks-tab)). To see your complete workspace credit spend for a given period, review the totals across all relevant tabs, or use the **Overview** chart.
 
 ### Reading the Overview chart
 
@@ -332,9 +332,25 @@ These run options skip rows that already ran successfully with unchanged inputs,
 
 Only use **Force run all [N] rows**, **Choose number of rows to run**, or **Run [N] cells** when you deliberately want a fresh lookup on rows that already have results. See [Run progress](run-progress.md#why-did-run-column-run-every-row-when-i-only-highlighted-a-few) for all column run options.
 
+### Why don't my signal credits show up in the Workbooks tab?
+
+If your credit balance dropped but every table in the **Workbooks** tab, and every row in its CSV export, shows 0 credits, check your signals. Credits spent by a signal that isn't linked to a table (for example, a signal you added to an Audiences segment) aren't tied to any table, so that spend doesn't appear in the **Workbooks** tab or its CSV export.
+
+Signal monitoring charges for every contact or company the signal checks on each run, whether or not it finds a match. A signal that monitors a large segment on a frequent schedule can use a large share of your monthly credits without adding any rows to a table.
+
+**Company Topic Intent signal cost (open beta):** the cost per company checked is the number of topics you track multiplied by each selected intent provider's per-topic rate, added up across providers. On current plans the per-topic rate is 0.2 credits for Delivr, 0.3 credits for Bombora, and 0.2 credits for Intentsify (legacy plans: 0.5, 0.6, and 0.5). For example, tracking 10 topics with Delivr and Bombora on a current plan costs 10 × 0.2 + 10 × 0.3 = 5 credits per company checked, so a run that checks 1,000 companies costs 5,000 credits. Before you save a signal, its settings show your estimated recurring cost per record checked or per run, plus a monthly estimate when the segment size is known. Track fewer topics, select fewer providers, or monitor a smaller segment to lower the cost.
+
+To find credits spent by signals:
+
+1.  Go to `Settings → Usage`.
+2.  On the **Overview** tab, set the `When` dropdown to the period you're investigating and switch the chart to **Spend breakdown** to see when the spend happened. See [Reading the Overview chart](#reading-the-overview-chart).
+3.  Open the **Signals** tab. Credits used by each signal are listed there, including signals that aren't linked to a table.
+
+If you don't need a signal right now, pause the signal itself so it stops checking records and using credits — pausing or deleting the table it writes to doesn't stop it. See [Why did my signal use far more credits than I expected?](signals.md#why-did-my-signal-use-far-more-credits-than-i-expected) for how signal monitoring is charged.
+
 ### Why don't my Audiences import credits show up in the Workbooks tab?
 
-If your credit balance dropped but no table in the **Workbooks** tab, and no row in its CSV export, shows the spend, check whether you imported records into Clay Audiences during that period. Paid Audiences imports aren't tied to a table, so their credits are not listed in the **Workbooks** tab or its CSV export — every table can show 0 credits even when your balance dropped.
+If your credit balance dropped but no table in the **Workbooks** tab, and no row in its CSV export, shows the spend, check whether you imported records into Clay Audiences during that period, or whether a signal that isn't linked to a table ran (see [Why don't my signal credits show up in the Workbooks tab?](#why-dont-my-signal-credits-show-up-in-the-workbooks-tab)). Paid Audiences imports aren't tied to a table, so their credits are not listed in the **Workbooks** tab or its CSV export — every table can show 0 credits even when your balance dropped.
 
 These Audiences imports charge credits for each record imported:
 
@@ -356,7 +372,7 @@ Because Audiences import costs scale with the number of records, narrow your fil
 Clay generally does not offer credit refunds for accidentally consumed credits — for example, from a misconfigured scheduled run or an unintended large batch. If you believe something went wrong, you can contact [Clay support](https://app.clay.com) and the team will investigate. When reaching out, include:
 
 -   Your workspace name
--   The table where the credits were consumed (or the Audiences import, if the spend isn't tied to a table)
+-   The table where the credits were consumed (or the Audiences import or signal, if the spend isn't tied to a table)
 -   The number of credits used
 
 To prevent accidental spend, turn off auto-run while building or testing workflows, and set credit spend limits for your workspace.
