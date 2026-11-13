@@ -77,7 +77,7 @@ What you can do yourself, and what needs Clay's help:
 -   **Delete an audience** — an `Admin` or `Editor` can delete a segment. This removes the segment definition, not the underlying records, which stay in the shared data layer.
 -   **Archive records** — take specific records out of active use without losing them. Archived records are recoverable.
 -   **Delete a workspace** — removes all workspace data after 30 days. See [Account and workspace settings](https://www.clay.com/university/guide/workspace-administration-documentation) for requirements and the exact steps.
--   **Permanently delete specific records or a segment's records** — an `Admin` can delete records outright in Audiences. Use this when a record should be removed for good rather than archived and recoverable.
+-   **Permanently delete specific records or a segment's records** — an `Admin` can delete records outright in Audiences. Use this when a record should be removed for good rather than archived and recoverable. This is currently in beta — contact Clay support to enable it for your workspace.
 -   **Permanently delete a person across the workspace** — Clay's public API removes a person's records from every audience in one workspace, matched on an email address, professional profile slug, or phone number. See **Deleting people with the privacy deletion API** below.
 -   **Purge a whole source's imported data** — not a self-serve action. Contact Clay support or your Growth Strategist, who can run a targeted deletion for a source's records or the workspace's Audiences data.
 
@@ -109,9 +109,22 @@ Delete or suppress them in your source system first, so the next sync does not r
 
 ### How does a permanent delete work in Audiences?
 
-An `Admin` can delete a single record from its own page, every record in a segment, or everything matching a filter in the archived view. Deleting a segment's records uses that segment's latest saved filter, so save any filter changes before you delete.
+Permanently deleting records in Audiences is currently in beta — contact Clay support to enable it for your workspace. An `Admin` can delete a single record from its own page, every record in a segment, or everything matching a filter in the archived view. Deleting a segment's records uses that segment's latest saved filter, so save any filter changes before you delete.
 
 Deleting covers `Accounts` and `Contacts`, and it removes the imported source records behind them as well. A source that is still syncing can bring those records back on its next run, so remove or suppress them in your source system first.
+
+### How do I permanently delete bad records from an import in Audiences?
+
+When a bad import leaves junk or wrongly matched company or person records in your Companies or People audience, a workspace `Admin` can permanently delete those records instead of only archiving them. Permanently deleting records in Audiences is currently in beta — contact Clay support to enable it for your workspace.
+
+To permanently delete records from an audience through a segment:
+
+1.  In **People** or **Companies**, add filters that match only the records you want to remove — for example, a **Sources** filter that selects the import the bad rows came from.
+2.  Click **Create segment** to save the filters as a segment, and check that the segment contains only the records you want to delete.
+3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name and select **Delete records in segment**.
+4.  In the **Permanently delete companies in this segment?** dialog (it says **people** in a People audience), check the box confirming you've reviewed the records, then click **Delete permanently**.
+
+Audiences deletes only the records that match the segment's latest saved filters, so save the segment after any filter change. **Delete list** in the same menu is different: it removes only the segment and leaves its records in your audience. To permanently delete records you've already archived, open the **Archived** section, filter to those records, and click **Delete records**.
 
 ### Does a `Viewer` who can see Audiences data also have a way to get it out?
 
