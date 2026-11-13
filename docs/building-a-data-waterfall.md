@@ -35,6 +35,22 @@ In Clay Workflows (the graph editor where you build with nodes), there's no **To
 
 **Can't find a "Waterfalls" tab?** In both Clay tables and Clay Workflows, **Waterfalls** is a card inside the **For you** tab, not a tab of its own. In a table, click **Tools** and stay on the **For you** tab to see the **Waterfalls** card. In a workflow, the **Waterfalls** view is marked **Beta**.
 
+### Waterfall output fields in Clay Workflows
+
+Waterfalls in Clay Workflows are currently in beta and available only to some workspaces. When a waterfall runs in a workflow, its `result` contains the fields below. You can map these fields into downstream nodes, and you'll see them in the run's details:
+
+-   `status` — how the waterfall finished: `accepted`, `continue`, or `exhausted`.
+-   `output` — the winning value the waterfall returned.
+-   `outputProvider` — the name of the provider that supplied `output` (for example, `dealroom.co`).
+-   `attempts` — a list with one entry per provider the waterfall tried. Each entry has:
+    -   `provider` — the provider's name (for example, `Crunchbase`).
+    -   `outcome` — `accepted`, `rejected`, `previously_rejected`, `no_data`, `missing_inputs`, or `provider_error`.
+    -   `validation` — `passed`, `failed`, or `not_run`.
+    -   `reason` — why the attempt got that outcome.
+    -   `candidate` — the value Clay extracted from that provider's response, when the provider returned one. A `candidate` can appear on rejected attempts too, not only on the accepted one.
+
+Provider fields show the provider's display name, not an internal provider ID. Earlier versions of the waterfall result used `value`, `sourceProviderId`, and `attempts[].providerId` instead of `output`, `outputProvider`, and `attempts[].provider`. A waterfall node set up before this change keeps returning the old fields until you open the waterfall node and save its settings again. After you save it, map `output`, `outputProvider`, and `attempts[].provider` in your downstream nodes.
+
 ## Editing an existing waterfall
 
 To add, remove, or reorder providers in a waterfall you've already saved:
@@ -348,6 +364,6 @@ See [HG Insights integration](hg-insights-integration-overview.md) for more deta
 
 **Sumble** is available as a standalone enrichment action (not part of a pre-built waterfall). It validates whether a company uses specific technologies you select, charging 6 credits per technology found. Use it when you need targeted confirmation of named tools rather than a broad technology scan. See [Sumble integration](sumble-integration.md).
 
-**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found."* See [Claygent](claygent-builder.md) for setup details.
+**Claygent** supplements database-backed tech stack enrichment by searching the web for signals of technology adoption. It is most useful for open-source or infrastructure frameworks — such as LangChain or AWS Bedrock — that leave no footprint in website source code and may not appear in database provider catalogs. Add a Claygent column to your table, use the company domain as an input variable, and write a mission prompt such as: *"Does {{company_domain}} use [technology name]? Search the company's website, blog posts, GitHub repositories, case studies, and press mentions, and return yes or no with the evidence found.\"* See [Claygent](claygent-builder.md) for setup details.
 
 **Note:** 6sense is not available as a waterfall provider in Clay. Store Leads enriches e-commerce site traffic data and is not part of any technographic waterfall.
