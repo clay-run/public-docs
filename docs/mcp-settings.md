@@ -163,7 +163,7 @@ If the budget you want isn't in the dropdown (for example, it only shows `No bud
 3.  Click `MCP` under **Orchestration** in the left sidebar, find the rep in the `MCP users` table, and open the `Budget` dropdown on their row.
 4.  Select the budget and click **Change budget** in the confirmation dialog. The rep's MCP spend from Claude, ChatGPT, or Glean is now charged to that budget.
 
-Giving a rep access to a budget doesn't assign it to them automatically — even if they're in a user group that has access. Each rep's budget has to be picked on their row in the `MCP users` table. To clear a rep's budget, select `No budget` and click **Remove budget**.
+Giving a rep access to a budget doesn't change which budget their MCP spend is charged to, even when the access comes through a user group. An admin sets the budget on the rep's row in the `MCP users` table. The budget can also be set each time the rep connects (or reconnects) Clay from Claude or ChatGPT. If the rep has access to more than one budget, the authorization page asks them to choose one. If they have access to exactly one, Clay assigns it automatically. A budget set when the rep connects replaces the one set on their row. To clear a rep's budget, select `No budget` and click **Remove budget**.
 
 ### How do I disconnect Clay from an AI tool?
 
