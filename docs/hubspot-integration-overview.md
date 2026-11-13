@@ -622,6 +622,33 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
 
+### How do I bring HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay Audiences?
+
+The HubSpot source in Clay Audiences imports HubSpot **Contacts**, **Companies**, and **Deals** only. It does not import HubSpot Activities such as calls, emails, meetings, notes, or tasks. You don't need a webhook or a workflow to get HubSpot Activities into Audiences. Use a Clay table as a staging step instead: fetch the activities with Clay's **HTTP API** integration, then write them to your Audiences records from the table.
+
+**Before you start:** Clay Audiences must be enabled on your workspace. If you don't see Audiences, contact your Growth Strategist. You'll also need a HubSpot Private App token with read access to the activity types you want, plus the HubSpot record ID (`hs_object_id`) of each contact or company in your table. The **Import objects from HubSpot** source includes `hs_object_id`. To add the token in Clay, open an **HTTP API** column, go to **Account** → **Select account** → **Add account**, and add an `Authorization` header with the value `Bearer <your-private-app-token>`.
+
+**Option 1: Roll HubSpot Activities up into fields on each record.** Audiences records are people and companies, so the simplest approach is to turn the activity log into fields such as last activity date, last activity type, number of meetings in the last 30 days, or last meeting notes.
+
+1.  In a Clay table of your HubSpot contacts or companies, add an **HTTP API** column. For each record, call HubSpot's associations endpoint to get the IDs of its activities. For example, `GET https://api.hubapi.com/crm/v4/objects/contacts/{hs_object_id}/associations/meetings` returns the meetings for a contact.
+2.  Add a second **HTTP API** column to fetch the details of those activities from HubSpot. For example, use `https://api.hubapi.com/crm/v3/objects/meetings/{meetingId}` for a meeting.
+3.  Add a formula or AI column that summarizes the activity details into the values you want, such as the most recent meeting date.
+4.  Add an `Upsert Audiences Record` column (listed as **Create or update Audiences record**) to write those values to the matching person or company in your Audience. Each time the table runs, it updates the matching record. `Upsert Audiences Record` writes only to fields that already exist in your Audience, so first create a custom field for each value. See [How do I create a custom Audience field that isn't tied to Salesforce?](audiences.md#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce)
+
+**Option 2: Write each HubSpot Activity to the record's Activity tab.** If you want individual activities instead of summary fields, use a Clay table that has one row per HubSpot activity. For example, you can pull a list of activities from HubSpot's API with the **Import data from an HTTP API** source.
+
+1.  Add a `Lookup in Audiences` column to find the person or company record the activity belongs to. Its result includes the record's `id` field, which is the Audiences record ID.
+2.  Add an `Upsert Audiences Activity` column and fill in these fields:
+    -   **Object type**: People or Companies.
+    -   **Record ID**: the `id` from the `Lookup in Audiences` result.
+    -   **Activity type**: Call, Email, Task, Meeting, Message, Event, or Other.
+    -   **Title**: for example, the meeting title or email subject.
+    -   **Activity timestamp**: the time the activity happened, as an ISO-8601 timestamp such as `2026-07-01T12:00:00Z`.
+    -   **Metadata** (optional): a JSON object with any extra activity details.
+3.  Run the column. The activities show up in the record's **Activity** tab in Audiences, and `Get Audiences Activity` returns them. If you re-run the column with the same record, activity type, and timestamp, Clay updates the existing activity rather than creating a duplicate.
+
+Test either option on a few rows before you run it on the whole table.
+
 ### Can I create HubSpot tasks from Clay?
 
 Clay's HubSpot integration does not include a native action for creating Tasks — tasks aren't one of the object types available in the HubSpot **Create object** action. To create HubSpot tasks from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's Tasks API directly.
