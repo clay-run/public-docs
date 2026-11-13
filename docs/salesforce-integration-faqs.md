@@ -689,6 +689,23 @@ When new contacts span multiple accounts — for example, prospecting contacts a
 
 If your Salesforce org uses parent-child accounts (for example, subsidiaries reporting to a parent company), set `AccountId` to the **child account** — the account that represents the person's actual employer in your hierarchy. You do not need to map `ParentId` on the contact itself. Salesforce maintains the relationship to the parent automatically through the child account's own `ParentId` field.
 
+## Will enabling Salesforce "Contacts to Multiple Accounts" affect my Clay integration?
+
+No. Enabling Contacts to Multiple Accounts in Salesforce won't break your existing Clay Salesforce workflows. Each Salesforce contact still has one primary account, stored in the contact's `AccountId` field. Clay's Salesforce actions (**Create record**, **Update record**, **Look up record**, and **Look up records with SOQL**) keep reading and writing `AccountId` the same way they did before.
+
+Salesforce keeps a contact's additional account links in a separate object called **Account Contact Relationship** (API name `AccountContactRelation`). Keep these points in mind when you use Clay with Contacts to Multiple Accounts:
+
+-   **Clay imports only the primary account.** Clay's Salesforce table sources and Clay Audiences don't import Account Contact Relationship records. In Clay, each contact is linked only to its primary account (`AccountId`), so any account-based segments, filters, or routing you build in Clay use that primary account.
+-   **To add extra account links from Clay**, add a **Create record** column, set the Salesforce object to **Account Contact Relationship**, and map `AccountId` and `ContactId`. The **Create record** object picker lists every object your connected Salesforce user can access.
+-   **To pull every account a contact is linked to**, add a **Look up records with SOQL** column and query the Account Contact Relationship object, for example:
+
+    `SELECT AccountId FROM AccountContactRelation WHERE ContactId = '/Contact ID'`
+
+    Replace `/Contact ID` with the column from your Clay table that holds the Salesforce Contact ID, using the `/` picker in the query editor.
+-   **Your connected Salesforce user needs access to Account Contact Relationship.** Clay's Salesforce actions run with the permissions of the connected Salesforce user, such as your integration user. If that user's profile or permission set can't read or create Account Contact Relationship records, the object won't appear in Clay or Salesforce will reject the request.
+
+Test the setup in a Salesforce sandbox before you roll it out in production. For more on connecting a sandbox, see [Is there a way I can test Salesforce enrichments?](#is-there-a-way-i-can-test-salesforce-enrichments).
+
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
 When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
