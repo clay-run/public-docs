@@ -269,10 +269,10 @@ The ad sync page does not have a CSV download button. The **People** (or **Compa
 
 1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
 2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
-3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+3. Click **Send** and select **Add to workbook** (currently in beta and not enabled in every workspace — contact support to request access). In the **Send to workbook** dialog, enter a table name and submit. Clay creates a new workbook and table with the segment's records (up to the first 50,000) and opens the table.
+4. In the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
 
-Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
+Workspace Admins and Editors can send a segment to a table; Workspace Viewers can't. If you don't see **Add to workbook**, or your workspace still has legacy bulk enrichment, see [How do I export an audience segment to CSV or Excel?](https://university.clay.com/docs/audiences#how-do-i-export-an-audience-segment-to-csv-or-excel) for the enrichment table steps. In workspaces where the Enrich panel only offers **Create enrichment workflow**, clicking `Enrich` creates a draft enrichment workflow, not a table.
 
 ### **Why is my matched count higher than the number of contacts I sent?**
 

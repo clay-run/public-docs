@@ -1232,15 +1232,30 @@ See [Workflows](https://university.clay.com/docs/workflows) for supported trigge
 
 ### How do I export an audience segment to CSV or Excel?
 
-Audiences doesn't have a CSV or Excel download button. A People or Companies list or segment in Audiences can't be downloaded directly. To get the records into a CSV file, put them into a Clay table first, then download the table as a CSV. Clay tables export to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
+Audiences doesn't have a CSV or Excel download button, so a People or Companies segment in Audiences can't be downloaded directly. To get a segment's records into a CSV file, put them into a Clay table first, then download the table as a CSV. Clay tables export to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
 
-**To export an audience segment to CSV:**
+Workspace Admins and Editors can send a segment to a Clay table; Workspace Viewers can't.
+
+**To export an audience segment to CSV with Add to workbook (beta):**
+
+**Add to workbook** is currently in beta and isn't enabled in every workspace. If you don't see it when you click **Send** on a segment, contact support to request access, or use the enrichment table steps below if your workspace has them.
+
+1.  Open the segment in Audiences and click **Send**.
+2.  Select **Add to workbook**.
+3.  In the **Send to workbook** dialog, enter a table name and submit. Clay creates a new workbook with a new table containing the segment's records, then opens that table. You can't add the segment to an existing workbook.
+4.  In the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Add to workbook imports only the first 50,000 records in the segment. The new table stays connected to the segment: records that join the segment later sync to the table automatically within 15 minutes. See [Why is a table connected to my audience segment updating Salesforce on its own?](#why-is-a-table-connected-to-my-audience-segment-updating-salesforce-on-its-own)
+
+**To export an audience segment to CSV with an enrichment table (workspaces with legacy bulk enrichment):**
 
 1.  Open the segment in Audiences and click `Enrich`.
-2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+2.  Click **Add enrichment table**, or click the `+` button and select **Create enrichment table** (labeled "Legacy bulk enrichment"). You don't need to add enrichment columns.
+3.  Open the new table and press **Cmd+E** (Mac) or **Ctrl+E** (Windows) to open the table's side panel. Click the **Export** tab, then click **Download CSV**. Enrichment tables created from a segment don't have a **Tools** button in the toolbar, so use the keyboard shortcut.
 
-Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
+See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
+
+**Why did clicking Enrich create a draft workflow instead of a table?** In workspaces where the Enrich panel's `+` button only offers **Create enrichment workflow**, the **Enrich** button on a segment builds enrichment workflows, not Clay tables. Each workflow is named after the segment (for example, "New Companies segment enrichment") and shows a **Draft** badge in the Enrichments panel until it runs. A draft enrichment workflow that never ran hasn't used any credits. To get the segment into a table you can download, use **Send** → **Add to workbook** instead.
 
 **If the list came from a people or companies search:** you can also run the search again and save the results to a Clay table instead of to Audiences. In the search, click **Continue** and choose **Save to new table** (or **Save to new workbook and table**) instead of **Save to People** or **Save to Companies**. Then download the table with **Tools** → **Export** → **Download CSV**.
 
