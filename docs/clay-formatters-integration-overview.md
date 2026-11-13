@@ -84,6 +84,21 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 The action outputs a **Normalized First Name** and a **Normalized Last Name** field.
 
+### How do I split a full name into first and last name before writing to Salesforce or another CRM?
+
+The Normalize First and Last Names action cleans up names that are already in separate first name and last name inputs — it doesn't split a single full name into parts. It also keeps only the first word of the first name, so a double first name such as `Mary Ann` becomes `Mary`. The last name keeps every word, so a surname with particles such as `van den Heuvel` stays whole (`Van Den Heuvel`).
+
+Splitting a full name by spaces — for example, a formula that takes the first word as the first name and the last word as the last name — breaks on double first names and on surnames with particles: `Lisa van den Heuvel` would be written as first name `Lisa` and last name `Heuvel`. To prepare full names for Salesforce (or any CRM that needs separate first and last name fields), use a Use AI column to parse the full name into separate output fields before the CRM write:
+
+1.  Click `Add column` and select `Use AI`. If you're building a function, add the Use AI column inside the function, before the Salesforce **Create record**, **Update record**, or **Create or update record** column.
+2.  Write a prompt that tells the model to split the full name into first name, last name, and (if present) middle name and suffix. Tell it explicitly to keep double first names together (for example, `Mary Ann`) and to keep the complete surname, including particles such as `van`, `van den`, `de`, or `von`. Also ask it to flag any name it isn't sure how to split. Insert your full name column into the prompt by typing `/` and selecting the column.
+3.  Set **Output format** to **Fields** and add one field for each part — for example, `first_name`, `last_name`, an optional `middle_name`, an optional `suffix`, and a review flag such as `needs_review`.
+4.  Run the Use AI column on a sample of edge cases (double first names, surnames with particles, names with suffixes) and check the results before turning on the Salesforce write.
+5.  In the Salesforce action, map the `first_name` and `last_name` fields (not the original full name column) to the **First Name** and **Last Name** fields of your Lead or Contact.
+6.  On the Salesforce column, check **Add run condition** ("Only run if this formula resolves to true") with a formula that only passes rows where `needs_review` isn't set, so names the AI flagged are reviewed by a person instead of being written to Salesforce automatically.
+
+See [Use AI](use-ai-integration-overview.md) for more on prompts and output fields, and [Salesforce integration](salesforce-integration-overview.md) for the Salesforce actions.
+
 ### `Action` Normalize a Domain
 
 Extract and standardize a domain URL to the format you need. To add this action to your table, click **+ Add Column → Enrich Data** and search for **"Normalize a Domain."**
