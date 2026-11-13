@@ -124,7 +124,7 @@ To permanently delete records from an audience through a segment:
 3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name and select **Delete records in segment**.
 4.  In the **Permanently delete companies in this segment?** dialog (it says **people** in a People audience), check the box confirming you've reviewed the records, then click **Delete permanently**.
 
-Audiences deletes only the records that match the segment's latest saved filters, so save the segment after any filter change. **Delete list** in the same menu is different: it removes only the segment and leaves its records in your audience. To permanently delete records you've already archived, open the **Archived** section, filter to those records, and click **Delete records**.
+Audiences deletes only the records that match the segment's latest saved filters, so save the segment after any filter change. **Delete segment** in the same menu is different: it removes only the segment and leaves its records in your audience. To permanently delete records you've already archived, open the **Archived** section, filter to those records, and click **Delete records**.
 
 ### Does a `Viewer` who can see Audiences data also have a way to get it out?
 
