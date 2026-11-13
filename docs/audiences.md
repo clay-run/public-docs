@@ -1251,7 +1251,7 @@ Add to workbook imports only the first 50,000 records in the segment. The new ta
 
 1.  Open the segment in Audiences and click `Enrich`.
 2.  Click **Add enrichment table**, or click the `+` button and select **Create enrichment table** (labeled "Legacy bulk enrichment"). You don't need to add enrichment columns.
-3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+3.  Open the new table and press **Cmd+E** (Mac) or **Ctrl+E** (Windows) to open the table's side panel. Click the **Export** tab, then click **Download CSV**. Enrichment tables created from a segment don't have a **Tools** button in the toolbar, so use the keyboard shortcut.
 
 See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
 
