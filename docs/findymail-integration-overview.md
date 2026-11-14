@@ -95,3 +95,34 @@ Clay credits work in this situation because they run on Clay's own Findymail acc
 **To fix this:** Log in to your Findymail account at [https://app.findymail.com](https://app.findymail.com) and top up your credits. Once your balance is restored, re-run the failing rows in Clay.
 
 If adding credits does not resolve the error, go to **Settings → Connections**, find your Findymail connection, and click **Reconnect** to re-enter your API key. Confirm the key is copied exactly from [https://app.findymail.com/user/api-tokens](https://app.findymail.com/user/api-tokens) with no extra spaces.
+
+### "Rate limited by Findymail" or "Retried but failed" when using the Clay-provided key
+
+This section applies when your Findymail columns run on the Clay-provided Findymail key (paid with Clay credits) rather than your own Findymail API key.
+
+The Clay-provided Findymail key is shared across Clay workspaces, and Findymail applies its own request caps to it. When the shared key is busy, Findymail temporarily rejects requests and the Find Work Email or Validate Email cell shows "Rate limited by Findymail. Retrying...".
+
+What Clay does automatically when Findymail rate-limits a request:
+
+1.  Clay retries the request up to 5 times, 1 second apart.
+2.  If every retry is still rate-limited, the cell shows **Retried but failed**.
+3.  Credits for a **Retried but failed** cell are refunded automatically. See [Credit refunds](credit-refunds.md).
+
+**Is there a per-minute or per-day limit on the Clay-provided Findymail key?** No. Clay doesn't set a fixed per-minute or per-day Findymail limit for your workspace. Whether a run gets through depends on how busy the shared key is at that moment, not on how many rows you send, so there's no batch size that's guaranteed to avoid "Rate limited by Findymail" on the Clay-provided key.
+
+**To avoid shared-key rate limits, connect your own Findymail API key:**
+
+1.  Copy your API key from [https://app.findymail.com/user/api-tokens](https://app.findymail.com/user/api-tokens).
+2.  Open the Findymail column's settings and, under `Select Findymail account`, click `+ Add account` and paste your key.
+3.  Save and re-run the affected rows.
+
+With your own key, requests count against your Findymail account's own limits and credits, and the Find Work Email and Validate Email actions don't use Clay credits.
+
+### Does re-running a Findymail row charge credits again?
+
+Yes. Clay doesn't cache Findymail Find Work Email or Validate Email results, so re-running a row sends a new request to Findymail and is billed like a first run.
+
+-   **Find Work Email:** charged again if it finds an email. If it finds no email, the credits are refunded.
+-   **Validate Email:** a validation that ended in **Retried but failed** was already refunded, so re-running it is billed like a new validation.
+
+For example, in a work email waterfall where Find Work Email found an email but the Validate Email step ended in **Retried but failed**, the validation was refunded but the Find Work Email lookup was charged as normal. Re-running that row charges the Find Work Email lookup again (2 credits on the Clay-provided key) if it finds an email again.
