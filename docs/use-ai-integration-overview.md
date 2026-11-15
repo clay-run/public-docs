@@ -109,6 +109,8 @@ The **Templates** dropdown at the top of the Use AI panel lets you explore pre-c
 4.  Write a `Prompt`.
 5.  Choose your preferred dimensions and optionally add a reference image URL.
 
+**Note:** Use AI columns set to the **Image generation** use case don't show the **Try on 5 rows** preview button, either when you add the column or when you edit it later. To test an image generation column on a sample, save the column, select a few rows in your table, right-click, and choose **Run [N] rows**. Only the rows you select will run.
+
 ### **Run settings**
 
 -   **Auto-update**
