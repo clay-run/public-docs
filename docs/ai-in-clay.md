@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-10-07T03:07:33.586Z
+last_synced: 2026-10-23T20:15:53.279Z
 ---
 
 # AI in Clay
@@ -10,13 +10,13 @@ A comprehensive guide to how Clay uses AI across its features.
 
 A comprehensive guide to how Clay uses AI across its features, with a focus on data privacy, security, and responsible AI practices.
 
-**Your data is never used for AI model training.** Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
+Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
 
 ## Core AI principles
 
 Clay is committed to transparent and responsible AI use. Here's what you need to know:
 
--   **No training on your data**: Customer data is never used to train Clay's AI models or those of our AI providers.
+-   **Model training**: Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces). Your customer data is never used for, or shared with, any other customer.
 -   **Enterprise-grade security**: Industry-standard encryption for data at rest and in transit, with SOC 2 Type II and ISO 27001 compliance.
 -   **You control your data**: As a data processor, Clay only uses your data to provide services to you.
 -   **Transparent partnerships**: Full list of AI subprocessors available at [trust.clay.com](http://trust.clay.com).
@@ -27,7 +27,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 **What it does**: Email Sequencer is Clay's built-in email outreach tool that lets you run email campaigns directly from your tables, using AI to create personalized messaging at scale.
 
-[View Email Sequencer documentation →](https://www.clay.com/university/guide/email-sequencer)
+[View Email Sequencer documentation →](https://university.clay.com/docs/email-sequencer)
 
 **How AI is used**:
 
@@ -38,14 +38,13 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
 ### Message drafting
 
 **What it does**: AI-powered message drafting within Clay tables helps you create personalized outreach messages for individual prospects.
 
-[View Email sequencer documentation →](https://www.clay.com/university/guide/email-sequencer)
+[View Email sequencer documentation →](https://university.clay.com/docs/email-sequencer)
 
 **How AI is used**:
 
@@ -56,14 +55,13 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
-### Use AI action
+### Use AI
 
 **What it does**: A powerful table action that gives you access to AI for web research, content generation, and image generation.
 
-[View Use AI documentation →](https://www.clay.com/university/guide/use-ai-integration-overview)
+[View Use AI documentation →](https://university.clay.com/docs/use-ai-integration-overview)
 
 **How AI is used**:
 
@@ -82,13 +80,12 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Data from your table rows is only sent to AI when you explicitly run the action.
 -   You control which columns are included as context.
--   Contractual agreements prohibit training on customer data.
 
 ### Claygents
 
 **What it does**: Build repeatable AI agents for web research and prospecting that can navigate websites, extract information, and make decisions.
 
-[View Claygent builder documentation →](https://www.clay.com/university/guide/claygent-playground)
+[View Claygent builder documentation →](https://university.clay.com/docs/claygent-builder)
 
 **How AI is used**:
 
@@ -100,25 +97,22 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Claygents process data row-by-row as they run.
 -   Research results are stored in your table, under your control.
--   No customer data used for training agent capabilities.
 
 ### Sculptor
 
-**What it does**: A chat interface for Clay that helps with table building, debugging, and analysis using conversational AI.
+**What it does**: A chat interface in your Clay tables and in Claygent Builder that helps with table building, debugging, and analysis.
 
-[View Sculptor documentation →](https://www.clay.com/university/guide/sculptor)
+[View Sculptor documentation →](https://university.clay.com/docs/sculptor)
 
 **How AI is used**:
 
--   Reads your "My Business Context" to understand your goals.
+-   In Claygent Builder, Sculptor reads your workspace AI context settings — company description, ideal customer profile, and buyer personas — to tailor its suggestions. These settings are moving to Knowledge Hub, which is currently in early access.
 -   Accesses information in your current table to provide relevant help.
 -   Suggests formulas, identifies issues, and helps analyze data.
 
 **Data privacy**:
 
--   Only accesses the specific table you're working in.
 -   Uses table metadata and visible data to provide context-aware assistance.
--   Chat history and table context are not used for training.
 -   Data is processed transiently to provide real-time assistance.
 
 ### Formula generator
@@ -135,13 +129,12 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your formula description and relevant table schema are sent to AI.
 -   Actual row data is not transmitted.
--   Generated formulas are not used to train models.
 
 ### API generator
 
 **What it does**: Helps you build HTTP API requests using AI, making it easier to connect to external services.
 
-[View HTTP API documentation →](https://www.clay.com/university/guide/http-api-integration-overview)
+[View HTTP API documentation →](https://university.clay.com/docs/http-api-integration-overview)
 
 **How AI is used**:
 
@@ -153,7 +146,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your API description is sent to AI models.
 -   API keys and credentials are never sent to AI providers.
--   Generated configurations are not used for training.
 
 ### Debug with AI
 
@@ -169,7 +161,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only error logs and relevant system information are sent to AI.
 -   Personal data in your tables is not included in debug requests.
--   Debug data is not used to train models.
 
 ### Find companies with natural language
 
@@ -186,7 +177,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   Only your ICP description is processed by AI.
 -   Search results come from Clay's company database, not your data.
 -   Your search criteria are not shared with other customers.
--   No training occurs on your ICP descriptions.
 
 ## Data Security and Compliance
 
@@ -246,15 +236,15 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 ### What you control:
 
 -   **Which AI features you use**: All AI features are opt-in through your actions.
--   **What data AI sees**: You choose which table columns to include in AI requests.
--   **API keys**: Option to bring your own API keys for supported providers.
+-   **What data AI sees**: You choose which table columns to include in AI requests. When configuring AI enrichments (Use AI, Claygent, etc.), you select which specific columns to send as context — the AI does not automatically access all columns in your table, and data is only processed when you explicitly run an AI action on specific rows. This means you can exclude PII columns from AI requests while still using Clay's AI features on non-PII data.
+-   **API keys**: Option to bring your own API keys for supported providers (OpenAI, Anthropic, Google Gemini). AWS Bedrock is not available as a native provider in Use AI or Claygent — to route AI calls through Bedrock, use the [HTTP API enrichment](https://www.clay.com/university/guide/http-api-integration-overview) to configure a request to Bedrock's OpenAI-compatible endpoint.
 -   **Data deletion**: Delete individual records, tables, or entire workspaces at any time. To request deletion of your personal data under privacy regulations such as CCPA, contact the Clay support team via the in-app chat — select **Talk to a person** and a team member will process your request and delete all data Clay holds for you.
 -   **Access permissions**: Control who in your organization can use AI features.
 
 ### What Clay guarantees:
 
--   Your data will never be used to train AI models.
--   Your data will not be shared with other Clay customers.
+-   Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces).
+-   Your customer data is never used for, or shared with, any other customer.
 -   All AI subprocessors have contractual prohibitions against unauthorized use.
 -   Industry-standard security and encryption protect your data.
 
@@ -263,18 +253,15 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 Clay provides access to a wide range of AI models from multiple providers. Below is a complete list of available models:
 
 | Provider | Models |
-| --- | --- |
-| Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
-| Gemini | 2.0 Flash, Flash Lite, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 3 Flash and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them. Gemini 2.5 Flash, Gemini 2.5 Pro, and Gemini 2.5 Flash Lite have been removed and are no longer available, including for existing configurations: Use AI columns that used Gemini 2.5 Flash or Gemini 2.5 Pro were moved to Gemini 3.8 Flash, and Use AI columns that used Gemini 2.5 Flash Lite were moved to Gemini 3.5 Flash Lite. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
-| xAI | Grok 4Grok 4.1 Fast Reasoning |
-| DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
-| Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
-| Kimi | Kimi K2.6Kimi K3 |
-| Z.ai | GLM 5.3 FlashGLM 5.3GLM 5.2 |
-| BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
-| Playground | Playground V2Playground V2.5 |
+| :------- | :----- |
+| Clay | Helium, Neon, Argon, Clay Navigator |
+| OpenAI | GPT 6 Sol, GPT 6 Luna, GPT 5.5, GPT 5.4, 5.4 Mini, 5.4 Nano, GPT 5 Mini, 5 Nano, o3, o4 Mini, GPT 4.1, 4.1 Mini, 4.1 Nano, GPT 4o, 4o Mini, GPT Image 1 (Low, Medium, High) |
+| Anthropic | Claude Opus 5, Claude 4.8 Opus, Claude 4.7 Opus, Claude Sonnet 5, Claude 4.6 Sonnet, Claude 4.5 Haiku |
+| Gemini | 3.1 Pro, 3.8 Flash, 3.7 Flash, 3.5 Flash Lite, 3.1 Flash Lite, 2.5 Pro, Gemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image |
+| Kimi | Kimi K2.6, Kimi K3 |
+| Z.ai | GLM 5.3 Flash, GLM 5.3, GLM 5.2 |
+| BlackForestLabs | Flux 1 Schnell, Flux 1 Dev |
+| Playground | Playground V2, Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
 

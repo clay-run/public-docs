@@ -97,7 +97,7 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
 ### **Slack notifications**
 
 1.  Go to your `Workspace Settings`.
-2.  Connect your Slack workspace to Clay's delivery system (workspace admin access required).
+2.  Connect your Slack workspace to Clay's delivery system (workspace admin access required). This connection uses a separate Slack app called **Clay Alerts Bot**, not the **Clay** app used for Slack actions in tables. If your Slack workspace restricts app installs, your Slack admin must approve **Clay Alerts Bot** separately. See [Clay vs. Clay Alerts Bot](slack-integration-overview.md#clay-vs-clay-alerts-bot-two-separate-slack-apps).
 3.  Return to the `Table alerts` panel.
 4.  Click `Connect Channel`.
 5.  Select the Slack channel where you want to receive alerts.

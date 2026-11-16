@@ -1,7 +1,7 @@
 ---
 title: Launch and manage a campaign
 description: Set a campaign's schedule and credit budget, launch it, and pause, resume, or complete it as leads move through the sequence.
-last_synced: 2026-11-06T23:41:09.596Z
+last_synced: 2026-11-10T20:23:38.238Z
 ---
 
 # Launch and manage a campaign
@@ -14,7 +14,7 @@ From there, managing a campaign comes down to three controls: pause it to make c
 
 ## Schedule settings
 
-A campaign's sending window lives on the `Settings` tab, in the `Schedule` section at the top. Start with `Schedule type` — it sets the shape of the window, and only `Custom schedule` exposes the individual fields.
+A campaign's sending window lives in its settings: click the campaign's name at the top of the page and choose `Settings`. `Schedule` is the section at the top. Start with `Schedule type` — it sets the shape of the window, and only `Custom schedule` exposes the individual fields.
 
 `Timezone` applies to every schedule type but `As fast as possible`, which hides the field. `Custom schedule` opens four more:
 
@@ -34,7 +34,7 @@ As you change these fields, the line above them updates with what the schedule a
 
 `Max new leads per day` caps how many new leads the campaign contacts each day, whichever schedule type you've picked. It defaults to 100,000 and limits new leads only, not follow-ups to leads already in the sequence. Daily volume comes from the sender accounts you've selected and their individual send limits, which is why selecting several accounts is what makes a campaign move faster.
 
-One setting does shape how that capacity gets spent. `Follow-up percentage`, further down the `Settings` tab, sets the share of emails allocated to follow-ups for leads already in the sequence before Clay reaches out to new ones.
+One setting does shape how that capacity gets spent. `Follow-up percentage`, further down in `Settings`, sets the share of emails allocated to follow-ups for leads already in the sequence before Clay reaches out to new ones.
 
 ## Setting a credit budget
 

@@ -1,7 +1,7 @@
 ---
 title: Clay (global agent)
 description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including scheduling, permissions, and credit usage.
-last_synced: 2026-11-06T22:53:03.684Z
+last_synced: 2026-11-10T19:37:58.476Z
 ---
 
 # Clay (global agent)
@@ -103,7 +103,7 @@ Every task and every schedule carries a permission level that decides what the g
 -   Resuming a paused run, testing a single action or code step, function runs, and searches.
 -   Creating or resuming a signal, which then checks records on a schedule.
 
-Deletions outside that list go ahead too: archiving a segment, deleting a segment field, a signal, a webhook, or an API key, and taking a destination off a draft ad sync.
+Deletions outside that list go ahead too: archiving a segment, deleting a segment field, a signal, a webhook, or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
 
 The same goes for credentials and billing — creating, renaming, or deleting an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself. Sending a test email from a campaign, or a test event to a webhook, needs no approval either.
 
@@ -114,7 +114,7 @@ The global agent works through a task without stopping for approval at each step
 -   **It won’t launch or send a campaign.** The global agent drafts one, edits the copy and settings, runs a spam check, and sends a single test email. Starting it, pausing it, and completing it happen in Sequencer, by you.
 -   **A signal it creates starts paused**, so you can read it back before it starts checking records and spending credits. It resumes the signal once you confirm, not on its own initiative.
 -   **It won’t create or edit a table.** Ask it to rebuild one as a workflow instead.
--   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s still a draft.
+-   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
 
 Everywhere else the global agent acts as it goes, and that includes spending credits on enrichments and workflow runs. So the checkpoint is you reading its work, not it asking permission: open the `Artifacts` panel, check the workflow or segment it produced, then run it yourself once it looks right.
 

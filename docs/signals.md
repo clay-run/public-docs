@@ -49,6 +49,41 @@ To start a signal, you'll **need a table with** companies or contacts you want t
 
 Currently, signals can only be adjusted by frequency, not set to run at specific times.
 
+### Can I schedule a Signal to run on a specific day of the week, like every Monday morning?
+
+No. Signals run on a frequency, not on a specific day or time. In a Signal's **Run settings**, the **Frequency** options are Daily, Weekly, Biweekly, Monthly, and Quarterly. There is no option to pick a day of the week (such as Monday) or a time of day for a Signal run.
+
+You can still make a weekly Signal land on the day you want by resetting its schedule on that day. See [How do I move my Signal's schedule to a different day of the week?](#how-do-i-move-my-signals-schedule-to-a-different-day-of-the-week)
+
+### Why does my weekly Signal run on Wednesday (or another day I didn't choose)?
+
+A Signal's schedule counts forward from when its previous run finished. Each frequency adds a fixed interval to that point:
+
+-   **Daily:** 24 hours after the last run
+-   **Weekly:** 7 days after the last run
+-   **Biweekly:** 14 days after the last run
+-   **Monthly:** 30 days after the last run
+-   **Quarterly:** 90 days after the last run
+
+For example, a weekly Signal whose last run finished on a Wednesday runs again the following Wednesday, and every Wednesday after that. If a Signal hasn't run yet, its schedule counts from when it was created.
+
+Because Monthly and Quarterly Signals use fixed 30-day and 90-day intervals rather than calendar months, their run dates gradually move through the month instead of staying on the same date.
+
+### How do I move my Signal's schedule to a different day of the week?
+
+To change which day a weekly or biweekly Signal runs on, re-run it on the day you want it to land on going forward. For example, to make a weekly Signal run on Mondays:
+
+1.  On a Monday, open the Signal: click the Signal column header (the `📡` icon) → **Edit signal**, or open it from the **Signals** tab in **Data hub**.
+2.  In **Run settings**, confirm **Frequency** is set to **Weekly**.
+3.  Click **Save and re-run**.
+
+The Signal runs right away. Once that run finishes, future weekly runs are scheduled 7 days apart from it, so they land on Mondays. The **Run cadence** column on the **Signals** tab in **Data hub** shows when the next run is due (for example, "Next in 7 days").
+
+Keep in mind:
+
+-   **Only a new run moves the schedule.** Clicking **Save** without re-running, or changing the **Frequency**, keeps the Signal counting from its previous run, so the day doesn't change.
+-   **The exact time follows the run.** The schedule counts from when the re-run *finishes*, not when you click **Save and re-run**, so to have the Signal run around a particular time of day (for example, Monday morning), click **Save and re-run** around that time.
+
 ### Does my Signal run automatically when new rows are added to my table?
 
 No. Signals run on a fixed schedule — Daily, Weekly, Biweekly, Monthly, or Quarterly — not when new rows arrive in your table. If new companies or contacts are added via a webhook or other source, the Signal will pick them up on the **next scheduled run**, not immediately.
