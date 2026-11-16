@@ -9,11 +9,19 @@ last_synced: 2026-04-26T01:39:58.486Z
 
 Find companies that match your specific criteria within Clay's proprietary dataset.
 
-The `Find Companies` source lets you build targeted lists of companies using filters like industry, size, location, and keywords.
+The `Find Companies` source lets you build targeted lists of companies using filters like industry, size, location, and description keywords.
 
 It's perfect for creating sales prospect lists, identifying competitors, and conducting market research.
 
 **Looking for similarity-based discovery?** You can switch to **Find lookalikes** mode using the mode dropdown in the filter panel header. See [Clay Lookalikes](clay-lookalikes.md) for documentation on the lookalike source and enrichments.
+
+## Where to start
+
+Open **Find leads** in the left sidebar or on your home page and choose **Companies**. In a workbook, use **+ Add → Find companies**. In a Workflow, add a **Find companies** node.
+
+Use **Find with filters** when available, or describe the companies you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
+
+For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
 
 ## **Creating a table with Find Companies**
 
@@ -23,13 +31,13 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
 ## `Source` **Find Companies**
 
 1.  Configure the source to your preferences:
-    -   **Industries** to include and exclude
+    -   **Industries** to include and exclude — choose from a fixed list of 457 industry values; see [the FAQ below](#what-are-all-the-industries-in-the-industries-filter) for the full list
     -   **Company size** — The self-reported size band on the company's profile (e.g., 11–50, 51–200). Select one or more bands from the dropdown.
     -   **Annual revenue ranges** — Filter by revenue brackets from $0–$500K up to $100B+.
-    -   **Funding raised** — Filter by total funding raised. Select one or more brackets from Under $1M up to $250M+, or select **Funding unknown** to include companies with no recorded funding data.
+    -   **Funding raised** — Filter by total funding raised across all known rounds, in pre-set ranges (for example, $1M–$5M, $5M–$10M). This reflects cumulative funding across all rounds, not the most recent round alone. To target companies that raised recently, use a signal (such as **Monitor for news & fundraising**) or enrich for the latest funding round with an integration like Crunchbase.
     -   **Company types** — Privately Held, Public Company, Partnership, Self Employed, Non Profit, Educational, Self Owned, or Government Agency. These values reflect how companies self-classify on their profiles.
-    -   **Keywords** to include or exclude
-        -   **Exact phrase matching:** Wrap multi-word terms in single or double quotes to search for that exact phrase. For example, searching for "Google Cloud" finds companies with "Google Cloud" in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
+    -   **Description keywords to include** and **Description keywords to exclude** — Filter companies by keywords that appear in their description.
+        -   **Exact phrase matching:** Wrap multi-word terms in double quotes to match that exact phrase. For example, `"Google Cloud"` finds companies with that phrase in their description — not just companies that mention Google and cloud separately. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are stripped out even with quoted phrases.
     -   **Semantic company description** — Enter a free-text description to help rank results based on how closely they match your ideal company profile (e.g., "B2B fintech company selling to mid-market banks").
     -   **Location** — Filter by company office location. Sub-filters: **Country**, **City**, **State or province**, **Region** (EMEA, NAM, APAC, or LATAM), and **Postal code**. Use **Is Headquarters** to restrict results to companies whose primary office is in the specified location. All sub-filters support include and exclude.
     -   **Estimated employee count** — Filter by a numeric count of estimated employees (enter a minimum and/or maximum). This is a separate field from **Company size** — see the [FAQ below](#why-do-company-sizes-and-estimated-employee-count-return-different-results-for-the-same-range) for why the same numeric range can surface different companies.
@@ -37,10 +45,11 @@ It's perfect for creating sales prospect lists, identifying competitors, and con
         -   **Industries** and **Subindustries** (include or exclude) — see [the FAQ below](#what-are-the-available-ai-subindustry-filter-values) for the full list of AI Subindustry values
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
-    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies.
+    -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies. The Audiences **Technographics** field is filled in only when the Find Companies search used at least one Technographics filter, and it holds the technologies that matched your filter — not the company's full tech stack. Companies sent to Audiences from a search without a Technographics filter have an empty Technographics field. See [Why does my Technographics filter return no results in my Companies audience?](#why-does-my-technographics-filter-return-no-results-in-my-companies-audience).
         -   **Vendors** — e.g., AWS, Salesforce, HubSpot
         -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
-        -   **Main categories** and **Parent categories**
+        -   **Categories** and **Subcategories** (labeled **Product categories** and **Product subcategories** in some search setups)
+        There is no vendor-domain filter — to target every product from one vendor, use **Vendors** and select the vendor by name.
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
     -   **Domain filters:**
         -   **Has domain** — Whether a company has a resolved domain.
@@ -76,6 +85,8 @@ A **custom table** (shown with the table icon in your workbook) is a blank canva
 
 **In short:** Choose **Find Companies** when you need to discover new companies from scratch; choose a **custom table** (or CSV import) when you're starting from a list you already own.
 
+**Already have a company list and want to find contacts at those companies?** Once your companies are in a custom table — whether imported from a CSV, CRM export, or any other source — you can run a people search directly from it: click **Tools** → **Import** → **Find People at These Companies**, set your title, seniority, and location filters, and send results to an Audiences draft. See [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#choose-your-starting-point) for the full workflow.
+
 **Keeping related tables in the same workbook**
 
 In Clay, a workbook is a container for related tables. It's common to keep linked tables together in one workbook — for example, a Find Companies table and the Find People table created from it — so the workflow is easy to navigate and share as a template. Create a new workbook when you're working on a distinct project or campaign (for example, separate workbooks for different clients or different outbound plays).
@@ -97,11 +108,26 @@ Founded year is not available as a filter when building a `Find Companies` searc
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
 
+### Which location field gives the most accurate headquarters address?
+
+Clay returns location data at two levels of detail — choose based on what you need:
+
+**For city/state/country-level headquarters identification (most reliable):**
+Use **Structured Locations** in the cell details. A company may have multiple Structured Location entries — one per known office. The **Is Headquarters** field is `true` for the company's primary office, so looking at entries where `Is Headquarters = true` pinpoints the HQ. These fields are geocoded and normalized (they handle informal names like "Greater Chicago Area") but do not include a full street address. The **Is Headquarters** filter in the Location section of Find Companies uses this same flag — enabling it restricts search results to companies whose HQ matches your location criteria.
+
+**For a raw street-level address:**
+Each company record also includes a **Locations** section in the cell details with a raw **Address** string per office (for example, "Brooklyn, NY 11222, US") and an **Is Primary** flag. When **Is Primary** is `true`, that entry is the designated primary office — the closest native field to a full street address. Two caveats:
+-   **Is Primary does not always equal HQ** — in some records, the primary flag doesn't perfectly map to the headquarters location.
+-   The address is an unparsed string; if you need city, zip, or country as separate values, you'll need a formula or AI column to extract them.
+
+**For confirmed street-level HQ address (highest accuracy):**
+None of Clay's native location fields return a verified street-level headquarters address on their own. For that level of precision, run a Claygent or AI research column that looks up the company's HQ from public sources. To reduce research cost, use **Structured Location where Is Headquarters = true** as a seed — it narrows the research to the right city and country without requiring a full web search from scratch.
+
 ### What if the industry I'm looking for isn't in the dropdown?
 
-The **Industries** filter matches against categories companies have self-selected on their profiles, so niche subcategories may not appear as suggestions. If you can't find your specific industry, select the closest available broader category and use the **Description keywords to include** field to narrow results to companies that operate in your specific niche.
+The **Industries** filter only accepts values from a fixed list of 457 industries (see [What are all the industries in the Industries filter?](#what-are-all-the-industries-in-the-industries-filter)), so niche subcategories may not have their own entry. If you can't find your specific industry, select the closest available broader category and use the **Description keywords to include** field to narrow results to companies that operate in your specific niche.
 
-For example, if you're targeting a specialized type of event company that doesn't have its own industry entry, select **Event Services** as the industry and enter keywords describing your target company type in **Description keywords to include**. The combination returns companies that fall under the broader industry AND mention those terms in their profile description.
+For example, if you're targeting a specialized type of event company that doesn't have its own industry entry, select **Events Services** as the industry and enter keywords describing your target company type in **Description keywords to include**. The combination returns companies that fall under the broader industry AND mention those terms in their profile description.
 
 For more guidance on balancing industry and keyword filters, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md).
 
@@ -112,6 +138,19 @@ For more guidance on balancing industry and keyword filters, see [Guide: Finding
 If you enable **technographics filters**, each company row that matches your criteria costs **3 Data Credits**.
 
 Any enrichments you select during the import wizard, or add to the table afterward (e.g., finding emails, enriching headcount), consume their own Actions and Data Credits as usual — only pulling company records from Clay's dataset is free.
+
+### Why does my Technographics filter return no results in my Companies audience?
+
+In a Companies audience, **Technographics** is a text field (T icon) stored on each company record. The Technographics segment filter in Audiences uses the standard text operators — such as **`contains`** or **`contains any of`** — and matches against whatever value is saved in that field. It does not search Clay's technographics catalog, and it has no vendor, product, category, or vendor-domain mode.
+
+A "Technographics contains Trimble" audience filter returns no results when the companies in your audience have an empty Technographics field. The Technographics field is filled in only when companies are sent to Audiences from a Find Companies search that used at least one Technographics filter (**Vendors**, **Products**, **Categories**, or **Subcategories**). In that case, the field holds the technologies that matched your search filter, not the company's full tech stack. Companies sent to Audiences from a Find Companies search that used only other filters — for example industry, size, and location — have no technographics data in Audiences.
+
+To find companies that use a specific technology, use one of these options:
+
+-   **Run a new Find Companies search with a Technographics filter.** Reuse your industry, location, and size filters, add the **Vendors** or **Products** filter (for example, search for Trimble in **Vendors** or **Products**), and send the results to Audiences. The Technographics filter costs 3 credits per matching company row.
+-   **Fill in the Technographics field on companies already in your audience.** Bring the companies into a Clay table, run a technographics enrichment, and use `Upsert Audiences Record` to write the result to the **Technographics** field on the matching Audience records. Enrichments use credits, so test on a small batch first. See [Audiences](audiences.md#sending-data-from-clay-table).
+
+You can't use a Companies audience segment to limit which companies a Find Companies search returns. In Find Companies, audience segments can be used only to exclude companies from the results.
 
 ### Why does my table show fewer rows than the preview count?
 
@@ -148,6 +187,27 @@ These two filters measure different things:
 
 Because the two values are sourced independently, a company whose reported size band is "51–200" may have a computed employee count of 250 — or vice versa. Filtering on one versus the other can return a different set of companies even when the numbers appear to overlap.
 
+### Why does enriched employee count differ from ZoomInfo or other sources?
+
+Large discrepancies between Clay's enriched employee count and another provider's figure typically have two causes.
+
+**The domain may have resolved to a subsidiary or child entity, not the global parent.** When you enrich a company by domain, Clay resolves the domain to whichever entity data providers associate with it — typically the company whose professional network profile lists that domain as its website. Country-specific sites, careers domains, and unit-level domains are often associated with a regional subsidiary or child entity rather than the global group. For example, `bankofchina.com` is associated with Bank of China (UK) Limited (the London subsidiary), not the global parent — which lists `boc.cn` as its domain. The same pattern applies to individual hotel or franchise sites, shared careers domains, and any domain primarily used by a subsidiary. Clay returns a real, correct company; it may just not be the entity you intended.
+
+To match the intended entity, enrich from the company's professional network company URL or its confirmed primary corporate domain instead of a regional or careers domain. For guidance on using company profile URLs as identifiers, see [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#use-linkedin-urls-not-domains-as-company-identifiers).
+
+**Clay's employee count methodology differs from compiled-headcount providers.** Clay's count reflects the number of professional network profiles discoverable for the matched company — the same measurement described in [What does the Estimated employee count filter measure?](#what-does-the-estimated-employee-count-filter-measure) above. Providers like ZoomInfo publish compiled or self-reported figures that may draw from regulatory filings, surveys, or other sources. For organizations with low professional-network presence — government agencies, military branches, educational institutions, and many non-Western companies — Clay's count will run substantially below a compiled headcount figure, and this is expected.
+
+For size-based segmentation (for example, filtering to companies with more than 1,000 employees), use the self-reported **Company size** band rather than an exact enriched count, or cross-validate against a second source — exact counts near a threshold are too sensitive to methodology differences to use as a reliable cut-off on their own.
+
+### What does the Funding raised filter measure?
+
+**Funding raised** reflects a company's total cumulative funding across all known rounds — not just the most recent or latest round alone. Selecting a range (for example, $1M–$5M) returns companies whose total funding falls in that range.
+
+The filter is not a recency filter — it does not narrow results by when a company raised. To target companies that raised recently, use one of these approaches instead:
+
+-   **Monitor for news & fundraising** signal — fires when a company in your table appears in fundraising-related news, including new round announcements.
+-   **Enrich a company's latest funding round** (Crunchbase integration) — returns the date, type, and amount of a company's most recent round.
+
 ### Why do companies sourced with a revenue filter have different enriched revenue values?
 
 The **Annual revenue ranges** filter in Find Companies uses estimated revenue from third-party sources stored in Clay's company database — the figure on file at search time.
@@ -166,9 +226,98 @@ Deduplication is based on each company's unique profile ID, not your filter conf
 
 **To re-import the full result set** (for example, when testing): delete the existing rows from your table first, then re-run the source. Once the rows are cleared, the search re-imports all matching companies from scratch.
 
+### Where does the Industry value come from in company data?
+
+The **`Industry`** field in Clay's company data — returned by the Companies, People, Jobs enrichment and present in Find Companies results — reflects the industry category a company has set on its professional network profile. Clay's underlying data provider scrapes professional network company profiles; the industry values conform to the professional network's industry taxonomy naming system (for example: *Software Development*, *Financial Services*, *Technology, Information and Internet*).
+
+Because companies self-select their industry on the professional network, the `Industry` field holds text names rather than a coded ID. The **Industries** filter in Find Companies uses a fixed list of 457 of these industry values — see [What are all the industries in the Industries filter?](#what-are-all-the-industries-in-the-industries-filter) for the full list. If a company has not set an industry on its professional network profile, the field returns empty.
+
+### Can Enrich Company classify government accounts as federal, state & local, or global government?
+
+No. The **Enrich Company** enrichment returns **Type** and **Industry** as single text values, and neither one splits government accounts into sub-categories such as Global Government, U.S. Federal, or U.S. State & Local. A government account shows a **Type** of **Government Agency**, and that is the most granular government value Enrich Company returns.
+
+The full set of **Type** values Enrich Company can return is: Educational, Government Agency, Non Profit, Partnership, Privately Held, Public Company, Self Employed, and Self Owned. These are the same values as the **Company types** filter in Find Companies.
+
+**To classify government accounts into your own categories (for example, Global Government, U.S. Federal, and U.S. State & Local):**
+
+1.  Run **Enrich Company** on your company domains.
+2.  Add a **Use AI** or Claygent column that takes the company domain (and optionally the company name and **Type**) as input.
+3.  In the prompt, list your categories and ask it to return exactly one category per company, plus a short reasoning note so you can spot-check the results. Domain endings such as `.gov` and `.mil` are useful signals for U.S. federal accounts.
+4.  To avoid spending credits on non-government companies, open **Run settings → Only run if** on the AI column and add a run condition — for example, only run when the domain ends in `.gov` or when the **Type** from Enrich Company is **Government Agency**. See [Conditional runs](conditional-runs.md) for how to write run conditions.
+
+### What country values does Enrich Company return?
+
+The **Country** field returned by the **Enrich Company** enrichment uses two-letter ISO 3166-1 alpha-2 country codes — for example, `US` (United States), `GB` (United Kingdom), `CA` (Canada), and `DE` (Germany). Enrich Company does not return full country names in the **Country** field.
+
+To match Enrich Company's **Country** values to the country values in your CRM (for example, a country picklist), map each two-letter code using the standard ISO 3166-1 alpha-2 list. The **Country** field can be empty when Clay's company data has no country on file for that company — handle blank values in your mapping.
+
+### What's the difference between Org Id, Company Id, and Clay Company Id in Enrich Company?
+
+The **Enrich Company** enrichment returns three different numeric IDs for each company. Each ID comes from a different system:
+
+-   **Org Id** — The company's ID on the professional network. It's the number that appears in the company's professional network profile URL when the URL uses a numeric ID (for example, `.../company/12345`).
+-   **Company Id** — The internal record ID used by Clay's underlying company data provider. It is not the professional network ID (that's **Org Id**) and not Clay's own ID (that's **Clay Company Id**). **Company Id** can be empty.
+-   **Clay Company Id** — Clay's own ID for the company. It's the recommended key for matching Enrich Company results to company records in your CRM.
+
+**Clay Company Id** doesn't depend on the company's domain or name, so a rebrand or domain change alone doesn't change it. In rare cases, a Clay Company Id can change when two company profiles in Clay's company data are merged — Enrich Company always returns the company's current Clay Company Id. See [Clay Company ID from Find Companies doesn't match the ID from Enrich Company](finding-companies-and-people-in-clay.md#clay-company-id-from-find-companies-doesnt-match-the-id-from-enrich-company) for how to handle older IDs.
+
+### What are all the industries in the Industries filter?
+
+The **Industries** filter in Find Companies (**Industries to include** and **Industries to exclude**) uses a fixed list of **457 industry values**. These are the only values the Industries filter accepts — you can't type a custom industry. The same 457-value list is used by the company industry filters (**Industries to include** and **Industries to exclude** under company attributes) in Find People. The values follow the professional network's industry taxonomy, which is the category each company selects on its own profile.
+
+The Industries filter is separate from the **Industries** and **Subindustries** filters under **AI filters**, which use Clay's own AI classification — see [What are the available AI Subindustry filter values?](#what-are-the-available-ai-subindustry-filter-values).
+
+To build a spreadsheet of the Industries filter values, copy the list below. The full set of 457 Industries filter values, grouped by first letter (values are separated by semicolons because some industry names contain commas):
+
+-   **A:** Abrasives and Nonmetallic Minerals Manufacturing; Accessible Architecture and Design; Accommodation Services; Accounting; Administration of Justice; Administrative and Support Services; Advertising Services; Agricultural Chemical Manufacturing; Agriculture, Construction, Mining Machinery Manufacturing; Air, Water, and Waste Program Management; Airlines and Aviation; Alternative Dispute Resolution; Alternative Medicine; Ambulance Services; Amusement Parks and Arcades; Animal Feed Manufacturing; Animation; Animation and Post-production; Apparel Manufacturing; Apparel and Fashion; Appliances, Electrical, and Electronics Manufacturing; Architectural and Structural Metal Manufacturing; Architecture and Planning; Armed Forces; Artists and Writers; Arts and Crafts; Audio and Video Equipment Manufacturing; Automation Machinery Manufacturing; Automotive; Aviation & Aerospace; Aviation and Aerospace Component Manufacturing
+
+-   **B:** Baked Goods Manufacturing; Banking; Bars, Taverns, and Nightclubs; Bed-and-Breakfasts, Hostels, Homestays; Beverage Manufacturing; Biomass Electric Power Generation; Biotechnology; Biotechnology Research; Blockchain Services; Blogs; Boilers, Tanks, and Shipping Container Manufacturing; Book Publishing; Book and Periodical Publishing; Breweries; Broadcast Media Production and Distribution; Building Construction; Building Equipment Contractors; Building Finishing Contractors; Building Materials; Building Structure and Exterior Contractors; Business Consulting and Services; Business Content; Business Intelligence Platforms; Business Supplies and Equipment
+
+-   **C:** Capital Markets; Caterers; Chemical Manufacturing; Chemical Raw Materials Manufacturing; Child Day Care Services; Chiropractors; Civic and Social Organizations; Civil Engineering; Claims Adjusting, Actuarial Services; Clay and Refractory Products Manufacturing; Climate Data and Analytics; Climate Technology Product Manufacturing; Coal Mining; Collection Agencies; Commercial Real Estate; Commercial and Industrial Equipment Rental; Commercial and Industrial Machinery Maintenance; Commercial and Service Industry Machinery Manufacturing; Communications Equipment Manufacturing; Community Development and Urban Planning; Community Services; Computer Games; Computer Hardware; Computer Hardware Manufacturing; Computer Networking; Computer Networking Products; Computer and Network Security; Computers and Electronics Manufacturing; Conservation Programs; Construction; Construction Hardware Manufacturing; Consumer Electronics; Consumer Goods; Consumer Goods Rental; Consumer Services; Cosmetics; Cosmetology and Barber Schools; Courts of Law; Credit Intermediation
+
+-   **D:** Dairy; Dairy Product Manufacturing; Dance Companies; Data Infrastructure and Analytics; Data Security Software Products; Defense & Space; Defense and Space Manufacturing; Dentists; Design; Design Services; Desktop Computing Software Products; Digital Accessibility Services; Distilleries
+
+-   **E:** E-Learning; E-Learning Providers; Economic Programs; Education; Education Administration Programs; Education Management; Electric Lighting Equipment Manufacturing; Electric Power Generation; Electric Power Transmission, Control, and Distribution; Electrical Equipment Manufacturing; Electronic and Precision Equipment Maintenance; Embedded Software Products; Emergency and Relief Services; Engineering Services; Engines and Power Transmission Equipment Manufacturing; Entertainment; Entertainment Providers; Environmental Quality Programs; Environmental Services; Equipment Rental Services; Events Services; Executive Offices; Executive Search Services
+
+-   **F:** Fabricated Metal Products; Facilities Services; Farming, Ranching, Forestry; Farming; Fashion Accessories Manufacturing; Financial Services; Fine Art; Fine Arts Schools; Fire Protection; Fisheries; Flight Training; Food & Beverages; Food and Beverage Manufacturing; Food and Beverage Retail; Food and Beverage Services; Food Production; Footwear Manufacturing; Forestry and Logging; Freight and Package Transportation; Fruit and Vegetable Preserves Manufacturing; Fundraising; Funds and Trusts; Furniture; Furniture and Home Furnishings Manufacturing
+
+-   **G:** Gambling Facilities and Casinos; Geothermal Electric Power Generation; Glass Product Manufacturing; Glass, Ceramics and Concrete Manufacturing; Golf Courses and Country Clubs; Government Administration; Government Relations; Government Relations Services; Graphic Design; Ground Passenger Transportation
+
+-   **H:** HVAC and Refrigeration Equipment Manufacturing; Health and Human Services; Health, Wellness and Fitness; Higher Education; Highway, Street, and Bridge Construction; Historical Sites; Holding Companies; Home Health Care Services; Horticulture; Hospitality; Hospitals; Hospitals and Health Care; Hotels and Motels; Household Appliance Manufacturing; Household Services; Household and Institutional Furniture Manufacturing; Housing Programs; Housing and Community Development; Human Resources; Human Resources Services; Hydroelectric Power Generation
+
+-   **I:** IT Services and IT Consulting; IT System Custom Software Development; IT System Data Services; IT System Design Services; IT System Installation and Disposal; IT System Operations and Maintenance; IT System Testing and Evaluation; IT System Training and Support; Import and Export; Individual and Family Services; Industrial Automation; Industrial Machinery Manufacturing; Industry Associations; Information Services; Information Technology and Services; Insurance; Insurance Agencies and Brokerages; Insurance Carriers; Insurance and Employee Benefit Funds; Interior Design; International Affairs; International Trade and Development; Internet Marketplace Platforms; Internet News; Internet Publishing; Investment Advice; Investment Banking; Investment Management
+
+-   **J:** Janitorial Services
+
+-   **L:** Landscaping Services; Language Schools; Laundry and Drycleaning Services; Law Enforcement; Law Practice; Leasing Non-residential Real Estate; Leasing Residential Real Estate; Leather Product Manufacturing; Legal Services; Legislative Offices; Leisure, Travel & Tourism; Libraries; Loan Brokers; Luxury Goods and Jewelry
+
+-   **M:** Machinery Manufacturing; Manufacturing; Maritime; Maritime Transportation; Market Research; Marketing Services; Mattress and Blinds Manufacturing; Measuring and Control Instrument Manufacturing; Meat Products Manufacturing; Mechanical or Industrial Engineering; Media & Telecommunications; Media Production; Medical Devices; Medical Equipment Manufacturing; Medical Practices; Medical and Diagnostic Laboratories; Mental Health Care; Metal Ore Mining; Metal Treatments; Metal Valve, Ball, and Roller Manufacturing; Metalworking Machinery Manufacturing; Military and International Affairs; Mining; Mobile Computing Software Products; Mobile Food Services; Mobile Gaming Apps; Motor Vehicle Manufacturing; Motor Vehicle Parts Manufacturing; Movies and Sound Recording; Movies, Videos and Sound; Museums; Museums, Historical Sites, and Zoos; Music; Musicians
+
+-   **N:** Nanotechnology Research; Natural Gas Distribution; Newspaper Publishing; Non-profit Organization Management; Non-profit Organizations; Nonmetallic Mineral Mining; Nonresidential Building Construction; Nuclear Electric Power Generation; Nursing Homes and Residential Care Facilities
+
+-   **O:** Office Administration; Office Furniture and Fixtures Manufacturing; Oil and Gas; Oil, Gas, and Mining; Online Audio and Video Media; Online Media; Online and Mail Order Retail; Operations Consulting; Optometrists; Outpatient Care Centers; Outsourcing and Offshoring Consulting; Outsourcing/Offshoring
+
+-   **P:** Packaging and Containers; Packaging and Containers Manufacturing; Paint, Coating, and Adhesive Manufacturing; Paper and Forest Product Manufacturing; Paper and Forest Products; Performing Arts; Performing Arts and Spectator Sports; Periodical Publishing; Personal Care Product Manufacturing; Personal Care Services; Personal and Laundry Services; Pet Services; Pharmaceutical Manufacturing; Philanthropic Fundraising Services; Philanthropy; Photography; Physical, Occupational and Speech Therapists; Physicians; Plastics Manufacturing; Plastics and Rubber Product Manufacturing; Political Organizations; Primary Metal Manufacturing; Primary and Secondary Education; Printing Services; Professional Organizations; Professional Services; Professional Training and Coaching; Program Development; Public Assistance Programs; Public Health; Public Policy; Public Policy Offices; Public Relations and Communications Services; Public Safety
+
+-   **R:** Radio and Television Broadcasting; Rail Transportation; Railroad Equipment Manufacturing; Ranching; Real Estate; Real Estate Agents and Brokers; Real Estate and Equipment Rental Services; Recreational Facilities; Religious Institutions; Renewable Energy Equipment Manufacturing; Renewable Energy Power Generation; Renewable Energy Semiconductor Manufacturing; Renewables & Environment; Repair and Maintenance; Research; Research Services; Residential Building Construction; Restaurants; Retail; Retail Apparel and Fashion; Retail Appliances, Electrical, and Electronic Equipment; Retail Art Dealers; Retail Art Supplies; Retail Books and Printed News; Retail Building Materials and Garden Equipment; Retail Florists; Retail Furniture and Home Furnishings; Retail Gasoline; Retail Groceries; Retail Health and Personal Care Products; Retail Luxury Goods and Jewelry; Retail Motor Vehicles; Retail Musical Instruments; Retail Office Equipment; Retail Office Supplies and Gifts; Retail Pharmacies; Retail Recyclable Materials & Used Merchandise; Reupholstery and Furniture Repair; Robotics Engineering; Rubber Products Manufacturing
+
+-   **S:** Satellite Telecommunications; School and Employee Bus Services; Seafood Product Manufacturing; Securities and Commodity Exchanges; Security Guards and Patrol Services; Security Systems Services; Security and Investigations; Semiconductor Manufacturing; Semiconductors; Services for Renewable Energy; Services for the Elderly and Disabled; Sheet Music Publishing; Shipbuilding; Shuttles and Special Needs Transportation Services; Sightseeing Transportation; Soap and Cleaning Product Manufacturing; Social Networking Platforms; Software Development; Solar Electric Power Generation; Sound Recording; Space Research and Technology; Specialty Trade Contractors; Spectator Sports; Sporting Goods; Sporting Goods Manufacturing; Sports Teams and Clubs; Sports and Recreation Instruction; Spring and Wire Product Manufacturing; Staffing and Recruiting; Steam and Air-Conditioning Supply; Strategic Management Services; Subdivision of Land; Sugar and Confectionery Product Manufacturing; Surveying and Mapping Services
+
+-   **T:** Taxi and Limousine Services; Technical and Vocational Training; Technology, Information and Internet; Technology, Information and Media; Telecommunications; Telecommunications Carriers; Telephone Call Centers; Temporary Help Services; Textile Manufacturing; Theater Companies; Think Tanks; Tobacco; Tobacco Manufacturing; Translation and Localization; Transportation Equipment Manufacturing; Transportation Programs; Transportation, Logistics, Supply Chain and Storage; Transportation/Trucking/Railroad; Travel Arrangements; Truck Transportation; Trusts and Estates; Turned Products and Fastener Manufacturing
+
+-   **U:** Urban Transit Services; Utilities; Utilities Administration; Utility System Construction
+
+-   **V:** Vehicle Repair and Maintenance; Venture Capital and Private Equity Principals; Veterinary; Veterinary Services; Vocational Rehabilitation Services
+
+-   **W:** Warehousing; Warehousing and Storage; Waste Collection; Waste Treatment and Disposal; Water Supply and Irrigation Systems; Water, Waste, Steam, and Air Conditioning Services; Wellness and Fitness Services; Wholesale; Wholesale Alcoholic Beverages; Wholesale Apparel and Sewing Supplies; Wholesale Appliances, Electrical, and Electronics; Wholesale Building Materials; Wholesale Chemical and Allied Products; Wholesale Computer Equipment; Wholesale Drugs and Sundries; Wholesale Food and Beverage; Wholesale Footwear; Wholesale Furniture and Home Furnishings; Wholesale Hardware, Plumbing, Heating Equipment; Wholesale Import and Export; Wholesale Luxury Goods and Jewelry; Wholesale Machinery; Wholesale Metals and Minerals; Wholesale Motor Vehicles and Parts; Wholesale Paper Products; Wholesale Petroleum and Petroleum Products; Wholesale Raw Farm Products; Wholesale Recyclable Materials; Wind Electric Power Generation; Wine and Spirits; Wineries; Wireless Services; Wood Product Manufacturing; Writing and Editing
+
+-   **Z:** Zoos and Botanical Gardens
+
+If your target niche doesn't have its own entry in the Industries filter, see [What if the industry I'm looking for isn't in the dropdown?](#what-if-the-industry-im-looking-for-isnt-in-the-dropdown).
+
 ### What are the available AI Subindustry filter values?
 
-The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. Clay recognizes approximately 457 common values (examples: *Software Development, Financial Services, Insurance, Healthcare and Life Sciences, Information Technology and Services, Marketing and Advertising, Non-profit Organization Management*). Because these come from what companies set on their professional profiles, the list is open-ended rather than a fixed picklist.
+The **Industries** filter (the standard one at the top of the filter panel) and the **`Industry` output column** use a standardized industry taxonomy drawn from company profile data. The **Industries** filter accepts a fixed list of 457 values (examples: *Software Development, Financial Services, Insurance, Information Technology and Services, Non-profit Organization Management*) — see [What are all the industries in the Industries filter?](#what-are-all-the-industries-in-the-industries-filter) for the full list.
 
 The **AI Subindustries filter** (under **AI filters**) is different. Clay generates a subindustry classification for each company using its own AI model, and this uses a fixed taxonomy of **110 categories**. These are the only values the filter accepts.
 

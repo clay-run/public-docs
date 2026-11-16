@@ -2,7 +2,7 @@
 title: HG Insights integration
 description: Uncover enterprise-grade technographic and parent company data
   while enriching foundational company data.
-last_synced: 2026-04-26T01:40:07.697Z
+last_synced: 2026-09-28T16:56:51.180Z
 ---
 
 # HG Insights integration
@@ -45,6 +45,18 @@ Build lists of companies based on what technology they use, including "back of h
 -   **Include total product signals count**
 -   **Include product first verified date**
 
+**Credit cost**
+
+**Note:** These credit charges apply when using the Clay provided key. If you bring your own HG Insights API key, no Clay credits are consumed for this source.
+
+The `Source Companies by product usage with HG Insights` action charges **8 credits per company per product matched**, capped at your **Max products per company** setting. A company that uses only 1 of your selected products costs 8 credits — the same as a company that uses all 7. Selecting more products only increases total credit spend if companies actually match those additional products.
+
+Running separate per-product searches does not reduce costs. A company that matches 3 of your selected products is billed 24 credits (3 × 8) whether you run one combined search or three separate per-product searches — but in three separate runs, that company appears in each run and is billed each time. **One combined run across all products is the most efficient approach.**
+
+**Lower-cost alternative for building a company universe**
+
+If your goal is to build a list of companies using a vendor's products — without needing to know exactly which products each company uses — the built-in **Technographics** filter in [Find Companies](find-companies.md) costs **3 credits per matching company row** (powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration)). Use `Source Companies by product usage with HG Insights` when you specifically need the full product breakdown per company.
+
 ## **Enriching data with HG Insights**
 
 1.  While in a Clay table, click `Add enrichment` and search for `HG Insights`.
@@ -76,7 +88,7 @@ For example, you can find out if a company uses Salesforce for their CRM or Nets
 -   **Include total product locations count (Optional)**
 -   **Include total product signals count (Optional)**
 -   **Include product first verified date (Optional)**
--   **Max product (Optional)**
+-   **Limit (Optional):** The maximum number of technology results returned per row. Defaults to **10**; maximum **100**.
 
 **Checking an existing account list for technology usage**
 
@@ -86,6 +98,33 @@ If you already have a list of companies — for example, accounts imported from 
 2.  For the **Company domain or HG company ID** input, select the column in your table that contains the company's website domain. The enrichment runs once per row using that column's value as the lookup.
 3.  Under **Products**, use the filter to select the specific product or competitor you want to check for.
 4.  Click **Save and run** to execute the check across your rows.
+
+**Credit cost**
+
+The HG Insights `Verify technology usage` action charges credits **per technology result returned**, not a flat amount per row. The price badge at the bottom of the column settings shows the rate as `/ result` — for example, `8 / result` means each matched technology costs 8 credits. The per-result rate can differ by billing plan, so check the badge in your workspace. By contrast, actions billed per row show `/ row` — for example, the BuyerCaddy `Verify technology usage` action shows `3 / row`.
+
+Hover over the `/ result` badge to see how the per-row maximum is calculated:
+
+-   **Cost per result:** the credits charged for each technology found (for example, 8 credits).
+-   **Estimated results per row:** your **Limit** setting (10 by default).
+-   **Max cost per row:** cost per result × Limit — for example, 80 credits (8 × 10).
+
+**Are you charged when HG Insights finds no technology?**
+
+No. With the HG Insights `Verify technology usage` action, you're only charged for technologies that are found:
+
+-   A row where HG Insights finds no matching technologies costs **0 credits**. After the run, click the cell and the cell details show `Charged: 0 (Refunded)`.
+-   A row skipped by your run condition (the cell shows `Run condition not met`) is not charged.
+
+**Why the Save and run estimate for Verify technology usage looks so high**
+
+The `Save and run 10 rows` and `Save and run [N] rows in this view` options show a **worst-case total**: cost per result × Limit × number of rows. The estimate assumes every row returns the maximum number of results. For example, a table of 28,063 accounts with the default Limit of 10 at 8 credits per result shows an estimate of about 2.25M credits (28,063 × 10 × 8 = 2,245,040).
+
+Your actual spend is cost per result × the total number of technologies found across all rows. For example, if HG Insights finds 2,000 matching technologies across those 28,063 accounts, the run costs 16,000 credits (2,000 × 8).
+
+**To reduce the maximum cost per row:** Lower the **Limit** in the enrichment configuration. Setting Limit to 2 caps the maximum at 16 credits per row (2 × 8); setting it to 3 caps it at 24 credits per row (3 × 8). If you're checking for a specific set of competitor products, set Limit to the number of products you're checking.
+
+**To estimate actual spend before running a large table:** Run a sample first — select a few hundred rows, right-click, and choose **Run [N] rows**. Check the credits used and the results on that sample (which reflect your run condition and how often technologies are actually found) before running the rest of the table or writing results back to your CRM.
 
 ### `Action` **Find company corporate structure**
 

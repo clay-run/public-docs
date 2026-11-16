@@ -1,7 +1,7 @@
 ---
 title: AI Tokens
 description: Understand AI Tokens
-last_synced: 2026-04-26T01:39:40.311Z
+last_synced: 2026-10-07T02:13:01.385Z
 ---
 
 # AI Tokens
@@ -26,12 +26,6 @@ When working with AI models, you'll encounter two types:
 **TPM (Tokens Per Minute)** refers to how many tokens a model can process within one minute—across both input and output. Different features and providers have different TPM requirements, often tied to your API tier.
 
 ## API tier requirements
-
-### ChatGPT Generate Text
-
--   **Requirement**: 30,000 TPM
--   **Access**: Works with **any paid tier** as long as the API key has access to GPT-4 or GPT-4 Turbo
--   _(Note: Free-tier or unpaid OpenAI keys may not have access)_
 
 ### ClayGent Web Research
 
@@ -69,7 +63,7 @@ When using AI features in Clay, you'll consume both **Actions** and **Data Credi
 Clay uses two pricing structures for AI models:
 
 -   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay's own models like Neon, Helium, and Argon)
--   **Variable pricing**: Data credits based on actual token usage plus a 20% premium (applies to advanced reasoning models used for sophisticated web research)
+-   **Variable pricing**: Data credits based on actual token usage, charged at cost with no markup (applies to advanced reasoning models used for sophisticated web research)
 
 You can control AI spending by:
 
@@ -78,7 +72,7 @@ You can control AI spending by:
 -   Choosing more cost-effective models for simpler tasks
 -   Selecting fixed-price models when cost predictability is important
 
-To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://www.clay.com/university/guide/how-ai-is-priced).
+To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
 ## Clay credits vs. personal API keys
 
@@ -102,7 +96,14 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   You manage your own API billing directly with the provider
 -   No output token cap from Clay's side (the model's own context length still applies)
 
-**Note:** When using a personal API key, price breakdowns won't appear in the Clay UI. You'll need to monitor your usage and upgrade tiers manually.
+**Estimated provider cost with a personal API key:** When a Use AI or Claygent column runs with a personal API key, each cell's output includes the token counts for that run and an estimated provider cost, shown in the cell as **Total Cost To AI Provider** (`totalCostToAIProvider` when referenced in a formula column). You can view these output fields on the cell or reference them in a formula column. When the column runs on Clay credits instead, the cell shows the Clay credits charged rather than a provider cost. With a personal API key, you'll still need to monitor your usage and upgrade tiers manually with your provider.
+
+**Why Clay's estimated cost can differ from your provider bill:** The Total Cost To AI Provider value in Clay is an estimate for that single cell run. Clay calculates it by multiplying the input and output tokens the provider reports for the run by Clay's standard price for that model. For reasoning models such as gpt-5-mini, the output token count already includes reasoning tokens. Your provider's usage dashboard and invoice are the billing source of truth because they:
+
+-   Include all usage on your API key and provider account, including any other columns, tables, or tools that use the same key
+-   Use your account's actual rates, which may differ from the standard prices Clay uses for the estimate
+
+To check what you were actually billed, use your provider's usage dashboard (see "Monitoring API Usage" above).
 
 **If you see "Rate limit wait time exceeded" errors when running many rows simultaneously with a personal OpenAI API key:** Clay runs multiple rows in parallel, which can exhaust your OpenAI account's tokens-per-minute (TPM) or requests-per-minute (RPM) limits faster than expected. Clay automatically retries rate-limited requests, but if the limit persists, cells will return a **"Rate limit wait time exceeded"** error. To resolve this:
 

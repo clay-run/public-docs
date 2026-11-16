@@ -54,7 +54,7 @@ The actual LLM cost is the cost charged by the AI provider of the model you've s
 1.  **Withhold.** Clay withholds an estimated number of data credits upfront—based on the 75th percentile of past runs for that model—multiplied by the number of rows.
 2.  **Execute.** The model processes your task.
 3.  **Calculate.** Clay calculates the actual LLM cost for each row.
-4.  **Reconcile.** The withheld amount is compared to the actual cost. Any surplus is refunded; any additional cost is deducted. You only pay for what was used.
+4.  **Reconcile.** The withheld amount is compared to the actual cost. Any surplus is returned to your balance; any additional cost is deducted. You only pay for what was used.
 
 Every AI prompt counts as **one action**. The variable component affects only the data credit cost of that action.
 
@@ -70,7 +70,7 @@ The example below details a fixed vs variable AI model being run on 100 rows in 
 | --- | --- | --- |
 | Starting balance | 100 credits | 100 credits |
 | Start of run | Charges 100 credits | Withholds 100 credits |
-| End of run | — | Refunds 20 credits |
+| End of run | — | Returns 20 credits |
 | Ending balance | 0 credits | 20 credits |
 
 In this scenario, the variable model's withholding mechanism protects both the customer and Clay from unexpected cost overruns—while returning unused credits at the end.

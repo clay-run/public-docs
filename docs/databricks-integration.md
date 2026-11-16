@@ -54,6 +54,19 @@ Connect to Databricks using a Personal Access Token.
 
 ## Using the Databricks integration
 
+### Closed-loop workflow: import, enrich, and write back to Databricks
+
+Once your Databricks source is connected, you can build a fully automated loop: Databricks imports data into Clay, Clay enriches each row, and the Upsert Row action pushes the results back to your Databricks table — no webhooks required.
+
+1.  **Schedule your source.** Open the source column settings and configure a schedule so Clay pulls fresh rows from Databricks automatically. See [scheduled sources](scheduled-sources.md) for details.
+2.  **Add enrichment columns.** For each piece of data you want to add — such as employee count or company details — add an enrichment column and map its required input to the corresponding Clay column (for example, map the enrichment's domain input to the column containing your `website_domain` values).
+3.  **Leave table auto-run on.** Auto-run is on by default, so every new row added by the Databricks source automatically triggers your enrichment columns as it arrives. See [auto-run](auto-run.md) for more on how this works.
+4.  **Gate each enrichment with "Only run if."** Add an `Only run if` condition to each enrichment column — for example, `website_domain is not empty and Employee Count is empty` — so enrichment fires only when its input exists and the result has not already been filled in. This prevents re-runs and controls credit spend.
+5.  **Add a Databricks Upsert Row action as the final column.** Select the destination table, set the `Lookup matching field` to the Databricks column that uniquely identifies each record (such as `website_domain`), and map each enrichment result to its destination Databricks column in the Column mapping section. See [how column mapping works](#how-column-mapping-works) below.
+6.  **Keep auto-run on for the Upsert Row action.** With auto-run enabled on the action column, every enriched row writes back to Databricks automatically.
+
+The result: Databricks sends rows to Clay, Clay enriches each row on arrival, and the Upsert Row action pushes the results straight back to your Databricks output table.
+
 ### Pushing enrichment data to Databricks
 
 To push enriched records from a Clay table into your Databricks instance, use one of the write actions below.
@@ -115,10 +128,36 @@ Use this action to insert or update a row in a Databricks table using a unique i
 -   **Databricks catalog**
 -   **Databricks schema**
 -   **Databricks table**
--   **Unique key column**
--   **Column values to insert or update**
+-   **Lookup matching field**
+-   **Column mapping (Table Columns)**
+
+#### How column mapping works
+
+After you select the Databricks catalog, schema, and table, the action loads your table's column schema. The setup panel has two parts:
+
+-   **Lookup matching field** — a dropdown listing your Databricks table's columns. Select the column that acts as the unique key for matching (for example, `website_domain`). The action uses this column name to decide whether to update an existing row or insert a new one. If no field is selected, the action will fail with a "Lookup field value missing" error.
+-   **Column mapping (Table Columns)** — each Databricks column appears as a separate input field. Map each field to the Clay column that holds the value you want to write. **Only columns you explicitly map here are written to Databricks.** You must map at least one column. The lookup field column itself must also be mapped here so the action has a value to match on for each row.
+
+**Example:** To write enriched employee count data back to a `headcount` column in Databricks while matching on `website_domain`:
+
+1.  Set `Lookup matching field` → `website_domain`.
+2.  In Column mapping, map `website_domain` to the Clay column containing domain values (so the match key has a value for every row).
+3.  In Column mapping, map `headcount` to the Clay enrichment column containing the employee count result.
 
 **Run settings**
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Troubleshooting
+
+### "Missing column data" error on Upsert Row
+
+The error `Missing input: Missing column data` on a row means the action has no column values to write — either because no columns are mapped in the Column mapping section, or because all mapped Clay columns are empty for that row.
+
+**To fix:**
+
+1.  Open the Upsert Row action. Check that at least one column is mapped in the Column mapping (Table Columns) section. If no column fields appear, click **Refresh fields** to reload the table schema from Databricks.
+2.  Make sure the lookup field column is mapped in the Column mapping section in addition to being selected in the `Lookup matching field` dropdown — the dropdown sets the column *name* used for matching, but the row *value* for that column must also be provided through the mapping.
+3.  Verify that the Clay columns you've mapped have values for the affected rows. If an enrichment returned no result for a row, that cell will be empty and contribute nothing to the write.
+4.  Add an **Only run if** condition to the Upsert Row action column so it fires only when the enrichment columns you're mapping have values (for example, `Employee Count is not empty`). This prevents the action from attempting to write rows where enrichment did not return results.

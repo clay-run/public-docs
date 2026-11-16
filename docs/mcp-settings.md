@@ -1,7 +1,7 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-04-26T01:40:20.821Z
+last_synced: 2026-10-19T16:50:28.293Z
 ---
 
 # MCP settings
@@ -12,7 +12,7 @@ MCP (Model Context Protocol) is how Clay connects your workspace to AI tools lik
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` in the side nav. The MCP settings page is only visible to workspace admins — if you don't see it in your settings sidebar, ask your workspace admin.
+Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
 
 **Note:**  
 
@@ -20,7 +20,7 @@ Credit controls and usage monitoring are available on all modern paid plans (Lau
 
 Audiences controls are available to workspaces with Clay Audiences enabled — contact support if you're unsure whether your workspace qualifies.  
 
-The `Enable for MCP` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
+The `MCP for reps` option on [Functions](#enabling-a-function-for-mcp) (reusable enrichment workflows built in Clay) is available on modern Launch, Growth, Enterprise, and Legacy Enterprise plans.
 
 Glean integration is available on Enterprise plans only.
 
@@ -29,10 +29,16 @@ Glean integration is available on Enterprise plans only.
 Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
-2.  Click the function to open it's settings and toggle `Enable for MCP`.
+2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
     -   Set a name and description for the MCP app — this is what reps see when browsing available functions, so make it actionable (e.g., _"Company enrichment waterfall"_ or _"Outbound email generator"_).
 
 _For more information about functions, check out our_ [_full doc_](https://university.clay.com/docs/functions)_._
+
+## How Actions are spent through MCP
+
+Work a rep triggers from ChatGPT, Claude, or Glean through Clay's MCP draws on the same Actions and Data Credits as the same work run inside Clay. There's no separate MCP allowance and no MCP surcharge.
+
+One prompt can turn into more than one charged operation, though. The AI tool decides which Clay tools to call to answer a request, so a single question might run a search, enrich what it finds, and invoke a Function — each charged as it runs. That makes MCP spend per prompt more variable than a single enrichment in a table, which is why it's worth setting a default credit limit before reps start.
 
 ## Setting credit limits
 
@@ -45,26 +51,26 @@ There are two levels of control:
 
 ## Monitoring usage
 
-The `MCP users` table gives a live view of every rep who has connected Clay to an external platform:
+The `MCP users` table lists all workspace members, including those who haven't yet connected Clay to an external platform. Connected members appear at the top; remaining workspace members appear below, sorted by name. Admins can pre-assign credit limits and Salesforce IDs for any member before the member connects an MCP client.
 
 -   **Name** — rep's name and email address
--   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination)
+-   **Platforms** — icons indicating which platforms the rep has connected (ChatGPT, Claude, Glean, or a combination). Members who haven't connected yet show no platform icons.
 -   **Credit limit** — the rep's current limit, either the workspace default or a per-user override
 -   **Credits used** — live usage tracked against the rep's limit
 -   **Salesforce ID** — populated automatically when `Sync user IDs from audiences` is enabled; shows  otherwise
 
 Use the search bar at the top of the table to find a specific rep by name or email.
 
-MCP credit usage also appears in the main credit usage dashboard at `Settings → Credit Usage`, alongside all other workspace credit consumption.
+MCP credit usage also appears at `Settings` → `Usage`, on the `MCP` tab. Spend there is grouped by rep — expand a rep's row to see their spend per Function, plus an `Other` row for usage outside your Functions. That `Other` row is where Clay's built-in tools, like company and contact search, land.
 
 ## Audiences controls
 
-If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP users` page:
+If your workspace uses Clay Audiences, two additional workspace-level toggles appear on the `MCP` page:
 
 -   **Sync user IDs from audiences** — continuously syncs audience data to match MCP users to the Salesforce accounts they own. Updates run incrementally every 15 minutes, with a full sync once a week.
 -   **Restrict account querying by Salesforce owner** — when enabled (the default when Salesforce is connected), reps can only query accounts they own in Salesforce. When disabled, reps can query any account in the synced audience.
 
-**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available when account ownership restriction is enabled. Disable "Restrict account querying by Salesforce owner" in workspace MCP settings to use contact queries`, the **Restrict account querying by Salesforce owner** toggle is on. Click `MCP` in the workspace sidebar and disable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
+**Troubleshooting — error: "Contact queries are not available in this workspace":** If a rep using Clay through Claude or ChatGPT sees the error `Contact queries are not available when account ownership restriction is enabled. Disable "Restrict account querying by Salesforce owner" in workspace MCP settings to use contact queries`, the **Restrict account querying by Salesforce owner** toggle is on. Click `MCP` under **Orchestration** in the left sidebar and disable it. The MCP page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin to make the change.
 
 **Troubleshooting — rep sees no results when querying Audiences:** When `Restrict account querying by Salesforce owner` is on, results are scoped to accounts the rep owns in Salesforce. A rep who owns no accounts (or whose Salesforce ownership hasn't synced yet) will receive empty results — which can look like the feature isn't working. To resolve: either disable `Restrict account querying by Salesforce owner` so the rep can see all workspace accounts, or ensure `Sync user IDs from audiences` is on and the rep's Salesforce account ownership is correctly mapped.
 
@@ -72,11 +78,11 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ### Why does Clay MCP return different results than my Clay table?
 
-The native Clay MCP contact enrichment — including the "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
+The native Clay MCP contact enrichment — including the `search-contacts` and `add-contact-data-points` tools, which replaced the older "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
 
 **To bring your waterfall coverage into MCP**, wrap the waterfall in a Clay Function and enable it for MCP. See [Enabling a function for MCP](#enabling-a-function-for-mcp) above for step-by-step instructions. Once enabled, you and your reps can invoke the waterfall function directly from Claude or ChatGPT.
 
-The `Enable for MCP` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
+The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
@@ -105,11 +111,13 @@ There is no self-service way to add a custom redirect URI to Clay's OAuth allowl
 
 ### What role should I assign to team members who will only use Clay through MCP?
 
-Any team member who needs to use Clay through an AI tool (Claude, ChatGPT, Glean, or xAI) must first be added to your Clay workspace. When inviting them, assign the **Sales Rep** role.
+Any workspace role — Admin, Member, Viewer, or Sales Rep — can authorize Clay in AI tools like Claude, ChatGPT, or Glean. Team members must first be added to your workspace before connecting.
 
-The Sales Rep role restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.). This makes it the right choice for team members who should use Clay through AI tools only — not build workflows directly in Clay.
+For team members whose only purpose is to use Clay through AI tools — with no need to access tables, workbooks, or other workspace resources — assign the **Sales Rep** role. Sales Rep restricts access to the main Clay workspace: users can invoke functions and run enrichments from within their AI tool, but they cannot open or interact with the Clay interface (tables, workbooks, etc.).
 
-To invite them: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
+If a team member already has Viewer, Member, or Admin access to your workspace, they can also authorize Clay in Claude, ChatGPT, or Glean without a role change.
+
+To invite MCP-only users: go to `Settings` → `Team`, click `+ Invite`, enter their email address, and select **Sales Rep** from the role dropdown.
 
 **Important:** Team members must accept their workspace invite email *before* connecting Clay to Claude, ChatGPT, or Glean. If a rep goes through the Clay MCP connection flow before accepting the invite, they'll be routed into a new personal workspace instead of your team workspace — and they won't appear in your `MCP users` table or be eligible for credit allocation.
 
@@ -139,7 +147,21 @@ Your Clay workspace data and workflows are unaffected — only the connection fr
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
-Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP users` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
+Yes, by removing them from your workspace. While admins cannot directly revoke a rep's MCP connection from the `MCP` page, they can remove the rep from the workspace entirely. If a rep is not added to your workspace, they won't have access to the data and workflows in your Clay instance. Alternatively, to limit usage without removing access, set their credit limit to a low value.
+
+### How do I make sure reps only send ICP accounts from Claude to Clay?
+
+Clay doesn't have a setting that limits Claude, ChatGPT, or Glean to your ideal customer profile (ICP) accounts, and Clay doesn't offer a pre-built ICP skill or Function. Every company defines its ICP differently. Writing "only send ICP accounts" in a Claude prompt is an instruction, not a guardrail, so Claude won't always follow it.
+
+To apply the same ICP check every time a rep uses Clay from Claude, put your ICP logic in a Clay Function:
+
+1.  In the `Functions` tab, build a Function that holds your fixed ICP qualification logic.
+2.  Give the Function outputs such as `is_icp`, `icp_score`, and `qualification_reason`. When a rep runs the Function from Claude, these output fields come back in the conversation.
+3.  Check `MCP for reps` on the Function so reps can run it from Claude, ChatGPT, or Glean (see [Enabling a function for MCP](#enabling-a-function-for-mcp)).
+4.  Have reps run the ICP Function first, and only go on to enrichment or outreach when `is_icp` is true.
+5.  For reps who only use Clay through AI tools, assign the **Sales Rep** role (currently in beta — contact support to request access for your workspace). This role gives them MCP access without access to tables, workbooks, or other workspace resources (see [What role should I assign to team members who will only use Clay through MCP?](#what-role-should-i-assign-to-team-members-who-will-only-use-clay-through-mcp)).
+
+**Limitation:** Turning on `MCP for reps` adds the Function alongside Clay's built-in MCP tools. It doesn't replace them. Reps can still search for people and add contact or company data points straight from Claude, without going through your ICP Function. Clay has no setting that turns off the built-in tools or limits a rep to specific Functions. To cap what a rep can spend, set their credit limit in the `MCP users` table. A credit limit of `0` blocks enrichments and Functions through AI tools. Searches that don't add paid data points still run.
 
 ### When do credits reset?
 
@@ -149,9 +171,36 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
 
+### Why am I seeing `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` in Claude or ChatGPT?
+
+The error `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` means the Clay user making the request has reached their monthly MCP credit limit — the per-user cap on credits spent through ChatGPT, Claude, Glean, or other AI tools connected to Clay. Inside Clay, the same limit shows as `Monthly user credit limit reached`.
+
+Despite `SALES_REP` in the error name, the MCP credit limit applies to every workspace member who uses Clay through an AI tool — including workspace admins, Members, and Viewers — not only users with the Sales Rep role. The MCP credit limit is available on all modern paid plans (Launch, Growth, Enterprise) and Legacy Enterprise.
+
+This error is not caused by workbook credit limits under `Settings → Usage → Workbook limits`. The MCP credit limit is managed only on the `MCP` page.
+
+To remove the error, a workspace admin raises the user's MCP credit limit:
+
+1.  From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar.
+2.  In the `MCP users` table, find the user (search by name or email — admins can find themselves here too).
+3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
+
+The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+
+### Why does a rep's credit usage appear higher than the number of prompts they sent?
+
+Credits are charged per record enriched, not per MCP request or prompt. A rep who sends a small number of prompts can consume many more credits than the prompt count suggests, for two reasons:
+
+-   **One prompt can fan out into multiple requests.** The AI tool may split a single prompt into several underlying calls — for example, asking to enrich a batch of contacts at once can generate a separate request for each one. The number of prompts the rep sent does not equal the number of enrichment requests that ran.
+-   **Credits are charged per record, not per request.** A single request that covers multiple records charges credits for each record individually.
+
+For Functions that run a provider waterfall, the cost per record also varies: the waterfall stops as soon as a provider returns a result, so each record is charged only for the providers that ran before a match was found. Records that resolve with an earlier, lower-cost provider cost less; records that fall through to later, higher-cost providers cost more.
+
+To see exactly what a rep spent and on which Functions: go to `Settings` → `Usage` → `MCP` tab, then expand the rep's row to see a per-Function credit breakdown.
+
 ### Where else can I see MCP credit usage?
 
-MCP usage appears in the main credit usage dashboard at `Settings → Credit Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
+MCP usage appears in the main credit usage dashboard at `Settings` → `Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
 
 ### What's the difference between the default credit limit and a per-user override?
 

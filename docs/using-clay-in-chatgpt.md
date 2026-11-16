@@ -37,7 +37,7 @@ Use cases for Clay in ChatGPT
 
 ### Find and enrich people at target accounts
 
-Once you've researched an account, Clay can help you find the right people to reach out to. Search by job title, seniority, location, or other criteria, and Clay will enrich each contact with verified emails, phone numbers, work history, and professional profile.
+Once you've researched an account, Clay can help you find the right people to reach out to. Search by job title, seniority, location, or other criteria, and Clay will enrich each contact with verified emails, work history, and professional profile.
 
 **Example prompts:**
 
@@ -71,7 +71,7 @@ After gathering context on companies and contacts, use Clay to draft personalize
 
 To get the best results when using Clay in ChatGPT:
 
--   Include the company domain (e.g., "rippling.com"), not just the company name
+-   Include the company domain (e.g., "rippling.com\"), not just the company name
 -   Limit your search to one company at a time for more accurate results
 -   Be specific with criteria: job titles, locations, seniority, keywords
 -   If you aren't sure what job title you're looking for, try asking "who manages X at company"

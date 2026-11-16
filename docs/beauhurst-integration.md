@@ -17,7 +17,7 @@ Beauhurst is a private company intelligence platform covering every private comp
 3.  In the modal, you will be asked to `Select Beauhurst account`.
     -   If you haven't already connected your Beauhurst account, click `+ Add account` and enter your API key. You can find your API key in your Beauhurst account settings.
 
-**Note:** Beauhurst covers private companies in the **UK and Germany only**. Actions will return no data for companies outside these markets. Credits are refunded when no data is returned.
+**Note:** Beauhurst covers private companies in the **UK and Germany only**. Actions will return no data for companies outside these markets. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically.
 
 ### `Action` Enrich company (UK & Germany)
 
