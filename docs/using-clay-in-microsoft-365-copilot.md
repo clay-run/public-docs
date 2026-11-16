@@ -1,7 +1,7 @@
 ---
 title: Using Clay in Microsoft 365 Copilot
-description: How to find people, enrich contacts, and draft personalized outreach using the Clay agent within Microsoft 365 Copilot.
-last_synced: 2026-07-16T15:28:26.197Z
+description: Find people, enrich contacts, and draft personalized outreach — all within Microsoft 365 Copilot.
+last_synced: 2026-10-07T02:53:43.943Z
 ---
 
 # Using Clay in Microsoft 365 Copilot
@@ -31,7 +31,7 @@ Microsoft 365 Copilot is an AI assistant embedded across Microsoft's productivit
     -   Enrich contacts with additional data points (email address, work history summary, thought leadership)
     -   Click `View info` next to a person's name for more details or `Draft email`
         -   **Note:** You'll need to enrich and find a person's email address before you can draft an outreach email.
-5.  Results are returned in groups of 20. Click `View 10 more` to see additional results — up to 100 total.
+5.  Results are returned in groups of 20, with the first 10 shown inline. Click `View 10 more` to open the full results view, then `Load more` to pull in the next group.
 6.  At any time, click `Open` in the top right of the widget to unlock more powerful enrichment and workflow capabilities directly in your Clay table.
 
 ## **Use cases for Clay in Microsoft 365 Copilot**
