@@ -264,17 +264,17 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 | Provider | Models |
 | --- | --- |
-| Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
+| Clay | Helium, Neon, Argon, Xenon, Radon, Clay Conductor, Clay Navigator |
+| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Research, o4 Mini, DALL·E 3 (Standard, HD), GPT Image 1 (Low, Medium, High) |
 | Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash2.5 Pro, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 2.5 Flash Lite, 3 Flash, and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
-| xAI | Grok 4Grok 4.1 Fast Reasoning |
+| xAI | Grok 4.5Grok 4.3Grok 4.20 Non-ReasoningGrok 4.20 Reasoning *(Grok 4 and Grok 4.1 Fast Reasoning are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
-| Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
-| Kimi | Kimi K2.6Kimi K3 |
-| Z.ai | GLM 5.3 FlashGLM 5.3GLM 5.2 |
-| BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
-| Playground | Playground V2Playground V2.5 |
+| Mistral | Mistral Medium 3, Mistral Large 2.1, Mistral Large 3, Magistral Medium, Devstral 2 |
+| Kimi | Kimi K2.6, Kimi K3 |
+| Z.ai | GLM 5.3, FlashGLM 5.3, GLM 5.2 |
+| BlackForestLabs | Flux 1 Schnell, Flux 1 Dev |
+| Playground | Playground V2, Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
 
