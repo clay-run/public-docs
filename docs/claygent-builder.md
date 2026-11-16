@@ -174,7 +174,7 @@ Common errors when writing schema by hand:
     }
     ```
 
--   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue.
+-   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue. When you save the column or run a test preview, Clay catches a trailing comma before the column runs: it shows `Your output JSON schema isn't valid JSON.` followed by the parser's error message, and won't save the column until you fix the JSON.
 
 -   **Numeric enum with integer type (Grok models).** Grok models have stricter structured output requirements than other providers. Combining `"type": "integer"` with a numeric `"enum"` array — for example `"enum": [1000, 500, 100]` — causes a `Bad Request` (400) error that surfaces as `Error: Bad Request` on every row. Other providers (Claude, GPT-4o, Gemini) accept this combination without error. Two fixes:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
@@ -521,7 +521,9 @@ This gates B on whether A returned any result for that row, regardless of which 
 
 ### Every row in my Claygent column is failing with "Error. Please retry or contact Clay support." — what should I check?
 
-A generic **"Error. Please retry or contact Clay support."** error on every row — especially when the column was running correctly before — is almost always caused by an invalid output JSON Schema. Clay's column editor accepts and saves the schema without flagging the problem; the error only appears when the column actually runs, because the AI provider rejects the malformed schema at that point.
+A generic **"Error. Please retry or contact Clay support."** error on every row — especially when the column was running correctly before — is almost always caused by an invalid output JSON Schema.
+
+Clay's column editor checks the output JSON Schema when you save the column or run a test preview. If the schema isn't valid JSON (for example, a trailing comma or a stray `}`) or breaks JSON Schema syntax rules, Clay won't save the column or run the preview and shows an error toast such as `Your output JSON schema isn't valid JSON.` An output schema that only becomes valid JSON after `{{column}}` references are filled in is also blocked at save and preview. Some schema problems still pass this check — most commonly an array field missing its `items` property. Those schemas save normally, and the error only appears when the column actually runs, because the AI provider rejects the schema at that point.
 
 Open the column settings (**click the column name → Edit column**) and go to the **Define column outputs** section to inspect the schema.
 
