@@ -99,7 +99,7 @@ If you need additional data points or more advanced workflows, access the full C
 
 **How do credits work in Glean?**
 
-Credits are consumed at the same rate as using Clay directly. Searching for people and companies is free; enriching a contact (finding an email, phone number, etc.) consumes credits. Your workspace admin controls your credit limit from the `MCP` page, which they open from the sidebar on the Clay homepage. The `MCP` page is currently in beta and is only visible to workspace admins.
+Credits are consumed at the same rate as using Clay directly. Searching for people and companies is free; enriching a contact (finding an email, phone number, etc.) consumes credits. Your workspace admin controls your credit limit from the `MCP` page, which they open from the sidebar on the Clay homepage.
 
 **Does my Glean admin need to do anything to set this up?**
 
