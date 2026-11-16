@@ -1193,6 +1193,24 @@ Yes. When you save a Find People or Find Companies search to Audiences, live sea
 
 To stop a live search from adding new matches, open the segment, click the **⋯** menu next to the segment name, and select **Turn live search off**.
 
+### Why does my live search segment have more people per company than my "People per company" limit?
+
+In a Find People search saved to Audiences, the **People per company** limit applies to each live search run. It doesn't cap the total number of people from a company in your segment. Each daily live search run skips everyone the search already imported, then adds up to your **People per company** limit of *new* matching people at each company. Each run also adds people who newly match your search criteria, for example after their profiles update.
+
+For example, if you set **People per company** to 10 and a company has 30 matching people:
+
+-   **Import day:** up to 10 people from that company are added.
+-   **Day 2 live search run:** up to 10 more people from that company are added (up to 20 total).
+-   **Day 3 live search run:** up to 10 more people from that company are added (up to 30 total).
+
+The limit also doesn't cap how many people are added per day overall. Each run can add up to 10 people at *every* matching company, so a segment can grow by far more than 10 people a day.
+
+**People per company** can be set from 1 to 100. If you leave it blank, there's no per-company limit. There's no setting that makes **People per company** a total cap across live search runs.
+
+To keep at most your **People per company** limit from each company, turn live search off after the first import: open the segment, click the **⋯** menu next to the segment name, and select **Turn live search off**. People already imported stay in your audience. When live search is on, a pulsing dot appears in the segment header.
+
+**Note:** This differs from a Find People source in a Clay table. A table source counts the people it has already imported from each company, and stops importing from a company once that company reaches the **Limit per company** cap. See [Find People](find-people-overview.md).
+
 ### How do I see the original criteria of a search I saved to Audiences?
 
 When you open a segment created from a saved Find People or Find Companies search, the page shows the segment's records and how many were saved to **All People** (or **All Companies**), but not the search filters. To view the original search criteria:
