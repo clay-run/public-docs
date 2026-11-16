@@ -44,7 +44,7 @@ This tracking provides insights into how visitors engage with your content and h
     -   **Note:** Pricing is based on unique IP addresses that successfully retrieve data. You'll be charged at most once per 30-day period for each visitor with the same IP address who visits your website.
 5.  Add filters for specific countries or pages.
     -   You can include a `*` to match any page paths (e.g., `/blog*`).
-6.  Make sure `Connection enabled` is toggled and click `Save`.
+6.  Under **Settings**, make sure **Enable connection** is selected and save your changes.
 7.  In a workbook, under `Create`, click `Website visitor tracking`.
 8.  Select your website connection from the dropdown and adjust your filters.
     -   Configure your table filters using page paths, session time, referrer, or UTM tags to show only relevant visitor data.
@@ -215,17 +215,20 @@ Toggling the Enabled toggle off and back on will not fix a disabled connection �
 
 **The connection is disabled automatically when:**
 
--   Your workspace ran out of credits.
--   The signal hit its credit spend limit.
+-   Your workspace ran out of credits, or hit a workspace credit limit or budget.
 -   The table reached the 50,000-row limit (enable passthrough tables to avoid this).
 
-Credits being restored does not re-enable the connection automatically — you must re-enable it manually.
+**Web intent does not turn back on by itself after credits are restored.** When your workspace runs out of credits, Clay switches the web intent connection to **Disable connection** and stops processing new visitor sessions. A plan refill or credit top-up does not re-enable the connection — you must set it back to **Enable connection** manually. Nobody on your team needs to have turned it off for this to happen.
+
+**Clay does not send an email or in-app notification when web intent is paused for running out of credits.** If your Web intent table suddenly stops receiving new visits, check your workspace credit balance and open **Settings → Web intent** to see whether **Disable connection** is selected.
+
+**Monthly limit for a signal works differently.** If you set a monthly limit for the signal in your web intent connection and the signal exceeds it, Clay pauses new visit sessions and shows **"Your website connection has reached the set credit limit. No visits will be processed."** This pause lifts automatically at the start of the next month (on the 1st, at 08:00 UTC) — you don't need to re-enable the connection manually.
 
 **To re-enable the website connection:**
 
-1.  Click the signal column header (📡 icon) in your workbook to open the right-hand panel.
-2.  Click **Edit website connection** in the panel.
-3.  Confirm the **Connection enabled** toggle is on, then click **Save**.
+1.  Click your account name → **Settings** → **Web intent** and open your website connection. You can also click the signal column header (📡 icon) in your workbook and click **Edit website connection** in the right-hand panel.
+2.  In the **Settings** section, select **Enable connection** ("Clay will automatically identify website visitors and charge credits for successful matches").
+3.  Save your changes.
 
 New visits will start flowing into the table as they arrive. Data from the period while the connection was off will not be backfilled.
 

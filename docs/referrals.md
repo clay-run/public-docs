@@ -34,6 +34,16 @@ You can monitor your referral activity, including the number of leads, converted
 
 **Note:** The Referrals section in Settings shows your activity as a referrer — the people you've invited and credits you've earned. If you signed up using someone else's referral link, your 3,000 bonus credits will appear in your account balance once the referral is confirmed; there is no separate tracker in Settings for your status as a referee.
 
+## Do referral credits include Actions?
+
+No. The 3,000 referral credits are **Data Credits** only — the referral reward does not include any **Actions**, for either the referrer or the person referred.
+
+On current plans that charge for both Actions and Data Credits (such as Launch and Growth), enrichments typically use both. Spending your referral credits therefore also uses Actions from your plan's Actions allowance.
+
+Receiving referral credits does not change your plan or move your workspace to a different billing model. Whether you're charged for Actions is determined only by your plan type. See [Legacy plans](./legacy-plans.md) for how legacy and current plans differ.
+
+On current plans, you can check your Actions balance and your Data Credits balance side by side in `Settings` → `Usage`. To learn how the two meters work and how to get more Actions, see [Actions & Data Credits](./actions-data-credits.md).
+
 ## Troubleshooting referral credits
 
 If expected referral credits haven't appeared yet:

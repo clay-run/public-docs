@@ -137,6 +137,40 @@ The most common cause of slip-throughs is a **profile slug change**: if a person
 
 **To troubleshoot:** Check whether the URL in your exclusion table matches the person's current profile URL on the professional network. Update the row with their current URL and re-run the source.
 
+### Why isn't my Find People search finding certain people I know exist?
+
+If your Find People search doesn't return people you expected (for example, leads from your CRM who fit your target persona), the search is usually working as configured: its filters are stricter than your example list. Find People returns only people who match **every** filter in the search at the same time, so failing a single filter is enough to leave a person out.
+
+Compare each missing person against your Find People search settings and check these causes:
+
+1.  **They're already in your table.** Find People doesn't add the same person twice. Re-runs and edited searches skip anyone the search has already imported, so search your results table for the person first.
+2.  **They're on your Exclude people list.** Anyone in a table, CSV, or list under **Exclude people** is never returned. Exclude people is available on the Launch plan and above.
+3.  **The Seniority filter is set to "is exactly".** The **Seniority** filter has two modes: **is exactly** (the default) returns only people whose seniority is one of the levels you selected, and **at or above** returns the selected level and every level above it. For example, if only C-suite, VP, Director, and Head are selected with **is exactly**, people with titles like "Underwriter" or "Product Manager" aren't returned. Add the levels you need, or switch to **at or above**.
+4.  **A word in their title is on your excluded job titles list.** An excluded job title keyword removes every title that contains that word. For example, excluding "Assistant" also removes everyone titled "Assistant Vice President", and excluding "Regional" removes "Regional Director". If the same word is on both your included and excluded job title lists, the exclusion wins and those people are filtered out — remove the word from one of the two lists.
+5.  **Their title doesn't match any of your included job titles.** For example, a "President" or "CFO" isn't returned if no matching title is in your job title list. Add the missing titles.
+6.  **Their current professional profile title is different from your CRM.** Find People matches job title filters against the person's current role on their professional profile — not the title stored in your CRM or spreadsheet, and not past roles. To also match past roles, turn on **Include past experiences**.
+7.  **Another filter excludes them.** **Location**, connection count (for example, a minimum number of connections), and your **Companies** list also apply. A person outside your selected locations, below your connection minimum, or at a company that isn't in your Companies list isn't returned.
+
+To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
+
+### Why does my Find People table show job titles I excluded, like HR or Intern?
+
+If you excluded job titles in your Find People search (for example, **Job title doesn't contain** Human Resources, Intern, HR) but the **Job Title** column in your table still shows those titles, check your **Target companies** setting.
+
+Find People checks your job title, seniority, and excluded job title filters against each person's **current** role. Separately, **Target companies** controls which employment at your target companies counts:
+
+-   **Currently work at:** the person's current job must be at one of your target companies.
+-   **Previously worked at:** a past job at one of your target companies counts.
+-   **Currently or previously worked at:** either a current or a past job at one of your target companies counts.
+
+When people are imported, the **Job Title** column shows the person's role **at the target company they matched**, not necessarily the current role that passed your title filters. With **Previously worked at** or **Currently or previously worked at**, that matched role can be an old job. For example, someone whose current role passes your filters can show up with "Human Resources Generalist" as their Job Title if that was their earlier role at one of your target companies. Your exclusions are still working: they were checked against the person's current role.
+
+**To fix it:**
+
+1.  Edit your search and set **Target companies** to **Currently work at**, then re-run it. The Job Title column then shows each person's current role at your target companies.
+2.  Make sure every title you want to exclude is on your excluded job titles list. A title that isn't on the list, such as "Consultant", isn't filtered out.
+3.  To clean up rows already in your table, add a table filter on the Job Title column using **does not contain**, and join the conditions with **And**, not **Or**. See [Combine table filters with And or Or](table-columns-overview.md#combine-table-filters-with-and-or-or).
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
@@ -161,6 +195,31 @@ If you add people to a Find People table by hand — typing or pasting their wor
 4.  Save the column, then click the column header → **Run column** → **Run [N] empty or out-of-date rows**. This option also includes cells that errored with Missing input, but skips cells that already have successful, up-to-date results — so you don't re-spend credits on rows that already worked.
 
 For other Enrich person input errors, see [Getting "Invalid input: Invalid person identifier" from Enrich person](finding-companies-and-people-in-clay.md#getting-invalid-input-invalid-person-identifier-from-enrich-person).
+
+### Can I pull an org chart of a company's IT department in Clay?
+
+**Clay doesn't have a built-in org chart view, and Find People results don't include a "reports to" or manager field.** You can still pull everyone in a company's IT department with the Find People source and organize them by seniority:
+
+1.  In a workbook, click `+ Add` at the bottom and search for `Find People`.
+2.  Under **Companies**, add the company you want to map, as a custom list or from a Clay table. Company profile URLs from the professional network give the most precise match.
+3.  Under **Job title**, open **Job functions** and select **Information Technology (IT) and Computer Science**.
+4.  Optionally, use the **Seniority** filter to pick specific levels (for example `c-suite`, `vp`, `director`, `head`, `manager`), or set a minimum level to return that level and above.
+5.  Set **Limit per company** (up to 100 people per company) or **Limit results**, check the preview, and click **Import**.
+
+**Grouping the IT team into seniority tiers:** In Find People, **Seniority** is a search filter only. The imported rows include each person's job title but no seniority column. To organize the IT department by level, either run a separate Find People search for each seniority level, or add a **Use AI** column that classifies each person's job title into a tier (for example: Executive, Director, Manager, Individual contributor).
+
+**Getting actual reporting lines:** To see who reports to whom, use the **Find company org chart** source from [The Org integration](theorg-integration.md). It returns every position The Org has for a company, with a Manager ID that links each person to their manager, and costs 25 credits per org chart (refunded if no org chart data is found). The Org doesn't return a department field, so to narrow the org chart to IT, add a **Use AI** column that classifies each person's title by function and filter on it. See [Surfacing the hierarchy and building an org chart](theorg-integration.md#surfacing-the-hierarchy-and-building-an-org-chart) for how to connect each person to their manager and turn the table into a visual chart.
+
+### Can I get a contact's home address or direct mailing address in Clay?
+
+**No. Clay does not return home, residential, or personal mailing addresses for individual contacts.** This is intentional. For privacy reasons, Clay removes street-level personal addresses from person enrichment results, even when the underlying provider has them.
+
+Clay enrichments can return business addresses and work locations:
+
+-   **Company address:** Company enrichments such as **Enrich company** can return a company's headquarters or office location, including city, state, postal code, and sometimes a street address.
+-   **A contact's work location:** Some person enrichment providers return where a contact works, such as their city, state, country, or ZIP/postal code. A few providers also return the address of the office the contact works from. The output field names depend on the provider. Open a cell's details to see what that provider returned.
+
+If you already use a compliant residential address data provider, you can call it from your table with the [HTTP API](http-api-integration-overview.md) enrichment.
 
 ### How do I change a workflow's Find people trigger from Manual to Scheduled?
 
@@ -332,3 +391,42 @@ This enrichment uses a third-party data provider authenticated with its own cred
 If a row returns empty or incomplete results, re-running the enrichment on that row may return more complete data on a subsequent attempt.
 
 For more control over post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
+
+## Checking whether a person was active in the last 30, 60, or 90 days
+
+Clay doesn't have a single built-in "last active" field for a person's professional profile, but you can work out how recently each person in a people table was active from the dates on their posts, shares, and comments. This uses two enrichments that are available on all plans, plus two formula columns.
+
+**Step 1: Add the activity enrichments**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**, search for `Get a person's professional posts and shares`, and select it. Map **Professional URL** to your profile URL column and click **Save**.
+2.  Click **Add enrichment** again, search for `Get a person's professional post comments`, and select it. Map **Professional URL** to the same profile URL column and click **Save**.
+3.  Run both columns on a few rows first to check the results and credit cost before running the whole table.
+
+Each enrichment returns the person's most recent activity, with a `created_at` date on every item:
+
+-   **Get a person's professional posts and shares** returns a `posts` array — original posts and reposts — with the date in `posts[N].created_at`. It returns 10 items by default and up to 25.
+-   **Get a person's professional post comments** returns a `comments` array with the date in `comments[N].created_at`. It returns 10 items by default and up to 30.
+
+**Step 2: Get the person's latest activity date**
+
+Add a formula column named `Latest activity date` and paste the formula below. It collects every date from both enrichments and returns the most recent one:
+
+```
+({{Get a person's professional posts and shares}}?.posts || []).map(p => p.created_at).concat(({{Get a person's professional post comments}}?.comments || []).map(c => c.created_at)).filter(Boolean).sort().reverse()[0]
+```
+
+**Step 3: Flag activity within 30, 60, or 90 days**
+
+Add a second formula column and paste the formula below. It compares the latest activity date with today's date using `moment()` and returns one label per person:
+
+```
+!{{Latest activity date}} ? "Unknown" : moment().diff(moment({{Latest activity date}}), 'days') <= 30 ? "Active in last 30 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 60 ? "Active in last 60 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 90 ? "Active in last 90 days" : "Not active in last 90 days"
+```
+
+For example, if today is November 6 and a person's latest comment is dated October 20, the difference is 17 days and the flag shows `Active in last 30 days`. A latest post dated August 1 is 97 days old and shows `Not active in last 90 days`.
+
+The flag only updates when the formula column re-runs. To keep it current, re-run the activity enrichments and the formula columns periodically — see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula) for how `moment()` evaluates.
+
+**When no activity is returned:** If neither enrichment finds public activity for a person, the enrichment cell shows no data and you aren't charged credits for that row. The flag formula labels these people `Unknown`. Treat them as unknown rather than inactive — the person may still be active in ways the data provider can't see. See [If the enrichment returns no data or fewer posts than expected](#getting-a-persons-posts-and-shares).
+
+**Reactions can't be used to date activity:** A **Get a person's professional post reactions** enrichment is also available, but it has no date for when the person reacted. Its only date, `post.created_at`, is when the reacted-to post was published, so a recent date doesn't mean the person reacted recently. Use posts, shares, and comments for 30, 60, or 90-day activity flags instead.

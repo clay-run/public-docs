@@ -334,8 +334,10 @@ To turn sync on or off for a source, open its settings by clicking the **⋮** m
 
 | Status | Meaning |
 |--------|---------|
-| **Search on** | The live search is enabled. Clay re-runs the search once per day and adds any new matching contacts or companies to Audiences. |
-| **Search off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
+| **On** | The live search is enabled. Clay re-runs the search once per day and adds any new matching contacts or companies to Audiences. |
+| **Importing** | A live search run is in progress right now. |
+| **Error** | The last live search run failed. |
+| **Off** | The live search is paused. No new results are added until you turn it back on. Contacts already imported remain in Audiences. |
 
 **Live search runs on a daily cadence, independently of any signal cadence.** If your audience has a signal that runs on a monthly schedule, the Find People or Find Companies search still re-runs once per day. To get a point-in-time result instead of continuously growing results, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop.
 
@@ -418,9 +420,9 @@ To create a new audience segment:
 1.  Open **People** or **Companies** in Audiences.
 2.  Click the **+** control labeled **Create segment** in the Audiences sidebar.
 3.  Add a **Filter** or **Filter group** to define which existing records belong in the segment. When editing filters on an existing list, **Create segment** also becomes available after valid filter changes, if you have segment-edit permission and are not editing a draft segment.
-    -   **Filters** evaluate a single condition at a time. All top-level filters are joined with AND — a record must match every one.
+    -   **Filters** evaluate a single condition at a time. Top-level filters are joined with AND by default — a record must match every one. To switch, click the **`and`** connector between two top-level filters to change it to **`or`**. This changes the connector for all top-level filters at once, so a record then matches if it meets any one of them.
     -   **Filter groups** combine multiple conditions using their own AND/OR logic. Within a single filter group, all conditions share the same operator — all AND or all OR; changing the operator in the group header switches all conditions at once. To mix AND and OR, use a nested filter group. For example, to build `A AND B AND (C OR D)`: add A and B as top-level filters, click **`+ Filter group`**, then add C and D inside the group. Once the group contains two or more conditions, a small **`and`** button appears between them — click it to switch to **`or`**.
-    -   **Filter limit:** An audience segment can have up to **15 top-level filters**, and each filter group can hold up to **15 conditions**. When you reach the limit, the add-filter button is disabled and shows "You can have up to 15 top-level filters at a time. Remove some filters to add more."
+    -   **Filter limit:** An audience segment can have up to **15 top-level filters**, and each filter group can hold up to **15 conditions**. A filter group counts as one top-level filter, and you can't add a filter group inside another filter group. When you reach the limit, the add-filter button is disabled and shows "You can have up to 15 top-level filters at a time. Remove some filters to add more."
 
 **Filtering by CRM and data warehouse properties:** All fields synced from your CRM (Salesforce, HubSpot) or data warehouse are available as filter options alongside Clay's built-in fields — you are not limited to Clay's native properties. When you click **+ Filter**, type the property name in the search box to find it. For example, to build a Companies segment of your existing customers, add a filter on the field in your CRM that tracks account type (such as **Account Type** in Salesforce) and set the value to `Customer`. Any field included in your import field mapping appears in the filter picker after the next sync completes. If a CRM field isn't showing up in the filter list, see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 
@@ -483,6 +485,20 @@ Workflows is in open beta. If it isn't available in your workspace, contact Clay
 5. Publish the workflow and choose whether to run it on existing segment members. See the run options below.
 
 Values written back to Audience fields are available when filtering other segments. To connect an existing workflow or review the trigger's run options, see [Connecting a workflow to a segment](#connecting-a-workflow-to-a-segment).
+
+**Why can't I continue past "Map fields" in an enrichment workflow guide?**
+
+A workflow created as an enrichment workflow from an Audience segment opens with a setup guide in the right-hand panel. The guide has four steps: **Source**, **Enrich**, **Map fields**, and **Review & run**. On the **Map fields** step ("Save your data to Audiences"), the guide disables **Next** and shows **Complete each field mapping to continue** until you map the workflow's outputs to Audience fields.
+
+If you don't want the workflow to write back to Audiences, switch to the manual builder. For example, your workflow might end with Salesforce **Send & export** steps instead. To switch:
+
+1.  In the guide panel, click the **...** menu next to **Close guide**.
+2.  Select **Switch to manual builder** ("Build it yourself from now on. Your steps stay.").
+3.  In the **Switch to the manual builder?** dialog, click **Switch to manual builder**.
+
+The workflow then opens in the manual builder. All of its existing steps stay in place, and the guide's Map fields requirement no longer applies, so you can publish the workflow without an Audiences write-back step.
+
+**Note:** Switching to the manual builder is permanent. You can't switch the workflow back to the guide. **Close guide** is different: it only hides the guide panel, and the workflow stays in the guide. To leave the guide, use **Switch to manual builder**.
 
 **Using Audiences from a Clay table:**
 
@@ -598,6 +614,18 @@ If a segment-triggered workflow never started for a contact or company, check th
 -   **The segment has no workflow connected.** Contacts joining a segment only start a workflow if a published workflow uses that segment as its trigger. Open the segment and check the **Workflows** section of the sidebar.
 -   **The segment was deleted.** If the segment a workflow trigger points to is deleted, the trigger stops firing. The trigger card in the workflow editor shows **"Segment not found. It may have been deleted."** To fix it, open the workflow, select a different segment on the trigger, and publish the workflow again.
 
+**Why does my workflow's Runs list show many "Segment · 2,500 runs" rows?**
+
+An **On event** segment trigger (shown as **New member in segment** in the trigger picker) delivers new segment members to the workflow in groups of up to **2,500 records**. Each group appears as its own row in the workflow's **Runs** list, labeled **Segment · 2,500 runs**. The last group from a segment check can be smaller, for example **Segment · 1,318 runs**.
+
+When many records join a segment between two segment checks, every one of them is delivered after that check. For example, if 150,000 companies join a segment at once because a field used in the segment's filters was filled in for all of them, the Runs list shows 60 rows of **Segment · 2,500 runs** close together. This is expected behavior, and every new member runs through the workflow.
+
+How On event segment triggers handle large segments:
+
+-   **The 2,500-record group size is fixed.** You can't change it on an On event trigger.
+-   **Updating records already in the segment doesn't start new runs.** The On event segment trigger fires only for records that join the segment. Changing a field on a record that is already a member, for example through a workflow write-back or a CRM sync, doesn't start the workflow again for that record. There is no "on change" setting on the trigger.
+-   **To control how many records run at a time,** use a **Segment on a schedule** trigger (the **Scheduled** trigger type) with batch processing turned on. See **Processing audience members in batches** below.
+
 **Testing a workflow on specific records**
 
 To test a workflow on hand-picked records — rather than an automatic sample — use the **Add data** button in the test data panel at the bottom of the workflow editor:
@@ -626,6 +654,20 @@ Clay Workflows does not have a dedicated "unpublish" button. To stop a workflow 
 To remove a trigger permanently (without deleting the workflow or its other steps), click **Remove** on the trigger card. Removing a trigger deletes its configuration; the rest of the workflow remains unchanged.
 
 To stop a workflow completely, pause or remove all of its triggers. The workflow and its steps are preserved and can be reactivated at any time.
+
+**Pausing and resuming individual triggers**
+
+You can pause individual triggers in the workflow editor without stopping other triggers or deleting any configuration. To pause a trigger, open the workflow in the editor, click the trigger card to open its detail panel, and click **Pause** at the bottom of the panel. The trigger immediately stops accepting new runs. To resume, click the same trigger card again and click **Resume** — the trigger returns to live and begins processing new events.
+
+Per-trigger pause is available for these trigger types:
+
+-   **Audience triggers** (segment, scheduled, and signal)
+-   **Webhook triggers**
+-   **Scheduled triggers**
+
+Manual triggers and CSV Upload triggers do not have a per-trigger Pause option. Manual triggers are on-demand and are not live between runs.
+
+There is no single button to make an entire workflow "not live." To stop a workflow from processing new runs, pause each active trigger individually using the steps above.
 
 ### **Syncing audiences to ad platforms**
 
@@ -726,8 +768,8 @@ The **`Create new Salesforce records`** toggle is in your Salesforce source sett
 
 Export sync behavior:
 
--   **Export frequency:** Once every 24 hours. Clay assigns each workspace a stable export time automatically — the schedule is not user-configurable.
--   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
+-   **Export frequency:** Once every 24 hours. Clay automatically assigns each Salesforce export (for example, your Contacts export and your Accounts export) its own stable daily export time, so exports for different objects can run at different times of day. The schedule is not user-configurable.
+-   **First export:** After you enable Export Sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. The Exports panel shows **Not set up** until the first export completes successfully.
 -   **Export batch size:** ~10,000 records per batch.
 -   **Subsequent syncs:** Incremental — only changed records are processed.
 
@@ -789,28 +831,32 @@ The destination table serves as a processing bridge — the flattened records ar
 
 ### How do I create a custom Audience field that isn't tied to Salesforce?
 
-Create a custom Audience field in **Data Hub**:
+Create a custom Audience field in the Audiences **Data hub**:
 
-1.  In the left sidebar, click **Data Hub**.
-2.  Select the **Fields** tab (it opens by default).
-3.  Click the **+** button in the top right.
-4.  Name the new field, select a data type (Text, Number, Date, or Boolean), and click **Save**.
+1.  In the left sidebar, under **Audiences**, click **People** or **Companies**.
+2.  In the People or Companies sidebar that opens, click **Data hub**.
+3.  Select the **Fields** tab (it opens by default).
+4.  Click **Add field** in the top right.
+5.  Name the new field, select a data type (Text, Number, Email, URL, Date, or Checkbox), and click **Create**.
 
 Once created, the field is immediately available as a filter in any segment and as a target for `Update Audiences Record` or `Upsert Audiences Record` from any Clay table.
 
 ### How do I delete a custom field from Audiences?
 
-Clicking a column header in the Audiences view (People or Companies) only shows **Hide** — there is no "Delete column" option in the column dropdown. To delete a custom field, use the **Data Hub**:
+You delete a custom field from Audiences in the **Data hub**, which you open from the People or Companies page. Clicking a column header in the Audiences view (People or Companies) only shows **Hide** — there is no "Delete column" option in the column dropdown.
 
-1.  In the left sidebar, click **Data Hub**.
-2.  Select the **Fields** tab (it opens by default).
-3.  Click the row for the field you want to delete — this opens the field settings sidebar.
-4.  Click **Delete field** at the bottom of the sidebar.
-5.  Confirm by clicking **Delete** in the dialog that appears.
+To delete a custom field from Audiences:
 
-The field is permanently removed and cannot be recovered.
+1.  In the left sidebar, under **Audiences**, click **People** or **Companies**.
+2.  In the People or Companies sidebar that opens, click **Data hub**.
+3.  Select the **Fields** tab (it opens by default).
+4.  Click the row for the field you want to delete — this opens the field settings sidebar.
+5.  Scroll to the bottom of the field settings sidebar and click **Delete field**.
+6.  In the **Delete field** dialog, click **Delete** to confirm.
 
-**Note:** Only custom fields — fields you created yourself — can be deleted. Built-in fields from Salesforce, HubSpot, or other connected sources have the Delete field button disabled. To stop a field from appearing in your column view without deleting it, use **Hide field** instead (available from the same sidebar, or by clicking the column header and selecting **Hide**).
+Deleting an Audiences field is permanent — the field can't be recovered. The **Delete field** dialog warns that any workflows that rely on the field may stop working. If any segments filter on the field, the dialog lists those segments, and the field is removed from their filters when you delete it. The dialog doesn't list the workflows or Clay tables that read from or write to the field, so check those yourself before you delete it.
+
+**Note:** Only custom fields can be deleted from Audiences. This includes fields created when you map a CRM property (for example, from Salesforce or HubSpot) to a new Clay field. Clay's default fields — such as **Title**, **City**, **State**, and **Country** in a People audience — don't show a **Delete field** button. If you don't see **Delete field** on a custom field, your workspace role doesn't allow managing fields: Admins and Editors can delete Audiences fields, but Viewers can't. To stop a field from appearing in your People or Companies view without deleting it, click the column header and select **Hide**.
 
 ### Why does my People audience have both Title and Job Title (or State and State/Region)?
 
@@ -901,6 +947,8 @@ When you change the SOQL query on a record subset import that's already set up w
 ### I added a new Salesforce field to my mapping but some records are missing data for it
 
 When you add a field to your Salesforce import mapping after the initial import, the filter option for that field becomes available after the next incremental sync (typically within 15 minutes). Clay doesn't need a change in Salesforce to fill in the new field: every Salesforce sync stores all of a record's fields, not only the mapped ones. When you click **Save and review** → **Confirm** on a mapping that adds a new field, Clay re-processes every record already imported from that Salesforce object and fills in the new field from each record's most recently synced copy. This backfill runs in the background, so values appear gradually rather than all at once.
+
+**Does adding a new Salesforce field to my mapping trigger a large backfill that uses Salesforce API calls?** No. Filling in a newly mapped field on existing records reads only Clay's stored copy of your Salesforce records — Clay doesn't call Salesforce for this backfill, so it doesn't use your Salesforce API quota or start a new import. After that, values for the new field come in through the regular Salesforce syncs described below, which run on the same schedule whether or not you change your mapping.
 
 The 15-minute incremental sync does **not** re-read every record — it only picks up records whose `SystemModstamp` changed in Salesforce since the last sync. So a record still shows an empty (or outdated) value for the new field if its value in Salesforce was set or changed after Clay last synced that record — for example, because the field was created in Salesforce after that record's last sync, or because it's a formula field (formula recalculations don't update `SystemModstamp`). Those records get the current value when either:
 
@@ -1003,6 +1051,26 @@ These refer to the same field. In the Salesforce import field mapping, the Linke
 
 The underlying field and data are identical. If you mapped Salesforce's Account LinkedIn URL field and named it "LinkedIn URL" in your import settings, filtering on "Company LinkedIn URL" in your Companies audience targets that same mapped field.
 
+### Why is my segment empty or not pulling leads from my Clay table or workbook?
+
+Audience segments don't read rows from Clay tables or workbooks directly. A segment is a saved set of filters over the records already in your Audience (**All People** or **All Companies**). A segment only shows people or companies that have already been added to your Audience. This also applies to any Sequencer campaign that uses the segment as its lead source. If the leads in your table were never sent to Audiences, the segment stays empty, even when the table has rows that match its filters.
+
+To send leads from a Clay table into your Audience so your segment fills up:
+
+1.  Open the table that holds the leads.
+2.  Click `Add enrichment` and search for `Upsert Audiences Record`. The action is listed as **Create or update Audiences record**.
+3.  Choose **People** or **Companies**.
+4.  Pick the lookup fields Clay uses to match existing records. For **People**, the options include **Email**, the person's professional network URL, and **Phone**. For **Companies**, the options include **Domain** and the company's professional network URL.
+5.  Map the table columns you want in your Audience. Include every field your segment filters on.
+6.  Run the column. Clay creates a new Audience record when no match is found and updates the matching record when one is found.
+7.  Open **All People** (or **All Companies**) and confirm your leads appear.
+
+Your segment then picks up the new records automatically on its next refresh, as long as the mapped values match the segment's filters. Segments refresh about every 20 minutes on Enterprise plans and about every 60 minutes on Launch and Growth plans. See [Does Audiences update automatically?](#does-audiences-update-automatically). If the leads show in **All People** but not in the segment after that, compare the segment's filters with the values you mapped.
+
+**Sequencer campaigns built on a segment:** a launched campaign enrolls new segment members on its own. During the first hour after launch, a one-time catch-up run enrolls them. After that, new members are enrolled on the campaign's daily enrollment run.
+
+**To keep this from happening as you build more campaigns and workbooks:** add an `Upsert Audiences Record` column to every new table whose leads should land in a segment, and run it before you launch the campaign. You can also send a table's rows to your Audience with **Continue → Save to People** or **Save to Companies**. See [Sending data from Clay table](#sending-data-from-clay-table).
+
 ### Why doesn't my Clay table appear in the Person source filter?
 
 The **Person source** filter lists each source by its display name. If you sent records from a Clay table to Audiences using **Continue → Save to People**, look for the table's display name in the Person source dropdown — the same name that appears in the **Source** column on each record.
@@ -1023,14 +1091,82 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 ### Does Audiences update automatically?
 
-Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
+Yes. Audience segments refresh automatically as records enter or exit your filter criteria. You don't need to refresh a segment by hand. Segment membership refreshes on a recurring cycle, not instantly:
 
--   **Enterprise plan:** CRM and data warehouse **imports** (CRM → Clay) run every 15 minutes, and segments update continuously.
--   **Growth plan:** CRM and data warehouse **imports** run daily, and segments update based on that daily refresh.
+-   **Enterprise plan:** segment membership refreshes about every 20 minutes.
+-   **Launch and Growth plans:** segment membership refreshes about every 60 minutes, so a change can take up to about 80 minutes to show in a segment.
+
+How often your CRM and data warehouse data reaches Audiences in the first place depends on your plan:
+
+-   **Enterprise plan:** CRM and data warehouse **imports** (CRM → Clay) run every 15 minutes.
+-   **Growth plan:** CRM and data warehouse **imports** run daily, so CRM changes reach your segments after that daily import.
 
 The 15-minute (or daily) cadence applies to the **import direction only** — it reflects changes from your CRM in Clay. The reverse direction — exporting enriched data from Clay back to Salesforce — runs on a **separate 24-hour schedule**. See [I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?](#i-enriched-data-in-my-audience-why-hasnt-it-appeared-in-salesforce-yet) for details.
 
 Enrichments configured with `Continuous Enrichment` enabled automatically process new records entering a segment, typically within 15 minutes. No manual runs are required after initial setup.
+
+### What updates automatically in an Audience: new records, segment membership, or record data?
+
+When people say an Audience "updates constantly," they can mean three different things. Audiences handles each one differently:
+
+-   **Segment membership — automatic for every source.** Audience segments are filter-based. Each segment recalculates its membership from every record's current data, so a record joins the segment when it starts matching the filters and leaves when it stops matching. This applies no matter how the record got into Audiences — Clay search, Clay table, CSV, CRM, or data warehouse. See [Does Audiences update automatically?](#does-audiences-update-automatically) for how often segments refresh.
+-   **New records — depends on the source.** Only sources that re-run or sync bring in new records on their own. A Find People or Find Companies search saved to Audiences has live search turned on by default and re-runs once a day, adding records that newly match the search filters.
+-   **Field data on existing records — never automatic.** Audiences doesn't re-enrich records in the background. A record's fields change only when something writes to them: a CRM or data warehouse sync, a CSV re-import, re-running a Clay table send or `Upsert Audiences Record` column, or an enrichment workflow that writes back to the record.
+
+The following table shows how each Audiences source keeps records up to date:
+
+| Source | New records added automatically | Field data on existing records refreshes automatically | Segment membership updates |
+|---|---|---|---|
+| Find People or Find Companies search | Yes — live search re-runs once a day | No | Yes |
+| Salesforce or HubSpot | Only with **Import sync** turned on | Only with **Import sync** turned on | Yes |
+| Data warehouse (Snowflake, BigQuery, Databricks, Redshift) | Yes — on each sync | Yes — on each sync | Yes |
+| Clay table | No — records are written each time you send the table or the column runs | No — re-run the send to update | Yes |
+| CSV upload | No — one-time import | No — re-import an updated file | Yes |
+
+### How do I keep my own TAM up to date in Audiences?
+
+If you brought your own total addressable market (TAM) list into Audiences instead of building it from a Clay search, how it stays current depends on where the list comes from:
+
+-   **Salesforce or HubSpot:** Turn on **Import sync** for the source (click **⋮** next to the source → **Settings** → **Import sync**). New and changed CRM records then flow into Audiences every 15 minutes on Enterprise plans, or once daily on Growth plans.
+-   **Data warehouse:** Incremental sync brings in new and changed rows on each sync. See [Importing from Snowflake](#importing-from-snowflake) and [Importing from Google BigQuery](#importing-from-google-bigquery) for sync timing.
+-   **Clay table:** A table send is a snapshot of the table at the time it runs. To keep it current, re-run the push — for example, schedule the table and use an `Upsert Audiences Record` column. `Upsert Audiences Record` matches existing records on identifiers such as email, professional network URL, or phone for people, and domain or professional network URL for companies, so re-running it updates changed fields instead of creating duplicates.
+-   **CSV:** CSV imports don't sync. Re-import an updated file using the same **Unique identifier** column to update existing records.
+
+For any source, two practices keep a TAM Audience accurate:
+
+-   **Use filter-based criteria for segments** (for example, industry, employee count, and country), so segment membership corrects itself whenever record data changes.
+-   **Fill missing or stale fields with an enrichment workflow.** Create a segment of records where a field is empty, connect an enrichment workflow to it, and write the results back to the records. Records drop out of that segment as their fields get filled in.
+
+To also catch companies that are new to your market, add a Find Companies search with the same criteria as your TAM. Its live search adds newly matching companies once a day.
+
+### Do people in my Audience update automatically when they change jobs?
+
+No. People records in Audiences don't update their title or company on their own. The **Job Change** signal doesn't rewrite them either — it records a signal event on the record and surfaces the company in the **Companies of job changers** segment, but it doesn't change the person's title or company fields.
+
+A person record in Audiences changes only when:
+
+-   a CRM or data warehouse sync brings in updated data — which only reflects a job change if your CRM or warehouse already has it,
+-   you re-run a Clay table send or `Upsert Audiences Record` column with new data, or
+-   an enrichment workflow writes new data back to the record.
+
+To catch job changes proactively, connect a workflow to your People segment that periodically re-enriches people (or reacts to the Job Change signal) and writes the updated company and title back to the record. Once the new data is written, filter-based segments such as "people at target accounts" adjust automatically.
+
+### Why is a table connected to my audience segment updating Salesforce on its own?
+
+Sending an Audiences segment to a Clay table with **Add to workbook** isn't a one-time push. The table stays connected to the segment, and new records that join the segment later are added to the table automatically. The **Send to workbook** dialog has no option to make the send one-time.
+
+New rows that arrive from a connected segment behave like any other new rows in the table: every column with auto-run turned on runs for them. If the table has a Salesforce **Update Record** column with auto-run on, Clay writes to Salesforce each time new records join the segment, even if nobody has opened the table recently. In Salesforce field history, those changes show your Clay integration user as the user who made them.
+
+**To see which tables a segment feeds:**
+
+1.  Open the segment in Audiences.
+2.  Click **Send** in the top right.
+3.  The **Send** sidebar lists every connected table under **Tables**. Click the **⋮** menu on a table card to **Open table**, **Rename**, or **Delete** it.
+
+The **Send** sidebar has no pause or disconnect option for a connected table. To stop a connected table from writing to Salesforce without deleting the table, open the table and do one of the following:
+
+-   **Turn off auto-run on the Update Record column** to stop only the Salesforce writes. New segment records still arrive in the table, but they're no longer pushed to Salesforce.
+-   **Turn off auto-run for the whole table** in the table toolbar to stop every action column from running on new rows. New segment records still arrive in the table.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
@@ -1049,6 +1185,41 @@ If you saved a Find People or Find Companies search to Audiences and the count c
 
 To stop the audience from growing, turn live search off: click the **⋮** menu next to the search source in the audience sidebar, or go to **Settings → Sources / Destinations**, click **⋮** next to the source row, and select **Turn live search off**. Contacts already imported remain in your audience — only new daily additions stop. You can always turn live search back on later if you want to resume continuous sourcing.
 
+### Does a live search keep adding new people after I save it to Audiences?
+
+Yes. When you save a Find People or Find Companies search to Audiences, live search is on by default, and it isn't limited to the original batch of results. Clay re-runs the search every 24 hours, counted from when you first imported it (not at a fixed time of day). Each run adds people or companies who newly match the search criteria to **All People** or **All Companies**, and skips anyone the search already imported.
+
+**New live search matches flow into segments filtered on the search.** Every record a live search adds is tagged with that search as its source. A segment that filters on the search using the **Origin source** filter picks up the new matches automatically on its next refresh — no manual step is needed.
+
+To stop a live search from adding new matches, open the segment, click the **⋯** menu next to the segment name, and select **Turn live search off**.
+
+### How do I see the original criteria of a search I saved to Audiences?
+
+When you open a segment created from a saved Find People or Find Companies search, the page shows the segment's records and how many were saved to **All People** (or **All Companies**), but not the search filters. To view the original search criteria:
+
+1.  Open the segment created from the search.
+2.  Click the **⋯** menu next to the segment name.
+3.  Select **Edit search**. If you don't have permission to edit segments, this option is labeled **View search**.
+
+The search panel opens with the full search setup, including filters, target companies, excluded people, and result limits.
+
+### How do I check when a live search last ran?
+
+The segment page for a live search doesn't show when the search last ran. To check a live search's status and last run time:
+
+1.  In Audiences, open **All People** (or **All Companies**).
+2.  Click the **Sources** tab.
+3.  Find the row for your search source.
+
+The **Status** column shows one of the following:
+
+-   **On** — live search is enabled and waiting for its next daily run.
+-   **Importing** — a live search run is in progress.
+-   **Error** — the last live search run failed.
+-   **Off** — live search is turned off.
+
+The **Last import sync** column shows when the live search last ran.
+
 ### Can I sync an audience to multiple ad platforms?
 
 Yes — you can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab. Click **Add** next to any available platform to configure field mappings for that provider. The new platform will sync on the same schedule as your existing provider.
@@ -1058,6 +1229,20 @@ Yes — you can add multiple ad platforms to a single audience sync. After your 
 Connect a [workflow to your segment](#connecting-a-workflow-to-a-segment) and add an action for your destination. Map the Audience fields and enrichment outputs to that action's inputs, test the workflow on a small set of records, and check the destination before running the whole segment.
 
 See [Workflows](https://university.clay.com/docs/workflows) for supported triggers, enrichment actions, and run controls.
+
+### How do I export an audience segment to CSV or Excel?
+
+Audiences doesn't have a CSV or Excel download button. A People or Companies list or segment in Audiences can't be downloaded directly. To get the records into a CSV file, put them into a Clay table first, then download the table as a CSV. Clay tables export to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
+
+**To export an audience segment to CSV:**
+
+1.  Open the segment in Audiences and click `Enrich`.
+2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
+3.  Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+
+Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't. See [Exporting your Clay table as CSV](csv-import-overview.md#exporting-downloading-your-clay-table-as-csv) for what the downloaded file includes.
+
+**If the list came from a people or companies search:** you can also run the search again and save the results to a Clay table instead of to Audiences. In the search, click **Continue** and choose **Save to new table** (or **Save to new workbook and table**) instead of **Save to People** or **Save to Companies**. Then download the table with **Tools** → **Export** → **Download CSV**.
 
 ### What happens to a contact's ad targeting when they become a customer?
 
@@ -1093,7 +1278,7 @@ To enable it (admin-only):
 3.  Under **Export [Object] data**, toggle on **Export sync**.
 4.  Click **Save and review** → **Confirm**.
 
-Once enabled, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
+Once enabled, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. See [Writing back to your CRM](#writing-back-to-your-crm) for the full schedule and behavior details.
 
 If Export sync is enabled but **specific fields** are still not updating in Salesforce — and you see no export errors — check each field's **write rule**. A field set to **Write if empty** only sends its value to Salesforce when the corresponding Salesforce field is blank. If that Salesforce field already contains a value, Clay skips the update silently without recording an error. Your data may look correct in Audiences while those fields remain unchanged in Salesforce.
 
@@ -1115,7 +1300,21 @@ No. The Audiences export to Salesforce never sends blank values. Before each exp
 
 With **Always write**, Clay replaces an existing Salesforce value only with a non-blank Audiences value.
 
-**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export.
+**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export. If your Audiences workflow step has no write rule option, see [Why doesn't my Audiences workflow step show a Write rule option?](#why-doesnt-my-audiences-workflow-step-show-a-write-rule-option) below.
+
+### Why doesn't my Audiences workflow step show a Write rule option?
+
+The Audiences workflow **Write rule** options (**If workflow value is present**, **If Audience field is empty**, and **Always**) are available only on Audiences write steps whose **Field mapping** (**Save your data to Audiences**) has a **Write rule** column. Older Audiences workflow steps have no write rules. These include the **Update Audiences record** step and Audiences write steps added to a workflow before write rules were introduced. Older Audiences steps always skip blank values, even with **Ignore blank values** turned off, so they can't clear a field on an Audience record.
+
+An older Audiences workflow step can't be upgraded in place. To get write rules, for example to clear a field by setting its write rule to **Always** and mapping it to a blank value:
+
+1.  Delete the older Audiences step from the workflow.
+2.  Add a new Audiences write step to the workflow canvas.
+3.  Open the new step's **Field mapping**. Each row now shows a **Workflow field**, an **Audience field**, and a **Write rule**.
+4.  Map your fields again, set each field's write rule, save the step, and re-run the workflow.
+5.  Open the record in Audiences to confirm the values changed.
+
+**Why does my Audiences workflow run show success when the Audience value didn't change?** The **Fields Updated Count** in an Audiences step's output counts the fields the workflow sent to Audiences, not the fields whose stored value changed. A step that skips blank values — an older Audiences step, or a step using the default **If workflow value is present** write rule — can report every field as updated while the existing Audience values stay in place.
 
 ### How do I make my Salesforce export conditional on a field match?
 
@@ -1149,6 +1348,21 @@ Once the toggle is on, Clay will create new Accounts or Contacts in Salesforce f
 **What about existing contacts?** Records already imported from Salesforce are tracked by their Salesforce Object IDs — Clay updates them directly without using the Clay ID field. The Clay ID field stays empty on those records and only comes into play for net-new records Clay creates.
 
 To track which contacts in Salesforce came from a specific Audience enrichment, create a custom Audience text field (for example, an "Audience Source" field set to a label like `"Q2-enrichment"`), and map it to a Salesforce field (a custom field, campaign tag, or lead status) in your export settings. You can then filter on that value directly in Salesforce.
+
+### Do people I save from Find People to All People sync to Salesforce automatically?
+
+Saving a Find People search to **All People** adds those people to your Clay Audience only. Whether they also reach Salesforce depends on the **`Create new Salesforce records`** toggle in your Audiences Salesforce export settings — you don't need to add a separate enrichment or Salesforce column to the search for the Audiences export sync to pick these people up. Salesforce export from Audiences is available on Growth and Enterprise plans and requires the workspace **Admin** role to configure.
+
+-   **`Create new Salesforce records` off (the default):** Export sync only updates Salesforce records that already match a record in your Audience. People who are net-new from a search have no matching Salesforce record, so they stay in Clay and nothing is created in Salesforce.
+-   **`Create new Salesforce records` on:** On the next export sync (exports run once every 24 hours), Clay creates a new Salesforce **Contact** for each person in your Audience who doesn't have a matching Salesforce record. Clay creates people as Contacts, not Leads — record creation isn't supported for Leads.
+
+To check the setting:
+
+1.  Open your Salesforce source settings and select the **Contacts** tab.
+2.  In the export section, confirm **Export sync** is on, then find the **`Create new Salesforce records`** toggle ("Allow new records to be created in Salesforce. If off, only existing records will follow the field mapping export rule.").
+3.  Before you can turn the toggle on, select a Clay ID field (a Salesforce field marked as **External ID**) in the **Record matching** section. If no Clay ID field is selected, the settings show "Create new records mapping is required when enabled" and won't save. See [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) for setup steps.
+
+Turning on `Create new Salesforce records` applies to every person in your Audience without a Salesforce match, not only the people from one search. See **What happens when you first enable this toggle** in [Writing back to your CRM](#writing-back-to-your-crm) before you enable it.
 
 ### How do I write enriched fields back to existing Salesforce records from a workflow?
 
@@ -1240,6 +1454,20 @@ To fix wrong Account Name, Type, or Owner values caused by duplicate Salesforce 
 
 **Note:** Duplicate Salesforce Accounts are merged only inside Clay — Audiences never merges or changes Accounts in your Salesforce org. To stop this from recurring, clean up duplicate Accounts in Salesforce.
 
+### Why does a contact in my audience show a professional network URL for a different person?
+
+Audiences matches each person record to a person in Clay's people data. That match fills in fields that your own sources leave empty, such as the person's professional network URL. If the match lands on a different person, for example someone with the same name, that person's professional network URL can appear on your contact.
+
+Values from your own sources take precedence over values from Clay's people data. When your Salesforce import sends a professional network URL for a contact, Audiences shows the Salesforce value. Audiences shows the value from Clay's people data when Salesforce sends no value, either because the professional network URL field isn't mapped in your Salesforce Contacts import or because the Salesforce field is blank for that contact. Fields that Salesforce does send, such as title and email, keep their Salesforce values.
+
+To see which sources contributed to a contact, open the contact and check the **Sources** section of the record's summary pane.
+
+To show the professional network URL from Salesforce instead:
+
+1.  Open your Salesforce source settings and select your Contacts import.
+2.  In the field mapping, map Clay's default professional network URL field to the Salesforce field that holds the correct URL, for example a custom profile URL field on your Contact object.
+3.  Click **Save and review** → **Confirm**. For when existing contacts pick up the newly mapped value, see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
 Clay Audiences syncs in two separate directions on different schedules:
@@ -1249,7 +1477,7 @@ Clay Audiences syncs in two separate directions on different schedules:
 
 The 15-minute (or daily) sync applies to the **import direction only** — it reflects Salesforce changes in your Audience. Enriched data written in Clay flows back to Salesforce on the 24-hour export cycle.
 
-After you enable Export sync, the first export does not run immediately — it fires at your workspace's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
+After you enable Export sync, the first export does not run immediately — it fires at that export's next scheduled export time, which may be up to 24 hours away. Subsequent exports run on the same 24-hour schedule. See [Writing back to your CRM](#writing-back-to-your-crm) for the full export schedule and behavior.
 
 To push enriched data to Salesforce before the next scheduled export, see [How can I export records to Salesforce immediately without waiting for the 24-hour sync?](#how-can-i-export-records-to-salesforce-immediately-without-waiting-for-the-24-hour-sync)
 
@@ -1294,6 +1522,18 @@ If you need company name alongside each person in a table workflow, the recommen
 
 This gives you company context directly alongside each person in the table without requiring company name to be stored as a field in Audiences.
 
+### Are linked Company fields (like Industry) available in a workflow triggered by a People segment?
+
+When a workflow runs from a **Segment on a schedule** trigger on a **Person** segment, the trigger's inputs are the person record's own Audiences fields. Fields from the person's linked Company record — for example, an Account-sourced field like Industry — are not included by default. Each person's trigger input does include an `accounts` list with the Clay Company ID (`id`) of each linked Company record, but not the company's field values.
+
+You have three ways to use linked Company fields in a segment-triggered workflow:
+
+- **Turn on Include company fields.** In the workflow editor, click the **Trigger** node. In the **Triggers** panel, under **Options**, turn on **Include company fields** ("Add fields from each person's company as workflow inputs."). Each entry in the `accounts` input then includes the linked company's name and all of its Company fields, so later steps can reference fields like Industry directly without an extra step. You can also turn this toggle on when you first add a segment trigger.
+- **Add a Lookup in Audiences step.** Add a `Lookup in Audiences` step after the trigger, set **Object type** to **Companies**, and map the company `id` from the trigger's `accounts` input to the **Company ID** filter. The step returns the full linked Company record.
+- **Trigger from a Company segment instead.** If the workflow mainly needs company context, choose **Company** instead of **Person** as the segment type on the **Segment on a schedule** trigger. The trigger inputs are then the Company record's fields.
+
+**Include company fields** applies only to Person segment triggers. Linked Company data is available only for people who have a Company association in Audiences — a person with no linked Company record has no entries in the `accounts` input, so neither the toggle nor a Company ID lookup returns company fields for them. For Salesforce Leads and other people records without a Company association, see [How do I access Account-level fields (like Company Name or Company Domain) from a People audience?](#how-do-i-access-account-level-fields-like-company-name-or-company-domain-from-a-people-audience) above.
+
 ### My Clay segment has far fewer records than my Salesforce report with the same filters — why?
 
 Clay audience segments count only the records that currently match your filters based on data that has been synced into Audiences — not live Salesforce data at query time. A large gap between your segment count and a matching Salesforce report usually traces to one of two causes.
@@ -1312,7 +1552,19 @@ To match your Salesforce report, confirm your segment filter is using the field 
 
 ### How do I filter a segment by a long list of Salesforce Account IDs?
 
-The **`contains any of`** filter in Audiences accepts up to **10 values per filter**, and a segment can have up to **15 top-level filters**. Pasting a list of hundreds of Salesforce Account IDs (or any other IDs or domains) into one filter won't work. Splitting the list across filters won't fit it either. To build an Audiences segment from a long list, tag those records with a custom field through a CSV import, then filter on that one field:
+The **`contains any of`** filter in Audiences accepts up to **10 values per filter**, and a segment can have up to **15 top-level filters**. You don't need a separate filter for each Account ID. Don't put the IDs into one **`=`** (**equals**) filter either: **`=`** compares the field to the full text you enter, so a value like `0011U00001JaaJJQAZ, 0011U00000B4VmqQAF` only matches a record whose Account ID is that exact comma-separated text, and the filter returns 0 results.
+
+**For up to 150 Account IDs, split the list across `contains any of` filters inside one filter group set to OR:**
+
+1.  Click **`+ Filter group`**.
+2.  Inside the group, add a filter on the Account ID field, set the operator to **`contains any of`**, and enter the first 10 IDs.
+3.  Add another **`contains any of`** filter on the same field inside the group for the next 10 IDs. Repeat until every ID is entered. A filter group holds up to 15 filters, so one group fits up to 150 IDs (15 filters × 10 IDs).
+4.  Click the **`and`** connector between the filters inside the group to switch it to **`or`**. A record now matches if its Account ID is in any one of the filters.
+5.  Click **Create segment** to save the segment.
+
+For example, a list of 19 Account IDs needs two `contains any of` filters inside one OR filter group: 10 IDs in the first filter and 9 in the second. Don't add the two filters as separate top-level filters while the top-level connector is **`and`**. A record would then have to match both lists, so the segment returns 0 results. The filter group counts as one top-level filter, so you can still combine it with other conditions joined by AND, such as a filter on Title.
+
+**For more than 150 IDs**, pasting the list of Salesforce Account IDs (or any other IDs or domains) into filters won't fit. To build an Audiences segment from a long list, tag those records with a custom field through a CSV import, then filter on that one field:
 
 1.  **Prepare a CSV** with one row per account and two columns:
     -   `Salesforce Account ID` — the account's existing Salesforce ID.
@@ -1454,19 +1706,25 @@ Audiences CSV imports are one-time, and you can't re-upload, edit, rename, or de
 
 ### How does the Audiences record limit work? What counts toward it?
 
-The Audiences record limit is a **per-workspace cap** on the total number of unique records stored in your Audience, regardless of which source they came from. Growth plans cap at 250,000 records; Enterprise plans cap at 25,000,000.
+The Audiences record limit is a cap on the number of records your workspace imports into Audiences from CRM and data warehouse sources. Growth plans cap at 250,000 CRM/DWH records; Enterprise plans cap at 25,000,000.
 
-Records that count toward the limit:
+The Audiences record limit is a running total of the records currently imported, not a monthly or yearly allowance. It does not reset at the start of a billing period.
 
--   All records in **All People** (contacts and leads from any source)
--   All records in **All Companies** (accounts from any source)
+Records that count toward the Audiences record limit:
 
-Records that do **not** count:
+-   Records imported from a CRM: Salesforce Accounts, Contacts, and Leads; HubSpot Companies and Contacts
+-   Account and Contact records imported from a data warehouse (Snowflake, Google BigQuery, Databricks, or Amazon Redshift)
 
--   Archived records (moved to the Archived section; not counted toward the limit while archived)
+Records that do **not** count toward the Audiences record limit:
+
+-   Records added by CSV upload
+-   Records added from Clay People or Company search
+-   Records sent from a Clay table (including `Upsert Audiences Record`)
 -   Segment memberships (a record in 10 different segments still counts as one record)
 
-If your workspace reaches the limit, Clay will stop importing new records from your connected sources until the count drops below the cap. To free up space: archive records you no longer need (see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) above), or upgrade your plan.
+**Launch plan:** Launch workspaces have no Audiences record limit. Launch doesn't include CRM or data warehouse sources, and records added by CSV upload, Clay search, or Clay table sends are not capped.
+
+**When your workspace reaches the Audiences record limit:** Clay blocks the CRM or data warehouse import instead of skipping records, and shows: `This import would exceed your plan's Audience record limit. Disable sync or narrow the query/source to import fewer records.` To import fewer records, narrow the source's query or object selection, or disable a sync you no longer need. To raise the limit, upgrade your plan.
 
 Growth plans have a hard cap — there is no add-on to increase the limit without upgrading to Enterprise.
 

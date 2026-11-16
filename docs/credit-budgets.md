@@ -105,7 +105,33 @@ Alerts fire once per threshold crossing. They reset when an admin increases the 
 
 Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it.
 
-When a budget is deleted, you can reassign all of its resources to a different budget — or leave them without a budget.
+## Deleting a budget
+
+Only workspace admins can delete a credit budget. Go to `Settings` → `Budgets` and delete the budget. If workbooks, workflows, or other resources are still assigned to the budget, Clay asks you to choose where they go: reassign them to a different budget, or pick **No budget** to leave them without one. The confirm button reads **Reassign & delete** when resources need to be moved, or **Delete budget** when nothing is assigned.
+
+### Will deleting a budget unpause my workflows?
+
+No. Deleting (removing) a credit budget doesn't unpause, resume, or turn on anything. Workflows, workflow triggers, signals, and tables you paused stay paused until you turn them back on yourself.
+
+### What happens to spend after a budget is deleted?
+
+Deleting a credit budget removes that budget's credit limit. Anything that was assigned to the budget and is still active can start spending credits again:
+
+-   Resources you reassigned to a different budget now count against that budget's credit limit.
+-   Resources left with **No budget** spend from your workspace's credits, subject to any other limits (such as credit spend limits) that still apply.
+-   Runs already in progress keep running. Any credits they use after the deletion are no longer capped by the deleted budget.
+
+If a resource was stopped only because the budget ran out of credits, it can start processing again once the budget is deleted.
+
+### Before you delete a budget to set up a new run
+
+If you want everything to stay stopped while you delete a budget (for example, before setting up a new budget for a fresh run), check the following first:
+
+1.  Every trigger on the workflows assigned to the budget is paused.
+2.  No workflow runs are still in progress.
+3.  Nothing else assigned to the budget — such as tables set to auto-run — is still on.
+
+Once those are off, you can safely delete the budget and set up the new run.
 
 ## Credit budgets vs. credit spend limits
 

@@ -1,7 +1,7 @@
 ---
 title: Audiences Security & Privacy
-description: "How data enters Clay Audiences, which workspace permission types can access it, and how Clay stores, retains, and deletes Audiences data."
-last_synced: 2026-10-19T18:12:06.409Z
+description: How data enters Audiences, which permission types can reach it, what admins control, and how Clay stores, retains, and deletes Audiences data.
+last_synced: 2026-11-09T19:33:01.922Z
 ---
 
 # Audiences Security & Privacy
@@ -78,7 +78,20 @@ What you can do yourself, and what needs Clay's help:
 -   **Archive records** — take specific records out of active use without losing them. Archived records are recoverable.
 -   **Delete a workspace** — removes all workspace data after 30 days. See [Account and workspace settings](https://www.clay.com/university/guide/workspace-administration-documentation) for requirements and the exact steps.
 -   **Permanently delete specific records or a segment's records** — an `Admin` can delete records outright in Audiences. Use this when a record should be removed for good rather than archived and recoverable.
+-   **Permanently delete a person across the workspace** — Clay's public API removes a person's records from every audience in one workspace, matched on an email address, professional profile slug, or phone number. See **Deleting people with the privacy deletion API** below.
 -   **Purge a whole source's imported data** — not a self-serve action. Contact Clay support or your Growth Strategist, who can run a targeted deletion for a source's records or the workspace's Audiences data.
+
+## Deleting people with the privacy deletion API
+
+For a privacy request that has to clear someone out of a whole workspace, Clay's public API permanently deletes that person's records across every audience in one call. Deletion covers people and the imported source records behind them. The API key you call with sets the scope, so a person who appears in more than one workspace needs one call per workspace.
+
+**Note:** These endpoints use a personal API key, created under `Settings → Account`. Permanently deleting records is limited to the `Admin` permission type, so the key has to belong to an admin.
+
+1.  **Preview the request.** Send the `POST /audiences/privacy-delete` endpoint with `dry_run` set to `true`, and the response returns `matched_count` — how many people the identifiers match — without deleting anything. Archived people count toward that total.
+2.  **Send the deletion.** The same endpoint without `dry_run` accepts 1 to 100 identifiers in `person_identifiers`, and anyone matching any one of them is selected. Each identifier is an email address, a phone number, or a professional profile slug — the handle at the end of a profile URL, such as `alice-smith`, rather than the URL itself.
+3.  **Track the job.** A queued deletion returns a `job_id`. Pass it to the `GET /audiences/privacy-delete/{job_id}` endpoint to read the job's `status` and the `total` number of people it selected. Clay keeps a finished job's status for three days.
+
+The full request and response reference lives in Clay's API docs, for [privacy delete people](https://developers.clay.com/api-reference/audiences/privacy-delete-people-from-audiences) and [deletion status](https://developers.clay.com/api-reference/audiences/get-audiences-privacy-deletion-status).
 
 ## FAQs
 
@@ -107,3 +120,9 @@ Not through Audiences. Export paths — CRM write-back and the CSV download in t
 ### Are records in Audiences automatically eligible for ad targeting?
 
 No. Nothing syncs to an ad platform until someone creates an ad sync for a specific segment, and that surface applies its own restrictions — including excluding records outside the US that Clay's own dataset is the only source for. See [Clay Ads](https://university.clay.com/docs/clay-ads) and [Clay Ads compliance best practices](https://university.clay.com/docs/clay-ads-compliance-best-practices) before you sync.
+
+### What do the privacy deletion job statuses mean?
+
+`in_progress` covers queued work, automatic retries, and the cascading cleanup that follows the delete itself, so a job can sit in that state for a while — a step that hits a transient error retries on its own, with nothing to resend. `complete` means the deletion and every cleanup task Clay tracks succeeded. `failed` means the job stopped before finishing and its cleanup may be partial.
+
+The `finished` count is a completion check rather than a progress bar: it stays at `0` until the whole job finishes, then matches `total`. To confirm nobody is left once a job ends, send the same identifiers again with `dry_run` set to `true`.
