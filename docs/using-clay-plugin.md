@@ -1,5 +1,5 @@
 ---
-title: Guide: Using Clay plugin
+title: "Guide: Using Clay plugin"
 description: Three go-to-market plays you can run with the Clay Plugin — sourcing your total addressable market, scoring accounts for ICP fit, and routing prioritized accounts — along with prompt-writing habits and budget tips.
 last_synced: 2026-09-22T21:48:19.495Z
 ---
