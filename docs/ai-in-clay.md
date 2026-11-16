@@ -246,8 +246,8 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 ### What you control:
 
 -   **Which AI features you use**: All AI features are opt-in through your actions.
--   **What data AI sees**: You choose which table columns to include in AI requests.
--   **API keys**: Option to bring your own API keys for supported providers.
+-   **What data AI sees**: You choose which table columns to include in AI requests. When configuring AI enrichments (Use AI, Claygent, etc.), you select which specific columns to send as context — the AI does not automatically access all columns in your table, and data is only processed when you explicitly run an AI action on specific rows. This means you can exclude PII columns from AI requests while still using Clay's AI features on non-PII data.
+-   **API keys**: Option to bring your own API keys for supported providers (OpenAI, Anthropic, Google Gemini). AWS Bedrock is not available as a native provider in Use AI or Claygent — to route AI calls through Bedrock, use the [HTTP API enrichment](https://www.clay.com/university/guide/http-api-integration-overview) to configure a request to Bedrock's OpenAI-compatible endpoint.
 -   **Data deletion**: Delete individual records, tables, or entire workspaces at any time. To request deletion of your personal data under privacy regulations such as CCPA, contact the Clay support team via the in-app chat — select **Talk to a person** and a team member will process your request and delete all data Clay holds for you.
 -   **Access permissions**: Control who in your organization can use AI features.
 
