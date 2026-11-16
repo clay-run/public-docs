@@ -37,11 +37,12 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
     -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
-    -   **OAuth Scopes:** Add the following scopes:
+    -   **OAuth Scopes:** The Client Credentials connection only requires the `api` scope. If your security review requires the External Client App to have `api` only, the Client Credentials connection still works. Configure the scopes as follows:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
-        -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
-        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional, but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional. When you set up or test the connection, Clay uses `id` to load which Salesforce org and user the connection is authenticated as, so you can see them when you select the connection in Clay. Without it, the connection still saves and works; Clay just doesn't show the connected org and user.
         -   **Manage Pardot services (`pardot_api`)** — optional; only required if your org uses Pardot.
+
+        Of the scopes listed for the **User Sign In** connection (`api`, `refresh_token`, `id`, `openid`, `profile`), the Client Credentials connection only needs `api`, and `id` is optional. You don't need **Perform requests at any time (`refresh_token, offline_access`)** or `openid` for Client Credentials: Clay doesn't request these scopes on Client Credentials token requests, and a Client Credentials connection gets a new access token with a fresh Client Credentials request instead of a refresh token.
 
     Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
@@ -73,6 +74,10 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **Connected app not pre-approved:** If connected apps require pre-approval, Salesforce may block Clay. In Salesforce Setup, go to `Connected Apps OAuth Usage` and confirm Clay is not blocked. Set `IP Relaxation` to `Relax IP Restrictions` and `Permitted Users` to `All users may self-authorize`.
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
+
+-   **`missing required code challenge` when connecting via User Sign In**
+
+Salesforce returns `invalid_request: missing required code challenge` when your Salesforce org requires PKCE (Proof Key for Code Exchange) for browser sign-ins. Clay's User Sign In method doesn't send a PKCE code challenge, so the license, connected app, SSO, and permission fixes above don't resolve this error. Switch the connection to `Client Credentials`, which connects server-to-server with no browser sign-in. Use `Reconnect` on your existing Salesforce connection rather than deleting it, so the tables and columns that use it keep working — see [Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?](salesforce-integration-faqs.md#why-am-i-seeing-missing-required-code-challenge-when-connecting-salesforce-with-user-sign-in) for the steps.
 
 -   **`invalid_grant: no valid scopes defined` when connecting via Client Credentials**
 

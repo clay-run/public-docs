@@ -1,6 +1,6 @@
 ---
 title: Managing team members
-description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace.
+description: Understand Clay's Admin, Editor, and Viewer roles, learn how to invite, update, and remove team members, and transfer ownership of workbooks and tables.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -110,7 +110,33 @@ To remove a member from your workspace:
 
 **Transferring ownership when a team member leaves**
 
-If a former employee owns tables or workbooks in your workspace, there is no separate "transfer ownership" UI in Clay — removing the former member from the workspace is how you do it. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+If a former employee owns tables or workbooks in your workspace, how you transfer ownership depends on your plan:
+
+-   **All plans:** Removing the former member from the workspace transfers ownership automatically. All tables, workbooks, and groups they owned reassign to the remaining admin whose admin role was granted earliest — the member being removed isn't counted. For example, if you and the departing member are the only two admins, ownership transfers to you.
+-   **Enterprise plans:** You can also transfer ownership of an individual workbook or table without removing anyone. See [Transfer ownership of a workbook or table (Enterprise only)](#transfer-ownership-of-a-workbook-or-table-enterprise-only).
+
+On non-Enterprise plans there's no `Transfer ownership` option — removing the former member is how ownership changes.
+
+## Transfer ownership of a workbook or table (Enterprise only)
+
+**Note:** Manually transferring ownership of a workbook or table is available on the Enterprise plan only. Workspace admins and the current owner of a workbook or table can transfer its ownership.
+
+To transfer ownership of a workbook or table to another workspace member:
+
+1.  Open the settings panel:
+    -   For a workbook, open the workbook, click the workbook name in the top bar, and select `Edit workbook settings`.
+    -   For a standalone table (a table that isn't inside a workbook), click the `Table settings` gear icon in the table's title bar.
+2.  Open the `Access permissions` section.
+3.  Under `Owner`, open the `…` menu on the current owner's row and select `Transfer ownership`.
+4.  Choose the new owner. Any workspace member can be selected, whatever their role.
+5.  Click `Save changes`. Until you save, the panel shows a notice that ownership of the workbook or table "will be transferred to [new owner's name] when you save your changes."
+
+**If you don't see the `Owner` row:** The `Owner` row and `Transfer ownership` option only appear when access is set to `Admins and editors in this workspace`. If the workbook or table is set to `Admins and invited collaborators only`, switch it to `Admins and editors in this workspace` first.
+
+**Things to know about transferring ownership:**
+
+-   Transferring ownership of a workbook also transfers every table inside it. Tables inside a workbook don't have their own `Access permissions` section — transfer the workbook instead.
+-   Ownership transfers one workbook or table at a time. There's no bulk transfer — to move everything a former member owns at once, remove them from the workspace.
 
 ## Cancel a pending invite
 

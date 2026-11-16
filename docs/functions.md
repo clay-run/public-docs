@@ -42,9 +42,14 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 
 **Create function from scratch:**
 
-1.  From the homepage, click on `Functions` in the sidebar.
-2.  Click on `+ New Function` on the top right.
-3.  This will create a blank function that you can directly edit, add inputs/outputs, etc.
+Creating a new custom function from scratch is available on paid plans, including Trial. Functions aren't available on the Free plan.
+
+1.  From the homepage, click `Functions` in the sidebar.
+2.  Click `New` in the top right. (If a menu appears, select `Function`.)
+3.  The **Browse Clay managed functions** window opens. Click `Create from scratch` at the bottom left of the window.
+4.  Clay creates a blank table function named "New Function" and opens it so you can edit it directly: rename it, and add inputs, outputs, and columns.
+
+**Create a function by duplicating an existing one:** To make a second version of a function you already have (for example, the same enrichment logic with different formulas or a different destination), duplicate it instead of starting from scratch. See [How do I duplicate a function within my workspace?](#how-do-i-duplicate-a-function-within-my-workspace).
 
 ## Calling a function from a table
 
@@ -175,6 +180,17 @@ You cannot look up directly into a function's background table — the **Lookup 
 ### Can functions call other functions?
 
 Yes. Functions can be nested — a function can call another function as part of its enrichment sequence, letting you compose complex workflows from smaller, validated building blocks.
+
+### Can I call a Workflow Function from a table?
+
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, using a **Function** step. You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+
+Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
+
+-   **From a table:** click `Tools` and select an option under `Functions`. See [Calling a function from a table](#calling-a-function-from-a-table).
+-   **From a workflow:** add a **Table function** step.
+
+If you need the same logic in both tables and workflows, build it as a table function.
 
 ### What happens if I edit a function while it's running in a production table?
 
