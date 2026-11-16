@@ -92,3 +92,14 @@ If your end-customers request that their data be deleted — for example, under 
 Email **privacy@clay.com** or contact your Clay Growth Strategist. Clay's Privacy team will review the request, determine the appropriate deletion scope, and coordinate any required deletion actions in Clay or with relevant third-party providers.
 
 Requests are generally processed within 30 days. If additional information is needed, the Privacy team will follow up.
+
+### Find a person's records across your tables for a deletion request
+
+Clay doesn't have a workspace-wide search for row values in the web app. To find where a person's data appears in Clay, search or filter each table individually. If you have many tables, you can locate matching rows programmatically with the Clay CLI or API:
+
+-   `clay tables query` (CLI) or `POST /public/v0/tables/query` (API) queries tables that have **Enable for API** turned on in their table settings.
+-   `clay tables rows list` (CLI only) reads rows from a single table and doesn't require **Enable for API**.
+
+See [Does Clay have an API?](using-clay-as-an-api.md) for setup and plan requirements.
+
+The Clay CLI and API are read-only for table data, so they can't delete rows. Once you've found a person's rows, delete them in the web app (see [Delete rows](#delete-rows)) or include them in a deletion request to **privacy@clay.com** as described above.

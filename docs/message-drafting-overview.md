@@ -118,14 +118,32 @@ For more information on Instantly's actions, refer to the [Instantly documentati
 
 ## Outreach
 
+When you export messages to Outreach using **Export Messages to Sequencer**, Clay generates a **Subject** column and a **Body** column containing your drafted message. These are mapped to Outreach **prospect custom fields** — this does not create a native saved email draft in Outreach's composer. The generated content is stored in the custom fields and referenced from an Outreach sequence template.
+
+We recommend reserving specific Prospect custom fields (e.g. custom10 to custom15) for Clay usage to avoid conflicts with other custom field data. You will have to manually map your messages to these custom fields.
+
+### For existing prospects
+
+For prospects who already exist in Outreach, use the **Lookup Prospect** action to retrieve the prospect record, then use the **Update Prospect** action to write the generated subject and body into the reserved custom fields. Avoid using **Create Prospect** for existing records — it will create duplicate prospects in Outreach.
+
+Recommended setup:
+
+1. Reserve two Outreach prospect custom fields for Clay, for example `custom10` (email subject) and `custom11` (email body).
+2. Map the generated **Subject** and **Body** columns to those custom fields in the message-drafting action panel.
+3. Add a **Lookup Prospect** column to retrieve the existing prospect by email or prospect ID.
+4. Add an **Update Prospect** column and map the generated subject and body to the reserved custom fields.
+5. Reference those custom fields in your Outreach sequence template so the personalized content is used when the sequence sends.
+
+If you need a **native saved email draft** in Outreach's Outbox rather than a sequence, Clay's native Outreach integration does not currently support this. You can use an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column to call Outreach's `POST /api/v2/mailings` endpoint with `state` set to `draft`.
+
+### HTML formatting
+
 Outreach sequence emails are rendered as HTML, so plain newlines in custom field values collapse into spaces when the email displays. Use `<br>` tags to produce visible line breaks.
 
 To add `<br>` tags to AI-generated email bodies, choose one of the following approaches:
 
 -   **Claygent or AI column prompt**: add formatting instructions to your prompt, for example: *"Use `<br>` at the end of each line and `<br><br>` between paragraphs. Do not use plain line breaks."* Apply this to the email body field only — a `<br>` tag inside a subject line appears as literal text, so keep the subject plain.
 -   **Formula column**: add a Formula column after your AI column that replaces each `\n` with `<br>`, then map that formula column to the Outreach custom field in the Update Prospect enrichment instead of the raw AI output.
-
-We recommend reserving specific Prospect custom fields (e.g. custom10 to custom15) for Clay usage to avoid conflicts with other custom field data. You will have to manually map your messages to these custom fields.
 
 For more information on Outreach's actions, refer to the [Outreach documentation](https://www.clay.com/university/guide/outreach-integration-interview).
 

@@ -345,7 +345,7 @@ For standard source imports (CSV, CRM, list builders), Clay stops importing sile
 -   Create a new import source — for Salesforce, HubSpot, Snowflake, and other CRM/database sources that have hit the limit, adding a new source definition starts at a fresh 0/50,000 record count (see [FAQ below](#my-salesforce-hubspot-snowflake-or-crm-import-is-returning-0-new-records))
 -   Use [Audiences](audiences.md) for large Salesforce, HubSpot, or other CRM imports that regularly exceed 50,000 records — Audiences are not subject to the per-source 50,000 record cap and scale to millions of records
 -   Use [auto-delete](https://university.clay.com/docs/table-management-settings#auto-delete-passthrough-tables) (Enterprise plan) for unlimited rows with compatible source types (webhooks, send table data, signals)
--   Use [bulk enrichment](https://www.clay.com/university/guide/bulk-enrichment) (Enterprise plan) to process millions of records
+-   Use [Workflows](https://university.clay.com/docs/workflows) to process large datasets
 
 ### Does manually deleting rows free up space toward the 50,000-row limit?
 
