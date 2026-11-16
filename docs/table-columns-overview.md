@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -33,6 +33,20 @@ Every Clay table includes two automatically maintained system columns: **Created
 -   **Updated At**: Records the most recent time any cell in the row changed. Clay automatically stamps a new value here whenever any column in the row is modified.
 
 Both fields are system-managed: you cannot delete them, edit their settings, or manually change their values.
+
+### Show the Created At column on all tables
+
+There is no workspace or account setting that shows the **Created At** (or **Updated At**) column on all tables by default. Clay hides both system columns automatically on every new table and on every new view you add to an existing table.
+
+Column visibility is saved per view, so you need to unhide **Created At** once in each view where you want to see it:
+
+1.  Open the table and switch to the view you want to change.
+2.  Click the column count button in the toolbar (for example, **15/31 columns**) to open the columns panel.
+3.  Find **Created At** in the list and toggle it on.
+
+**Created At** now appears in that view. Other views of the same table, and other tables, keep it hidden until you unhide it there too.
+
+If you create new tables often, set up one table with **Created At** visible and duplicate it whenever you need a new table. Duplicating a table (or a workbook) copies each view's column visibility, so **Created At** stays visible in the copy.
 
 ### Tracking who created a row
 
@@ -124,6 +138,27 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
 -   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
 
+### "You have reached the maximum number of columns allowed"
+
+If you try to add a waterfall (for example a Work Email, Personal Email, or Mobile Phone waterfall) and see **"You have reached the maximum number of columns allowed (N total columns, M action columns). Please delete some columns before adding new ones."**, the new waterfall would take your table over one of its column limits. N is your table's total column limit (100 by default) and M is its action (enrichment) column limit. The error appears if either limit would be exceeded, and Clay checks every column the new waterfall needs before creating any of them. That means the error can appear even when your table is still below N columns.
+
+**Why waterfalls use up so many columns.** Each provider in a waterfall is its own column in your table. When validation is turned on, each provider also gets its own validation column. Clay also adds one merge column that holds the final result. All of these columns count toward your table's column limits.
+
+**Example:** A Mobile Phone waterfall with 15 providers and validation turned on uses 15 provider columns + 15 validation columns + 1 merge column = **31 columns**. Removing 10 providers you don't need frees up 20 of those columns.
+
+**How to read the column count in the toolbar.** The columns button in the table toolbar (for example **75/75 columns**) shows how many columns are visible in the current view out of all columns in the table, including hidden ones. It doesn't show your column limit. **75/75 columns** means the table has 75 columns and none of them are hidden.
+
+**To free up columns from a waterfall, remove the providers you don't need:**
+
+1.  Click the waterfall's header and select **Edit column** (or click the waterfall tab and select **Edit group**).
+2.  In the panel that opens on the right, click the **Full configuration** tab.
+3.  In the waterfall sequence, click the trash (delete) icon next to each provider you want to remove.
+4.  Click **Save**.
+
+Clay deletes each removed provider's column and its validation column from the table. To decide which providers to keep, check which ones actually return results in your table. Removing providers that rarely return results frees up far more space than deleting columns one at a time. Before you delete any columns, check whether another table looks up data from this one, because a dependency like that isn't visible from this table. See [Editing an existing waterfall](building-a-data-waterfall.md#editing-an-existing-waterfall) for more about changing a waterfall's providers.
+
+If you still need more columns after cleaning up, contact support. Clay support can raise the column limits for your workspace.
+
 ## Create child columns from a parent column
 
 When you enrich data within Clay, your results will be presented as arrays of data, which sometimes includes nested endpoints. You can create individual child columns by mapping specific endpoints from the parent column's enrichment.
@@ -133,7 +168,7 @@ When you enrich data within Clay, your results will be presented as arrays of da
 To create a new column with an endpoint from an enrichment (parent column):
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
-2.  Hover over the endpoint you want to map out and to the right click `Add as column`.
+2.  Hover over the endpoint you want to map out and to the right click `Add to column`.
 3.  In the **Add description as new column** section, enter your column description and click `Create column` to generate a new column.
 
 ### Map child columns to an existing column
@@ -141,12 +176,27 @@ To create a new column with an endpoint from an enrichment (parent column):
 To map an endpoint from an enrichment to an existing column:
 
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
-2.  Hover over the desired endpoint and click `Add as column` on the right.
+2.  Hover over the desired endpoint and click `Add to column` on the right.
 3.  Under **Map to an existing column**, click on the column you want to map this enrichment endpoint to. What happens depends on the destination column's current state:
     -   **If the destination column has no formula** (for example, values you entered manually or imported from a CSV), Clay replaces the column with a formula referencing the new source column. Clay shows a **"Data overwrite"** warning before proceeding. If you confirm, that column will be blank for any rows where the new source column is empty — including rows from a different source in a multi-source table. **This cannot be undone.**
     -   **If the destination column already has a formula**, Clay automatically applies a waterfall pattern — the new source column is appended as a fallback, so existing data is preserved.
 
 **To keep manually entered or CSV-imported data while also bringing in new enrichment data:** Instead of mapping to the existing column, use **Create new column** to extract the incoming field into a separate column. Then add a [Merge column](#merge-columns) that references both the original column and the new one — it returns the first non-empty value per row, preserving whichever source has data.
+
+### Split an address into separate street, city, state, country, and ZIP code columns
+
+You can only create child columns from a cell that holds structured data, such as an enrichment or Use AI result. If your address lives in a plain **Text** or formula column (for example, an "Address Locations" column holding a string like `Brooklyn, NY 11222, US`), clicking a cell doesn't open a **Cell details** panel with sub-fields, so there's nothing to add as a column. Formulas that split the address by comma position also break when part of the address is missing (for example, no street) or when the address uses an international format.
+
+To get separate street address, city, state, country, and zip code columns from a text address, have a Use AI column parse the address into named output fields, then add each field as its own column:
+
+1.  Click `Add column` and select `Use AI`.
+2.  Switch to the `Configure` tab and choose the **Create or modify content** use case. Parsing an address doesn't need web access.
+3.  Write a prompt that tells the model to split the address into its parts by meaning rather than by comma position, and to leave a part empty when it isn't in the address. Insert your address column into the prompt by typing `/` and selecting the column. Text that only looks like `/Address Locations` (for example, pasted from somewhere else) isn't a column reference, and the model won't receive the address.
+4.  Open **Define outputs**, set **Output format** to **Fields**, and add one field for each part you want — for example, `streetAddress`, `city`, `stateOrRegion`, `country`, and `postalCode`.
+5.  Save and run the column.
+6.  Click any result cell in the Use AI column to open the **Cell details** panel. For each field, hover over it, click `Add to column`, and click `Create column`.
+
+Each address part, such as city or zip code, now appears in its own column and fills in for every row the Use AI column has run on. See [Use AI](use-ai-integration-overview.md) for more on prompts, models, and output fields.
 
 ### Circular dependency error
 
@@ -209,8 +259,21 @@ You can filter your table to show only rows that match specific criteria. Filter
 1.  Click the **Filter** button (funnel icon) in the table toolbar, above the rows.
 2.  Click **Add filter** and select a column to filter by.
 3.  Choose a comparison operator (e.g., **is**, **contains**, **is not empty**) and enter a value. The operators shown depend on the column's data type: Number (#) columns include numeric operators such as **is greater than** and **is less than**, while Text columns include string operators such as **contains**. If an expected numeric operator isn't visible, check that the column is set to the **Number** type. See [Comparison operators](comparison-operators.md) for a full reference.
-4.  To add more conditions, click **Add filter** again. Multiple filters are applied together — a row must match all active filters to appear.
+4.  To add more conditions, click **Add filter** again. Each new condition is joined to the others with an **And** or **Or** dropdown at the start of its row. See [Combine table filters with And or Or](#combine-table-filters-with-and-or-or) below.
 5.  To remove a single filter, click the **×** next to it. To remove all filters, click **Clear filters**.
+
+### Combine table filters with And or Or
+
+When a table filter has more than one condition, the first condition starts with **Where**. Every condition after it starts with an **And** / **Or** dropdown that controls how the conditions are combined:
+
+-   **And:** a row appears only if it matches **all** of the conditions.
+-   **Or:** a row appears if it matches **any one** of the conditions.
+
+All conditions at the same level share one And/Or setting. Changing the dropdown on any row changes it for every condition at that level. To mix And and Or logic, click **Add filter group**. Each filter group has its own And/Or setting.
+
+**Excluding several values with "does not contain":** to hide rows that contain any of several words, join the **does not contain** conditions with **And**. With **Or**, a row only has to pass one condition to stay visible. For example, with Job Title **does not contain** `intern` **Or** Job Title **does not contain** `consultant`, a "Biology Intern" row still appears because it doesn't contain "consultant". If your filter hides no rows (for example, the row count still shows **919 / 919 rows**), check that the dropdown between your **does not contain** conditions is set to **And**.
+
+**"does not contain" matches partial words and ignores capitalization.** The value can appear anywhere in the cell. For example, **does not contain** `intern` hides "Biology Intern", but it also hides "Internal Audit Manager" and "International Sales Director".
 
 ### Check whether a filter is active
 

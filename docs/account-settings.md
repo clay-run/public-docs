@@ -164,13 +164,14 @@ To switch to email and password login instead, see [Switch from Google login to 
 
 ## Clay API key (legacy)
 
-Your Clay API key (legacy) is a personal single-token key that enables Clay-native integrations and some older third-party connections such as Zapier. To manage this key, go to `Settings` > `Account` > `API key (legacy)`.
+Your Clay API key (legacy) is a personal single-token key used by some older integrations, such as Zapier, and early API automations. To manage this key, go to `Settings` > `Account` > `API key (legacy)`. You can have one legacy API key at a time.
 
 Your full API key is shown **once** immediately after it is generated or regenerated — copy it from the modal that appears and store it somewhere safe. After you close the modal, only a redacted version is visible in settings and the full key cannot be retrieved without regenerating.
 
--   **To create or replace your key:** click `Regenerate key`. The new key is shown once in the modal; your previous key is invalidated immediately.
+-   **To create your key:** if you don't have a legacy key yet, click `Create API key`.
+-   **To replace your key:** click `Regenerate key`. The new key is shown once in the modal; your previous key is invalidated immediately.
 
-**Note:** This personal key is for Clay-native integrations only. If you need a workspace-scoped key to authenticate with Clay's Public HTTP API, open **API and CLI** in the left sidebar, select the **API keys** tab, and click **Add API key**.
+**Note:** Clay's Public HTTP API doesn't accept the legacy API key, and in-table features such as looking up rows in another table don't use it. If you need a workspace-scoped key to authenticate with Clay's Public HTTP API, open **API and CLI** in the left sidebar, select the **API keys** tab, and click **Add API key**. To send data into a Clay table from a tool such as Workato, use the table's [webhook](webhook-integration-guide.md#connecting-middleware-tools) instead — Clay webhooks don't use an API key.
 
 ## Delete your account
 
