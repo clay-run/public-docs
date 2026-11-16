@@ -358,7 +358,7 @@ Records need a high-confidence identifier to match. Auto-enrichment adds `Linked
 
 **Import record matching**
 
-**Import record matching** deduplicates records at ingestion time by checking whether a specific alias field (such as email, LinkedIn URL, or domain) matches across your import sources. Import record matching appears in the import settings for Salesforce (Accounts, Contacts, and Leads), HubSpot, Dynamics 365, Snowflake, BigQuery, Databricks, Redshift, CSV, and Clay table imports.
+**Import record matching** deduplicates records at ingestion time by checking whether a specific alias field (such as email, professional network URL, or domain) matches across your import sources. Import record matching appears in the import settings for Salesforce (Accounts, Contacts, and Leads), HubSpot, Dynamics 365, Snowflake, BigQuery, Databricks, Redshift, CSV, and Clay table imports.
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -368,7 +368,7 @@ To configure:
 2. Choose one of the two options:
     -   **Match existing records (Recommended)** — choose a shared field to identify records that represent the same company or person. Records without a match are added separately.
     -   **Import without matching** — skip the check. Records representing the same company or person may be added as separate records.
-3. If you chose **Match existing records**, under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+3. If you chose **Match existing records**, under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include professional network URL, phone number, and others).
 4. Under `In`, map the alias field to the corresponding field in each connected source. The `Equals` (**Same value**) and `Then` (**Merge record**) rows are fixed.
 5. Click `Done`, then save your import settings.
 
