@@ -19,6 +19,8 @@ From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Ema
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
     -   Each domain supports up to 5 email accounts.
+    -   To pick your own domain names instead of the suggestions, type a brand term or domain variation in the domain search box. See [Can I choose my own domain names instead of the suggested domains?](#can-i-choose-my-own-domain-names-instead-of-the-suggested-domains)
+    -   Use **How many domains do I need?** to estimate how many domains to order for your weekly sending volume. See [How many sends per week does each domain support?](#how-many-sends-per-week-does-each-domain-support)
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
     -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible.
@@ -40,6 +42,33 @@ After placing an order, you can track its progress in the `Account orders` tab (
 ### **Can I add more email accounts to a domain after I've purchased it?**
 
 No. Once a domain is purchased, you cannot add additional email accounts to it. Select your desired number of accounts (up to 5 per domain) before confirming your order.
+
+### **Can I choose my own domain names instead of the suggested domains?**
+
+Yes, as long as the domain is available. In Step 1 (**Domains**) of the **Buy email accounts** flow, the suggested domains are only a starting point. To choose your own:
+
+1.  Type a brand term or domain variation into the domain search box.
+2.  Select the domains you want from the available results. Selected domains appear under **Selected domains**, and you'll see them in the order preview on the right.
+
+The **Buy email accounts** flow only sells available `.com` domains, and you can only add domains that appear in the search results. You can't type in a domain and add it directly. If the domain you want doesn't appear, you can't buy it through Clay. Instead, buy it from a domain registrar, create mailboxes on it, and connect them under **Sequencer → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+
+### **How many sends per week does each domain support?**
+
+Sending capacity for purchased email accounts depends on how many email accounts are on each domain. On the default campaign schedule (9:00 AM–5:00 PM, Monday–Friday, with 20 minutes between steps), each email account can send up to 24 emails per day, or 120 per week. The following table shows the weekly capacity of one domain at different account counts:
+
+| Email accounts on the domain | Sends per day | Sends per week |
+| --- | --- | --- |
+| 1 | 24 | 120 |
+| 3 | 72 | 360 |
+| 5 (maximum) | 120 | 600 |
+
+**Adding email accounts to a domain increases its weekly sends.** It doesn't just split the same total across more inboxes. For example, going from 3 to 5 email accounts on one domain raises its capacity from about 360 to about 600 sends per week, and those sends are spread across all 5 inboxes.
+
+The **How many domains do I need?** calculator in Step 1 (**Domains**) works like this:
+
+-   Enter your **Weekly sends** to get a recommended number of **Domains**. The calculator divides your weekly sends by the per-domain capacity shown in its tooltip, adds a 5% availability buffer, and rounds up to a whole number of domains.
+-   Enter a number of **Domains** to see the **Weekly sends** they support after the 5% buffer. For example, one domain at 600 sends per week shows 571 weekly sends.
+-   The calculator assumes each domain has the default number of email accounts shown in its tooltip. It doesn't update when you add or remove email accounts in the order preview. Use the table above to estimate capacity for a different number of accounts.
 
 ### **What happens if I cancel a domain before the year is up? Will I get a refund?**
 
