@@ -290,6 +290,22 @@ To recover events that were acknowledged by Clay but did not appear as rows in y
 
 **To prevent data loss going forward,** pace requests within Clay's [throughput limits](#limits) and ensure your source system implements retry logic with exponential backoff for `429` responses.
 
+### Can a Clay webhook enrich a web form lead in real time and return the data in the same request?
+
+No. A Clay webhook table doesn't return enrichment results to the system that sent the data. When you POST a lead to a Clay webhook URL (for example, the work email someone typed into a web form), Clay acknowledges the request right away and runs the table's enrichment columns in the background. The response to your POST is only an acknowledgment. It doesn't contain the enriched company or contact data. The enriched data reaches your system later, when an outbound column in the table sends it after the enrichments finish. That column can be an **HTTP API** column (see [Send enriched data from Clay to a middleware tool](#send-enriched-data-from-clay-to-a-middleware-tool)) or a CRM action such as Salesforce **Update record**. A webhook that triggers a Workflow works the same way: Clay returns `202 Accepted` before the workflow runs (see [Webhooks as Workflow triggers](#webhooks-as-workflow-triggers)).
+
+**Recommended pattern for routing form leads in real time:** If you need company data while the lead is still on the form (for example, to route the lead before they submit), split the work into these steps:
+
+1.  **During the form step:** Use a fast lookup that your form or routing tool calls directly, such as a domain lookup, to get the data you need for routing right away.
+2.  **After the form is submitted:** Send the lead to your Clay webhook table for full enrichment.
+3.  **When the Clay results arrive:** Have the table push the enriched data back with an HTTP API column or a CRM action, then update the lead's routing or CRM record.
+
+**Plan for missed or duplicate deliveries from Clay:** Clay doesn't guarantee that enriched results reach your endpoint exactly once, so build the endpoint that receives Clay's results to handle both cases:
+
+-   **Make your receiving endpoint idempotent.** Include a lead or record ID in each request Clay sends, and have your endpoint use that ID so a duplicate delivery does no harm. Clay doesn't add its own run ID or event ID to HTTP API requests. To build a stable key from the row's data, see [Does Clay send a run ID or event ID with HTTP API requests?](http-api-integration-overview.md#does-clay-send-a-run-id-or-event-id-with-http-api-requests)
+-   **Return a `2xx` response quickly.** If your endpoint returns a status code outside the `2xx` range, Clay marks that HTTP API cell as an error.
+-   **Re-send only the leads that never got a result.** Add a periodic check on your side that flags leads with no Clay result after your expected processing window, and re-send only those leads to the webhook. Without an [idempotency key](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows), each re-sent lead creates a new row and runs the enrichments again, which uses credits.
+
 ### What happens when I map a webhook field to an existing column — and why did my data disappear?
 
 When you click a cell in your webhook column, open **Cell details**, hover over a field, and select **Add as column → Map to an existing column**, Clay changes the destination column's formula to pull from the webhook source. What happens next depends on what was already in that column:
