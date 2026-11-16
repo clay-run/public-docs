@@ -177,9 +177,25 @@ Your search filters are saved on the source, not on the table rows. To update th
 
 1. In your Find People table, click the **database icon** in the source column header (tooltip: "Edit source") — or click the column header dropdown and select **Edit source**. A panel opens showing a read-only summary of your current inputs.
 2. Click **Edit inputs** in the panel. A wizard opens where you can update your criteria — job title, seniority, location, company filters, exclusions, and so on.
-3. Save your changes, then run the source from the panel to re-import results with the updated criteria.
+3. When you apply your changes, open the dropdown on the button and choose how the updated search should change your table:
+    -   **Add new results to table** — "Bring new results into table without deleting what is already in the table." Only contacts that match your updated criteria and aren't already in the table are added. Contacts that were previously imported, and their enrichment data, stay as they are and are not re-evaluated against the new criteria.
+    -   **Replace existing results in table** — "Delete all results that are already in the table and import only the ones matching the latest search filters." Clay asks you to confirm in a **Replace existing rows?** dialog before deleting anything. Deleted rows can't be restored.
 
-**Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
+**Note:** If auto-run is on, choosing **Replace existing results in table** re-runs every enrichment in the table on every re-imported row and charges credits again — see [Why did changing my Find People filters use up my credits?](#why-did-changing-my-find-people-filters-use-up-my-credits) below. To keep your existing contacts and only enrich new ones, choose **Add new results to table**.
+
+### Why did changing my Find People filters use up my credits?
+
+If you edited the filters on an existing Find People (or Find Companies) source, re-ran it, and a large share of your credits was spent within seconds, two settings usually worked together:
+
+1.  **The source was re-run with Replace existing results in table.** This option deletes every row the source previously added to the table and imports the results matching the latest filters as brand-new rows. Any enrichment results on the deleted rows are deleted with them.
+2.  **Auto-run was on for the table's enrichment columns.** Clay treats each re-imported row as a new row, so every auto-run enrichment column (for example, a work email waterfall or an AI column) runs on all of them again. **Keep existing results** doesn't prevent this, because it only skips cells that already have a successful result, and the re-imported rows have none.
+
+For example, if a Find People source re-imports 3,000 contacts with Replace existing results in table, and the table has an auto-run enrichment that costs 1 credit per row, the re-run spends 3,000 credits (1 credit × 3,000 rows), even if those same contacts were already enriched before.
+
+Changing the filters on a Find People source doesn't cost credits by itself. Importing from Find People is free. To change filters on a Find People source without re-spending credits:
+
+-   **Choose Add new results to table when you apply the change.** Contacts already in the table keep their enriched data, and only contacts that are new to the table get enriched.
+-   **For an extra safety net, turn off auto-run on the enrichment column before re-running the source.** Click the column name → **Edit column** → turn off **Auto-run** under **Run settings** → **Save**. After the source finishes, filter the table to rows where that enrichment column is empty, then right-click the column header → **Run column** → **Run N rows**. The run menu shows how many rows will run before any credits are used. See [Auto-run](auto-run.md) for table-level and column-level controls.
 
 ### Why does Enrich person show "Missing input" on people I added manually to my Find People table?
 
@@ -429,4 +445,4 @@ The flag only updates when the formula column re-runs. To keep it current, re-ru
 
 **When no activity is returned:** If neither enrichment finds public activity for a person, the enrichment cell shows no data and you aren't charged credits for that row. The flag formula labels these people `Unknown`. Treat them as unknown rather than inactive — the person may still be active in ways the data provider can't see. See [If the enrichment returns no data or fewer posts than expected](#getting-a-persons-posts-and-shares).
 
-**Reactions can't be used to date activity:** A **Get a person's professional post reactions** enrichment is also available, but it has no date for when the person reacted. Its only date, `post.created_at`, is when the reacted-to post was published, so a recent date doesn't mean the person reacted recently. Use posts, shares, and comments for 30, 60, or 90-day activity flags instead.
+**When no activity is returned:** placeholder
