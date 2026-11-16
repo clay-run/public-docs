@@ -356,24 +356,41 @@ When a match is found, records merge into a single unified record in Audiences. 
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
-**Import record matching (beta)**
+**Import record matching**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+**Import record matching** deduplicates records at ingestion time by checking whether a specific alias field (such as email, LinkedIn URL, or domain) matches across your import sources. Import record matching appears in the import settings for Salesforce (Accounts, Contacts, and Leads), HubSpot, Dynamics 365, Snowflake, BigQuery, Databricks, Redshift, CSV, and Clay table imports.
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
 To configure:
 
-1. In your import settings, find `Import record matching` and click `Edit`.
-2. Under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
-3. Under `In`, map the alias field to the corresponding field in each connected source.
-4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
+1. In your import settings, find `Import record matching` and click `Set up`. The **Import record matching for Companies** (or **for People**) dialog opens.
+2. Choose one of the two options:
+    -   **Match existing records (Recommended)** — choose a shared field to identify records that represent the same company or person. Records without a match are added separately.
+    -   **Import without matching** — skip the check. Records representing the same company or person may be added as separate records.
+3. If you chose **Match existing records**, under `When`, choose an **alias field** — typically `Domain` for Companies or `Email` for People (additional options include LinkedIn URL, phone number, and others).
+4. Under `In`, map the alias field to the corresponding field in each connected source. The `Equals` (**Same value**) and `Then` (**Merge record**) rows are fixed.
+5. Click `Done`, then save your import settings.
 
-You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
+When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
+
+You can configure one alias field per entity type (one for People, one for Companies). Import record matching runs when each record is first imported — later updates to a record don't trigger matching again, and records already in Audiences are not retroactively merged.
+
+**Why do I see "Choose how to match records before saving." in my import settings?**
+
+When **Import sync** is turned on for an Audiences import, you must choose an Import record matching option before you can save the import settings. If you haven't made a choice yet, Clay shows **"Choose how to match records before saving."** under `Import record matching` and next to the **Save and review** button. This applies to any change you save — for example, adding new field mappings to an existing import — not only to new imports. The message isn't caused by the fields you just mapped.
+
+To clear the message:
+
+1. Click `Set up` next to `Import record matching`.
+2. Choose **Match existing records (Recommended)** and select an alias field (for example, `Domain` for Companies), or choose **Import without matching** to import without the check — the same as imports that had no matching configured before.
+3. Click `Done`, then click **Save and review**.
+
+Imports with **Import sync** turned off don't require an Import record matching choice.
 
 **Unique Identifier vs. alias field (Snowflake and BigQuery imports)**
 
-When setting up a Snowflake or BigQuery import, you also define a `Unique Identifier` — a field that must be completely unique and non-null across your dataset (for example, `domain` or `work_email_domain` for companies; `email` for people). Clay uses this to determine whether an incoming row should create a new Audiences record or update an existing one. This is distinct from the alias field used in import record matching (beta): the Unique Identifier governs record creation and updates within a single source, while the alias field controls how Clay joins records across multiple sources.
+When setting up a Snowflake or BigQuery import, you also define a `Unique Identifier` — a field that must be completely unique and non-null across your dataset (for example, `domain` or `work_email_domain` for companies; `email` for people). Clay uses this to determine whether an incoming row should create a new Audiences record or update an existing one. This is distinct from the alias field used in import record matching: the Unique Identifier governs record creation and updates within a single source, while the alias field controls how Clay joins records across multiple sources.
 
 **Other deduplication behaviors**
 
@@ -1265,7 +1282,7 @@ For this to work, you need both:
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
 
 ### I've mapped fields to Salesforce but the data isn't syncing — why?
 
