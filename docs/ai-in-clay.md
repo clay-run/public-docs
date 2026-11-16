@@ -219,11 +219,11 @@ Full subprocessor list: [trust.clay.com](http://trust.clay.com)
 
 ### Data Processing Agreements (DPAs)
 
-Clay provides Data Processing Agreements (DPAs) to support compliance with data protection regulations such as GDPR. Eligibility for a signed DPA depends on your plan:
+Clay provides a Data Processing Agreement (DPA) to support compliance with data protection regulations such as GDPR. Eligibility for a signed DPA depends on your plan:
 
--   **Any paid plan:** Eligible for a standard DPA provided as-is, without customization or redlines. Email [security@clay.com](mailto:security@clay.com) to request one — Clay will send it via DocuSign.
--   **Enterprise plan:** Eligible for a DPA with customization and redlines. Contact your account manager or [Clay support](https://app.clay.com) to request one.
--   **Free plan:** Not eligible for a signed DPA. Upgrade to any paid plan to request one.
+-   **Any paid plan:** Eligible for a standard DPA provided as-is, without customization or redlines. See https://www.clay.com/legal/dpa .
+-   **Enterprise plan:** Contact your account manager or Clay support to request one.
+-   **Free plan:** Not eligible for a signed DPA.
 
 Clay's standard DPA is fully binding for all customers regardless of plan, ensuring consistent data protection commitments across all tiers. To view Clay's standard DPA and Standard Contractual Clauses (SCCs), visit the [Clay Trust Center](https://trust.clay.com).
 
