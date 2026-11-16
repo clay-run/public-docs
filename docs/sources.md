@@ -221,6 +221,8 @@ If you narrow a source filter — for example, by updating a HubSpot list or seg
 
 The **Update existing rows** toggle (available when re-running a source) controls whether Clay refreshes the data in existing rows on re-run. It does not remove rows that are no longer included in the source.
 
+**Exception: Find People and Find Companies sources can replace their rows when you choose to.** When you edit an existing Find People or Find Companies source, you choose between **Add new results to table** (keeps existing rows) and **Replace existing results in table** (deletes every row the source previously added, then imports only results matching the latest filters). Replace only happens when you pick it and confirm it in the **Replace existing rows?** dialog. If auto-run is on, the re-imported rows are treated as new and every enrichment runs on them again, which charges credits again. See [Why did changing my Find People filters use up my credits?](find-people-overview.md#why-did-changing-my-find-people-filters-use-up-my-credits).
+
 To remove rows that no longer match your filter, you have two options:
 
 -   **Delete them manually** — select the rows in the table and delete them.
