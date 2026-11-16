@@ -40,7 +40,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
-    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
+    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.**
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs. To view the full sync history, click **Sync history** at the top of this section. The Sync history panel shows past runs grouped by date — each row displays match rate, records sent, matched count, and the change in match rate since the previous run.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
@@ -119,6 +119,18 @@ Access control is enforced at the Google Ads account level — the person connec
 Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google Ads**, **Bing Ads**, **Reddit Ads**, and **Vibe.co**.
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
+
+### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
+
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, never lists Reddit Ads or Bing Ads. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+
+To send your contacts to Reddit Ads or Bing Ads:
+
+1.  Go to **Ads** from the Clay homepage, click `Create ad sync`, and select **People** (not **Table**, which is marked **Deprecated** and creates a legacy Table ads sync).
+2.  Pick the Audiences People segment that holds your contacts. There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
+3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
+
+Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
 
 ### **Why are some contacts excluded when I set up an ad sync?**
 

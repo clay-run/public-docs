@@ -121,6 +121,24 @@ Per-table row limits by plan:
 
 To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).
 
+**If your table shows more rows than your CSV has (for example, "1000/1000 rows" for a 10-row file):**
+
+Clay imports every row in your CSV file, including blank rows. Spreadsheet tools often leave blank rows at the end of a file, even after you clear the data in them, and Clay imports each one as an empty row in your table. The row count in the table toolbar reads **X/Y rows**: X is the number of rows in your current view and Y is the total number of rows in the table. For example, a CSV with 10 rows of data followed by 990 blank rows shows **1000/1000 rows** after import.
+
+Empty rows from a CSV import don't use credits:
+
+-   Importing a CSV doesn't consume any Actions or Data Credits, regardless of how many rows the file contains.
+-   Enrichment columns don't run on rows where a required input is blank. Those cells show **Missing input** and consume no credits.
+
+To delete the empty rows from your table:
+
+1.  Click the **No filters** button (funnel icon) in the table toolbar to open the filter panel, and add a filter on a column that's filled in for every row of your real data (for example, a name or email column), using the **is empty** operator.
+2.  Select all rows in the filtered view using the checkbox in the table's header row.
+3.  Click **Delete N rows** in the toolbar and confirm.
+4.  Remove the filter. The row count now matches the number of rows with data.
+
+To avoid this on future imports, open the CSV in a plain text editor before uploading and delete any blank lines at the end of the file.
+
 **If AI column text is cut off in the exported CSV:**
 
 Use AI and Claygent columns store their output as a structured object containing multiple fields — Response, Reasoning, Confidence, and others. Each cell in the table displays only a short text preview of the Response field, which is why longer values trail off with "..." in the table view. When you export to CSV, the exported value is that same short preview, so AI column text can be cut off mid-sentence in the downloaded file.

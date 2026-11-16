@@ -43,6 +43,22 @@ If you create a custom writeback object:
 -   Grant `Read`, `Create`, and `Edit` on the custom object
 -   Keep `Account` as `Read` only
 
+### **If your Salesforce org has Person Accounts enabled**
+
+If **Person Accounts** are enabled in your Salesforce org, Salesforce requires any profile or permission set with `Read` access on `Account` to also have `Read` access on `Contact`. This is a Salesforce permission dependency, and Clay can't override it. As a result, an Account-only restricted user isn't achievable at the object-permission level in a Person Accounts org: granting the Clay user `Read` on `Account` also gives it `Read` on `Contact` (and Person Account records). Switching to the **Client Credentials** connection method or an API-only integration user doesn't change this Salesforce behavior.
+
+If Contacts and Person Accounts must be blocked through Salesforce permissions, don't grant the Clay user access to the standard `Account` object. Use a dedicated custom integration object instead:
+
+1.  Create a custom object in Salesforce (for example, `Clay_Account_Integration__c`) containing only the approved business Account fields — such as Account ID, Account Name, and Website or domain.
+2.  Populate that object from your Account records in Salesforce, excluding Person Accounts.
+3.  In your Clay permission set, grant `Read`, `Create`, and `Edit` on the custom object only — no access to `Account`, `Contact`, `Lead`, or `Opportunity`.
+4.  In a Clay table, pull records from the custom object with the **Import records from a Salesforce SOQL query** source (for example, `SELECT Id, Name, Website__c FROM Clay_Account_Integration__c`), enrich them, and write results back to the same custom object with the **Update record** action.
+5.  Use a Salesforce Flow or Apex process to copy the enriched values from the custom object back to the approved Account fields.
+
+This keeps the Clay user isolated from Accounts, Contacts, Leads, and Opportunities through Salesforce-enforced permissions while preserving your enrichment workflow.
+
+**Note on Clay Audiences:** In this setup, run your enrichment in Clay tables. The Clay Audiences Salesforce import can't use a custom object as a source of Companies (account) records — Audiences imports custom-object records as activities that appear on associated people and companies, and only the standard `Account` object populates Companies.
+
 ## **Configure field-level security**
 
 1.  Go to `Object Settings` → `Account` → `Field Permissions`
@@ -95,7 +111,7 @@ The user you authenticate with Clay can now:
 -   ✅ See only `Account Name`, `Domain`, and `Record ID`
 -   ✅ Write back approved enrichment fields
 -   ❌ View other `Account` fields
--   ❌ Access `Contacts`, `Opportunities`, `Leads`, etc.
+-   ❌ Access `Contacts`, `Opportunities`, `Leads`, etc. (If Person Accounts are enabled in your org, `Account` read access also requires `Contact` read access — see [If your Salesforce org has Person Accounts enabled](#if-your-salesforce-org-has-person-accounts-enabled).)
 
 ## **Static IP addresses for allowlisting**
 
