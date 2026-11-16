@@ -42,9 +42,14 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 
 **Create function from scratch:**
 
-1.  From the homepage, click on `Functions` in the sidebar.
-2.  Click on `+ New Function` on the top right.
-3.  This will create a blank function that you can directly edit, add inputs/outputs, etc.
+Creating a new custom function from scratch is available on paid plans, including Trial. Functions aren't available on the Free plan.
+
+1.  From the homepage, click `Functions` in the sidebar.
+2.  Click `New` in the top right. (If a menu appears, select `Function`.)
+3.  The **Browse Clay managed functions** window opens. Click `Create from scratch` at the bottom left of the window.
+4.  Clay creates a blank table function named "New Function" and opens it so you can edit it directly: rename it, and add inputs, outputs, and columns.
+
+**Create a function by duplicating an existing one:** To make a second version of a function you already have (for example, the same enrichment logic with different formulas or a different destination), duplicate it instead of starting from scratch. See [How do I duplicate a function within my workspace?](#how-do-i-duplicate-a-function-within-my-workspace).
 
 ## Calling a function from a table
 
@@ -95,9 +100,45 @@ When a function contains a waterfall, the estimated cost shown (marked with a `~
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows.
+**Note:** The function's live view keeps only the most recent **1,000 completed rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows. Rows that haven't completed — rows showing **Run stopped**, errored rows, and queued or in-progress rows — aren't removed, so the live view can show more than 1,000 rows in total.
 
-To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
+To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
+
+### Can I set up auto-delete on a function?
+
+You don't need to set up auto-delete on a function, because functions already auto-delete. Every function is a passthrough table with auto-delete always turned on, so the **auto-delete icon** and **Enable auto-delete** option you see on regular tables aren't shown in functions. You don't need to configure anything for a function's rows to be cleaned up.
+
+How function auto-delete works:
+
+-   **Completed rows are removed automatically.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it's eligible for removal. The function's live view keeps the **1,000 most recent completed rows**.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed.
+-   **Removed rows are archived.** Click **View archive** in the function's footer, then **Export full archive** to download them as a CSV.
+
+For more detail, see [Is there a row limit for functions?](#is-there-a-row-limit-for-functions) and [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats). To turn on auto-delete for a regular table, see [Auto-delete in tables](auto-delete.md).
+
+### Why does my function show fewer rows than the run count in "View run stats"?
+
+A function's **View run stats** chart and the function's row list measure different things, so their numbers don't match:
+
+-   **View run stats** counts every run (execution) of the function in each time period.
+-   **The function's row list** shows only the rows the function is currently keeping.
+
+For example, a function that ran about 6,000 times in a period can show only about 1,900 rows in its list. This is expected: the row list isn't a log of every run, and completed rows that leave the list have already sent their results back to the calling table.
+
+Functions are passthrough tables, so Clay cleans up the function's row list automatically:
+
+-   **Completed rows are removed.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it becomes eligible for removal. The function keeps the **1,000 most recent completed rows** and removes older ones.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed, and they're listed on top of the 1,000 completed rows.
+
+For example, a function list showing 1,930 rows can be 1,000 recent completed rows plus 930 rows where **Send data back** was stopped.
+
+**To view or download completed rows that were removed from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click **View archive** in the function's footer, at the bottom of the screen. This opens the function's archive table.
+3.  In the archive table's toolbar, click **Export full archive** to download the archived rows as a CSV.
+
+Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
 ### Why does "Go to row in function" say the function row has been archived?
 
@@ -105,9 +146,9 @@ When you click a cell in your table that was processed by a function and see **"
 
 **Your results are not lost, and you do not need to re-run anything.** The function already ran successfully, wrote the output back to your calling table, and charged credits at the time of execution. The "archived" message means only that the drill-through record inside the function's own view is no longer accessible — not that the enrichment failed or that data is missing from your table.
 
-This happens because the function's Live view retains at most 1,000 rows total, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
+This happens because the function's Live view retains at most 1,000 completed rows, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
 
-To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
+To view historical rows that have aged out, click **View archive** in the function's footer. Archived rows are kept for 30 days, and you can download them as a CSV with **Export full archive** in the archive table's toolbar.
 
 ### What's the difference between an input and a column in a function?
 
@@ -139,6 +180,17 @@ You cannot look up directly into a function's background table — the **Lookup 
 ### Can functions call other functions?
 
 Yes. Functions can be nested — a function can call another function as part of its enrichment sequence, letting you compose complex workflows from smaller, validated building blocks.
+
+### Can I call a Workflow Function from a table?
+
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, using a **Function** step. You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+
+Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
+
+-   **From a table:** click `Tools` and select an option under `Functions`. See [Calling a function from a table](#calling-a-function-from-a-table).
+-   **From a workflow:** add a **Table function** step.
+
+If you need the same logic in both tables and workflows, build it as a table function.
 
 ### What happens if I edit a function while it's running in a production table?
 
@@ -234,6 +286,23 @@ No. Previously processed rows remain unchanged and won't be marked as stale. Onl
 No. Changes to a function don't backfill — they won't reapply to rows that have already been processed. Past outputs stay exactly as they were. Only rows that run after you publish your changes will use the new version of the function.
 
 To apply the updated logic to a row that already ran, re-run that row's function column in the calling table. This dispatches a fresh invocation against the current function configuration.
+
+### Why is a new function column filled in while editing, but empty after I exit edit mode?
+
+When you add a new column to a function (for example, a second AI column like **Industry**), it can look populated in edit mode but empty in the live function after you click **Exit edit mode**. Nothing is broken. You're looking at two different sets of rows:
+
+-   **In edit mode**, the rows are sandbox test rows. Rows copied from your live function show as **Row (copy)** in the **Function inputs** column. They run on your draft configuration, so the new column fills in. Results on these test rows stay in the sandbox and are never sent back to your calling table.
+-   **In the live function**, the rows are the real runs your function already processed. Publishing a new column adds it to the live function but doesn't run it on rows that already exist there. On those rows, the new column stays empty and nothing new is sent back to the calling table.
+
+If **Review changes** shows "This function has no unpublished changes," your new column is already published. Rows the function receives from now on run every column, including the new one.
+
+**To fill in the new column for rows that already ran:**
+
+1.  Open the calling table, which is the table where the function column lives.
+2.  Select the affected rows and re-run the function column for them.
+3.  Each re-run sends a fresh row to the function. The new row runs on the published configuration, including the new column, and **Send data back** returns the new value to your calling table.
+
+You can't re-run past rows from inside the live function itself. See [Why can't I run/edit a function in "Live" mode directly?](#why-cant-i-runedit-a-function-in-live-mode-directly).
 
 ### What columns should I include when building a function?
 
@@ -416,19 +485,24 @@ To find your data:
 
 Other useful column status filters you can apply to any function or enrichment column: **has no results** (ran but returned nothing), **has not run** (not yet processed), **is queued** (waiting to be processed), **is retrying** (a retry is in progress), and **is awaiting callback** (waiting for the function to finish and return results).
 
-### Can I share a function with someone outside my workspace?
+### Can I share a function with someone outside my workspace, or copy a function to another workspace?
 
-Yes. Use the **Share as template** toggle to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
+Yes. To share a function with another workspace, or to duplicate a function from one workspace to another, use the **Share as template** toggle in the function's settings panel to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
 
-**To generate and share the link:**
+You need edit access to the function to see the **Share as template** option. The destination workspace must be on a plan that includes Functions (Functions aren't available on the Free plan).
+
+**To generate and share the function link:**
 
 1.  Open the function from your Clay homepage. Make sure you are **not** in edit mode — the Share as template section is only visible when viewing a function live, not while editing it. If you see an edit-mode banner, click **Exit edit mode** first.
-2.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
-3.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the section that appears.
-4.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
-5.  When the link opens, Clay shows a workspace picker listing the workspaces you have access to. Select the destination workspace and confirm to create the copy.
+2.  Open the function's settings panel by clicking **Details** in the function toolbar. **Details** is available both on the function table and on the function's run stats page (the page with the **View runs** button).
+3.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
+4.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the **Template link** field. To restrict who can open the link, add addresses under **Share with specific email(s)**; leave it blank to let anyone with the link open it.
+5.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
+6.  When the link opens, Clay shows a preview of the function. Click **Create function using template**, choose the destination in the **Workspace** dropdown, and confirm to create the copy.
 
 The copy is fully independent of the original. Any changes you make to the original function after sharing do not sync to the copy — each workspace's version is maintained separately.
+
+If the function contains a **Run workflow** column, it can't be copied to another workspace. Clay shows: *This table has a "Run workflow" column, and workflows can't be copied to another workspace yet. Remove the "Run workflow" column from the original table and try again.*
 
 ### How do I duplicate a function within my workspace?
 

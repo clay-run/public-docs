@@ -104,6 +104,23 @@ To invite a new member to your workspace:
 -   Select the appropriate role from the dropdown and click `Send invites`.
 -   The invited person will receive an email to join the workspace with the specified role.
 
+### **Invite members from a CSV file**
+
+Workspace admins can invite up to 1,000 people at once by uploading a CSV file, instead of typing email addresses one by one. This is useful when you have a list of reps exported from another tool. The only requirement is that the file has a column of email addresses.
+
+1.  Go to `Settings` → `Team` and click the `Invite` button.
+2.  In the `Invite members` window, switch from the `Invite` tab to the `Upload CSV` tab.
+3.  Upload a `.csv` file. The file must be under 1 MB and contain at most 1,000 rows. A header row is optional — Clay detects it automatically.
+4.  Choose the column that contains email addresses. Clay pre-selects the column with the most email addresses and shows example values. Click `Continue`.
+5.  Review the invite list. Set a role for each person, or use the `Apply to all` row to set the same role for everyone. If user groups or credit budgets are enabled for your workspace, you can assign those here too.
+6.  Click `Send invites` (the button shows the number of invites, for example `Send 47 invites`). A progress counter shows how many have been sent.
+
+**Which rows a CSV invite skips:** On the review step, Clay leaves out invalid email addresses, duplicates, people who are already in your workspace, your own email, and any email that isn't on your own email domain. A summary line shows how many rows were skipped and why.
+
+**CSV invites only work for your own email domain.** For example, if your email is on `@acme.com`, a CSV upload only invites `@acme.com` addresses. To invite people on other domains (such as contractors or a second company domain), invite them individually from the `Invite` tab.
+
+**If sending stops partway through:** Clay stops at the failed batch and shows a `Retry` button with the number of invites still to send — click it to send the rest. If you close the window while invites are sending, the remaining invites are not sent and Clay shows how many were invited (for example, "Invited 30 of 100. The rest were not sent."). You can re-upload the same file — people who were already invited are skipped as existing members.
+
 ### **Change a team member's role**
 
 To update a member's role:

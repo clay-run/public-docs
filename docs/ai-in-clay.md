@@ -10,13 +10,13 @@ A comprehensive guide to how Clay uses AI across its features.
 
 A comprehensive guide to how Clay uses AI across its features, with a focus on data privacy, security, and responsible AI practices.
 
-**Your data is never used for AI model training.** Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
+Clay has contractual agreements with all AI providers (OpenAI, Anthropic, Google, and others) that strictly prohibit using customer data to train their models.
 
 ## Core AI principles
 
 Clay is committed to transparent and responsible AI use. Here's what you need to know:
 
--   **No training on your data**: Customer data is never used to train Clay's AI models or those of our AI providers.
+-   **Model training**: Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces). Your customer data is never used for, or shared with, any other customer.
 -   **Enterprise-grade security**: Industry-standard encryption for data at rest and in transit, with SOC 2 Type II and ISO 27001 compliance.
 -   **You control your data**: As a data processor, Clay only uses your data to provide services to you.
 -   **Transparent partnerships**: Full list of AI subprocessors available at [trust.clay.com](http://trust.clay.com).
@@ -38,7 +38,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Your campaign data and prospect information are processed only to generate your email content.
--   Data is not used to train models or shared with other Clay customers.
 -   You can optionally use your own API keys with supported providers.
 
 ### Message drafting
@@ -56,7 +55,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Only the specific table data you select is sent to AI models.
--   No training occurs on your messaging or prospect data.
 -   Access is controlled by Clay's role-based permissions.
 
 ### Use AI
@@ -82,7 +80,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Data from your table rows is only sent to AI when you explicitly run the action.
 -   You control which columns are included as context.
--   Contractual agreements prohibit training on customer data.
 
 ### Claygents
 
@@ -100,7 +97,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Claygents process data row-by-row as they run.
 -   Research results are stored in your table, under your control.
--   No customer data used for training agent capabilities.
 
 ### Sculptor
 
@@ -117,7 +113,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 **Data privacy**:
 
 -   Uses table metadata and visible data to provide context-aware assistance.
--   Chat history and table context are not used for training.
 -   Data is processed transiently to provide real-time assistance.
 
 ### Formula generator
@@ -134,7 +129,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your formula description and relevant table schema are sent to AI.
 -   Actual row data is not transmitted.
--   Generated formulas are not used to train models.
 
 ### API generator
 
@@ -152,7 +146,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only your API description is sent to AI models.
 -   API keys and credentials are never sent to AI providers.
--   Generated configurations are not used for training.
 
 ### Debug with AI
 
@@ -168,7 +161,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   Only error logs and relevant system information are sent to AI.
 -   Personal data in your tables is not included in debug requests.
--   Debug data is not used to train models.
 
 ### Find companies with natural language
 
@@ -185,7 +177,6 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 -   Only your ICP description is processed by AI.
 -   Search results come from Clay's company database, not your data.
 -   Your search criteria are not shared with other customers.
--   No training occurs on your ICP descriptions.
 
 ## Data Security and Compliance
 
@@ -245,15 +236,15 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 ### What you control:
 
 -   **Which AI features you use**: All AI features are opt-in through your actions.
--   **What data AI sees**: You choose which table columns to include in AI requests.
--   **API keys**: Option to bring your own API keys for supported providers.
+-   **What data AI sees**: You choose which table columns to include in AI requests. When configuring AI enrichments (Use AI, Claygent, etc.), you select which specific columns to send as context — the AI does not automatically access all columns in your table, and data is only processed when you explicitly run an AI action on specific rows. This means you can exclude PII columns from AI requests while still using Clay's AI features on non-PII data.
+-   **API keys**: Option to bring your own API keys for supported providers (OpenAI, Anthropic, Google Gemini). AWS Bedrock is not available as a native provider in Use AI or Claygent — to route AI calls through Bedrock, use the [HTTP API enrichment](https://www.clay.com/university/guide/http-api-integration-overview) to configure a request to Bedrock's OpenAI-compatible endpoint.
 -   **Data deletion**: Delete individual records, tables, or entire workspaces at any time. To request deletion of your personal data under privacy regulations such as CCPA, contact the Clay support team via the in-app chat — select **Talk to a person** and a team member will process your request and delete all data Clay holds for you.
 -   **Access permissions**: Control who in your organization can use AI features.
 
 ### What Clay guarantees:
 
--   Your data will never be used to train AI models.
--   Your data will not be shared with other Clay customers.
+-   Clay does not use your customer data to train or fine-tune any AI models, except when solely for your benefit and use within your own Clay workspace, for example to build your Knowledge Hub (currently in early access for a limited set of workspaces).
+-   Your customer data is never used for, or shared with, any other customer.
 -   All AI subprocessors have contractual prohibitions against unauthorized use.
 -   Industry-standard security and encryption protect your data.
 
@@ -263,17 +254,17 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 | Provider | Models |
 | --- | --- |
-| Clay | HeliumNeonArgonXenonRadonClay ConductorClay Navigator |
-| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Researcho4 MiniDALL·E 3 (Standard, HD)GPT Image 1 (Low, Medium, High) |
+| Clay | Helium, Neon, Argon, Xenon, Radon, Clay Conductor, Clay Navigator |
+| OpenAI | GPT 4o, 4.1, 4o MiniGPT 4.1 Mini, 4.1 NanoGPT 5.1, 5.4, 5.4 Mini, 5.4 Nano, 5.5, 5 Mini, 5 NanoGPT 6.1 Sol, 6 Sol, 6 Lunao1, o1 Pro, o1 Minio3, o3 Mini, o3 Deep Research, o4 Mini, DALL·E 3 (Standard, HD), GPT Image 1 (Low, Medium, High) |
 | Anthropic | Claude 4.5 HaikuClaude 4.6 SonnetClaude 4.7 OpusClaude 4.8 OpusClaude Opus 5Claude Opus 5.5Claude Sonnet 5.5 *(Claude 4 Sonnet, Claude 4 Opus, Claude 4.5 Opus, Claude 4.5 Sonnet, and Claude 4.6 Opus are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | Gemini | 2.0 Flash, Flash Lite2.5 Flash2.5 Pro, 3.7 Flash, 3.8 Flash, 3 Pro, 3.5 Flash LiteGemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image *(Gemini 2.5 Flash Lite, 3 Flash, and 3.5 Flash are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them. Imagen 3.0 and 3.0 Fast have been removed and are no longer available.)* |
-| xAI | Grok 4Grok 4.1 Fast Reasoning |
+| xAI | Grok 4.5Grok 4.3Grok 4.20 Non-ReasoningGrok 4.20 Reasoning *(Grok 4 and Grok 4.1 Fast Reasoning are deprecated and no longer available for new configurations; they remain selectable only for existing configurations that already use them.)* |
 | DeepSeek | *(DeepSeek V4 Pro is deprecated and no longer available for new configurations; existing configurations that use this model remain unaffected.)* |
-| Mistral | Mistral Medium 3Mistral Large 2.1Mistral Large 3Magistral MediumDevstral 2 |
-| Kimi | Kimi K2.6Kimi K3 |
-| Z.ai | GLM 5.3 FlashGLM 5.3GLM 5.2 |
-| BlackForestLabs | Flux 1 SchnellFlux 1 Dev |
-| Playground | Playground V2Playground V2.5 |
+| Mistral | Mistral Medium 3, Mistral Large 2.1, Mistral Large 3, Magistral Medium, Devstral 2 |
+| Kimi | Kimi K2.6, Kimi K3 |
+| Z.ai | GLM 5.3, FlashGLM 5.3, GLM 5.2 |
+| BlackForestLabs | Flux 1 Schnell, Flux 1 Dev |
+| Playground | Playground V2, Playground V2.5 |
 | Segmind | SSD 1B |
 | Stability | Stable Diffusion XL 1024 |
 
@@ -281,9 +272,12 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 
 Clay periodically retires older models from the same class to keep the model selection dropdown manageable — as newer versions are released, their predecessors are deprecated. When a model is deprecated:
 
--   **It is removed from the model dropdown.** Deprecated models cannot be selected for new columns or configurations.
--   **Existing configurations keep running unchanged.** Any column or configuration already using the deprecated model continues to work as-is — no action is needed on your end.
--   **Migration is not automatic.** Clay does not automatically switch your existing configurations to a newer model. If you want to use a newer model, open the column settings and select the replacement from the dropdown.
+-   **It stays visible in the model picker but can't be selected.** In the AI column model dropdown, the full model browser (**See all models**), and the agent playground model selector, deprecated models are listed after supported models, greyed out, and marked with an orange **Deprecated** badge. Hovering the badge shows "This model is being retired. Choose another model." Deprecated models cannot be selected for new columns or configurations.
+-   **A column already set to a deprecated model shows it greyed out.** If a column's current model is deprecated, the model picker still shows that model with the **Deprecated** badge, but it is not highlighted as selected and can't be re-selected. To move off it, pick a currently supported model.
+-   **Existing configurations keep running unchanged.** A deprecated model does not break your tables. Any column or configuration already using the deprecated model continues to run as-is — no action is needed to keep it running.
+-   **You can't save edits to a column that uses a deprecated model.** If you open the settings of a Use AI or Claygent column that is set to a deprecated model, the save button is disabled and you'll see "Selected model is deprecated. Please choose a different model." To save your changes, select a currently supported model from the **Model** dropdown, then save.
+-   **Fully retired models are migrated to a replacement.** Before Clay fully removes a deprecated model, Clay migrates existing Use AI columns and Claygents that still use it to a replacement model that Clay selects for that retired model. If you'd rather choose the replacement yourself, switch the column to a currently supported model before the model is removed.
+-   **Migration applies whether you use Clay credits or your own API key.** Migration is based on the model selected in the column, so Use AI columns and Claygents that run on your own provider API key (for example, a Gemini API key) are migrated to the replacement model the same way as columns that use Clay-managed credits.
 -   **Proactive notification applies only to pricing changes.** Clay notifies customers when a model change affects credit pricing. For other deprecations, no advance notification is sent.
 
 ## Questions?

@@ -53,6 +53,28 @@ Deleting a single email account from a domain will delete **all** email accounts
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
 
+### **What happens if I don't have enough credits when my email accounts or domains renew?**
+
+Purchased email accounts and domains renew on their own schedule, separate from your plan's monthly credit refresh. So a renewal can come due before your new credits arrive. If your workspace doesn't have enough credits to cover a renewal:
+
+-   The order is not cancelled. Clay records the renewal as a failed billing attempt.
+-   Your purchased email accounts keep working: they still send and receive email, so replies keep coming in.
+-   Clay retries the charge once a day until it succeeds. There is no limit on retries, and Clay doesn't suspend or cancel the email accounts while it retries.
+-   When your workspace has enough credits again, for example after your plan's monthly credits refresh or after you buy more credits, the next daily retry charges the renewal.
+
+**Example:** Your email account renewals are due November 18, but your plan's credits refresh November 20. The November 18 charge fails and Clay retries it once a day. Once the November 20 credits arrive, the next daily retry goes through, and your email accounts keep working the whole time.
+
+### **Can I change the renewal date of my purchased email accounts or domains?**
+
+No. You can't change the renewal date of purchased email accounts or domains. If a renewal is due before your monthly credits refresh, Clay retries the charge once a day until it succeeds, and your email accounts stay active in the meantime (see [What happens if I don't have enough credits when my email accounts or domains renew?](#what-happens-if-i-dont-have-enough-credits-when-my-email-accounts-or-domains-renew)).
+
+### **What happens to my purchased email accounts if I downgrade my plan?**
+
+Buying email accounts requires a Growth or Enterprise plan, but what happens to accounts you've already bought depends on the plan you downgrade to:
+
+-   **Downgrading to Launch (or another plan that includes Sequencer):** Your purchased email accounts and domains stay active and keep renewing in credits. You can keep using them in campaigns and receiving replies. You just can't buy new email accounts until you upgrade back to Growth or Enterprise. Make sure your new plan gives you enough credits to cover the renewals.
+-   **Downgrading to the Free plan:** The Free plan doesn't include Sequencer. All campaigns are paused, warmup is turned off, and your purchased email accounts are cancelled and deleted permanently. Their recurring charges stop and there's no prorated refund. Upgrading again later doesn't bring the deleted email accounts back.
+
 ### **Are purchased domains pre-warmed?**
 
 No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 3 weeks to complete — plan to wait before using purchased accounts in campaigns.
@@ -85,6 +107,22 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 ### **How can I look up the rep's details for a purchased account?**
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+
+### **How do I see or download attachments from replies to my purchased email accounts?**
+
+Files that leads attach to their replies (for example, photos or PDFs) can't be opened or downloaded in Clay. The campaign's `Replies` tab and the `Global inbox` show the reply message, but not its attached files. To view and download attachments on replies sent to an email account purchased through Clay, sign in to that mailbox directly.
+
+**Get authentication info** is available only for email accounts purchased through Clay, and only workspace admins and owners can see it.
+
+1.  Go to `Sequencer → Email Accounts`.
+2.  Click the **⋯** menu next to the purchased email account and select **Get authentication info**.
+3.  A window titled with the account's email address shows the account's **Password** and a **Security code**. The security code is one-time and expires at the time shown below it (**Expires** followed by a date and time), so use it right away.
+4.  Sign in to the mailbox with the account's email address, the password, and the security code. Purchased email accounts are Google Workspace or Microsoft 365 mailboxes, so sign in through Gmail or Outlook on the web, depending on the account's provider.
+5.  Open the lead's reply in the mailbox to view, download, or forward its attachments.
+
+If you're signed out of the mailbox later, select **Get authentication info** again to get a new security code.
+
+For email accounts you connected yourself through Google OAuth, Microsoft Outlook OAuth, or SMTP, open the lead's reply in that mailbox as usual to access its attachments.
 
 ### **Why does my sender's name appear with extra characters in Outlook?**
 

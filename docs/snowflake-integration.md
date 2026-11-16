@@ -156,7 +156,7 @@ If a batch fails, the error message will include **"Note: Try reducing the batch
 
 ### `Action` Update row
 
-Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
+Update existing rows in a Snowflake table. The Snowflake Update row action runs an `UPDATE` statement that changes only the rows already in your Snowflake table that match the **Where Clause** (for example, `WHERE EMAIL = '<Email column>'`). Update row never inserts new rows: if no rows in the Snowflake table match the Where Clause, nothing is written.
 
 **Inputs**
 
@@ -166,10 +166,29 @@ Update a row in a Snowflake database using a single field as a unique identifier
 -   **Table name**
 -   **Snowflake warehouse**
 -   **Role** (optional)
+-   **Where Clause** (required): A SQL condition that must start with `WHERE` and determines which rows to update (e.g. `WHERE id = 1`).
+-   One input per Snowflake table column: map the Clay columns whose values you want to write to each Snowflake column.
 
 **Batching**
 
-The Update row action also supports **Run in batches** mode with the same behavior: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
+The Update row action also supports **Run in batches** mode: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
+
+#### Why is my Snowflake table still empty after running Update row?
+
+The Snowflake Update row action only changes rows that already exist in the Snowflake table and match the Where Clause. If the Snowflake table is new or empty, or none of its rows match (for example, none of the emails in your Clay table are in Snowflake yet), Update row writes nothing. The cell still shows a success result rather than an error — usually **⚠️ Completed, 0 rows matched**, and in some cases **✅ Update completed**. When rows do match, the cell shows **✅ Updated 1 row** (or the number of rows updated).
+
+To add rows to Snowflake instead:
+
+1.  Change the column's action to **Insert row** to add every Clay row as a new Snowflake row, or to **Create or update row** to update rows whose lookup field value already exists in Snowflake and insert the rest (avoids duplicates).
+2.  Map your Clay columns (for example, Email, Job Function, Department, Job Level) to the matching Snowflake columns.
+3.  Run the column again, then query the Snowflake table to confirm the rows were written.
+
+#### Update row error: "All rows in batch must have the same columns"
+
+When **Run in batches** is turned on, every row in a batch must have values in the same set of mapped columns. Mapped columns whose value is blank (empty, whitespace-only, or null) for a row are skipped for that row, so if some rows have a blank value in a mapped column (for example, Job Function) and others don't, the batch fails with "All rows in batch must have the same columns". To fix it, do one of the following:
+
+-   Fill in the blank values, or map only columns that are populated for every row.
+-   Turn off **Run in batches** — when each row runs individually, blank columns are simply left out of that row's update and no error occurs.
 
 ### Run settings
 
