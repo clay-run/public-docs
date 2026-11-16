@@ -198,9 +198,29 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
-**Record scope:** The HubSpot Audiences connector imports all records for the object type you select — there is no option to pre-filter to a specific HubSpot list within the Audiences source setup. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
+**Record scope:** For each object type, you can import **All records** or a single **HubSpot list**. To bring in only the contacts, companies, or deals in one of your HubSpot lists, see [Importing a HubSpot list](#importing-a-hubspot-list) below. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
 **Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a workflow with a HubSpot action — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+
+#### Importing a HubSpot list
+
+**Plan availability:** Importing a HubSpot list into Audiences is available on **Growth** and **Enterprise** plans. Other plans can't connect HubSpot or other integrations as an Audiences source.
+
+Instead of importing every record for an object type, you can import a single HubSpot list — the contacts, companies, or deals you've already grouped in HubSpot. Only the members of that HubSpot list are brought into Audiences, and Clay keeps the HubSpot list import up to date with recurring automatic syncs. You can pick any HubSpot list, including static lists and active (dynamic) lists.
+
+**To import a HubSpot list into Audiences:**
+
+1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
+2.  Select your HubSpot account and click `Connect`. If the account is already connected, click `Add records`.
+    -   Your HubSpot connection needs the `crm.lists.read` scope to import lists. If it's missing, Clay shows an **Export permission required** warning and disables the button. Click **Re-authorize HubSpot** in the warning to reconnect the account with CRM export and list read permissions, then continue.
+3.  Choose the object type to import: **Contacts**, **Companies**, or **Deals**.
+4.  Under record selection, choose **HubSpot list** ("Import one CRM list") instead of **All records**.
+5.  In the `HubSpot list` field, type to search your lists by name and select the list you want. Clay shows a preview of records from the list as soon as you select it.
+6.  Click `Continue`, then map the HubSpot fields you want in Audiences and click **Save and review**.
+
+**HubSpot list sync timing:** After setup, Clay syncs your HubSpot list automatically every **12 hours** on Enterprise plans and every **24 hours** on Growth plans. There is no manual **Sync now** button for a HubSpot list import — changes to the list in HubSpot come in on the next scheduled sync.
+
+**Replacing the HubSpot list:** If you edit an existing HubSpot list import and pick a different list, Clay asks you to confirm with **Replace list**. Replacing the HubSpot list stops the old list's sync and removes its field mappings. Records already imported stay in Audiences but no longer sync from the old list. Set up field mappings for the new list on the next screen to start syncing it — leaving that screen without saving doesn't restore the old sync.
 
 ### Importing from Snowflake
 
@@ -1416,9 +1436,11 @@ Test on a small set of records and confirm the results in HubSpot before publish
 
 ### My HubSpot has more records than my plan limit — how do I limit what gets imported into Audiences?
 
-The Audiences HubSpot connector imports all records for the selected object type (Contacts, Companies, or Deals) — there is no option to select a specific HubSpot list within the Audiences source setup. If your HubSpot object has more than 250,000 records (the Growth plan limit), the import will pull all records for that object. Filtering in Audiences after the import won't reduce your record count against the plan limit — the records have already been imported.
+Import a HubSpot list instead of all records. When you set up a HubSpot import in Audiences, choose **HubSpot list** instead of **All records** under record selection and pick the list that holds the contacts, companies, or deals you want. Only that HubSpot list's members are imported into Audiences. See [Importing a HubSpot list](#importing-a-hubspot-list) for setup steps.
 
-To import only a filtered subset of HubSpot records into Audiences:
+Choosing **All records** pulls every record for that object type. Filtering in Audiences after an **All records** import won't reduce your record count against the plan limit (250,000 for Growth) — the records have already been imported.
+
+**Alternative — import through a Clay table:** if you also want to transform or format fields before they reach Audiences:
 
 1.  In a **Clay table**, add a source and select **Import objects from HubSpot**.
 2.  Under **List to pull objects from**, select the specific HubSpot list containing the contacts or companies you want.
