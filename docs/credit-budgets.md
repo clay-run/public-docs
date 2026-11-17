@@ -16,7 +16,7 @@ Credit budgets appear at `Settings` → `Budgets`. Only workspace admins can cre
 
 A **budget** is a named credit pool with:
 
--   A **credit limit** — the maximum number of credits the budget can spend in its lifetime (limits do not auto-reset on a billing cycle).
+-   A **credit limit** — the maximum number of credits the budget can spend. By default, budget limits do not auto-reset on a billing cycle; see [Resetting and adjusting budgets](#resetting-and-adjusting-budgets) for the `Reset frequency` setting (in beta).
 -   A **current balance** — how many credits remain (limit minus spend so far).
 -   An **access rule** — whether all workspace members can draw from the budget by default, or only members explicitly granted access.
 -   An optional list of **users** or **user groups** with explicit access.
@@ -103,7 +103,18 @@ Alerts fire once per threshold crossing. They reset when an admin increases the 
 
 ## Resetting and adjusting budgets
 
-Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it.
+Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it: in the `Edit budget` window, click `Reset usage` under `Current usage`, then click `Save changes`.
+
+### How do I make a credit budget reset automatically?
+
+A credit budget refills on a schedule only if its `Reset frequency` is set to something other than `Never`. Some Enterprise workspaces see the `Reset frequency` setting when creating or editing a budget in `Settings` → `Budgets`. The `Reset frequency` setting is in beta and isn't available on every workspace yet — contact support if you don't see it. The options are:
+
+-   `Never` — the budget doesn't refill on its own. Once it runs out, resources and users on the budget are blocked until an admin raises the limit or resets its usage — including reps whose individual MCP credit limits on the `MCP` page (titled `Agent users`) still have room. Resetting a rep's individual credit spend doesn't add credits back to the budget.
+-   `Monthly` — the limit renews on the 1st of every month.
+-   `Quarterly` — the limit renews on the 1st of every quarter.
+-   `Annual` — the limit renews on January 1 every year.
+
+Scheduled renewals happen at midnight UTC.
 
 ## Deleting a budget
 
