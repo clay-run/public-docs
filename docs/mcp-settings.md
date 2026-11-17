@@ -76,6 +76,16 @@ If your workspace uses Clay Audiences, two additional workspace-level toggles ap
 
 ## FAQ
 
+### Why don't I see MCP in my workspace Settings?
+
+The Clay `MCP` page is not part of workspace Settings. The Settings sidebar (Workspace, Team, Connections, Plan & billing, Usage, and so on) has no MCP entry. To find the MCP page:
+
+1.  Click the back arrow in the top left of Settings to return to the Clay homepage.
+2.  In the homepage left sidebar, find the **Orchestration** section.
+3.  Click `MCP`. The MCP page opens, with the `MCP users` table and credit limit controls.
+
+There's no feature flag to request to turn on MCP access. If `MCP` doesn't appear under **Orchestration**, you aren't a workspace admin, because only workspace admins can see the MCP page. Ask your workspace admin to change MCP settings for you, or to give you the Admin role.
+
 ### Why does Clay MCP return different results than my Clay table?
 
 The native Clay MCP contact enrichment — including the `search-contacts` and `add-contact-data-points` tools, which replaced the older "Find and Enrich list of contacts" tool — runs a preset set of enrichment steps. It does not run the multi-provider waterfall you may have set up in your Clay tables. As a result, contacts that are only findable via a specific waterfall provider may return an email in your Clay table but not through MCP.
