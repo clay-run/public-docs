@@ -43,6 +43,8 @@ Your new plan will activate immediately, and any applicable charges will be appl
 -   You receive the **full** Actions and Data Credits for your new plan right away.
 -   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
 -   Your existing unused Data Credits are preserved when you upgrade.
+-   **When the upgrade takes effect:** During checkout, you can choose **"Immediately (today)"** (the full plan price is charged now, and your plan activates right away) or **"At the end of my current billing period"** (the plan switches at your existing renewal date, with no immediate charge). Free and trial plan users only see the immediate option.
+-   **Billing cycle after an immediate upgrade:** If you choose "Immediately," your billing cycle resets to the upgrade date — your next renewal will be one month from the day you upgrade, not from your previous plan's renewal date. The **"Plan updates on"** date in the upgrade confirmation screen always shows your current plan's existing renewal date; it does not reflect when the new plan will first renew after an immediate upgrade.
 
 ### Free plan
 
