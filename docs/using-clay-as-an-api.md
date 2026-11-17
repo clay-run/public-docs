@@ -69,6 +69,33 @@ To run a query-mode search with your workspace-scoped API key in the `clay-api-k
 2.  `POST /search/query-mode/{search_id}/run` with the body `{"limit": 100}`. `limit` accepts 1 to 500 and defaults to 20. The response includes `data` (the results) and `has_more`.
 3.  Keep calling `run` with the same `search_id` while `has_more` is `true`.
 
+**How paging works for query-mode search — there is no cursor or page token.** A query-mode search is a forward-only iterator that Clay tracks on the server. Each call to `POST /search/query-mode/{search_id}/run` returns the next page of results and advances the search's position, so you can't request a specific page or replay an earlier one. Keep calling `run` until `has_more` is `false`. When `has_more` is `false`, the response includes `exhaustion_reason`:
+
+-   `query_limit` — the search reached the `limit` written in your query.
+-   `no_more_results` — there are no more people or companies that match your query.
+
+**Retrying a failed query-mode `run` call:**
+
+-   **`500` with `Failed to advance search iterator`:** the search's position didn't advance, so retrying returns the same page. If the failure happened after the page was counted, the retry counts those results against your search results quota a second time. Retry once, and only when the failed call returned no data.
+-   **`404` with `Search not found or expired`:** the `search_id` doesn't exist or belongs to another workspace. Create a new search.
+-   **`410` with `Search results have expired. Please start a new search.`:** the search's results have expired on Clay's side. Create a new search with `POST /search/query-mode` — the new search counts against your quota again.
+
+To make retries safe, de-duplicate query-mode people results on `clay_profile_id`, which every people result includes.
+
+**What a query-mode people result contains — work emails aren't included.** Each people result includes fields such as `clay_profile_id`, `name`, `first_name`, `last_name`, `location` (`name`, `city`, `state_or_province`), and `matched_experiences` (the experiences that matched your query, with `company`, `company_domain`, `title`, `is_current`, `location`, `start_date`, and `end_date`). Query-mode search doesn't return work emails or phone numbers. To get work emails, run a work-email enrichment on the people you found — that is a separate run per person and uses credits.
+
+**Does query-mode search use credits?** No. Query-mode People and Company search results don't use data credits per result. They count against your workspace's search results quota instead (see the quota table below).
+
+**Getting every matching person at a company, not a sample.** The **Find People at Company** enrichment returns up to 10 people per company row by default, even at companies with thousands of employees. To get the full list of people at a company who match your criteria, use a query-mode people search and restrict it to the company's domain with `clay.filter_to_companies(...)`, which matches people whose current employer has that domain. Put `clay.filter_to_companies(...)` at the top level of the query and combine it with `and` — not inside `experiences.any(...)`. For example, to find current employees of `example.com` with a marketing title:
+
+```
+select from people
+where clay.filter_to_companies(("example.com"))
+and experiences.any(is_current = true and job_title is_similar_to ("Marketing"))
+```
+
+Pass several domains in the inner parentheses, such as `clay.filter_to_companies(("stripe.com", "ramp.com"))`. Call `GET /search/query-mode/reference` for the full syntax.
+
 **Where to find the list of queryable fields and query syntax:** call `GET /search/query-mode/reference` with your `clay-api-key` header. This endpoint returns `{"reference": "<markdown>"}`. The markdown string is the full query-mode reference: every queryable field for people and companies, the allowed values for fields like seniority, and the complete query grammar. Read the reference before you build a query, or point your integration at it.
 
 **Job title and seniority are experience fields, not person fields.** In a query-mode people search, `job_title` and `seniority` belong to a person's work experiences. Put them inside `experiences.any(...)`, usually with `is_current = true` to match the current role. If you put `job_title` or `seniority` directly after `select from people where`, the query fails with an error like `Unknown field 'seniority' for entity 'people'`.
@@ -133,7 +160,7 @@ If the Public HTTP API is turned off for your workspace, Clay returns a `403` wi
 | Paid | 1,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 | Enterprise | 10,000,000 | Rolling 30-day (usage ages out daily at midnight UTC) |
 
-When you exceed the period limit, Clay returns `400` with a message naming the limit, the number of results already used, and the next daily midnight UTC reset timestamp. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
+When you exceed the period limit, Clay returns `402` with a message naming the limit, the number of results already used, and the date of the next daily midnight UTC reset (for example, `November 25, 2026`). Don't retry a `402` automatically — wait for older usage to age out or ask for a higher limit. To monitor your usage before hitting the limit, open the **API and CLI** page from the left sidebar (under **Orchestration**). The **Search API usage** section shows your current period's results used out of your limit, the next reset date, and a progress bar that turns orange at 70% usage and red at 90%. If you need a higher limit, [contact Clay support](https://www.clay.com/contact-form).
 
 **Note:** Workspaces on legacy (pre-2026) non-Enterprise plans retain the annual quota window (resets January 1 UTC) rather than the rolling 30-day window.
 
