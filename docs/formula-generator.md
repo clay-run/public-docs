@@ -185,6 +185,12 @@ Use `Clay.getCellStatus()` in a formula column to read the current processing st
 Clay.getCellStatus({{Column Name}})
 ```
 
+**Insert the column with the `/` picker — don't type its name in quotes.** `Clay.getCellStatus()` needs a column reference like `{{Find phone number}}`, which Clay inserts when you type `/` and pick the column. If you type the column name as a quoted string, for example `Clay.getCellStatus("Find phone number")`, Clay can't match it to a column and returns no status. The formula also doesn't depend on that column, so it won't update when the column runs. For example, `Clay.getCellStatus("Find phone number") + " | " + Clay.getCellStatus("Find mobile phone number")` shows only ` | ` on every row, even after saving the column. To fix it, replace each quoted name with a `/` column reference:
+
+```javascript
+Clay.getCellStatus({{Find phone number}}) + " | " + Clay.getCellStatus({{Find mobile phone number}})
+```
+
 This returns a string representing the cell's current state. Possible values include:
 
 -   **Success**: `"SUCCESS"` (data returned), `"SUCCESS_NO_DATA"` (ran successfully but returned no data), `"SUCCESS_BLOCKED_DATA"`
@@ -195,7 +201,7 @@ This returns a string representing the cell's current state. Possible values inc
 
 A few important notes:
 
--   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
+-   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. If your formula combines `Clay.getCellStatus()` with text, the preview shows only the text parts (for example, ` | `). Save the column and the values will populate, as long as each column is inserted with `/`.
 -   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET\"`, not `"UNKNOWN"`.
 -   The function returns the cell's **stored** status at the moment the formula evaluates, and in-progress values such as `"RETRY"` or `"QUEUED"` are possible return values. However, a formula that references an action column does not recalculate while that action is in progress — see the next question.
 
