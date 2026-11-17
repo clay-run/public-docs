@@ -123,6 +123,26 @@ Also check your **Limit results** setting: the import won't exceed whatever limi
 
 **If you're re-running or editing an existing Find People source:** When you reopen a source that has already run, the preview reflects only *net new* records — people who match your filters and aren't already in your table. Contacts imported in previous runs are automatically excluded from the preview count, so the number shown can be much lower than the total matching universe. To see the full unfiltered count, create a new Find People search with the same filters. See [The preview count drops dramatically when editing an existing Find People source](finding-companies-and-people-in-clay.md#the-preview-count-drops-dramatically-when-editing-an-existing-find-people-source) for more detail.
 
+### Why does my Find People search return thousands of people with unrelated job titles?
+
+**The most common cause is a filter group set to "any" instead of "all."** In the Find People filter builder, each filter group starts with a toggle, for example "People match **all** of:" or "Experiences match **any** of:". The toggle controls how the conditions in that group combine:
+
+-   **all** — every condition in the group must match (AND).
+-   **any** — matching just one condition in the group is enough (OR).
+
+For example, suppose a Find People search for library deans in Canada has an experience group that reads "Experiences match **any** of: Job title is similar to Dean of Libraries, or Seniority is Head, Director." With **any**, anyone whose current role has Head or Director seniority qualifies, even if their job title has nothing to do with libraries. That's how results like "Director of Basketball Operations" end up in the preview, and why the count can reach the thousands.
+
+**To narrow a Find People search to the right job titles:**
+
+1.  Switch the experience group's toggle from **any** to **all**, or remove the **Seniority** condition so the job title condition does the work.
+2.  For niche roles, use the **contains** operator with title keywords (for example, `Librarian`, `Libraries`, `Library`) instead of **is similar to**. **is similar to** uses AI to expand your title into related titles, which broadens results. **contains** only matches titles that include your keyword, and **is** only matches the exact title.
+3.  Keep the **Company: Industry** condition to only the industries that fit your target (for example, Libraries and Higher Education for academic libraries).
+4.  If you already know which companies you want, add them under **Target companies** so the search only looks for people at those companies.
+
+**Conditions inside one experience block apply to the same job.** A block like "≥ 1 current experience is all of: Job title contains Library, and Company: Industry is Libraries" requires at least one current role that matches both the title and the industry. A title from one job and an industry from another job don't combine into a match. The experience block's tenure setting can be **Current**, **Past**, or **Current or past**.
+
+**Availability:** The grouped Find People filter builder with **all**/**any** toggles is currently in beta and is enabled for paid plans. If your workspace doesn't show it, use the standard Find People filters described in the Inputs list above, or contact support.
+
 ### Why does my Find People search return people from companies I didn't add to my list?
 
 When you use domains (e.g., `acme.com`) as company identifiers, Clay maps each domain to internal company records at the root-domain level. This mapping can occasionally include people from a parent company, subsidiary, or other entity associated with that domain — resulting in contacts from companies you didn't explicitly target.
