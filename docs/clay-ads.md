@@ -215,7 +215,7 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 ### **How long does it take for audiences to be created?**
 
-After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). A company (account-level) Ad Sync takes longer — it can take more than three days to build. Plan accordingly when launching time-sensitive campaigns.
+After sending your audience to the professional network or Meta, it will be created within **48 hours** (typically 1-2 days). A company (account-level) Ad Sync takes longer — it can take more than three days to build. Plan accordingly when launching time-sensitive campaigns.
 
 ### **Why should I use personal emails instead of work emails?**
 
