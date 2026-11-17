@@ -41,6 +41,20 @@ A common use of this pattern is enriching new Salesforce leads or contacts autom
 
 This is a simpler setup than calling the Clay API directly from Salesforce, because Clay handles the enrichment and writes the data back to Salesforce for you — no custom integration code required.
 
+**Getting a person's summary, education, and job history from your own code (for example, a Python script)**
+
+If your system has contacts with an internal contact ID, a first and last name, an email address, and sometimes a LinkedIn profile URL, you get their profile summary, education, and job history from Clay by sending the contacts into a Clay table through its webhook and adding person enrichment columns to that table:
+
+1.  **In Clay:** Create a table with a webhook source and copy the webhook URL — see [Creating a table with webhook](webhook-integration-guide.md#creating-a-table-with-webhook). Webhook sources aren't available on every plan; check the plan availability note in [Webhooks in Clay](webhook-integration-guide.md).
+2.  **In your code:** Send a POST request to the webhook URL for each contact, with a JSON body that includes your internal contact ID, first name, last name, email address, and LinkedIn profile URL (when you have one). Keep the internal contact ID in the payload so you can match the enriched results back to your records.
+3.  **In Clay:** Add the person enrichment that matches the data you have:
+    -   **You have a LinkedIn profile URL:** Add Clay's **Enrich person** enrichment and map its **Professional URL** input to the LinkedIn URL column. It returns `summary`, `headline`, `education`, and `experience` (the person's full job history), plus `current_experience` for their active roles.
+    -   **You only have an email address or a name:** Add the People Data Labs **Enrich person** enrichment. It accepts an **Email Address**, a **Social Media Profile URL**, a **Phone Number**, or a **Person's Name** combined with a **Company Name**, **Location**, or **School** — a first and last name alone isn't enough. It returns `education` and `experience` (job history), but it doesn't return a `summary` or `headline` field. See [People Data Labs](people-data-labs-integration-overview.md) for the full input list.
+4.  **Auto-run runs the enrichments for you.** Auto-run is on by default, so the enrichment columns run on each new row as it arrives from the webhook, with no manual clicks. See [Auto-run](auto-run.md).
+5.  **In Clay:** Add an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column that sends the enriched fields, along with your internal contact ID, back to an endpoint in your system.
+
+Each webhook source holds up to 50,000 records at one time and incoming webhook requests are rate-limited per workspace, so pace the requests your script sends — see [Webhook limits](webhook-integration-guide.md#limits) for the current values. On Enterprise plans, enable [auto-delete](auto-delete.md) on the table so processed rows are removed and the webhook can keep accepting new contacts.
+
 ### 2\. **Wrap Clay in a third-party tool** (Best for light API proxying)
 
 You can use tools like Replit or Make as a wrapper around Clay. These tools receive API requests, trigger Clay to do its thing, and return results once processing is complete.

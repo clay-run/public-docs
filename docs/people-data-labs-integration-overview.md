@@ -78,13 +78,19 @@ This means you don't need to do a separate lookup using a raw PDL parent ID. The
 
 ### `Action` Enrich Person
 
-Use this action to retrieve comprehensive personal data such as social profiles, contact details, and employment history using People Data Labs.
+Use this action to retrieve comprehensive personal data such as social profiles, contact details, and employment history using People Data Labs. The People Data Labs **Enrich person** result includes `experience` (job history) and `education`. It doesn't include a `summary` or `headline` field — to get those from a LinkedIn profile URL, use Clay's **Enrich person** enrichment, which takes a **Professional URL**.
 
 **Setup Inputs**
 
--   **Person's Name**: Provide the full name of the individual.
--   **Company Name**: Specify the company name associated with the person. Must be used with Person's Name.
--   **Social Media Profile URL** (Optional): Enter the LinkedIn or Facebook URL for the person to narrow down results.
+People Data Labs **Enrich person** needs at least one of the following identifiers:
+
+-   **Email Address**: The person's email address.
+-   **Email Hash**: A SHA-256 or MD5 hash of the person's email address.
+-   **Social Media Profile URL**: The person's LinkedIn or Facebook URL.
+-   **Phone Number**: The person's phone number.
+-   **Person's Name**: The person's full name. Must be used with **Company Name**, **Location**, or **School** — a name on its own isn't enough.
+
+If none of these are provided, the enrichment returns the error "You must include an email, email hash, phone number, professional media profile, or person and company name/location/school."
 
 ### `Action` Find Personal Email
 
