@@ -82,7 +82,7 @@ To run a query-mode search with your workspace-scoped API key in the `clay-api-k
 
 To make retries safe, de-duplicate query-mode people results on `clay_profile_id`, which every people result includes.
 
-**What a query-mode people result contains — work emails aren't included.** Each people result includes `clay_profile_id`, `name`, `first_name`, `last_name`, `linkedin_url`, `location` (`name`, `city`, `state_or_province`), and `matched_experiences` (the experiences that matched your query, with `company`, `company_domain`, `title`, `is_current`, `location`, `start_date`, and `end_date`). Query-mode search doesn't return work emails or phone numbers. To get work emails, run a work-email enrichment on the people you found — that is a separate run per person and uses credits.
+**What a query-mode people result contains — work emails aren't included.** Each people result includes fields such as `clay_profile_id`, `name`, `first_name`, `last_name`, `location` (`name`, `city`, `state_or_province`), and `matched_experiences` (the experiences that matched your query, with `company`, `company_domain`, `title`, `is_current`, `location`, `start_date`, and `end_date`). Query-mode search doesn't return work emails or phone numbers. To get work emails, run a work-email enrichment on the people you found — that is a separate run per person and uses credits.
 
 **Does query-mode search use credits?** No. Query-mode People and Company search results don't use data credits per result. They count against your workspace's search results quota instead (see the quota table below).
 
