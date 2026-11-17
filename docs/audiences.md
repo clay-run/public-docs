@@ -1045,6 +1045,21 @@ A semi-join passes Clay's **Preview** step (which uses Salesforce's standard RES
 
 **Fix:** Remove the nested sub-select and use only direct field filters on the object you are importing. Open the import settings, update the SOQL query to eliminate the semi-join, and re-run the sync. For example, instead of filtering contacts by `WHERE Id IN (SELECT ContactId FROM OpportunityContactRole WHERE ...)`, import all contacts and apply the opportunity contact-role condition as an **audience segment filter** after importing — segment filters evaluate cross-object lookups using a separate query path that supports them.
 
+### Why does my Salesforce SOQL query time out with "Your query request was running for too long"?
+
+When you set up a Salesforce **Record subset** import in Audiences, the **Preview** pane can show **"Salesforce rejected the SOQL query: Your query request was running for too long."** This timeout comes from Salesforce, not from Clay. Your Clay connection to Salesforce is working. Salesforce stops a SOQL query that runs for longer than about two minutes and returns this error (Salesforce's `QUERY_TIMEOUT` error) to Clay.
+
+A SOQL query usually times out because its `WHERE` clause isn't selective. Salesforce can't use an index for the filter, so it scans every record of the object. That happens most often on large objects, such as a Contacts object with millions of records. Custom fields aren't indexed by default, so a filter on a custom checkbox field like `WHERE My_Custom_Checkbox__c = TRUE` usually forces Salesforce to scan every Contact.
+
+To make a SOQL record subset query fast enough for Salesforce to finish:
+
+1.  **Add a filter on an indexed field.** Standard fields such as `Id`, `CreatedDate`, and `SystemModstamp` are indexed. For example, add `AND CreatedDate = LAST_N_YEARS:2` to the `WHERE` clause next to your custom field filter.
+2.  **Or ask your Salesforce admin to index the custom field.** Your Salesforce admin can ask Salesforce Support whether a custom index can be added to the field you filter on.
+3.  **Check the query in Salesforce.** Your Salesforce admin can run the query through Salesforce's **Query Plan** tool in the Developer Console. The tool shows whether Salesforce can run the query selectively, using an index.
+4.  **Run Preview again in Clay.** When the query is selective, the Preview pane shows matching records instead of the timeout error.
+
+**Why doesn't Contacts show a record count in the object type list?** In the **Add records from Salesforce** object type list, each object shows a record count under its name (for example, "420,633 records"). Clay gets that number by asking Salesforce to count every record of the object. On a very large object, the count query can take too long to finish, and Clay then shows no number under that object. A missing count doesn't mean your Salesforce setup or your Clay connection has a problem.
+
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
 When Salesforce data syncs into Audiences, Leads and Contacts are not always separate Clay person records. Clay applies a built-in record-matching rule using the `ConvertedContactId` field on Lead records.
