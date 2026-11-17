@@ -183,33 +183,9 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 
 1.  From the Clay homepage, click `Agent users` under **Orchestration** in the left sidebar.
 2.  In the `Agent users` table, find the user (search by name or email — admins can find themselves here too).
-3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
+3.  Click the pencil icon next to their `Credit limit` to open `Edit credit limit`. Enter a higher amount and click `Save`, or clear the field and click `Remove limit` so the user shows `No limit` and the MCP credit limit no longer caps their usage. The user can run enrichments again on their next request in Claude or ChatGPT.
 
 The **Default credit limit** card at the top of the `Agent users` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `Agent users` page — ask your workspace admin to raise your limit.
-
-### Why are my enrichments refused when my workspace still has credits?
-
-If your user has a monthly credit limit (for example, `1,000`) and its balance is at 0, Clay refuses every enrichment and Function run you start from ChatGPT, Claude, or another AI tool connected to Clay — even though the workspace itself still has credits. This is the per-user **MCP credit limit**: a personal monthly cap on the credits you spend through Clay's MCP connection, tracked separately from the workspace's overall credit balance. It is not a credit budget, and it is not your workspace's plan balance.
-
-In the AI tool, you'll see one of these messages:
-
--   `You've hit your monthly MCP credit limit. To raise it, open MCP in Clay and edit your limit or the default credit limit.` — shown to workspace admins.
--   `You've hit your monthly user credit limit. Please contact your workspace admin to increase it.` — shown to everyone else.
-
-Only a workspace admin can lift or remove the MCP credit limit:
-
-1.  From the Clay homepage, click `Agent users` under **Orchestration** in the left sidebar (URL: `app.clay.com/workspaces/<workspace ID>/mcp`).
-2.  In the `Agent users` table, find the user by name or email.
-3.  Click the pencil icon next to their `Credit limit` to open `Edit credit limit`, then either:
-    -   enter a higher amount and click `Save`, or
-    -   clear the field and click `Remove limit`. The user then shows `No limit`, so the MCP credit limit no longer caps their usage.
-4.  To restore access right away without changing the limit, click `Reset credit spend to zero` (the ↺ icon) in the `Credits used` column, then confirm with `Reset spend`.
-
-The user can run enrichments again on their next request in the AI tool. If the admin changes nothing, the MCP credit limit resets on the 1st of each month at midnight UTC.
-
-**If many users have the same cap:** the cap probably comes from the **Default credit limit** section at the top of the `Agent users` page. An admin can change the amount there. Under `Apply to`, choose `New users only`, or choose `New and existing users` to apply it to everyone — this overwrites any individually set credit limits.
-
-**MCP credit limits vs. credit budgets:** credit budgets (`Settings` → `Budgets`) are separate named spending pools. If your workspace uses credit budgets and an agent user is also assigned to a budget, the user's MCP credit limit and the budget must both have credits remaining — either one running out blocks the request. If raising a budget doesn't stop the refusals, check the user's `Credit limit` on the `Agent users` page.
 
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
