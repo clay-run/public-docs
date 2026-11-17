@@ -33,6 +33,7 @@ The columns in this view display:
 -   `Usage:` Marked as `Recurring` when it contains recurring credit usage (e.g., scheduled runs or signals).
 -   `Owner:` The workbook's creator or assigned owner — not necessarily who triggered the credit spend within it.
 -   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total also includes credits from tables deleted more than 30 days ago, which no longer have their own row. Hover over the ⓘ icon on the Workspace row to see that amount ("Includes N credits from deleted tables."). These credits are already counted in the Workspace total, not added on top of it. Tables deleted within the last 30 days still have their own rows, marked `Archived`. See [Why do archived or deleted tables still show credits used?](#why-do-archived-or-deleted-tables-still-show-credits-used)
+-   `Credit spend limit:` Shown on Enterprise plans for workbooks that have a credit spend limit. Shows how many credits the workbook has spent against its limit, with a progress bar — for example, `112,550.9 spent` of `130,000`. This spend is tracked from when the limit was created or last reset, and it is not filtered by the `When` dropdown, so it can differ from the workbook's `Credits used` value. See [Why doesn't a workbook's Credit spend limit match its Credits used?](#why-doesnt-a-workbooks-credit-spend-limit-match-its-credits-used)
 
 Filter any of the content on this page by:
 
@@ -281,6 +282,26 @@ In the **Workbooks** tab of the credit usage dashboard (`Settings → Usage`), a
 -   **Tables deleted within the last 30 days:** Deleted tables stay in Trash for 30 days. During that time they still appear as their own rows in the Workbooks tab, with an `Archived` badge, and are included individually in the CSV export. To open an archived table, restore it from Trash first (see [Delete content within your workspace](delete-content-within-your-workspace.md)).
 -   **Tables deleted more than 30 days ago:** These tables no longer have their own row. Their credits are still counted in the **Workspace** row total, and you can hover over the ⓘ icon on the Workspace row to see the amount ("Includes N credits from deleted tables."). On plans that show `Actions used`, a matching tooltip shows "Includes N action executions from deleted tables." In the CSV export, these credits appear as a single row labeled "Deleted tables (unattributed)", with no table name or ID.
 -   **Deleted tables don't start new runs:** Deleting a table cancels its queued enrichments, scheduled runs, and source imports. Requests that had already been sent to a data provider when you deleted the table can still finish, so their final charge or refund may appear after the deletion time.
+
+### Why doesn't a workbook's Credit spend limit match its Credits used?
+
+Workbook credit spend limits are available on Enterprise plans. In the **Workbooks** tab of the credit usage dashboard (`Settings → Usage`), a workbook with a credit spend limit can show different numbers in the `Credit spend limit` and `Credits used` columns — for example, `112,550.9 spent` of `130,000` under `Credit spend limit`, but `82,821` under `Credits used`. Both numbers are accurate; the two columns measure different things:
+
+-   **`Credit spend limit`** — all credits deducted from the workbook's limit since the limit was created or last reset. The dashboard describes it as "Credit spend is tracked from when the limit is created or last reset." This number ignores the `When` dropdown.
+-   **`Credits used`** — credits spent by the tables currently in the workbook during the period selected in the `When` dropdown.
+
+The most common reasons the two numbers differ:
+
+-   **The `When` range doesn't match the limit period.** Spend that happened after the limit was set but outside your selected `When` range counts toward the `Credit spend limit` but not toward `Credits used`.
+-   **Tables were moved into or out of the workbook.** `Credits used` follows each table to the workbook it's in now, including spend from before the move. The `Credit spend limit` keeps every credit charged while a table was in the workbook, even after the table moves out.
+
+To compare the two numbers for the same period:
+
+1.  Open the **Workbooks** tab in `Settings → Usage`.
+2.  In the `When` dropdown, choose `Custom range` and set the start date to the day the workbook's limit was created or last reset, and the end date to today.
+3.  Click `Apply filters` and compare the workbook's `Credits used` with its `Credit spend limit`. Any remaining difference can come from tables moved into or out of the workbook.
+
+For how credit spend limits work, see the [Credit spend limits FAQ](/docs/credit-spend-limits-faq).
 
 ### Credits spiked after editing a formula or upstream column
 
