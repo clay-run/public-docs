@@ -124,6 +124,12 @@ At launch, Topic Intent is **North America-first**. Broader geographic coverage 
 
 No. Topic Intent runs on Clay credits — no separate provider accounts or API keys are required.
 
+### Can I connect my existing Bombora account or license so I'm not paying twice?
+
+No. Clay doesn't currently support connecting your own Bombora account, license, or API key — either to Topic Intent or to the Bombora enrichments (**Find company topic intent**, **Find company topic intent by geo**, and **Find companies with buying intent**). Bombora data pulled through Clay always runs on Clay credits, even if your company already has a separate Bombora contract.
+
+If you already pay for Bombora, you can still bring that data into Clay: export your Bombora intent feed and import it into a Clay table with a [CSV import](csv-import-overview.md) or a [webhook](webhook-integration-guide.md). You can then layer it with Clay's other enrichments and signals.
+
 ### Can I use Topic Intent to check intent for companies already in my table?
 
 Yes, as an enrichment. Instead of adding Topic Intent as a source, add **Find company topic intent** (Delivr), **Find company topic intent** (Bombora), or the Intentsify equivalent as an enrichment column in your existing company table. This checks whether each company in your table is showing intent on your selected topics, rather than discovering new companies.
