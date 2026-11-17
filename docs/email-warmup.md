@@ -1,6 +1,6 @@
 ---
 title: Email warmup
-description: How email warmup builds sending reputation, how it differs on purchased and self-connected accounts, and how to turn it on, adjust it, and filter warmup emails.
+description: How email warmup builds sending reputation, how it differs on purchased and self-connected accounts, why to warm secondary domains rather than your main domain, and how to turn it on, adjust it, and filter warmup emails.
 last_synced: 2026-11-10T20:17:32.851Z
 ---
 
@@ -37,15 +37,27 @@ Because Clay manages warmup on purchased accounts, those accounts don't show war
 
 ## Turning warmup on and off
 
-We recommend keeping warmup on at all times for every account you connect, including accounts that have been sending for a while.
+We recommend keeping warmup on at all times for every account you connect on a secondary sending domain, including accounts that have been sending for a while. For accounts on your main domain, see [Should I warm up my main domain?](#should-i-warm-up-my-main-domain) below.
 
 1.  Select `Sequencer` in the sidebar, then open `Email accounts`.
 2.  Open the 3-dot menu on the account and select `Enable warming`. The option is there whenever warming isn't already running on the account.
-3.  In the `Enable email warming to improve deliverability` modal, the accounts are listed already checked. Select `Enable warming` to turn it on for everything still checked. Uncheck all of them and that same button becomes `Continue without warming`, which closes the modal and leaves the accounts as they are.
+3.  In the `Enable email warming to improve deliverability` modal, the accounts are listed already checked, under a `Do not warm your main domain` warning. Uncheck any account on your main domain, then select `Enable warming` to turn it on for everything still checked. Uncheck all of them and that same button becomes `Continue without warming`, which closes the modal and leaves the accounts as they are.
 
 To change how much warmup mail an account sends, open the same menu and select `Edit warmup frequency`, then set `Emails per day` to anything from 1 to 30. This option appears only once warming is active on the account.
 
 To stop warmup, select `Disable warming` from the same menu. You can also select several accounts in the `Email accounts` list at once and enable warming for all of them together.
+
+## Should I warm up my main domain?
+
+No — Clay recommends turning email warmup on for secondary sending domains only, not your main domain (the domain your company's own website and everyday email use). Every `Enable email warming to improve deliverability` modal shows a `Do not warm your main domain` warning: "Turn warming on for secondary domains only. Warming your main domain can harm its reputation."
+
+The warning is a recommendation, not a block. Clay doesn't stop you from enabling warmup on any account you connect yourself, whether it's connected with Google OAuth, Microsoft OAuth, or SMTP. If an account is on a dedicated outreach domain rather than your main domain, you can turn warmup on for it from the 3-dot menu with `Enable warming`.
+
+How the modal pre-selects accounts depends on where you open it:
+
+-   When you add accounts with `Gmail (OAuth)` or `Outlook (OAuth)`, they're listed unchecked, so the button reads `Continue without warming` until you check the accounts on secondary domains.
+-   When you add accounts with `Manual SMTP setup` or `Bulk CSV upload`, they're listed already checked.
+-   When you select `Enable warming` from an account's 3-dot menu, or enable warming for several accounts at once, they're listed already checked.
 
 ## Filtering warmup emails out of your inbox
 

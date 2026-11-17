@@ -68,7 +68,7 @@ If connecting still fails more than 24 hours after your admin finished, reach ou
 1.  Back in the modal, click `Continue` to reach the `Connect your email account` step.
 2.  Decide who can see the account using the `Only show to me and workspace admins` toggle. On — the default — means `This email account will only be visible to you and workspace admins`; switching it off means `This email account will be visible to all workspace editors`.
 3.  Click `Connect your Google account`, sign in, and grant access.
-4.  The last step is `Enable email warming to improve deliverability`. The accounts you just added are listed with warmup already checked, so clicking `Enable warming` turns it on for all of them. Unchecking every account changes that same button to `Continue without warming`. [Email warmup](https://university.clay.com/docs/email-warmup) builds sender reputation before you send at volume, so leaving it on is the recommendation for almost every account.
+4.  The last step is `Enable email warming to improve deliverability`. Accounts connected with Google OAuth are listed unchecked, under a `Do not warm your main domain` warning, so the button reads `Continue without warming`. Check the accounts on secondary sending domains and click `Enable warming` to turn it on for them. [Email warmup](https://university.clay.com/docs/email-warmup) builds sender reputation before you send at volume, so it's recommended for accounts on secondary domains but not for your main domain.
 
 ## Connect with Microsoft OAuth
 
@@ -80,7 +80,7 @@ Microsoft follows the same shape, with one difference: instead of configuring th
 4.  `Share with your admin` — send the URL to whoever administers your Microsoft 365 tenant.
 5.  `Admin grants consent` — the admin opens the URL and grants consent on behalf of the organization.
 6.  Click `Continue`, set the `Only show to me and workspace admins` toggle, then click `Connect your Microsoft account` and sign in.
-7.  Finish on the `Enable email warming to improve deliverability` step — the same last screen as the Google path, and the same choice between `Enable warming` and `Continue without warming`.
+7.  Finish on the `Enable email warming to improve deliverability` step — the same last screen as the Google path. Accounts connected with Microsoft OAuth are also listed unchecked, so check the ones on secondary sending domains before clicking `Enable warming`.
 
 If the consent page returns a server error, that's usually a temporary hiccup rather than a sign the consent failed. Try connecting through OAuth anyway — and if the connection doesn't go through either, have your admin open the URL again a few minutes later.
 
