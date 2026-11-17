@@ -8,10 +8,6 @@ last_synced: 2026-04-26T01:40:51.931Z
 
 # User groups
 
-User groups let you share Clay workbooks, connected accounts, and credit budgets with multiple members at once.
-
-**Note:** This feature is currently in beta for Enterprise customers.
-
 User groups let you share Clay workbooks, connected accounts, and credit budgets with multiple members at once. Instead of adding people one by one to connections and tables, you can create groups and grant access to the entire group at once.
 
 Only admins can create and manage groups, but all workspace members can view them.
