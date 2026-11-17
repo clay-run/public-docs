@@ -138,6 +138,18 @@ Enrichment (action) columns include any column that runs an integration, waterfa
 -   **Consolidate with Functions.** [Functions](https://university.clay.com/docs/functions) run multiple enrichment steps in a background mini-table and return a single column to your main table — collapsing 20–50 enrichment columns into one. This is the most effective way to stay within the limit while keeping your workflows intact.
 -   **Request a higher limit.** Tables using email or phone waterfalls can have the enrichment column limit raised to 60. Contact support if you need a higher limit for your use case.
 
+#### "Cannot create new computable field" when saving a people search to a table
+
+If you see **"Table '…' cannot create new computable field due to table size limit"** after you start a people search from a company table and click **Save to table**, the table that hit the limit is usually your **company table**, not the new people table. When you create a people search from a company table, Clay adds an **Update People Search** enrichment column to the company table. This column keeps the company table linked to the new people table. If the company table is already at its enrichment column limit (40 by default), there's no room for the Update People Search column, so Clay shows this error. The table ID in the error message is the ID of your company table.
+
+To fix the "cannot create new computable field" error on a people search:
+
+1.  Open the company table you started the people search from.
+2.  Delete enrichment columns you no longer need (or consolidate them into a Function) so the company table is below its enrichment column limit (40 by default).
+3.  Run the people search from the company table again.
+
+Clay creates the people table before it adds the Update People Search column to the company table. So before you run the search again, check your workbook for a people table left over from the failed attempt. That way you don't end up with two copies.
+
 ### "You have reached the maximum number of columns allowed"
 
 If you try to add a waterfall (for example a Work Email, Personal Email, or Mobile Phone waterfall) and see **"You have reached the maximum number of columns allowed (N total columns, M action columns). Please delete some columns before adding new ones."**, the new waterfall would take your table over one of its column limits. N is your table's total column limit (100 by default) and M is its action (enrichment) column limit. The error appears if either limit would be exceeded, and Clay checks every column the new waterfall needs before creating any of them. That means the error can appear even when your table is still below N columns.
