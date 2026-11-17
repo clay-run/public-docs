@@ -69,6 +69,25 @@ After that alert closes, there is no self-serve way to recover deleted rows. The
 
 Note: rows cannot be restored if doing so would put your table over the 50,000-row limit.
 
+## Recover rows removed by "Replace" on a Find People or Find Companies search
+
+When you edit and re-run an existing Find People or Find Companies search on a table, Clay asks how to bring in the results:
+
+-   **Add new results to table** — imports new matches without deleting anything already in the table.
+-   **Replace existing results in table** — deletes all rows that came from this search, then imports only the rows that match the latest search filters. Clay shows a **Replace existing rows?** confirmation ("This action cannot be undone") before it runs.
+
+**Note:** The Add/Replace choice is part of Clay's newer search experience, which is still rolling out — it may not appear in every workspace yet.
+
+Rows removed by **Replace existing results in table** are permanently deleted. They don't go to Trash, there is no **Undo** alert for them, and Clay support can't restore them the way it can restore rows you deleted manually (see [Recover deleted rows](#recover-deleted-rows)). Any enrichment results on those rows are gone as well.
+
+**To get the replaced people or companies back**, re-run the search with your original filters and choose **Add new results to table**. Replace clears the search's record of previously imported records, so the same people or companies are imported again instead of being skipped as already seen:
+
+1.  Open the Find People (or Find Companies) search on your table.
+2.  Set the filters back to your original search configuration.
+3.  Run the search and choose **Add new results to table** (not **Replace existing results in table**).
+
+The records come back as new rows, so enrichment columns need to run on them again. If you built the table over several searches with different filters, repeat these steps for each search configuration. If you don't remember your original filters, contact Clay support with your table URL — support can help look up the search configuration you used.
+
 ## Cell data cannot be recovered
 
 Recovery only applies to deleted rows — **individual cell data cannot be recovered**, by you or by Clay support. If a cell's value is cleared or overwritten (for example, by clearing a cell, editing its contents, or re-running an enrichment that returns a different result), the previous value is gone. [Table versions](table-versions.md) do not help here either: they capture your table's structure and configuration, not cell data.
