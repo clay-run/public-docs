@@ -124,6 +124,7 @@ Once SCIM provisioning is connected, the button in the **SCIM provisioning** sec
 -   Enabling SCIM provisioning won't remove existing workspace members.
 -   Users your identity provider assigns to Clay are added to the workspace with the role mapped from their group.
 -   Users your identity provider unassigns or deprovisions are removed from the Clay workspace.
+-   Groups your identity provider pushes to Clay sync as SCIM-managed [user groups](./user-groups.md), with names and membership kept up to date.
 -   Clay has no SCIM sync schedule to configure and no "sync now" button — Clay picks up changes automatically after your identity provider sends them, so when users appear in Clay depends on your identity provider's provisioning schedule.
 
 ## Disabling or re-enabling SSO
