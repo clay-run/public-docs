@@ -1,6 +1,6 @@
 ---
 title: Connect your own email accounts
-description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect accounts with auth errors.
+description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect or bulk-delete accounts with auth errors.
 last_synced: 2026-11-10T20:17:32.598Z
 ---
 
@@ -146,6 +146,18 @@ An account in `Auth error` can't send or fetch replies until it's reconnected. R
 `Reconnect` only appears on an account connected through OAuth, and only while that account is in `Auth error` — a healthy account doesn't show the option. It opens in a pop-up window, so if nothing appears, allow pop-ups for Clay and try again.
 
 For an account added through `Manual SMTP setup` or `Bulk CSV upload`, delete it and add it again with current credentials — that's the reliable fix. For accounts purchased through Clay, contact Clay support and they'll resolve it on their side.
+
+### Delete many accounts with auth errors at once
+
+You don't have to delete SMTP accounts one at a time. If a whole batch of accounts added through `Manual SMTP setup` or `Bulk CSV upload` shows `Auth error` (for example, after a CSV upload with the wrong passwords), delete them together on the `Email accounts` tab, then add them again with corrected credentials:
+
+1.  On the `Email accounts` tab, open the `Status` filter and tick `Auth error` so only those accounts are listed.
+2.  Tick the checkbox next to each account, or tick the checkbox in the column header to select them all. Shift-click selects a range. You'll see `N of M selected` at the top right.
+3.  Click `Actions`, then `Delete`.
+4.  Confirm with `Delete` in the dialog. Campaigns stop sending from the deleted accounts.
+5.  Add the accounts again through `Bulk CSV upload` with the corrected credentials.
+
+Any workspace role except Viewer can delete email accounts. Accounts connected through SMTP or CSV can be added again after you delete them. Accounts purchased through Clay can't be added again, and deleting one deletes every account on the same domain, so contact Clay support about purchased accounts instead of deleting them.
 
 ## FAQs
 
