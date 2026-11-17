@@ -1,1 +1,131 @@
-PLACEHOLDER
+---
+title: Workflow FAQs
+description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, pausing triggers, list handling, and how Workflows works with Audiences and tables."
+last_synced: 2026-11-10T19:03:47.302Z
+---
+
+# Workflow FAQs
+
+Answers to common questions about access, scale, list handling, and how Workflows sits alongside Audiences and tables.
+
+Workflows is Clay's orchestration layer — a graph of connected steps that a trigger starts and that runs once per record. This page covers the questions that come up most often once you start building, and the workarounds for the things Workflows doesn't do yet.
+
+## FAQs
+
+### Who can create and edit a workflow?
+
+Anyone with member access can create workflows, edit them, and run them. Deleting a workflow is reserved for workspace admins. View-only roles can open a workflow and read its runs but not change it. If you see `You do not have the proper access for workflows in this workspace`, your role is what's in the way.
+
+`Integrations` in workflow settings is visible to everyone, but only workspace admins and editors can change what a workflow exposes there.
+
+Access to Workflows itself is separate from your role: during open beta you turn it on by enrolling your workspace in the beta program from your workspace settings. If `Workflows` isn't in your left sidebar under `Orchestration` at all, check your enrollment there first. Your Growth Strategist or Clay support can help if it still doesn't appear.
+
+### Which plans include Workflows?
+
+Workflows is available on every plan, including free and trial plans. On the modern Enterprise, Growth, and Launch plans it's available indefinitely, and legacy Enterprise customers keep it indefinitely as well — the time limit below applies only to the legacy self-serve plans.
+
+What varies by plan is which trigger sources you can use. `Webhook` and `Segment` need a paid plan, but they stay visible with an upgrade badge on their card rather than being hidden.
+
+Starter, Explorer, and Pro have full access for a limited time. After that, Workflows on those plans moves to a free-plan experience rather than switching off, with limits on runs and run history. The workflows you built and the data they've written back to Audiences stay either way, so moving to a modern plan is what restores full access. Your Growth Strategist or Clay support can tell you where your workspace stands.
+
+### When should I use a workflow instead of a table or Bulk Enrich?
+
+Reach for a workflow when something needs to run on its own — on a trigger or a schedule — and when different records should take different paths depending on what you learn about them. Routing, branching, and event-driven plays on individual records are what it's built for.
+
+Tables are still the better fit when you want cell-by-cell visibility on a working set you're exploring or prototyping, or when you need a data source that isn't in Workflows yet. [Bulk enrichment](https://university.clay.com/docs/bulk-enrichment) is the better fit for running the same set of enrichments across a large existing record set and keeping it current over time. The durable split: [Audiences](https://university.clay.com/docs/audiences) is where your data lives, and Workflows is how you act on it.
+
+### How do Workflows and Audiences work together?
+
+Audiences holds the records and the segments; Workflows acts on them. The usual shape is a loop — a record enters a segment, that starts a run, the run does its work, and `Update audience members` writes the result back to the profile.
+
+That write-back is what makes the loop useful. Results land on the record rather than in the run, so a field a workflow produced is immediately available as a filter in every other segment, including segments that trigger other workflows. Keeping Audiences as the source of truth is also what lets separate runs coordinate at all.
+
+### What happens when a run fails?
+
+The run stops at the step that failed and keeps everything it produced up to that point, so you can open it and read that step's input, its error, and any partial output. Failed runs generally cost little or nothing, since you're only charged for the lookups and AI that actually ran before the failure.
+
+A few errors have recognizable causes. A tool-not-found error usually means the integration isn't configured for your workspace. An invalid-input error usually means a reference is pointing at a field that doesn't exist in the upstream output. A rate-limit error means a provider throttled you rather than anything being wrong with the graph. Fix the cause, publish, and re-run — a run carries the version it started on, so your fix applies to the next run rather than retroactively to the one that failed.
+
+### Can one workflow call another?
+
+Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
+
+There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
+
+### Can a step run once for each item in a list?
+
+Yes. Enrichment, Claygent, and code steps each have a `Run options` section, where `Run on` decides whether the step runs once or repeats. `Each item, one at a time` repeats the step for every item in the list you choose under `List`, all inside the same run. When a people or company search feeds the step, `Each person, one at a time` or `Each company, one at a time` repeats it over that search's results without you picking a list.
+
+By default, a repeating step lets the run continue when some items fail and others succeed. Choose `Mark the run as failed` instead if a partial result shouldn't count.
+
+For pure logic, `Run code` can also work through a list on its own, since it iterates freely over data within a record. It can't call an enrichment or any other Clay action, though — that work belongs in its own step.
+
+### Can a workflow loop back on itself?
+
+No — the graph runs one way, so there's no cycle or counting loop between steps. Iteration happens inside a step instead, either by setting the step to repeat over a list in its `Run options` or by looping over the data in `Run code`.
+
+If what you want is for something to happen repeatedly over time rather than within one run, that's a trigger question rather than a graph question: a trigger with its `Type` set to `Scheduled`, on a `Segment` source or with `None`, gives you a fresh run on each pass, which is usually what people are reaching for.
+
+### Can a step query several objects at once, or join across sources?
+
+A step reads from one source at a time, so joins happen a step later rather than inside the query. Load each source in its own step, then use `Run code` to match and merge them in memory. That's also where many-to-many mapping belongs — scoring a set of accounts and assigning each one to a rep is a single code step once both sets are loaded.
+
+### Can two runs share data?
+
+Each run is fully independent, which is exactly what lets a batch process thousands of records at once without them queueing behind each other. The trade-off is that a run can't read another run's output.
+
+When two runs genuinely need to see the same state, keep that state in Audiences: have the first run write it with `Update audience members`, and have the second read it off the record. Audiences is the shared memory between runs.
+
+### Can I run just part of a workflow?
+
+You can run a single step on its own from its run button on the canvas, against a recent run's data or values you type in. That's the fast way to prove out one step's configuration without paying for the steps around it.
+
+What you can't do yet is start at a step and let the run continue through everything downstream of it — a step you run this way executes on its own and stops. So for checking a whole path, a manual trigger with one record or a handful is still the move. Running against a slice of a segment isn't available either; point a manual trigger at a few records instead.
+
+One thing worth knowing before you publish: a manual run and a triggered run can resolve input mappings differently, so a mapping that renders correctly on a manual run is worth confirming on a real trigger.
+
+### How much will a run cost before I run it?
+
+Estimates show up in three places: each step's configuration panel as you set it up, the panel when you run a single step, and on the `Run after publishing` step when you publish a workflow onto a segment and check `Run workflow after publishing`. Between them you can size most things before committing.
+
+What there isn't yet is a whole-graph estimate or a per-run cost breakdown after the fact beyond the per-step credit usage on the trace. For anything large, run a small test batch first, read the actual credit usage on those runs, and scale up from there rather than relying on the estimate alone.
+
+### How do I cap what a workflow can spend?
+
+On Enterprise plans, give the workflow a credit limit from the `Credit limit` section of workflow settings. Only workspace admins can set or change it, and anyone else sees the section read-only.
+
+The limit is one running total across the workflow's runs, so spend keeps building from run to run and doesn't reset with your billing cycle. `Reset spend` in the same section starts the count over without changing the limit.
+
+When a run reaches the limit, it fails, and opening it shows `The workflow paying for this run has reached its credit limit. A workspace admin can increase it.` For which runs count against the limit, see [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
+
+### How do I pause a workflow so it stops running and spending credits?
+
+To stop a workflow without deleting anything, pause its triggers. Pausing is per trigger. There's no single switch that pauses a whole workflow, so pause every trigger that can start it. A paused trigger stays on the workflow with its settings intact, which suits a workflow you only need at certain times, like during an outreach push or around an event, and want to switch back on later.
+
+To pause a workflow trigger:
+
+1.  Open the workflow and select the trigger node on the canvas. Its triggers appear as cards in the side panel.
+2.  On the trigger's card, click the `⋮` menu and choose `Pause`.
+3.  The card's status badge changes from `Live` to `Paused`. Once every trigger on the node is paused, the node shows `paused` instead of `live`.
+
+Pausing a trigger also pauses any runs it started that are still in progress. Those runs stop where they are rather than being cancelled.
+
+These triggers can be paused: `New member in segment`, `Segment on a schedule`, `On a schedule`, and `On webhook call`. `Run manually` and `On CSV upload` don't have a `Pause` option because they only run when you start them. A `Clay table` trigger has no `Pause` option in the workflow's side panel either, because Clay table triggers are managed from the table rather than from the workflow.
+
+To turn a paused trigger back on:
+
+1.  On the trigger's card, click the `⋮` menu and choose `Resume`.
+2.  In the `Resume trigger?` dialog, decide whether to tick `Also resume all paused runs from this trigger`. Ticked, the runs that were paused continue from where they stopped and may use credits. Left unticked, those runs stay paused and only new runs start.
+3.  Click `Resume trigger`. The badge goes back to `Live`.
+
+If you won't need a trigger again, `Remove` in the same `⋮` menu deletes it instead of pausing it.
+
+### Is every enrichment, source, and signal available in Workflows?
+
+The action library is at parity, so anything you can run as an enrichment in a table you can run in a `Run enrichment` step. Table data sources and signals are still being brought across, so a few aren't in Workflows yet, and which actions you see depends on your plan exactly as it does in a table.
+
+When you need one that isn't, build that part where it does exist and meet the workflow at the record: run the source or signal against your data so the results land in Audiences, then trigger the workflow off a segment that filters on them. The workflow reads the record, so it doesn't matter which surface filled the field.
+
+### Are waterfalls available in Workflows?
+
+Not as a step type — a `Run enrichment` step runs one action, so a waterfall's provider fallback isn't something you draw on the canvas. Where you need one, put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. That keeps the fallback logic in one governed place and available to your tables at the same time. See [Managed functions](https://university.clay.com/docs/managed-functions).
