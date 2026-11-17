@@ -325,6 +325,12 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### Can I test a Claygent for free through the Clay CLI?
+
+No. Free Claygent testing happens only in the test panel of Claygent builder in the Clay app. The Clay CLI doesn't have a command for testing a Claygent — the `clay claygents` commands let you list, view (`get`), and delete Claygents.
+
+Work you run through the CLI uses credits the same way it would in the product. For example, testing a Workflow step that contains a Claygent with `clay workflows nodes test` is a real run of that step and is charged like any other Claygent run. To iterate on a Claygent's prompt without spending credits, test it in Claygent builder first, then use it from the CLI or in your Workflows. For more on CLI and API billing, see [Clay API & CLI](clay-api-cli.md).
+
 ### If I re-run a Claygent column on rows that already have results, am I still charged credits?
 
 Yes. Every Claygent run costs credits regardless of whether the new output matches what is already in the cell. Clay does not compare the incoming result against the existing value before charging — a re-run starts from 0 on cost every time.
