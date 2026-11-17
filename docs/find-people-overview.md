@@ -254,6 +254,16 @@ Here's what happens to people the old Manual trigger already found:
 -   **They stay in your audience.** Removing a Find people trigger deletes that trigger's search source and schedule. It doesn't remove any contacts already written to Audiences or to your People segment.
 -   **The new trigger's first run may pull them again.** Each scheduled run of a Find people trigger adds only people that trigger hasn't already pulled. The new trigger has no record of what the old trigger found, so its first run can return people who are already in your segment. To avoid this, add your existing People segment under **Excluded people** in the new trigger's search. Clay re-checks the exclusion on every scheduled run. Audience exclusions match by professional profile URL or email only, so contacts without either can still be pulled again. See "Excluding people (or companies) from your search" under [Importing from people and companies search](audiences.md#importing-from-people-and-companies-search).
 
+### Why did importing a new search create a new column instead of writing to my existing Find People column?
+
+**This happens when you delete a Find People source before running the new import.** When you delete a Find People source using "Delete source, keep existing rows," Clay disconnects the Find People column from its source — the existing rows stay in the table, but the column is no longer bound to any active source. When you then run a new Find People import into the same table, Clay finds no live source to write into and creates a brand-new column instead of reusing your original Find People column. Any downstream enrichments that reference the original column now point to the wrong place.
+
+**To avoid this:** When replacing a Find People search, run the new import first, then delete the old source. As long as the original column stays bound to an active source throughout the transition, new results write into the existing column and you can safely delete the old source afterward.
+
+**If your table is already affected:** There is no way to redirect the new column's results back into the original Find People column. Your options are:
+- **Re-point each downstream enrichment** to reference the new Find People column instead of the original one.
+- **Duplicate the affected table** and set up the Find People source fresh in the copy. You only need to duplicate the affected tables — not the entire workbook.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
