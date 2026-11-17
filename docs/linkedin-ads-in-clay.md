@@ -81,7 +81,7 @@ Once `Enhanced matching` is on, `Hashed email 1`, `Hashed email 2`, and `Hashed 
 
 ## Managing your audiences
 
-Synced audiences appear in LinkedIn Campaign Manager under matched audiences, and can be used for either targeting or exclusion. LinkedIn takes about 48 hours to finish processing before the audience is usable, and a company sync can take more than three days.
+Synced audiences appear in Campaign Manager under matched audiences, and can be used for either targeting or exclusion. Campaign Manager takes about 48 hours to finish processing before the audience is usable, and a company sync can take more than three days.
 
 ## FAQs
 
@@ -101,7 +101,7 @@ Yes. Within one sync, add LinkedIn Ads under `Sync destinations` once for each a
 
 ### The audience never leaves `Building`
 
-Give it the full processing window first — about 48 hours, and longer for a company sync. That's usually all it needs. If it's still there, check the segment has at least 300 matchable records. A people sync that re-sends the full list stops with an error when it's short, but an incremental or company sync uploads the smaller audience, and LinkedIn won't serve one under 300.
+Give it the full processing window first — about 48 hours, and longer for a company sync. That's usually all it needs. If it's still there, check the segment has at least 300 matchable records. A people sync that re-sends the full list stops with an error when it's short, but an incremental or company sync uploads the smaller audience, and Campaign Manager won't serve one under 300.
 
 ### Match rates are lower than expected
 
