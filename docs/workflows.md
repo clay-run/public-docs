@@ -204,7 +204,7 @@ The workflow editor has two views, `Graph` and `Runs`.
 
 This runs the step you started from rather than continuing through the rest of the graph, so use it to prove out a single step's config, and a `Run manually` trigger to prove out a whole path. Runs started this way carry a `Partial` badge in the list so they're easy to tell apart.
 
-**Data observability.** Every run is recorded, and the record is fixed once written: it keeps the version it ran against, each step's inputs and outputs, timings, and any error. `Recent runs` on the canvas is the quick view — hovering a run previews its path on the graph, and clicking pins its trace so you can step through it. `View all runs` opens the full history, where `Run log` lists runs chronologically and `Table view` lays them out as a grid so you can compare outputs across many at once.
+**Data observability.** Every run is recorded, and the record is fixed once written: it keeps the version it ran against, each step's inputs and outputs, timings, and any error. `Recent runs` on the canvas is the quick view — hovering a run previews its path on the graph, and clicking pins its trace so you can step through it. `View all runs` opens the full history, where `Standard` lists runs chronologically and `Table` lays them out as a grid so you can compare outputs across many at once.
 
 Narrow the list by time (`All`, `1d`, `1w`, `1m`), or by `Status`, `Versions`, and `Triggers`. A run reads as `Pending`, `Running`, `Waiting`, `Paused`, `Done`, or `Failed`.
 
@@ -225,8 +225,8 @@ Clay autosaves the whole graph — nodes, edges, prompts, code, and tools — as
 What reaches your live triggers is a version you publish.
 
 1.  Build and test freely. While a published workflow has unpublished changes, the badge next to the version selector reads `Edit` rather than `Live`, and a trigger you haven't published sits in `Draft` and won't fire.
-2.  When it's ready, click `Publish`. In the publish dialog, name the version in `Version name` — Clay suggests the next number, like `V4` — and confirm with `Publish`. This sets every trigger on the workflow live at that version. If `Publish` is unavailable, the workflow has no trigger yet.
-3.  For a workflow on a segment, check `Run workflow after publishing` and click `Next` to also run it across the segment's current members. Clay shows how many records that covers and a credit estimate for the backfill before you confirm with `Publish and run`.
+2.  When it's ready, click `Publish`. On `Ready to go live?`, name the version in `Version name` — Clay suggests the next number, like `V4` — and confirm with `Publish`. This sets every trigger on the workflow live at that version. If `Publish` is unavailable, the workflow has no trigger yet.
+3.  For a workflow on a segment, check `Run on all members now` to also run it across the segment's current members. Clay shows how many records that covers and a credit estimate for the backfill before you confirm.
 
 The `Versions` dropdown in the topbar lists published versions by name or number alongside when each went live. For the full picture, open workflow settings and click `History` to see `Workflow history`, which shows published versions with their autosaves underneath.
 
