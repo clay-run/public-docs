@@ -2,7 +2,7 @@
 title: Using Clay in ChatGPT
 description: Find people, enrich contacts, and draft personalized outreach — all
   within a regular ChatGPT conversation.
-last_synced: 2026-07-13T21:39:45.462Z
+last_synced: 2026-11-10T19:42:43.254Z
 ---
 
 # Using Clay in ChatGPT
@@ -22,7 +22,7 @@ Clay in ChatGPT lets you find people, enrich contacts, and draft personalized ou
     -   Toggle to view the list of people as a table
     -   Add a filter (e.g., only people in the US or people who have been there for less than 6 months)
     -   Enrich the data with different data points (email address, work history summary, thought leadership)
-    -   Click `View Info` next to a person's name to view more professional information or `Draft Email`
+    -   Click a person's row to open their details and see more professional information, or ask Clay in the chat to draft an email to them
         -   **Note:** You'll need to enrich and find a person's email address before you can draft an outreach email.
 5.  At any time, you can click `Open in Clay` in the top right corner to unlock even more powerful enrichment and workflow capabilities directly in your Clay table.
 
@@ -94,7 +94,7 @@ Clay will find the matching function, run it, and return the results directly in
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `MCP` page, which they open from the sidebar on the Clay homepage. The `MCP` page is only visible to workspace admins and is currently in beta — if your admin doesn't see it in the sidebar, contact support. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
@@ -161,4 +161,4 @@ If you click `Open in Clay`, a table is created in your Clay workspace. For one-
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `MCP` page in the sidebar on the Clay homepage. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
