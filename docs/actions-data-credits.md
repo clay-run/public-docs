@@ -2,7 +2,7 @@
 title: Actions & Data Credits
 description: Learn about credits, the virtual currency system used for running
   actions in Clay.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-19T16:49:55.816Z
 ---
 
 # Actions & Data Credits
@@ -61,6 +61,7 @@ Features that use an Action:
 -   Data warehouse exports and syncs.
 -   HTTP API calls.
 -   Ads audience exports (e.g., LinkedIn, Facebook).
+-   Work reps trigger from an AI tool through MCP (the enrichments, AI runs, and exports it sets off).
 
 **Features that don't use an Action:**
 
@@ -516,3 +517,9 @@ Only CRM **write** operations consume Actions: Create Record, Update Record, Ups
 Yes. Clay charges **1 Action** (and the associated Data Credits) per enrichment row run, regardless of whether that person has been enriched in another table. There is no cross-table deduplication — each row runs independently. If the same contact appears in two tables and you run an enrichment such as Enrich Person in both, you will be charged for each run separately.
 
 **To avoid double-charging on overlapping lists:** Merge your lists into a single table first and use the **Dedupe** feature (click a text, email, or URL column header → **Dedupe**) to remove duplicate entries based on a unique identifier such as a profile URL or email address. Enriching the merged, deduplicated table ensures each person is processed and charged only once.
+
+### How are Actions charged when work runs through MCP?
+
+Actions and Data Credits are the same units whether the work runs in Clay or a rep triggers it from an AI tool like Claude or ChatGPT — there's no separate MCP allowance and no surcharge. What differs is how much one request covers: the AI tool chooses which Clay tools to call, so a single prompt can set off a search, an enrichment, and a Function, each charged as it runs.
+
+Admins cap this per rep rather than per workspace, and MCP spend appears on its own tab at `Settings` → `Usage`. For how to set those caps, see [MCP settings](https://university.clay.com/docs/mcp-settings).
