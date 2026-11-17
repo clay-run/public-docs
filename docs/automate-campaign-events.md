@@ -109,7 +109,10 @@ Removing the lead from the segment the sequence is attached to has the same effe
 
 ## Custom webhooks
 
-Clay doesn't send sequence events to a webhook URL of your own. Build the flow on the `Campaign events` table instead.
+Whether you can send sequence events to a webhook URL of your own depends on the type of sequence:
+
+-   **Table-based sequences** (the older sequences marked with a `Legacy` badge): open the sequence's `Settings` tab and use `Webhooks` under `Advanced settings` to send the event types you choose to your own webhook URL. Event types you send to a custom webhook go there instead of to the sequence's events table, so they won't appear as rows in Clay. For the setup steps, see [Email sequencer](https://university.clay.com/docs/email-sequencer).
+-   **Segment-based sequences**: there's no `Webhooks` setting. Build the flow on the `Campaign events` table instead.
 
 ## FAQs
 
