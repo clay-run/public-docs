@@ -125,10 +125,10 @@ Audience-based campaigns don't have a `Leads` tab — lead-level detail lives on
 
 ### Automatic pauses
 
-Two settings under `Settings` → `Enrollment` pause leads for you:
+Two settings in the `Enrollment` section of a campaign's settings pause leads for you. To find them, click the campaign's name at the top of the campaign page, choose `Settings` from the dropdown, and scroll to `Enrollment`.
 
 -   `Pause lead on segment exit`: pauses a lead in this campaign when they leave the segment. It's on by default — when someone stops matching the segment feeding the campaign, the rest of the sequence doesn't go out to a lead who no longer belongs in it.
--   `Pause leads at the same company on reply`: when a lead replies, pauses other leads with the same email domain. Useful when you're sequencing several people at one account and want the conversation to happen once.
+-   `Pause leads at the same company on reply`: when a lead replies, pauses the other leads in this campaign who share the replying lead's email domain. It's off by default. Matching is by email domain only, so a contact at the same company who uses a different email domain isn't paused, and leads in your other campaigns aren't affected. The other leads are paused, not removed, so they can be resumed later. Useful when you're sequencing several people at one account and want the conversation to happen once.
 
 **Note:** `Pause lead on segment exit` only appears on campaigns fed by a segment. A campaign that receives its leads from a workflow has no segment to leave, so the setting isn't shown.
 
