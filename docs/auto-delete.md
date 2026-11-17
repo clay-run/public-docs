@@ -79,7 +79,7 @@ A common cause is a column with **Auto-run** turned off. A column with Auto-run 
 
 In an Audiences enrichment table, Clay automatically treats every action column as a Success column. That includes each enrichment column and the column that writes results back to your Audience. A row leaves the table only after every one of those action columns has run successfully for it. This holds even if some fields, such as Name or Title, have already been written back to your Audience.
 
-The **Run setup** panel in an Audiences enrichment table shows **Completed rows**, **Remaining rows**, and **Errored rows**. Rows that are still in the table count under **Remaining rows**. If one action column has Auto-run turned off (for example, a LinkedIn profile waterfall or a final Use AI column), its rows never finish. Remaining rows then stops going down, even though other columns have already processed those rows.
+The **Run setup** panel in an Audiences enrichment table shows **Completed rows**, **Remaining rows**, and **Errored rows**. Rows that are still in the table count under **Remaining rows**. If one action column has Auto-run turned off (for example, a social profile waterfall or a final Use AI column), its rows never finish. Remaining rows then stops going down, even though other columns have already processed those rows.
 
 ### How do I get rows that are stuck in an auto-delete table processing again?
 
