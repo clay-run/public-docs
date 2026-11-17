@@ -76,6 +76,22 @@ The Clay CLI and Clay's Agent have the same workflow budget controls as the Clay
 -   **Create a workflow with a budget:** `clay workflows create --budget-id <budget-id>`
 -   **Change an existing workflow's budget:** `clay workflows update <workflow-id> --budget-id <budget-id>`
 
+## Choosing a budget when you connect an AI tool, the Clay CLI, or an API application
+
+When you authorize a connection to Clay — Clay's MCP server from an AI tool, the Clay CLI (`clay login` or `clay login --device`), or an API OAuth application — the consent screen can ask which credit budget that connection's usage is charged to. This budget picker applies to workspaces with credit budgets enabled (Enterprise plan workspaces).
+
+The budget picker appears only when you have access to more than one budget in the workspace you're connecting. If you have access to one budget or none, the consent screen doesn't show it.
+
+To choose a budget on the consent screen:
+
+1.  Select the workspace to connect.
+2.  Under **Budget for [workspace name]**, open the dropdown and select a budget. The field reads: "Credits used by [application name] in this workspace will be charged to this budget."
+3.  Click **Authorize**. The **Authorize** button stays disabled while the field shows `Loading budgets…`, and becomes available once your budgets load.
+
+**If you don't select a budget:** the dropdown shows `Use existing or default budget`. Clay keeps the budget already assigned to you for that workspace, or, if you don't have one yet, assigns the oldest budget you have access to.
+
+**Connecting more than one workspace from the Clay CLI:** when you select several workspaces during `clay login`, each workspace gets its own **Budget for [workspace name]** field, so you can pick a different budget for each one.
+
 ## Tracking spend by resource on the Budgets page
 
 Open a budget from `Settings` → `Budgets` to see its spend over time. Use the **Breakdown** option to see that budget's spend split by resource — **Workflows** and **Workbooks** — so you can tell how much of a budget's credits went to workflows versus workbooks.
