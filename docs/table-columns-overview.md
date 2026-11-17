@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, and how to resolve circular dependency errors.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, how to resolve circular dependency errors, and what the icons in a column header mean.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -24,6 +24,52 @@ There are a data types you can specify for your column. Here's a high level over
 -   **Assigned To:** Tag anyone in your Clay workspace.
 -   **Email:** Accepts any email address input.
 -   **Image from URL:** Upload image URLs for easy retrieval.
+
+## What the icons in a column header mean
+
+Each column header in a Clay table shows one or more small icons to the left of the column name. These column header icons tell you what kind of data the column holds and where its values come from. The Extract, data type, Formula, merge, and waterfall icons don't show a tooltip when you hover over them, so use this section to identify them.
+
+### Extract icon: the column was extracted from another column
+
+The Extract icon looks like three horizontal lines with an arrow pointing right (≡→). It appears on many columns in a typical table. The Extract icon means the column's values were pulled out of another column's result, rather than typed in or calculated. Clay shows the Extract icon on any column whose formula only points to a field inside another column's result.
+
+You'll see the Extract icon on columns extracted from:
+
+-   **The table's source.** For example, when a source such as a local business search fills in **Name**, **Google Maps URL**, and **Description**, each of those fields is extracted into its own column from the source column.
+-   **An enrichment's result.** For example, a field you added as its own column from an enrichment or Use AI cell using `Add to column` (see [Create child columns from a parent column](#create-child-columns-from-a-parent-column)).
+-   **A waterfall provider's result.** For example, a URL field pulled from one provider column inside an enrichment waterfall.
+-   **A lookup to another table.** A field you extract from a [Lookup Rows](lookup-rows.md) column's result shows the Extract icon. The Lookup Rows column itself shows the lookup action's icon instead.
+
+To see which column an extracted column comes from, click the column header and select `Go to parent column`.
+
+### Data type icons next to the column name
+
+Next to the Extract icon (or on its own), each column header shows the column's [data type](#column-data-types) icon. The following list shows the icon for each data type:
+
+-   **Text:** T
+-   **Number:** #
+-   **URL:** link (chain) icon
+-   **Email:** @
+-   **Date:** calendar
+-   **Checkbox:** checked box
+-   **Select:** circle with a check mark
+-   **Multi-select:** list with check marks
+-   **Currency:** $
+-   **Assigned To:** person
+-   **Image from URL:** image
+
+For example, a header with the Extract icon followed by a link icon is a URL column extracted from another column's result.
+
+Enrichment, waterfall provider, and source columns show the provider's or source's logo instead of a data type icon.
+
+### Formula, merge, waterfall, and auto-dedupe icons
+
+Other column header icons you may see:
+
+-   **Formula icon (ƒ):** the column is a formula that calculates a value, rather than extracting a single field from another column.
+-   **Merge icon (two arrows joining into one):** the column is the merged result column of an enrichment waterfall, which holds the final value from the waterfall's providers. It appears with the column's data type icon, for example a merge icon followed by T for a text result.
+-   **Waterfall icon:** appears on the tab above a group of waterfall columns. Expand the waterfall to see the provider columns and the merged result column inside it.
+-   **Auto-dedupe icon (two arrows pointing toward a line):** the table automatically dedupes rows on this column. Hover over it to see "Auto-dedupe is enabled on this column." See [Dedupe columns](#dedupe-columns).
 
 ## System columns: Created At and Updated At
 
