@@ -1,7 +1,7 @@
 ---
 title: Snowflake integration
 description: Cloud-based data platform enabling data storage, analysis, and sharing.
-last_synced: 2026-11-17T20:51:15.788Z
+last_synced: 2026-11-17T20:58:09.361Z
 ---
 
 # Snowflake integration
@@ -203,7 +203,7 @@ Clay Audiences supports importing data directly from Snowflake using a SQL query
 
 Clay uses **Key Pair Authentication** for Snowflake. You'll upload a private key file (`.p8`) to Clay, and assign the matching public key to your Snowflake user.
 
-If someone on your team has already set up the Snowflake connection and shared the `.p8` file with you, skip ahead to [Connecting in Clay](https://app.dust.tt/w/5b990f8923/conversation/np8Ywp0SvD#connecting-in-clay).
+If someone on your team has already set up the Snowflake connection and shared the `.p8` file with you, skip ahead to **Connecting in Clay**.
 
 To generate a new key pair, run the following commands in your `Terminal` (not in Snowflake):
 
