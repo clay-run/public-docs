@@ -1,16 +1,16 @@
 ---
 title: Connect your own email accounts
 description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect accounts with auth errors.
-last_synced: 2026-11-10T20:17:32.598Z
+last_synced: 2026-11-17T21:03:48.265Z
 ---
 
 # Connect your own email accounts
 
-Connect email accounts you already own — Google Workspace, Microsoft 365, or any mailbox that supports SMTP — and use them as sending accounts for your campaigns.
+Connect email accounts you already own — Google Workspace, Microsoft 365, or any mailbox that supports SMTP — and use them as sending accounts for your sequences.
 
 Clay can sell you managed sending accounts, and it can also send from mailboxes you already own. Bringing your own accounts means you keep the domain, the DNS, and the mailboxes, and you connect each one to Clay once. Two paths cover almost everything: OAuth for Google Workspace and Microsoft 365, and SMTP for other providers or for migrating a batch of accounts in one go.
 
-**Note:** Campaigns send through Clay’s email integration partner, Smartlead, so the credentials you connect are shared securely with Smartlead. Accounts you connect sit at the workspace level, which means any campaign in the workspace can select them as senders. The connection modal links both the Smartlead privacy policy and Clay’s trust center if you want the detail on how that data is handled.
+**Note:** Sequences send through Clay’s email integration partner, Smartlead, so the credentials you connect are shared securely with Smartlead. Accounts you connect sit at the workspace level, which means any sequence in the workspace can select them as senders. The connection modal links both the Smartlead privacy policy and Clay’s trust center if you want the detail on how that data is handled.
 
 ## When to bring your own
 
@@ -21,7 +21,7 @@ Two situations make connecting your own accounts the right call:
 
 Bringing your own accounts also means the surrounding infrastructure stays with you. DNS records (SPF, DKIM, and DMARC), the warmup decision, and domain-level health are yours to manage, because Clay doesn't control the accounts.
 
-Domain deliverability monitoring is available for accounts purchased through Clay. For your own accounts, keep an eye on the bounce rate in campaign analytics and keep daily volume conservative per mailbox. [Deliverability and domain health](https://university.clay.com/docs/sequencer-deliverability) covers the numbers to watch and where to find them.
+Domain deliverability monitoring is available for accounts purchased through Clay. For your own accounts, keep an eye on the bounce rate in sequence analytics and keep daily volume conservative per mailbox. [Deliverability and domain health](https://university.clay.com/docs/sequencer-deliverability) covers the numbers to watch and where to find them.
 
 | Method | Best for | Admin authorization |
 | --- | --- | --- |
@@ -97,7 +97,7 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 | Section | Field | What goes in it |
 | --- | --- | --- |
 | SMTP settings (sending) | Sender name | The sender name recipients see |
-| SMTP settings (sending) | Sender email | The address campaigns send from |
+| SMTP settings (sending) | Sender email | The address sequences send from |
 | SMTP settings (sending) | Username | The username the mail server expects, often the address itself |
 | SMTP settings (sending) | Password | The mail server password, or an app password for Gmail mailboxes |
 | SMTP settings (sending) | SMTP host | Your provider’s outgoing mail server |
@@ -121,7 +121,7 @@ Your CSV needs one row per mailbox, with these columns:
 
 | Column | What goes in it |
 | --- | --- |
-| from_email | The address campaigns send from |
+| from_email | The address sequences send from |
 | from_name | The sender name recipients see |
 | user_name | The username the mail server expects, often the address itself |
 | password | The mail server password, or an app password for Gmail mailboxes |
@@ -151,7 +151,7 @@ For an account added through `Manual SMTP setup` or `Bulk CSV upload`, delete it
 
 ### Why does an admin have to authorize the Clay Sequencer app at all?
 
-Campaign sending comes with inbox warmup, which sends and receives mail on the account's behalf. That puts the app outside the scope Google and Microsoft will fully verify themselves, so the decision moves to the person who administers your domain instead. Every cold email sequencer that includes warmup works this way.
+Sequence sending comes with inbox warmup, which sends and receives mail on the account's behalf. That puts the app outside the scope Google and Microsoft will fully verify themselves, so the decision moves to the person who administers your domain instead. Every cold email sequencer that includes warmup works this way.
 
 The practical upside is that it's a single step per Workspace or organization. Once it's done, every mailbox on the domain can connect without involving the admin again.
 
@@ -161,11 +161,11 @@ OAuth connections are for business mailboxes on a domain you administer, through
 
 That lines up with what works for cold outbound anyway: a domain you control is what lets you set DNS records, spread sending across several mailboxes, and protect your reputation over time.
 
-### Will campaign emails show up in my Sent folder?
+### Will sequence emails show up in my Sent folder?
 
-For accounts connected with Google or Microsoft OAuth, yes — campaign sends land in the mailbox's `Sent` folder alongside everything else you send. For SMTP accounts it depends on the mail server, and most don't copy messages sent over SMTP into `Sent`.
+For accounts connected with Google or Microsoft OAuth, yes — sequence sends land in the mailbox's `Sent` folder alongside everything else you send. For SMTP accounts it depends on the mail server, and most don't copy messages sent over SMTP into `Sent`.
 
-Either way, replies are fetched from the mailbox over IMAP and collected on the campaign's `Replies` tab, so you can answer from the same address the email went out from.
+Either way, replies are fetched from the mailbox over IMAP and collected on the sequence's `Replies` tab, so you can answer from the same address the email went out from.
 
 ### Clay says the address is already in use — what now?
 
