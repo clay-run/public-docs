@@ -100,6 +100,33 @@ The Update object action matches on the Marketo internal ID (not email). If your
 5.  Under **Fields**, select the field to update — for example, a lead status field or a custom "Contacted" field — and map the value from your table.
 6.  Enable **Auto-update** in Run settings so that rows are pushed back to Marketo automatically as cadence results come in.
 
+### Update existing Marketo leads and create only the new ones (upsert)
+
+To push a Clay table to Marketo so that people who already exist in Marketo get updated and people who don't are created as new leads, combine the three Marketo actions with **Only run if** conditions. The Marketo **Create object** action only creates new records — it does not update an existing lead — so the run conditions decide which action each row goes to.
+
+1.  Add a Marketo **Lookup object** enrichment with **Object type** set to `Person`, **Filter type** set to `Email`, and **Filter values** set to your work email column.
+    -   When a lead is found, the Lookup object column returns a `results` list, and the first match's Marketo ID is `results[0].id`.
+    -   When no lead is found, the Lookup object column shows **❌ No objects found** and `results` is an empty list.
+2.  Add a Marketo **Update object** enrichment for existing leads:
+    -   Set **Object type** to `Person`.
+    -   Set **Marketo object ID** to the ID of the first lookup result (`results[0].id` from the Lookup object column).
+    -   Under **Fields**, map the Clay columns you want to write to the Marketo lead.
+    -   Set **Only run if** so the column runs only when the Lookup object column found a lead (its `results` list is not empty).
+3.  Add (or edit) a Marketo **Create object** enrichment for new leads:
+    -   Set **Object type** to `Person` and map **Email** (required) plus any other fields.
+    -   Set **Only run if** so the column runs only when the Lookup object column found no lead (its `results` list is empty) **and** your work email column is not empty.
+
+With this setup, each row either updates the existing Marketo lead or creates a new one — never both. If the Create object action runs on a person who already exists in Marketo, Marketo skips the record and the cell shows **❌ Object already exists**; no duplicate lead is created.
+
+### Add Clay leads to a Marketo program or static list
+
+Clay can't add leads to a specific Marketo program or static list directly. The Marketo integration has three actions — **Create object**, **Lookup object**, and **Update object** — for `Person` (lead) and `Company` records only; there is no Clay action that adds a lead to a program or list or triggers a Marketo smart campaign.
+
+To get Clay leads into a Marketo program or list, write a value to a Marketo lead field from Clay and let Marketo do the placement:
+
+1.  In Clay, use the **Create object** or **Update object** action (see the upsert workflow above) to write a value to a Marketo lead field — for example, a custom field that marks the lead as Clay-enriched or records a segment value.
+2.  In Marketo, build a smart campaign that selects leads based on that field value and, in its flow, adds them to the program or static list you want.
+
 ## Connecting Marketo via webhook
 
 Use webhooks to send data from Marketo to Clay for real-time lead enrichment. This is ideal for capturing inbound leads as they arrive — such as form fills, demo requests, or other lead events. After enrichment, you can use the Marketo enrichment actions above to write the enriched data back to Marketo.
