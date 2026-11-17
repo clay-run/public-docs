@@ -69,6 +69,29 @@ To have auto-delete remove contacts who are no longer in your HubSpot list:
 
 **Tip:** Test your rule on a small batch of rows before applying it to the whole table. Deleted rows are not recoverable.
 
+## Why are rows staying in my table instead of being auto-deleted?
+
+Auto-delete removes a row only after that row's actions are done. When a **Success column** is set, auto-delete doesn't remove a row until the Success column has run successfully for that row. If the Success column never runs for a row, the row stays in the table indefinitely. Auto-delete has no timeout that eventually removes it.
+
+A common cause is a column with **Auto-run** turned off. A column with Auto-run off runs only when someone triggers it manually. Rows that were still unprocessed when Auto-run was switched off never finish, and neither do rows added afterward, so auto-delete never removes them. In a column with Auto-run off, cells that haven't run show a small play (▶) button instead of a result.
+
+### Why does my Audiences enrichment table show a "Remaining rows" count that isn't going down?
+
+In an Audiences enrichment table, Clay automatically treats every action column as a Success column. That includes each enrichment column and the column that writes results back to your Audience. A row leaves the table only after every one of those action columns has run successfully for it. This holds even if some fields, such as Name or Title, have already been written back to your Audience.
+
+The **Run setup** panel in an Audiences enrichment table shows **Completed rows**, **Remaining rows**, and **Errored rows**. Rows that are still in the table count under **Remaining rows**. If one action column has Auto-run turned off (for example, a LinkedIn profile waterfall or a final Use AI column), its rows never finish. Remaining rows then stops going down, even though other columns have already processed those rows.
+
+### How do I get rows that are stuck in an auto-delete table processing again?
+
+Turning Auto-run back on makes new rows run automatically, but it doesn't run the rows that were skipped while Auto-run was off. To clear rows stuck in an auto-delete table:
+
+1.  Click the header of the column that has Auto-run turned off and select **Edit column**.
+2.  In the **Run settings** section, turn on **Auto-run**, then save the column.
+3.  Run the rows that were skipped: right-click the column header, select **Run column**, then select **Run [N] empty or out-of-date rows**. You can also hover over the column header, click the play (▶) button, and choose the same option.
+4.  Repeat steps 1–3 for every other action column that has Auto-run turned off.
+
+Once every action column has run successfully for a row, auto-delete removes that row the next time it runs, and the **Remaining rows** count goes down. If cells still don't start after you turn on Auto-run, check whether the whole table is in Manual mode. See [Troubleshooting: enrichments not triggering automatically despite auto-run being enabled](run-progress.md#troubleshooting-enrichments-not-triggering-automatically-despite-auto-run-being-enabled).
+
 ## Keeping space for incoming records
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
