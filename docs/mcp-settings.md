@@ -205,3 +205,16 @@ MCP usage appears in the main credit usage dashboard at `Settings` → `Usage`, 
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### Does a workflow called through MCP know which rep called it?
+
+Not automatically. Clay passes the caller's identity into a Function called through MCP, but not into a Workflow called through MCP:
+
+-   **Functions:** When a rep runs a Function from ChatGPT, Claude, or Glean, Clay automatically adds the rep's email to the Function's data in a locked field named `MCP Caller Email`. You can reference that field in the Function's columns like any other field.
+-   **Workflows:** When a rep runs a Workflow through MCP, the Workflow only receives the inputs the AI tool sends to its manual trigger. Clay doesn't add the rep's email or user ID as an input. In the Workflow's `Runs` view, these runs are labeled `Manual · MCP`, without the name of the rep who started them.
+
+**Workaround to get the rep's email inside a Workflow:** add an explicit input, such as `rep_email`, to the Workflow's manual trigger. Then have the AI tool fill in the rep's email when it calls the Workflow. Later steps in the Workflow can reference `rep_email` like any other trigger input.
+
+**Credit attribution and limits are the same for Workflows and Functions.** Clay still records the calling rep on every MCP run, whether the rep calls a Function or a Workflow. Credits the run spends, including credits used by a Function the Workflow calls, are attributed to that rep, count against their MCP credit limit, and come out of your workspace's credit balance. You can see this spend per rep at `Settings` → `Usage` → `MCP` tab.
+
+**Making a Workflow callable from MCP:** the Workflow needs a manual trigger with defined inputs, and `MCP for reps` must be turned on in the Workflow's settings. Calling Workflows through MCP is currently in beta. If you don't see `MCP for reps` on your Workflow, contact support to request access for your workspace.
