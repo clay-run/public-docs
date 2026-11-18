@@ -3,7 +3,7 @@ title: Functions
 description: Functions let you convert any enrichment sequence into a reusable
   workflow. Once created, you can use it across any table — and any updates you
   make to the…
-last_synced: 2026-04-26T01:40:01.780Z
+last_synced: 2026-11-18T19:56:07.816Z
 ---
 
 # Functions
@@ -76,7 +76,7 @@ Creating a new custom function from scratch is available on paid plans, includin
     -   **Edit mode runs in a manual-run sandbox.** Table-level auto-run is intentionally off while you are in Edit mode, so that modifying and testing your function cannot trigger real side effects — such as external API writes or CRM updates. Column-level Auto-run settings on individual columns do not override this. When you manually rerun a column inside Edit mode, dependent downstream columns are skipped (shown as "Table auto-run is off") and keep their previous results, even if their run conditions evaluate to true. There is no setting inside the function UI to enable automatic dependent reruns in Edit mode — this behavior is by design. Automatic dependent reruns work as expected once the function is saved and invoked from a regular table with auto-run enabled.
     -   **Conditional-run previews ("Will run" / "Will not run") use values from when the panel opened.** The preview is evaluated in the browser and does not recalculate on re-renders — so time-varying expressions like `Date.now()` stay frozen at their value when you opened the panel. The preview also uses each column's display value rather than its full underlying value, which can differ for HTTP response and JSON columns. As a result, the preview can disagree with a live formula column evaluating the same condition. If the preview looks wrong, save the condition and test on real rows — the actual run results are the authoritative source.
     -   Note that no changes made here will apply to the live function until published.
-4.  Once your changes are ready, click `Review Changes` to view your pending changes and click `Publish Changes` to apply your changes to your live function.
+4.  Once your changes are ready, click `Review changes` to view your pending changes and click `Publish to function` to apply your changes to your live function.
 
 ## Managing MCP access and credit budgets
 
@@ -333,7 +333,7 @@ When a Claygent or Use AI column runs inside a function, all its output fields a
 3.  Hover over the specific output field you want to add (for example, **Agency Name** or **Buying Model**).
 4.  Click **Add to column** — this creates a standalone basic column for that field in the function table.
 5.  Repeat for each output field you want to expose.
-6.  Click **Publish Changes**.
+6.  Click **Review changes**, then click **Publish to function**.
 
 After publishing, each promoted field appears as its own column in the function and is listed in the **"Choose output data to send"** checklist. Check those columns there to have them returned to the calling table and included in any export. See [How do I configure which columns are returned from my function to the calling table?](#how-do-i-configure-which-columns-are-returned-from-my-function-to-the-calling-table) for the next step.
 
@@ -348,7 +348,7 @@ Every function includes a built-in **"Send data back"** column — the final ste
 3.  Click its column header to open the settings panel.
 4.  Under **Configure → Choose output data to send**, you'll see a checklist labeled **"Selected columns (N of M)"** listing the function's columns.
 5.  Check each column whose values you want returned to the calling table.
-6.  Click **Publish Changes** to apply.
+6.  Click **Review changes**, then click **Publish to function** to apply.
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
 
@@ -458,7 +458,7 @@ If multiple rows are stuck and the function appears to have run (you can see val
 3.  Click the column header to open its settings, then check whether an **"Only run if..."** run condition is set.
 4.  If the condition requires a specific enrichment field to have a value, rows where that enrichment returned nothing will never trigger the callback — leaving the calling table stuck until the 24-hour timeout.
 5.  Remove the run condition, or loosen it so **"Send data back"** runs for every row — including rows where the enrichment returned nothing. Sending back an empty result still resolves the calling table's "Awaiting Callback" status immediately.
-6.  Click **Publish Changes** to apply.
+6.  Click **Review changes**, then click **Publish to function** to apply.
 
 After fixing the condition, re-run the stuck rows in the calling table (see "To re-run rows stuck in Awaiting Callback" below).
 
@@ -603,7 +603,7 @@ To make an input optional:
 1.  From your Clay homepage, click **Functions** and open the function you want to change.
 2.  Click **Edit function** in the settings panel.
 3.  In the inputs list, find the input you want to make optional and toggle off its **Required input** setting.
-4.  Click **Publish Changes** to apply.
+4.  Click **Review changes**, then click **Publish to function** to apply.
 
 After this change, rows that don't have a value for that input will still run — they'll pass an empty value for that field instead of being skipped.
 
@@ -632,7 +632,7 @@ If your function has an input whose **Semantic type** is **Email**, Clay validat
 2.  Click **Function inputs** and find the affected input (e.g., **Email**).
 3.  Click the input, then click **Remove input**.
 4.  Click **+ Add input** and create a new input with the exact same name (e.g., **Email**). A freshly created input has no semantic type restriction and accepts any string value, including values that arrive as objects.
-5.  Click **Publish Changes**.
+5.  Click **Review changes**, then click **Publish to function**.
 
 Columns inside the function that reference this input by name continue to work without modification — inputs are looked up by name.
 
