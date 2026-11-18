@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-18T19:11:46.758Z
 ---
 
 # Workflows
@@ -254,13 +254,19 @@ Most cost sits in the enrichment and Claygent steps, and a few habits keep it in
 -   Leave a Claygent on `Auto` so simple tasks run on cheaper models and the strongest ones are saved for complex reasoning.
 -   Prune as you go. Graphs collect steps over time, and unreachable ones still add clutter and cost.
 
-**Speed.** Most runs finish in seconds to a couple of minutes, and because runs go in parallel, throughput comes from concurrency rather than from any single run being fast. Within one run, branching independent lookups from the start instead of chaining them shortens data-heavy runs noticeably. A single heavy Claygent — a research-and-compile step, say — can take several minutes and use tens of data credits on its own; that's a step doing more work, not a problem.
+### Speed
 
-**Scale.** Workflows is built for scale. Unlimited records and unlimited steps.
+Most runs finish in seconds to a couple of minutes, and because runs go in parallel, throughput comes from concurrency rather than from any single run being fast. Within one run, branching independent lookups from the start instead of chaining them shortens data-heavy runs noticeably. A single heavy Claygent — a research-and-compile step, say — can take several minutes and use tens of data credits on its own; that's a step doing more work, not a problem.
+
+### Scale
+
+Workflows is built for scale. Unlimited records and unlimited steps.
 
 In practice that means you point a workflow at an entire audience rather than a slice of it. Where a table caps the rows you can work with and the columns you can add, a workflow caps neither, so a long play keeps its whole sequence in one graph instead of being split across several tables.
 
 A single step also isn't the place to load a very large result set — each node handles up to 5MB of data per record, so a warehouse query returning a hundred thousand rows into one node will hit that ceiling. Land the data in [Audiences](https://university.clay.com/docs/audiences) and read it off the record instead — that's the pattern to reach for, since the result stays reusable in every other segment and workflow rather than trapped in one run. If you do need it inside the step, page through with limit and offset.
+
+### Fast-changing segments
 
 A segment that changes rapidly is the one case worth planning around: a bulk import that touches thousands of records fires thousands of runs at once, which spends credits quickly and can hit a provider's rate limits. For a high-volume segment, `Segment on a schedule` gives you the same coverage at a pace you control.
 
