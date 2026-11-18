@@ -470,6 +470,21 @@ Any contact whose primary source matches the selected source is excluded from th
 
 **Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
+### Saving a segment's column layout for everyone
+
+You can reorder, show, and hide columns in an Audiences segment, then save that column layout so everyone in your workspace sees the same columns in that segment, across browsers and devices. Each segment keeps its own saved column layout, so changing the columns in one segment doesn't change the layout of any other segment.
+
+To change and share a segment's column layout:
+
+1.  Open the segment in **People** or **Companies** in Audiences.
+2.  Click the **Columns** button in the toolbar above the records to open the columns menu.
+3.  Drag columns to reorder them, or show or hide individual columns. You can also use **Show all columns**, **Hide all columns**, or **Reset to defaults**.
+4.  Click **Save for everyone**. The button shows **Saving…** while Clay saves the layout. Everyone who opens the segment now sees the same column order and visibility.
+
+**Unsaved column changes are only visible to you.** Until you click **Save for everyone**, the columns menu shows "Changes are only visible to you until you save them for everyone," and a blue dot appears next to the column count on the **Columns** button. To undo your unsaved column changes, click **Discard changes** in the same menu.
+
+**Who can save a column layout:** Any workspace member who can view Audiences can click **Save for everyone** on a segment — saving a column layout doesn't require Admin or Editor access.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
