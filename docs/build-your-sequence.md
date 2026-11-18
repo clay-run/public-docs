@@ -1,7 +1,7 @@
 ---
 title: Build your sequence
 description: Write a campaign's email sequence before launch — add steps and delays, personalize with variables, spintax, and AI snippets, then check data coverage, spam score, and test sends.
-last_synced: 2026-11-17T21:01:33.323Z
+last_synced: 2026-11-18T19:12:01.431Z
 ---
 
 # Build your sequence
@@ -10,7 +10,7 @@ Write, personalize, and pressure-test the emails your sequence sends — before 
 
 The `Sequence` tab is where you write the messages, set how far apart they land, and personalize them with your lead data. Everything here happens before launch, so you can iterate freely: preview the copy against real leads from your segment, check how well your fields are filled in, and send yourself a test.
 
-**Note:** A sequence costs 1 action credit per lead enrolled. Adding AI snippets adds a variable number of data credits per lead on top of that, depending on how much work each snippet does. Clay shows you an estimate in the sequence, so you can see what a change will cost before you commit to it.
+**Note:** Each lead enrolled in a sequence spends action credits. Adding AI snippets adds a variable number of data credits per lead on top of that, depending on how much work each snippet does. Clay shows you an estimate in the sequence, so you can see what a change will cost before you commit to it.
 
 ## Adding steps
 
