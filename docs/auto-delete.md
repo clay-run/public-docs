@@ -69,6 +69,15 @@ To have auto-delete remove contacts who are no longer in your HubSpot list:
 
 **Tip:** Test your rule on a small batch of rows before applying it to the whole table. Deleted rows are not recoverable.
 
+### Can auto-delete remove rows older than a week, or run on a weekly schedule?
+
+No. Auto-delete (available on the Enterprise plan) doesn't support a rolling time window (such as "delete rows older than 7 days") or a recurring schedule (such as "clear the table every week"):
+
+-   **No schedule.** Auto-delete isn't a daily or weekly job. It runs automatically about a minute after rows finish running, and again when you change a table's auto-delete settings.
+-   **No "older than N days" rule.** In **Delete based on conditional rules** mode, you can filter on the **Created At** or **Updated At** column, but date filters compare against a fixed date you choose. A rule like "Created At before March 1" deletes completed rows created before that date, but the date doesn't move forward on its own. To keep deleting older rows, you need to update the date in the filter manually.
+
+To stop a large table from overflowing while still keeping recent rows available to audit, use **Number of rows to keep** instead. Auto-delete keeps the most recent rows (based on when each row was created) up to that number and deletes older rows whose actions have finished running. For example, with **Number of rows to keep** set to 10,000, the table is trimmed back to the newest 10,000 completed rows each time auto-delete runs. **Number of rows to keep** is set per table in the auto-delete settings; if you leave it empty, the table keeps 100 rows, unless Clay support has set a different default for your workspace.
+
 ## Keeping space for incoming records
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
@@ -111,7 +120,7 @@ Having a Send Table Data column does not make the **sending table** compatible w
 
 **Note:** Archive deleted rows is in early access. Contact your Clay account team to have it enabled for your workspace.
 
-When archive is enabled, the **Archive deleted rows** toggle appears in your auto-delete settings. Turning it on stores a copy of every auto-deleted row for up to 30 days after deletion. Archived rows can be downloaded as a CSV file from the History modal.
+When archive is enabled, the **Archive deleted rows** toggle appears in your auto-delete settings. Turning it on stores a copy of every auto-deleted row for up to 30 days after deletion. Archived rows can be downloaded as a CSV for up to 30 days after deletion. Archived rows can be downloaded as a CSV file from the History modal.
 
 You can also select an **Indexed column** in the archive settings. Indexing a column lets you search for and retrieve specific deleted rows within the 30-day archive window.
 
