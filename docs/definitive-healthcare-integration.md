@@ -1,7 +1,7 @@
 ---
 title: Definitive Healthcare integration
 description: Find US hospitals and enrich them with executives, physicians, networks, payor mix, technology, and financial metrics from Definitive Healthcare.
-last_synced: 2026-11-02T16:00:21.641Z
+last_synced: 2026-11-18T19:18:38.950Z
 ---
 
 # Definitive Healthcare integration
@@ -10,14 +10,14 @@ Find US hospitals in Clay and enrich them with executives, physicians, networks,
 
 Definitive Healthcare is a commercial intelligence provider for the US healthcare market, covering hospitals, the networks they belong to, and the executives and physicians affiliated with them. With this integration, you can build hospital lists in Clay and enrich them with firmographics, affiliations, installed technology, payor mix, financial and clinical metrics, and contact details for named executives and physicians.
 
-**Note:** These actions run on a Clay-managed account, so you don't need your own Definitive Healthcare subscription to use them. If you have one, connect your own API key instead — it costs fewer credits per record, and the data you get back matches the entitlements on your account.
+**Note:** These actions run on a Clay-provided account, so you don't need your own Definitive Healthcare subscription to use them. If you have one, connect your own API key instead — it costs fewer credits per record, and the data you get back matches the entitlements on your account.
 
 ## Creating a table with Definitive Healthcare
 
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Definitive Healthcare` and select `Find hospitals` from the results.
 3.  In the modal, you will be asked to `Select Definitive Healthcare account`.
-    -   To use your own Definitive Healthcare subscription rather than the Clay-managed account, click `+ Add account` and enter your API key. Clay saves it as a `Definitive Healthcare API Key` connection and reuses it for every Definitive Healthcare action. ([Learn more about managing integration accounts](https://university.clay.com/docs/managing-integration-accounts))
+    -   To use your own Definitive Healthcare subscription rather than the Clay-provided account, click `+ Add account` and enter your API key. Clay saves it as a `Definitive Healthcare API Key` connection and reuses it for every Definitive Healthcare action. ([Learn more about managing integration accounts](https://university.clay.com/docs/managing-integration-accounts))
 
 ### `Source` Find hospitals
 
