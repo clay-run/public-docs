@@ -470,6 +470,21 @@ Any contact whose primary source matches the selected source is excluded from th
 
 **Keep sync on to keep the suppression list current.** If the source's **Import status** shows **Sync off**, new contacts added to your CRM won't flow into Audiences and won't be suppressed from this segment. Make sure sync is enabled for the source you're using as a suppression list — see [Understanding source import statuses](#understanding-source-import-statuses) above.
 
+### Saving a segment's column layout for everyone
+
+In Audiences, each segment keeps its own saved column layout — the order of its columns and which fields are shown or hidden. The saved column layout is shared with everyone in your workspace who views that segment, on any browser or device. Any workspace member who can view Audiences, including Viewers, can save a segment's column layout.
+
+To change and save a segment's column layout:
+
+1.  Open the segment in **People** or **Companies**.
+2.  Click **Columns** in the top bar.
+3.  Drag fields to reorder the columns, and click the eye icon next to a field to show or hide it. **Show all columns** and **Hide all columns** change every field at once, and the search box finds a field by name.
+4.  Click **Save for everyone**. The button shows **Saving…** while the layout is saved.
+
+Until you click **Save for everyone**, your column changes are visible only to you. The **Columns** button shows a blue dot while you have unsaved changes, and the panel shows "Changes are only visible to you until you save them for everyone." To undo unsaved changes and go back to the segment's saved layout, click **Discard changes**. To return the segment to the default column layout, click **Reset to defaults**, then click **Save for everyone** — like other column changes, a reset is visible only to you until you save it.
+
+Saving a layout on one segment doesn't change any other segment. To apply one column layout to every segment at once, open **All People** or **All Companies**, set up the columns, then click **Apply to all segments** in the **Columns** panel, then click **Continue** in the **Apply to all segments?** dialog.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
