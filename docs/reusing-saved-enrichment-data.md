@@ -1,7 +1,7 @@
 ---
 title: Reusing saved enrichment data
 description: Save the data your enrichments return in Audiences and reuse it on later runs instead of paying for the same data twice.
-last_synced: 2026-10-20T15:07:08.147Z
+last_synced: 2026-11-18T19:16:02.287Z
 ---
 
 # Reusing saved enrichment data
@@ -125,9 +125,9 @@ Shortening a window takes effect at the next lookup, and values already older th
 
 No. A saved value expires a set time after the provider produced it, and serving it again doesn't restart that clock. Once the window lapses the next run buys the data fresh and saves it with a new date.
 
-### Does a reuse choice travel with a preset or a recipe?
+### Does a reuse choice travel with a template or a function?
 
-No. Reuse is a choice about the one step you set it on, so a preset or recipe leaves it behind and a column built from one starts from whatever the destination workspace has set as its default. Set reuse on the new column if you want it.
+A template leaves it behind. Reuse is a choice about the one step you set it on, so a column built from a template starts from whatever the destination workspace has set as its default. Set reuse on the new column if you want it. A function is different: a reuse choice set on one of its own columns applies every time the function runs, whichever table calls it.
 
 ### Why didn't an enrichment reuse a value a teammate's run already paid for?
 
