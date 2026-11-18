@@ -163,7 +163,7 @@ It is the number of days to wait before a lead can be sequenced again, and it is
 
 Which campaigns count toward that window is controlled by `Trigger cooldowns`, under `Enrollment` in the campaign's `Settings` (click the campaign's name at the top of the page, then `Settings`). It is on by default, meaning enrolling a lead in a campaign makes them ineligible for other campaigns during those campaigns' cooldown windows. Turn it off on a campaign whose enrollments shouldn't hold anyone back — a small internal test, say.
 
-**Note:** A new campaign starts with `Cooldown window` set to `None`, so nothing stops the same person appearing in two campaigns at once until you set one. If you want a lead in only one campaign at a time, set a window on each campaign and leave `Trigger cooldowns` on across the board.
+**Note:** A new campaign starts with `Cooldown window` set to `30 days`, so it skips anyone enrolled in the last 30 days in another of your workspace's campaigns that has `Trigger cooldowns` on. Choose `None` if you don't want that. Older campaigns that never had a window saved stay at `None` until you set one. Duplicating a campaign copies its saved window, including `None`; if the original never had a window saved, the copy starts at `30 days`. If you want a lead in only one campaign at a time, set a window on each campaign and leave `Trigger cooldowns` on across the board.
 
 ## FAQs
 
