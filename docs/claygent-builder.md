@@ -86,6 +86,10 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 **Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
 
+**Using an uploaded document in your prompt:** Claygent uses an uploaded document only when your prompt mentions it. Uploading a file doesn't add it to every run on its own. To point your Claygent at a document, type `@` in the prompt and select the document from the list. If your Claygent seems to ignore a document you uploaded, check that the prompt @-mentions it.
+
+**Who can manage uploaded documents:** Workspace Admins and Editors can upload, rename, replace, and delete documents in the **Browse documents** window. Admins and Editors can delete any document in the workspace, including ones someone else uploaded. Viewers can't upload or delete documents.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
@@ -294,6 +298,10 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 ### Who can create or edit agents?
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
+
+### Why do I see "Failed to delete file" when I try to delete an uploaded document?
+
+Deleting a document from the Claygent **Browse documents** window needs the Admin or Editor workspace role. If you have the Viewer role, Clay won't delete the file and shows "Failed to delete file." To remove the document, ask a workspace Admin or Editor to delete it for you, or ask an Admin to change your role (see [Workspace administration](workspace-administration-documentation.md)).
 
 ### Can I duplicate a Claygent?
 
