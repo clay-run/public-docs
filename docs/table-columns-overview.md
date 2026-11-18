@@ -203,6 +203,8 @@ If you try to add a waterfall (for example a Work Email, Personal Email, or Mobi
 
 Clay deletes each removed provider's column and its validation column from the table. To decide which providers to keep, check which ones actually return results in your table. Removing providers that rarely return results frees up far more space than deleting columns one at a time. Before you delete any columns, check whether another table looks up data from this one, because a dependency like that isn't visible from this table. See [Editing an existing waterfall](building-a-data-waterfall.md#editing-an-existing-waterfall) for more about changing a waterfall's providers.
 
+**Swapping providers when your table is at its column limit.** You can replace providers in an existing waterfall even when your table is already at its column limit. Remove the providers you want to drop and add their replacements in the same edit, then click **Save**. Clay doesn't block the save as long as the new provider columns (plus their validation columns, if validation is turned on) are no more than the columns you're removing, for both the total column count and the action (enrichment) column count. If the replacements need more columns than you removed and the table is at its column limit, the save fails and Clay shows a **"Failed to update waterfall"** message. To fix this, remove more providers in the same edit, or free up other columns first.
+
 If you still need more columns after cleaning up, contact support. Clay support can raise the column limits for your workspace.
 
 ## Create child columns from a parent column
