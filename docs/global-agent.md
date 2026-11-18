@@ -76,12 +76,24 @@ You can pause a schedule, run it early, or end it from the schedule’s own page
 The global agent starts from your `Knowledge Hub`, your workspace’s record of what you sell and who you sell it to. When a task should lean on something specific, add a reference to it as you write the message:
 
 -   Type `@` for a part of your `Knowledge Hub`, or a document you’ve uploaded there.
--   Type `$` or `/` for your `Workspace skills`, the instructions your team has written for work the global agent does often. Your team creates them on the `Agent skills` page in workspace settings.
+-   Type `$` or `/` for your `Workspace skills`, the instructions your team has written for work the global agent does often. Your team creates them on the `Agent skills` page in workspace settings, or by asking the global agent to save one from a chat.
 -   Select `Attach file` to add one or more files to a message: spreadsheets including CSVs, PDFs, Word documents, text files, and images, up to 50 MB each.
 
 **Note:** One message can carry up to 50 references. Add more and the send button stays locked until you remove some.
 
 See [Knowledge Hub](https://university.clay.com/docs/knowledge-hub) for what lives there and how to change it.
+
+### Saving a workspace skill from a chat
+
+You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires a Workspace Admin.
+
+-   **Workspace Admins:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
+-   **Everyone else:** the global agent doesn’t save the skill. It tells you to ask a Workspace Admin to add it.
+-   **Drafts:** anyone can ask for a skill draft. The global agent shows the draft as formatted text in the chat and doesn’t save it.
+
+A saved workspace skill shows up when you type `$` or `/` in the message box as soon as the run finishes, without reloading the page. If a skill with that name already exists, the new skill is saved under the same name with `-2`, `-3`, and so on added to the end, and the global agent tells you the name it used.
+
+Saving a skill from a chat stores the Markdown instructions only. To upload a skill folder with reference files, scripts, or other assets, use the `Agent skills` page in workspace settings.
 
 ## Permissions and approvals
 
