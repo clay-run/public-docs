@@ -63,4 +63,15 @@ Your business context lives in `Knowledge Hub` now. The `AI context` page no lon
 
 ### When does my Knowledge Hub update?
 
-Adding or removing a document starts an update right away. Past that it’s always on: as Clay learns from your workspace activity and your chats with it, it proposes a change whenever something in your sections should change. A stretch can pass with nothing waiting for you.
+Adding or removing a document starts an update right away, unless your workspace has reached its daily update limit (see below). Past that it’s always on: as Clay learns from your workspace activity and your chats with it, it proposes a change whenever something in your sections should change. A stretch can pass with nothing waiting for you.
+
+### Is there a limit on how often my Knowledge Hub can update?
+
+Yes. By default, each workspace can start up to 10 `Knowledge Hub` updates per 24 hours. The allowance refills gradually rather than all at once — one update every 2 hours 24 minutes — and holds at most 10 at a time. These all count toward the `Knowledge Hub` daily update limit:
+
+-   Refreshing `Knowledge Hub`
+-   Adding or removing a document
+-   Connecting or disconnecting a source
+-   Scheduled refreshes
+
+When your workspace reaches the limit, Clay shows `Daily update limit reached. Documents and changes are saved. Refresh Knowledge Hub tomorrow to apply them.` and doesn’t start the update. Your current sections stay as they are, and your uploaded documents and changes are kept. Once the allowance refills, refresh `Knowledge Hub` to apply them.
