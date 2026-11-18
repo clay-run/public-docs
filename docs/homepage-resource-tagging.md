@@ -19,13 +19,36 @@ You can add tags to:
 
 ## Finding your tables and workbooks
 
-The Clay homepage at [app.clay.com](https://app.clay.com) lists every table, workbook, folder, and function in your workspace. Three tabs let you navigate your resources:
+Where your tables, workbooks, and folders appear depends on which Clay homepage your workspace shows. Clay is gradually rolling out a new homepage, so some workspaces see it and others still see the original homepage. If the top of your homepage says **What can we build today?** and shows a **Switch to old homepage** link in the top-left of the page header, you are on the new homepage. See [Where are my folders on the new homepage?](#where-are-my-folders-on-the-new-homepage) below.
+
+On the original homepage, [app.clay.com](https://app.clay.com) lists every table, workbook, folder, and function in your workspace. Three tabs let you navigate your resources:
 
 -   **All files** — Shows all tables, workbooks, folders, and functions you have created or have access to. If you have built something and cannot find it, start here. You can sort by **Created at** or **Last opened by me** to surface older resources.
 -   **Recents** — Shows the resources you have opened most recently, sorted newest first. Use this when you remember working on something recently but cannot recall where it is stored.
 -   **Favorites** — Shows only resources you have starred. Star any table or workbook by clicking the ☆ icon on its row.
 
 To open a table or workbook, click its name from any of these views.
+
+### Where are my folders on the new homepage?
+
+The new Clay homepage is currently rolling out gradually, so not every workspace has it yet. On the new homepage, your folders are still there. They live on the **Tables & workbooks** page, not on the homepage itself.
+
+The tabs on the new homepage (**Created by me**, **Recently viewed**, and **Favorites**) show workbooks and tables only. Folders do not appear in these tabs, and the new homepage has no **All files** tab.
+
+To find your folders on the new homepage:
+
+1.  In the left sidebar, click **Tables & workbooks** (just below **Home** and **Workflows**).
+2.  The Tables & workbooks page lists your folders, tables, and workbooks. Use the **All**, **Recents**, and **Favorites** tabs at the top to switch views.
+3.  Click a folder to open it. You can also create new folders from this page.
+
+### Switching back to the old homepage
+
+If you prefer the original homepage, which lists all your tables and folders on the homepage itself:
+
+1.  On the new homepage, click **Switch to old homepage** in the top-left of the page header.
+2.  Confirm in the dialog. Home goes back to listing all your tables and folders, with the **All files**, **Recents**, and **Favorites** tabs.
+
+Clay saves your choice, so the homepage you picked stays in place after you reload or sign in again. To return to the new homepage, click **Switch to new homepage** in the same spot.
 
 ## **When to use tags**
 
