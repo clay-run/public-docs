@@ -1,7 +1,7 @@
 ---
 title: Audiences FAQs and best practices
 description: Answers to common questions and best practices for using Clay Audiences, covering segments, matching, field limits, enrichment, and setup.
-last_synced: 2026-08-11T13:50:33.269Z
+last_synced: 2026-11-18T19:16:00.401Z
 ---
 
 # Audiences FAQs and best practices
@@ -38,7 +38,7 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
 
--   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update every 15 minutes.
+-   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update every 15 minutes. HubSpot list imports, and warehouse imports without a timestamp field, run every 12 hours instead.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segment membership is recalculated approximately every 60 minutes.
 
 Enrichments configured with `Auto-enrich new records` enabled automatically process new records entering a segment, typically within 15 minutes.
