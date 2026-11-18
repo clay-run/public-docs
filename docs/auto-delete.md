@@ -120,7 +120,7 @@ Having a Send Table Data column does not make the **sending table** compatible w
 
 **Note:** Archive deleted rows is in early access. Contact your Clay account team to have it enabled for your workspace.
 
-When archive is enabled, the **Archive deleted rows** toggle appears in your auto-delete settings. Turning it on stores a copy of every auto-deleted row for up to 30 days after deletion. Archived rows can be downloaded as a CSV for up to 30 days after deletion. Archived rows can be downloaded as a CSV file from the History modal.
+When archive is enabled, the **Archive deleted rows** toggle appears in your auto-delete settings. Turning it on stores a copy of every auto-deleted row for up to 30 days after deletion. Archived rows can be downloaded as a CSV file from the History modal.
 
 You can also select an **Indexed column** in the archive settings. Indexing a column lets you search for and retrieve specific deleted rows within the 30-day archive window.
 
