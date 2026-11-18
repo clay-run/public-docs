@@ -466,6 +466,20 @@ To fix the account mismatch on a Claygent column:
 
 The same rule applies to other providers. GPT models need an OpenAI account (for example, **Clay-managed OpenAI account**), and Gemini models need a Google Gemini account. To review or add accounts, click **Manage accounts** next to the dropdown.
 
+### How do I turn off AI input mapping suggestions on my Claygent column?
+
+There's no setting to turn off AI input mapping suggestions on a Claygent column. When you add a new Claygent column to a table, the **Map agent inputs** section ("Connect table columns to the agent's inputs") automatically uses AI to suggest which table column feeds each of the agent's inputs. You can also request new suggestions at any time by clicking **Suggest input mappings with AI**.
+
+Automatic input mapping suggestions run only once, when you first create the Claygent column. Reopening the settings of an existing Claygent column doesn't re-run them, so the mappings you saved are kept.
+
+To change an input mapping the AI suggested:
+
+1.  In the **Map agent inputs** section, click the **x** on the column chip in the input you want to change.
+2.  Type `/` in that input and select the table column you want to use.
+3.  Save the column.
+
+**Note:** Clicking **Suggest input mappings with AI** replaces your current input mappings — including manual changes you haven't saved — with new AI suggestions. Only click it when you want Clay to re-suggest your inputs.
+
 ### How do I mark a Claygent input as optional?
 
 Each input in the Claygent builder shows **(required)** or **(optional)** next to its name. To change whether an input is required:
