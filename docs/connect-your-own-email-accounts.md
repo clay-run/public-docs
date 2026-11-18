@@ -1,6 +1,6 @@
 ---
 title: Connect your own email accounts
-description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect or bulk-delete accounts with auth errors.
+description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, how to reconnect or bulk-delete accounts with auth errors, and what happens to connected accounts when you downgrade to the Free plan.
 last_synced: 2026-11-10T20:17:32.598Z
 ---
 
@@ -184,3 +184,11 @@ Either way, replies are fetched from the mailbox over IMAP and collected on the 
 Smartlead allows an email address to be connected to one account at a time, so an address that was previously linked to another Smartlead account has to be released there before it can connect here.
 
 If you have access to that Smartlead account, delete the address there and connect it again in Clay. If you don't, contact Clay support with the address you're trying to add and they can remove it for you.
+
+### What happens to my connected email accounts if I downgrade to the Free plan?
+
+The Free plan doesn't include Sequencer, so when a workspace moves to Free (or to any plan without Sequencer access), Clay deletes the email accounts you connected yourself — through Google OAuth, Microsoft OAuth, manual SMTP setup, or bulk CSV upload — from Clay and from Smartlead, Clay's email integration partner. Connected email accounts aren't kept in the workspace with warmup turned off; they're removed, and campaigns can no longer send from them. Deletion starts as soon as the plan change takes effect, with no grace period.
+
+Before you confirm a cancellation or a downgrade to Free, the confirmation dialog lists the connected email accounts that will be disconnected. Downgrading to a plan that still includes Sequencer keeps your connected email accounts in place.
+
+Email accounts purchased through Clay are handled separately: they're cancelled and deleted permanently when you downgrade to Free. See [What happens to my purchased email accounts if I downgrade my plan?](https://university.clay.com/docs/buying-email-accounts#what-happens-to-my-purchased-email-accounts-if-i-downgrade-my-plan).
