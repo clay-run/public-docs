@@ -1,7 +1,7 @@
 ---
 title: Sequencer FAQs and best practices
 description: Answers to common Sequencer questions on costs, limits, sequences, and leads, plus deliverability best practices and troubleshooting.
-last_synced: 2026-11-06T22:48:34.763Z
+last_synced: 2026-11-18T19:11:00.712Z
 ---
 
 # Sequencer FAQs and best practices
@@ -56,9 +56,9 @@ Launch, Growth, and Enterprise. Table-based campaigns stay available on Launch, 
 
 Buying email accounts in Clay is a step up from there: it needs Growth or Enterprise. On Launch, connect email accounts you already own and send your campaigns from those.
 
-### What does Sequencer cost?
+### How does Sequencer charge credits?
 
-Each lead enrolled in a campaign costs 1 action credit. AI snippets add data credits per lead on top of that, varying with the model you choose, and the campaign shows you an estimate before you launch.
+Each lead enrolled in a campaign spends 1 action credit. AI snippets add data credits per lead on top of that, varying with the model you choose, and the campaign shows you an estimate before you launch.
 
 Two things are easy to miss:
 
