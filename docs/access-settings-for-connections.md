@@ -11,7 +11,7 @@ Workspace admins have two ways to control connection access, both managed from `
 
 **Note:** This feature is available to Enterprise customers.
 
-1. **Build permissions** — Restrict which workspace members can use a specific connection to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
+1. **Build permissions** — Restrict which workspace members can use a specific connection, including Clay-managed connections, to configure workflows and columns. Members only see connections they're allowed to use; all workspace members can still run workflows that are already set up.
 2. **Approval to add connections** — Require that members request admin approval before adding any new connection to the workspace.
 
 ## Managing connections as an admin
@@ -52,6 +52,22 @@ Connection access settings are available in Enterprise workspaces only. Workspac
 5.  Click `Save` to apply the changes
 
 To update access later, just edit the connection and add or remove users or user groups from the allowlist.
+
+### Setting permissions on a Clay-managed connection
+
+Clay-managed connections — connections where Clay provides the API key and usage draws on your workspace credits — support the same access settings as connections you add yourself. In `Settings` → `Connections`, Clay-managed connections are marked with a `Clay-managed account` indicator and show `Clay` as the owner.
+
+Because Clay owns these connections, only workspace admins can change the access settings on a Clay-managed connection. Like other connection access settings, this is available in Enterprise workspaces only.
+
+To restrict who can use a Clay-managed connection:
+
+1.  Navigate to `Settings` → `Connections`.
+2.  Find the Clay-managed connection you want to manage and edit it.
+3.  Under `Access settings`, choose `Anyone in the workspace` or `Specific people and groups`.
+4.  If you selected `Specific people and groups`, add the individual members or [user groups](https://university.clay.com/docs/user-groups) who should be able to build with this Clay-managed connection.
+5.  Click `Save` to apply the changes.
+
+When a Clay-managed connection is set to `Specific people and groups`, members who aren't on its allowlist won't see that connection in `Connections` or in account selectors, so they can't configure new columns or workflows with it. As with other connections, access settings on a Clay-managed connection apply when configuring columns and workflows, not when running them: existing columns that already use the Clay-managed connection keep running.
 
 ## What users can and cannot do
 
