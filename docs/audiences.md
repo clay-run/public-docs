@@ -1112,23 +1112,23 @@ If you want a master list in Audiences of the leads you couldn't find an email f
 
 **Why rows with no email are left out:** the `Upsert Audiences Record` column (listed as **Create or update Audiences record**) finds or creates each Audience record using the lookup fields you pick. If **Email** is the only lookup field and a row's email is blank, that row isn't added to your Audience. When every selected lookup field is empty on a row, the cell shows the error `All lookup field values are empty` and no Audience record is created for that row.
 
-**Which lookup fields you can use for People:** **Email**, **LinkedIn URL**, and **Phone**. You can't look people up by name, so a lead needs at least one of these values before `Upsert Audiences Record` can add it to your Audience.
+**Which lookup fields you can use for People:** **Email**, the person's professional network profile URL, and **Phone**. You can't look people up by name, so a lead needs at least one of these values before `Upsert Audiences Record` can add it to your Audience.
 
-**To add leads with no email by LinkedIn URL:**
+**To add leads with no email by professional network profile URL:**
 
 1.  In the table, add a second `Upsert Audiences Record` column for **People**, or duplicate your existing one. Your existing email-based column stays as it is.
-2.  Set **Lookup fields** to **LinkedIn URL** and map it to the table column that holds each person's LinkedIn URL. Map the same Audience fields as your email-based column.
-3.  Add a run condition (**Only run if**) so the new column runs only when the email column is empty and the LinkedIn URL column is not empty. Rows that already went into your Audience by email skip the new column, so they aren't added twice.
+2.  In **Lookup fields**, select the professional network profile URL field and map it to the table column that holds each person's profile URL. Map the same Audience fields as your email-based column.
+3.  Add a run condition (**Only run if**) so the new column runs only when the email column is empty and the profile URL column is not empty. Rows that already went into your Audience by email skip the new column, so they aren't added twice.
 4.  Run the new column on the table.
 5.  Open **All People** and confirm the leads with no email now appear.
 
 Repeat these steps in each table that holds leads you want on the same master list.
 
-**Alternative — select more than one lookup field on one column:** if you select both **Email** and **LinkedIn URL** as lookup fields on the same `Upsert Audiences Record` column, Clay skips any lookup field that is empty on a row and uses the remaining ones. The cell only shows `All lookup field values are empty` when every selected lookup field is empty on that row.
+**Alternative — select more than one lookup field on one column:** if you select both **Email** and the profile URL field as lookup fields on the same `Upsert Audiences Record` column, Clay skips any lookup field that is empty on a row and uses the remaining ones. The cell only shows `All lookup field values are empty` when every selected lookup field is empty on that row.
 
-**Leads with no email and no LinkedIn URL:** these rows can't be added to your Audience yet. Run an enrichment that finds the person's LinkedIn URL (or phone number) first, then run the `Upsert Audiences Record` column again on those rows.
+**Leads with no email and no profile URL:** these rows can't be added to your Audience yet. Run an enrichment that finds the person's professional network profile URL (or phone number) first, then run the `Upsert Audiences Record` column again on those rows.
 
-**How LinkedIn URL matching handles different formats:** before matching on LinkedIn URL, Clay normalizes the URL on both sides. It lowercases the URL and ignores `http`/`https`, `www.`, `m.` and country subdomains (such as `uk.`), query strings, `#` fragments, and trailing slashes, and it converts legacy `/pub/` profile URLs to `/in/` URLs. So the same profile written in different formats matches one Audience record. Two different profile slugs for the same person (for example, an old custom URL and a new one) are treated as different values and create separate Audience records. To avoid this, map the same LinkedIn URL column in every table you send to Audiences. Email lookups are matched after lowercasing and trimming spaces.
+**How profile URL matching handles different formats:** before matching on the professional network profile URL, Clay normalizes the URL on both sides. It lowercases the URL and ignores `http`/`https`, `www.`, `m.` and country subdomains (such as `uk.`), query strings, `#` fragments, and trailing slashes, and it converts legacy `/pub/` profile URLs to `/in/` URLs. So the same profile written in different formats matches one Audience record. Two different profile slugs for the same person (for example, an old custom URL and a new one) are treated as different values and create separate Audience records. To avoid this, map the same profile URL column in every table you send to Audiences. Email lookups are matched after lowercasing and trimming spaces.
 
 ### Why doesn't my Clay table appear in the Person source filter?
 
