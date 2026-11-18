@@ -68,6 +68,15 @@ The exported CSV includes only the columns and rows visible in your current view
 
 Downloading a table as CSV does not consume any Actions or Data Credits.
 
+### Why some exported values start with an apostrophe (')
+
+When you download a Clay table as CSV, Clay adds a single quote (`'`) to the start of any text value or column header that begins with `=`, `+`, `-`, `@`, a tab, or a carriage return. This stops spreadsheet apps such as Excel or Google Sheets from running the value as a formula when you open the downloaded CSV. For example:
+
+-   A text value `=SUM(A1:A3)` downloads as `'=SUM(A1:A3)`.
+-   A phone number stored as text, such as `+14155551234`, downloads as `'+14155551234`.
+
+Only text values are changed. Values stored as numbers (for example, `-5`) and text that doesn't start with one of these characters (for example, `a=b`) download unchanged. If you need the original text in another tool, remove the leading `'` from those cells after you open the file.
+
 ## Next steps after importing
 
 Once your data is in Clay, you can enrich rows to pull in additional information.
