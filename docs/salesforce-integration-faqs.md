@@ -21,7 +21,7 @@ To connect Clay to Salesforce, your Clay user needs:
 2.  Manage User Data via APIs
 3.  Perform Requests Anytime (refresh\_token, offline\_access)
 
-An OAuth user must set up the initial connection. After that, any user in your Clay workspace can use the integration.
+An OAuth user must set up the initial connection. After that, by default, any member of your Clay workspace can use that Salesforce connection. On Enterprise plans, workspace admins and the member who added the connection can limit a Salesforce connection to specific people and groups — see [Can I give some Clay users read-only Salesforce access and others write access?](#can-i-give-some-clay-users-read-only-salesforce-access-and-others-write-access)
 
 **Connection Scope and Permissions**
 
@@ -53,6 +53,26 @@ You cannot restrict individual tables to specific Salesforce objects or fields. 
 If you need different tables to have different levels of access — for example, one table that can only read and another that can write — create separate Salesforce connections authenticated as different Salesforce users, each with the appropriate Salesforce permissions. Then select the correct connection when setting up each table's actions.
 
 For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+## Can I give some Clay users read-only Salesforce access and others write access?
+
+Yes, by combining two controls. A Salesforce connection in Clay has no read-only or read/write setting of its own:
+
+-   **What a Salesforce connection can read or write** is set in Salesforce, by the permissions of the Salesforce user the connection authenticates as (the signed-in user for **User Sign In**, or the **Run As** user for **Client Credentials**).
+-   **Which Clay users can use a Salesforce connection** is set in Clay, by the connection's access setting in `Settings` → `Connections`. By default, every Salesforce connection is shared with `Anyone in the workspace`.
+
+A workspace can have more than one Salesforce connection, so you can set up one Salesforce connection for read-only Clay users and another for Clay users who are allowed to write to Salesforce:
+
+1.  **In Salesforce, set up two Salesforce users** — one whose profile or permission sets grant only **Read** on the objects and fields Clay uses, and one that also grants **Edit** (and **Create**, if Clay should create records). See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md).
+2.  **In Clay, add a Salesforce connection for each Salesforce user** in `Settings` → `Connections`. Give each connection a clear name, such as "Salesforce – read only" and "Salesforce – read/write".
+3.  **Restrict the read/write Salesforce connection (Enterprise plans).** In `Settings` → `Connections`, find the read/write Salesforce connection, choose `Specific people and groups` under access settings, add the members or user groups who are allowed to write to Salesforce, and click `Save`.
+4.  **Leave the read-only Salesforce connection set to `Anyone in the workspace`**, so every member can look up and import Salesforce records.
+
+Members who aren't on a Salesforce connection's access list don't see that connection when they set up Salesforce columns, sources, or workflows. For the full list of what restricted members can and can't do — including running existing columns that already use the connection — see [Access settings for connections](access-settings-for-connections.md).
+
+**Connection access settings are available on Enterprise plans.** In workspaces on other plans, every Salesforce connection is shared with `Anyone in the workspace`: all members can select either Salesforce connection, and Salesforce enforces what each connection can actually read or write. If you're on an Enterprise plan and don't see access settings on your Salesforce connections, contact Clay support.
+
+**Salesforce license cost:** You don't need a full Salesforce user license for each Clay connection. **Client Credentials** connections work with Salesforce Integration User and API-only licenses — see [What Salesforce license type is required to connect Clay?](#what-salesforce-license-type-is-required-to-connect-clay)
 
 ## How much data does Clay read from Salesforce, and can I limit it to only the records I enrich?
 
