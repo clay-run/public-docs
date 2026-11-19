@@ -198,6 +198,23 @@ For Functions that run a provider waterfall, the cost per record also varies: th
 
 To see exactly what a rep spent and on which Functions: go to `Settings` → `Usage` → `MCP` tab, then expand the rep's row to see a per-Function credit breakdown.
 
+### How are credits tracked when an MCP Function calls another Function?
+
+When a rep runs a Function from ChatGPT, Claude, or Glean through Clay's MCP, credits are charged for the enrichment actions the Function runs, not for the Function itself. If that Function calls another Function (a nested Function), the credits used by the nested Function are still attributed to the rep who started the original Function through MCP.
+
+Nested Functions don't create a separate credit pool. All credits from the top-level Function and every Function it calls count toward the invoking rep's MCP credit limit on the `MCP` page.
+
+### Can reps run Clay Workflows through MCP?
+
+Yes. Clay Workflows can be run from ChatGPT, Claude, or Glean through Clay's MCP, the same way Functions can. This is currently in beta: if you don't see the `MCP for reps` option on a workflow, contact support to request access for your workspace.
+
+To make a workflow available to reps through MCP:
+
+1.  Open the workflow's settings.
+2.  Check `MCP for reps` ("Allow this workflow to be called from ChatGPT and other MCP clients").
+
+Once a workflow is enabled for MCP, reps see it alongside your MCP-enabled Functions when they ask their AI tool what Clay Functions or workflows are available, and they can run it from a prompt. Workflow runs started through MCP are charged to the invoking rep's MCP credit limit, just like Function runs.
+
 ### Where else can I see MCP credit usage?
 
 MCP usage appears in the main credit usage dashboard at `Settings` → `Usage`, which tracks all credit consumption across your workspace broken down by table, integration, and time period.
