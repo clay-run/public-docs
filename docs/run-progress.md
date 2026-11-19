@@ -3,7 +3,7 @@ title: Run progress
 description: Clay provides multiple ways to track and monitor run progress
   across your tables and workflows, including how to use the built-in Errored
   rows view to filter to failed rows, what happens when a workflow node fails
-  (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
+  (including why action nodes fail with timeout errors, and how the Run options failure setting works for nodes that run on each person, company, or list item), bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
   of rows, troubleshoot cells stuck in Queued status, recover action column cells
@@ -113,9 +113,15 @@ To recover runs that failed with a timeout:
 -   **From the UI:** use **Bulk re-run** (below) to restart the failed runs at their failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating them.
 -   **On a schedule:** use the Clay CLI to find failed runs and re-run them automatically — see **Retrying failed workflow runs via the CLI** (below).
 
-### Continuing past failed items in Repeat mode
+### Continuing past failed items when a node runs on each item
 
-The **If an item fails** setting is available to all Workflows customers. When a node has **Repeat** turned on, it runs once for each item in a list. The node's **If an item fails** setting controls what happens when individual items error:
+Repeating a node and its failure setting are available to all Workflows customers. A workflow node's sidebar has a **Run options** section with a **Run on** choice that controls whether the node repeats:
+
+-   **The whole list, all at once** — The node runs once and doesn't repeat.
+-   **Each person, one at a time** or **Each company, one at a time** — Shown when an upstream data source in the workflow searches people or companies. The node runs once for each person or company that search returns.
+-   **Each item, one at a time** — The node runs once for each item in a list you pick.
+
+When a node runs on each person, company, or item, the sidebar's credit estimate is shown per run of that unit (for example, **/ person run**, **/ company run**, or **/ list item run**). A **Run options** failure setting, labeled **If some, but not all, people fail**, **If some, but not all, companies fail**, or **If some, but not all, list items fail**, controls what happens when individual items error:
 
 -   **Continue the run** — The node completes, failed items are left out of its output, and the run keeps going.
 -   **Mark the run as failed** — The run is marked **Failed** after all items finish.
