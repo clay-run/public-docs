@@ -1,7 +1,7 @@
 ---
 title: Account Research Agents
 description: "Account Research Agents (open beta) are always-on agents that run across every account in an Audience segment, maintaining agent-managed fields that can sync to your CRM or data warehouse."
-last_synced: 2026-11-06T22:49:18.158Z
+last_synced: 2026-11-10T17:50:37.954Z
 ---
 
 # Account Research Agents
@@ -20,7 +20,7 @@ Unlike a Claygent in a table, Account Research Agents come pre-configured with c
 
 **Note:** Audiences must be set up before you can create an Account Research Agent. This means connecting at least one data source — Salesforce, HubSpot, Snowflake, BigQuery, Databricks, or Gong — and having at least one Audience segment defined.
 
-1.  In `Audiences`, connect your data sources. Import your CRM, data warehouse, and Gong — the import wizard walks through field mapping. See [**Setting up Audiences**](https://university.clay.com/lessons/setting-up-audiences) for a full walkthrough.
+1.  In `Audiences`, connect your data sources. Import your CRM, data warehouse, and Gong — the import wizard walks through field mapping. To add a source, open the `Sources` tab in `All Companies` and click `Add source`; a workspace with no data yet opens straight to a source picker instead. See [**Setting up Audiences**](https://university.clay.com/lessons/setting-up-audiences) for a full walkthrough.
 2.  Create an Audience segment for the accounts you want the agent to run over — for example, high-signal expansion accounts or a closed-lost cohort.
 3.  Open the segment and click the `Account agents` button in the top right. This opens the `Account agent builder`, where you configure your Account Research Agent. Just describe what you want (e.g., `build me an agent to analyze closed-lost opportunities`) to [**Sculptor**](https://www.clay.com/university/guide/sculptor), our AI copilot, and it generates the prompt and output fields for you. From here you can also configure what tools, functions, and context the agent has access to.
 4.  Before running across the whole segment, click `Test` to try the agent on a few sample records in the builder, and review the `Total cost estimate` in the run modal so you don't spend credits unexpectedly. Then save the agent and run it against the segment. Once complete, click into any account to inspect its agent-managed field outputs and the reasoning behind each one.
