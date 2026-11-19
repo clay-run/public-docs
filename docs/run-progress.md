@@ -158,6 +158,8 @@ If you want an agent or script to catch and re-trigger failed workflow runs on a
     ```
     Returns run status, per-node progress, and error messages. Add `--verbose` for full node inputs and outputs.
 
+    For waterfall nodes, which appear in `clay workflows runs get` output with or without `--nodes`, each node also includes a `waterfallResult` object once the waterfall step has public outputs. `waterfallResult` shows the waterfall's status (`accepted`, `exhausted`, or `continue`) and an `attempts` list with each provider's outcome, validation result, and reason. When a provider's result was accepted, it also shows the winning `value` and the `sourceProviderId` that returned it; both are absent when the status is `exhausted`. You can see why a waterfall didn't return a result without opening its child run.
+
 3.  **Re-run the failed runs** from the node where they failed:
     ```
     clay workflows runs rerun <workflowId> <runIds...> --from failed
