@@ -1301,9 +1301,21 @@ See [Workflows](https://university.clay.com/docs/workflows) for supported trigge
 
 ### How do I export an audience segment to CSV or Excel?
 
-Audiences doesn't have a CSV or Excel download button. A People or Companies list or segment in Audiences can't be downloaded directly. To get the records into a CSV file, put them into a Clay table first, then download the table as a CSV. Clay tables export to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
+You can export a saved segment in Audiences to a CSV file with **Export to CSV**. CSV exports support up to 100,000 records per segment. Audiences exports to CSV only, not to an Excel (.xlsx) file — open the downloaded CSV in Excel or Google Sheets.
 
-**To export an audience segment to CSV:**
+Workspace Admins and Editors can start a CSV export; Workspace Viewers can't. **Export to CSV** works from saved segments only — it isn't available on **All People** or **All Companies**, so create a segment first.
+
+**To export an audience segment to CSV with Export to CSV:**
+
+1.  Open the segment in Audiences.
+2.  Click **Export to CSV**. If your segment has more than one export option, open the **Export action** dropdown and select **Export to CSV**.
+3.  Optionally change the **File name** and choose which fields to include under **Fields**. The fields default to the columns currently shown for the segment.
+4.  Click **Start export**.
+5.  The export runs in the background, and you aren't notified when it finishes. To download the file, click **Exports** in the left sidebar, find your export, click **…** on its row, and select **Download**. **Download** stays disabled while the export is still processing.
+
+**If your segment has more than 100,000 records:** the CSV export shows "CSV exports support up to 100,000 records. Narrow your segment filters and try again." Add filters to bring the segment to 100,000 records or fewer, or export the records through a Clay table instead, as described below.
+
+**To export an audience segment to CSV through a Clay table:**
 
 1.  Open the segment in Audiences and click `Enrich`.
 2.  Click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.

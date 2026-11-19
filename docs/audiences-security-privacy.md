@@ -115,7 +115,7 @@ Deleting covers `Accounts` and `Contacts`, and it removes the imported source re
 
 ### Does a `Viewer` who can see Audiences data also have a way to get it out?
 
-Not through Audiences. Export paths — CRM write-back and the CSV download in the ad-sync flow — require write access, so they are unavailable to a `Viewer`. A `Viewer` can still read data on screen, which is worth weighing when you grant the permission type.
+Not through Audiences. Export paths — CRM write-back, a segment's **Export to CSV**, and the CSV download in the ad-sync flow — require write access, so they are unavailable to a `Viewer`. A `Viewer` can still read data on screen, which is worth weighing when you grant the permission type.
 
 ### Are records in Audiences automatically eligible for ad targeting?
 
