@@ -12,7 +12,7 @@ Keep one reviewable record of your business in Clay — what you sell, who you s
 
 It’s a living record of what you sell, who you sell to, and which signals matter. Clay builds it from your website and public information, your workspace activity, your chats with Clay, and documents you upload or connect from Notion, Google Drive, and GitHub, so every play starts with context specific to your business. Clay keeps proposing updates as it learns, and you accept or dismiss each one.
 
-**Note:** `Knowledge Hub` is in beta and rolling out gradually, so you may not see it in your workspace yet. Making and approving edits, including adding documents and connecting apps, needs the `Admin` role. If you can read the page but not change it, ask a workspace admin to make the change for you.
+**Note:** `Knowledge Hub` is in beta. Making and approving edits, including adding documents and connecting apps, needs the `Admin` role. If you can read the page but not change it, ask a workspace admin to make the change for you.
 
 Clay fills in the same five sections for every workspace:
 
