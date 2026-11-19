@@ -1,6 +1,6 @@
 ---
 title: Clay (global agent)
-description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including scheduling, permissions, and credit usage.
+description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including permissions and credit usage.
 last_synced: 2026-11-19T07:45:50.367Z
 ---
 
@@ -66,37 +66,66 @@ For the tools themselves, see [Workflows](https://university.clay.com/docs/workf
 
 The global agent starts from your `Knowledge Hub`, your workspace’s record of what you sell and who you sell it to. When a task should lean on something specific, add a reference to it as you write the message:
 
--   Type `@` for a part of your `Knowledge Hub`, or a document you’ve uploaded there.
--   Type `$` or `/` for your `Workspace skills`, the instructions your team has written for work the global agent does often. Your team creates them on the `Agent skills` page in workspace settings.
--   Select `Attach file` to add one or more files to a message: spreadsheets including CSVs, PDFs, Word documents, text files, and images, up to 50 MB each.
+-   Type `@` for a part of your `Knowledge Hub`, a document you’ve uploaded there, or, if your workspace uses Audiences, one of your saved segments.
+-   Type `$` or `/` for your `Workspace skills`, the instructions your team has written for work the global agent does often. Your team creates them on the `Agent skills` page in workspace settings, or by asking the global agent to save one from a chat.
+-   Select the `+` button (`Add context`) in the message box to pick a reference from a menu instead of typing:
+    -   `Attach files` adds one or more files to a message: spreadsheets including CSVs, PDFs, Word documents, text files, and images, up to 50 MB each.
+    -   `Knowledge Hub`, `Segments`, and `Skill` let you search for a Knowledge Hub document, a saved segment, or a workspace skill. `Segments` appears only when your workspace uses Audiences and has saved segments.
+    -   `Discover skills` opens the Clay marketplace in a new tab, where you can browse more skills.
+
+Each reference you add appears in the message as a chip. To remove one, select the `X` on the chip, or press Backspace twice: once to select the chip and once to remove it.
 
 **Note:** One message can carry up to 50 references. Add more and the send button stays locked until you remove some.
 
 See [Knowledge Hub](https://university.clay.com/docs/knowledge-hub) for what lives there and how to change it.
 
+### Saving a workspace skill from a chat
+
+You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires a Workspace Admin.
+
+-   **Workspace Admins:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
+-   **Everyone else:** the global agent doesn’t save the skill. It tells you to ask a Workspace Admin to add it.
+-   **Drafts:** anyone can ask for a skill draft. The global agent shows the draft as formatted text in the chat and doesn’t save it.
+
+A saved workspace skill shows up when you type `$` or `/` in the message box as soon as the run finishes, without reloading the page. If a skill with that name already exists, the new skill is saved under the same name with `-2`, `-3`, and so on added to the end, and the global agent tells you the name it used.
+
+Saving a skill from a chat stores the Markdown instructions only. To upload a skill folder with reference files, scripts, or other assets, use the `Agent skills` page in workspace settings.
+
 ## Permissions and approvals
 
-Every task carries a permission level that decides what the global agent does without stopping to ask. `Allow changes` is the default. Set it in the message box before you send a task.
+Every task carries a permission level that decides what the global agent does without stopping to ask. `Ask for approval` is the default. Set it in the message box before you send a task. In the message box, the permission picker shows the current level by its short name: `Ask` for `Ask for approval`, or `Allow` for `Allow everything`.
 
-| Level | What it allows |
-| --- | --- |
-| Allow changes | The global agent edits freely and runs test data. It waits for your approval before running a workflow outside test data, and before deleting a workflow or a Claygent. |
-| Allow everything | Nothing waits for approval, including workflow runs and deletions. |
+The two permission levels you can pick are:
+
+| Level | Subtitle in the picker | What it allows |
+| --- | --- | --- |
+| Ask for approval (default) | Pauses before runs, sends, and deletes | The global agent builds and edits freely. It waits for your approval before most runs, sends, publishes, and deletes — including test data runs. See the lists below for exactly what waits and what doesn’t. |
+| Allow everything | Won’t stop to ask permission | Nothing waits for approval, including workflow runs, sends, and deletions. |
 
 **Note: a task set up before `View only` was retired still shows it.** Nothing breaks, and changing it means picking one of the two levels above.
 
-### What runs without asking
+### What waits for approval under Ask for approval
 
-`Allow changes` holds a short, specific list, so plenty of real work — including work that spends credits — goes ahead on its own. Before you leave a task running, it’s worth knowing that these need no approval:
+With `Ask for approval`, the global agent stops and shows you an approval card before any of the following:
 
--   Runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Running a workflow, including test data runs and runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Resuming a paused run or a paused trigger.
 -   Publishing a workflow, which turns on its live triggers so runs start from new events.
--   Resuming a paused run, testing a single action or code step, function runs, and searches.
--   Creating or resuming a signal, which then checks records on a schedule.
+-   Creating, updating, resuming, or deleting a signal.
+-   Launching or resuming a campaign.
+-   Running a routine or triggering an ad sync.
+-   Archiving a segment or deleting a segment field.
+-   Deleting a workflow, a workflow alert, or a Claygent.
 
-Deletions outside that list go ahead too: archiving a segment, deleting a segment field, a signal, a webhook, or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
+### What runs without asking under Ask for approval
 
-The same goes for credentials and billing — creating, renaming, or deleting an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself. Sending a test email from a campaign, or a test event to a webhook, needs no approval either.
+With `Ask for approval`, building and editing go ahead on their own, and so does some work that spends credits. These need no approval:
+
+-   Building and editing workflows, and adding or removing test data rows.
+-   Searches.
+-   Deleting a webhook or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
+-   Creating or renaming an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself.
+-   Sending a test email from a campaign, or a test event to a webhook.
 
 ## What the global agent won’t do on its own
 
@@ -107,7 +136,7 @@ The global agent works through a task without stopping for approval at each step
 -   **It won’t create or edit a table.** Ask it to rebuild one as a workflow instead.
 -   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
 
-Everywhere else the global agent acts as it goes, and that includes spending credits on enrichments and workflow runs. So the checkpoint is you reading its work, not it asking permission: open the `Artifacts` panel, check the workflow or segment it produced, then run it yourself once it looks right.
+Everywhere else the global agent acts as it goes, and that includes work that spends credits, such as searches. With `Ask for approval` it still pauses before runs, sends, and deletes; with `Allow everything` it doesn’t. So the checkpoint is you reading its work: open the `Artifacts` panel, check the workflow or segment it produced, then approve the run, or run it yourself, once it looks right.
 
 It does come back to you mid-task when a decision is genuinely yours and would change the outcome — which list to start from, which of two scoring approaches to take. It gathers those onto one card rather than interrupting you repeatedly.
 
@@ -121,6 +150,19 @@ The global agent spends data credits as it works, and the work it sets up spends
 Working with the global agent spends data credits only; it doesn’t consume actions. What you pay for its own work doesn’t change with the model behind it, so a model change on our side never changes your cost. Asking it to redo something, or changing direction partway through a build, spends credits on top of the first attempt.
 
 **Tip:** If you’re not sure what a task will take, ask the global agent to plan it before it builds. Planning is cheap, and you get to check the approach first.
+
+### Estimated credits for common tasks
+
+These are rough estimates of what the global agent’s own work spends on some common tasks. Your costs will vary with what a task involves, how long the conversation runs, and how much data the global agent works through.
+
+| Task | What it covers | Estimated data credits |
+| --- | --- | --- |
+| Build and run a search | Create or refine a company or people search and check its preview. | 4–12 |
+| Build a segment | Turn your criteria into a saved segment and check who’s in it. | 6–12 |
+| Answer a question about your records | Count, filter, compare, or summarize records already in Audiences. | 3–12 |
+| Build and test a simple workflow | A short workflow, such as a CSV feeding a code step, sits at the low end. Setting up enrichments and checking the results moves it up. | 6–30 |
+
+The estimates don’t include enrichments or other work the global agent runs for you, which spend credits and actions as usual.
 
 ### Free credits in Beta
 
@@ -174,6 +216,18 @@ Yes. The global agent can see the page you have open, so you can ask about what�
 Yes. Select `Dictate`, the microphone in the message box, and speak. It works when you start a task, when you follow up, and when you answer one of the global agent’s questions.
 
 When you finish, what you said lands in the message box as text you can edit, and nothing sends until you send it. A recording finishes on its own after five minutes.
+
+### Why did the global agent give me a CSV to download instead of creating a table?
+
+The global agent can’t create or edit a Clay table, so when you ask it for a list — contacts or companies a workflow found, for example — it delivers the results as a CSV file in the conversation instead of adding them to a table. The file appears as a card in the task with the file name and a `Download` button.
+
+To get the global agent’s CSV into a new Clay table:
+
+1.  Select `Download` on the file card in the task to save the CSV.
+2.  On your workspace home, select `Import data`, then choose `Import CSV`.
+3.  Upload the file. A new table from a CSV doesn’t need column mapping — Clay adds each column in the CSV as a column in the new table.
+
+If you’d rather add the rows to a table you already have, open that table and import the CSV there instead; in that case you map the CSV’s columns to the table’s fields. The global agent’s CSV is a standard file, so it imports the same way as any other CSV. See [How to import your CSV into Clay](csv-import-overview.md) for the full import options.
 
 ### Should I use `Core` or `Deep`?
 
