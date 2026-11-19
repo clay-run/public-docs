@@ -251,6 +251,22 @@ Once downgraded to the Free plan, your Data Credit balance is capped at **200 cr
 
 To avoid an interruption, keep your payment information current in `Settings` → `Plan & billing`.
 
+### I redeemed a promo link, but Plan & billing still shows Trial. Was it applied?
+
+You might redeem a promotional link, such as an offer for 90 days of the Growth plan, and see a confirmation message, but `Settings` → `Plan & billing` still shows your workspace on the **Trial** plan. That's expected. A promotional plan offer doesn't change the plan shown on the Plan & billing page. A redeemed promotional offer does the following:
+
+-   Unlocks the offered plan's features (for example, Growth plan features) for the length of the offer, counted from when you redeemed the link.
+-   Adds bonus data credits and actions on top of your standard trial balance. The bonus amounts depend on the offer.
+
+To confirm a promotional offer was applied, open `Settings` → `Usage`:
+
+-   Promotional data credits appear on a separate **Bonus credits** line, below your trial data credits. Bonus credits expire one year after they're granted.
+-   Promotional actions are included in your **Trial actions** balance. After your 14-day trial ends, the same balance is labeled **Monthly actions**.
+
+**Dates and plan labels during a promotional offer:** The date shown on `Plan & billing` reflects your standard 14-day trial, not the end of the promotional offer. When the 14-day trial ends, `Plan & billing` shows the **Free** plan. However, the offered plan's features stay available until the promotional period ends, and your Bonus credits remain in your balance. The end date of a promotional offer isn't shown in the app; to confirm it, contact [Clay support](https://app.clay.com).
+
+**Redeeming a promo code more than once:** Each promo code can be redeemed once per person and once per workspace. If you try to redeem a code again, you'll see "This promo code has already been redeemed, either by you or on this workspace."
+
 ### Why was my account locked?
 
 Clay automatically flags accounts suspected of fraud or abuse of free trial credits. If your account has been locked, you'll see a message on the sign-in screen indicating your account has been temporarily locked for fraud protection.
