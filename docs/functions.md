@@ -150,6 +150,25 @@ This happens because the function's Live view retains at most 1,000 completed ro
 
 To view historical rows that have aged out, click **View archive** in the function's footer. Archived rows are kept for 30 days, and you can download them as a CSV with **Export full archive** in the archive table's toolbar.
 
+### How do I find which table a row in my function came from?
+
+A function can be called from many tables, so each row in a function stores where it came from in an **Origin** object in its **Function inputs** column. Use the Origin to trace a function row back to the table and row that sent it, for example when something breaks.
+
+**To open the source table and row from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click the **Function inputs** cell on the row you want to trace. The **Cell details** panel opens on the right and shows the **Origin** object, including:
+    -   **Table Id** (`t_...`): the table that called the function.
+    -   **Field Id** (`f_...`): the function column in that table.
+    -   **Record Id** (`r_...`): the row in that table that sent the data.
+3.  Click **Go to row in origin table** at the top of the **Cell details** panel. The source table opens in a new tab, scrolled to that row with the row selected.
+
+**Go to row in origin table** appears when the function was called directly from a table. If you don't see the button, you can still open the source table by adding its **Table Id** to your workspace URL: `https://app.clay.com/workspaces/<your workspace ID>/tables/<Table Id>`. Your workspace ID is the number after `/workspaces/` in your browser's address bar.
+
+**To find the function column in the source table:** in the source table's toolbar, click the columns button (for example, **8/10 columns**), then paste the **Field Id** into the **Search for a column** box. Column search matches column names and exact column IDs, so the function column appears in the results.
+
+**Searching by ID on the Clay homepage isn't supported.** The homepage **All files** search matches table, workbook, and folder names only, so pasting a **Table Id** there shows "No results found." Use the **Go to row in origin table** button or the workspace URL above instead.
+
 ### What's the difference between an input and a column in a function?
 
 Inputs are the values that change from table to table — typically identifiers like a company domain, a person's full name, or a LinkedIn URL. You define them when saving the function, and map them when calling the function from a different table. Columns that aren't marked as inputs are fixed enrichment logic that runs the same way every time.
