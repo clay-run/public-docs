@@ -170,6 +170,17 @@ If you want an agent or script to catch and re-trigger failed workflow runs on a
 
 Additional `clay workflows runs` subcommands: `steps <workflowId> <runId>` (list the execution steps of a run), `pause <workflowId> <runId>` (pause an active run), `resume <workflowId> <runId>` (resume a paused run).
 
+**Reading very large workflow runs with the CLI.** Clay CLI 1.18.0 and later can read workflow runs that are too large to return in one response. When a run's details are too large, `clay workflows runs get` and `clay workflows runs steps` fail with a `validation_error` (exit code 2) whose `details.code` is `run_too_large`. To read a run that's too large:
+
+1.  **List the run's steps without their input and output data.** Step errors are still included:
+    ```
+    clay workflows runs steps <workflowId> <runId> --omit-payloads
+    ```
+2.  **Fetch full input and output data for only the steps you need**, as comma-separated step IDs (up to 50 per request):
+    ```
+    clay workflows runs steps <workflowId> <runId> --step-ids <stepId1>,<stepId2>
+    ```
+
 **Clay does not automatically re-run failed workflow runs.** To build a recurring retry loop, schedule the `list --status failed` → `rerun --from failed` sequence to run a few times a day using a cron job or your agent's scheduler. The agent lists failed runs, identifies which ones failed due to transient provider errors (such as timeouts), and re-runs them from their failed node without manual intervention. For re-running many failed runs at once from the UI instead, use the **Bulk re-run** feature in the **Runs** dashboard described above.
 
 ## Stopping a run
