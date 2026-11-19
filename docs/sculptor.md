@@ -1,7 +1,7 @@
 ---
 title: Sculptor
 description: Your go-to-market co-pilot
-last_synced: 2026-04-26T01:40:38.269Z
+last_synced: 2026-10-23T20:15:53.210Z
 ---
 
 # Sculptor
@@ -43,7 +43,7 @@ Sculptor conversations cannot be deleted or cleared — there is no control to r
 
 ## Best practices
 
--   **Go step by step.** Sculptor does best when handling a problem one element at at ime.
+-   **Go step by step.** Sculptor does best when handling a problem one element at a time.
 -   **Provide context.** Sculptor performs best when you include details, examples, and framing.
 -   **Check your work.** All results are inspectable—review and validate before scaling.
 -   **Use Sculptor as a strategist.** Treat it like a partner to help shorten your learning curve, navigate complex systems faster, and accelerate iteration.
@@ -62,11 +62,11 @@ Once Sculptor adds columns and sandbox mode is active:
 
 For more on how sandbox mode works, see [Sandbox mode](https://www.clay.com/university/guide/sandbox-mode).
 
-## Analyst mode
+## Analyzing a table
 
-Analyst mode lets you query any Clay table using natural language to uncover trends and insights. Ask questions in plain English, and Sculptor will analyze your entire table to identify patterns, outliers, and strategic insights you can export as reports.
+`Analyze` mode lets you query any Clay table using natural language to uncover trends and insights. Ask questions in plain English, and Sculptor will analyze your entire table to identify patterns, outliers, and strategic insights you can export as reports.
 
-### How to use analyst mode
+### How to use `Analyze` mode
 
 1.  **Open Sculptor.** From within any table, click `Chat with Sculptor` → `Analyze`.
 2.  **Ask analytical questions.** For example:
@@ -83,7 +83,7 @@ The following table covers common Sculptor use cases and key notes for each.
 
 | Use case | Notes and caveats |
 | --- | --- |
-| List building | Sculptor's primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. Sculptor can also help draft outreach emails to those prospects. |
+| List building | Sculptor's primary use case. It can handle most of the setup for you—start from the homepage input to create a CPJ search, enrich the list in a table, then move from a company table to a people table. |
 | Data enrichment | Once your table is set up, Sculptor excels at recommending the right enrichments and generating Claygent prompts tailored to your workflow. |
 | Building co-pilot | A great first pass before turning to GTME, EGS, or Support. Sculptor can troubleshoot errors, analyze patterns in your data, and even conduct research directly within your table. |
 
