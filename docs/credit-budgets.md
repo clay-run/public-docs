@@ -78,7 +78,26 @@ The Clay CLI and Clay's Agent have the same workflow budget controls as the Clay
 
 ## Tracking spend by resource on the Budgets page
 
-Open a budget from `Settings` → `Budgets` to see its spend over time. Use the **Breakdown** option to see that budget's spend split by resource — **Workflows** and **Workbooks** — so you can tell how much of a budget's credits went to workflows versus workbooks.
+Open a budget from `Settings` → `Budgets` to see its spend over time. The budget's **Resources** tab lists everything that draws credits from that budget. A credit budget can cover resources as well as people:
+
+-   **Resources** — workbooks, tables, workflows, and other resources appear in the Resources tab because they've been assigned to the budget. Each row shows the resource's icon (workbooks show a notebook icon) and its name. Click the arrow icon next to the name to open the resource in a new tab.
+-   **People** — individual workspace members appear in the Resources tab because their **MCP** usage is charged to the budget. MCP usage is the credits a person spends when they use Clay from an AI tool such as Claude or ChatGPT. People rows show the member's profile picture and name, with no arrow icon.
+
+### Why is a workbook listed in my budget's Resources tab?
+
+A workbook appears in a credit budget's Resources tab because the workbook is assigned to that budget, so any credits the workbook uses come out of that budget. A workbook spends credits whenever:
+
+-   a column runs in one of its tables
+-   leads are enrolled in a sequence
+-   leads are enriched in an ad sync
+
+### Why are people listed in my budget's Resources tab?
+
+A person appears in a credit budget's Resources tab because their MCP usage — the credits they spend using Clay from an AI tool such as Claude or ChatGPT — is charged to that budget. Each person chooses which budget their MCP usage is charged to on the authorization page when they connect their AI tool to Clay.
+
+### Filtering a budget's Resources tab by type
+
+At the top of a budget's Resources tab, the **Breakdown** filter shows **All resources** by default. Select a type — for example **Workbooks**, **Workflows**, or **MCP** — to see only that type's spend on the budget. Only types that are present on the budget appear as filter options.
 
 ## Managing budget access
 
