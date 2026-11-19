@@ -1,6 +1,6 @@
 ---
 title: Workspace settings
-description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, AI Context and Knowledge Hub, deletion, and recovering a previous workspace.
+description: Create, switch between, and manage Clay workspaces — including workspace name, picture, billing email, SSO setup, agency setups, Knowledge Hub, deletion, and recovering a previous workspace.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -68,7 +68,7 @@ If you're managing Clay for multiple clients, the recommended approach is to use
 
 **Why separate workspaces work well for agencies:**
 
--   Each workspace has its own **AI Context** domain (accessible via **AI context** in the left sidebar of your workspace, or via **Knowledge Hub** in workspaces where Knowledge Hub has replaced AI Context), so you can set the right company domain and business context per client rather than sharing a single workspace setup.
+-   Each workspace has its own **Knowledge Hub**, so you can set the right company domain and business context per client rather than sharing a single workspace setup.
 -   Credits and billing are tracked separately per workspace, making it easy to see exactly what each client is consuming.
 -   When a project ends, you can hand the workspace over to the client by ensuring they have admin access and removing yourself — all tables, workbooks, and settings remain in place.
 
