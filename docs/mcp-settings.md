@@ -84,6 +84,12 @@ The native Clay MCP contact enrichment — including the `search-contacts` and `
 
 The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
+### Can I build or edit Clay Audiences through Clay's MCP?
+
+No. Clay's MCP is built for looking up and querying Audiences data — for example, filtering accounts or asking questions about accounts with the `ask-question-about-accounts` tool. Clay's MCP has no tools for creating or editing audiences (segments) or Audiences fields. Build and edit audiences in the Clay app, or use the Clay CLI.
+
+To let marketers manage Audiences through a coding agent such as Devin, Claude Code, or Codex, use the Clay CLI instead of Clay's MCP. The CLI's `clay audiences` commands can create, update, and archive segments, create and manage Audiences fields, and count the records in an audience. To run a workflow on an audience segment's members, use `clay workflows runs test <workflowId> --audience-segment <segmentId> --limit <n>`. For the full command list, sign-in requirements, and roles, see [Does Clay have an API?](https://university.clay.com/docs/using-clay-as-an-api) under **CLI agent plugin**.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
