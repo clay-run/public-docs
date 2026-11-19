@@ -419,6 +419,25 @@ Note that credits are not refunded for enrichments where the system operated as 
 
 It depends on the provider's billing model. In some cases, a data provider may not charge when no data is found — in those cases, your credits will be refunded automatically. Other providers charge Clay for the API call regardless of whether data is found, so credits are deducted either way. You can see the exact credit cost for each enrichment in the enrichment panel before running.
 
+### Are Data Credits charged for Topic Intent when no intent is found?
+
+Topic Intent (open beta) uses buying-intent data from Bombora, Delivr.ai, and Intentsify. Whether you're charged Data Credits when no intent is found depends on how you use Topic Intent:
+
+-   **Monitoring companies or people you already have** (for example, records in a table or an Audience): Clay charges a flat Data Credit rate for **each selected topic on each record checked**, whether or not intent is detected. The intent provider charges for every check regardless of the result, so a Topic Intent check that returns no intent topics is still charged and is not refunded.
+-   **Finding new companies or people with intent** (a Topic Intent search source): Clay charges for each matched topic on each company or person returned. The search only returns records that show intent, so you don't pay for records without intent. If the Topic Intent search returns no results, the Data Credits are refunded automatically.
+
+The table below lists the Data Credit cost per selected topic, per record checked, when monitoring existing companies or people with Topic Intent.
+
+| Intent provider | Modern plans | Legacy plans |
+| --- | --- | --- |
+| Delivr.ai | 0.2 Data Credits | 0.5 Data Credits |
+| Intentsify | 0.2 Data Credits | 0.5 Data Credits |
+| Bombora | 0.3 Data Credits | 0.6 Data Credits |
+
+**Example:** On a modern plan, monitoring 100 companies for 3 Delivr.ai topics and 2 Bombora topics costs 100 × (3 × 0.2 + 2 × 0.3) = **120 Data Credits** per check, even if none of the 100 companies show intent.
+
+**Finding people with intent:** Bombora provides company-level intent only. To search for people showing intent directly, use Delivr.ai or Intentsify.
+
 ### What happens to credits if an enriched email fails validation or turns out to be undeliverable?
 
 Credits are charged when a provider returns a result — including email addresses that later fail a validation step or turn out to be undeliverable. There is no automatic credit refund when a returned email fails validation or bounces after sending; credits are deducted at the point the provider returns data, regardless of what happens to that address downstream.
