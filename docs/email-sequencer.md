@@ -764,6 +764,19 @@ If a connected sending account is the rep's own inbox, replies already arrive in
 4.  Run the forward column on one `EMAIL_REPLY` row and confirm the email reaches the correct rep's inbox.
 5.  Add an `Only run if` condition so the forward column only runs on `EMAIL_REPLY` events where the lookup returned a primary email, then turn on `Auto-run`. Replies from sending accounts that aren't in your mapping table are skipped instead of forwarded.
 
+### Why are forwarded Sequencer replies landing in spam or showing a "Be careful with this message" warning?
+
+When you forward a lead's reply from Clay Sequencer, whether with a `Forward lead email in campaign` column or the forward option in the global inbox, the forwarded email is sent **from the sending account** that received the reply. That's the inbox on your sending domain (for example, `joel@yoursendingdomain.com`), not Clay or your rep's primary address. The forward also uses that sending account's sender name. Clay doesn't have an option to change the from address or sender name on forwarded emails.
+
+If your sending accounts are on a different domain from your company's primary email, and their sender name matches a person in your organization, your company's email security can treat the forward as possible impersonation. In Gmail, the rep sees a yellow **"Be careful with this message"** banner saying the sender "isn't part of your organization but is using the same name as an account in your organization." Depending on how your email admin has configured this protection, these messages are kept in the inbox with the warning, moved to spam, or quarantined. This comes from your organization's email security settings. It doesn't mean your campaign emails to leads are being flagged as spam.
+
+To stop forwarded replies from being flagged:
+
+1.  **Ask your email admin to trust your sending domains.** In Google Workspace, the relevant protection is **Protect against spoofing of employee names** under Gmail's **Safety** → **Spoofing and authentication** settings in the Admin console. Your admin decides how that protection treats mail from your Clay sending domains, for example by adding those domains as approved senders so forwards reach reps' inboxes.
+2.  **Or change the sender name on the sending account** so it doesn't exactly match the rep's name in your organization's directory. For purchased email accounts, see [How do I change the sender name or other details on a purchased email account?](buying-email-accounts.md#how-do-i-change-the-sender-name-or-other-details-on-a-purchased-email-account). Leads see this sender name too, so weigh this against how you want your campaign emails to appear.
+
+After the change, forward one `EMAIL_REPLY` row to a rep and confirm it arrives in their inbox without the warning.
+
 ### Why does the reply body show HTML instead of plain text?
 
 This is expected. When a lead replies using an HTML-capable email client like Microsoft Outlook, the reply arrives in HTML format. The `Reply Message` field in your campaign events table includes two sub-fields:
