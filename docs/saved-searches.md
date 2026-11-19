@@ -38,7 +38,7 @@ Recent searches automatically track your last 5-10 searches and are temporary. S
 
 ### How do I add people from a saved search or my People audience to a Clay table?
 
-Clay Audiences doesn't have an "add to table" or "send to table" action on a People or Companies segment. The segment's **Send** menu offers options such as **Send to workflow** and **Sync to ad platforms**, but none of them copy the segment's records into a Clay table. If you ran a people search, saved it, and then saved the results to **People** in Audiences, import the saved search into a Clay table.
+By default, Clay Audiences doesn't have an "add to table" or "send to table" action on a People or Companies segment. The segment's **Send** menu offers options such as **Send to workflow** and **Sync to ad platforms**, but none of them copy the segment's records into a Clay table. Sending a segment to a table with **Add to workbook** is turned off by default and is enabled for individual workspaces on request — contact support to ask about enabling it for your workspace. If you ran a people search, saved it, and then saved the results to **People** in Audiences, import the saved search into a Clay table.
 
 **Import your saved search into a table.** Because the people came from a saved people search, you can pull the same search results directly into a table, including an existing table that already has your enrichment columns set up:
 
@@ -50,6 +50,38 @@ Clay Audiences doesn't have an "add to table" or "send to table" action on a Peo
 If you run the search outside an existing table, the save menu offers `Save to new table` (when you're in a workbook) or `Save to new workbook and table` instead.
 
 **Note:** A Clay table holds up to 50,000 rows, while Audiences holds millions of records. For large or ongoing lists, keep the people in Audiences and use **Send** → **Send to workflow** to run your steps on them — see [Connecting a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment).
+
+### Why didn't the rows I deleted from a segment-connected table come back?
+
+A Clay table that you created from an Audiences segment with **Add to workbook** doesn't refill itself after you delete its rows. **Add to workbook** is turned off by default and is enabled for individual workspaces on request. A segment-connected table gets records from its segment in two ways only:
+
+-   **When the table is created**, all of the segment's current records are imported into the table once, up to 50,000 rows.
+-   **After that**, only records that newly join the segment are added to the table, within about 15 minutes of joining.
+
+Records that were already sent to the table aren't sent again. So if you delete rows from a segment-connected table, those rows don't come back from the segment, however long you wait. The table has no resync, re-run, or backfill button for the segment. The table's source settings only show a **View [segment name]** link back to the segment.
+
+Duplicating a segment-connected table doesn't help. The copy doesn't get its own feed from the segment: the segment stays connected to the original table only, and the duplicate gets no new segment records.
+
+**To start over with all of the segment's records in a table:**
+
+1.  Open the segment in Audiences and click **Send** in the top right.
+2.  In the **Send** sidebar, click **Export action** → **Add to workbook**. If **Add to workbook** is the only export option for your workspace, the button shows that label directly.
+3.  Complete the **Send to workbook** dialog. Clay creates a new table and imports the segment's current records into it.
+4.  Add your enrichment and formula columns to the new table again.
+
+### Can I add another segment to an existing segment-connected table?
+
+No. A Clay table created from an Audiences segment with **Add to workbook** receives records from that one segment only. You can't add a second segment as a source to the existing table, and **Add to workbook** always creates a new table rather than adding records to an existing one. **Add to workbook** is turned off by default and is enabled for individual workspaces on request.
+
+To get records from more than one segment into the same table, create a new segment in Audiences whose filters cover the records from both segments, then send that segment to a table with **Add to workbook**.
+
+**To run the same columns and enrichments on several segments, use a workflow instead of a table.** A workflow's segment trigger (**New member in segment** in the trigger picker, shown as **Member added** on the trigger node) can watch more than one segment:
+
+1.  Open a segment in Audiences and click **Send** → **Send to workflow**, then build your enrichment and scoring steps as workflow nodes.
+2.  Open the trigger node and click **Add segment** to add each additional segment.
+3.  The trigger node shows how many segments it watches, for example **2 segments**. Click it to see the list of segments.
+
+Records that enter any of the connected segments run through the same workflow steps. See [Connecting a workflow to a segment](audiences.md#connecting-a-workflow-to-a-segment) for how to publish the workflow and run it on members already in a segment.
 
 ### Who can see my saved searches?
 
