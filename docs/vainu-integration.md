@@ -1,7 +1,7 @@
 ---
 title: Vainu integration
 description: Enrich Nordic companies with registry details and figures from their filed annual accounts using Vainu.
-last_synced: 2026-11-07T03:30:31.589Z
+last_synced: 2026-11-18T19:17:51.170Z
 ---
 
 # Vainu integration
@@ -15,7 +15,7 @@ Vainu is a company data provider that builds its company records from the Nordic
 1.  While in a Clay table, click `Add enrichment` and search for `Vainu`.
 2.  Under `Integrations`, select one of the Vainu actions — the integration is listed as `Vainu (Nordic)`.
 3.  In the modal, you will be asked to `Select Vainu account`.
-    -   If you have your own Vainu account, click `+ Add account` and enter your `Client ID` and `Client secret`, which you create in Vainu under `Settings` → `API Access`. Otherwise, use the Clay-managed account.
+    -   If you have your own Vainu account, click `+ Add account` and enter your `Client ID` and `Client secret`, which you create in Vainu under `Settings` → `API Access`. Otherwise, use the Clay-provided account.
 
 **Note:** Vainu reads the national business registries of Finland, Sweden, Norway and Denmark, so these actions cover companies registered in one of those four countries. If you connect your own Vainu credentials, the registries you can reach follow your Vainu subscription — Clay checks which ones your credentials cover when you add the account and tells you what it found.
 
