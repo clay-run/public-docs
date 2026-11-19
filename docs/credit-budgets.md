@@ -91,6 +91,26 @@ To update access for an existing budget, open it from `Settings` → `Budgets`, 
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
 
+## Giving a new member a budget when you invite them
+
+Workspace admins can give a new member access to a credit budget, such as a set test budget for a new hire, directly from the `Invite members` window. The `Budgets` column in that window lists only budgets whose access is limited to specific people and groups. Budgets open to everyone in the workspace aren't listed there, because every member can already use them.
+
+To invite someone with a credit budget:
+
+1.  Create the budget first: go to `Settings` → `Budgets`, click **Create**, enter a name and credit limit, set the default access so only specific people and groups can use it, and click **Save**.
+2.  Go to `Settings` → `Team` and click `Invite`.
+3.  Enter the person's email address and press **Enter**.
+4.  In that person's row, choose a role, then open the `Budgets` dropdown and select one or more budgets.
+5.  Click `Send invites`.
+
+The budget access takes effect when the person accepts the invite. It adds them to the budget's access list. It doesn't assign any workbooks or workflows to the budget. If you also add the person to a user group in the `Groups` column, any budgets that group already has access to are selected automatically and labeled "via" the group name.
+
+To give an existing member access to a budget, open the budget from `Settings` → `Budgets`, click **Edit**, and add them to the budget's access list.
+
+### Why the Budgets dropdown in the invite window says "None available"
+
+The `Budgets` dropdown in the `Invite members` window shows **None available** when your workspace has no credit budgets whose access is limited to specific people and groups. This happens if you haven't created any budgets yet (`Settings` → `Budgets` shows "No budgets yet"), or if all of your budgets are open to everyone in the workspace. To fix it, create a budget whose access is limited to specific people and groups (or edit an existing budget's access setting), then reopen the `Invite members` window and select it. The `Groups` dropdown shows **None available** in the same way when your workspace has no user groups.
+
 ## Email alerts for budget usage
 
 Clay sends email alerts to workspace admins when a budget reaches specific usage thresholds:
