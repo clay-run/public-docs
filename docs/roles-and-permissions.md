@@ -101,8 +101,19 @@ To invite a new member to your workspace:
 
 -   Go to `Settings` → `Team`.
 -   Click the `Invite` button, enter the email address of the person you want to invite, then press **Enter** (or type a comma) to confirm it. You can add multiple addresses this way.
--   Select the appropriate role from the dropdown and click `Send invites`.
+-   Each person you add appears in a list with a `Role` dropdown in their row. Choose a role for each person, then click `Send invites` (the button shows the number of invites, for example `Send 3 invites`).
 -   The invited person will receive an email to join the workspace with the specified role.
+
+### **Assign roles, groups, and budgets to several invitees at once**
+
+When you invite people to your Clay workspace — by typing email addresses on the `Invite` tab or on the review step of a CSV upload — you can set the role for several invitees at once instead of changing each row:
+
+1.  Check the box next to each email address you want to change, or check the box in the header row to select everyone in the invite list.
+2.  The header row shows how many people are selected (for example, `3 selected`) and a `Role` dropdown. Choose a role to apply it to everyone selected. If the selected people currently have different roles, the dropdown shows `Mixed`.
+3.  If user groups are enabled for your workspace, use the `Groups` dropdown in the header row to add or remove a group for everyone selected. If credit budgets are enabled for your workspace and you can manage credit controls, use the `Budgets` dropdown in the header row the same way.
+4.  To take the selected people off the invite list before sending, click the `X` button in the header row.
+
+You can still change any one person's role, groups, or budgets from the dropdowns in their own row.
 
 ### **Invite members from a CSV file**
 
@@ -112,7 +123,7 @@ Workspace admins can invite up to 1,000 people at once by uploading a CSV file, 
 2.  In the `Invite members` window, switch from the `Invite` tab to the `Upload CSV` tab.
 3.  Upload a `.csv` file. The file must be under 1 MB and contain at most 1,000 rows. A header row is optional — Clay detects it automatically.
 4.  Choose the column that contains email addresses. Clay pre-selects the column with the most email addresses and shows example values. Click `Continue`.
-5.  Review the invite list. Set a role for each person, or use the `Apply to all` row to set the same role for everyone. If user groups or credit budgets are enabled for your workspace, you can assign those here too.
+5.  Review the invite list. Set a role for each person in their row, or select several people with the checkboxes and set their role together from the header row (see [Assign roles, groups, and budgets to several invitees at once](#assign-roles-groups-and-budgets-to-several-invitees-at-once)). If user groups or credit budgets are enabled for your workspace, you can assign those here too.
 6.  Click `Send invites` (the button shows the number of invites, for example `Send 47 invites`). A progress counter shows how many have been sent.
 
 **Which rows a CSV invite skips:** On the review step, Clay leaves out invalid email addresses, duplicates, people who are already in your workspace, your own email, and any email that isn't on your own email domain. A summary line shows how many rows were skipped and why.
