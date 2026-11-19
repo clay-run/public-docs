@@ -1,7 +1,7 @@
 ---
 title: Connect your own email accounts
 description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, how to reconnect or bulk-delete accounts with auth errors, and what happens to connected accounts when you downgrade to the Free plan.
-last_synced: 2026-11-10T20:17:32.598Z
+last_synced: 2026-11-19T19:10:36.670Z
 ---
 
 # Connect your own email accounts
@@ -108,7 +108,7 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 Three provider-specific details to watch for:
 
 -   For a consumer Gmail address, Clay fills in the SMTP and IMAP hosts for you. When the `Sender email` ends in `@gmail.com` or `@googlemail.com`, the `SMTP host` field is set to `smtp.gmail.com` and the `IMAP host` field to `imap.gmail.com`. Both fields stay editable, and a host you type yourself is never overwritten. If you change the `Sender email` to a non-Gmail address, the hosts Clay filled in are cleared. Google Workspace addresses on your own domain aren't filled in automatically, so enter `smtp.gmail.com` and `imap.gmail.com` yourself for those.
--   Gmail mailboxes need an app password for SMTP access rather than the normal account password. You can create one in your Google account security settings, under 2-step verification.
+-   Gmail mailboxes need an app password for SMTP access rather than the normal account password. 2-step verification has to be turned on for the Google account before you can create one, and the app password option sits under it in your Google account security settings.
 -   If you enter an Outlook or Office 365 hostname, the modal points you back to Microsoft OAuth. Outlook retired IMAP access in 2022, so OAuth is the path that works for those mailboxes.
 
 ### Upload accounts in bulk
