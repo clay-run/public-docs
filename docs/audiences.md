@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-10-08T17:37:34.526Z
+last_synced: 2026-11-18T19:15:58.700Z
 ---
 
 # Audiences
@@ -42,7 +42,7 @@ To add a data source, use the controls shown in your workspace:
 -   **If you see Records, Sources, and Exports tabs:** open **All People** or **All Companies**, select **Sources**, then click **Add source**.
 -   **If you see Add data in the top right:** click **Add data** → **Add Source**.
 
-The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot open their own source settings panel instead.
+The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot ask you to connect an account first, then add each object through a wizard.
 
 **Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
 
@@ -170,20 +170,16 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 ### Importing from HubSpot
 
-**Note:** Setup must be completed separately for Contacts, Companies, and Deals. Run through the steps once per connected HubSpot account. HubSpot Deal import is currently in early access — contact your Growth Strategist to enable it for your workspace.
+**Note:** Each HubSpot object is set up as its own import, and one connection can hold several, including list imports. Clay lists every import you add in the HubSpot source settings, where you can open or remove any of them.
 
-1.  Click `Add data` → `Add Source` → select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview).
-2.  Select `Contacts` at the top of the sync panel.
-3.  Enable the `Import` toggle.
-4.  Add any HubSpot fields you want to segment by — only fields included here will appear as columns and filter options in your Audience.
-5.  Name the corresponding Clay fields — these become the column names in Audiences.
-6.  Select `Companies` and repeat steps 3–5 for accounts.
-7.  To import Deals (if enabled for your workspace), select `Deals` at the top of the sync panel.
-8.  Enable the `Import` toggle.
-9.  Add any Deal fields you want to filter or segment by — common fields include `Deal Stage`, `Amount`, `Close Date`, and `Owner`.
+1.  Open **All People** or **All Companies** → **Sources** → **Add source** (or **Add data** → **Add Source**), select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview), then choose your account under `Select HubSpot account`.
+2.  Click `Connect`, or `Add records` if the account is already connected to Audiences. Either one opens the `Add records from HubSpot` wizard.
+3.  Choose the `Object type` — `Companies`, `Contacts`, or `Deals` — and select `All records` under `Record selection`.
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
-10.  Name the corresponding Clay fields.
-11.  Click `Save and Preview`, then `Confirm`.
+4.  Click `Continue`. Clay saves the import and opens its settings, with `Import sync` turned on.
+5.  Map your Audiences fields to HubSpot fields — only fields you map here will appear as columns and filter options in your Audience. Click `Auto-map` to match them automatically, or `Add mapping` to add a row yourself.
+6.  Click `Save and review`, then `Confirm` to start the import.
+7.  Repeat the wizard for each additional object you want in Audiences.
 
 **Note: HubSpot is currently import-only.** Clay imports HubSpot records and enriches them in your Audience, but does not currently write enriched data or segment membership back to HubSpot. Salesforce is the only native write-back destination — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
