@@ -62,7 +62,7 @@ When a budget hits its limit, campaigns drawing on it stop spending credits, whi
 When the campaign is ready, click `Launch campaign` at the top of the campaign page.
 
 1.  Clay checks the campaign. If anything's missing, it takes you to the tab that needs attention with the field flagged.
-2.  The `Launch campaign` modal opens. It confirms how many leads the campaign includes, flags a warning if the spam check graded your copy poorly, and shows the `Estimated total cost` in action credits and data credits. A campaign fed by a workflow has no lead total to price against, so it shows `Estimated cost per lead` in place of a total.
+2.  The `Launch campaign` modal opens. It confirms how many leads the campaign includes and shows the `Estimated total cost` in action credits and data credits. A campaign fed by a workflow has no lead total to price against, so it shows `Estimated cost per lead` in place of a total.
 3.  Click `Confirm and launch` to start sending.
 
 The checks that have to pass are:
@@ -73,6 +73,7 @@ The checks that have to pass are:
 -   `Message body is required`, and `Subject is required for new threads`, for every step in every variant.
 -   `Add at least one sender account`.
 -   `Select a sender field or set assignment to none` — only when you've set up per-lead sender assignment.
+-   `Improve your spam check score` — every variant that has copy and a share of leads needs a `Spam check` grade of `Looks good`. A variant graded `Needs work` or `High risk` blocks launch: Clay takes you to the `Sequence` tab and names the variant in the error (for example, `Variant B: Improve your spam check score`). Variants set to receive no leads aren't checked.
 
 ### What launch locks
 
