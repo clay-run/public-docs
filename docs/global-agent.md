@@ -1,7 +1,7 @@
 ---
 title: Clay (global agent)
-description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including scheduling, permissions, and credit usage.
-last_synced: 2026-11-11T22:38:05.334Z
+description: Chat with Clay's global agent (Beta) to plan, build, and run go-to-market work across Workflows, Audiences, Search, Sequencer, and Signals, including permissions and credit usage.
+last_synced: 2026-11-19T07:45:50.367Z
 ---
 
 # Clay (global agent)
@@ -10,11 +10,11 @@ Chat with Clay, our global agent, to build and run go-to-market plays: it plans,
 
 `Agent` is the main tab where you work with our global agent. Tell the global agent what you’re trying to do, and it works across our products to help you get it done.
 
-You can also open the global agent from the Agent icon in the top right bar, which opens the chat interface within the page you’re working on. Agent is available in Workflows, Search, or the home screen.
+You can also open the global agent from the Agent icon in the top right bar, which opens the chat interface within the page you’re working on. Agent is available in Workflows, Search, Audiences, Sequencer, and the home screen.
 
-**Note:** `Agent` is in Beta and available on Enterprise, Growth, and Launch plans. Results may not always be accurate while it is in Beta, so check its work before you rely on it.  
+**Note:** `Agent` is in Beta and available on Enterprise, Growth, and Launch plans, and for a limited time on legacy Starter, Explorer, and Pro plans. Results may not always be accurate while it is in Beta, so check its work before you rely on it.  
 
-Working with the global agent is free until November 19, when it starts spending data credits. Running what it sets up — enrichments, workflow runs, and other actions — spends credits just as it does when you run them yourself.
+Working with the global agent spends data credits. Running what it sets up — enrichments, workflow runs, and other actions — spends credits just as it does when you run them yourself.
 
 ## Global agent capabilities
 
@@ -24,9 +24,9 @@ Our global agent allows you to easily interact with Clay’s existing products.
 | --- | --- |
 | Workflows | Reads, builds, and updates workflows, adds enrichment steps, and can run an Account Agent as a step. |
 | Audiences | Reads and analyzes your records, and creates and updates segments and fields. |
-| Find leads | Finds net-new companies and people in Clay’s own dataset, and can leave out accounts you already have. |
+| Find leads | Finds net-new companies and people in Clay’s own dataset, edits searches you’ve already built, and can leave out accounts you already have. |
 | Sequencer | Reads campaigns, creates them, edits their copy and settings, runs a spam check, and sends one test email. You launch the campaign yourself. |
-| Signals | Creates the common signal types — job changes, promotions, new hires, job posts, and news — and reads what they pick up. A signal the global agent creates stays paused until you resume it. |
+| Signals | Creates the common signal types — job changes, promotions, new hires, job posts, and news — on records in Audiences, and reads what they pick up. A signal the global agent creates stays paused until you resume it. |
 | Workbooks & tables | Reads, queries, and analyzes a table, and can rebuild one as a workflow. Building or editing the table itself stays with Sculptor. |
 
 ## Global agent vs Sculptor
@@ -49,7 +49,6 @@ Our global agent runs on the same engine as the Clay CLI, so anything you can do
 | Best for | Getting work done in Clay with guidance, whether or not you write code. | People who already work inside a coding agent. |
 | Experience | Previews, links, and artifacts you can open, check, and refine without leaving Clay. | Scripts, custom logic, and wiring Clay into systems outside it. |
 | Context | Starts from your Knowledge Hub, so your business context is already there. | You supply and maintain the context each run needs. |
-| Ongoing work | Recurring tasks you schedule in the product. | More flexible, but you build the orchestration and guardrails yourself. |
 
 For the tools themselves, see [Workflows](https://university.clay.com/docs/workflows), [Audiences](https://university.clay.com/docs/audiences), [Search](https://university.clay.com/docs/search) for `Find leads`, [Sequencer](https://university.clay.com/docs/getting-started-with-sequencer), and [Signals](https://university.clay.com/docs/signals). [Account Agents in Workflows](https://university.clay.com/docs/account-agents-in-workflows) covers the workflow step that researches one account at a time, and when to add one.
 
@@ -62,14 +61,6 @@ For the tools themselves, see [Workflows](https://university.clay.com/docs/workf
 3.  Say what to leave out. Accounts you already own, and anyone you’ve already engaged — naming them up front is what keeps them out of the results.
 4.  Answer the questions it comes back with. The global agent asks for the detail you left out before it starts building, and you can `Skip` any question you’d rather not answer. Closing the question card instead stops the task.
 5.  Open what it built. The `Artifacts` panel collects what the global agent made in this task.
-
-## Scheduling a task to repeat
-
-You can ask the global agent to make any task recurring, so the same work runs on a cadence instead of once — daily, on weekdays, weekly, or monthly. Recurring tasks live under `Scheduled` in the `Agent` sidebar.
-
-Each schedule keeps the `Instructions` it follows, its `Next run`, and every run it has had, so you can read back what changed between one run and the next. A run that needs an answer from you waits rather than guessing, and the schedule stands still until you reply.
-
-You can pause a schedule, run it early, or end it from the schedule’s own page.
 
 ## Giving the global agent more context
 
@@ -102,7 +93,7 @@ Saving a skill from a chat stores the Markdown instructions only. To upload a sk
 
 ## Permissions and approvals
 
-Every task and every schedule carries a permission level that decides what the global agent does without stopping to ask. `Ask for approval` is the default. Set it in the message box before you send a task, and on a schedule’s own page for runs nobody is watching. In the message box, the permission picker shows the current level by its short name: `Ask` for `Ask for approval`, or `Allow` for `Allow everything`.
+Every task carries a permission level that decides what the global agent does without stopping to ask. `Ask for approval` is the default. Set it in the message box before you send a task. In the message box, the permission picker shows the current level by its short name: `Ask` for `Ask for approval`, or `Allow` for `Allow everything`.
 
 The two permission levels you can pick are:
 
@@ -111,7 +102,7 @@ The two permission levels you can pick are:
 | Ask for approval (default) | Pauses before runs, sends, and deletes | The global agent builds and edits freely. It waits for your approval before most runs, sends, publishes, and deletes — including test data runs. See the lists below for exactly what waits and what doesn’t. |
 | Allow everything | Won’t stop to ask permission | Nothing waits for approval, including workflow runs, sends, and deletions. |
 
-**Note: a task or schedule set up before `View only` was retired still shows it.** Nothing breaks, and saving a change to that task or schedule means picking one of the two levels above.
+**Note: a task set up before `View only` was retired still shows it.** Nothing breaks, and changing it means picking one of the two levels above.
 
 ### What waits for approval under Ask for approval
 
@@ -124,7 +115,7 @@ With `Ask for approval`, the global agent stops and shows you an approval card b
 -   Launching or resuming a campaign.
 -   Running a routine or triggering an ad sync.
 -   Archiving a segment or deleting a segment field.
--   Deleting a workflow, a workflow alert, a Claygent, or a schedule.
+-   Deleting a workflow, a workflow alert, or a Claygent.
 
 ### What runs without asking under Ask for approval
 
@@ -156,7 +147,7 @@ The global agent spends data credits as it works, and the work it sets up spends
 -   **The agent’s own work.** Reading your workspace, answering a question, and planning an approach cost very little. Building something — a workflow, a campaign, a segment — costs more, because it takes more steps across more of Clay.
 -   **What the agent runs for you.** Enrichments, workflow runs, and other downstream work spend credits and actions as usual. That spend lands under whatever the agent built, not under the agent.
 
-Working with the global agent spends data credits only; it doesn’t consume actions. What you pay for its own work doesn’t change with the model behind it, so a model change on our side never changes your cost.
+Working with the global agent spends data credits only; it doesn’t consume actions. What you pay for its own work doesn’t change with the model behind it, so a model change on our side never changes your cost. Asking it to redo something, or changing direction partway through a build, spends credits on top of the first attempt.
 
 **Tip:** If you’re not sure what a task will take, ask the global agent to plan it before it builds. Planning is cheap, and you get to check the approach first.
 
@@ -173,26 +164,30 @@ These are rough estimates of what the global agent’s own work spends on some c
 
 The estimates don’t include enrichments or other work the global agent runs for you, which spend credits and actions as usual.
 
-### Bonus credits in Beta
+### Free credits in Beta
 
-Every eligible workspace gets a one-time grant of bonus credits when Beta starts. The grant lands the first time anyone in your workspace starts a task with the global agent.
+Every eligible workspace gets free credits to spend on the global agent’s own work — reading your workspace, answering questions, and planning and building what you ask for.
 
-| Plan | Bonus credits |
+| Plan | Free credits |
 | --- | --- |
 | Enterprise | 10,000 |
-| Growth and Launch | 1,000 |
+| Growth, Launch, and legacy self-serve plans | 1,000 |
 
-Bonus credits are added to your workspace’s data credit balance and spend like any other credit — on the global agent or anywhere else in Clay. A workspace on a trial gets no grant, so the global agent spends the credits the workspace already has.
+Free credits are spent first. Every message draws on them until they run out, and after that the global agent spends your workspace’s regular data credits. A charge that uses up your last free credits takes what’s left of them and bills the remainder to your regular balance.
 
-**Note:** The bonus grant applies during Beta. Pricing may change before general availability, and we’ll post the change here first.
+Free credits don’t cover what the global agent runs for you. Enrichments, workflow runs, and other downstream work always spend your regular credits and actions. A workspace on a trial gets no free credits, so the global agent spends the credits the workspace already has.
+
+**Note:** Free credits apply during Beta. Pricing may change before general availability, and we’ll post the change here first.
 
 ### Keeping an eye on spend
 
 When the global agent stops for your approval, the card carries an `Estimated cost` in credits and action executions before anything runs. Some actions can’t be priced ahead of time, and the card says `Cost can’t be estimated` when that happens.
 
-The permission level you set decides how often you see a card at all, so it’s also the lever on how much runs unwatched. A schedule spends credits on every run, which is worth weighing when you set its level.
+The permission level you set decides how often you see a card at all, so it’s also the lever on how much runs unwatched.
 
-To see what the global agent has spent, select your account name, go to `Settings` then `Usage`, and open the `Agent` tab. It breaks spend down by task over the period you pick. The work the agent set up shows up in the other tabs, under the workflow or table it belongs to.
+While your workspace has free credits left, the global agent shows how many of them have been used so far.
+
+To see what the global agent has spent, free credits included, select your account name, go to `Settings` then `Usage`, and open the `Agent` tab. It breaks spend down by person over the period you pick, and anyone who isn’t a Workspace Admin sees only their own. The work the agent set up shows up in the other tabs, under the workflow or table it belongs to.
 
 If your workspace runs out of credits, the global agent stops: you can’t start a new task or send a follow-up until the balance is topped up. Clay tells you so in the task, with `Add credits` alongside.
 
@@ -234,8 +229,6 @@ To get the global agent’s CSV into a new Clay table:
 
 If you’d rather add the rows to a table you already have, open that table and import the CSV there instead; in that case you map the CSV’s columns to the table’s fields. The global agent’s CSV is a standard file, so it imports the same way as any other CSV. See [How to import your CSV into Clay](csv-import-overview.md) for the full import options.
 
-### Why don’t I see `Agent` in my workspace?
+### Should I use `Core` or `Deep`?
 
-The global agent is rolling out gradually during Beta, so you may not see it yet even once it has reached other people.
-
-If you’re an Enterprise customer and want to try it, ask your Growth Strategist for access. On a Growth or Launch plan, sign up for the early adopter program, then have a Workspace Admin turn on `Beta program` in your workspace settings. Clay notifies you in the product once you have access.
+The picker in the message box sets how much reasoning the global agent puts into your next message. `Core` is the default and covers most everyday work. `Deep` reasons longer, for complex work such as building a new workflow from scratch, and can spend more credits as a result. You can switch between them on any message.
