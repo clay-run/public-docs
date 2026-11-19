@@ -36,7 +36,7 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 **Setting up in Salesforce**
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
-    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
+    -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`. If Salesforce's **Security Posture** check flags your external client app, use Clay's callback URL `https://api.clay.com/v3/app-accounts/oauth/salesforce/callback` instead — see [Salesforce Security Posture flags "IP Allowlist Not Securely Configured" or "DPoP Not Securely Configured"](#salesforce-security-posture-flags-ip-allowlist-not-securely-configured-or-dpop-not-securely-configured).
     -   **OAuth Scopes:** The Client Credentials connection only requires the `api` scope. If your security review requires the External Client App to have `api` only, the Client Credentials connection still works. Configure the scopes as follows:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
         -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional. When you set up or test the connection, Clay uses `id` to load which Salesforce org and user the connection is authenticated as, so you can see them when you select the connection in Clay. Without it, the connection still saves and works; Clay just doesn't show the connected org and user.
@@ -87,6 +87,19 @@ This error means the Salesforce Connected App (or external client app) has no OA
 2.  Under **OAuth Settings**, add the **Access and manage your data** (`api`) scope.
 3.  Click `Save`. Salesforce can take up to 10 minutes to propagate scope changes.
 4.  Return to Clay and reconnect: `Settings` → `Connections` → add or reconnect your Salesforce `Client Credentials` connection.
+
+#### Salesforce Security Posture flags "IP Allowlist Not Securely Configured" or "DPoP Not Securely Configured"
+
+Salesforce's **Security Posture** check can flag an external client app (or connected app) that your team created in your own Salesforce org to connect Clay, such as the app you use for a Clay `Client Credentials` connection. Salesforce requires at least one of two proof-of-possession controls on the app: an IP allowlist (**Enforce Refresh Token IP Allowlist** paired with a third-party callback URL), or DPoP (Demonstrating Proof of Possession). Clay doesn't support DPoP for Salesforce, so use the IP allowlist control to secure the app you use with Clay.
+
+To satisfy the Salesforce Security Posture check for the app you use with Clay:
+
+1.  Get the current list of Clay's static IP addresses from [Clay support](https://www.clay.com/support). On **Enterprise plans**, Salesforce connections route through these addresses automatically — see [IP allowlisting](#ip-allowlisting).
+2.  In Salesforce Setup, open the app in `External Client App Manager` (or `App Manager` for a traditional connected app) and click `Edit`.
+3.  Set the app's **Callback URL** to Clay's Salesforce callback URL, `https://api.clay.com/v3/app-accounts/oauth/salesforce/callback`. This is the third-party callback URL Salesforce asks you to pair with the IP allowlist.
+4.  Add each Clay IP address as a trusted IP range on the app, using the same address as both the start and end IP.
+5.  Enable **Enforce Refresh Token IP Allowlist**, then click `Save`.
+6.  In Clay, run a Salesforce action or [test your connection](#testing-your-connection) to confirm the connection still works.
 
 ### Testing your connection
 
