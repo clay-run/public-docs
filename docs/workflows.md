@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-10T19:37:52.850Z
 ---
 
 # Workflows
@@ -40,7 +40,7 @@ Workflows is the Clay surface built for this; tables can't be created through th
 
 The empty canvas offers three ways in — `Start with a trigger`, `Start with segment`, or `Import a table` to scaffold the graph from a table's schema. From there, open the node palette with `Add` to pick from `Triggers` and `Nodes`, or drag out from a node's handle, then connect steps by drawing an edge between them.
 
-**Who can do what.** Workspace members can create, edit, and run workflows, and deleting one is admin-only. `Integrations` in workflow settings is the section that exposes a workflow as a routine, so it can be called from `API & CLI` or as a tool inside a Claygent. Everyone can see that section, but only workspace admins and editors can change what it exposes.
+**Who can do what.** Workspace members can create, edit, and run workflows, and deleting one is admin-only. `Integrations` in workflow settings is the section that exposes a workflow as a routine, so it can be called from `API & CLI` or as a tool inside a Claygent. The `Claygent` option is rolling out gradually, so you may not see it in your workspace yet. Everyone can see that section, but only workspace admins and editors can change what it exposes.
 
 ## Triggers
 
