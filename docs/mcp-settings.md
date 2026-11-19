@@ -1,14 +1,14 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-10-19T16:50:28.293Z
+last_synced: 2026-11-19T07:25:33.509Z
 ---
 
 # MCP settings
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms. Admins and editors also choose which Functions and workflows are available to reps.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
@@ -26,7 +26,7 @@ Glean integration is available on Enterprise plans only.
 
 ## **Enabling a function for MCP**
 
-Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
+Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins and editors build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
 2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
