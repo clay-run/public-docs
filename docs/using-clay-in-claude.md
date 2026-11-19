@@ -2,7 +2,7 @@
 title: Using Clay in Claude
 description: Find people, enrich contacts, and draft personalized outreach—all
   within a Claude conversation
-last_synced: 2026-04-26T01:40:52.929Z
+last_synced: 2026-11-19T07:37:54.822Z
 ---
 
 # Using Clay in Claude
@@ -90,7 +90,7 @@ Claude will find the matching function, run it, and return the results directly 
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `Agent users` page, which they open from the sidebar on the Clay homepage. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
@@ -108,7 +108,7 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled, you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." By default, results are scoped to accounts you own in Salesforce; your admin can lift this restriction from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see the error `Contact queries are not available when account ownership restriction is enabled`, ask your admin to disable `Restrict account querying by Salesforce owner` on the `MCP` page in the workspace sidebar — when this toggle is on, contact queries return an error. Note that the MCP page is only visible to workspace admins. If the toggle is off but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
+If your workspace has Clay Audiences enabled, you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." By default, results are scoped to accounts you own in Salesforce; your admin can lift this restriction from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see the error `Contact queries are not available when account ownership restriction is enabled`, ask your admin to disable `Restrict account querying by Salesforce owner` on the `Agent users` page in the workspace sidebar — when this toggle is on, contact queries return an error. Note that the `Agent users` page is only visible to workspace admins. If the toggle is off but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
@@ -220,4 +220,4 @@ For batch workflows like running an email-finder waterfall on a list of companie
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `Agent users` page. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
