@@ -371,6 +371,21 @@ When using **Text with tokens** mode, the column's value is sent to Salesforce f
 
 **If a picklist option isn't visible in Clay's dropdown:** Click **Refresh** in the Map fields panel to reload field definitions from Salesforce — Refresh re-fetches picklist values along with the field schema. If the option is still missing after refreshing, confirm in Salesforce that the value is **active** (Salesforce excludes inactive picklist values from the field schema Clay receives) and, for restricted picklists, that the value is assigned to the correct Record Type for the records you are updating.
 
+### Writing to Salesforce picklist fields from Audiences
+
+The dropdown described above is only in the **Map fields** panel of Salesforce actions in Clay tables. The Audiences export to Salesforce works differently. Audiences has no picklist or dropdown field type. When you map a Salesforce picklist or multi-select picklist field in your Audiences Salesforce source settings, Clay treats it as a **Text** field. You can only choose these data types for Audience fields: Text, Number, Email, URL, Date, and Checkbox.
+
+The Audiences export sends the Audience field's text value to Salesforce exactly as it's stored. Clay doesn't translate it to a picklist option. Salesforce then checks that text against the picklist:
+
+-   **Restricted picklist:** the text must exactly match one of the picklist's values, using the API Name with the same spelling, capitalization, and spacing. Salesforce rejects any other value.
+-   **Unrestricted picklist:** if the text doesn't match an existing option, Salesforce saves it on the record as an inactive picklist value. The record shows the value, but users can't select it from the picklist.
+
+**To make sure the Audience field only holds valid Salesforce picklist values,** control what writes to that field. Your picklist can stay restricted.
+
+1.  In the Clay table or workflow that writes to your Audience, add a formula column that returns only your exact picklist values. For example, for a "Clay Sourced Record" picklist with options `yes` and `no`, return `yes` when your Salesforce lookup found no existing record and `no` otherwise. For a "Clay Enrichment Status" picklist, return `Enriched` when Work Email or Mobile Phone isn't empty and `Not Enriched` otherwise.
+2.  Write the formula column to the Audience field with `Upsert Audiences Record` or `Update Audiences Record`.
+3.  In your Audiences Salesforce source settings, map that Audience field to the Salesforce picklist field and set its write rule to **Always write** or **Write if empty**. See [Writing back to your CRM](audiences.md#writing-back-to-your-crm) for export setup.
+
 ### Single-select picklist (dropdown)
 
 When updating picklist fields in Salesforce from Clay, you need to match the exact format Salesforce expects.
