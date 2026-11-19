@@ -105,7 +105,7 @@ If your table sends a field that the published workflow version doesn't use, the
 
 ### Can a table's Invoke workflow column run the draft version of a workflow?
 
-No. A table's **Invoke workflow** column always runs the currently published version of the workflow. There's no setting to point a table column — or any other trigger outside the workflow editor, such as a webhook, schedule, or segment — at a draft.
+No. A table's **Invoke workflow** column runs the currently published version of the workflow. The only exception is a workflow that has never been published: in that case, the column runs the workflow's current draft. Once a workflow has a published version, there's no setting to point a table column — or any other trigger outside the workflow editor, such as a webhook, schedule, or segment — at its draft.
 
 The only way to run a draft workflow without publishing it is from inside the workflow editor: start a manual run from the editor, or hover a node and click its run button to test that one step.
 
