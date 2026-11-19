@@ -109,6 +109,38 @@ redirect_uris.0: redirect_uri must be from an allowed domain
 
 There is no self-service way to add a custom redirect URI to Clay's OAuth allowlist. If your organization needs to connect Clay through a specific third-party MCP client or gateway, reach out to Clay support with the redirect URI(s) you require. Adding a new platform requires a code change on Clay's side.
 
+### Can a backend service use Clay's MCP through one shared service account?
+
+Yes. A backend service can call Clay's MCP through one dedicated Clay user on behalf of many of your own users. Clay has no separate service-account or machine-user type, so invite a dedicated non-personal user (for example, `automation@yourcompany.com`) to your workspace and have the service sign in as that user. Before you set up a shared service account, keep in mind:
+
+-   **MCP rate limits are per workspace, not per user.** Every user in the workspace shares the same limits: 600 MCP requests per minute (bursts of up to 200) and 300 tool calls per minute (bursts of up to 30). One shared service account gets the same headroom as several individual users. It doesn't get extra capacity.
+-   **The service account has one MCP credit limit.** All requests made through the shared account count against that one user's limit in the `MCP users` table. See [Setting credit limits](#setting-credit-limits).
+-   **The service account signs in like any other user.** See [How long do Clay MCP refresh tokens last, and is there a service token for servers?](#how-long-do-clay-mcp-refresh-tokens-last-and-is-there-a-service-token-for-servers)
+
+### How long do Clay MCP refresh tokens last, and is there a service token for servers?
+
+These token rules apply to a client you register through `/oauth/register` (Dynamic Client Registration) and sign in with the authorization-code flow:
+
+-   **Access tokens** for Clay's MCP last 1 hour.
+-   **Refresh tokens** have no set expiry. Each refresh returns a new refresh token, so store the new one every time you refresh.
+-   **Signing in again** is only needed if the token is revoked or the user loses access to the workspace.
+
+**Device-code sign-in isn't available for your own clients.** The device-code flow is only available to Clay's own apps. A client registered through `/oauth/register` that tries the device-code flow gets the error `unauthorized_client`.
+
+**There's no service token for Clay's MCP.** Clay's MCP has no service token, API key, or client-credentials option for non-interactive sign-in. For a backend service, the supported route is to sign in once with the authorization-code flow, then keep the connection alive with refresh tokens.
+
+### Can I turn off Clay's built-in MCP tools for the Sales Rep role?
+
+No. Role settings control which Functions a Sales Rep can run through MCP. They don't cover Clay's built-in MCP tools: `add-contact-data-points` and `add-company-data-points` can't be turned off for a specific role, so you can't limit Sales Rep users to search only.
+
+The closest control is the `Hide default functions from MCP` toggle on the `MCP` page, which only workspace admins can see. This toggle applies to everyone in the workspace, not to one role. When `Hide default functions from MCP` is on:
+
+-   Clay-managed functions and default enrichment data points (such as email, website traffic, tech stack, open jobs, and latest funding) are hidden from AI tools and refused if requested.
+-   The built-in tools still appear in AI tools.
+-   Search tools keep working.
+
+To cap what a Sales Rep can spend through the built-in tools, set their credit limit in the `MCP users` table (see [Setting credit limits](#setting-credit-limits)).
+
 ### What role should I assign to team members who will only use Clay through MCP?
 
 Any workspace role — Admin, Member, Viewer, or Sales Rep — can authorize Clay in AI tools like Claude, ChatGPT, or Glean. Team members must first be added to your workspace before connecting.
