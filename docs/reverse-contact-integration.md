@@ -1,7 +1,7 @@
 ---
 title: Reverse Contact integration
 description: Find professional profiles with Reverse Contact.
-last_synced: 2026-04-26T01:40:33.006Z
+last_synced: 2026-11-19T06:48:31.184Z
 ---
 
 # Reverse Contact integration
@@ -17,7 +17,7 @@ With this integration, you can easily find professional profiles and additional 
 1.  While in a Clay table, click `Add enrichment` and search for `Reverse Contact`.
 2.  Under `Integrations`, select one of the Reverse Contact options.
 3.  In the modal, you will be asked to `Select Reverse Contact account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided account.
 
 ### `Action` Find professional profile
 
