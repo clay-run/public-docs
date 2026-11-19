@@ -22,7 +22,7 @@ Open **Find leads** in the left sidebar or on your home page and choose **People
 
 Use **Find with filters** when available, or describe the people you want in the search assistant and review its suggested search. Clay's built-in search is separate from the deprecated **Find AI** integration. **People** and **Companies** under Audiences show records already in your workspace; filtering those records does not discover new prospects.
 
-For advanced query syntax, use [Find with query](finding-companies-and-people-in-clay.md#find-with-filters-and-find-with-query) inside the built-in search, if your workspace has access.
+For advanced query syntax, use the [query editor](finding-companies-and-people-in-clay.md#where-is-the-query-editor-in-find-people-and-find-companies) inside the built-in search: in the **Criteria** section, switch the **Filters** dropdown to **Query**. The query editor is available when upgraded search is on in your workspace.
 
 ## **Creating a table with Find People**
 
