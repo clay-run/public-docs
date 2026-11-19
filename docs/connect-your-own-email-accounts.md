@@ -105,8 +105,9 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 | IMAP settings (receiving) | IMAP host | Your provider’s incoming mail server |
 | IMAP settings (receiving) | IMAP type | SSL and TLS both use port 993, and None uses 143. |
 
-Two provider-specific details to watch for:
+Three provider-specific details to watch for:
 
+-   For a consumer Gmail address, Clay fills in the SMTP and IMAP hosts for you. When the `Sender email` ends in `@gmail.com` or `@googlemail.com`, the `SMTP host` field is set to `smtp.gmail.com` and the `IMAP host` field to `imap.gmail.com`. Both fields stay editable, and a host you type yourself is never overwritten. If you change the `Sender email` to a non-Gmail address, the hosts Clay filled in are cleared. Google Workspace addresses on your own domain aren't filled in automatically, so enter `smtp.gmail.com` and `imap.gmail.com` yourself for those.
 -   Gmail mailboxes need an app password for SMTP access rather than the normal account password. You can create one in your Google account security settings, under 2-step verification.
 -   If you enter an Outlook or Office 365 hostname, the modal points you back to Microsoft OAuth. Outlook retired IMAP access in 2022, so OAuth is the path that works for those mailboxes.
 
