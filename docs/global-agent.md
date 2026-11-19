@@ -75,9 +75,14 @@ You can pause a schedule, run it early, or end it from the schedule’s own page
 
 The global agent starts from your `Knowledge Hub`, your workspace’s record of what you sell and who you sell it to. When a task should lean on something specific, add a reference to it as you write the message:
 
--   Type `@` for a part of your `Knowledge Hub`, or a document you’ve uploaded there.
+-   Type `@` for a part of your `Knowledge Hub`, a document you’ve uploaded there, or, if your workspace uses Audiences, one of your saved segments.
 -   Type `$` or `/` for your `Workspace skills`, the instructions your team has written for work the global agent does often. Your team creates them on the `Agent skills` page in workspace settings, or by asking the global agent to save one from a chat.
--   Select `Attach file` to add one or more files to a message: spreadsheets including CSVs, PDFs, Word documents, text files, and images, up to 50 MB each.
+-   Select the `+` button (`Add context`) in the message box to pick a reference from a menu instead of typing:
+    -   `Attach files` adds one or more files to a message: spreadsheets including CSVs, PDFs, Word documents, text files, and images, up to 50 MB each.
+    -   `Knowledge Hub`, `Segments`, and `Skill` let you search for a Knowledge Hub document, a saved segment, or a workspace skill. `Segments` appears only when your workspace uses Audiences and has saved segments.
+    -   `Discover skills` opens the Clay marketplace in a new tab, where you can browse more skills.
+
+Each reference you add appears in the message as a chip. To remove one, select the `X` on the chip, or press Backspace twice: once to select the chip and once to remove it.
 
 **Note:** One message can carry up to 50 references. Add more and the send button stays locked until you remove some.
 
