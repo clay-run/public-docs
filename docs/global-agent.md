@@ -85,27 +85,39 @@ See [Knowledge Hub](https://university.clay.com/docs/knowledge-hub) for what liv
 
 ## Permissions and approvals
 
-Every task and every schedule carries a permission level that decides what the global agent does without stopping to ask. `Allow changes` is the default. Set it in the message box before you send a task, and on a schedule’s own page for runs nobody is watching.
+Every task and every schedule carries a permission level that decides what the global agent does without stopping to ask. `Ask for approval` is the default. Set it in the message box before you send a task, and on a schedule’s own page for runs nobody is watching. In the message box, the permission picker shows the current level by its short name: `Ask` for `Ask for approval`, or `Allow` for `Allow everything`.
 
-| Level | What it allows |
-| --- | --- |
-| Allow changes | The global agent edits freely and runs test data. It waits for your approval before running a workflow outside test data, and before deleting a workflow, a Claygent, or a schedule. |
-| Allow everything | Nothing waits for approval, including workflow runs and deletions. |
+The two permission levels you can pick are:
+
+| Level | Subtitle in the picker | What it allows |
+| --- | --- | --- |
+| Ask for approval (default) | Pauses before runs, sends, and deletes | The global agent builds and edits freely. It waits for your approval before most runs, sends, publishes, and deletes — including test data runs. See the lists below for exactly what waits and what doesn’t. |
+| Allow everything | Won’t stop to ask permission | Nothing waits for approval, including workflow runs, sends, and deletions. |
 
 **Note: a task or schedule set up before `View only` was retired still shows it.** Nothing breaks, and saving a change to that task or schedule means picking one of the two levels above.
 
-### What runs without asking
+### What waits for approval under Ask for approval
 
-`Allow changes` holds a short, specific list, so plenty of real work — including work that spends credits — goes ahead on its own. Before you leave a task running, it’s worth knowing that these need no approval:
+With `Ask for approval`, the global agent stops and shows you an approval card before any of the following:
 
--   Runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Running a workflow, including test data runs and runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Resuming a paused run or a paused trigger.
 -   Publishing a workflow, which turns on its live triggers so runs start from new events.
--   Resuming a paused run, testing a single action or code step, function runs, and searches.
--   Creating or resuming a signal, which then checks records on a schedule.
+-   Creating, updating, resuming, or deleting a signal.
+-   Launching or resuming a campaign.
+-   Running a routine or triggering an ad sync.
+-   Archiving a segment or deleting a segment field.
+-   Deleting a workflow, a workflow alert, a Claygent, or a schedule.
 
-Deletions outside that list go ahead too: archiving a segment, deleting a segment field, a signal, a webhook, or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
+### What runs without asking under Ask for approval
 
-The same goes for credentials and billing — creating, renaming, or deleting an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself. Sending a test email from a campaign, or a test event to a webhook, needs no approval either.
+With `Ask for approval`, building and editing go ahead on their own, and so does some work that spends credits. These need no approval:
+
+-   Building and editing workflows, and adding or removing test data rows.
+-   Searches.
+-   Deleting a webhook or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
+-   Creating or renaming an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself.
+-   Sending a test email from a campaign, or a test event to a webhook.
 
 ## What the global agent won’t do on its own
 
@@ -116,7 +128,7 @@ The global agent works through a task without stopping for approval at each step
 -   **It won’t create or edit a table.** Ask it to rebuild one as a workflow instead.
 -   **It won’t delete a campaign or an ad sync.** It can take a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
 
-Everywhere else the global agent acts as it goes, and that includes spending credits on enrichments and workflow runs. So the checkpoint is you reading its work, not it asking permission: open the `Artifacts` panel, check the workflow or segment it produced, then run it yourself once it looks right.
+Everywhere else the global agent acts as it goes, and that includes work that spends credits, such as searches. With `Ask for approval` it still pauses before runs, sends, and deletes; with `Allow everything` it doesn’t. So the checkpoint is you reading its work: open the `Artifacts` panel, check the workflow or segment it produced, then approve the run, or run it yourself, once it looks right.
 
 It does come back to you mid-task when a decision is genuinely yours and would change the outcome — which list to start from, which of two scoring approaches to take. It gathers those onto one card rather than interrupting you repeatedly.
 
