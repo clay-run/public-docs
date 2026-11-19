@@ -1,7 +1,7 @@
 ---
 title: Clay API & CLI
 description: How to access Clay's data and enrichments programmatically using the Clay CLI and Public API, including setup, plan limits, and available features.
-last_synced: 2026-11-10T18:50:14.947Z
+last_synced: 2026-11-19T07:41:30.596Z
 ---
 
 # Clay API & CLI
@@ -43,7 +43,7 @@ The platform has three core primitives:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and, for a limited time, on legacy plans through the end of 2026.
+The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and on legacy plans.
 
 Search result limits vary by plan:
 
