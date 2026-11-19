@@ -137,13 +137,15 @@ When a user connects their AI tool to Clay, they go through Clay's OAuth flow, w
 
 ### How do I disconnect Clay from an AI tool?
 
-Clay doesn't manage the MCP connection from its side — each AI platform controls its own connector integrations. To disconnect Clay, go to that platform's settings and remove the Clay connector:
+Clay doesn't manage individual MCP connections from its side — each AI platform controls its own connector integrations. To disconnect Clay, go to that platform's settings and remove the Clay connector:
 
 -   **ChatGPT:** Open ChatGPT **Settings → Connectors**, find Clay, and remove it.
 -   **Claude:** Go to [claude.com/connectors](https://claude.com/connectors/clay) and remove the Clay connector.
 -   **Codex or other tools:** Find connected apps, MCP integrations, or connectors in that tool's settings and remove Clay from there.
 
 Your Clay workspace data and workflows are unaffected — only the connection from that AI tool is removed.
+
+**To disconnect every AI tool at once from Clay's side,** go to `Settings → Account` in Clay and click **Log out of all sessions**. This logs you out of all active Clay sessions and disconnects connected apps, like the Clay CLI and AI assistants connected through MCP. Resetting your Clay password or changing how you sign in to Clay disconnects them too. Each AI tool must be re-authorized before it can use Clay again. The **Log out of all sessions** option appears only when you have more than one active session.
 
 ### Can admins remove a rep's access to Clay in ChatGPT or Claude?
 
