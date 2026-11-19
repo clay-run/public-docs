@@ -377,7 +377,7 @@ data.user.email
 
 ### Step 7: Custom rate limit
 
-Throttle how many requests Clay sends to the API within a given time window. This is a **column-level** setting — it applies uniformly to every row the column processes. Open the column settings and scroll to the **Custom rate limit** collapsible section on the **Configure** tab.
+Throttle how many requests Clay sends to the API within a given time window. You set the custom rate limit on each HTTP API column, but the limit is enforced **workspace-wide**: every HTTP API column with a custom rate limit in your workspace counts toward one shared limit (see [Is the custom rate limit shared across HTTP API columns?](#is-the-custom-rate-limit-shared-across-http-api-columns) below). Open the column settings and scroll to the **Custom rate limit** collapsible section on the **Configure** tab.
 
 **Fields:**
 
@@ -394,6 +394,18 @@ Duration (ms): 60000
 ```
 
 **⚠️ Common mistake — setting Request Limit to your total row count:** The rate limit is a sliding window that repeats throughout the run, not a one-time total. Setting `Request Limit: 4000, Duration: 145000 ms` means Clay tries to send 4,000 requests within every 145-second window — not 4,000 requests total. Check the target API's documentation for its stated rate limit (e.g., "100 requests per minute") and match those values.
+
+#### Is the custom rate limit shared across HTTP API columns?
+
+Yes. The HTTP API custom rate limit is not isolated to a single column. Every HTTP API column in the same workspace that has a custom rate limit set draws from one shared limit — across all tables, including function tables. Requests from all of those columns count toward the same total.
+
+-   **Columns with different values:** If your HTTP API columns have different **Request Limit** or **Duration** values, neither value applies on its own. The cap on the shared total comes from whichever of those columns most recently queued a request, so the cap switches between the configured values as the columns run. For example, if one column is set to 3,000 requests per 60,000 ms and another to 2,500 requests per 60,000 ms, both columns count against one total whose cap alternates between 3,000 and 2,500.
+-   **To cap requests to one server reliably:** Set the same **Request Limit** and **Duration** on every HTTP API column in the workspace that has a custom rate limit, and size that limit for all of those columns combined — not for one column.
+-   **Other enrichment types are separate:** The shared limit only covers HTTP API columns. Custom rate limits on other enrichments (for example, Apollo OAuth enrichments) count toward their own separate workspace-wide limit.
+
+#### Can I control how many requests an HTTP API column runs at once?
+
+No. There is no setting to control concurrency (the number of requests an HTTP API column keeps open at the same time). Each column runs up to 50 rows at once, and fewer on some plans. The **Custom rate limit** (Request Limit + Duration) is the only throttling setting available on an HTTP API column.
 
 ### Step 8: Remove empty values
 
@@ -617,7 +629,7 @@ Before running on your entire table:
 
 ### ✓ Set a custom rate limit
 
-If the API documentation specifies rate limits, configure the **Custom rate limit** setting on the **Configure** tab of your HTTP API column. This is a column-level setting — it applies uniformly to all rows. The rate limit must average at least 1 request per second, and the duration can be up to 900,000 ms (15 minutes).
+If the API documentation specifies rate limits, configure the **Custom rate limit** setting on the **Configure** tab of your HTTP API column. The limit is shared workspace-wide: every HTTP API column with a custom rate limit in your workspace counts toward one total, so use the same values on each of those columns (see [Is the custom rate limit shared across HTTP API columns?](#is-the-custom-rate-limit-shared-across-http-api-columns)). The rate limit must average at least 1 request per second, and the duration can be up to 900,000 ms (15 minutes).
 
 **Example:** 100 requests per minute
 
