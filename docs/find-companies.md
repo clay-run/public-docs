@@ -46,8 +46,8 @@ For advanced query syntax, use [Find with query](finding-companies-and-people-in
         -   **Revenue streams** — e.g., Subscriptions/Recurring, Professional Services, Transaction Fees, Advertising, Licensing/IP
         -   **Business types** — B2B, B2C, or Nonprofit
     -   **Technographics** — Filter by installed technology, powered by [BuyerCaddy](https://university.clay.com/docs/buyercaddy-integration). Costs **3 credits per matching company row** — cheaper in most cases than pulling a broad list and running a technographic enrichment afterward, since you pay only for companies that already match your tech criteria. Technographics data is also included when sending company rows to Audiences; the same 3-credit cost per matching row applies. The Audiences **Technographics** field is filled in only when the Find Companies search used at least one Technographics filter, and it holds the technologies that matched your filter — not the company's full tech stack. Companies sent to Audiences from a search without a Technographics filter have an empty Technographics field. See [Why does my Technographics filter return no results in my Companies audience?](#why-does-my-technographics-filter-return-no-results-in-my-companies-audience).
-        -   **Vendors** — e.g., AWS, Salesforce, HubSpot
-        -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud
+        -   **Vendors** — e.g., AWS, Salesforce, HubSpot. Matches companies that use at least one product from that vendor — see [Does the Vendors filter match one product or every product from that vendor?](#does-the-vendors-filter-match-one-product-or-every-product-from-that-vendor)
+        -   **Products** — e.g., Amazon EC2, Salesforce Sales Cloud. Matches companies that use that specific product.
         -   **Categories** and **Subcategories** (labeled **Product categories** and **Product subcategories** in some search setups)
         There is no vendor-domain filter — to target every product from one vendor, use **Vendors** and select the vendor by name.
         Product and vendor names in the filter come from BuyerCaddy's catalog and may not match a company's public brand name exactly. To identify what a product name refers to, run the search and check the **Vendor** field in the cell details for any returned row — it shows the company behind the product.
@@ -151,6 +151,15 @@ To find companies that use a specific technology, use one of these options:
 -   **Fill in the Technographics field on companies already in your audience.** Bring the companies into a Clay table, run a technographics enrichment, and use `Upsert Audiences Record` to write the result to the **Technographics** field on the matching Audience records. Enrichments use credits, so test on a small batch first. See [Audiences](audiences.md#sending-data-from-clay-table).
 
 You can't use a Companies audience segment to limit which companies a Find Companies search returns. In Find Companies, audience segments can be used only to exclude companies from the results.
+
+### Does the Vendors filter match one product or every product from that vendor?
+
+The **Vendors** filter (one of the Find Companies Technographics filters, shown under **Tech stack** in the filter panel) matches at the vendor level, not the product level. For example, selecting **Salesforce** in **Vendors** returns companies that use at least one Salesforce product. A match does not mean the company uses one specific Salesforce product, such as Salesforce Sales Cloud.
+
+To target a specific product (SKU) instead of the whole vendor, use one of these options:
+
+-   **In Find Companies:** Use the **Products** filter and select the specific product, for example **Salesforce Sales Cloud**. The Technographics filters cost 3 credits per matching company row.
+-   **In a Clay table:** Run the BuyerCaddy **Verify technology usage** enrichment on your company rows. In its product input, type a vendor name (for example, `Salesforce`) and select the individual products you want to check. BuyerCaddy enrichments cost data credits per row. See [BuyerCaddy integration](buyercaddy-integration.md).
 
 ### Why does my table show fewer rows than the preview count?
 
