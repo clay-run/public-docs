@@ -442,7 +442,15 @@ There are two ways to check your credit renewal date:
 
 ### How long does it take for Data Credits to renew?
 
-When your plan renews, Data Credits are updated via a payment-processor webhook and typically appear within a few minutes of your renewal timestamp. If credits haven't updated shortly after the renewal time shown in your billing settings, wait a few minutes and refresh the page.
+Your Clay plan renews on your billing anniversary, not on the 1st of the calendar month. On a monthly plan, that is the same day each month that your billing cycle started, at about the same time of day. For example, if your billing cycle started on the 5th at 3:25 PM UTC, your plan renews on the 5th of every month at around 3:25 PM UTC. You can check your exact renewal date with the **Credits** button in the top bar or in `Settings` → `Plan & billing`.
+
+New Data Credits don't appear at the exact renewal time. Clay adds them only after the renewal payment has been processed, which a payment-processor webhook confirms. Credits usually appear within a few minutes of the renewal time, but it can take up to an hour or two.
+
+If your renewal credits haven't appeared:
+
+1.  Wait up to two hours after the renewal time, then refresh the page and check your credit balance again.
+2.  Check the invoice for that renewal in `Settings` → `Plan & billing`. Clay adds renewal credits only after the renewal payment succeeds. If the payment failed, update your payment method.
+3.  If the invoice is paid and the credits still haven't appeared, contact support so the team can check your credit history.
 
 ### Why are Data Credits being deducted unexpectedly?
 
