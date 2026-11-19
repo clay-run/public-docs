@@ -108,23 +108,24 @@ The two permission levels you can pick are:
 
 With `Ask for approval`, the global agent stops and shows you an approval card before any of the following:
 
--   Running a workflow, including test data runs and runs on a trigger’s records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
--   Resuming a paused run or a paused trigger.
--   Publishing a workflow, which turns on its live triggers so runs start from new events.
--   Creating, updating, resuming, or deleting a signal.
--   Launching or resuming a campaign.
--   Running a routine or triggering an ad sync.
--   Archiving a segment or deleting a segment field.
--   Deleting a workflow, a workflow alert, or a Claygent.
+-   Running a workflow, test data included, or a single step of it as a test.
+-   Running a workflow on a trigger’s existing records: a CSV’s rows, a `Find leads` search’s results, or a segment’s members.
+-   Re-running a run, or resuming one that’s paused.
+-   Publishing a workflow, which turns on its live triggers so runs start from new events, or turning a paused trigger back on.
+-   Running a function or an enrichment on its own, outside a workflow.
+-   Creating, changing, pausing, resuming, or deleting a signal.
+-   Archiving a segment, deleting a segment field, or deleting a workflow, a workflow alert, or a Claygent.
+-   Accepting or dismissing a suggested change to your Knowledge Hub.
 
 ### What runs without asking under Ask for approval
 
 With `Ask for approval`, building and editing go ahead on their own, and so does some work that spends credits. These need no approval:
 
--   Building and editing workflows, and adding or removing test data rows.
+-   Editing a workflow and its triggers, and trying out an action or a piece of code before it goes into a workflow.
 -   Searches.
--   Deleting a webhook or an API key, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
--   Creating or renaming an API key, turning auto top-ups on or off, and starting a credit purchase, which you still complete yourself.
+-   Creating or updating segments and fields.
+-   Deleting a webhook, and taking a destination off an ad sync that’s paused or still a draft, or off an always-on sync that failed.
+-   Renaming an API key and starting a credit purchase, which you still complete yourself.
 -   Sending a test email from a campaign, or a test event to a webhook.
 
 ## What the global agent won’t do on its own
@@ -189,7 +190,7 @@ While your workspace has free credits left, the global agent shows how many of t
 
 To see what the global agent has spent, free credits included, select your account name, go to `Settings` then `Usage`, and open the `Agent` tab. It breaks spend down by person over the period you pick, and anyone who isn’t a Workspace Admin sees only their own. The work the agent set up shows up in the other tabs, under the workflow or table it belongs to.
 
-If your workspace runs out of credits, the global agent stops: you can’t start a new task or send a follow-up until the balance is topped up. Clay tells you so in the task, with `Add credits` alongside.
+Once your workspace’s regular credits run out, the global agent stops, even if free credits are left: you can’t start a new task or send a follow-up until the balance is topped up. Clay tells you so in the task, with `Add credits` alongside.
 
 See [Actions & Data Credits](https://university.clay.com/docs/actions-data-credits) for how the two meters work, and [Credit usage](https://university.clay.com/docs/credit-usage) for the rest of the dashboard.
 
