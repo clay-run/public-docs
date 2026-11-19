@@ -35,6 +35,16 @@ In Clay Workflows (the graph editor where you build with nodes), there's no **To
 
 **Can't find a "Waterfalls" tab?** In both Clay tables and Clay Workflows, **Waterfalls** is a card inside the **For you** tab, not a tab of its own. In a table, click **Tools** and stay on the **For you** tab to see the **Waterfalls** card. In a workflow, the **Waterfalls** view is marked **Beta**.
 
+### Is validation turned on by default for waterfalls in Clay Workflows?
+
+Yes. When you add a waterfall to a workflow for a data point that has a validator, such as work email, personal email, or phone, Clay turns validation on for that waterfall automatically. Waterfalls in Clay Workflows are currently in beta and are rolling out to Workflows users; if you don't see the **Waterfalls** card, contact support.
+
+-   **Which validator is selected:** Clay picks the first validator for that data point that's available to workflows in your workspace (for example, Findymail for work email). If that validator is turned off for your workspace, Clay uses the next available one.
+-   **Require validation success is off:** The waterfall's **Require validation success** setting starts turned off. Turn it on if you only want results that the validator confirms as valid.
+-   **Data points without a validator:** For data points that have no validator (for example, company news), the waterfall is added without validation.
+
+To change the validator or turn validation off, open the waterfall in your Enrich node. Use the **Validate every result** toggle to turn validation on or off, and pick a different validator while the toggle is on.
+
 ## Editing an existing waterfall
 
 To add, remove, or reorder providers in a waterfall you've already saved:
