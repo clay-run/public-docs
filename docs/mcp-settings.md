@@ -12,7 +12,7 @@ MCP (Model Context Protocol) is how Clay connects your workspace to AI tools lik
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
+Navigate to it from the Clay homepage by clicking `Agent users` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
 
 **Note:**  
 
