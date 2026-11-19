@@ -1,7 +1,7 @@
 ---
 title: Audiences
 description: "Clay Audiences is available on Growth and Enterprise plans. Launch workspaces can import via CSV, people/company search, and Clay table sends; connecting a CRM or data warehouse requires Growth or above. Trial workspaces do not have access to Audiences."
-last_synced: 2026-10-08T17:37:34.526Z
+last_synced: 2026-11-17T20:58:08.337Z
 ---
 
 # Audiences
@@ -41,6 +41,8 @@ To add a data source, use the controls shown in your workspace:
 
 -   **If you see Records, Sources, and Exports tabs:** open **All People** or **All Companies**, select **Sources**, then click **Add source**.
 -   **If you see Add data in the top right:** click **Add data** → **Add Source**.
+
+If Audiences has no data yet, the **All People** or **All Companies** page opens on **Get started with Audiences** instead. Pick a source there or click **Browse all sources**.
 
 The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot open their own source settings panel instead.
 
@@ -524,6 +526,8 @@ The workflow then opens in the manual builder. All of its existing steps stay in
 
 Four Clay actions let you move data between a Clay table and your Audience directly.
 
+In the `Add enrichment` picker, `Upsert Audiences Record` is listed as **Create or update Audiences record**, and `Lookup in Audiences` is listed as **Look up in Audiences**.
+
 -   In any Clay table, click `Add enrichment` and search for:
     -   `Upsert Audiences Record` pushes records from a table into your Audience — creating a new record if no match exists, or updating an existing one if a match is found. The **Lookup fields** dropdown controls how Clay finds the matching record: for **Companies**, the available options are **Domain** and **LinkedIn URL**; for **People**, the options are **Email**, **LinkedIn URL**, and **Phone**. Use it to commit data from integrations not yet natively supported in Audiences, qualify event lists in a table before adding them to your Audience, or migrate enrichment work already done in a table.
     -   `Update Audiences Record` writes data from a table row to one or more fields on an existing Audience record. Unlike `Upsert Audiences Record`, it does not create a new record if no match is found. Both actions write only to fields that already exist in your Audience — to create a new custom field first, see [How do I create a custom Audience field that isn't tied to Salesforce?](#how-do-i-create-a-custom-audience-field-that-isnt-tied-to-salesforce) below.
@@ -558,8 +562,8 @@ For **Companies** audiences, five built-in signal types are available:
 
 **To add a signal to a segment:**
 
-1.  Navigate to an audience and click `Enrich`.
-2.  Click `Signals` → select a signal type (e.g., `New Hire`).
+1.  Navigate to an audience and click `Signals`.
+2.  Click `Add signal`, then click `Add signal` next to the signal type you want (e.g., `New Hire`).
 3.  Set the `look-back period` for the initial run: `3 months`, `6 months`, or `1 year`.
 4.  Set the `recurrence frequency` — how often it re-runs going forward.
 5.  Review the `cost preview per record` shown before the run begins.
