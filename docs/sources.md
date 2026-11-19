@@ -146,6 +146,24 @@ This gives you account-level attributes (company name, industry, revenue, etc.) 
 -   **Scope your source before the first sync.** When connecting Salesforce or HubSpot, use a pre-filtered list view or segment (e.g., filtered by account stage, owner, or segment) as your source. This ensures you bring in only the records you plan to work with — not your entire CRM.
 -   **Sources are additive.** Once records are imported, narrowing your source filter does not remove rows already in the table. See [Will rows already in my table be removed if they no longer match the source filter?](#will-rows-already-in-my-table-be-removed-if-they-no-longer-match-the-source-filter) below.
 
+## Combining HubSpot and Salesforce data in one table
+
+If your team uses both HubSpot and Salesforce, you can bring records from both CRMs into a single Clay table, then use that table to find and remove duplicates, enrich missing data, and export the combined result for reporting in Excel or Google Sheets. A Clay table can have more than one CRM source, so a HubSpot source and a Salesforce source can feed the same table.
+
+**To combine HubSpot and Salesforce records in one Clay table:**
+
+1.  Create a table with your first CRM source — for example, **Import objects from HubSpot** (contacts, companies, deals, or custom objects).
+2.  In the same table, click `Tools` → `Import` and add your second CRM source — for example, **Import records from a Salesforce list** (Accounts, Contacts, or Leads) or **Import records from Salesforce SOQL query**.
+3.  Each CRM source adds its own columns to the table, so the same field (for example, email) can initially land in separate HubSpot and Salesforce columns. To consolidate a field into one shared column, click a cell in the source column to open the cell details panel, hover over the field value, click **Add to column**, and under **Map to an existing column** choose the target column (for example, Email). Repeat this for each source so both HubSpot rows and Salesforce rows fill the same column.
+4.  Turn on **Auto-dedupe rows** in table settings and choose a **Dedupe via column** that both CRMs share, such as email or company domain. Auto-dedupe compares every row in the table regardless of which source imported it, so a record that exists in both HubSpot and Salesforce is kept only once. See [Auto-dedupe](table-management-settings.md#auto-dedupe) for column type requirements.
+5.  Add enrichment columns to fill in missing data on the combined records.
+6.  Export the combined table for reporting: click `Tools` → `Export` → `Download CSV` to open it in Excel (see [Exporting table data](#exporting-table-data)), or add a Google Sheets **Add row** action column to write rows to a Google Sheet (see [Google Sheets integration](google-sheets-integration-overview.md)).
+
+**Things to know when combining HubSpot and Salesforce data in Clay:**
+
+-   **CRM sources are not a real-time sync.** HubSpot and Salesforce sources pull new records only when you run them manually or on their schedule. See [Scheduled sources](scheduled-sources.md).
+-   **Clay does not automatically write the combined data back to your CRMs.** To update HubSpot or Salesforce records from your Clay table, add a CRM action column — for example, HubSpot **Update object** or Salesforce **Update record** or **Create or update record**. See [HubSpot integration](hubspot-integration-overview.md) and [Salesforce integration](salesforce-integration-overview.md).
+
 ## Modifying sources
 
 1.  In a table, click the source column title.
