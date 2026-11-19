@@ -206,6 +206,14 @@ If you're unsure whether you need a higher tier, check your current usage in `Se
 
 Each fully enriched record typically costs 6-20 data credits (including company and person profile, email, phone number, and custom AI enrichments). The more private API keys you use, the fewer data credits you'll spend per record.
 
+### Where did the Starter plan go?
+
+The Starter plan is a legacy plan from before Clay's 2026 pricing change. Starter is no longer offered to new customers, so it doesn't appear in the `Switch plan` list when you choose a plan.
+
+Workspaces that were already on Starter (or on the other legacy plans, Explorer and Pro) can keep their plan. See [Legacy plans](legacy-plans.md) for how legacy plans compare to current plans.
+
+To see the plans you can choose for your workspace and what each one costs, click your profile picture in the top-right corner, select `Settings`, go to `Plans & billing`, and click `Switch plan`.
+
 ### How do I cancel my subscription?
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
