@@ -93,7 +93,7 @@ In Clay, a workbook is a container for related tables. It's common to keep linke
 
 ### Can I filter by job title or role in company search?
 
-No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.). There is no job title filter in company search. Job title is a person-level attribute available only in People search.
+No — `Find Companies` only filters by company-level attributes (industry, size, location, revenue, etc.) and, through the **Job openings** filter, by a company's job postings. There is no filter for the job titles of a company's employees in company search. Job title is a person-level attribute available only in People search. (The **Job openings** filter in Find Companies matches titles in a company's open job postings, which is a hiring signal — it doesn't return people. See [Can I find companies with buying signals like hiring, recent funding, or AI initiatives before importing?](#can-i-find-companies-with-buying-signals-like-hiring-recent-funding-or-ai-initiatives-before-importing))
 
 **To find people with specific roles (e.g., CEO, Founder, Owner) at companies in your list, you have two options:**
 
@@ -107,6 +107,25 @@ For more detail on both workflows, see [Guide: Finding companies and people in C
 Founded year is not available as a filter when building a `Find Companies` search — you can't narrow results by founding date before importing.
 
 However, `Find Companies` automatically includes a **Founded** column in your table showing the founding year for each company. Once you've imported your results, you can filter or sort that column to focus on companies founded within a specific range — for example, filtering to companies founded after 2020 to target early-stage startups.
+
+### Can I find companies with buying signals like hiring, recent funding, or AI initiatives before importing?
+
+Some buying signals can be filtered in `Find Companies` before you import anything; others need a research step after import. Previewing Find Companies results costs no credits, so you can check your filtered list before you spend anything.
+
+**Hiring activity (filterable before importing):** Use the **Job openings** filter to narrow companies by their job postings. Sub-filters include **Job title**, **Job description**, **Employment type**, **Seniority**, **Location**, **Job posted date**, and **Job still open?**. For example, combine your ICP filters (industry, company size, location) with **Job title** set to roles that suggest a need for your product and a recent **Job posted date**. The **Job openings** filter is available on trial and paid plans, not on the Free plan. It appears in the default upgraded search; if you've switched **Upgraded search** off, the Job openings filter isn't shown.
+
+**Recent funding:** The **Funding raised** filter reflects total funding across all rounds, not when a company raised, so it can't isolate recent rounds on its own. See [What does the Funding raised filter measure?](#what-does-the-funding-raised-filter-measure) for ways to target companies that raised recently.
+
+**Buying signals you can't filter on before importing:** Find Companies has no filter for news, announcements, intent, or initiatives such as AI projects or digital transformation. The closest pre-import option is **Description keywords to include** (labeled **Description** in some search setups), which matches words in the company's profile description. It doesn't confirm that a company has a current initiative.
+
+**To keep only companies that show one of these signals:**
+
+1.  Narrow your search as far as possible with the free filters above (industry, size, location, Job openings), and preview the results.
+2.  Import a small batch first — for example, 50–100 companies.
+3.  Add a Claygent or **Use AI** column that researches each company for your signal and returns structured fields, such as whether the signal was found, the evidence, and the date.
+4.  Filter the table to keep only the companies where the signal was found.
+
+Claygent and Use AI columns consume credits when they run, so narrowing with free filters first means you pay only to check signals on an already-qualified list.
 
 ### Which location field gives the most accurate headquarters address?
 
