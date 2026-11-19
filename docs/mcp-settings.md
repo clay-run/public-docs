@@ -185,7 +185,7 @@ To remove the error, a workspace admin raises the user's MCP credit limit:
 2.  In the `MCP users` table, find the user (search by name or email — admins can find themselves here too).
 3.  Click the pencil icon next to their `Credit limit` and enter a higher amount. The user can run enrichments again on their next request in Claude or ChatGPT.
 
-The **Default credit limit** card at the top of the `MCP` page (1,000 credits unless an admin has changed it) sets the limit applied to new MCP users when they first connect an AI tool. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
+The **Default credit limit** card at the top of the `MCP` page sets the limit applied to new MCP users when they first connect an AI tool. Newly created workspaces start with no default credit limit: the card shows `Set default limit` until an admin sets one, and users who connect before then show `No limit`. Workspaces that already have a default credit limit (for example, 1,000 credits) keep it until an admin changes it. If you don't change the limit, MCP credit spend resets on the 1st of each month at midnight UTC. If you aren't a workspace admin, you won't see the `MCP` page — ask your workspace admin to raise your limit.
 
 ### Why does a rep's credit usage appear higher than the number of prompts they sent?
 
