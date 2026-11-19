@@ -497,7 +497,7 @@ To request a review, contact [Clay support](https://www.clay.com/contact) with d
 Unused trial Data Credits do not roll over. What happens to them depends on whether you convert to a paid plan:
 
 -   **If you convert to a paid plan:** Your trial Data Credits do not carry over to the paid plan. At conversion, your balance is set to the Data Credits included with your new paid plan.
--   **If your trial ends without converting:** Your workspace moves to the Free plan, which includes 100 Data Credits per month with a rollover cap of 200 credits. Any trial balance above that cap is forfeited at your first monthly renewal on the Free plan.
+-   **If your trial ends without converting:** Your workspace moves to the Free plan, which includes 100 Data Credits per month with a rollover cap of 200 credits. When your workspace moves to the Free plan, Clay adds the Free plan's 100 monthly Data Credits to your remaining trial balance and caps the total at 200 credits right away. Any trial balance above that cap is forfeited at that point, not at a later renewal.
 
 To get the most out of your trial credits, use them before your trial ends.
 

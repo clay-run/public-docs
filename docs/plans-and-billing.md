@@ -161,6 +161,25 @@ When your trial ends, your account automatically moves to the free plan — you 
 
 ## FAQs
 
+### Why does my table only show 50 rows when the Free plan includes 200 rows per table?
+
+If your table shows only 50 rows and asks you to upgrade to see the rest, your workspace is on a trial, not the Free plan. The Free plan's limit of 200 rows per table doesn't apply during a trial. A trial table can hold up to **1,000 rows**, but the table view displays only the first **50 rows**. When a trial table has more than 50 rows, you'll see a **"{N} more rows available"** message with a `View upgrade options` button. Your other rows are still stored in the table, and they become visible when you upgrade to a paid plan.
+
+To check whether your workspace is on a trial:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  Navigate to `Plans & billing`. During a trial, the plan badge reads **Trial**. The price line reads **Free** because the trial costs nothing, so it's easy to mistake a trial for the Free plan.
+3.  You can also check the credits widget in the top bar of the app, which shows **"{N} days until your free trial ends."**
+
+### Can I end my trial early and switch to the Free plan?
+
+You can't switch a trial workspace to the Free plan yourself from `Plans & billing`, because the Free plan can't be selected in the plan selector during a trial. You have two options:
+
+-   **Contact [Clay support](https://app.clay.com)** through the in-app chat and ask them to end your trial and move your workspace to the Free plan.
+-   **Wait for your 14-day trial to end.** Your workspace then moves to the Free plan automatically, and you won't be charged.
+
+**What happens to your trial data credits:** When your workspace moves from a trial to the Free plan, whether the trial ends on its own or support ends it, Clay adds the Free plan's 100 monthly data credits to your remaining balance and caps the total at **200 credits** right away. Any trial credits above that 200-credit cap are forfeited at that point. For example, if you have 700 trial credits left when you move to the Free plan, your balance becomes 200 credits, not 800. To avoid losing credits, use them before you move to the Free plan.
+
 ### How do I track my actions and data credits usage?
 
 You can track both actions and data credits usage in the `Usage Dashboard`, which you can access from the `Settings` menu in the app. You can also track usage at the table level via `Table history`.
