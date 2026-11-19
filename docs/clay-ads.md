@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-09-29T18:57:11.306Z
+last_synced: 2026-11-17T20:52:18.661Z
 ---
 
 # Clay Ads
@@ -120,6 +120,18 @@ Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
+### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
+
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, never lists Reddit Ads or Bing Ads. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+
+To send your contacts to Reddit Ads or Bing Ads:
+
+1.  Go to **Ads** from the Clay homepage, click `Create ad sync`, and select **People** (not **Table**, which is marked **Deprecated** and creates a legacy Table ads sync).
+2.  Pick the Audiences People segment that holds your contacts. There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
+3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
+
+Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
+
 ### **Why are some contacts excluded when I set up an ad sync?**
 
 When you create an ad sync, you may see an **Ad sync segment filters** panel showing a breakdown of your audience segment size, excluded contacts, and syncable contacts. Some contacts are automatically filtered out based on the platform you're syncing to and where their data originally came from.
@@ -176,12 +188,14 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Yes — you can add a new destination to an active sync using **Pause to edit**. Open the sync, click **Pause to edit**, add the platform under **Sync destinations**, then continue to **Enrich and sync**. Destinations that have already synced cannot be removed from an existing sync — only new ones can be added while paused.
+Yes — you can change the destinations on an existing Ad Sync using **Pause to edit**. Open the sync and click **Pause to edit**. To add a platform, add it under **Sync destinations**. To remove a destination, click **...** on its card and choose **Remove**. Then continue to **Enrich and sync**.
 
-**Pause to edit** is available when a sync is active, processing, or in a warning state. A failed sync, or a one-time sync that has finished and shows the **Exported** status on the Ads page, cannot be paused, and the **Add sync destinations** option no longer appears on it. For those syncs, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+**Pause to edit** is available when a sync is active, processing, or in a warning state. A **Paused** Ad Sync, or a recurring (always-on) Ad Sync that has **Failed**, can be edited straight away without pausing. A one-time sync that has finished (shown with the **Exported** status on the Ads page) or failed can't be edited, and the **Add sync destinations** option no longer appears on it. For those syncs, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
+-   Once an Ad Sync has run, it must keep at least one destination. To replace the only destination, add the new destination first, then remove the old one.
+-   When you remove a destination, the audience already built in that ad account stays there, but Clay stops updating it. Adding the same ad account back later creates a new audience.
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
 
 ### **Can I change a one-time Ad Sync to recurring?**
@@ -201,7 +215,7 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 ### **How long does it take for audiences to be created?**
 
-After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
+After sending your audience to the professional network or Meta, it will be created within **48 hours** (typically 1-2 days). A company (account-level) Ad Sync takes longer — it can take more than three days to build. Plan accordingly when launching time-sensitive campaigns.
 
 ### **Why should I use personal emails instead of work emails?**
 
