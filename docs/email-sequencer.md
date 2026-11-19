@@ -320,6 +320,14 @@ No. The plaintext or HTML mode you choose in the campaign `Setup` tab is locked 
 
 To use HTML features — including images in sender signatures, bold text, or hyperlinks — create a new campaign and enable HTML in the **Setup** tab before launching it. Your sender account and signature settings carry over automatically and do not need to be recreated.
 
+### Can I attach files (such as a PDF or image) to Sequencer campaign emails?
+
+No. Clay's email sequencer can't send file attachments — PDFs, PNGs, or any other files — with campaign emails. Each email step is sent as a subject line and message body only, and this applies to every sender account type, including Google OAuth, Microsoft Outlook OAuth, and SMTP accounts.
+
+To share a file with your leads, host it somewhere they can open it (for example, a file-sharing or document link) and include the link in your message. Hyperlinks require HTML to be enabled in the campaign `Setup` tab before launch; in plaintext campaigns, paste the full URL into the message instead.
+
+The files you can add in a campaign are used only as context for AI drafting — they aren't sent to leads as attachments.
+
 ### Why can't I see or edit the Message sequence section?
 
 If your campaign is active, all settings — including the Message sequence — are locked. To make edits, open the campaign's `Setup` tab and click `Pause`. Once paused, you can edit message copy and campaign settings. Note that you cannot change the total number of messages while paused — to add or remove messages, complete the campaign and create a new one.
@@ -631,6 +639,18 @@ If a lead *replies* to your email — rather than clicking an HTML unsubscribe l
 ### What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?
 
 Adding an email address to the Global Blocklist stops that address from receiving emails from **all** campaigns in your workspace — including leads already mid-campaign. No separate pause step is required. Emails already in Smartlead's immediate outgoing queue at the moment you add the address (typically within the next few minutes before a scheduled send time) may still be delivered, but no further emails are queued after the blocklist takes effect.
+
+### Can Clay check with my own system right before each Sequencer email is sent?
+
+No. Clay's email sequencer has no send-time hook or webhook that calls your system for approval right before each individual email goes out. After a lead is enrolled in a launched campaign, the campaign's schedule decides when each email is sent, and no outside eligibility check runs before each send.
+
+To control who receives Sequencer emails, use these options instead:
+
+-   **Filter leads before they enter the campaign:** Add an `Only run if` condition to the `Sync lead data to campaign` column in your source table so only eligible leads are synced into the campaign.
+-   **Global Blocklist:** Add an email address or domain to the Global Blocklist to stop it from receiving emails from all campaigns in your workspace, including leads already mid-campaign. See [What happens if I manually add a lead to the Global Blocklist while they're already in an active campaign?](#what-happens-if-i-manually-add-a-lead-to-the-global-blocklist-while-theyre-already-in-an-active-campaign)
+-   **Pause leads:** Pause individual leads from the campaign's `Leads` tab (see [Pausing a lead in a launched campaign](#pausing-a-lead-in-a-launched-campaign)), or automatically with the `Pause lead in campaign` enrichment, which can run from any Clay table.
+
+To send campaign outcomes back to your own system, add an `HTTP API` action column to the [campaign events table](#campaign-events-table), which records sends, opens, clicks, bounces, replies, and unsubscribes. See [How do I send Sequencer campaign data to Snowflake or another data warehouse?](#how-do-i-send-sequencer-campaign-data-to-snowflake-or-another-data-warehouse) for setup details.
 
 ### What happens when an email to a lead bounces?
 
