@@ -207,6 +207,27 @@ It depends on how the function is set up. By default, Claude does not have acces
 
 If you click `Open in Clay`, a table is created in your Clay workspace. For one-off operations — like finding a single contact's email — a table is not created by default.
 
+**Can Claude see or read the tables I've created in Clay?**
+
+Not through the Clay connector in Claude. The Clay connector (Clay's MCP server) has no tool for listing your Clay tables or reading their rows, so Claude can't see tables you've built in your Clay workspace. Upgrading your Clay plan or changing your MCP settings doesn't change this. Through the Clay connector, Claude can:
+
+-   Search for contacts and companies, and load more search results
+-   Enrich contacts and companies with additional data points
+-   List and run Functions that are enabled for MCP
+-   Query your Clay Audiences data, if Audiences is enabled for your workspace
+
+That's why Claude may tell you it can only reach Clay Audiences and Functions.
+
+To have Claude read your existing Clay tables, use the Clay CLI from Claude Code or a terminal:
+
+1.  Install the Clay CLI from the [agent-plugins repository](https://github.com/clay-run/agent-plugins) and sign in with `clay login`. See [CLI agent plugin](https://university.clay.com/docs/using-clay-as-an-api) for setup and role requirements.
+2.  In Claude Code, ask Claude to list your tables (`clay tables list`) or give it the table name or table ID. A Clay table ID starts with `t_` and is the part of the table's browser URL after `/tables/` — for example, `t_0te5b6rGsW6WAJW22cD` in `app.clay.com/workspaces/.../tables/t_0te5b6rGsW6WAJW22cD/views/...`.
+3.  Claude Code reads the table with commands such as `clay tables get <tableId>`, `clay tables columns list <tableId>`, and `clay tables rows list <tableId>`.
+
+The Clay CLI table-read commands require a paid or trial Clay plan. On the Free plan, they fail with the message "The public observability API is not enabled for this workspace (available on paid and trial plans)." If you're on a paid plan and still see this message, contact [Clay support](https://www.clay.com/contact-form).
+
+To run a Function from Claude through the Clay connector, the Function's settings must have `MCP for reps` checked. To run it through the Clay CLI, check `API & CLI`. The two checkboxes are separate.
+
 **Can Clay in Claude write to or add rows to my existing Clay tables?**
 
 Not natively. The Clay connector is designed for finding new contacts and companies, enriching them, and drafting outreach — all within the conversation. It doesn't have a built-in action to push rows into a table you've already built in your Clay workspace.
