@@ -993,14 +993,14 @@ A semi-join passes Clay's **Preview** step (which uses Salesforce's standard RES
 
 This applies to Salesforce **Record subset** (SOQL) imports in Audiences. Clay checks your SOQL query before sending it to Salesforce. If two fields in the `SELECT` list aren't separated by a comma, Clay reads the second field name as an alias for the first, and the query stops with **"Field aliases are not supported."**
 
-For example, the comma after `Enterprise_Opportunities__c` is missing in this query, so Clay treats `BO_Link__c` as an alias:
+For example, the comma after `Example_one__c` is missing in this query, so Clay treats `Example_two__c` as an alias:
 
 ```sql
-SELECT Id, Name, Enterprise_Opportunities__c BO_Link__c, SystemModstamp, IsDeleted
+SELECT Id, Name, Example_one__c Example_two__c, SystemModstamp, IsDeleted
 FROM Account
 ```
 
-**Fix:** Put a comma between every field in the `SELECT` list (`Enterprise_Opportunities__c, BO_Link__c`), then preview the query again. Audiences SOQL queries don't support field aliases, so list each field by its Salesforce API name only. In a long field list, check the end of each line for a missing comma.
+**Fix:** Put a comma between every field in the `SELECT` list (`Example_one__c, Example_two__c`), then preview the query again. Audiences SOQL queries don't support field aliases, so list each field by its Salesforce API name only. In a long field list, check the end of each line for a missing comma.
 
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
