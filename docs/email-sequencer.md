@@ -93,6 +93,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
 7.  Explore `Advanced settings` if needed:
     -   `Email tracking`: Configure tracking for email opens and link clicks (if HTML is enabled)
     -   `Pause leads at the same company on reply`: When a lead replies, automatically pause other leads with the same email domain. Off by default.
+    -   `Webhooks` (table-based Sequencer v1 campaigns only): Send campaign events to your own webhook endpoint instead of the campaign events table — for example, to route Smartlead campaign events to a downstream tool. Click `Add webhook`, enter a `Webhook name` and `Webhook URL`, choose the `Event types` to send (Email sent, Email reply received, Email bounced, Lead unsubscribed, Lead category updated, Campaign status changed, Manual step reached, Email opened, Email link clicked), and click `Add webhook`. Events sent to a custom webhook won't appear in your campaign events table. Each event type can go to only one custom webhook, so event types another custom webhook already uses are greyed out. Deleting a custom webhook (`Delete webhook?` → `Delete`) can't be undone and returns its event types to the campaign events table. Workspace Admins and Members with edit access to the campaign's table can add or delete webhooks at any campaign status, including while the campaign is live. People-based (Sequencer v2) campaigns don't have a Webhooks setting.
 8.  Go to `Leads` to preview the messages for all people in your campaign
     -   `Send test email` to verify your template looks right
     -   Click the `Pencil` icon to spot-edit a message for a specific lead
@@ -107,8 +108,8 @@ Once all your settings are saved, you can launch your campaign. Launching a camp
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
     -   Any new leads routed into the campaign will automatically be sequenced, enabling "always-on" campaigns for inbound routing.
-    -   All campaign settings become locked.
--   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)).
+    -   All campaign settings become locked, except custom `Webhooks` in Sequencer v1 campaigns, which you can still add or delete.
+-   Campaign events are captured in the global campaign events table shared across your workspace (see [Campaign events table](#campaign-events-table)). In Sequencer v1 campaigns, event types you've sent to a custom webhook in `Advanced settings` go to that webhook instead and don't appear in the campaign events table.
 
 At any point, you can pause or complete a campaign:
 
@@ -370,6 +371,28 @@ If you've moved to a new email provider (for example, switching from a third-par
     -   Other providers (including third-party email hosting): select `SMTP` and enter your SMTP and IMAP credentials.
 2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
 3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
+
+Changing a campaign's sender accounts only affects leads enrolled after the change. Leads that were already enrolled stay assigned to the old sending account and aren't moved to the new one. See [What happens to my campaign if a sender leaves the company mid-campaign?](#what-happens-to-my-campaign-if-a-sender-leaves-the-company-mid-campaign)
+
+### What happens to my campaign if a sender leaves the company mid-campaign?
+
+When someone who sends a campaign's emails leaves your company, their sender account is usually deleted or disconnected. What happens next depends on whether a lead was already enrolled with that sender account.
+
+**Leads already enrolled with the departed sender's account stop receiving emails.** Clay assigns each lead to one sender account when the lead is enrolled. People-based (Sequencer v2) campaigns always do this. Table-based (Sequencer v1) campaigns do it when `Assign sender account field to lead` is mapped. If a lead's sender account is later deleted or disconnected, the lead isn't moved to another sender account (even if the campaign has several) and it stops receiving the rest of its sequence. Clay doesn't have an in-product option to move already-enrolled leads to a different sender account. Pausing the campaign and changing its sender accounts only affects leads enrolled afterward.
+
+**Leads enrolled after the sender account is deleted or disconnected aren't assigned to it** (people-based campaigns). If `Assign sender account field to lead` isn't mapped, new leads are spread across the campaign's remaining active sender accounts. If it is mapped, a lead whose sender column still holds the departed sender's address isn't enrolled.
+
+**How to tell a sender account is disconnected:** the campaign header shows a red badge such as `1 sender auth error`, and the account's status in `Sequencer` → `Email accounts` shows **Auth error**.
+
+**To replace a departed sender in a campaign:**
+
+1.  **Connect the replacement sender account** and enable warmup. See [How do I switch my campaign's sending email to a new provider or address?](#how-do-i-switch-my-campaigns-sending-email-to-a-new-provider-or-address)
+2.  **Pause the campaign** (`Pause` in the campaign header) and add the replacement account in the campaign's `Sender accounts` tab.
+3.  **If you use `Assign sender account field to lead`,** update that column in your source table so leads that haven't been enrolled yet point to the replacement sender's address. Then re-run the `Sync lead data to campaign` column for those rows.
+4.  **Resume the campaign.**
+5.  **Delete the departed sender's account (optional).** Go to `Sequencer` → `Email accounts`, click the ⋯ menu on the account's row, and select `Delete account`. The confirmation warns that sequences will no longer send emails from this account.
+
+**To keep new leads flowing when a sender leaves:** If you don't need specific reps to own specific leads, add several sender accounts to the campaign (for example, 2–3) and leave `Assign sender account field to lead` empty. In people-based campaigns, new leads then keep enrolling through the remaining active accounts when one sender account is deleted or disconnected.
 
 ### What is email account warmup?
 
@@ -692,6 +715,23 @@ For per-step analysis, use the campaign events table. Each event includes a `seq
 
 To extract `sequence_number` as a standalone column, click any Campaign event cell, find `sequence_number` in the Cell details panel, and click **Add as column**.
 
+### Why is the Bounce rate in my campaigns list different from the Sender and Recipient bounce rates in the Analytics tab?
+
+The **Bounce rate** column in the Sequencer campaigns list and the bounce cards in the **Deliverability** section of a campaign's `Analytics` tab count bounces differently, so the numbers often won't match. The campaigns list combines every bounce into one rate, while the Deliverability section splits bounces into sender-side and recipient-side rates.
+
+The Sequencer bounce metrics are calculated as follows:
+
+-   **Bounce rate** (campaigns list): all bounces for the campaign — sender bounces plus recipient bounces — divided by emails sent. It's shown as a percentage with the total bounce count in parentheses, for example `2.2% (4)`. This column always uses the campaign's lifetime totals and isn't affected by any date range.
+-   **Sender bounce rate** (Deliverability section): emails that bounced for sender-side reasons, such as mailbox authentication or reputation problems, divided by emails sent — shown as, for example, "2 of 180 sent". The email provider flags which bounces are sender-originated.
+-   **Recipient bounce rate** (Deliverability section): emails that bounced on the recipient side, such as bad or unreachable addresses, divided by emails sent. This is every bounce that isn't a sender bounce.
+-   **Delivery rate** (Deliverability section): emails sent minus all bounces, divided by emails sent. The number under it is the total bounce count.
+
+The Deliverability section reflects the date range selected in the campaign's `Analytics` tab; the campaigns list Bounce rate does not.
+
+**Example:** A campaign has sent 180 emails, with 2 sender bounces and 2 recipient bounces. The Deliverability section shows a Sender bounce rate of 1.1% (2 of 180 sent) and a Recipient bounce rate of 1.1% (2 of 180 sent). The campaigns list shows a Bounce rate of `2.2% (4)`, because 4 total bounces ÷ 180 sent = 2.2%. If the numbers still don't line up, check the date range in the `Analytics` tab — the campaigns list always counts the campaign's full history.
+
+The separate Sender bounce rate and Recipient bounce rate cards appear in the Analytics tab of people-based (V2) campaigns; table-based (V1) campaigns don't show this sender/recipient split.
+
 ### How are replies categorized in the Campaign Events table?
 
 Each time a reply is categorized, a `LEAD_CATEGORY_UPDATED` event is written to the campaign events table. Categorization happens two ways: a user or teammate selects a category from the dropdown in the campaign's **Replies** tab or global inbox, or AI auto-categorization assigns a label automatically (enabled for all campaigns by default). Sends and sequence steps do not trigger this event — it only fires when a reply's category is set or changed.
@@ -732,6 +772,10 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 -   `Text`: a plain text version of the same content
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
+
+**To read an HTML reply the way the lead's email looked:** click the cell to open the Cell details panel, then click **View HTML** next to the `Html` value. The **HTML preview** window shows the email rendered as it would appear in an inbox. Scripts in the email don't run, and links open in a new tab. To see the raw HTML source, turn off the **HTML viewer** switch (it's on by default); a **Copy** button appears so you can copy the source.
+
+The **View HTML** button appears in the Cell details panel for any field whose name contains "html" (for example, `Html` or `body_html`) and whose value starts with `<` and ends with `>`. This includes HTML in bounce notifications and other campaign event data, not only replies.
 
 ### Useful links
 
