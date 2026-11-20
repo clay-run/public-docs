@@ -38,6 +38,37 @@ Follow these steps to set up auto-delete:
 
 **Warning:** Deleted rows are not recoverable.
 
+## How conditional rules decide which rows auto-delete removes
+
+In **Delete based on conditional rules** mode, auto-delete only considers rows where every action column has finished running. Rows with an action still running are skipped until they complete. Clay then applies your filter rules to those completed rows.
+
+**Number of rows to keep** in conditional rules mode applies only to rows that match your rules. Auto-delete keeps the most recent matching rows (100 by default) and deletes the older matching rows. Rows that don't match your rules are never deleted by auto-delete.
+
+### What the "is from source" and "is not from source" filters check
+
+The **is from source** and **is not from source** filter conditions check which source originally created each row. Clay records that source when the row is created, and it never changes afterward, even if the record later changes or leaves the list in your CRM.
+
+-   **is from source** matches rows that were created by the source you select.
+-   **is not from source** matches rows that were created by a different source, or by no source (for example, rows added manually).
+
+For example, take a table whose only source is **Import objects from HubSpot**. A rule of "is not from source **Import objects from HubSpot**" never matches any of the imported rows, so auto-delete never deletes them.
+
+### Can auto-delete remove rows when a contact leaves my HubSpot list or segment?
+
+Not on its own. The **Import objects from HubSpot** source doesn't remove or flag rows for contacts who have since left the HubSpot list. Each refresh only brings in the list's current members, and rows for contacts who left stay in the table. The source filter conditions can't detect this either, because a row's original source never changes.
+
+To have auto-delete remove contacts who are no longer in your HubSpot list:
+
+1.  Add a column that checks whether each contact is still in the list. Clay has no built-in action that checks a single contact's list membership, so use one of these options:
+    -   In HubSpot, create a contact property that tracks membership in the list (for example, one kept up to date by a HubSpot workflow). Then add a HubSpot **Look up object** column in Clay to read that property for each row.
+    -   Add an HTTP API column that calls HubSpot's API to get each contact's list memberships.
+2.  Re-run that column regularly so it reflects current list membership. Rows are only flagged when the column is re-run.
+3.  Open the auto-delete settings, select **Delete based on conditional rules**, and add a filter on the membership column (for example, where the membership value shows the contact is no longer in the list).
+4.  Turn on **Archive deleted rows** if it's available in your workspace, so you can download deleted rows as a CSV for up to 30 days.
+5.  Click `Save changes`.
+
+**Tip:** Test your rule on a small batch of rows before applying it to the whole table. Deleted rows are not recoverable.
+
 ## Keeping space for incoming records
 
 Auto-delete runs after records are written to the table, not before. When records arrive, Clay checks whether the table is below the 50,000-row limit and creates the records first — the auto-delete cleanup job then runs separately, typically about a minute later. This means that if records keep arriving faster than auto-delete can clear space, the table can temporarily reach the 50,000-row limit and new records will be rejected.
@@ -69,6 +100,12 @@ All other source types — such as CRM integrations (Salesforce, HubSpot), CSV a
 -   **Split across multiple tables.** Create a new table with the same source settings. Each new table starts its source record count at 0 of 50,000, so you can continue processing until that table reaches its limit, then create another. This works well when your searches are naturally segmented (for example, by region or persona) but requires manual management.
 
 **Continuous-streaming workflows:** Auto-delete allows a table to keep importing new records indefinitely only when the source continuously pushes incoming data — specifically, webhook, send table data, and signal sources. For scheduled CRM or database imports (such as Gong, Salesforce, HubSpot, or Snowflake queries configured to run on a recurring schedule), enabling auto-delete will delete processed rows from the table, but the source will still stop importing after 50,000 records are reached. To process records continuously — for example, enriching every new Gong call as it completes — use a **webhook source** in Clay and configure the external system to push records to Clay as they are created. For Gong specifically, you can do this with Gong's automation rules: create a webhook source in Clay, copy the webhook URL, then set up a Gong rule to send the call ID to that URL whenever a new call is processed.
+
+### Does auto-delete work for the table that sends data or the table that receives it?
+
+The **send table data** option in auto-delete refers to the table's **source**, not to its action columns. It applies to the **receiving (destination) table**: the table whose source was created by a Send Table Data column in another table. When you add a Send Table Data column, Clay creates a send table data source on the destination table, so auto-delete on the destination table can process and delete the incoming rows there without hitting the 50,000-record source limit.
+
+Having a Send Table Data column does not make the **sending table** compatible with auto-delete. The sending table's compatibility depends only on its own source. For example, if the sending table's source is a CSV import or a HubSpot import, it still stops importing after 50,000 records even with auto-delete enabled. If the sending table's own source is a webhook, send table data, signal, or Audiences source, auto-delete lets the sending table keep importing past 50,000 records too.
 
 ## Archive deleted rows
 
