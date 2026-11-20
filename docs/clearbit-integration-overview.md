@@ -1,7 +1,7 @@
 ---
 title: Clearbit integration overview
 description: B2B data solutions for lead generation and marketing personalization.
-last_synced: 2026-04-27T18:09:36.202Z
+last_synced: 2026-11-18T20:50:11.670Z
 ---
 
 # Clearbit integration overview
@@ -110,7 +110,7 @@ The **Enrich Company** action helps you get key data about a company given the c
 
 First, you can use either the Clay-managed Clearbit account or your own API key.
 
-If you use the Clay-managed Clearbit account you will be charged at 8 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Clearbit account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -132,6 +132,18 @@ If you want to only run this enrichment under set circumstances, you are able to
 
 Select which data from the enrichment you'd like to add as columns to your table. Even if you choose not to add columns at this point, the enriched data will still be available and accessible for later use.
 
+#### Getting a company's fiscal year end with Clearbit Enrich Company
+
+Clearbit's **Enrich Company** action returns a **Fiscal Year End** field: the month in which the company's fiscal year ends, as a number from 1 to 12 (for example, `12` means the fiscal year ends in December).
+
+To add a company's fiscal year end to your table with Clearbit Enrich Company:
+
+1.  Set up the **Enrich Company** action with the company's website domain (Steps 1–4 above).
+2.  In Step 5, select **Fiscal Year End** from the list of data to add as columns. Fiscal Year End isn't selected by default.
+3.  Run the enrichment. Each enriched row shows the fiscal year end month as a number in the new **Fiscal Year End** column.
+
+If you already ran Enrich Company without adding the Fiscal Year End column, the value is still available in the enrichment result, and you can add it as a column later. The **Enrich Person & Company** action also returns **Fiscal Year End** for the person's current company.
+
 ### `Action` Enrich Person & Company
 
 The **Enrich Person & Company** action helps you find key data about a person and their current company from a given work email.
@@ -140,7 +152,7 @@ The **Enrich Person & Company** action helps you find key data about a person an
 
 First, you can use either the Clay-managed Clearbit account or your own API key.
 
-If you use the Clay-managed Clearbit account you will be charged at 8 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Clearbit account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 

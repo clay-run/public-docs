@@ -107,6 +107,30 @@ Clay.getCellErrorMessagePreview({{Add prospect to flow}})
 
 See [Formulas — How do I pull an error message from an action column into another column?](formula-generator.md) for full usage details, including limitations on preview behavior and which cells are supported.
 
+**Troubleshooting: Email copy sent to a Gong Engage flow shows up as one block of text**
+
+If the email copy you send from Clay to a Gong Engage flow doesn't keep the formatting from your Clay column — the paragraphs and line breaks in your template or AI-generated email run together into a single block in Gong — the cause is that Gong renders the flow step body as HTML. The **Add Prospect to Flow** action sends the value mapped to **Override for step N body** to Gong exactly as it appears in Clay, without converting line breaks, and HTML ignores plain line breaks. The action has no plain-text or HTML setting to change this, so the fix is to add HTML tags to the email body before it's sent.
+
+To keep your email formatting in Gong Engage:
+
+1.  Format the email body with HTML tags:
+    -   Wrap each paragraph in `<p>` and `</p>`.
+    -   Use `<br>` for a single line break inside a paragraph, such as a multi-line signature.
+2.  Produce that format in one of these ways:
+    -   **AI column prompt:** instruct the AI column (or Claygent) that writes the email to wrap each paragraph in `<p>` tags and use `<br>` for single line breaks, instead of plain line breaks.
+    -   **Formula column:** add a Formula column after the column that holds the email body that converts its line breaks into HTML tags, then map the formula column to **Override for step N body** instead of the original column.
+3.  Rerun the column on one row, enroll a test prospect, and check the rendered step in Gong. Once the paragraphs display correctly, run the remaining rows.
+
+For example, a body formatted like this displays as three separate paragraphs in Gong, with the signature on two lines:
+
+```html
+<p>Hi Jordan,</p>
+<p>Quick question about how your team tracks corrective actions today.</p>
+<p>Alex Morgan<br>Example Co</p>
+```
+
+Blank lines between the `<p>` blocks are optional — the `<p>` tags are what create the paragraph spacing in Gong.
+
 ### `Action` Get Assigned Flows for Prospect
 
 Use this action to retrieve the Gong Engage flows assigned to a prospect.
