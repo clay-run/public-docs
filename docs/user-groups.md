@@ -1,17 +1,14 @@
 ---
 title: User groups
-description: User groups let you share Clay workbooks and connected accounts
-  with multiple members at once.
+description: User groups let you share Clay workbooks, connected accounts, and
+  credit budgets with multiple members at once, and can sync from your identity
+  provider through SCIM provisioning.
 last_synced: 2026-04-26T01:40:51.931Z
 ---
 
 # User groups
 
-User groups let you share Clay workbooks and connected accounts with multiple members at once.
-
-**Note:** This feature is currently in beta for Enterprise customers.
-
-User groups let you share Clay workbooks and connected accounts with multiple members at once. Instead of adding people one by one to connections and tables, you can create groups and grant access to the entire group at once.
+User groups let you share Clay workbooks, connected accounts, and credit budgets with multiple members at once. Instead of adding people one by one to connections and tables, you can create groups and grant access to the entire group at once.
 
 Only admins can create and manage groups, but all workspace members can view them.
 
@@ -45,6 +42,8 @@ To edit a group's name or members, navigate to `Settings` → `Teams` → `Group
 
 Changes take effect immediately. When you add someone to a group, they automatically gain access to all resources the group has been granted. When you remove someone, they immediately lose that access.
 
+For SCIM-managed user groups, admins can only edit the description in Clay. See [SCIM-managed user groups](#scim-managed-user-groups).
+
 ### Deleting a group
 
 To delete a group:
@@ -55,6 +54,8 @@ To delete a group:
 4.  Click `Delete group` to confirm.
 
 Once deleted, the group loses any previous access to associated resources. This action cannot be undone.
+
+`Delete group` isn't available for SCIM-managed user groups. To remove one, delete the group in your identity provider.
 
 ## Adding a group to a resource
 
@@ -71,6 +72,38 @@ For example, to grant a group access to a connection:
 5.  Click `Save`
 
 When you add a user to a group, they automatically inherit access to all connections and resources that group has been granted access to.
+
+## SCIM-managed user groups
+
+If your workspace uses [SCIM provisioning](./scim-provisioning.md), groups you push from your identity provider (IdP), such as Okta or Azure AD, sync to Clay as SCIM-managed user groups. Group names and membership stay up to date automatically, so IT teams can manage these user groups in the IdP instead of creating and maintaining them by hand in Clay. SCIM provisioning and user groups are available on Enterprise plans.
+
+### What syncs from your identity provider
+
+This table shows what each group change in your identity provider does to the SCIM-managed user group in Clay.
+
+| In your IdP | In Clay |
+| --- | --- |
+| Push a group | Clay creates a user group with the same name. |
+| Rename a group | The user group's name updates to match. |
+| Add a user to a group | The user is added to the user group and inherits access to every workbook, connection, and credit budget the group has been granted. |
+| Remove a user from a group | The user is removed from the user group and loses the access granted through it. |
+| Delete a group | The user group is deleted from Clay, and its members lose the access granted through it. |
+
+A user is only added to a SCIM-managed user group once they're also assigned to Clay through SCIM. Users with a pending invite can be group members too.
+
+For example, share a credit budget with a `Sales reps` group pushed from your IdP. When IT adds someone to that group in the IdP, they automatically get access to that budget in Clay.
+
+### Identifying and editing SCIM-managed user groups
+
+In `Settings` → `Teams` → `Groups` tab, SCIM-managed user groups show a `SCIM` badge next to the group name and list your identity provider as their source.
+
+When an admin opens a SCIM-managed user group in Clay:
+
+-   The group name and members are read-only, with the message "This group syncs from" followed by your identity provider's name. Change them in your IdP instead.
+-   The description can be edited, up to 1,000 characters.
+-   `Delete group` isn't available. Select `Manage SCIM` to manage the connection instead.
+
+You share SCIM-managed user groups with workbooks, connections, and credit budgets the same way as any other user group.
 
 ## FAQs
 
@@ -100,7 +133,7 @@ Admins can see which connections a given group has access to use. However, edito
 
 **Are groups synced from Okta, Azure AD, or other identity providers?**
 
-No. User groups in Clay are managed manually within the workspace — groups from external identity providers are not synced into Clay user groups. This includes SCIM Directory Sync (currently in beta for select Enterprise workspaces), which syncs workspace membership and workspace roles but not user groups. This is separate from workspace SSO authentication: Clay does support SSO login via WorkOS for Enterprise customers (and as a paid add-on for annual Pro and Growth plans). See [Single Sign-On (SSO)](./single-sign-on.md) for setup details.
+Yes, through SCIM provisioning (available on Enterprise plans). Groups pushed from Okta, Azure AD, or another identity provider sync to Clay as SCIM-managed user groups, with names and membership kept up to date automatically. See [SCIM-managed user groups](#scim-managed-user-groups). Groups you create in Clay are still managed manually within the workspace. This is separate from workspace SSO authentication: Clay does support SSO login via WorkOS for Enterprise customers (and as a paid add-on for annual Pro and Growth plans). See [Single Sign-On (SSO)](./single-sign-on.md) for setup details.
 
 **Can groups be nested inside other groups?**
 
