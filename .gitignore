@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude Code local files
+.claude/settings.local.json
+.claude/scratch/
+
+# Environment and secrets
+.env
+.env.*
+
+# Local reports
+/reports/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak

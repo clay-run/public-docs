@@ -2,7 +2,7 @@
 title: Using Clay in Claude
 description: Find people, enrich contacts, and draft personalized outreach—all
   within a Claude conversation
-last_synced: 2026-04-26T01:40:52.929Z
+last_synced: 2026-11-19T07:37:54.822Z
 ---
 
 # Using Clay in Claude
@@ -90,7 +90,7 @@ Claude will find the matching function, run it, and return the results directly 
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `Agent users` page, which they open from the sidebar on the Clay homepage. The `Agent users` page is currently in beta and is visible only to workspace admins — if it doesn't appear in your sidebar, contact Clay support. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
@@ -108,7 +108,7 @@ Company search is not currently supported. However, you can research companies b
 
 **Can I query my Audiences data or run analytical queries like "group by seller"?**
 
-If your workspace has Clay Audiences enabled, you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." By default, results are scoped to accounts you own in Salesforce; your admin can lift this restriction from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see the error `Contact queries are not available when account ownership restriction is enabled`, ask your admin to disable `Restrict account querying by Salesforce owner` on the `MCP` page in the workspace sidebar — when this toggle is on, contact queries return an error. Note that the MCP page is only visible to workspace admins. If the toggle is off but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
+If your workspace has Clay Audiences enabled, you can use natural language to filter and look up accounts — for example, "Show me my open-pipeline accounts in the northeast" or "Tell me about [Account]." By default, results are scoped to accounts you own in Salesforce; your admin can lift this restriction from [MCP settings](https://university.clay.com/docs/mcp-settings). If you see the error `Contact queries are not available when account ownership restriction is enabled`, ask your admin to disable `Restrict account querying by Salesforce owner` on the `Agent users` page in the workspace sidebar — when this toggle is on, contact queries return an error. Note that the `Agent users` page is only visible to workspace admins. If the toggle is off but queries return no results, ensure `Sync user IDs from audiences` is also on and your Salesforce account ownership is correctly mapped.
 
 The integration is designed for targeted, individual account research — not bulk data exports or analytical operations. SQL-style queries such as grouping accounts by owner or aggregating pipeline by territory are not supported. For complex analysis across your full Audiences dataset, use the Clay platform directly at [app.clay.com](http://app.clay.com).
 
@@ -137,7 +137,7 @@ Credit pricing matches standard Clay plans. Claude serves as an alternative inte
 
 **Where can I track how many credits I've used through Clay in Claude?**
 
-Go to `Settings → Credit Usage → MCP tab`. Your usage appears there, broken down by user — expand your row to see which Clay functions you ran and how many credits each consumed.
+Go to `Settings` → `Usage` → `MCP` tab. Your usage appears there, broken down by user — expand your row to see which Clay functions you ran and how many credits each consumed.
 
 **Do I need to invoke Clay manually, or will Claude know to use it?**
 
@@ -150,6 +150,18 @@ Yes. Ask _"What functions do you have?"_ or _"What workflows has RevOps built fo
 **Does Clay work with Claude Code?**
 
 Yes. Once you connect Clay via Claude's connector system at `claude.com/connectors/clay`, it will also work in Claude Code.
+
+**Why can't I copy and paste Clay results in Claude, and how do I get them in a portable format?**
+
+In Claude chat (claude.ai), Clay shows enrichment results in Clay's interactive widget: a box with a table of results that you can filter and enrich inside the conversation. Your data is fine. The Clay widget is built for working with results in-chat, though, not for copying and pasting. You can get Clay results in a format you can copy in any of the following ways:
+
+1.  **Ask Claude to restate the results as text.** Add a formatting instruction to your prompt, and Claude will write the Clay results as a plain table or CSV you can copy. Sample prompt:
+    -   `Use Clay to enrich these two people: [Name] at [company.com] and [Name] at [company.com]. Return work email, phone, title, and social profile URL. After the widget loads, also write the results as a plain markdown table (one row per person) and as a CSV code block so I can copy them.`
+    -   If the widget has already loaded, follow up in the same chat with `Put that in a CSV code block` and Claude will reformat the results.
+2.  **Click `Open in Clay`.** This creates a table in your Clay workspace with the results. From that table, you can export to CSV or push the data to your CRM.
+3.  **Use Claude Code if you do this often.** Claude Code doesn't display the Clay widget. Clay returns the results as text in the conversation instead, so everything can be copied by default. It's the same Clay connector and the same data.
+
+For better results with any of these options, include the company domain (e.g., `acme.com`), not just the company name, and say exactly which fields you want back.
 
 **Troubleshooting: "SDK auth failed: Client name must not impersonate a known platform"**
 
@@ -170,6 +182,18 @@ To fix:
 1.  In Claude, go to **Settings → Connectors**.
 2.  Find Clay and disconnect it.
 3.  Go to [claude.com/connectors/clay](https://claude.com/connectors/clay) and complete the OAuth flow again.
+
+**Troubleshooting: No workspace to select on the "Authorize Claude" page, and the Authorize button is greyed out**
+
+When you connect Clay to Claude, Clay opens an **Authorize Claude** page that says "Please select the workspace you want to connect." The Clay workspace selector, labeled **Which workspace should Claude connect to?**, sits below the **This application will be able to:** permissions list, inside a scrollable area of the page. The **Deny** and **Authorize** buttons stay pinned at the bottom, so on smaller screens or at higher browser zoom levels the workspace selector can be hidden below the visible part of the page. The **Authorize** button stays greyed out until you select a workspace.
+
+To fix:
+
+1.  On the **Authorize Claude** page, scroll down inside the page card (above the **Deny** and **Authorize** buttons), or zoom out in your browser (`Cmd` + `-` on Mac, `Ctrl` + `-` on Windows).
+2.  Find the **Which workspace should Claude connect to?** dropdown and select your Clay workspace.
+3.  Click **Authorize**. The button becomes clickable once a workspace is selected.
+
+The dropdown lists every Clay workspace you're a member of, with any role (Admin, Member, Viewer, or Sales Rep). If the dropdown is visible but your team workspace isn't in it, make sure you're signed in to Clay with the email that was invited to that workspace, and that you've accepted the workspace invite.
 
 **When I run an action in Claude, does it count as a Clay action?**
 
@@ -196,4 +220,4 @@ For batch workflows like running an email-finder waterfall on a list of companie
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `Agent users` page (currently in beta). If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
