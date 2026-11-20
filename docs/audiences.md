@@ -829,6 +829,8 @@ To change a field's write rule, click the **pencil (edit) icon** next to any map
 
 **Important:** Because **Never write** is the default, a newly mapped field will not export data until you explicitly change its write rule. If a specific field isn't showing up in Salesforce after enabling Export sync, confirm its write rule is set to **Always write** or **Write if empty**.
 
+**Never write only affects the Audiences scheduled export.** The **Scheduled export rule** doesn't block Salesforce actions (**Create record**, **Update record**, or **Create or update record**) that you run from a workflow or a Clay table. See [Does the "Never write" scheduled export rule block writing back to Salesforce from a workflow?](#does-the-never-write-scheduled-export-rule-block-writing-back-to-salesforce-from-a-workflow) in the FAQs below.
+
 **These write rules apply uniformly to all records — there is no native option to make a write conditional on a per-row field value match.** For example, there is no built-in way to write a field to Salesforce only when a contact's Salesforce Account ID matches the Account ID on the Audience Company Record. For conditional write-back logic, connect a [Workflow to your audience segment](#connecting-a-workflow-to-a-segment): a workflow can include lookup steps, branch (conditional) nodes, and a Salesforce Update Record action that evaluates the condition per record and writes only when it passes. See [How do I make my Salesforce export conditional on a field match?](#how-do-i-make-my-salesforce-export-conditional-on-a-field-match) in the FAQs below.
 
 **Note: Scheduled export rules apply to Contacts and Accounts only.** The Salesforce Lead field mapping does not include a Scheduled export rule column — Lead records imported into Audiences are import-only and do not support the automated export sync. To push enriched data from Audiences back to Salesforce Leads, use a Salesforce Update Record action in a workflow — see [How do I write enriched fields back to existing Salesforce records from a workflow?](#how-do-i-write-enriched-fields-back-to-existing-salesforce-records-from-a-workflow) in the FAQs below.
@@ -1682,6 +1684,13 @@ To check the setting:
 3.  Before you can turn the toggle on, select a Clay ID field (a Salesforce field marked as **External ID**) in the **Record matching** section. If no Clay ID field is selected, the settings show "Create new records mapping is required when enabled" and won't save. See [How do I create new Salesforce Accounts or Contacts from an Audience?](#how-do-i-create-new-salesforce-accounts-or-contacts-from-an-audience) for setup steps.
 
 Turning on `Create new Salesforce records` applies to every person in your Audience without a Salesforce match, not only the people from one search. See **What happens when you first enable this toggle** in [Writing back to your CRM](#writing-back-to-your-crm) before you enable it.
+
+### Does the "Never write" scheduled export rule block writing back to Salesforce from a workflow?
+
+No. When you add a field to your Salesforce field mapping in Audiences, its **Scheduled export rule** defaults to **Never write**. This rule only controls whether the Audiences scheduled export (the Export sync from Audiences to Salesforce) sends that field to Salesforce.
+
+-   **Audiences scheduled export:** If a workflow writes a value to an Audience record and you rely on the Audiences export to sync that field to Salesforce, **Never write** prevents the field from being exported. Change the rule to **Always write** or **Write if empty** to export it — see [Writing back to your CRM](#writing-back-to-your-crm).
+-   **Salesforce actions in a workflow or Clay table:** A Salesforce **Create record**, **Update record**, or **Create or update record** action writes directly to Salesforce with the fields you map in that action. The Audiences **Scheduled export rule** isn't applied to these actions, so **Never write** doesn't block them.
 
 ### How do I write enriched fields back to existing Salesforce records from a workflow?
 
