@@ -41,6 +41,15 @@ Conditional runs allow you to execute specific actions or enrichments in a workf
 
 Rows where the formula flags the address as personal show **\"Run condition not met\"** — no credits are consumed for those rows.
 
+**Run enrichment only when email is invalid or missing**: When an email verification enrichment returns a structured result object, referencing the raw enrichment column directly in a run condition evaluates against the full JSON object — a non-null object is always truthy, so the condition passes even for rows with valid emails. To gate on a specific field like verification status, extract that field first into a formula column, then reference the formula column in the run condition.
+
+1.  Your email verification enrichment (e.g., "Verify Email") outputs a JSON object. The relevant field — for example, `verified` — is nested inside it.
+2.  Create a **Formula column** (e.g., named "Verified") with the formula `{{Verify Email}}?.verified`. This extracts the boolean result: `true` for a valid email, `false` for an invalid one.
+3.  On the downstream enrichment column, open **Run settings → Only run if** and set the formula to `!{{Verified}}`. The `!` operator returns `true` for any falsy value — including `false` and an empty cell — so the enrichment runs when the email is invalid (Verified is `false`) or when the Verified field has no result yet.
+4.  To also catch rows where no email address is present at all, combine with `OR`: `!{{Verified}} OR /Email is empty`
+
+Rows where the email is already verified (Verified is `true`) show **\"Run condition not met\"** — no credits are consumed for those rows.
+
 **Create a record only if no existing match was found**: After running a CRM or table lookup step, run a create action only if the lookup found no existing record and a required field is available. This is sometimes called the \"create if not found\" pattern — for example, look up a company in HubSpot, then create a company record only if no match was returned and a company name is present.
 
 -   **Condition**: `[Look up Company] has no results AND [Company Name] is not empty`
@@ -111,7 +120,7 @@ When using the Clay **Workflows editor** — the standalone workflow builder, no
 **Prompt-based setup**
 
 1. Open a node's sidebar in the Workflows editor.
-2. In the **Run if** section, type a plain-language description in the text input — for example, *"Only run when the company has more than 100 employees"* or *"Only run when the email is not empty."*
+2. In the **Run if** section, type a plain-language description in the text input — for example, *\"Only run when the company has more than 100 employees\"* or *\"Only run when the email is not empty.\"*
 3. Use `/` to reference specific workflow fields inline in your description.
 4. Click **Generate condition** to generate and apply the condition to the node.
 
@@ -121,7 +130,7 @@ Descriptions are limited to 1,000 characters. You may reference up to 10 workflo
 
 Click **Build manually** below the prompt input to configure the condition directly using Clay's comparison operators, without writing a prompt.
 
-Once a run condition is set, the **Run if** section shows **"Run this node only when its condition is met."** Click **Edit run condition** at any time to update it.
+Once a run condition is set, the **Run if** section shows **\"Run this node only when its condition is met.\"** Click **Edit run condition** at any time to update it.
 
 ## Tips
 
@@ -148,7 +157,7 @@ When checking whether a field has a value — in a run condition or a formula co
 - `/Email is not empty` — condition passes when the Email column has a value
 - `/Domain is empty` — condition passes when the Domain column is blank
 
-**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` when the column is empty or blank, and `false` when it has a value — making it equivalent to `/column is empty`. For example, a run condition of `!{{Email Address}}` means \"only run when Email Address is blank.\" On rows where Email Address already contains data, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
+**You may also see `!{{column}}` syntax in existing run conditions.** The single `!` (negation operator) returns `true` for any falsy value — including an empty or blank cell, the boolean `false`, and the number `0` — and `false` for any truthy value. On text columns this behaves like `/column is empty`; on boolean columns it also fires when the value is `false`, not only when the cell is blank. For example, `!{{Verified}}` on a formula column that returns `true`/`false` means "only run when Verified is false or empty." A run condition of `!{{Email Address}}` on a text column means "only run when Email Address is blank." On rows where the column contains a truthy value, the condition evaluates to `false` and the cell shows **\"Run condition not met\"** — this is expected behavior, not an error. To understand why a specific row was skipped, click the cell and use the **Explain** button in the cell details panel. To change the run condition, click the column header → **Edit column** → scroll to **Run settings** → update the **Only run if** formula → click **Save**.
 
 ### Avoid combining `!!` with equality checks on 0 or other falsy values
 
@@ -204,6 +213,20 @@ When a cell shows **\"Run condition not met\"**, an **Explain** button appears n
 **To use it:** Click the cell showing \"Run condition not met,\" then click the **Explain** button in the status area. The explanation appears inline below the message.
 
 This is particularly useful when the formula looks correct but the condition still isn't met — for example, when a value appears populated in the table but the comparison fails due to type mismatches, unexpected whitespace, or a nested formula that resolves differently at runtime than it previews.
+
+### Seeing "Run condition not met" on a column you didn't configure
+
+If a column shows **"Run condition not met"** for rows you expected it to process — and you didn't set a run condition — the column has one configured, possibly by a teammate or when the column was originally built.
+
+**To view and remove the run condition:**
+
+1.  Click the column header to open the column menu, then select **Edit column**.
+2.  In the settings panel, scroll to the **Run settings** section.
+3.  Look for the **Add run condition** checkbox — if it is checked, a run condition is active. The formula displayed below the checkbox controls which rows the column runs on.
+4.  To understand why a specific row was skipped, click the cell showing "Run condition not met" and use the **Explain** button in the cell details panel.
+5.  To remove the run condition, uncheck **Add run condition** and click **Save**. The column will then run for all rows.
+
+**Common example**: A lead-assignment column might include a run condition like `{{Assignment Rule}} == "Round Robin"` so it only processes round-robin leads and skips rows where the assignment type is something else (for example, "User ID"). Those skipped rows show **"Run condition not met"** — the column is working as designed. If you need it to run for all rows regardless of assignment rule, uncheck **Add run condition** in **Run settings** and save.
 
 ### Running an action only once per row (new rows only)
 
@@ -277,6 +300,8 @@ A common workflow: run a lookup step (for example, \"Look up Company in HubSpot\
 
 When you save a run condition, Clay validates that the column referenced in the condition does not depend — directly or through a chain of other columns — on the column being gated. If a cycle is detected, Clay shows a **\"Circular dependency error\"** modal and prevents saving. The modal lists the specific column(s) that complete the loop.
 
+**A reference in a run condition creates the same dependency edge as a column input reference.** Clay's dependency graph treats both identically — there is no distinction between "this column uses Column X as an input" and "this column has a run condition that references Column X." If the column you want to reference is downstream of the column being gated (even through a chain of intermediate columns), the cycle is real and Clay will block saving.
+
 **This check covers indirect chains, not just direct self-reference.** Even if the condition column doesn't visibly reference the gated column, the error can still occur if the condition column's value is derived from other columns that themselves depend on the gated column's output.
 
 **Example**: You want Work Email to run only when a Status field is not \"customer\". But Status is written by a matching step that reads from Apollo Contact, which depends on Work Email. The full dependency chain is:
@@ -294,6 +319,13 @@ Clay blocks this and lists Status (or the intermediate column completing the cyc
 **How to fix**: Find the step in the dependency chain that uses the gated column as an input, and replace that input with an equivalent identifier that comes from your import source — one that exists before the gated enrichment runs. Common substitutes: Company Domain, Company Name, professional profile URL, First Name, Last Name.
 
 Alternatively, restructure so the condition-determining step happens fully upstream using only pre-enrichment data as inputs, with no dependency on the gated column.
+
+**Waterfall pattern — gating a column on a waterfall output it feeds into**: If your column is part of the input chain that feeds a waterfall column (directly or through one or more intermediate columns), you cannot gate it on that waterfall's output — the output is downstream of your column, and the run condition reference closes the loop. Two options:
+
+1. **Move your column into the waterfall as its last step.** Waterfall steps only run when earlier steps came back empty, so you get "only if nothing else found it" for free. Gate the waterfall itself on the pre-enrichment condition instead (for example, using your import source fields directly).
+2. **Break the dependency chain.** Find the intermediate column that uses your column as an input, and switch that reference to an equivalent identifier from your import data — one that does not depend on your column's output. Once your column is no longer in the chain of inputs feeding the waterfall, the cycle is broken and the run condition saves.
+
+**Note on timing**: When your run condition references a waterfall output column, the gated column waits until the waterfall has *finished running* for that row. The condition evaluates against the waterfall's terminal state — a row where the waterfall finished with no value (because all steps found nothing, or a step errored) looks the same to the run condition as a genuinely empty result. The gated column fires for any row where the condition is true once the waterfall's run completes.
 
 **If the error appears but the column you are configuring does not visibly depend on the gated column**: The circular dependency check traverses the full column graph of your entire table at save time. If another column in the table has accumulated stale dependency information — for example, from a prior column deletion or recreation — the traversal can flag an apparent cycle in those other columns and block your save, even though your run condition itself is not the source of the cycle. In this case, the error modal may not name any specific column completing the loop.
 
@@ -370,7 +402,7 @@ This is expected behavior. Clay evaluates the "Only run if" condition, finds it 
 
 1.  Click the `⛭` icon in the top toolbar → **Run Settings**.
 2.  Make sure **Auto-run** is on.
-3.  Uncheck **"Keep existing results"**.
+3.  Uncheck **\"Keep existing results\"**.
 
 With this setting off, the enrichment re-runs whenever the condition is met — including when you manually edit an upstream field.
 
