@@ -38,6 +38,8 @@ Admins will have seven days to **approve** or **deny** each request from the ema
 
 ### Setting permissions on a connection
 
+Connection access settings are available in Enterprise workspaces only. Workspace admins can change the access setting on any connection, and connection owners can change it on connections they added.
+
 1.  Navigate to `Settings` → `Connections`
 2.  Find the connection you want to manage (e.g., OpenAI, Salesforce, HubSpot).
 3.  Under access settings, choose one of the following options:
@@ -107,9 +109,9 @@ Signals follow the same access rules as a single column:
 -   When **creating** a Claygent, connection access controls apply when adding documents or connecting data sources.
 -   When running an existing Claygent, users can only leverage connections they're allowlisted for. For example, if you run a Claygent, it will use your own OpenAI connection rather than another user's connection. Within the Claygent builder experience itself, no functionality is limited.
 
-### Audiences, Sculptor, and Prospector
+### Sculptor and Prospector
 
-Enrichment columns within bulk enrichment tables (Audiences) and Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
+Enrichment columns within Sculptor/Prospector surfaces follow the same access rules described above for individual columns and waterfalls.
 
 ### Sources
 
@@ -124,6 +126,14 @@ To allow all workspace members to import from the same connected account, change
 **What's the default for new keys?**
 
 Admins and connection owners must explicitly add users or user groups to build workflows and columns with that key.
+
+**Why don't I see access settings on my connections in another workspace?**
+
+Connection access settings appear only in Enterprise workspaces. In workspaces on other plans, the access settings section is hidden and every connection, including API keys like OpenAI, is shared with `Anyone in the workspace`. There's no way to restrict a connection to only the person who added it outside of an Enterprise workspace. If you see access settings in one workspace but not another, the second workspace is likely not on an Enterprise plan.
+
+**Can I restrict my own API key so only I can use it?**
+
+Yes, in an Enterprise workspace. Go to `Settings` → `Connections`, edit your connection (for example, your OpenAI API key), choose `Specific people and groups` under access settings, and don't add anyone else. The connection owner always keeps access to their own connection. Other members won't be able to configure columns or workflows with that key, though they can still run existing columns that already use it. Workspace admins can still manage the connection and add themselves to its access list.
 
 **Can a user still run a column that uses a connection they don't have access to?**
 

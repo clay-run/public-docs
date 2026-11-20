@@ -30,6 +30,8 @@ Every time a source runs or re-runs, Clay walks through a short decision tree be
 -   If the **column's Auto-run toggle is off**: the cell is marked stale and skipped — it will not run when new rows are added. To run cells in this column on demand, right-click the column header and choose **Run column → Run N rows**.
 -   If the **column's Auto-run toggle is on** (default): **the cell runs**.
 
+**Note on enrichment and AI columns with no column references:** Auto-run for enrichment and AI columns is dependency-driven — a column fires automatically only when data arrives or changes in one of its input columns. A column whose prompt or configuration references no other columns has no input dependency to trigger, so it is **not** triggered by new row imports or upstream column changes. Only enrichment and AI columns that reference at least one other column as an input fire automatically when those inputs are populated.
+
 **Note: Adding a People, Companies, or Jobs list-builder source to an existing table auto-runs enrichments on the first 10 rows only.** When you use a People, Companies, or Jobs search source to add rows to an existing table — including tables created by duplicating a workbook and then adding a source afterward — Clay automatically queues enrichments for only the **first 10 imported rows**. The remaining rows are added to the table but do not trigger auto-run. This is intentional behavior to prevent unexpected credit burns. This 10-row cap applies only to the initial source setup; subsequent scheduled runs of the same source run enrichments on all newly imported rows. To process the remaining rows, manually run them: select all rows in the table, right-click, and choose **Run [N] rows** — or right-click the first column in your workflow and select **Run column**.
 
 ## Table-level auto-run (master control)
@@ -43,6 +45,8 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 -   **Default setting**: Enabled by default — Clay is designed to automatically enrich data as soon as it arrives.
 
 **Note:** There is no workspace-wide setting to disable auto-run across all tables at once. Auto-run must be configured individually for each table.
+
+**Note:** Clay does not automatically switch a table from auto-run to manual when enrichments finish running. The Auto-run toggle is always a manual setting — there is no column completion event or rule that flips it automatically. To prevent completed rows from being re-enriched while auto-run stays on, use **Keep existing results** (on by default): only new, empty, or errored cells run automatically, and cells that already have successful results are skipped. To stop enrichments entirely, toggle Auto-run off manually via the `⛭` icon → **Run Settings**.
 
 **To enable or disable table-level auto-run:**
 
@@ -77,11 +81,36 @@ Table-level auto-run acts as the master switch that controls automatic enrichmen
 -   **Run from the column header**: right-click the enrichment column header → **Run column** → **Run [N] empty or out-of-date rows**.
 -   **Re-trigger auto-run**: toggle Auto-run off, then back on, and choose **Update cells** to queue all currently stale cells.
 
+**Ran an upstream column but dependent columns didn't re-run**
+
+When you trigger or force-run an upstream column and the downstream columns with auto-run on still don't re-run their existing cells, "Keep existing results" is the reason. Clay marks downstream cells as out of date but skips re-executing any cell that already has a **successful** result — even when the upstream column's output just changed. The protection is cell-scoped: empty, errored, or never-run cells still execute normally; only previously successful cells are preserved.
+
+To refresh downstream cells after running an upstream column:
+
+-   **Force-run the downstream column**: right-click the column header → **Run column → Force run all [N] rows**. Force run re-executes every cell regardless of its current state, bypassing the keep-existing check.
+-   **Turn off "Keep existing results"** (⛭ icon → **Run Settings** → uncheck **Keep existing results**), then right-click the downstream column header → **Run column → Run [N] empty or out-of-date rows**. You can re-enable "Keep existing results" after the downstream columns have finished running.
+
+**Ran cells in one column and a different column ran too (for example, a work email waterfall also triggered a personal email waterfall)**
+
+When table-level auto-run is on, running cells in one column (even a handful of selected cells) can cause another column to run on those same rows if that other column uses the first column as an input. Auto-run is dependency-driven: each time a cell in an input column runs on a row, Clay checks every column that references that input and runs it on that row if it's eligible. That means it has its own Auto-run toggle on, any run condition is met, and "Keep existing results" doesn't skip it.
+
+This also applies to waterfalls. If a step in a waterfall references another column as an input, the whole waterfall depends on that column. For example, if the first provider step of a personal email waterfall takes the work email column as an input, running work email cells with auto-run on also triggers the personal email waterfall on those rows. Two waterfalls can look independent in the table and still be linked through one step's input.
+
+**Column order doesn't affect this.** Clay decides which columns run, and in what order, based on which columns feed into each other, not on where they sit in the table. Moving the dependent column to the left of its input column won't stop it from running.
+
+To stop the dependent column from running automatically when you run its input column, do one of the following:
+
+-   **Turn off auto-run for the dependent column**: click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**. For a waterfall, this setting applies to the whole waterfall. You can still run it on demand from the column header (**Run column → Run N rows**).
+-   **Remove the reference**: edit the dependent column (or the waterfall step) and remove the input that points to the other column. This breaks the dependency entirely.
+-   **Turn off table-level auto-run** (⛭ icon → **Run Settings** → toggle **Auto-run** off) while testing, so that no column runs unless you trigger it yourself.
+
 ### Understanding the out-of-date indicator
 
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
 
 A cell also shows as out of date when its inputs have changed since it last ran — for example, if an upstream column with auto-run enabled re-ran and updated its values, or if the column's own configuration was modified (such as editing a prompt). In these cases the indicator is informational: the existing value is still valid and usable downstream. In many cases re-running would produce the same result, so only trigger a re-run if you specifically need fresh output.
+
+**AI column prompt references create live dependencies — including hidden and optional inputs.** In AI and enrichment columns, any column you reference using the `{{Column Name}}` syntax (inserted with the `/` shortcut in the prompt editor) becomes an input dependency. This dependency is active regardless of whether the referenced column is hidden from the table view or whether the input is marked as optional (Required to run: off). Each time the referenced column writes a new value to a row, Clay marks the downstream AI column as out of date for that row. Hiding the referenced column does not remove the dependency — only removing the `{{Column Name}}` reference from the prompt itself breaks the link.
 
 **Manual tables and sequential column runs:** In Manual mode, running a column does not automatically trigger downstream columns — even if those columns have run conditions that are currently met. Without Auto-run enabled, Clay does not cascade a run from an upstream column to any column that depends on it. Each column in your workflow must be triggered separately, in the order they appear in your table (left to right).
 
@@ -100,6 +129,14 @@ If a cell **keeps** showing as out of date even after you re-run it, check wheth
 -   **Disable auto-run on the downstream column** — the column will only run when you trigger it manually. This is the most targeted fix and leaves the upstream column untouched.
 -   **Disable auto-run on the upstream column** — stops the cascade at its source, but means the upstream column also switches to manual-only mode.
 -   **Enable "Keep existing results"** at the table level — cells with existing results are no longer automatically re-run, so the stale indicator appears but no credits are consumed re-running the column on every upstream change.
+
+**'Run N empty or out-of-date rows' appears to do nothing for cells that already have results**
+
+If clicking **Run column → Run [N] empty or out-of-date rows** produces no visible activity — no credits consumed, no progress update, cells remain flagged — and the column has Auto-run switched off, the most likely cause is that all flagged cells already have a successful result. A standard column run targets only cells that are empty, errored, or have never run. With Auto-run off, cells that already have a result are skipped even when they are marked as out of date — the run sees nothing to do and immediately re-applies the flag instead of clearing it.
+
+To re-run these cells, use **Force run on all rows** from the column header menu (**Run column → Force run all [N] rows**). Force run bypasses the success-skip and re-executes every cell regardless of its current state. The UI shows the estimated credit cost before you confirm.
+
+**Sequencing tip:** If the upstream column driving the out-of-date flag is still actively running — for example, only a quarter of its rows have completed — force-running the downstream column now will clear the flag temporarily, but it will return on each new upstream write. Let the upstream column finish running across all its rows first, then force-run the downstream column once to settle the state. Alternatively, turn Auto-run on for the downstream column after the upstream finishes, so future updates are handled automatically.
 
 ### Understanding the manually-overwritten indicator
 
