@@ -486,6 +486,8 @@ To keep only the people who came from Source 2 and not Source 1:
 
 The segment now excludes anyone who also appears in Source 1, so it contains only records unique to Source 2.
 
+**Note: Why Audiences filters use text-based matching instead of structured categories.** If you are accustomed to filtering by Industry in Find Companies — which offers a dropdown of structured industry categories and subindustries to select from — the text-based filter in Audiences segments may feel limited. The two tools serve different purposes: Find Companies is built for prospecting discovery and uses a curated taxonomy of industry categories; Audiences segment filters are designed to quickly filter over data you have already imported (from your CRM, data warehouse, or saved searches) and must scale to millions of records, so they use text-based operators (`contains`, `does not contain`, `equals`, `starts with`) rather than enumerated category pickers. To build a company list using structured industry categories, use Find Companies first, then [save those results to your Audiences](#importing-from-people-and-companies-search). You can then use Audiences segment filters for ongoing segmentation based on CRM fields, enrichment data, and signals.
+
 ## Finding people from a Companies Audience
 
 Once you have a Companies Audience segment, you can run a people search scoped strictly to the companies in that segment — without needing a separate company table.
