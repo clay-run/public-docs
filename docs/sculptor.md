@@ -209,7 +209,8 @@ Sculptor can be helpful throughout the building process, and you can freely turn
 
 **🔜 Limited or Coming Soon**
 
--   **Sources (CPJ, Google Maps, CSV)** — Config reading only; full support coming soon
+-   **Sources (CPJ, CSV)** — Config reading only; full support coming soon
+-   **Google Maps workflow sources** — The workflow engine fully executes Google Maps "Find local businesses" sources. Configure the Google Maps source manually in the workflow trigger; Sculptor can read the configured source but cannot set up its search inputs itself.
 -   **Run Conditions** — Read and configure on new columns; when Sculptor sets a run condition automatically, review it in column settings before running at scale to ensure it matches your data.
 -   **Message Drafting** — Not yet supported
 -   **Filters & Sorting** — Not yet supported

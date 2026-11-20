@@ -1,7 +1,7 @@
 ---
 title: Madkudu integration overview
 description: Predictive intelligence platform boosting sales and marketing ROI via scoring.
-last_synced: 2026-04-26T01:40:18.849Z
+last_synced: 2026-11-18T20:51:17.758Z
 ---
 
 # Madkudu integration overview
@@ -10,7 +10,7 @@ Predictive intelligence platform boosting sales and marketing ROI via scoring.
 
 ## What is the Madkudu integration?
 
-Start from an email address and get intent data and relevant signals. Clay's API key is setup to give a lead score for B2B SaaS, SMB Mid-market, sign up with Madkudu directly and use your own API key to create a custom score.
+Start from an email address and get intent data and relevant signals. The Clay-managed account is set up to give a lead score for B2B SaaS, SMB Mid-market, sign up with Madkudu directly and use your own API key to create a custom score.
 
 ## Setting up Madkudu within Clay
 
@@ -22,7 +22,7 @@ By default, Madkudu enrichments will use the Clay-managed Madkudu account. This 
 
 Simply pull up any Madkudu enrichment within Clay to use the Clay-managed Madkudu account.
 
-Please note the lead scores from the Clay account assumes a generic score as if you are selling a B2B SaaS product to larger companies.
+Please note the lead scores from the Clay-managed account assume a generic score as if you are selling a B2B SaaS product to larger companies.
 
 ### (Recommended) Option 2: Use your own Madkudu API key
 

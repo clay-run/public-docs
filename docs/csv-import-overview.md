@@ -10,6 +10,26 @@ Import your CSV into Clay.
 
 Within Clay you can import CSV as a source to an existing or new table.
 
+## Preparing your CRM data for import
+
+When exporting contacts from your CRM (such as HubSpot, Salesforce, or Pipedrive) as a CSV, include the following columns to get the most from Clay's enrichment features:
+
+| Column | Why it matters |
+|--------|----------------|
+| First Name | Required input for the Work Email and Phone Number waterfalls |
+| Last Name | Required input for the Work Email and Phone Number waterfalls |
+| Email | Lets Clay validate existing email addresses or skip re-enrichment on rows that already have one |
+| Company Name | Needed to look up company domains when a domain is not already in your export |
+| Company Domain | The most important enrichment column — required by the Work Email waterfall; a company name alone is not sufficient |
+| Job Title | Useful for filtering and targeting contacts by role |
+| Phone Number | Can be validated or used to cross-match records |
+| LinkedIn Profile URL | Required by several phone number enrichment providers |
+| CRM Contact ID | Preserves a reference to the original CRM record for tracking or future updates |
+
+You can include any subset of these — only the fields relevant to the enrichments you plan to run are required. If your CRM export does not include company domains, Clay can find them automatically after import using the Company Domain waterfall (see [Next steps after importing](#next-steps-after-importing)).
+
+**Direct CRM sync vs. CSV import:** Importing a CSV works on all Clay plans, including Free (up to 200 rows per table). If you want Clay to pull new and updated records directly from your CRM automatically — without a manual export — that requires Growth plan or higher. See [HubSpot integration](hubspot-integration-overview.md), [Salesforce integration](salesforce-integration-overview.md), and [Plans & billing](plans-and-billing.md) for details.
+
 ## Importing a CSV into Clay
 
 1.  Open the source panel:
@@ -120,6 +140,24 @@ Per-table row limits by plan:
 -   **Launch, Growth, and Enterprise plans:** 50,000 rows per table
 
 To proceed: delete some rows from the destination table to free up capacity, switch the destination to **Create new table** to import into a fresh table, or upgrade your plan to increase the per-table row limit (click **Upgrade your plan** in the top right of your workspace).
+
+**If your table shows more rows than your CSV has (for example, "1000/1000 rows" for a 10-row file):**
+
+Clay imports every row in your CSV file, including blank rows. Spreadsheet tools often leave blank rows at the end of a file, even after you clear the data in them, and Clay imports each one as an empty row in your table. The row count in the table toolbar reads **X/Y rows**: X is the number of rows in your current view and Y is the total number of rows in the table. For example, a CSV with 10 rows of data followed by 990 blank rows shows **1000/1000 rows** after import.
+
+Empty rows from a CSV import don't use credits:
+
+-   Importing a CSV doesn't consume any Actions or Data Credits, regardless of how many rows the file contains.
+-   Enrichment columns don't run on rows where a required input is blank. Those cells show **Missing input** and consume no credits.
+
+To delete the empty rows from your table:
+
+1.  Click the **No filters** button (funnel icon) in the table toolbar to open the filter panel, and add a filter on a column that's filled in for every row of your real data (for example, a name or email column), using the **is empty** operator.
+2.  Select all rows in the filtered view using the checkbox in the table's header row.
+3.  Click **Delete N rows** in the toolbar and confirm.
+4.  Remove the filter. The row count now matches the number of rows with data.
+
+To avoid this on future imports, open the CSV in a plain text editor before uploading and delete any blank lines at the end of the file.
 
 **If AI column text is cut off in the exported CSV:**
 

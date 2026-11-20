@@ -2,7 +2,7 @@
 title: Clay Ads
 description: Build and sync contact and account lists to LinkedIn, Meta, Google Ads, Bing
   Ads, Reddit Ads, and Vibe.co for precise ad targeting.
-last_synced: 2026-09-17T20:19:29.621Z
+last_synced: 2026-11-17T20:52:18.661Z
 ---
 
 # Clay Ads
@@ -40,7 +40,7 @@ _Note: Personal email addresses significantly improve match rates when syncing t
     -   **Important:** Email is the primary field ad platforms use to match contacts. If no email column is mapped, the platform will process the sync but return an audience size of 0 — even for tens of thousands of contacts. This appears as a "too small for use in campaigns" status. Because field mapping cannot be changed after an Ad Sync is created, verify at least one email column is mapped before sending your audience.
 4.  **Review enrichment and sync status** in the Sync panel. Your audience starts syncing automatically after you complete field mapping.
     -   If Enhanced Matching is configured, the Sync panel shows enrichment progress while personal email addresses are being found for your contacts.
-    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.** Click **Open bulk enrichment** to open the underlying enrichment table and review errors.
+    -   If Enhanced Matching encounters an error, the Sync panel shows **Enhanced Match could not be completed.**
     -   **Sync destinations** shows a status card for each connected ad platform with details from the most recent and previous sync runs. To view the full sync history, click **Sync history** at the top of this section. The Sync history panel shows past runs grouped by date — each row displays match rate, records sent, matched count, and the change in match rate since the previous run.
     -   Your audience will be available in your ad platform's campaign manager within **48 hours** of the first sync.
 
@@ -120,6 +120,18 @@ Clay currently supports syncing ad audiences to **LinkedIn**, **Meta**, **Google
 
 Note that data source restrictions apply depending on the platform — see [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) below for details.
 
+### **Why don't I see Reddit Ads (or Bing Ads) as an option on my table ad sync?**
+
+Reddit Ads and Bing Ads are only available in Ad Syncs created from the **Ads** page — they aren't offered in legacy Table ads (ad syncs run from the panel next to a Clay table). The legacy Table ads panel, including its **Expand your reach** list, never lists Reddit Ads or Bing Ads. You can tell a sync is a legacy Table ads sync by the banner at the top of its panel: "Table ads will be sunset end of November. To migrate your sync, watch this video."
+
+To send your contacts to Reddit Ads or Bing Ads:
+
+1.  Go to **Ads** from the Clay homepage, click `Create ad sync`, and select **People** (not **Table**, which is marked **Deprecated** and creates a legacy Table ads sync).
+2.  Pick the Audiences People segment that holds your contacts. There is no one-click migration from Table ads — you set up the new Ad Sync yourself. The "watch this video" link in the Table ads banner walks through the switch.
+3.  Add **Reddit Ads** or **Bing Ads** as a destination and connect your account.
+
+Reddit Ads and Bing Ads support People (contact-level) audiences only — they won't appear as destinations for a Companies segment.
+
 ### **Why are some contacts excluded when I set up an ad sync?**
 
 When you create an ad sync, you may see an **Ad sync segment filters** panel showing a breakdown of your audience segment size, excluded contacts, and syncable contacts. Some contacts are automatically filtered out based on the platform you're syncing to and where their data originally came from.
@@ -150,7 +162,7 @@ Each record exported or synced consumes 1 action. Data credits apply for any enr
 
 The 50,000 row limit applies to ad audiences exported from tables. For larger audiences, create multiple tables and attach multiple audiences to your campaigns in the ad platform.
 
-Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, clone the segment and create a new ad sync from the clone.
+Each audience segment supports only one ad sync. If a segment already has an active or previously-exported ad sync, the option to create a new ad sync from that segment will not appear. To sync the same audience to a different ad platform, duplicate the segment (select **Duplicate** from the segment's menu) and create a new ad sync from the duplicated segment.
 
 Company (account-level) segments are supported by the professional network only. Meta, Google Ads, Bing Ads, Reddit Ads, and Vibe.co support People (contact-level) segments only. To run campaigns on those platforms targeting contacts at your company accounts, use **Find people from this list** on your Companies segment to build a People segment, then create an ad sync from that People segment.
 
@@ -176,13 +188,24 @@ Deleting an ad sync does **not** delete the underlying audience segment — your
 
 ### **Can I add another ad platform to an existing Ad Sync?**
 
-Not directly — once an ad sync is active, its destination platforms are locked. Ad sync configuration can only be changed while the sync is still in draft state. Configure all desired destinations when you first create the Ad Sync, before activating it.
+Yes — you can change the destinations on an existing Ad Sync using **Pause to edit**. Open the sync and click **Pause to edit**. To add a platform, add it under **Sync destinations**. To remove a destination, click **...** on its card and choose **Remove**. Then continue to **Enrich and sync**.
 
-If you need to add a platform to a sync that is already active, the workaround is to delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
+**Pause to edit** is available when a sync is active, processing, or in a warning state. A **Paused** Ad Sync, or a recurring (always-on) Ad Sync that has **Failed**, can be edited straight away without pausing. A one-time sync that has finished (shown with the **Exported** status on the Ads page) or failed can't be edited, and the **Add sync destinations** option no longer appears on it. For those syncs, delete the current sync and create a new Ad Sync with all desired destinations included from the start. **Deletion is permanent — a deleted sync cannot be restored or reactivated.** Deleting the sync does not affect your underlying audience segment; your segment and its contacts remain intact, and you can create a new Ad Sync from the same segment immediately. See [Can I permanently delete an Ad Sync?](#can-i-permanently-delete-an-ad-sync) for how to delete and [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync) for credit implications.
 
 **Notes:**
 
+-   Once an Ad Sync has run, it must keep at least one destination. To replace the only destination, add the new destination first, then remove the old one.
+-   When you remove a destination, the audience already built in that ad account stays there, but Clay stops updating it. Adding the same ad account back later creates a new audience.
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience includes contacts from Clay's company/people search data, Google Ads and Bing Ads will not be available as destination options. See [Why are some contacts excluded when I set up an ad sync?](#why-are-some-contacts-excluded-when-i-set-up-an-ad-sync) for details.
+
+### **Can I change a one-time Ad Sync to recurring?**
+
+No. You choose an Ad Sync's schedule (**One-time** or **Recurring**) in the **Schedule** section when you set up the sync. When a one-time Ad Sync finishes, its status changes to **Exported** on the Ads page (recurring syncs show **Active** instead). An exported Ad Sync is read-only: you can't change its schedule, add destinations, or edit its settings, and **Pause to edit** is not available.
+
+To keep an audience updating on a schedule, create a new Ad Sync with **Recurring** selected and include every destination you want — including any destination the exported one-time sync already sent to, such as Meta. Because each audience segment supports only one Ad Sync, use one of these options:
+
+1.  **Delete and recreate:** Delete the exported Ad Sync, then create a new Ad Sync from the same segment. Deletion is permanent, but it does not affect your segment or its contacts. If you used Enhanced Match, contacts that were already enriched are not enriched again — see [Will I be charged again if I deactivate and recreate an Ad Sync?](#will-i-be-charged-again-if-i-deactivate-and-recreate-an-ad-sync).
+2.  **Duplicate the segment:** Keep the exported Ad Sync, select **Duplicate** from the segment's menu, then create the new recurring Ad Sync from the duplicated segment.
 
 ### **Will I be charged again if I deactivate and recreate an Ad Sync?**
 
@@ -192,7 +215,7 @@ For costs related to the export itself, see [How much does it cost to sync audie
 
 ### **How long does it take for audiences to be created?**
 
-After sending your audience to LinkedIn or Meta, it will be created within **48 hours** (typically 1-2 days). Plan accordingly when launching time-sensitive campaigns.
+After sending your audience to the professional network or Meta, it will be created within **48 hours** (typically 1-2 days). A company (account-level) Ad Sync takes longer — it can take more than three days to build. Plan accordingly when launching time-sensitive campaigns.
 
 ### **Why should I use personal emails instead of work emails?**
 
@@ -234,11 +257,24 @@ To see exactly what each provider requires: open the waterfall setup panel, clic
 
 ### **Do audiences automatically update?**
 
-Yes! Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+Yes. Once synced, your audiences automatically update as data changes in your Clay table. New rows that match your criteria are added, and rows that no longer match are removed. This keeps your ad targeting aligned with your latest data without manual updates.
+
+For recurring syncs, the update interval depends on your destinations: every 3 days by default, or every 7 days when Bing Ads is one of your destinations.
 
 ### **Can I see which contacts matched?**
 
 No, LinkedIn and Meta don't provide contact-level match visibility for privacy reasons. However, Clay shows aggregate match rates and total audience size after each sync.
+
+### **How do I export the contacts in my ad sync to CSV?**
+
+The ad sync page does not have a CSV download button. The **People** (or **Companies**) list shown next to the Setup, Match, and Sync steps is a read-only preview of the segment you're syncing. To download the contacts in an ad sync as a CSV, open the ad sync's source segment in Audiences and export it from there:
+
+1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
+2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
+3. In the segment, click **Export to CSV** (or open the **Export action** dropdown and select **Export to CSV**), choose your fields, and click **Start export**.
+4. When the export finishes, click **Exports** in the left sidebar, click **…** on the export's row, and select **Download**.
+
+**Export to CSV** supports segments with up to 100,000 records. Workspace Admins and Editors can start the export; Workspace Viewers can't. For larger segments, or for the full steps, see [How do I export an audience segment to CSV or Excel?](https://university.clay.com/docs/audiences#how-do-i-export-an-audience-segment-to-csv-or-excel) in Audiences.
 
 ### **Why is my matched count higher than the number of contacts I sent?**
 
