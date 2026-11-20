@@ -59,6 +59,7 @@ Search ZoomInfo's database for contacts matching specific criteria. Use this act
 -   **Required fields:** Comma-separated fields a contact must have to be returned (e.g., `email`).
 -   **Sort by:** How to sort results. Defaults to relevance (most to least).
 -   **Page size:** Number of contacts to return per page, from 1 to 100. Defaults to 25.
+-   **Additional search fields:** Any other ZoomInfo contact search field, entered as a key (**ZoomInfo field**) and a **Value**. Clay passes these straight through to ZoomInfo's contact search, so you can filter on criteria that don't have a dedicated input above. For arrays and booleans, use formula mode for the value. See [ZoomInfo's contact search reference](https://docs.gtm.ai/reference/searchinterface_searchcontact) for the available field names and values. If a key matches one of the dedicated inputs above, the dedicated input takes precedence.
 
 ### **`Action` Enrich contact(s) by ID**
 
@@ -185,6 +186,18 @@ These actions handle authentication, rate limiting, and error handling automatic
 If you have direct API access provisioned from ZoomInfo, you can also call the ZoomInfo API via Clay's [HTTP API integration](http-api-integration-overview.md). This approach is better suited for advanced use cases that go beyond what the pre-built actions support — for example, calling ZoomInfo endpoints not covered by the built-in actions (such as intent data or custom field selections).
 
 For most use cases, start with the built-in integration. Use the HTTP Connector path only when you need a specific ZoomInfo endpoint or data type not available through the four built-in actions.
+
+### **Can I search my ZoomInfo data to see how many contacts exist at an account before running a people waterfall?**
+
+Yes. Use the native ZoomInfo **Search contacts** action to search ZoomInfo's contact database with your connected ZoomInfo account. You don't need to set up an HTTP API call to ZoomInfo for this.
+
+1.  In your Clay table of accounts, click **Add enrichment**, search for ZoomInfo, and select **Search contacts**.
+2.  Map the account's domain to **Company website** so results are limited to contacts at that company.
+3.  Narrow results to the people you care about (for example, your buying group personas) with **Include title keywords**, **Exclude title keywords**, **Departments**, **Management level**, and **Country**.
+4.  To filter on any other ZoomInfo contact search criteria that doesn't have a dedicated input, add it under **Additional search fields** as a ZoomInfo field name and value. See [ZoomInfo's contact search reference](https://docs.gtm.ai/reference/searchinterface_searchcontact) for valid field names.
+5.  Run the column. Each row returns the matching ZoomInfo contacts (up to the **Page size**, from 1 to 100, default 25).
+
+You can then use the results to decide which accounts still have a persona gap, and add a run condition (**Run settings → Only run if**) to your people waterfall so it only runs on those accounts. See [Conditional runs](conditional-runs.md).
 
 ### **Does using the ZoomInfo API via Clay's HTTP Connector require a ZoomInfo subscription?**
 

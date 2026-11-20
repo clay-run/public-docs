@@ -2,7 +2,7 @@
 title: HG Insights integration
 description: Uncover enterprise-grade technographic and parent company data
   while enriching foundational company data.
-last_synced: 2026-09-28T16:56:51.180Z
+last_synced: 2026-11-19T06:48:34.933Z
 ---
 
 # HG Insights integration
@@ -47,7 +47,7 @@ Build lists of companies based on what technology they use, including "back of h
 
 **Credit cost**
 
-**Note:** These credit charges apply when using the Clay provided key. If you bring your own HG Insights API key, no Clay credits are consumed for this source.
+**Note:** These credit charges apply when using the Clay-provided account. If you bring your own HG Insights API key, no Clay credits are consumed for this source.
 
 The `Source Companies by product usage with HG Insights` action charges **8 credits per company per product matched**, capped at your **Max products per company** setting. A company that uses only 1 of your selected products costs 8 credits — the same as a company that uses all 7. Selecting more products only increases total credit spend if companies actually match those additional products.
 
@@ -62,7 +62,7 @@ If your goal is to build a list of companies using a vendor's products — witho
 1.  While in a Clay table, click `Add enrichment` and search for `HG Insights`.
 2.  Under `Integrations`, select one of the HG Insights options.
 3.  In the modal, you will be asked to `Select HG Insights account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Enrich company
 

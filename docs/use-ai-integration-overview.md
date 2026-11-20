@@ -191,8 +191,11 @@ The triangle icon next to a value in an AI column is not an error message. A sma
 The confidence icon in an AI column is display-only:
 
 -   It does not change the cell's value.
--   It does not mark the cell as errored. Cells that fail show a status message instead of a confidence icon.
+-   It does not mark the cell as errored. Cells that fail show a status message, such as **Error** or **Timed out**, instead of a result and a confidence icon.
 -   It does not trigger, block, or change downstream columns or run conditions, unless you explicitly reference the `confidence` sub-field in a formula.
+-   It does not change the credits charged. A run with `low` or `medium` confidence is billed at the same rate as a run with `high` confidence.
+
+Changing the output format between **Fields** and **JSON Schema** does not remove the triangle, because the icon reflects the AI's confidence in its answer, not how the output is formatted.
 
 To see why the AI was less certain about a specific row, click the cell to open it and review the `reasoning` field in the output. If many rows come back with an orange triangle, add clearer instructions or examples to your prompt.
 
@@ -326,6 +329,8 @@ When a Use AI web research column or Claygent column runs, the result is stored 
 -   **`confidence`** — Clay's built-in quality indicator (`low`, `medium`, `high`, or `very high`), which drives the color dot on each cell.
 -   **`stepsTaken`** — descriptions of each research step the AI took (for example: `"Searched Google for: 'company headquarters'"` or `"Visited https://example.com to find: 'company revenue'"`).
 
+**`reasoning`, `confidence`, and `stepsTaken` also appear when you define your own outputs.** In a Claygent column, these extra keys are added even when you configure **Fields** or a custom **JSON Schema**, including a schema that sets `"additionalProperties": false`. Clay adds `confidence` and `reasoning` to your schema before it is sent to the model and adds `stepsTaken` after the run, so these keys never cause a schema validation failure and do not affect the output fields you defined. To keep only your own fields, extract each one into its own column with the `/` picker, as described below.
+
 If this JSON object appears in a downstream column, that column is referencing the full AI column object instead of a specific sub-field.
 
 **To get just the `response` text into a cell:** In a formula column, use the `/` property picker and select `YourAIColumn > response`. You can also use dot notation directly: `{{YourAIColumn}}.response`.
@@ -351,7 +356,7 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 ### Cells showing "This request exceeds your budget limit" (Clay Credit Budget)
 
-For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
+For Use AI columns using variable-priced models with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
 
 Before running each row, Clay estimates the row's cost from the length of your prompt, including the column values you insert into it. If the estimated cost is higher than the Clay Credit Budget, the row does not run and the cell shows an error like this one:
 

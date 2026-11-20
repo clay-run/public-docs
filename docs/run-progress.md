@@ -211,7 +211,7 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
-**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**. Use **Run [N] cells** (not **Run [N] rows**) when you want to re-run cells that already have results — **Run [N] rows** skips cells that already ran successfully with unchanged inputs.
 
 **If an enrichment column shows a clock icon after "Run [N] rows" and doesn't complete**, this typically occurs on tables with auto-run turned off (shown as **Manual** in the top navigation bar). When Clay runs a row, it dispatches upstream columns first. While upstream columns are in progress, Clay marks any downstream columns that depend on them as out-of-date. On manual tables, those downstream columns are not automatically re-triggered after the upstream run finishes — leaving a clock icon that doesn't resolve on its own. On tables with auto-run enabled, downstream cells can re-run automatically after upstream columns complete.
 
@@ -238,9 +238,9 @@ The column header has the following run options:
 To run a column only on the rows you've highlighted:
 
 1.  Select the cells in that column for the rows you want.
-2.  Right-click and choose **Run [N] cells**. Only the selected cells run.
+2.  Right-click and choose **Run [N] cells**. Only the selected cells run. **Run [N] cells** is a force run: selected cells that already have results run again and use credits again.
 
-If you select whole rows instead (by clicking row numbers), the right-click option is **Run [N] rows**. It runs every enrichment column on those rows only.
+If you select whole rows instead (by clicking row numbers), the right-click option is **Run [N] rows**. It runs every enrichment column on those rows only. **Run [N] rows** skips cells that already ran successfully with unchanged inputs, so those cells aren't charged again.
 
 ## Setting a row limit
 
