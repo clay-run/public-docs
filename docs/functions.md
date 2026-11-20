@@ -90,6 +90,16 @@ For a full walkthrough, see [MCP settings](https://university.clay.com/docs/mcp-
 
 Functions is available on all paid plans at no additional cost, including paid legacy plans. Advanced capabilities such as MCP access are gated to higher tiers.
 
+### Can I run a function that includes a phone number enrichment on a free or trial plan?
+
+No. Phone number enrichments aren't available on free or trial plans, and that applies to functions too. If a function contains a phone number enrichment and your workspace is on a free or trial plan, the function won't run.
+
+-   **In a table:** when you choose that function in a function column's configuration panel, Clay shows a **Paid plan required** notice that reads "Phone number enrichments need a paid plan." with an **Upgrade plan** button.
+-   **In Browse Clay managed functions:** Clay-managed functions that include a phone number enrichment show a **Paid plan required** badge, and the same notice appears when you open one.
+-   **Through the API or MCP:** running the function returns the same "Phone number enrichments need a paid plan." message with an upgrade link.
+
+To run the function, upgrade to a paid plan, or remove the phone number enrichment from the function. Editing a Clay-managed function detaches it from Clay's updates — see [What happens when I try to edit a Clay-managed function?](#what-happens-when-i-try-to-edit-a-clay-managed-function).
+
 ### Does running a function cost extra credits?
 
 No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a profile lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Estimated cost is visible in the function editor panel and also in the table where the function is referenced.
