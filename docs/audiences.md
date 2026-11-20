@@ -198,6 +198,12 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Deleted records:** When a HubSpot record is deleted, Clay does not automatically remove it from Audiences. After the next full sync (within 7 days), the record remains in your Audience marked **Deleted in source** — it is not hard-deleted. You can filter on **Deleted in source** in any segment to exclude these records from your active audiences and enrichment workflows.
+
+**Merged records:** When HubSpot merges two companies (or contacts), the original record ID becomes invalid while the surviving record gets a new ID. Clay does not automatically remap the old HubSpot ID to the surviving record — rows still referencing the old ID may return "record not found" errors in enrichment or update actions. To prevent these errors, add a run condition to any HubSpot enrichment or update workflow that skips records where the sync status is **Deleted in source** or where the HubSpot record ID is blank.
+
+To clean up records marked **Deleted in source**, see [How do I handle deleted or merged HubSpot records in Audiences?](#how-do-i-handle-deleted-or-merged-hubspot-records-in-audiences) in the FAQs below.
+
 **Record scope:** For each object type, you can import **All records** or a single **HubSpot list**. To bring in only the contacts, companies, or deals in one of your HubSpot lists, see [Importing a HubSpot list](#importing-a-hubspot-list) below. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
 **Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a workflow with a HubSpot action — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
@@ -450,6 +456,16 @@ To create a new audience segment:
 
 **Filtering by CRM and data warehouse properties:** All fields synced from your CRM (Salesforce, HubSpot) or data warehouse are available as filter options alongside Clay's built-in fields — you are not limited to Clay's native properties. When you click **+ Filter**, type the property name in the search box to find it. For example, to build a Companies segment of your existing customers, add a filter on the field in your CRM that tracks account type (such as **Account Type** in Salesforce) and set the value to `Customer`. Any field included in your import field mapping appears in the filter picker after the next sync completes. If a CRM field isn't showing up in the filter list, see [A Salesforce field isn't appearing in my audience filters — how do I add it?](#a-salesforce-field-isnt-appearing-in-my-audience-filters--how-do-i-add-it) in the FAQs below.
 
+### Saving filter changes to a segment
+
+Filter changes on an Audiences segment aren't saved automatically. When you add, edit, or remove a filter on a saved segment, a **Save filters** button appears next to **Filters**. Until you click **Save filters**, the segment keeps its last saved filters — anyone else opening the segment, and you after you come back, sees the last saved version.
+
+-   Click **Save filters** to save the filter changes to the current segment.
+-   Click the arrow next to **Save filters** and select **Create segment** to save the current filters as a new segment instead, leaving the original segment unchanged.
+-   Select **Reset to last save** from the same menu to discard your filter changes.
+
+If you try to leave Audiences or close or refresh the browser tab with unsaved filter changes, Clay shows an **Unsaved filter changes** prompt — click **Keep editing** to go back and save, or **Discard changes** to leave. Moving between views inside Audiences (for example, to the **Archived** view) doesn't show this prompt — your unsaved filter changes stay in place for that browser session and reappear when you return to the segment, but they still aren't saved until you click **Save filters**. If you click **Discard changes** or close or refresh the tab, unsaved filter changes are lost and can't be recovered, because Clay never stored them.
+
 ### Filter operators by field type
 
 The operators available when building a filter depend on the field's data type, shown by the icon next to the field name:
@@ -487,6 +503,8 @@ To keep only the people who came from Source 2 and not Source 1:
 5. Click **Save filters** to update the existing segment. If you're building a new view, the button reads **Create segment** instead.
 
 The segment now excludes anyone who also appears in Source 1, so it contains only records unique to Source 2.
+
+**Note: Why Audiences filters use text-based matching instead of structured categories.** If you are accustomed to filtering by Industry in Find Companies — which offers a dropdown of structured industry categories and subindustries to select from — the text-based filter in Audiences segments may feel limited. The two tools serve different purposes: Find Companies is built for prospecting discovery and uses a curated taxonomy of industry categories; Audiences segment filters are designed to quickly filter over data you have already imported (from your CRM, data warehouse, or saved searches) and must scale to millions of records, so they use text-based operators (`contains`, `does not contain`, `equals`, `starts with`) rather than enumerated category pickers. To build a company list using structured industry categories, use Find Companies first, then [save those results to your Audiences](#importing-from-people-and-companies-search). You can then use Audiences segment filters for ongoing segmentation based on CRM fields, enrichment data, and signals.
 
 ## Finding people from a Companies Audience
 
@@ -739,6 +757,18 @@ Contacts imported into Audiences from a CSV file can be synced to ad platforms l
 
 The same steps work for any source listed in the Sources tab — for example, to sync only the contacts from one Salesforce import or SOQL record subset.
 
+**Troubleshooting — "Accept the terms of service in your ads manager to select this account":** This message appears in the Meta Ads account selector when Meta's Custom Audience terms have not yet been accepted for the ad account you are connecting. Clay reads the acceptance status from Meta's API and cannot accept these terms on your behalf — you must complete this step directly in Meta Ads Manager.
+
+To accept the terms:
+
+1.  Open Meta Ads Manager and select the ad account you are connecting in Clay.
+2.  Navigate to **Audiences**, then choose **Create audience → Custom audience → Customer list**.
+3.  Accept Meta's terms when prompted.
+
+You can also go directly to `https://business.facebook.com/ads/manage/customaudiences/tos?act=YOUR_AD_ACCOUNT_ID` (replace `YOUR_AD_ACCOUNT_ID` with the numeric ID of the ad account) to accept from there.
+
+After accepting, return to Clay and hard-refresh your browser (Mac: **Cmd + Shift + R**; Windows: **Ctrl + F5**) to reload the account list. Meta's API may take a few minutes to reflect the accepted terms — if the message still appears immediately after accepting, wait a moment and refresh again. Make sure you accepted the terms for the specific ad account you are connecting; terms must be accepted separately for each Meta Ads account.
+
 **Syncing to multiple ad platforms**
 
 You can add multiple ad platforms to a single audience sync. After your initial sync is active, an **Expand your reach** section appears on the Sync tab showing available platforms you haven't yet connected. Click **Add** next to any platform to configure field mappings for that provider — it will sync on the same schedule as your existing provider.
@@ -820,6 +850,12 @@ Export sync behavior:
 
 To estimate API calls for initial export, divide record count by 10,000 and compare against your Salesforce limit.
 
+**Seeing your API usage in Clay:** Your Salesforce source settings in Audiences show an `API usage` card — a percentage of your daily quota, plus `Calls used` for the `Last 24 hours`. Clay reads these figures from Salesforce's Limits API.
+
+Reading that endpoint takes a permission beyond the one that authenticates the connection. The Salesforce user Clay runs as needs `View Setup and Configuration` in addition to `API Enabled`; `API Enabled` alone is enough to connect and make ordinary API calls, but not to read your quota.
+
+**Note:** An `API usage` card reading 0% with `0 / 0` calls used means Clay couldn't read your quota from Salesforce — not that nothing has run. Ask your Salesforce admin to open the connected app, go to Manage → Edit Policies, and confirm the Run As user. That user needs `View Setup and Configuration` through its profile or a permission set. Clay caches quota figures for 15 minutes, so allow that long before reloading.
+
 **Note:** CRM export is admin-only. Enrichments and signals follow standard Clay table pricing.
 
 ## FAQs
@@ -862,6 +898,21 @@ The simplest framing: Tables are how you _work on_ data. Audiences is where your
 ### What if my integration isn't supported yet?
 
 Use the `Upsert Audiences Record` table enrichment as a bridge. Bring your data into a Clay table from any source, then use Upsert to push those records permanently into your Audience. This works for any source Audiences doesn't yet natively support.
+
+### How do I remove accounts that are already in my Audience (for example, my Salesforce accounts) from a Clay table?
+
+This applies to workspaces on a plan that includes Audiences (Launch, Growth, or Enterprise). To check each row in a Clay table against your Audience, for example to remove accounts that already exist in your Salesforce-synced Companies audience, add the `Look up in Audiences` enrichment column to the table. In some places it's labeled `Lookup in Audiences`. The column doesn't cost any credits.
+
+An Audience is not a Clay table. It doesn't appear in the table picker for **Lookup single row in other table** or **Lookup multiple rows in other table**, and you don't need to copy the Audience into a table first. `Look up in Audiences` reads your Audience directly.
+
+To find and remove table rows that already exist in your Audience:
+
+1.  In your Clay table, click `Add enrichment` and search for `Look up in Audiences`.
+2.  Set **Object type** to **Companies** for accounts, or **People** for contacts.
+3.  In **Fields to filter by**, select the Audience field to match on, for example your company domain field. Then map it to the column in your table that holds the same value. The options are the fields that exist in your Audience, plus **Company ID** or **Person ID**.
+4.  Run the column. Rows with no matching Audience record show **No records found**. Rows that match show the matched record.
+5.  Click any cell in the column and add `totalMatched` to the table as its own column. `totalMatched` is `0` when the account isn't in your Audience, and `1` or higher when it is.
+6.  Filter the table view on `totalMatched`. Filter for `0` to see only accounts that aren't in your Audience yet. Filter for values greater than `0` to find the rows to delete.
 
 ### How do I expand a JSON array from a Clay table into Audience records?
 
@@ -1345,6 +1396,11 @@ A segment is a saved, filtered view of that overall audience, not a separate lis
 5.  Repeat for the other segment (for example, **Net New Accounts**) with filters that exclude your customers.
 
 As you add or change filters, the **Total records** count at the top of the segment updates live to preview how many records match. Click **Save filters** to keep those filters on the segment. See [Creating an audience](#creating-an-audience) for how filters and filter groups work.
+### Why did my segment's filters reset or disappear?
+
+Audiences segment filters only persist after you click **Save filters**. If you added filters to a segment but didn't save them, the segment still has its last saved filters (or no filters, if it was never saved with any) — so when you come back, the filters look like they were cleared and the record count goes back up. Clay doesn't reset or remove saved segment filters on its own.
+
+Unsaved filters can't be restored. To fix the segment, add the filters again and click **Save filters** before closing or refreshing the tab or leaving Audiences. See [Saving filter changes to a segment](#saving-filter-changes-to-a-segment) for how saving works.
 
 ### Why didn't my audience count change after I tightened my search filters?
 
@@ -1669,6 +1725,24 @@ The Opportunities import settings show this reminder under **Import sync**: "Con
 3.  Select your Opportunities import and turn on **Import sync**. The toggle is now available.
 
 **Turning off Accounts or Contacts sync also turns off Opportunities sync.** If you later turn off **Import sync** for your Salesforce Accounts or Contacts import, Clay also turns off Import sync for every Opportunities import from that Salesforce account. Before you save, Clay warns you, for example "Opportunities import will be disabled." To resume Opportunities syncing, turn Accounts and Contacts sync back on, then turn Opportunities sync back on.
+
+### How do I handle deleted or merged HubSpot records in Audiences?
+
+When a HubSpot record is deleted or merged in HubSpot, Clay does not automatically remove the corresponding Audiences record. After the next full sync (within 7 days), the record is marked **Deleted in source** in your Audience — it persists in All People or All Companies until you archive it. Rows that still reference the old HubSpot ID — for example, enrichment or update actions pointing at a merged company — will return "record not found" errors because HubSpot no longer recognizes that ID.
+
+**To reduce errors from deleted and merged records:**
+
+1. **Exclude deleted records from workflows.** In any HubSpot enrichment or update workflow, add a run condition to skip records whose sync status is **Deleted in source** and whose HubSpot record ID is blank. This prevents workflows from repeatedly trying to look up records that HubSpot no longer recognizes.
+2. **Archive the stale records.** To remove **Deleted in source** records from your Audience:
+   1. Go to **All People** or **All Companies** in your Audiences view.
+   2. Click **+ Filter** → **Source** → select your HubSpot import → set status to **Deleted in source**.
+   3. Click **Create segment** to save the filter as a named segment — the **Archive records** option is available only on saved segments.
+   4. In the left sidebar, click the **⋮** (three-dot) menu next to the segment name.
+   5. Select **Archive records** and confirm. All matched records are moved to the Archived section and removed from all active segments.
+
+   If you need records permanently deleted from Audiences rather than archived, contact Clay support.
+
+3. **Prevent future duplicates on re-import.** If you plan to clean up and re-import your HubSpot data, configure **Import record matching** (currently in beta — contact your Growth Strategist to enable) before the initial sync, using a stable identifier such as a company domain or external record ID. This helps prevent the same company from appearing twice if it is re-imported under a new HubSpot ID after a merge. Note that matching applies only to records imported after the setting is enabled — it is not retroactive.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
