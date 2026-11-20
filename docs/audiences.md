@@ -185,8 +185,6 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 **Sync timing and behavior**
 
-HubSpot data sync in Audiences is currently in open beta — contact your Growth Strategist to enable it for your workspace.
-
 Clay syncs data from HubSpot automatically on the following schedules:
 
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
@@ -346,9 +344,9 @@ When a match is found, records merge into a single unified record in Audiences. 
 
 Records need a high-confidence identifier to match. Auto-enrichment adds `LinkedIn URL` and `CPJ ID` at no cost to improve matching.
 
-**Import record matching (beta)**
+**Import record matching)**
 
-When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. This feature is currently in beta — contact your Growth Strategist to enable it for your workspace.
+When importing from Salesforce or Snowflake, you can configure **Import record matching** to deduplicate records at ingestion time. 
 
 **Example:** If you're importing from both Snowflake and Salesforce, setting `domain` as your alias field ensures that a single company row in your Audiences reflects data from both sources — rather than creating two separate records for the same company.
 
@@ -363,7 +361,7 @@ You can configure one alias field per entity type (one for People, one for Compa
 
 **Unique Identifier vs. alias field (Snowflake and BigQuery imports)**
 
-When setting up a Snowflake or BigQuery import, you also define a `Unique Identifier` — a field that must be completely unique and non-null across your dataset (for example, `domain` or `work_email_domain` for companies; `email` for people). Clay uses this to determine whether an incoming row should create a new Audiences record or update an existing one. This is distinct from the alias field used in import record matching (beta): the Unique Identifier governs record creation and updates within a single source, while the alias field controls how Clay joins records across multiple sources.
+When setting up a Snowflake or BigQuery import, you also define a `Unique Identifier` — a field that must be completely unique and non-null across your dataset (for example, `domain` or `work_email_domain` for companies; `email` for people). Clay uses this to determine whether an incoming row should create a new Audiences record or update an existing one. This is distinct from the alias field used in import record matching: the Unique Identifier governs record creation and updates within a single source, while the alias field controls how Clay joins records across multiple sources.
 
 **Other deduplication behaviors**
 
@@ -543,7 +541,7 @@ For **Companies** audiences, five built-in signal types are available:
 -   **New Hire** — detect new hires at monitored companies within the last three months.
 -   **News & Fundraising** — monitor funding rounds, mergers and acquisitions, strategic partnerships, product launches, and leadership changes.
 -   **Job Posting** — alert when a monitored company posts a new job opening; Clay analyzes job descriptions for urgency indicators and geographic expansion signals.
--   **Company Topic Intent** (open beta) — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
+-   **Company Topic Intent** — monitor when companies show buying intent for topics you care about, with High, Medium, and Low scoring tiers. Cost: approximately 0.2 credits per account monitored. Contact your Growth Strategist to enable this signal for your workspace.
 
 **Custom signals are not available within Audiences.** To track a more specific or custom signal (for example, website changes, RSS feed mentions, or technology adoption), build that logic in a bulk enrichment on the audience segment using Claygent or scheduled enrichment columns — see [Adding enrichments](#adding-enrichments) above.
 
@@ -680,9 +678,9 @@ You can add multiple ad platforms to a single audience sync. After your initial 
 -   You cannot add a platform while a sync is currently in progress — wait for the active sync to complete first.
 -   Google Ads and Bing Ads are only available for audiences sourced from first-party data (your own CRM or data warehouse). If your audience uses Clay's company/people search (CPJ) data, Google Ads and Bing Ads will not be available to add.
 
-**Enhanced Matching (Beta)**
+**Enhanced Matching**
 
-Enhanced Matching improves ad platform match rates by looking up hashed personal email addresses for your contacts via Clay's provider network and sending up to three per record to the connected ad platform. It is currently in beta — contact your Growth Strategist to enable it for your workspace.
+Enhanced Matching improves ad platform match rates by looking up hashed personal email addresses for your contacts via Clay's provider network and sending up to three per record to the connected ad platform.
 
 When setting up an Audiences → Ads sync, the **Map** step includes an Enhanced Matching panel where you choose a tier:
 
@@ -857,8 +855,6 @@ No. Audiences has no option to merge two fields into one. You can delete a custo
 **Blank cells don't clear existing values.** `Upsert Audiences Record` and `Update Audiences Record` have an **Ignore blank values** setting that is on by default — an empty cell in your table is skipped, and the Audience record keeps its current value for that field. So fixing a mapping and re-pushing doesn't remove values already written to the wrong field; those values stay until you overwrite them or delete the field. A field you map also fills in only on rows where the source column has data.
 
 ### How do I fill an Audience field with AI (for example, classify companies by channel) without using a table?
-
-Workflow enrichment from the Data Hub is currently in beta — if you don't see the **Create workflow** button described below, contact your Growth Strategist or Clay support to check whether it can be enabled for your workspace. It requires Audiences (Launch, Growth, or Enterprise plans) and is not available to Viewers.
 
 You can populate a People or Companies Audience field directly from that field in the **Data Hub**, without pulling records into a table and pushing them back. For example, to add a **Channel** field (Distributor, Retailer, E-commerce) and fill it with an AI classification for each company:
 
@@ -1161,7 +1157,7 @@ For this to work, you need both:
 -   Salesforce Accounts synced into Audiences with website domain fields mapped.
 -   Web intent configured as a signal in your Audiences workspace.
 
-**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key (this feature is currently in beta — contact your Growth Strategist to enable it). This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
+**If visitors arrived before your Salesforce sync was connected:** Web intent records added to Audiences before you connected Salesforce may not automatically merge with existing SFDC records. To resolve this, use the **Import record matching** option in your Salesforce import settings and select domain as the match key. This matching applies to records coming in after the setting is enabled — it does not retroactively merge records already in Audiences.
 
 ### I've mapped fields to Salesforce but the data isn't syncing — why?
 
