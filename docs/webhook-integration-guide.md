@@ -109,6 +109,33 @@ There is no way to wait for the workflow to finish or return a custom response b
 
 ## FAQs
 
+### Can a Clay webhook table return enriched data in the same request, for real-time web form enrichment?
+
+No. A **Monitor webhook** table doesn't return enriched data in its webhook response. When your web form or backend POSTs a lead (for example, a work email) to the webhook URL, Clay acknowledges the request with a `200` response before any enrichment columns run, and that response doesn't include enrichment results. The enrichment columns run on the new row after Clay has responded, so a webhook table can't hand company data back to a live form step while the visitor is still filling out the form.
+
+**Recommended pattern for real-time form routing with a webhook table:**
+
+1.  **Before submit:** route the lead with a fast lookup in your own stack, such as a domain lookup on the work email.
+2.  **After submit:** send the lead to your Clay webhook URL for full enrichment.
+3.  **Get the results back:** add an **HTTP API** enrichment column at the end of the table that POSTs the enriched data to your endpoint (see [Send enriched data from Clay to a middleware tool](#send-enriched-data-from-clay-to-a-middleware-tool)). When it arrives, update routing or your CRM.
+
+### Is delivery of enriched results from Clay's HTTP API column to my endpoint guaranteed?
+
+No. When an **HTTP API** enrichment column sends enriched data to your endpoint, Clay retries a failed request only in specific cases:
+
+-   **Retried by default:** `408`, `413`, and `429` status codes, plus the network errors `ETIMEDOUT`, `ECONNRESET`, and `ECONNREFUSED`.
+-   **Number of retries:** 1 by default, configurable up to 5 with **Retry on failure** (see the [HTTP API guide](http-api-integration-overview.md#step-9-retry-on-failure)).
+-   **Not retried by default:** other failures, such as a `500` response. Add them to **Status codes to retry** if you want Clay to retry them.
+-   **After the last retry:** the cell shows an error, and Clay doesn't queue the request for later delivery.
+
+**To build your receiving endpoint for occasional missed or repeated deliveries:**
+
+1.  **Make your endpoint idempotent.** Send a key built from the row's own data, such as a lead ID or record ID, so a repeated request is harmless. See [Does Clay send a run ID or event ID with HTTP API requests?](http-api-integration-overview.md#does-clay-send-a-run-id-or-event-id-with-http-api-requests)
+2.  **Return a `2xx` response quickly.** The HTTP API column waits at most 100,000 ms (100 seconds) for a response.
+3.  **Check for missing results.** On your side, run a periodic check that flags leads with no result after your expected window, and re-deliver only those:
+    -   **Re-run the HTTP API cell** on the lead's existing row in Clay to send the request again.
+    -   **Or re-send the lead to the webhook URL.** Without an `X-Clay-Webhook-Idempotency-Key` header, the re-send creates a new row and runs the enrichments again, which consumes credits. With the same idempotency key and an identical body, Clay doesn't create a new row or re-run enrichments. In that case, re-run the HTTP API cell instead (see [Use an idempotency key to stop retries from creating duplicate rows](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows)).
+
 ### How can I see webhook logs?
 
 Clay does not have a built-in webhook log UI. The two places to check webhook activity are:
