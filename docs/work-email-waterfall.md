@@ -68,6 +68,29 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 -   `Aggressive` — Higher risk level, good for casting a wide net. Best when volume and coverage take priority over precision.
 -   `Advanced` — Manual configuration for fine-grained control over validation behavior.
 
+The default `Validation strategy` is `Conservative`.
+
+### Which validation strategies each validation provider supports
+
+The `Validation strategy` options you can select depend on the `Validation Provider` you choose. Strategies the selected provider doesn't support are greyed out in the dropdown. For example, `Balanced` is only available with Hunter or Debounce. Some providers support only `Conservative`.
+
+This table shows which validation strategies each Work Email waterfall validation provider supports:
+
+| Validation provider | Conservative | Balanced | Aggressive | Advanced |
+|---|---|---|---|---|
+| Hunter | ✓ | ✓ | ✓ | ✓ |
+| Debounce | ✓ | ✓ | ✓ | ✓ |
+| NeverBounce | ✓ | — | ✓ | ✓ |
+| ZeroBounce | ✓ | — | ✓ | ✓ |
+| LeadMagic | ✓ | — | ✓ | ✓ |
+| Enrichley | ✓ | — | ✓ | ✓ |
+| Kitt | ✓ | — | ✓ | ✓ |
+| Findymail | ✓ | — | — | — |
+| Enrow | ✓ | — | — | — |
+| Listmint | ✓ | — | — | — |
+
+To use a strategy that's greyed out, switch the `Validation Provider` to one that supports it, then select the strategy.
+
 ### Additional column settings
 
 `Output name of successful provider?` (optional): When enabled, adds a column showing which provider successfully found the email.
@@ -251,11 +274,34 @@ To permanently show provider and validation columns going forward, click the wat
 -   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
 -   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
 
-**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results but is not available for all validation providers.)
+**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results, but only Hunter and Debounce support it.)
+
+**If `Conservative` is the only strategy you can select:** Your validation provider supports only `Conservative`, so the other strategies are greyed out. Findymail, Enrow, and Listmint support only `Conservative`. To keep catch-all emails in the Work Email output column:
+
+1.  Open the Work Email waterfall settings and go to the `Validation` section.
+2.  Change `Validation Provider` to one that supports more strategies, such as Hunter.
+3.  Set `Validation strategy` to `Balanced` or `Aggressive`.
+4.  Re-run the rows where the Work Email column is empty.
+
+See [Which validation strategies each validation provider supports](#which-validation-strategies-each-validation-provider-supports) for the full list.
 
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
 If you need to use an email that a later provider found despite an earlier invalid result, you can manually paste it into your output column, or create a formula column that pulls directly from the individual provider result columns.
+
+### If I enable "Require validation success" after the waterfall has already run, will it update existing results?
+
+Yes — for rows that already have validation data stored. Enabling **Require validation success** and saving immediately updates the waterfall's output column by re-evaluating the merge formula against the validation results already stored in your table. No re-run is needed and no credits are charged for this update.
+
+- **Rows where validation already confirmed the email as valid** continue to show that email in the output column — no change.
+- **Rows where validation returned "invalid," "catch-all," or an inconclusive result** will have the email removed from the output column. The individual provider cell still shows the found email, but the final output column becomes blank because the stricter setting now filters it out.
+
+**To find a different email for rows that are now blank**, a re-run is needed — no re-run is required just to apply the filter, but one is required if you want to search for a new email that passes the stricter validation gate:
+
+1. Filter your table to show only the rows where the Work Email column is now empty.
+2. Select those rows in the Work Email waterfall column and right-click → **Run [N] cells**. The waterfall re-runs only on that subset, searching for a different email that passes validation.
+
+**Exception — if no validation column exists:** If your waterfall was originally configured without a validation provider (no "Validate" step was added), there is no stored validation data for the setting to evaluate against. In this case, you do need to rerun the waterfall on those rows to first collect validation data before the stricter gate can take effect.
 
 ### Why does the Work Email output column show "Waiting for another column to finish"?
 
@@ -266,6 +312,14 @@ When the Work Email output column shows **"Waiting for another column to finish"
 1. Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
+
+**If a provider step in the Work Email waterfall stays "Queued" and isn't progressing**, the Work Email output column keeps showing "Waiting for another column to finish" until that step runs. **Run column** → **Run [N] empty or out-of-date rows** skips cells that are already Queued. To unblock the stuck waterfall rows in one go:
+
+1. Click **Filter** in the table toolbar, select the stuck provider step column, and set the condition to **is queued**. Only the stuck rows are now visible.
+2. Right-click that provider step's column header and select **Run column** → **Force run all [N] rows**. With the filter active, this re-runs only the visible queued rows, so rows that already finished aren't re-run.
+3. Repeat for any other waterfall step that shows Queued, then remove the filter.
+
+Once the stuck steps finish, the Work Email output fills in automatically. If a column that uses Work Email as an input, such as a CRM lookup, is also stuck in Queued, unblock the waterfall steps first, then use the same filter and **Force run** steps on that column. For more on stuck queues, see [Troubleshooting cells stuck in Queued status](run-progress.md#troubleshooting-cells-stuck-in-queued-status).
 
 To permanently show provider and validation columns so you can monitor waterfall progress at a glance, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
@@ -308,3 +362,32 @@ You can chain as many validators as needed this way. Each column's **Only run if
 **Tip:** Before running at scale, test by right-clicking a single row and choosing **Run 1 cell**, or enable [sandbox mode](sandbox-mode.md) to try your full validation sequence without consuming live credits.
 
 For a full reference on writing conditional run formulas, see [Conditional runs](conditional-runs.md).
+
+### Does email validation confirm that a work email belongs to the right person or company?
+
+No. Validation in the Work Email waterfall checks **deliverability** — whether an address can receive mail — not **identity**, meaning whether the email actually belongs to the person and company in your row. The validation provider (for example, ZeroBounce, Debounce, NeverBounce, or Hunter) returns a status such as valid, invalid, catch-all, or unknown, and your `Validation strategy` uses that status to decide whether the waterfall stops. A deliverable email can still be the wrong email for your contact.
+
+The Work Email waterfall's validation step does **not**:
+
+-   Check that the email domain matches the company domain you mapped as an input.
+-   Exclude free or personal email domains such as `@yahoo.com` or `@gmail.com`.
+-   Check that the name in the email address matches the person's name in your row.
+
+This matters most when you use enriched emails for CRM routing — for example, matching leads to Accounts in Salesforce or Marketo by email domain. A wrong domain can route a lead to the wrong Account. Low-quality inputs, such as placeholder company names like `xxx` or `N/A`, increase the risk of a deliverable email at the wrong company.
+
+**To check work email accuracy before syncing to your CRM**, add your own "safe to sync" checks after the waterfall:
+
+1.  **Keep the original fields unchanged.** Write the enriched email and enriched company to separate columns instead of overwriting the submitted email, company name, or account fields.
+2.  **Exclude free or personal email domains.** Add a formula column that flags emails on free email domains (such as `yahoo.com`, `gmail.com`, or `hotmail.com`), and exclude those rows. See [Conditional statements](conditional-statements.md) for an example formula that matches free email domains.
+3.  **Confirm the email domain matches the company.** Add a formula column that extracts the domain after `@` and compares it to the contact's company domain or an approved subsidiary domain. See [Handling email/company domain mismatches](building-a-data-waterfall.md#handling-emailcompany-domain-mismatches) for this setup.
+4.  **Flag name mismatches.** Compare the part of the email before `@` with the person's first and last name, and send mismatches to review instead of syncing them automatically.
+5.  **Exclude risky validation results.** Use the `Conservative` validation strategy, which excludes catch-all emails. For more control, choose `Advanced`, leave `Include catch-all` off, and turn on `Exclude role-based emails` and `Exclude disposable emails`.
+6.  **Sync only rows that pass every check.** Use an **Only run if** condition on your CRM sync column so only rows that pass all checks are sent. Filter the remaining rows into a review view. See [Conditional runs](conditional-runs.md).
+
+### Is there a confidence score for work emails I can filter on?
+
+No. The Work Email waterfall does not return a single confidence score for each email. The waterfall output column contains only the email the waterfall accepted. If you turn on `Output name of successful provider?`, you also get a column showing which provider found the email, but there is no score.
+
+Some individual providers include their own score in their columns. For example, Hunter returns a `score` from 0 to 100 in its email finder and email verification results. These scores come from that provider alone, aren't available for every provider in the waterfall, and measure deliverability rather than whether the email belongs to the right person.
+
+To filter out weak matches before syncing to your CRM, build your own "safe to sync" status from the checks in [Does email validation confirm that a work email belongs to the right person or company?](#does-email-validation-confirm-that-a-work-email-belongs-to-the-right-person-or-company) instead of relying on deliverability alone. For general ways to improve reliability across waterfall enrichments, see [Waterfall results and data quality](building-a-data-waterfall.md#waterfall-results-and-data-quality).

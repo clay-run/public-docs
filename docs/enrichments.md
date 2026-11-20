@@ -1,7 +1,7 @@
 ---
 title: Enrichments
 description: Learn how to run enrichments in Clay, including how enrichment search works, run settings, delay options, and custom rate limits.
-last_synced: 2026-04-26T01:39:56.840Z
+last_synced: 2026-11-18T19:16:01.156Z
 ---
 
 # Enrichments
@@ -18,7 +18,7 @@ You can run enrichments in several ways:
 
 -   Individually
 -   Using pre-built templates
--   Creating powerful recipes to automate complex workflows
+-   Saving a whole enrichment sequence as a [function](functions.md) to reuse across tables
 
 ## Running an enrichment
 
@@ -58,10 +58,13 @@ Use conditional logic to control when an enrichment runs. The enrichment only ex
 
 ### Saving configuration changes
 
-When you click **Save** after editing an enrichment column, a dropdown lets you choose how the change takes effect:
+What happens when you click **Save** after editing an enrichment column depends on whether the column's **Auto-run** toggle is on or off:
 
--   **Save and don't run** — Saves your updated settings without re-running existing rows. If [auto-run](table-management-settings.md) is enabled, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
--   **Save and run _N_ rows** — Saves your settings and immediately queues all rows in the table for a run using the updated configuration.
+-   **Auto-run ON** — A dropdown appears letting you choose how the change takes effect:
+    -   **Save and run 10 rows** — Saves your settings and queues the first 10 rows as a quick sample run. (Only shown when the view has more than 10 rows.)
+    -   **Save and run _N_ rows in this view** — Saves your settings and immediately queues all rows in the current view using the updated configuration.
+    -   **Save and don't run** — Saves your updated settings without running any rows. Because Auto-run is on, new rows added after saving will still trigger this enrichment automatically; historical rows remain unchanged until you manually trigger a run.
+-   **Auto-run OFF** — Clicking **Save** saves the configuration immediately with no dropdown. No rows are queued to run, and the column stays in manual-only mode. To run rows on demand, right-click the column header and choose **Run column → Run _N_ rows**.
 
 ## Delay run
 
@@ -141,6 +144,19 @@ To retrieve actual contact data, add a dedicated enrichment column instead:
 -   **Phone numbers** — click `Add enrichment`, search for `Phone`, and select the waterfall option for your region under **Waterfalls** — `Mobile Phone (US and Canada)`, `Mobile Phone (EMEA)`, `Mobile Phone (APAC)`, or `Mobile Phone (Global)`. See [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md) for provider recommendations by region.
 -   **Full profile data (job title, company, professional profile URL, and more)** — click `Add enrichment` and search for `Enrich Person` to browse provider-specific integrations. Each provider connects to a different data source — choose the one that fits your needs, or stack several as a [waterfall](building-a-data-waterfall.md) for broader coverage.
 
+### "How do I enrich just one person? Can I enrich someone directly from All People?"
+
+To enrich a single person in Clay, use a Clay table. The **All People** list in Audiences doesn't have a per-record enrich option — opening a person's record there won't let you run an enrichment on just that one contact.
+
+To enrich one person:
+
+1.  Create a new table (or use an existing one) and add a row with the person's identifier. The person's professional profile URL is the best input when you have one; an email address also works.
+2.  Click `Add enrichment`, search for `Enrich person`, and add it as a column.
+3.  Map the **Professional URL** input to your profile URL column (or map the **Email** input to your email column).
+4.  Run the enrichment for only that row: check the row's checkbox, click **Actions**, and choose **Run 1 row**.
+
+The `Enrich person` column returns the person's full profile data — for example, job title, current company, and experience history — in that row.
+
 ### "What accuracy or match rate can I expect from data enrichment in Clay?"
 
 Clay does not publish a single universal accuracy percentage because match rates vary based on several factors:
@@ -157,3 +173,14 @@ Clay does not publish a single universal accuracy percentage because match rates
 -   [[Data test] Work email providers](data-test-work-email-providers.md) — confidence scores comparing work email finders across SMB and enterprise datasets.
 
 **Recommendation:** Run a proof-of-concept (POC) test on a sample of your actual accounts or contacts before committing to a full run. Results vary significantly depending on your industry, persona, and geographic mix — testing with your own data gives you the most accurate picture of expected coverage.
+
+### "How do I edit an enrichment column's settings without re-running it on all my existing rows?"
+
+Editing an enrichment column's configuration does not re-run it on rows that already have results — as long as you choose the right save option. When you click **Save** after making changes, a dropdown appears:
+
+-   **Save and don't run** — Saves your updated configuration without queuing any existing rows for re-processing. Rows that already have results are preserved; only new rows added after saving will trigger this enrichment if auto-run is enabled.
+-   **Save and run _N_ rows** — Saves your settings and immediately queues all rows for a re-run using the updated configuration.
+
+Choose **Save and don't run** to apply your changes safely without spending credits on rows that are already populated.
+
+**Built-in credit protection:** Clay's **"Keep existing results"** setting (on by default for new tables) provides an additional safeguard — even when auto-run fires on new data, only empty, errored, or new cells are processed. Rows that already have a successful result are always skipped. Confirm this is enabled under the `⛭` icon in the top toolbar → **Run Settings**. See [Auto-run](auto-run.md) for full details.

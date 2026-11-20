@@ -95,6 +95,11 @@ Only workspace admins. The `First-party only` toggle under `Ads settings` is vis
 **My segment and my synced audience show different counts. Is something broken?**  
 No. The segment count is everyone matching your filters, while the synced count is only the contacts eligible for the destinations you picked. The difference is the excluded contacts, and the badge on the audience header tells you which rule accounts for them.
 
+**I have a large contact list but only a fraction of those records were sent to Meta Ads or LinkedIn. Why?**  
+The most common reason is that most of your contacts are located outside the United States. Clay can only use Clay-sourced data (from Find People and Clay's data providers) for US-based contacts — contacts with a confirmed non-US country are automatically excluded before the sync, and Enhanced Matching does not run for them either. A list sourced from Clay that is focused on EMEA or other non-US regions will result in a synced audience that is a small fraction of the total, because only the US-based contacts are sent.
+
+To reach non-US contacts, use your own first-party data: contacts from your CRM, data warehouse, or a CSV upload where you have collected the appropriate consent. See [How audience sourcing works by region](#how-audience-sourcing-works-by-region) for the complete breakdown of what is eligible by platform and location.
+
 **Why is my match rate lower than expected for audiences that include non-US contacts from Find People?**  
 When Enhanced Matching runs for an ad sync, Clay generates hashed email identifiers for each contact before sending them to the ad platform. Ad platforms use these hashes to identify your contacts — a contact without a hashed identifier cannot be matched, even if it is included in the sync.
 
