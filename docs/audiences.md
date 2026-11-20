@@ -198,6 +198,12 @@ Clay syncs data from HubSpot automatically on the following schedules:
 -   **Incremental sync:** Runs every **15 minutes** on Enterprise workspaces, or **once daily** on Growth workspaces. Picks up new and changed HubSpot records since the last sync.
 -   **Full sync (every 7 days):** Re-reads all records from HubSpot and reconciles deleted records — catching anything the incremental sync may have missed.
 
+**Deleted records:** When a HubSpot record is deleted, Clay does not automatically remove it from Audiences. After the next full sync (within 7 days), the record remains in your Audience marked **Deleted in source** — it is not hard-deleted. You can filter on **Deleted in source** in any segment to exclude these records from your active audiences and enrichment workflows.
+
+**Merged records:** When HubSpot merges two companies (or contacts), the original record ID becomes invalid while the surviving record gets a new ID. Clay does not automatically remap the old HubSpot ID to the surviving record — rows still referencing the old ID may return "record not found" errors in enrichment or update actions. To prevent these errors, add a run condition to any HubSpot enrichment or update workflow that skips records where the sync status is **Deleted in source** or where the HubSpot record ID is blank.
+
+To clean up records marked **Deleted in source**, see [How do I handle deleted or merged HubSpot records in Audiences?](#how-do-i-handle-deleted-or-merged-hubspot-records-in-audiences) in the FAQs below.
+
 **Record scope:** For each object type, you can import **All records** or a single **HubSpot list**. To bring in only the contacts, companies, or deals in one of your HubSpot lists, see [Importing a HubSpot list](#importing-a-hubspot-list) below. If your HubSpot has more records than your plan's limit (250,000 for Growth; 25,000,000 for Enterprise), see [My HubSpot has more records than my plan limit — how do I limit what gets imported?](#my-hubspot-has-more-records-than-my-plan-limit--how-do-i-limit-whats-imported) in the FAQs below.
 
 **Write-back to HubSpot:** Unlike Salesforce, the HubSpot source in Audiences does not include per-field export rules or a scheduled export toggle — there is no write-back configuration in the HubSpot source settings panel. To push enriched data from Audiences to HubSpot, use a workflow with a HubSpot action — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
@@ -1659,6 +1665,24 @@ The Opportunities import settings show this reminder under **Import sync**: "Con
 3.  Select your Opportunities import and turn on **Import sync**. The toggle is now available.
 
 **Turning off Accounts or Contacts sync also turns off Opportunities sync.** If you later turn off **Import sync** for your Salesforce Accounts or Contacts import, Clay also turns off Import sync for every Opportunities import from that Salesforce account. Before you save, Clay warns you, for example "Opportunities import will be disabled." To resume Opportunities syncing, turn Accounts and Contacts sync back on, then turn Opportunities sync back on.
+
+### How do I handle deleted or merged HubSpot records in Audiences?
+
+When a HubSpot record is deleted or merged in HubSpot, Clay does not automatically remove the corresponding Audiences record. After the next full sync (within 7 days), the record is marked **Deleted in source** in your Audience — it persists in All People or All Companies until you archive it. Rows that still reference the old HubSpot ID — for example, enrichment or update actions pointing at a merged company — will return "record not found" errors because HubSpot no longer recognizes that ID.
+
+**To reduce errors from deleted and merged records:**
+
+1. **Exclude deleted records from workflows.** In any HubSpot enrichment or update workflow, add a run condition to skip records whose sync status is **Deleted in source** and whose HubSpot record ID is blank. This prevents workflows from repeatedly trying to look up records that HubSpot no longer recognizes.
+2. **Archive the stale records.** To remove **Deleted in source** records from your Audience:
+   1. Go to **All People** or **All Companies** in your Audiences view.
+   2. Click **+ Filter** → **Source** → select your HubSpot import → set status to **Deleted in source**.
+   3. Click **Create segment** to save the filter as a named segment — the **Archive records** option is available only on saved segments.
+   4. In the left sidebar, click the **⋮** (three-dot) menu next to the segment name.
+   5. Select **Archive records** and confirm. All matched records are moved to the Archived section and removed from all active segments.
+
+   If you need records permanently deleted from Audiences rather than archived, contact Clay support.
+
+3. **Prevent future duplicates on re-import.** If you plan to clean up and re-import your HubSpot data, configure **Import record matching** (currently in beta — contact your Growth Strategist to enable) before the initial sync, using a stable identifier such as a company domain or external record ID. This helps prevent the same company from appearing twice if it is re-imported under a new HubSpot ID after a merge. Note that matching applies only to records imported after the setting is enabled — it is not retroactive.
 
 ### Do Activities or Opportunities count toward my plan's record limit?
 
