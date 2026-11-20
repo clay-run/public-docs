@@ -386,12 +386,14 @@ Import record matching is primarily useful for **cross-source scenarios** — wh
 
 To configure:
 
-1. In your import settings, find `Import record matching` and click `Edit`.
+1. In your import settings, find **Import record matching (optional)** and click **Set up** — or **Edit** if matching is already configured. The **Import record matching for Companies** (or **Import record matching for People**) modal opens.
 2. Under `When`, choose an **alias field** — the identifier Clay uses to match records across sources. Options include **Email**, **Phone number**, **professional network URL**, and **External record ID** for People; **Domain**, **professional network URL**, and **External record ID** for Companies (among others). The **External record ID** option matches on each source's native record identifier — after selecting it, you map it to the specific field per source (for example, for HubSpot contacts this is the Contact ID field, which is HubSpot's `hs_object_id` property).
 3. Under `In`, map the alias field to the corresponding field in each connected source.
 4. When a new record arrives, Audiences checks whether the alias value already exists. If it does, the new data is merged with the existing record instead of creating a duplicate.
 
 You can configure one alias field per entity type (one for People, one for Companies). This setting applies to records imported *after* it is enabled — it does not retroactively merge records already in Audiences.
+
+**Import record matching can't be turned off once it's saved.** After you save a matching field, the settings page only offers **Edit**, which lets you change which field Import record matching uses — there is no option to select no field or turn matching off. If Import record matching is merging records you want to keep separate, click **Edit** and choose a field that is unique for every record, such as **External record ID** mapped to the Salesforce record ID. Any change to Import record matching applies only to future records: records that were already merged stay merged and are not split back into separate records. See [Why are some of my Salesforce Accounts missing from my Companies audience?](#why-are-some-of-my-salesforce-accounts-missing-from-my-companies-audience) in the FAQs below.
 
 **Unique Identifier vs. alias field (Snowflake and BigQuery imports)**
 
@@ -1694,6 +1696,24 @@ To show the professional network URL from Salesforce instead:
 1.  Open your Salesforce source settings and select your Contacts import.
 2.  In the field mapping, map Clay's default professional network URL field to the Salesforce field that holds the correct URL, for example a custom profile URL field on your Contact object.
 3.  Click **Save and review** → **Confirm**. For when existing contacts pick up the newly mapped value, see [I added a new Salesforce field to my mapping but some records are missing data for it](#i-added-a-new-salesforce-field-to-my-mapping-but-some-records-are-missing-data-for-it).
+
+### Why are some of my Salesforce Accounts missing from my Companies audience?
+
+If your Companies audience has fewer companies than the number of Salesforce Accounts your import syncs — for example, the Salesforce Account import pulls 2,097 Accounts but All Companies shows 2,087 — and the import's status is **Sync on**, the missing Accounts have usually been merged into other company records rather than skipped.
+
+Audiences always matches each imported Salesforce Account to an existing company by its Salesforce record ID. If **Import record matching for Companies** (currently in beta) is set to **Domain**, Salesforce Accounts that share the same website domain — for example, parent and child Accounts, or subsidiaries that use the parent company's domain — are also merged into a single company in Audiences. Each merged group appears as one company, so the company count is lower than your Salesforce Account count.
+
+To keep Salesforce Accounts that share a domain as separate companies:
+
+1.  In Audiences, open **All Companies** and click the **Sources** tab.
+2.  Click the **⋮** menu next to your Salesforce Account import and select **Settings**.
+3.  Find **Import record matching (optional)** and click **Edit**.
+4.  In the **Import record matching for Companies** modal, change the field from **Domain** to a field that is unique for every Account, such as **External record ID** mapped to the Salesforce record ID.
+5.  Save and confirm the change.
+
+**Import record matching can't be turned off once it's saved** — you can only change which field it uses, so choose a field that is unique for every Account. The change applies only to future records: Accounts that were already merged into one company stay merged and are not split back into separate companies.
+
+**Note:** Merging happens only inside Clay — Audiences never merges or changes Accounts in your Salesforce org.
 
 ### I enriched data in my Audience. Why hasn't it appeared in Salesforce yet?
 
