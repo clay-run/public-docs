@@ -1,9 +1,9 @@
 ---
-title: Amazon Redshift integration
+title: Connect Clay to Amazon Redshift
 description: Connect Clay to your Amazon Redshift Serverless workgroup or provisioned cluster with short-lived AWS credentials and import records into Audiences. Available to select Enterprise workspaces, currently in alpha.
 ---
 
-# Amazon Redshift integration
+# Connect Clay to Amazon Redshift
 
 Connect Clay to your own Amazon Redshift warehouse and import records from it into Clay Audiences.
 
@@ -25,7 +25,7 @@ To connect Amazon Redshift to Clay, you need:
 
 1.  In Clay, go to **Settings** → **Connections**, click **Create**, and choose **Amazon Redshift**.
 2.  Copy the two values Clay shows: the **Issuer** (`https://identity.clay.com`) and the **Connection subject** (formatted like `workspace:12345:connection:oidc_…`). The connection subject is unique to this connection and stays the same when you reconnect. The setup window lasts seven days — if it lapses, click **Renew authorization**.
-3.  In AWS IAM, go to **Identity providers** → **Add provider** → **OpenID Connect**. Set **Provider URL** to the Issuer from Clay and set **Audience** to a value of your choice, such as `sts.amazonaws.com`. Note the audience for step 6. Skip this step if the AWS account already has a Clay identity provider (for example, from an Amazon Bedrock connection).
+3.  In AWS IAM, go to **Identity providers** → **Add provider** → **OpenID Connect**. Set **Provider URL** to the Issuer from Clay and set **Audience** to a value of your choice, such as `sts.amazonaws.com`. Note the audience for step 6. Skip this step if the AWS account already has a Clay identity provider (for example, from an [Amazon Bedrock connection](connect-clay-to-amazon-bedrock.md)).
 4.  Create an IAM role of type **Web identity** using that provider and audience. In the role's trust policy, allow `sts:AssumeRoleWithWebIdentity` with `StringEquals` conditions on the audience (`identity.clay.com:aud`) and the full connection subject (`identity.clay.com:sub`). Use the full connection subject — never a wildcard.
 5.  Attach a permissions policy that lets the role run statements on your warehouse through the Redshift Data API and read its own statement results:
     -   **Redshift Serverless:** allow `redshift-serverless:GetCredentials`, `redshift-data:ExecuteStatement`, and `redshift-data:BatchExecuteStatement` on the workgroup, plus `redshift-data:DescribeStatement`, `redshift-data:GetStatementResult`, `redshift-data:CancelStatement`, and `redshift-data:ListStatements`.

@@ -52,6 +52,7 @@ You can import data from:
 -   CSV
 -   Snowflake
 -   Google BigQuery
+-   Amazon Redshift (alpha — see [Connect Clay to Amazon Redshift](connect-clay-to-amazon-redshift.md))
 -   Salesforce
 -   HubSpot
 
