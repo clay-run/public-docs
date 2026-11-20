@@ -1,7 +1,7 @@
 ---
 title: The Swarm integration
 description: Find intros to companies and individuals using your network.
-last_synced: 2026-04-26T01:40:47.998Z
+last_synced: 2026-11-19T08:05:15.872Z
 ---
 
 # The Swarm integration
@@ -47,8 +47,7 @@ If the column shows a **"required auth missing"** or **"required auth account is
 
 **Inputs**
 
--   **Your company domain**
--   **Social URL:** Your target's social links.
+-   **Professional URL:** The professional profile URL of the person you want an intro to.
 
 ### `Action` Find warm intros to company
 
