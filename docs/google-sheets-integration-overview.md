@@ -2,8 +2,8 @@
 title: Google Sheets integration
 description: Cloud-based spreadsheet for real-time collaboration. Covers using
   Google Sheets as a Clay table source (including dedup fields and import
-  history), enrichment actions, and pushing rows from Google Sheets into Clay
-  using Apps Script.
+  history), enrichment actions, pushing rows from Google Sheets into Clay
+  using Apps Script, and why rows written from a workflow land out of order.
 last_synced: 2026-04-26T01:40:04.431Z
 ---
 
@@ -249,3 +249,19 @@ The **Lookup, Add, or Update Row** enrichment is deprecated and is no longer ava
 2. Add an **Add row** enrichment column. In its **Run settings**, add a conditional run so it fires only when the **Update rows** column returns `updated_rows` equal to `0`.
 
 With this setup, each record is updated if it already exists in the sheet, or added as a new row if it doesn't — never both. If you have existing columns using the old **Lookup, Add, or Update Row** enrichment, they will continue to work. Use the two-column approach above for any new add-or-update workflows.
+
+### Rows written to Google Sheets from a workflow are out of order or mixed together
+
+If you write rows to a Google Sheet at the end of a Clay workflow (Workflows is in open beta) with the Google Sheets **Add row** step, rows can appear in a different order than you sent them, or one person's rows (for example, their work and education history) can be interleaved with another person's. It can look like rows are being overwritten, but the **Add row** action never overwrites existing rows: it uses Google's append operation with the insert-rows option, which adds each new row after the last row of the table Google detects on the sheet. Clay never picks a row number.
+
+Rows written by **Add row** end up out of order or mixed together for these reasons:
+
+-   **Parallel writes:** In a workflow, records run up to 5 at a time in parallel, and separate workflow runs can overlap. Each row lands in the order its write finishes, not the order it was sent.
+-   **Sheet layout:** Google finds "the end of the table" by scanning from cell A1 of the sheet. Blank rows or columns, headers that aren't in row 1, or other content below your data can make new rows land in unexpected places.
+-   **Header changes during a run:** **Add row** matches values to columns by exact header name, and Clay caches the sheet's header row for 3 minutes. Renaming or reordering headers while a run is in progress can put values in the wrong columns.
+
+To keep rows written by the **Add row** step together and in order:
+
+1.  **Keep the sheet as one clean table.** Put headers in row 1, leave no blank rows or columns, keep nothing below the data, and don't rename or reorder headers while runs are active. After changing headers, wait at least 3 minutes before writing again.
+2.  **Map a sort key.** Add a column such as a row number or a unique person ID (for example, email address or profile URL) to the sheet and map it in the **Add row** step, so you can sort the sheet back into input order and group each person's rows together.
+3.  **Turn on batching in the workflow.** On the Google Sheets **Add row** step, turn on **Run in batches** and set **Number of runs per batch** (up to 100). Records in the same batch are written in a single append, so they land together as one block of rows. Separate batches and overlapping workflow runs can still arrive in any order, so keep the sort key from step 2 if you need strict ordering.

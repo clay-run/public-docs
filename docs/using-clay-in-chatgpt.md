@@ -2,7 +2,7 @@
 title: Using Clay in ChatGPT
 description: Find people, enrich contacts, and draft personalized outreach — all
   within a regular ChatGPT conversation.
-last_synced: 2026-07-13T21:39:45.462Z
+last_synced: 2026-11-19T07:42:01.786Z
 ---
 
 # Using Clay in ChatGPT
@@ -10,6 +10,8 @@ last_synced: 2026-07-13T21:39:45.462Z
 Find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation.
 
 Clay in ChatGPT lets you find people, enrich contacts, and draft personalized outreach — all within a regular ChatGPT conversation. Clay pulls data from a subset of its 200+ providers and AI-powered research agents directly into ChatGPT, so you can move from research to action in seconds.
+
+This doc covers MCP for Reps, the Clay app sales reps use in ChatGPT to prospect and run approved functions. To build and edit in your own workspace from ChatGPT, see [Clay MCP in ChatGPT](https://university.clay.com/docs/clay-mcp-in-chatgpt).
 
 ## Getting started
 
@@ -94,7 +96,7 @@ Clay will find the matching function, run it, and return the results directly in
 
 ## MCP settings for your team
 
-Workspace admins can set credit limits and monitor rep usage from `Settings → MCP users`. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `Agent users` page, which they open from the sidebar on the Clay homepage. The `Agent users` page is currently in beta and is visible only to workspace admins. For a full walkthrough of the admin controls, see [MCP settings](https://university.clay.com/docs/mcp-settings).
 
 ## FAQ
 
@@ -161,4 +163,4 @@ If you click `Open in Clay`, a table is created in your Clay workspace. For one-
 
 **How does my admin control my credit limit?**
 
-Your workspace admin can set a default credit limit for all reps, or a per-user override, from `Settings → MCP users`. If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.
+Your workspace admin can set a default credit limit for all reps, or a per-user override, from the `Agent users` page (currently in beta and visible only to workspace admins). If you hit your limit, further enrichments will be blocked until the monthly reset on the 1st of each month at midnight UTC. Contact your admin to have your limit adjusted.

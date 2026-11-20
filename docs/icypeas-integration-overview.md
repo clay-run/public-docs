@@ -1,7 +1,7 @@
 ---
 title: Icypeas integration overview
 description: Email discovery and verification tool.
-last_synced: 2026-04-26T01:40:10.024Z
+last_synced: 2026-11-19T06:48:14.287Z
 ---
 
 # Icypeas integration overview
@@ -50,7 +50,7 @@ The **Find Work Email** action helps you find the work email from the name and c
 
 First, you can use either the Clay-managed Icypeas account or your own API key.
 
-If you use the Clay-managed Icypeas account you will be charged at 1 credit per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
+If you use the Clay-managed Icypeas account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
 
 **Step 2: Enter email address**
 

@@ -47,6 +47,17 @@ To enable or disable auto-dedupe:
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
+### Why did my deduplicated table use more credits than its row count?
+
+If the same records are sent to a table again and again (for example, a webhook or other source that re-sends the same companies every night), the auto-dedupe option you choose decides whether you pay to enrich those records again:
+
+-   **Keep newest row:** The incoming row is kept and the existing row is deleted. The new row is a brand-new row: values from the deleted row, including enrichment results, are not copied over. Enrichment columns set to auto-run therefore run on the new row and charge credits again. In the settings panel, this option is described as "Any existing row will be deleted; enrichments will run on the new row."
+-   **Keep oldest row** (the default): The existing row is kept unchanged and the incoming duplicate is deleted before any enrichment runs on it, so the duplicate doesn't charge credits.
+
+The table's row count only includes the rows left after auto-dedupe, so it doesn't show how many times a record was re-sent and enriched again. For example, if a webhook sends `openai.com` five nights in a row to a table that dedupes on **Domain** with **Keep newest row**, the table shows one row for openai.com. An auto-run enrichment column that costs 1 credit per row has run five times on that domain and charged 5 credits, one per night.
+
+To check whether this is happening, open the **History** panel (bottom-right of the table) and select **Row deduplication** to see the rows auto-dedupe has deleted. To stop paying again for records that are already in the table, switch the table's Deduplication setting to **Keep oldest row**.
+
 ## Auto-run
 
 Auto-run controls whether enrichments fire automatically when rows are added or edited, keeping your table current. For complete documentation — including the run decision tree, table-level and column-level controls, "Keep existing results," the out-of-date indicator, the Update Existing Rows toggle, common scenarios, and best practices — see **[Auto-run](auto-run.md)**.
@@ -68,6 +79,13 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
+-   Unpublished sandbox mode changes — see the note below
+
+**Columns missing after you duplicate a table or workbook? Check for unpublished sandbox changes.** Duplicating a table or workbook copies the live, published version of each table. Columns you've added or edited in [sandbox mode](sandbox-mode.md) but haven't published yet are not part of the published table, so they don't come along — for example, the duplicate may contain only the source column (such as a Salesforce import) even though the original table shows many more columns in its sandbox. The duplicate itself worked; the sandbox columns never reached the live table. To include those columns in a copy:
+
+1.  Open the original table and click **Review changes (N)** in the tab bar above the table, where N is the number of unpublished column changes.
+2.  In the **Sandbox review** window, click **Publish and don't run** (publishes the column changes without starting a run) or **Publish and run** (publishes and runs the affected columns on all rows).
+3.  Duplicate the table or workbook again. The new copy includes the published columns. You can delete the earlier copy if you don't need it.
 
 **To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — the Send Table Data action itself consumes no credits. **Important:** Because auto-run carries over to the duplicate (see below), enrichment columns in the destination (such as Claygent) will automatically re-fire on incoming rows and consume credits unless you turn off auto-run in the duplicate — or disable it on individual enrichment columns you don't want to re-run — before sending data.
 
