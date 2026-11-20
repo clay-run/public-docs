@@ -1,7 +1,7 @@
 ---
 title: Hunter
 description: Email outreach platform.
-last_synced: 2026-04-26T01:40:09.700Z
+last_synced: 2026-11-18T20:53:02.517Z
 ---
 
 # Hunter
@@ -38,7 +38,7 @@ You have two options connecting Hunter to Clay.
 
 ### Option 1: Use the Clay-managed Hunter account
 
-This means you do not need to have a Hunter account to use the enrichment. You will be charged 2 credits per enriched cell without any need to create a Hunter account.
+This means you do not need to have a Hunter account to use the enrichment. Credit costs vary by action — see each action section below for details.
 
 When you pull up the enrichment you will simply select the option for `Clay-managed Hunter account`. And you can now use the enrichment!
 
@@ -62,11 +62,13 @@ The **Find Emails by Company** action helps you find public email addresses on t
 
 First, you can use either the Clay-managed Hunter.io account or your own API key.
 
-If you use the Clay-managed Hunter account you will be charged at 2 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
+If you use the Clay-managed Hunter account, you will be charged credits per email address found (credits are charged per result returned, not per row enriched). For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
 
 **Step 2: Select what emails you'd like to find within a company**
 
 Next, you'll select the company domain so you can identify people from that organization. Optionally, you can then select what department you'd like to search to find people.
+
+To return only generic or role-based email addresses (such as `info@`, `sales@`, or `support@`) for the domain, set **Type** to **Generic**. Set **Type** to **Personal** to return only individuals' email addresses.
 
 Follow the step-by-step walkthrough in this interactive lesson for an example:
 
@@ -88,7 +90,7 @@ The **Find Work Email** action helps you find a person's email address from thei
 
 First, you can use either the Clay-managed Hunter.io account or your own API key.
 
-If you use the Clay-managed Hunter account you will be charged at 2 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
+If you use the Clay-managed Hunter account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
 
 **Step 2: Select the individual's full name and domain of the company**
 
@@ -112,7 +114,7 @@ The **Validate Email** action helps you determine if an email address has as val
 
 First, you can use either the Clay-managed Hunter.io account or your own API key.
 
-If you use the Clay-managed Hunter account you will be charged at 2 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
+If you use the Clay-managed Hunter account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://docs.clay.com/en/articles/9654103-how-clay-credits-work).
 
 **Step 2: Select the email address you want to verify**
 

@@ -36,7 +36,7 @@ Build lists of companies based on their intent activities.
 -   **Activities limit per company**
 -   **Maximum credit cost (current: 6K credits)**
 
-**Note:** Each intent activity per company costs 20 credits. To control your credit usage, set limits on activities per company, total companies, or maximum credit cost.
+**Note:** Each intent activity per company costs 10 credits. Your total run cost varies based on how many intent activities are returned. To control your credit usage, set limits on activities per company, total companies, or maximum credit cost.
 
 ## TrustRadius glossary
 

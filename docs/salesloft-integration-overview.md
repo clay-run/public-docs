@@ -28,7 +28,24 @@ To get set up with Salesloft, you'll need to obtain an API key and have an exist
 
 To set up Salesloft within Clay, you'll need to first obtain a Salesloft API Key. You can request for an API key within Salesloft's [New API Key](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/) Page.
 
-Once you've obtained your API key, navigate to your enrichment panel and paste your API key when creating a new account.
+Once you've obtained your API key, you can add it to Clay in either of two ways. Salesloft is available on all plans, and Salesloft accounts are saved to your workspace, so a Salesloft API key added either way can be reused across every Salesloft action.
+
+**Option 1: Add your Salesloft API key from Settings → Connections**
+
+1.  Go to `Settings` → `Connections`.
+2.  Click `Create` in the top-right corner.
+3.  In the `Connect an account` modal, type "Salesloft" into the `Search` field and select Salesloft.
+4.  In the `Add Salesloft API Key` window, paste your key into the `API key` field, name the account, and save.
+
+The Salesloft account then appears in your `Connections` list.
+
+> **Note:** The search bar on the Connections page itself only filters connections you've already added. If you search "salesloft" there before adding a Salesloft API key, you'll see **No connections match your filters** — use the `Create` button instead to find Salesloft.
+
+**Option 2: Add your Salesloft API key from a Salesloft action**
+
+1.  In a Clay table, add a Salesloft action column (for example, **Create account** or **Add person to cadence**).
+2.  In the action's sidebar, go to the `Account` section and open the account dropdown.
+3.  Select `Add account`, paste your Salesloft API key, and save.
 
 **Set up Cadence within Salesloft**
 
@@ -95,7 +112,13 @@ If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ### Action: Adding Person to Cadence
 
-The Add Person to Cadence action lets you create new leads within Salesloft.
+The Add Person to Cadence action enrolls existing Salesloft contacts in a cadence.
+
+**How cadence enrollment works**
+
+The **Current Active Cadence** field visible on a Salesloft person record is a data field — it shows which cadence the contact is currently enrolled in. Writing a cadence name to this field will not enroll the contact. Cadence enrollment requires the separate **Add Person to Cadence** action.
+
+Before running Add Person to Cadence, the contact must already exist in Salesloft. Run a **Create Person** or **Upsert Person** action first, then add a second column using Add Person to Cadence. The cadence must also already exist in Salesloft — Clay cannot create cadences, and only cadences that exist in your Salesloft account appear in the cadence dropdown.
 
 **Step 1: Select the Add Person to Cadence action**
 
@@ -103,11 +126,11 @@ The Add Person to Cadence action lets you create new leads within Salesloft.
 
 Select the Salesloft account to send emails from. If you have not already integrated Salesloft with Clay, please enter your API key when creating an account ([Salesloft API key documentation](https://developers.salesloft.com/docs/platform/external-calendars/setup-api-key/)).
 
-**Step 3: Specify the Salesloft Person and Cadence ID**
+**Step 3: Specify the Salesloft Person and Cadence**
 
-The SalesLoft Person you'd like to add to a cadence. This is normally taken from a Lookup Person or Upsert Person step.
+For the **Salesloft person id** field, map the Person ID returned by your Create Person or Upsert Person column — use the `/` field picker to reference that column's output. This is the numeric Salesloft record ID assigned when the contact was created, not the contact's email address.
 
-The Cadence you'd like to add this person to.
+For the **Cadence id** field, select the cadence from the dropdown. Only cadences that already exist in Salesloft appear here.
 
 **Step 4: Configure run settings**
 
@@ -172,6 +195,21 @@ Specify Auto-update and Conditional run statements.
 If you are running trigger campaigns please make sure to turn Auto-update on.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/691e659fa1b8cb9cc1ee32da_672aeddc0616d6a7ef69234a_672aec9c4163926064f940bf_CleanShot%2525202024-10-31%252520at%25252002.14.57%2525402x%252520\(1\).png)
+
+## Enrolling contacts in a Salesloft cadence
+
+To enroll a contact in a Salesloft cadence from Clay, use the **Add Person to Cadence** action as a separate column in your Clay table. Cadence enrollment is a distinct step from creating or updating a person record and requires its own column.
+
+**The "current active cadence" field does not trigger enrollment.** The "current active cadence" field visible on Salesloft person records is a read-only data field that reflects which cadence the person is currently in. Writing a value into that field does not enroll the person in a cadence — it only updates a data value on the record.
+
+**To enroll contacts in a cadence:**
+
+1. Add a **Create Person** or **Upsert Person** column to your Clay table and run it first. The contact must already exist in Salesloft before Clay can enroll them in a cadence.
+2. Add a second Clay column and select **Add Person to Cadence** as the Salesloft action.
+3. Set the **Salesloft Person ID** field to reference the Person ID returned by your Create Person or Upsert Person column. Then select the target cadence from the **Cadence ID** dropdown. The cadence must already exist in Salesloft — Clay cannot create cadences. Refer to [Salesloft's documentation](https://help.salesloft.com/s/article/Create-a-Cadence?language=en_US) to create one first.
+4. Run one row and confirm the contact appears in the correct cadence in Salesloft before running the full table.
+
+For guidance on sequencing these two columns to prevent duplicate person records from being created, see [Avoiding duplicate Salesloft person records](#avoiding-duplicate-salesloft-person-records).
 
 ## Passing personalized copy to Salesloft cadences
 
