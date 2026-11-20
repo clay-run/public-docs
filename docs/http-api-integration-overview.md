@@ -680,6 +680,29 @@ This error means the API credentials in your HTTP API action are no longer valid
 
 If your API issues short-lived tokens that expire automatically, the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action may be a better fit — it fetches a fresh token from a configurable endpoint and refreshes it automatically approximately every 55 minutes (available on Explorer and above plans).
 
+### Token-fetch HTTP API column skipping rows — "Bearer undefined" or 401 on new rows
+
+If you use one HTTP API column to fetch a bearer token and a second HTTP API column to call the API with that token, new rows may get 401 errors or produce `"Bearer undefined"` in the Authorization header — even though the token column appears to work on some rows.
+
+**Why this happens:** Clay determines when to run a column by looking at which other columns it references (its dependency edges). A column with **no column references** anywhere in its URL, headers, query parameters, or body is treated as having no upstream dependency — Clay won't automatically trigger it when new rows are added. If your token-fetch column is fully hardcoded (every value is a static string, with no `/ColumnName` chip inserted via the picker), it has no dependency edge and won't run automatically for new rows. Those rows end up with an empty token cell, and the downstream enrichment column sends `"Bearer undefined"` to the API.
+
+**Best fix — use HTTP API with JWT Authentication:**
+
+For APIs that issue short-lived bearer tokens from a dedicated token endpoint (including ZoomInfo), the recommended solution is the **[HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview)** action. It fetches and refreshes the token automatically (approximately every 55 minutes) without a separate column. See [HTTP API with JWT Authentication](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview) for setup instructions, including step-by-step ZoomInfo configuration.
+
+**Alternative — shared token cache table (for auth flows JWT auth doesn't cover):**
+
+For auth flows not supported by the JWT action (for example, OAuth 2.0 `client_credentials` or `refresh_token` grants — see the JWT auth FAQ), centralize the token in a dedicated single-row table instead of fetching it per row:
+
+1. Create a new table in the same workbook with a single row. This table holds one shared, always-fresh token.
+2. Move your token-fetch HTTP API column into that table. Add a formula column (e.g., `fetched_at`) with the formula `moment().toISOString()` to record when the token was last fetched. Run the token column once manually to seed an initial value.
+3. Add both columns to a scheduled refresh: click `⛭` → **Run Settings** → **Re-run columns on a schedule** → **Only selected columns** → select both columns. Set the frequency to stay within your token's validity window. **Hourly scheduling requires an Enterprise plan** — on other plans, the most frequent option is Daily. See [Scheduled columns](scheduled-columns.md).
+4. In your main table, add a **Lookup Single Row in Other Table** column pointed at the token cache table. For the match condition, reference any upstream column from the row (even a simple formula column) rather than using a static value — this gives Clay a dependency edge so the lookup auto-runs for each new row. See [Lookup Rows](lookup-rows.md).
+5. Update your enrichment columns to build the Authorization header from the lookup result: `"Bearer " + ({{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"] || "")`.
+6. Add a run condition on your enrichment columns so they only fire when the cached token is present: `!!{{Token Cache Lookup}}?.records?.[0]?.fields?.["access_token"]`.
+
+**Why a separate cache table — not just scheduling the token column in the same table:** Scheduled re-runs fire for **every row** in the table, not just new ones. Scheduling a token-fetch column that lives in a table with thousands of rows would fetch a separate token for each row on every cycle — thousands of token requests per hour — risking rate-limit errors on the auth endpoint. A single-row cache table fetches one token per cycle regardless of how many rows your main table has.
+
 ### 401 error with Basic authentication — trailing newline in base64 credential
 
 If you're using HTTP Basic authentication and getting 401 "Unauthorized" responses — but the same credential works in Postman or another API client — the most likely cause is a trailing newline embedded in your base64-encoded credential.
@@ -915,6 +938,22 @@ Yes. Use the **HTTP API enrichment** with a **POST** method to send enriched rec
 
 **Note:** HTTP API enrichment processes one row at a time — each cell sends a separate POST request to your endpoint. There is no native batch mode.
 
+### Does Clay send a run ID or event ID with HTTP API requests?
+
+No. When an HTTP API enrichment column calls your service, Clay doesn't include a run ID, event ID, row ID, or request ID in the request. The run ID you may see in Clay is only available on Clay's side — it can't be inserted into the HTTP API URL, query parameters, body, or headers. The only values you can insert with the `/` picker are your table's columns, and Clay doesn't add an ID header of its own. The headers Clay sends are the ones you enter in the column plus any from a selected HTTP API (Headers) account.
+
+**Workaround — send your own unique key for de-duplication:** If your service needs an ID to match or de-duplicate the requests it receives from Clay, build one from the row's own data and send it with each request:
+
+1.  Add a formula column that combines values that don't change for each row — for example, the company domain and the person's email, or a record ID that already comes from your own source data.
+2.  In the HTTP API enrichment column, insert that formula column (using the `/` picker) into the request body or into a custom header, such as `X-Event-Id`.
+
+Because the key is built from the row's data, it stays the same when the row is re-run. It also stays the same when Clay resends a failed request because **Retry on failure** is turned on (see [Step 9: Retry on failure](#step-9-retry-on-failure)), so your service can recognize the repeat as the same request. Keep these points in mind:
+
+-   **Don't use random values in the key formula.** A retry or re-run would generate a different key, which defeats de-duplication.
+-   **Build the key from fields that stay fixed.** If someone later edits a column the key is built from, the key changes too.
+
+**If your service starts the run instead:** When your service triggers a Clay Workflow by calling its webhook URL, the `202 Accepted` response to that call includes a `workflowRunId` you can store on your side. This only applies when your system calls Clay, not when an HTTP API column calls your system. See [Webhooks as Workflow triggers](webhook-integration-guide.md#webhooks-as-workflow-triggers).
+
 ### Can I paste a cURL request directly into Clay?
 
 There is no "paste cURL" button, but you can replicate any cURL request by manually mapping its components to the HTTP API configuration fields.
@@ -943,3 +982,14 @@ Map each part as follows:
 
 -   **Pulling records in as rows** (e.g. fetching a list from an API to start a table): use **HTTP API as source** (Tools → View all sources → Import data from an HTTP API).
 -   **Calling an API once per row** (e.g. enriching existing records): use the **HTTP API enrichment column** (Add enrichment → HTTP API).
+
+### Does Clay's HTTP API support OAuth 2.0 Client Credentials flow?
+
+No. Neither the standard HTTP API action nor the HTTP API with JWT Authentication action performs an OAuth 2.0 `client_credentials` grant. The standard HTTP API action requires static auth inputs — a fixed API key or a permanent bearer token. The JWT Authentication action fetches a fresh token from your endpoint, but its request body contains only `username` and `password` — it does not include `grant_type=client_credentials`. Endpoints that require this parameter will reject the request.
+
+**Workarounds:**
+
+-   **Chained HTTP API columns:** Use a standard HTTP API column to POST `grant_type=client_credentials`, `client_id`, and `client_secret` to your token endpoint and store the resulting access token. Reference that token in a second HTTP API column for your actual API call. Note that fetching a new token per row can affect table run performance and may hit rate limits on the auth endpoint — for large tables, the recommended pattern is to centralize the token in a dedicated single-row cache table that refreshes on a schedule, then look up that token in your main table. See [Token-fetch HTTP API column skipping rows](#token-fetch-http-api-column-skipping-rows----bearer-undefined-or-401-on-new-rows) for full setup steps including the cache table pattern.
+-   **Middleware proxy:** Use an external service (such as a serverless function) to handle the OAuth 2.0 token exchange, then have it return a ready-to-use bearer token to Clay or proxy the downstream API request on Clay's behalf.
+
+For full technical detail on the JWT Authentication action's incompatibility with `client_credentials`, see [Does HTTP API with JWT Authentication support OAuth 2.0 client_credentials?](https://university.clay.com/docs/http-api-with-jwt-authentication-integration-overview).
