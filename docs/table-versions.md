@@ -20,7 +20,7 @@ Table versions capture your table's **structure and configuration**, including:
 -   Active filters and sorts
 -   Table-level run settings
 
-**Note:** Cell value data is not versioned. Table Versioning preserves your table's structure and configuration—not the actual data within rows. If row-level data is overwritten or deleted, it cannot be recovered through versioning.
+**Note:** Cell value data is not versioned. Table Versioning preserves your table's structure and configuration—not the actual data within rows. If cell values are overwritten or cleared, that data cannot be recovered. If rows are deleted, they may be recoverable by Clay support within 30 days — see [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows).
 
 ## Viewing your version history
 
@@ -95,7 +95,7 @@ The table below shows the version history retention period available on each Cla
 
 ### My existing row data didn't change after restoring a version
 
-Table Versioning restores **structure and configuration**, not cell-level data. If rows were overwritten or deleted before the restore, that data cannot be recovered. Additionally, restored column configurations only apply to new rows going forward — to refresh existing rows, you'll need to manually re-run the affected columns.
+Table Versioning restores **structure and configuration**, not cell-level data. If cell values were overwritten before the restore, that data cannot be recovered. If rows were deleted, they may be recoverable by Clay support within 30 days — see [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows). Additionally, restored column configurations only apply to new rows going forward — to refresh existing rows, you'll need to manually re-run the affected columns.
 
 ### I can't find a version from a specific date
 
@@ -104,3 +104,11 @@ Version history is retained based on your plan (30 days for Launch/Growth and le
 ### Restoring a version removed columns I still needed
 
 Restoring a version removes columns that were added after the snapshot was taken. Because the restore operation automatically creates a new snapshot of your configuration immediately before applying the restore, you can recover by restoring that most-recent pre-restore version.
+
+### Can I undo a CSV import or roll back to a previous row state?
+
+No — the History panel tracks table configuration and schema versions only, not row-level data. There is no built-in undo for CSV imports, bulk row deletions, or column dedupe operations.
+
+**To protect your data before a bulk import or destructive operation:** export your current table to CSV first (Tools → Export → Download CSV). If something goes wrong, re-import the CSV to restore the data to its pre-operation state.
+
+**If rows have already been deleted:** contact Clay support within 30 days — deleted rows may be recoverable. See [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows) for details. On passthrough tables, row deletions are permanent and cannot be recovered.
