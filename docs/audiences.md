@@ -1204,8 +1204,6 @@ The updated value will be pushed to Salesforce on the next export cycle (within 
 
 ### When I map a Clay field to a Salesforce field, does the value show up in Salesforce automatically, and does it use credits?
 
-Connecting Salesforce to Clay Audiences requires a **Growth** or **Enterprise** plan.
-
 **Mapping a field doesn't push its value by itself.** A Clay field mapped to a Salesforce field is written to Salesforce only when all of the following are true:
 
 -   **Export sync** is turned on for that Salesforce object (for example, **Accounts** or **Contacts**).
