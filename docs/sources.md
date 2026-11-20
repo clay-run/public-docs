@@ -191,6 +191,17 @@ Key details:
 -   **Deduplication is cumulative across all runs.** On every re-run (including scheduled runs), the source compares against every business it has ever found — not just the most recent run. A business found in week 1 is still tracked and skipped in week 52.
 -   **Deduplication is tied to the source definition.** If you delete and re-add the source, or create a new source with the same search criteria, deduplication starts over. The new source has no history, so all businesses it finds are treated as new and credited accordingly.
 
+### Can I save my Openmart or Google Maps source inputs to reuse them in a new table?
+
+**No — source inputs for "Find local businesses using Openmart" and "Find local businesses using Google Maps" are not saved or carried over when you duplicate a table or start from a Clay template.** Business types, locations, radius, and other search criteria must be configured each time you set up a new source.
+
+The behavior differs slightly depending on how you create the new table:
+
+-   **When you duplicate a table:** The source column appears in the duplicated table, but it has no source attached. Click the source column header, select **Edit source**, and enter your search inputs — business types, locations, and any other criteria — for the new search.
+-   **When you create a table from a Clay template:** The source column is not present in the copied table. Add a new source from scratch by clicking **Tools → Import** (or by clicking **Add source** when creating a new table).
+
+**Recommended approach for running the same sourcing workflow across multiple locations or business types:** Build one table with your enrichment columns, formulas, and run settings fully configured, then duplicate it each time you want to run a new search. The duplicate preserves the table structure — you only need to enter the source inputs (business types, location, and other search criteria) for each new search.
+
 ### Why doesn't my Clay table update when I change the source filters?
 
 **Editing the source of a Clay table after it's been run won't retroactively update the results, because Clay doesn't reprocess previously generated data automatically.**
@@ -210,10 +221,33 @@ If you narrow a source filter — for example, by updating a HubSpot list or seg
 
 The **Update existing rows** toggle (available when re-running a source) controls whether Clay refreshes the data in existing rows on re-run. It does not remove rows that are no longer included in the source.
 
+**Exception: Find People and Find Companies sources can replace their rows when you choose to.** When you edit an existing Find People or Find Companies source, you choose between **Add new results to table** (keeps existing rows) and **Replace existing results in table** (deletes every row the source previously added, then imports only results matching the latest filters). Replace only happens when you pick it and confirm it in the **Replace existing rows?** dialog. If auto-run is on, the re-imported rows are treated as new and every enrichment runs on them again, which charges credits again. See [Why did changing my Find People filters use up my credits?](find-people-overview.md#why-did-changing-my-find-people-filters-use-up-my-credits).
+
 To remove rows that no longer match your filter, you have two options:
 
 -   **Delete them manually** — select the rows in the table and delete them.
 -   **Delete and re-run the source** — this re-imports records based on the current filter. You will need to clear any previously imported rows first if you want a clean slate. **For CRM, database, Google Sheets, Google Maps, and Find People sources (Salesforce, HubSpot, Snowflake, Google Sheets, Find local businesses using Google Maps, Find People):** the source tracks previously imported records and will not re-add deleted rows even after re-running. Duplicate the table (or delete and re-add the source) instead.
+
+**Note:** This additive behavior applies to CRM and filter-based sources. If you edit the SQL query text itself on a Snowflake or BigQuery source, the behavior is different — see [What happens to existing rows when I change the SQL query on my source?](#what-happens-to-existing-rows-when-i-change-the-sql-query-on-my-source) below.
+
+### What happens to existing rows when I change the SQL query on my source?
+
+**For SQL-based sources (Snowflake, BigQuery), changing the query text and re-running causes Clay to fully invalidate the existing import and reimport from the new query.** The practical result:
+
+-   **Records returned only by the old query are removed** from your table — they no longer appear in the new results and are deleted when the reimport completes.
+-   **Records returned by both the old and new query are upserted on their unique identifier** — they are updated in place, not duplicated. The unique identifier is the field you designated when configuring the source (for example, a Snowflake ID or email column).
+-   **Records returned only by the new query are added** as fresh rows.
+
+This differs from narrowing a CRM source filter, where existing rows stay in the table regardless of whether they still match the new filter.
+
+**Whether enrichment columns re-run on the matched (upserted) rows depends on your "Keep existing results" setting:**
+
+-   **Keep existing results ON** (the default for new tables): Enrichment cells that already have a successful result are preserved and skipped — only new or empty cells run automatically. Rows that existed in both the old and new query keep their enrichment data without spending credits to re-run them.
+-   **Keep existing results OFF**: All enrichment cells on reimported rows are eligible to re-run, including cells that already have results.
+
+To check or change "Keep existing results": click the table name → **Edit table settings** → scroll to **Run settings** — or click the **⛭** icon in the top toolbar.
+
+**Note:** This full-invalidation behavior applies specifically when you edit the SQL query text itself. For scheduled re-runs of the same unchanged query, Clay uses normal dedup logic — only net-new records are added by default, unless you enable **Update existing rows** in the source settings. See [Auto-run](auto-run.md#update-existing-rows-toggle-for-scheduled-source-imports) for details on how "Update existing rows" and "Keep existing results" interact on scheduled runs.
 
 ### I deleted rows from my table and re-ran the source, but they didn't reappear
 
@@ -255,6 +289,19 @@ When adding a new source to an existing table, you must have the appropriate col
 2. Retry adding the source.
 
 **Note:** If Sculptor put the table into Sandbox mode, use the **Review changes** button instead of **Exit Sandbox** — clicking Exit Sandbox discards all of Sculptor's proposed changes without saving them. See [Sandbox mode](sandbox-mode.md) for the full publishing step-by-step.
+
+### I see "You do not have update access to the source's subscribed tables" when saving a search
+
+**This error is not a permissions problem. It means a table the source feeds into is in sandbox mode.** Workspace admins and table owners see this error too. Clay shows "You do not have update access to the source's subscribed tables" when you save changes to a source's search (for example, editing the filters of a Find Companies or Find People search), re-run the source, or delete the source while a table that the source adds rows to is in [sandbox mode](sandbox-mode.md).
+
+While a table is in sandbox mode, the original table is locked: changes can only be made in the sandbox copy. Saving a search writes directly to the original table, so Clay blocks it. Sandbox mode can be turned on without you clicking **Sandbox Mode** yourself. When the AI chat ([Sculptor](sculptor.md)) builds or updates columns in a table, it automatically puts that table into sandbox mode.
+
+**To fix this error, take the destination table out of sandbox mode in one of two ways:**
+
+-   **Publish the sandbox (keeps the sandbox changes):** In the table, click **Review changes** in the tab bar above the table, then click **Publish and don't run** or **Publish and run** in the **Sandbox review** window. This copies the sandbox changes, including any columns the AI chat added, into the original table and ends sandbox mode.
+-   **Turn off sandbox mode (discards the sandbox changes):** Click the **⚙️** icon on the right side of the tab bar above the table (the bar with the **Test data** and **All data** tabs), select **Turn off sandbox mode**, and confirm. This deletes the sandbox copy and all unpublished changes in it, and leaves the original table as it was. Discarded sandbox changes can't be recovered, so only use this option if you don't need what was built in the sandbox.
+
+Once the table is out of sandbox mode, save the search again. The save should now go through.
 
 ### I see "Limit of 20 sources for source field reached" when adding a source
 
@@ -313,7 +360,7 @@ For standard source imports (CSV, CRM, list builders), Clay stops importing sile
 -   Create a new import source — for Salesforce, HubSpot, Snowflake, and other CRM/database sources that have hit the limit, adding a new source definition starts at a fresh 0/50,000 record count (see [FAQ below](#my-salesforce-hubspot-snowflake-or-crm-import-is-returning-0-new-records))
 -   Use [Audiences](audiences.md) for large Salesforce, HubSpot, or other CRM imports that regularly exceed 50,000 records — Audiences are not subject to the per-source 50,000 record cap and scale to millions of records
 -   Use [auto-delete](https://university.clay.com/docs/table-management-settings#auto-delete-passthrough-tables) (Enterprise plan) for unlimited rows with compatible source types (webhooks, send table data, signals)
--   Use [bulk enrichment](https://www.clay.com/university/guide/bulk-enrichment) (Enterprise plan) to process millions of records
+-   Use [Workflows](https://university.clay.com/docs/workflows) to process large datasets
 
 ### Does manually deleting rows free up space toward the 50,000-row limit?
 

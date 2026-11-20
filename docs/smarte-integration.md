@@ -1,7 +1,7 @@
 ---
 title: SMARTe integration
 description: Enrich company details and find emails/phone numbers.
-last_synced: 2026-04-26T01:40:41.821Z
+last_synced: 2026-11-19T06:50:33.251Z
 ---
 
 # SMARTe integration
@@ -17,7 +17,7 @@ This integration allows you to enrich your data with company details, contact in
 1.  While in a Clay table, click `Add enrichment` and search for `SMARTe`.
 2.  Under `Integrations`, select one of the SMARTe enrichment options.
 3.  In the modal, you will be asked to `Select SMARTe account`.
-    -   If you have your own account, click `+ Add account` and complete authentication. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and complete authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Enrich Company
 
@@ -69,3 +69,9 @@ Use this action to find a person's work email using their social URL, personal e
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## FAQs
+
+### Am I charged when SMARTe doesn't find a result?
+
+Rows where SMARTe finds nothing are refunded, so they don't cost you anything.
