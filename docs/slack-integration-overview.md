@@ -291,6 +291,28 @@ Once your Slack workspace admin has approved the Clay app, complete the connecti
 
 Make sure you are logged into your Slack workspace in the same browser when you do this.
 
+### "You are not authorized to install Clay" even though my Slack admin approved Clay
+
+If Slack shows *"You are not authorized to install Clay on [workspace name]"* and says Clay "is restricted for this workspace," even though your Slack admin has already approved the Clay app, check which Slack workspace the install page is using. The Slack authorization page opens in whichever Slack workspace your browser is currently signed into. That may not be the workspace where your admin approved Clay.
+
+To connect the Slack workspace your admin approved:
+
+1. In Clay, go to **Settings → Connections → + Create**, search for **Slack**, and select it.
+2. Click **Add to Slack**.
+3. On the Slack page that opens, check the workspace name in the top-right dropdown. If it isn't the workspace where Clay was approved, use the dropdown to switch to the correct workspace. If the correct workspace isn't listed, sign in to it on that page, or retry in a private/incognito browser window where you're signed into only that Slack workspace.
+4. Click **Allow**. You'll return to Clay with your Slack account connected. If you were reconnecting an existing Slack account, Clay shows the confirmation *"[account name] account successfully updated"*.
+
+### Clay vs. Clay Alerts Bot: two separate Slack apps
+
+Clay uses two separate Slack apps. Each one needs its own approval from your Slack workspace admin:
+
+| Slack app name | Used for | Where you connect it in Clay |
+|---|---|---|
+| **Clay** | Slack actions in your tables: **Send message to channel**, **Send for approval to Slack channel**, **Find Slack user by email**, **Find list of channel members**, and **Get channel ID from channel name** | **Settings → Connections → + Create → Slack**, or **Add enrichment → Slack → + Add account** in a table |
+| **Clay Alerts Bot** | Workspace alerts sent to Slack (see [Table alerts](table-alerts.md)) | **Settings → Alerts** |
+
+Approving the **Clay** app in Slack doesn't approve **Clay Alerts Bot**. If you connect Slack from **Settings → Alerts** and Slack shows *"You are not authorized to install Clay Alerts Bot"* with a message that it "is restricted for this workspace," your Slack admin has to approve **Clay Alerts Bot** as well. You only need Clay Alerts Bot if you want Clay's workspace alerts delivered to Slack. Slack actions in your tables need only the **Clay** app.
+
 ### Bot name or Emoji inputs have no effect
 
 If you've filled in the **Bot name** or **Emoji** fields but the Slack message still arrives under the default Clay bot name and avatar, your Slack connection is most likely missing the `chat:write.customize` scope.

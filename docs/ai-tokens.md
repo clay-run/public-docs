@@ -1,7 +1,7 @@
 ---
 title: AI Tokens
 description: Understand AI Tokens
-last_synced: 2026-04-26T01:39:40.311Z
+last_synced: 2026-10-07T02:13:01.385Z
 ---
 
 # AI Tokens
@@ -26,12 +26,6 @@ When working with AI models, you'll encounter two types:
 **TPM (Tokens Per Minute)** refers to how many tokens a model can process within one minute—across both input and output. Different features and providers have different TPM requirements, often tied to your API tier.
 
 ## API tier requirements
-
-### ChatGPT Generate Text
-
--   **Requirement**: 30,000 TPM
--   **Access**: Works with **any paid tier** as long as the API key has access to GPT-4 or GPT-4 Turbo
--   _(Note: Free-tier or unpaid OpenAI keys may not have access)_
 
 ### ClayGent Web Research
 
@@ -69,7 +63,7 @@ When using AI features in Clay, you'll consume both **Actions** and **Data Credi
 Clay uses two pricing structures for AI models:
 
 -   **Fixed pricing**: A flat number of data credits per task (applies to most models, including Clay's own models like Neon, Helium, and Argon)
--   **Variable pricing**: Data credits based on actual token usage plus a 20% premium (applies to advanced reasoning models used for sophisticated web research)
+-   **Variable pricing**: Data credits based on actual token usage, charged at cost with no markup (applies to advanced reasoning models used for sophisticated web research)
 
 You can control AI spending by:
 
@@ -78,7 +72,7 @@ You can control AI spending by:
 -   Choosing more cost-effective models for simpler tasks
 -   Selecting fixed-price models when cost predictability is important
 
-To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://www.clay.com/university/guide/how-ai-is-priced).
+To learn more about how AI is priced in Clay, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
 ## Clay credits vs. personal API keys
 
@@ -93,7 +87,7 @@ Each option has different benefits and considerations in terms of cost, convenie
 -   Pricing varies by model (fixed or variable depending on which model you select)
 -   Cost visibility in Clay UI shows data credit consumption
 
-**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits) with a **premium model** (such as GPT-4o, Claude Sonnet, or Gemini 2.5 Pro), output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** This cap does not apply to compact or budget models (such as GPT-4o mini or Claude Haiku). To work around this limit when using premium models, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (see "Personal API Keys" below).
+**Output token limit with Clay's managed key:** When using Clay's shared key (Clay credits) with a provider's **premium model**, output tokens are capped at **4,000 per request**. If your column's maximum output length exceeds this, you'll see the error: **"Maximum tokens is too large. Please use a private key or contact support."** This cap does not apply to compact or budget models. To work around this limit when using premium models, lower your column's maximum output setting to 4,000 or fewer, or connect your own API key (see "Personal API Keys" below).
 
 ### Personal API Keys
 
