@@ -75,6 +75,34 @@ The social network brand mentions source — along with several related social l
 
 For additional alternatives — including Claygent and third-party social listening tools — see the [Signals in Clay](/docs/signals) documentation.
 
+### Can I monitor competitors' social media posts with a Custom Signal?
+
+Yes, on the professional network. To monitor posts from specific competitor companies, use the Monitor Professional Posts signal. Clay's earlier social network sources that monitored activity and mentions from specific accounts have been retired and no longer appear in the **Social listening** section of the Custom Signal source picker.
+
+To track what competitors are posting, use one of these options:
+
+-   **Monitor Professional Posts signal** — Monitor competitor activity on the professional network. Provide up to 5 competitor domains or company profile URLs, then set the **Companies filter** to one of three options:
+    -   **Posted by companies** — posts published by the competitor companies themselves.
+    -   **Posted by companies' employees** — posts written by people who work at the competitor companies.
+    -   **Mentions companies** — posts that mention the competitor companies.
+-   **Bring in your own social data** — If you have API access to a social network or a third-party social listening tool, send that data into a Clay table with a [webhook](webhook-integration-guide.md) or an [HTTP API](http-api-integration-overview.md) column. You can then enrich those rows and trigger actions like any other data in Clay. This option requires your own account with that service.
+
+### Why does the Slack channel dropdown show "No options found" when I add a Slack enrichment?
+
+The Slack channel dropdown only lists channels where the Clay app has been added as a member. Adding the Clay app to your Slack workspace alone is not enough — Clay must be invited to each channel individually before that channel appears in the dropdown.
+
+To add Clay to a channel and populate the dropdown:
+
+1. Open the channel in Slack and type `/invite @Clay` in the message box, then press Enter.
+2. Return to Clay, open the enrichment configuration, and click **Refresh fields** to reload the channel list.
+
+Alternatively, if you don't want to add the Clay app to the channel, you can enter the channel ID directly:
+
+1. In Slack, right-click the channel name and select **Get channel details** (or **Copy link**). The channel ID starts with `C` — for example, `C04F8AWK44T`.
+2. In the Clay enrichment config, click the gear icon next to the **Slack channel** field, switch to **Text with tokens**, and paste the channel ID.
+
+For additional Slack troubleshooting — including reconnecting your Slack account and verifying OAuth scopes — see [Slack integration troubleshooting](slack-integration-overview.md#new-channels-not-appearing-in-the-channel-picker).
+
 ## Guide: Turning enrichments into signals
 
 You may occasionally need to monitor changes in an enrichment. Below is a step-by-step guide on creating a signal for any enrichment. **In this guide, we'll start with a list of companies and add enrichments to monitor.**
