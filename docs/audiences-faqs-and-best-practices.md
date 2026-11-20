@@ -74,6 +74,16 @@ When you reach a bucket's limit, Clay tells you which type is full — for examp
 
 The underlying system ceilings are much higher than the plan defaults — 600 text fields and 200 each of number, date, and checkbox — so there is real headroom. If you have a legitimate need for more than your plan's default, your Growth Strategist can raise the limits for your workspace.
 
+### **How do I filter an audience by date of creation?**
+
+To filter Audiences records by when they were added, use the **Company creation date** filter in a Companies audience or the **Person creation date** filter in a People audience. These filters use the date and time each record was first created in Audiences, and are available in every Audiences workspace.
+
+1.  Open your Companies or People audience and click **+ Filter**.
+2.  Search for **Company creation date** (or **Person creation date**) and select it.
+3.  Choose an operator — **before**, **after**, **within the last**, or **not within the last** — and enter a date and time (or a number of days, weeks, or months for the "within the last" operators).
+
+For example, if you added a large batch of companies today and want to work only with the companies that were already in your audience, set `Company creation date → before →` today's date and the time of the import. The filter chip then shows, for example, **Company creation date before Jul 2, 2026 11:42 AM**. To reuse this filter, save it as a segment — see [Creating an audience](audiences.md#creating-an-audience).
+
 ## **Best practices**
 
 ### **Start with RevOps, not marketing or sales**
