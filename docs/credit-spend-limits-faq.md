@@ -1,7 +1,7 @@
 ---
 title: Credit spend limits FAQ
 description: Answering questions about the credit spend limits feature.
-last_synced: 2026-04-26T01:39:48.764Z
+last_synced: 2026-11-19T07:28:48.978Z
 ---
 
 # Credit spend limits FAQ
@@ -56,6 +56,10 @@ To set a default limit:
 3.  Set your desired default credit limit.
 
 Previously, admins had to manually set the limit for each individual workbook. With default limits, all new workbooks automatically inherit the workspace default limit, streamlining credit management across your workspace.
+
+**How do I set a limit on a single workbook?**
+
+Workspace admins can set a credit limit on an individual workbook: open the workbook's overview and click `Manage` next to `Workbook credit limit`. Members who aren't workspace admins can see the workbook's current limit there, but they won't see the `Manage` button.
 
 **Can limits be increased or decreased after they're set?**
 

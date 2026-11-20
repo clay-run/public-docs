@@ -1,7 +1,7 @@
 ---
 title: Scheduled sources
 description: Automatically refresh data from sources on a set schedule.
-last_synced: 2026-09-29T18:48:45.433Z
+last_synced: 2026-10-07T01:52:12.763Z
 ---
 
 # Scheduled sources
@@ -20,8 +20,8 @@ This keeps your data current without manual updates by pulling in new informatio
 
 -   After adding a new source, a modal will appear to start scheduling runs.
 -   Under `Run this source`, select `On a schedule`.
--   Choose the frequency and click `Update Source Schedule`.
-    1.  Hour (Enterprise only)
+-   Choose the frequency and click `Save schedule`.
+    1.  Hourly (Enterprise only)
     2.  Day
     3.  Week
     4.  Month
@@ -33,8 +33,8 @@ This keeps your data current without manual updates by pulling in new informatio
 -   Click the source columns title.
 -   Under `Sources`, select your source.
 -   Under `Run this source`, select `On a schedule`.
--   Choose the frequency and click `Update Source Schedule`.
-    1.  Hour (Enterprise only)
+-   Choose the frequency and click `Save schedule`.
+    1.  Hourly (Enterprise only)
     2.  Day
     3.  Week
     4.  Month
@@ -119,8 +119,18 @@ To have your table automatically import new matching entries on a recurring basi
 1.  Click the source column title in your table.
 2.  Under **Sources**, select your source.
 3.  Under **Run this source**, select **On a schedule**.
-4.  Choose a frequency (Daily, Weekly, or Monthly) and click **Update Source Schedule**.
+4.  Choose a frequency (Daily, Weekly, or Monthly) and click **Save schedule**.
 
 Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
 
 **Note:** Scheduled sources are not available on the Free plan.
+
+### Why did my scheduled source stop importing records after previously working?
+
+If a source was running on a schedule and has now stopped importing new records — even though the schedule is still enabled and the table appears to have space — the most likely cause is that the source has reached its 50,000 total records processed limit.
+
+Certain source types, including **Import records from a Salesforce list**, track the cumulative number of records pulled over the source's entire lifetime, not the rows currently visible in the table. Once that running total reaches 50,000, the schedule stops.
+
+**Auto-delete does not reset this limit.** For these source types, auto-delete clears rows from the table, but the source reimports those same records on the next scheduled run, continuing to accumulate toward the 50,000 total. Your table may show far fewer than 50,000 visible rows while the source has already reached its processed-record ceiling.
+
+For details and options to continue importing records, see [Salesforce integration FAQs](salesforce-integration-faqs.md) if you are using a Salesforce list source, or [Auto-delete in tables](auto-delete.md#source-compatibility) for a full explanation of which source types are subject to this limit.
