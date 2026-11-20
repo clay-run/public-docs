@@ -88,6 +88,15 @@ To save a segment's column layout for everyone:
 4.  Click **Save for everyone** in the **Columns** menu.
 
 Column layout changes are only visible to you until you click **Save for everyone**. While you have unsaved changes, a small dot appears next to the column count on the **Columns** button, and the **Columns** menu shows "Changes are only visible to you until you save them for everyone." along with **Save for everyone** and **Discard changes**. These two options appear only after you change the layout. To undo your unsaved column changes and return to the segment's saved layout, click **Discard changes**.
+### **How do I filter an audience by date of creation?**
+
+To filter Audiences records by when they were added, use the **Company creation date** filter in a Companies audience or the **Person creation date** filter in a People audience. These filters use the date and time each record was first created in Audiences, and are available in every Audiences workspace.
+
+1.  Open your Companies or People audience and click **+ Filter**.
+2.  Search for **Company creation date** (or **Person creation date**) and select it.
+3.  Choose an operator — **before**, **after**, **within the last**, or **not within the last** — and enter a date and time (or a number of days, weeks, or months for the "within the last" operators).
+
+For example, if you added a large batch of companies today and want to work only with the companies that were already in your audience, set `Company creation date → before →` today's date and the time of the import. The filter chip then shows, for example, **Company creation date before Jul 2, 2026 11:42 AM**. To reuse this filter, save it as a segment — see [Creating an audience](audiences.md#creating-an-audience).
 
 ## **Best practices**
 
