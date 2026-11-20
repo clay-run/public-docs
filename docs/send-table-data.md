@@ -73,6 +73,20 @@ This is useful for **flattening lists**. For example, if you run Find Active Job
 
 You can also select additional data to send along with the flattened list, just like with `Send row`.
 
+**Getting each contact's details (name, email, title) into columns in the destination table**
+
+When you use `Send row for each item in a list`, each new row in the destination table holds that one list item's own fields. For example, if you flatten a `records` or `People` list of contacts, each destination row holds one contact's name, email, title, and profile URL. These fields are stored in the destination table's leftmost **"rows from: [source table name]"** cell. Any additional data you selected (such as the account name or account ID) is stored in the same cell under a `parent` field.
+
+**Auto-extract new columns** only creates destination columns for the additional data you selected. It doesn't create columns for the list item's own fields. So after the first send, you may see your account-level columns in the destination table but no columns for each contact's details. To add a list item's fields as columns in the destination table:
+
+1.  Open the destination table and click a **"rows from: [source table name]"** cell.
+2.  In the cell details panel, hover over the field you want (for example, the contact's email).
+3.  Click **Add to column**.
+4.  Name the column and click **Create column**, or select a column under **Map to an existing column**.
+5.  Repeat for each contact field you need.
+
+Each new column pulls that field from its row's **"rows from"** cell, so every row shows its own contact's details.
+
 **Tip: Use "Take action on list" to set this up automatically**
 
 The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
@@ -94,6 +108,26 @@ When configuring the list field by hand, select the **list itself** (e.g., `Peop
 **If the column holds a stringified JSON array** — for example, a text value that looks like `[{"name": "Alice"}, {"name": "Bob"}]`, common when data arrives from an HTTP API call or webhook — Clay won't recognize it as a native list and will show the same **"Please add a valid list."** error. To fix this, click the **gear icon** on the right side of the list input to switch to formula mode, then enter `JSON.parse(/YourColumn)`, replacing `YourColumn` with the name of your column (use `/` to reference it). This converts the text string into a native array that Clay can iterate over.
 
 If your table has no rows with data yet, Clay skips this validation and accepts the formula as-is. In that case, run a few rows first so the enrichment column has real output, then re-open the Send Table Data configuration to confirm the list field is valid before running the full table.
+
+**Which sub-field to select when the list comes from a waterfall or a function**
+
+When your contacts come from a people waterfall, the **Send table data** list can't point at the waterfall's output as a whole. This applies both to a waterfall in your table and to a function that wraps one (for example, a "Find ICP People" function). A waterfall tries each contact provider in order, such as **Find Contacts at Company** and then **Find people at company**, and stops at the first provider that returns contacts. Each provider step keeps its own result, and that provider's contacts are in a `people` list inside it. On any given row, only the provider that found contacts has a filled `people` list. The providers after it didn't run.
+
+To pick the right sub-field in Send table data:
+
+1.  Choose **Send row for each item in a list**.
+2.  Click in the **Select a list** field and type `/`.
+3.  Open the waterfall or function column's output and pick one provider's result (for example, **Find Contacts at Company**).
+4.  Select that provider's `people` field, not the provider's whole result. Each person in the `people` list becomes its own row in the destination table.
+
+If you select a provider's whole result instead of its `people` field, Clay shows **"Please add a valid list."** because the result is an object, not a list. A function only shows per-provider sub-fields if the function returns each provider's result as an output. If the function returns a single combined `people` field, select that field instead.
+
+Because a different provider can fill the list on each row, one Send table data column only sends contacts from the provider you mapped. Rows where that provider didn't run fail with `Invalid send table data inputs … "listData" … "Required"`. To send contacts from every row, use one of these options:
+
+-   **Add one Send table data column per provider.** Map each column to a different provider's `people` field. Give each column a run condition so it only runs when that provider's `people` list has a value.
+-   **Send the first non-empty list.** Create a formula column that returns whichever provider's list is filled, for example `{{Provider A}}?.people || {{Provider B}}?.people`, with one entry per provider in waterfall order. Then select that formula column in **Select a list**. You can also enter the same expression directly in the list input's formula mode.
+
+**Avoid duplicate contacts when you re-run.** `Send row for each item in a list` always creates new rows, and **Update existing rows on re-run** doesn't apply to it. Re-running a row that already sent its contacts sends them again as duplicate rows in the destination table. When you fix the list mapping, re-run only the rows that errored or show **Sent 0 rows**. Don't re-run the whole column.
 
 ### Routing data conditionally with multiple Send table data columns
 
@@ -141,6 +175,8 @@ This setting controls row-level behavior only. It is separate from the column-le
 
 Automatically creates new columns in the destination table for any that don't already exist.
 
+Auto-extract new columns checks the destination table's [column limit](table-columns-overview.md#column-limits) against every new column a Send table data column needs to create at once, not one column at a time. If the new columns would put the destination table over its column limit, none of them are created. See "A mapped column never appears in the destination table" under [Best practices & troubleshooting](#best-practices--troubleshooting).
+
 **Include column colors**
 
 When on (default), copies the source column's [view-level color](table-columns-overview.md#color-column-headers) to each new destination column created by **Auto-extract new columns**. Turn this off if you prefer auto-created destination columns to start without any color.
@@ -153,7 +189,7 @@ Automatically maps incoming fields to existing destination columns that share th
 
 When you send data to a destination table, it appears in the leftmost column as **"rows from: \[source table name\]"**. The data is stored within this cell and needs to be extracted into individual columns to use it in your workflow.
 
-**Tip:** `Auto-extract new columns` is **on by default** and automatically creates a new column for each sent field — but only for fields that don't already have a matching column in the destination table. If your destination table already has columns with plain-text (non-formula) data, those columns won't be updated automatically. Use **Add to column** below to map those fields manually, or enable `Auto-map existing columns` in the advanced settings.
+**Tip:** `Auto-extract new columns` is **on by default** and automatically creates a new column for each sent field — but only for fields that don't already have a matching column in the destination table. If your destination table already has columns with plain-text (non-formula) data, those columns won't be updated automatically. Use **Add to column** below to map those fields manually, or enable `Auto-map existing columns` in the advanced settings. With `Send row for each item in a list`, `Auto-extract new columns` only creates columns for the additional data you selected, not for each list item's own fields (such as a contact's name or email). Use **Add to column** to extract those fields — see [Using Send row for each item in a list](#using-send-row-for-each-item-in-a-list).
 
 To manually map data from the source column to columns in the destination table:
 
@@ -271,6 +307,12 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
     -   **Create a new column:** If the table was permanently deleted from Trash or you no longer need that destination, delete this Send Table Data column and add a new one pointing to a different table: select **Tools → Export → Send table data** and select your new destination.
 
     **Note:** The table ID shown in the error (e.g., `t_0tbdt...`) is an internal identifier — you cannot search for it in Trash. Browse the list of recently deleted items by name to find the right table.
+-   **Saving a Send Table Data column shows "The destination table "[table name]" is in sandbox mode. Publish or turn off its sandbox to edit this column.":** Clay blocks creating or editing a Send Table Data column while its destination table has [sandbox mode](sandbox-mode.md) turned on, because a table's regular (live) version is read-only while its sandbox is open. The column won't save until the destination table's sandbox is closed. To save the Send Table Data column:
+    1.  Open the destination table named in the error.
+    2.  Either publish its sandbox changes with **Review changes**, or click **Exit Sandbox** to turn sandbox mode off. **Exit Sandbox** discards all unpublished sandbox changes, so publish first if you want to keep them. See [Publishing sandbox changes](sandbox-mode.md#publishing-sandbox-changes).
+    3.  Return to your source table and save the Send Table Data column again. Once the destination table is out of sandbox mode, the column saves normally.
+
+    This message appears only if you have edit access to the destination table. If you don't, or if the destination table can't be edited for another reason, editing the column shows the generic error "route-row destination authorization audit failed" instead (creating the column shows "There was an error creating the column.").
 -   **The Send Table Data configuration shows a "Deleted fields — Action required" warning with one or more field names listed:** This warning appears when columns in the source table (the table that contains this Send Table Data column) that were previously included in the field mapping have since been deleted from that table. The action cannot send data from fields that no longer exist, and those stale mappings must be removed before the column can run. Click the trash icon next to each field listed under "Deleted fields" to remove it from the configuration, then save.
 -   **You want to route data to a different destination table, but the configured destination cannot be changed:** Once a Send Table Data column is created, the destination table is fixed and cannot be edited. To route data to a different table, add a new Send Table Data column: select **Tools → Export → Send table data** and choose the new destination. After confirming the new column runs correctly, delete the old Send Table Data column if it is no longer needed.
 -   **Data can only be sent in a linear direction** (A → B → C). In other words, loops are not possible (A → B → C → A).
@@ -316,7 +358,17 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
     4. **Extract only the specific keys you need from large JSON or object fields.** Rather than sending a whole object, pull just the keys your destination actually uses into individual formula columns and send those.
     5. **Pass a reference instead of the full content.** If the large field already lives in an external system (Salesforce, Airtable, etc.), send only the record ID or a URL — the destination can look it up when needed.
 
--   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically. However, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
+-   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically — except for each list item's own fields when you use `Send row for each item in a list`, which you extract with **Add to column**. Also, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
+-   **A mapped column never appears in the destination table even though `Auto-extract new columns` is on, while other mapped columns work:** The destination table has most likely hit its column limit. `Auto-extract new columns` checks the column limit against the total number of new columns a Send table data column needs to create, not one column at a time. If the destination table's current column count plus those new columns is more than the table's column limit (**100** by default, or a higher custom limit if Clay support raised it for your workspace), **none** of the new columns are created, and no error message appears. Mapped fields that already have a matching column in the destination table still receive data, which is why some columns keep working while the new ones are missing.
+
+    **Example:** A destination table has 111 columns and a custom column limit of 120. A Send table data column maps 63 fields, and 51 of them don't have a matching destination column yet. 111 + 51 = 162, which is over 120, so none of the 51 new columns are created. A Send table data column that needs only 1 new column gives 111 + 1 = 112, which is within 120, so that column is created.
+
+    **To get the missing column into the destination table:**
+
+    1.  Count the destination table's columns (including hidden ones) and compare the count with the table's column limit. See [Column limits](table-columns-overview.md#column-limits).
+    2.  In the source table, select **Tools → Export → Send table data**, choose the same destination table, and select only the field (or fields) that are missing.
+    3.  Keep the number of new columns small enough that the destination table's current column count plus the new columns stays at or under the column limit, then run the new Send table data column.
+    4.  If the destination table has no room left, delete unused columns in the destination table first.
 -   **The column shows "✅ Sent" after re-running, but rows you deleted from the destination table do not reappear:** When destination rows are deleted, Clay removes the internal tracking records associated with those rows. However, each Send Table Data cell in the source table retains a cached record of the last inputs it sent. On a re-run, if the source data being sent has not changed since the previous send, the cell detects no difference and skips execution entirely — keeping its old "✅ Sent" display without actually sending anything. No new rows are created in the destination.
 
     Using the column-level **Run column** or **Force run** option from the column header does not resolve this — those options only target cells that are empty or out of date, not cells that already have a result. To bypass the input-hash check, you must right-click an **individual cell** and select **Force run this cell**. This re-sends that row's data and creates a new row in the destination table.
