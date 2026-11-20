@@ -2,7 +2,7 @@
 title: Crunchbase integration
 description: Access company data including financials, growth metrics, funding
   details, and acquisition history.
-last_synced: 2026-04-27T18:09:41.382Z
+last_synced: 2026-11-19T06:52:31.990Z
 ---
 
 # Crunchbase integration
@@ -18,7 +18,7 @@ Through this integration, you can access company data directly in Clay, includin
 1.  While in a Clay table, click `Add enrichment` and search for `Crunchbase`.
 2.  Under `Integrations`, select one of the Crunchbase options.
 3.  In the modal, you will be asked to `Select Crunchbase account`.
-    -   If you haven't already connected your Crunchbase account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you haven't already connected your Crunchbase account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Enrich a company's financials
 

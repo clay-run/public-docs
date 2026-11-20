@@ -1,7 +1,7 @@
 ---
 title: HitHorizons integration overview
 description: Europe-focused company data provider.
-last_synced: 2026-04-26T01:40:08.037Z
+last_synced: 2026-11-18T20:52:00.293Z
 ---
 
 # HitHorizons integration overview
@@ -18,7 +18,7 @@ You can connect HitHorizons in Clay two ways.
 
 ### Option 1: Use the Clay-managed HitHorizons account
 
-By default, HitHorizons enrichments in Clay use the Clay-managed HitHorizons account, which charges one credit for each enrichment.
+By default, HitHorizons enrichments in Clay use the Clay-managed HitHorizons account, which charges credits for each enrichment.
 
 To utilize this, simply open any HitHorizons enrichment within Clay.
 
