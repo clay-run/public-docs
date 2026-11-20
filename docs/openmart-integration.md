@@ -58,6 +58,22 @@ Each business row includes:
 
 **City, State, or Postal Code not appearing?** These fields are part of the **Address** output and are added as columns automatically when the source runs. If the location columns are empty for a business, that business's record did not include that data. Do not add a City or Zip column manually — manually-added columns are not connected to the Openmart source output.
 
+### Re-running the source and managing exclusions
+
+The **Run settings** panel for the Openmart source has two controls:
+
+-   **Run this source:** Choose **Manually** to run only when you click **Run now**, or **On a schedule** to import new businesses automatically on a recurring cadence. See [Scheduled sources](scheduled-sources.md).
+-   **Update existing rows:** When enabled, re-running the source refreshes field values (business name, address, ratings, contact info, etc.) for businesses already in your table with the latest data from Openmart. **This toggle does not remove rows.** Businesses that would now be excluded by your updated filters stay in the table — the toggle only updates data within existing rows, not which rows are present.
+
+**Exclusion filters are going-forward only.** The **Exclude matches with these keywords** filter (and other filter changes) applies only to businesses added on future runs. Businesses already in your table that would now be excluded are not removed automatically when you re-run the source.
+
+The Openmart source does not have a "Replace existing results in table" option. Clay's native Find Companies and Find People sources offer this mode — which deletes rows no longer matching the current filters and reimports only current matches. The Openmart source does not have an equivalent.
+
+**To remove existing rows that no longer match your exclusions, use one of these approaches:**
+
+1.  **Filter and bulk delete (recommended):** Add a formula column that flags rows where the business type, category, or tags contain unwanted terms, apply a table filter on that flag, select those rows, and bulk-delete them. This preserves all other rows and does not spend additional Openmart credits. Refine the formula as you identify more unwanted terms and repeat the cleanup.
+2.  **Delete all and re-run:** Delete the Openmart-sourced rows from your table, finalize your exclusion list, then run the source again. Unlike Clay's Find People and Google Maps sources, Openmart does not permanently track previously-imported businesses after they are deleted — re-running the source after a full delete re-imports all businesses matching your current filters (including updated exclusions). This option uses credits, so the formula-and-delete approach is more efficient while you are still refining your filters.
+
 ## **Enriching data with Openmart**
 
 1.  While in a Clay table, click `Add enrichment` and search for `Openmart`.
