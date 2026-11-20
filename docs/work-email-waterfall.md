@@ -68,6 +68,29 @@ The `Validation` section in `Full configuration` controls how the waterfall eval
 -   `Aggressive` — Higher risk level, good for casting a wide net. Best when volume and coverage take priority over precision.
 -   `Advanced` — Manual configuration for fine-grained control over validation behavior.
 
+The default `Validation strategy` is `Conservative`.
+
+### Which validation strategies each validation provider supports
+
+The `Validation strategy` options you can select depend on the `Validation Provider` you choose. Strategies the selected provider doesn't support are greyed out in the dropdown. For example, `Balanced` is only available with Hunter or Debounce. Some providers support only `Conservative`.
+
+This table shows which validation strategies each Work Email waterfall validation provider supports:
+
+| Validation provider | Conservative | Balanced | Aggressive | Advanced |
+|---|---|---|---|---|
+| Hunter | ✓ | ✓ | ✓ | ✓ |
+| Debounce | ✓ | ✓ | ✓ | ✓ |
+| NeverBounce | ✓ | — | ✓ | ✓ |
+| ZeroBounce | ✓ | — | ✓ | ✓ |
+| LeadMagic | ✓ | — | ✓ | ✓ |
+| Enrichley | ✓ | — | ✓ | ✓ |
+| Kitt | ✓ | — | ✓ | ✓ |
+| Findymail | ✓ | — | — | — |
+| Enrow | ✓ | — | — | — |
+| Listmint | ✓ | — | — | — |
+
+To use a strategy that's greyed out, switch the `Validation Provider` to one that supports it, then select the strategy.
+
 ### Additional column settings
 
 `Output name of successful provider?` (optional): When enabled, adds a column showing which provider successfully found the email.
@@ -251,7 +274,16 @@ To permanently show provider and validation columns going forward, click the wat
 -   Switch to a less strict `Validation strategy` — for example, `Balanced` or `Aggressive` instead of `Conservative`.
 -   Remove the validation provider entirely — any email found will then flow directly to the final output column without being checked.
 
-**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results but is not available for all validation providers.)
+**A common cause — catch-all domain emails with Conservative strategy:** If your contacts are on catch-all domains (domains configured to accept email sent to any address), the validation provider may report those emails as "Valid" — but the `Conservative` strategy still rejects catch-all results, keeps the waterfall running, and leaves the output column blank. The validation column appears to show success while the waterfall's strategy filter is rejecting the result. To accept catch-all emails, switch to `Aggressive` in the waterfall's Full Configuration validation settings, or use `Advanced` with the catch-all option enabled. (`Balanced` also includes catch-all results, but only Hunter and Debounce support it.)
+
+**If `Conservative` is the only strategy you can select:** Your validation provider supports only `Conservative`, so the other strategies are greyed out. Findymail, Enrow, and Listmint support only `Conservative`. To keep catch-all emails in the Work Email output column:
+
+1.  Open the Work Email waterfall settings and go to the `Validation` section.
+2.  Change `Validation Provider` to one that supports more strategies, such as Hunter.
+3.  Set `Validation strategy` to `Balanced` or `Aggressive`.
+4.  Re-run the rows where the Work Email column is empty.
+
+See [Which validation strategies each validation provider supports](#which-validation-strategies-each-validation-provider-supports) for the full list.
 
 **A related sub-case — same email found by multiple providers:** To avoid paying for validation twice, the waterfall skips re-validation for any email address that was already found and validated (as invalid) by an earlier provider step. If Provider 3 finds the same email address that Provider 1 already returned and confirmed as invalid, the validation column for Provider 3 will show **run conditions not met** and that email will not be written to the final output column. This is expected behavior — the waterfall continues searching because a later provider might still return a different, valid email.
 
@@ -280,6 +312,14 @@ When the Work Email output column shows **"Waiting for another column to finish"
 1. Click the **«»** arrow on the waterfall column header to expand the waterfall and reveal each provider's individual sub-column.
 2. Look across that row for a cell showing **"Queued"**, **"Running"**, or **"Awaiting Callback"** — that is the step the output column is waiting on.
 3. Once all running steps complete, the "Waiting for another column to finish" status clears automatically and the Work Email output updates with the result.
+
+**If a provider step in the Work Email waterfall stays "Queued" and isn't progressing**, the Work Email output column keeps showing "Waiting for another column to finish" until that step runs. **Run column** → **Run [N] empty or out-of-date rows** skips cells that are already Queued. To unblock the stuck waterfall rows in one go:
+
+1. Click **Filter** in the table toolbar, select the stuck provider step column, and set the condition to **is queued**. Only the stuck rows are now visible.
+2. Right-click that provider step's column header and select **Run column** → **Force run all [N] rows**. With the filter active, this re-runs only the visible queued rows, so rows that already finished aren't re-run.
+3. Repeat for any other waterfall step that shows Queued, then remove the filter.
+
+Once the stuck steps finish, the Work Email output fills in automatically. If a column that uses Work Email as an input, such as a CRM lookup, is also stuck in Queued, unblock the waterfall steps first, then use the same filter and **Force run** steps on that column. For more on stuck queues, see [Troubleshooting cells stuck in Queued status](run-progress.md#troubleshooting-cells-stuck-in-queued-status).
 
 To permanently show provider and validation columns so you can monitor waterfall progress at a glance, click the waterfall tab, select **Edit group**, click the **Full configuration** tab, turn off `Hide provider columns?`, and re-run.
 
