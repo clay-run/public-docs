@@ -1,7 +1,7 @@
 ---
 title: Enrichley integration overview
 description: Verify and validate risky emails to ensure accuracy and deliverability.
-last_synced: 2026-04-26T01:39:56.199Z
+last_synced: 2026-11-18T20:52:25.172Z
 ---
 
 # Enrichley integration overview
@@ -20,7 +20,7 @@ There are two options to connect Enrichley to Clay.
 
 ### Option 1: Use the Clay-managed Enrichley account
 
-By default, Enrichley enrichments will use the Clay-managed Enrichley account. This means that any new enrichment will charge the 1 credit
+By default, Enrichley enrichments will use the Clay-managed Enrichley account. This means that any new enrichment will charge credits.
 
 Simply pull up any Enrichley enrichment within Clay to use the Clay-managed Enrichley account.
 
@@ -40,7 +40,7 @@ Enrichley’s **Validate Email** action helps you determine if the email address
 
 You can use either the Clay-managed Enrichley account or bring your own key.
 
-If you use the Clay-managed Enrichley account, you will be charged at 1 credit per enriched cell.
+If you use the Clay-managed Enrichley account, you will be charged credits per enriched cell.
 
 **Step 2: Select the email you want to verify**
 
