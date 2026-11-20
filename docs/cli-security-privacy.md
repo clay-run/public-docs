@@ -1,6 +1,6 @@
 ---
 title: CLI security & privacy
-description: How Clay CLI sessions are authenticated, which roles can use the CLI, the shared security responsibilities, and how Clay handles data sent from your terminal.
+description: How Clay CLI sessions are authenticated, which roles can use the CLI, why bulk routine runs from the CLI ask for approval and how to always allow a workflow, the shared security responsibilities, and how Clay handles data sent from your terminal.
 last_synced: 2026-10-19T18:12:06.412Z
 ---
 
@@ -32,6 +32,33 @@ CLI access is restricted to the two permission types that can already edit works
 -   `Viewer` and `Sales Rep` — cannot. Sign-in fails with `Editor access required`, and CLI-backed endpoints reject the request even if the user holds an API key. `Sales Rep` is in beta, so it only appears in workspaces that have requested it.
 
 Because the check runs again whenever a CLI session refreshes its credentials, removing a user from the workspace or lowering their role below `Editor` also invalidates their existing CLI session — it does not keep working until it expires.
+
+## Why bulk routine runs from the CLI ask for approval
+
+On paid plans, starting a bulk routine run from the Clay CLI — for example `clay routines runs start workflow:<id> --bulk <file>` — is held for a human to approve before it runs. Instead of starting the run, the CLI returns an `approval_required` error with the action `routines.run-batch` and an approval request ID in `details.actionApprovalRequestId` (it starts with `aar_`). Clay holds these runs because a workflow's steps can act outside Clay, such as writing to a CRM, and credits are charged for each item in the file.
+
+To handle a held bulk run from the CLI:
+
+1.  Run `clay approvals get <requestId>` to see what the run will do and how many items it covers.
+2.  Run `clay approvals approve <requestId>` to start the run, or `clay approvals deny <requestId>` to cancel it.
+3.  After you approve, the run starts with the same input you submitted — you don't need to rerun the original command.
+
+### Can an admin turn off approvals for bulk CLI runs?
+
+No. There's no workspace setting that turns off approval for bulk routine runs from the CLI, and admins can't pre-approve workflows on behalf of other users. Each user can instead always allow a specific workflow for themselves, as described below.
+
+### How to always allow a workflow so bulk runs start without approval
+
+To stop approving every batch for a workflow you run often, approve one held request with `--always-allow`:
+
+`clay approvals approve <requestId> --always-allow`
+
+This approves the current run and saves a rule, so later bulk runs of that same workflow that you start from the CLI begin straight away. The rule covers only that one workflow or routine, only your user, and only that workspace — other workflows and other teammates still need approval. Rules don't expire. To review or remove them:
+
+-   `clay approvals rules list` shows the rules you've saved.
+-   `clay approvals rules delete <ruleId>` removes a rule, so that workflow asks for approval again.
+
+The `--always-allow` option needs Clay CLI version 1.14.0 or later. If `clay approvals approve` doesn't accept it, update your CLI.
 
 ## Shared responsibility
 
