@@ -1,7 +1,7 @@
 ---
 title: BuiltWith overview
 description: Web technology intelligence for sales, marketing, and market analysis.
-last_synced: 2026-04-27T18:09:27.255Z
+last_synced: 2026-11-18T20:50:12.003Z
 ---
 
 # BuiltWith overview
@@ -10,7 +10,7 @@ Web technology intelligence for sales, marketing, and market analysis.
 
 ## What is BuiltWith?
 
-BuiltWith allows you to view a website's tech stack and find technologies that companies are built with.This action costs 2 credits per cell to run.
+BuiltWith allows you to view a website's tech stack and find technologies that companies are built with. On the Clay-managed account, this action costs credits per cell to run.
 
 ## Setting up BuiltWith and Clay
 
@@ -18,7 +18,7 @@ You can connect BuiltWith in Clay two ways.
 
 ### Option 1: Use the Clay-managed BuiltWith account
 
-By default, BuiltWith enrichments in Clay use the Clay-managed BuiltWith account, which charges 2 credits for each enrichment.
+By default, BuiltWith enrichments in Clay use the Clay-managed BuiltWith account, which charges credits for each enrichment.
 
 To utilize this, simply open any BuiltWith enrichment within Clay.
 

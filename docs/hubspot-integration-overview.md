@@ -522,7 +522,7 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 
 1. Go to **Settings → Connected accounts**.
 2. Find your HubSpot account and click **Reconnect**.
-3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked**. They're unchecked by default on a new connection, but the reconnect modal keeps the scopes your previous HubSpot connection had, so uncheck them if they're selected.
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
@@ -537,13 +537,15 @@ The scopes in the error message are the ones Clay requested during that connecti
 -   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
 -   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
 
+**If you only need to add contacts to a HubSpot list,** you don't need the sequence scopes. The **Add record to list** action needs `crm.lists.write`, not `automation.sequences.read` or `automation.sequences.enrollments.write`. Clay only requests the optional scopes that are checked under **Optional scopes** in Clay's connection modal, so unchecking both sequence scopes when you reconnect removes them from the request. Your HubSpot super admin then only needs to approve `crm.lists.write` (and any other scopes still listed in the error). You choose which scopes Clay requests in Clay's reconnect modal; your super admin approves them in HubSpot's App Governance settings.
+
 **To fix:**
 
 1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
 2.  Find **Clay** in the list and click **Manage**.
 3.  On the app detail page, expand **App access and permissions**.
 4.  Under **Conditionally required** permissions, enable every scope listed in the error message (for example, `crm.export`, or `automation.sequences.read`, `automation.sequences.enrollments.write`, and `crm.lists.write`).
-5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal — they stay unchecked on reconnect unless you select them.
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal. If you don't use that action, make sure both sequence scopes are unchecked. The reconnect modal keeps the scopes your previous HubSpot connection had, so review the **Optional scopes** checkboxes before you continue.
 
 **Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
@@ -619,6 +621,27 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 **Workaround — rollup properties:** Create HubSpot rollup properties on your Contact or Company objects to capture the activity data you need. For example, to track completed meetings for a contact, create a Contact property in HubSpot that stores the most recent completed meeting date — populated by a HubSpot workflow or rollup. Once those properties are in place, import the Contact or Company into Clay using the **Import objects from HubSpot** source or a **Lookup object** action; Clay reads the rollup property like any other contact or company field. Using date-based rollup properties (rather than booleans) lets you compute recency-based values in Clay with a formula, such as the number of days since the last completed meeting.
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
+
+### Should I use Lookup in Audiences or a live HubSpot lookup to pull CRM context into a workflow?
+
+If HubSpot is connected to [Clay Audiences](audiences.md#importing-from-hubspot), you can pull HubSpot context into a table or workflow in two ways: `Lookup in Audiences`, which reads the HubSpot records Clay has already synced into Audiences, or a native HubSpot action such as **Lookup object** or **Retrieve associated objects**, which reads from your HubSpot account when the step runs.
+
+The following table compares `Lookup in Audiences` with live HubSpot actions for pulling CRM context:
+
+| | `Lookup in Audiences` | Live HubSpot action (**Lookup object**, **Retrieve associated objects**) |
+|---|---|---|
+| Where the data comes from | HubSpot records already synced into Audiences | Your HubSpot account, at the time the step runs |
+| HubSpot API calls | None — reads Clay's Audiences data | Calls HubSpot's API each time the step runs |
+| How current the data is | As of the last Audiences HubSpot sync — see [Importing from HubSpot](audiences.md#importing-from-hubspot) for the sync schedule | Current HubSpot values |
+| HubSpot objects available | Contacts, Companies, and Deals | Company, Contact, Deal, Lead, and custom objects |
+| HubSpot activities (calls, emails, meetings, notes) | Not available | Not available |
+
+**HubSpot activities aren't available through either option.** The Audiences HubSpot source imports Contacts, Companies, and Deals only — unlike the Salesforce source in Audiences, it has no option to import activities. Clay's native HubSpot actions don't read calls, emails, meetings, or notes either; **Retrieve associated objects** returns associated Company, Contact, Deal, Lead, and custom object records, not activities. To reference HubSpot activity history in downstream steps or messaging, use one of the workarounds in [Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?](#why-cant-i-import-hubspot-activities-calls-emails-meetings-notes-or-tasks-into-clay):
+
+-   **Rollup properties:** Store the activity data you need in HubSpot rollup properties on the Contact or Company. A live **Lookup object** action reads them like any other property, and `Lookup in Audiences` reads them once you add them to your Audiences HubSpot import field mapping.
+-   **HTTP API:** Call HubSpot's Engagements endpoints directly with Clay's **HTTP API** integration and a HubSpot Private App token.
+
+**Call transcripts and other data in a data warehouse:** To combine HubSpot context with data stored in your warehouse, such as call transcripts, add a Snowflake, Google BigQuery, or Databricks lookup step alongside your HubSpot steps. Select only the columns you need so results stay within Clay's cell size limits — see [Manage cell data](manage-cell-data.md).
 
 ### Can I create HubSpot tasks from Clay?
 

@@ -62,10 +62,11 @@ To add more profiles from the same search to an existing people table without cr
 -   **Certifications:** Search for specific certifications (e.g., AWS, Google Cloud).
 -   **Languages:** Filter by specific languages spoken.
 -   **Education:** Search for specific school names.
--   **Companies:** Find people at specific companies using an existing Clay table or a custom list. By default, this matches people who **currently** work at those companies.
+-   **Companies:** Find people at specific companies using an existing Clay table, a Company Audience, or a custom list. By default, this matches people who **currently** work at those companies.
     -   **Locked after creation:** The filter type (Clay table vs. custom list), which table is linked, and — when using a custom list — the specific company identifiers entered cannot be changed once the source exists. This is what the "Can only be changed during source creation" tooltip means. If you need to target a different set of companies (for example, to correct a mistyped domain), create a new Find People source with the corrected identifiers. The linked Clay table's row contents are not frozen, however: adding or removing rows from the linked table is reflected each time the source runs. When re-run after new companies are added, the source searches across all companies currently in the table, not just the newly added ones.
     -   **Run settings:** The source runs **Manually** by default — adding new companies to the linked table does not automatically trigger a new run. To automatically pick up new companies on a recurring basis, click the source column header in your people table, expand **Run settings**, and switch from **Manually** to **On a schedule**. Choose a frequency (Daily is most common) and click **Save schedule**. You can also click **Run now** at any time for an immediate on-demand run.
     -   **Company identifier type:** The identifier in your linked table or custom list determines how companies are resolved. **Domains** (e.g., `acme.com`) match at the root-domain level — useful for broader coverage, but may return people from a parent company or other entities that share that domain. **Company profile URLs** from the professional network match the exact company page, limiting results to that specific entity. Company profile URLs return fewer but more precise results; domains return more but may include unintended companies.
+    -   **Using a Company Audience:** When you select a Company Audience as the companies source, no **Company identifier type** selector appears — this is expected. Each company record in the Audience already contains a company profile URL and domain, so Clay automatically extracts those identifiers at search time and resolves them to internal company IDs (via entity resolution) — there is nothing for you to choose. Find People then matches people against those resolved IDs. For the most accurate matching, make sure your company records in the Audience have a company profile URL populated: a profile URL maps directly to a single company, whereas a domain alone can also resolve to subsidiaries or other entities that share that domain.
 -   **Exclude people:** Exclude up to 3 different sets of people from your search using Clay tables, CSVs, or manual lists. You can exclude up to 300,000 people total (100,000 per source). Exclusions match by **professional profile URL** — each row in your exclusion table must contain the person's profile URL from the professional network. Clay extracts the profile slug from the URL, so common format variations like `www.` prefixes, trailing slashes, and query parameters are automatically normalized. Email addresses, company names, domains, company page URLs, and job titles in your exclusion table will **not** suppress those people from the results.
 
     **To exclude all people at a specific company**, use a post-import lookup instead: after importing your Find People results, add a **Lookup single row in other table** action that matches each person's company domain against your company blocklist. Set a run condition on downstream enrichments (for example, `{{Company Blocklist Lookup}} is not empty` → skip) to suppress anyone whose employer appears on your list. See [Excluding records during enrichment](finding-companies-and-people-in-clay.md#excluding-records-during-enrichment) for the full pattern.
@@ -153,15 +154,49 @@ Compare each missing person against your Find People search settings and check t
 
 To change the filters, follow the steps in [How do I adjust or refine my search criteria on an existing Find People table?](#how-do-i-adjust-or-refine-my-search-criteria-on-an-existing-find-people-table), then re-run the source. People the search already imported won't be added again. For job title phrasing tips, see the people search FAQs in [Guide: Finding companies and people in Clay](finding-companies-and-people-in-clay.md#faqs).
 
+### Why does my Find People table show job titles I excluded, like HR or Intern?
+
+If you excluded job titles in your Find People search (for example, **Job title doesn't contain** Human Resources, Intern, HR) but the **Job Title** column in your table still shows those titles, check your **Target companies** setting.
+
+Find People checks your job title, seniority, and excluded job title filters against each person's **current** role. Separately, **Target companies** controls which employment at your target companies counts:
+
+-   **Currently work at:** the person's current job must be at one of your target companies.
+-   **Previously worked at:** a past job at one of your target companies counts.
+-   **Currently or previously worked at:** either a current or a past job at one of your target companies counts.
+
+When people are imported, the **Job Title** column shows the person's role **at the target company they matched**, not necessarily the current role that passed your title filters. With **Previously worked at** or **Currently or previously worked at**, that matched role can be an old job. For example, someone whose current role passes your filters can show up with "Human Resources Generalist" as their Job Title if that was their earlier role at one of your target companies. Your exclusions are still working: they were checked against the person's current role.
+
+**To fix it:**
+
+1.  Edit your search and set **Target companies** to **Currently work at**, then re-run it. The Job Title column then shows each person's current role at your target companies.
+2.  Make sure every title you want to exclude is on your excluded job titles list. A title that isn't on the list, such as "Consultant", isn't filtered out.
+3.  To clean up rows already in your table, add a table filter on the Job Title column using **does not contain**, and join the conditions with **And**, not **Or**. See [Combine table filters with And or Or](table-columns-overview.md#combine-table-filters-with-and-or-or).
+
 ### How do I adjust or refine my search criteria on an existing Find People table?
 
 Your search filters are saved on the source, not on the table rows. To update them after initial setup:
 
 1. In your Find People table, click the **database icon** in the source column header (tooltip: "Edit source") — or click the column header dropdown and select **Edit source**. A panel opens showing a read-only summary of your current inputs.
 2. Click **Edit inputs** in the panel. A wizard opens where you can update your criteria — job title, seniority, location, company filters, exclusions, and so on.
-3. Save your changes, then run the source from the panel to re-import results with the updated criteria.
+3. When you apply your changes, open the dropdown on the button and choose how the updated search should change your table:
+    -   **Add new results to table** — "Bring new results into table without deleting what is already in the table." Only contacts that match your updated criteria and aren't already in the table are added. Contacts that were previously imported, and their enrichment data, stay as they are and are not re-evaluated against the new criteria.
+    -   **Replace existing results in table** — "Delete all results that are already in the table and import only the ones matching the latest search filters." Clay asks you to confirm in a **Replace existing rows?** dialog before deleting anything. Deleted rows can't be restored.
 
-**Note:** Re-running after a filter change imports only *new* contacts that match your updated criteria and are not already in the table. Contacts that were previously imported remain in the table and are not re-evaluated against the new criteria. If you need to start fresh with the updated filters, create a new Find People table.
+**Note:** If auto-run is on, choosing **Replace existing results in table** re-runs every enrichment in the table on every re-imported row and charges credits again — see [Why did changing my Find People filters use up my credits?](#why-did-changing-my-find-people-filters-use-up-my-credits) below. To keep your existing contacts and only enrich new ones, choose **Add new results to table**.
+
+### Why did changing my Find People filters use up my credits?
+
+If you edited the filters on an existing Find People (or Find Companies) source, re-ran it, and a large share of your credits was spent within seconds, two settings usually worked together:
+
+1.  **The source was re-run with Replace existing results in table.** This option deletes every row the source previously added to the table and imports the results matching the latest filters as brand-new rows. Any enrichment results on the deleted rows are deleted with them.
+2.  **Auto-run was on for the table's enrichment columns.** Clay treats each re-imported row as a new row, so every auto-run enrichment column (for example, a work email waterfall or an AI column) runs on all of them again. **Keep existing results** doesn't prevent this, because it only skips cells that already have a successful result, and the re-imported rows have none.
+
+For example, if a Find People source re-imports 3,000 contacts with Replace existing results in table, and the table has an auto-run enrichment that costs 1 credit per row, the re-run spends 3,000 credits (1 credit × 3,000 rows), even if those same contacts were already enriched before.
+
+Changing the filters on a Find People source doesn't cost credits by itself. Importing from Find People is free. To change filters on a Find People source without re-spending credits:
+
+-   **Choose Add new results to table when you apply the change.** Contacts already in the table keep their enriched data, and only contacts that are new to the table get enriched.
+-   **For an extra safety net, turn off auto-run on the enrichment column before re-running the source.** Click the column name → **Edit column** → turn off **Auto-run** under **Run settings** → **Save**. After the source finishes, filter the table to rows where that enrichment column is empty, then right-click the column header → **Run column** → **Run N rows**. The run menu shows how many rows will run before any credits are used. See [Auto-run](auto-run.md) for table-level and column-level controls.
 
 ### Why does Enrich person show "Missing input" on people I added manually to my Find People table?
 
@@ -373,3 +408,42 @@ This enrichment uses a third-party data provider authenticated with its own cred
 If a row returns empty or incomplete results, re-running the enrichment on that row may return more complete data on a subsequent attempt.
 
 For more control over post retrieval, you can connect a tool like Phantombuster or Apify to Clay and run lookups using your own session cookie, which can improve coverage for profiles whose activity is not fully visible to unauthenticated providers.
+
+## Checking whether a person was active in the last 30, 60, or 90 days
+
+Clay doesn't have a single built-in "last active" field for a person's professional profile, but you can work out how recently each person in a people table was active from the dates on their posts, shares, and comments. This uses two enrichments that are available on all plans, plus two formula columns.
+
+**Step 1: Add the activity enrichments**
+
+1.  In a table with a professional profile URL column, click **Add enrichment**, search for `Get a person's professional posts and shares`, and select it. Map **Professional URL** to your profile URL column and click **Save**.
+2.  Click **Add enrichment** again, search for `Get a person's professional post comments`, and select it. Map **Professional URL** to the same profile URL column and click **Save**.
+3.  Run both columns on a few rows first to check the results and credit cost before running the whole table.
+
+Each enrichment returns the person's most recent activity, with a `created_at` date on every item:
+
+-   **Get a person's professional posts and shares** returns a `posts` array — original posts and reposts — with the date in `posts[N].created_at`. It returns 10 items by default and up to 25.
+-   **Get a person's professional post comments** returns a `comments` array with the date in `comments[N].created_at`. It returns 10 items by default and up to 30.
+
+**Step 2: Get the person's latest activity date**
+
+Add a formula column named `Latest activity date` and paste the formula below. It collects every date from both enrichments and returns the most recent one:
+
+```
+({{Get a person's professional posts and shares}}?.posts || []).map(p => p.created_at).concat(({{Get a person's professional post comments}}?.comments || []).map(c => c.created_at)).filter(Boolean).sort().reverse()[0]
+```
+
+**Step 3: Flag activity within 30, 60, or 90 days**
+
+Add a second formula column and paste the formula below. It compares the latest activity date with today's date using `moment()` and returns one label per person:
+
+```
+!{{Latest activity date}} ? "Unknown" : moment().diff(moment({{Latest activity date}}), 'days') <= 30 ? "Active in last 30 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 60 ? "Active in last 60 days" : moment().diff(moment({{Latest activity date}}), 'days') <= 90 ? "Active in last 90 days" : "Not active in last 90 days"
+```
+
+For example, if today is November 6 and a person's latest comment is dated October 20, the difference is 17 days and the flag shows `Active in last 30 days`. A latest post dated August 1 is 97 days old and shows `Not active in last 90 days`.
+
+The flag only updates when the formula column re-runs. To keep it current, re-run the activity enrichments and the formula columns periodically — see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula) for how `moment()` evaluates.
+
+**When no activity is returned:** If neither enrichment finds public activity for a person, the enrichment cell shows no data and you aren't charged credits for that row. The flag formula labels these people `Unknown`. Treat them as unknown rather than inactive — the person may still be active in ways the data provider can't see. See [If the enrichment returns no data or fewer posts than expected](#getting-a-persons-posts-and-shares).
+
+**Reactions can't be used to date activity:** A **Get a person's professional post reactions** enrichment is also available, but it has no date for when the person reacted. Its only date, `post.created_at`, is when the reacted-to post was published, so a recent date doesn't mean the person reacted recently. Use posts, shares, and comments for 30, 60, or 90-day activity flags instead.

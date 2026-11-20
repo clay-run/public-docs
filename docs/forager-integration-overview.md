@@ -1,7 +1,7 @@
 ---
 title: Forager integration
 description: Find phone numbers and emails based on a social profile.
-last_synced: 2026-04-26T01:40:00.773Z
+last_synced: 2026-11-18T20:51:07.557Z
 ---
 
 # Forager integration
@@ -23,7 +23,7 @@ We'll cover how to connect Clay to Forager, then we'll go over each action that 
 1.  While in a Clay table, click `Add enrichment` and search for `Forager`.
 2.  Under `Integrations`, select one of the Forager options.
 3.  In the modal, you will be asked to `Select Forager account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Find mobile phone number
 

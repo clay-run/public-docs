@@ -1,7 +1,7 @@
 ---
 title: Clearbit integration overview
 description: B2B data solutions for lead generation and marketing personalization.
-last_synced: 2026-04-27T18:09:36.202Z
+last_synced: 2026-11-18T20:50:11.670Z
 ---
 
 # Clearbit integration overview
@@ -110,7 +110,7 @@ The **Enrich Company** action helps you get key data about a company given the c
 
 First, you can use either the Clay-managed Clearbit account or your own API key.
 
-If you use the Clay-managed Clearbit account you will be charged at 8 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Clearbit account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -152,7 +152,7 @@ The **Enrich Person & Company** action helps you find key data about a person an
 
 First, you can use either the Clay-managed Clearbit account or your own API key.
 
-If you use the Clay-managed Clearbit account you will be charged at 8 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Clearbit account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 

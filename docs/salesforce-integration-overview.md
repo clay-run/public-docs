@@ -1,7 +1,7 @@
 ---
 title: Salesforce integration
 description: Cloud-based customer relationship management software.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-11-18T15:41:31.197Z
 ---
 
 # Salesforce integration
@@ -37,11 +37,12 @@ Connect to Salesforce via Client Credentials for server-to-server access. No bro
 
 1.  In Salesforce Setup, search for `External Client App Manager` in Quick Find and select it. Create a new external client app — see [**Salesforce's documentation**](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&language=en_US&type=5) for full creation steps. Set **Distribution State** to `Local`. When configuring the app's OAuth settings:
     -   **Callback URL:** Salesforce requires this field to be populated even for server-to-server flows. You can enter `https://login.salesforce.com/services/oauth/callback`.
-    -   **OAuth Scopes:** Add the following scopes:
+    -   **OAuth Scopes:** The Client Credentials connection only requires the `api` scope. If your security review requires the External Client App to have `api` only, the Client Credentials connection still works. Configure the scopes as follows:
         -   **Manage user data via APIs (`api`)** — required; without it, Salesforce returns `invalid_grant: no valid scopes defined` when Clay tries to connect.
-        -   **Perform requests at any time (`refresh_token, offline_access`)** — add this scope to allow the External Client App to complete the Client Credentials token exchange.
-        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional, but enables Clay's Test Connection feature to display which user and org the connection is authenticated as.
+        -   **Access the identity URL service (`id, profile, email, address, phone`)** — optional. When you set up or test the connection, Clay uses `id` to load which Salesforce org and user the connection is authenticated as, so you can see them when you select the connection in Clay. Without it, the connection still saves and works; Clay just doesn't show the connected org and user.
         -   **Manage Pardot services (`pardot_api`)** — optional; only required if your org uses Pardot.
+
+        Of the scopes listed for the **User Sign In** connection (`api`, `refresh_token`, `id`, `openid`, `profile`), the Client Credentials connection only needs `api`, and `id` is optional. You don't need **Perform requests at any time (`refresh_token, offline_access`)** or `openid` for Client Credentials: Clay doesn't request these scopes on Client Credentials token requests, and a Client Credentials connection gets a new access token with a fresh Client Credentials request instead of a refresh token.
 
     Once created, click on your app and select `Edit`.
 2.  In the `Settings` tab, enable the flow at the app level:
@@ -73,6 +74,10 @@ This error appears during the OAuth flow and is most commonly caused by one of t
 -   **Connected app not pre-approved:** If connected apps require pre-approval, Salesforce may block Clay. In Salesforce Setup, go to `Connected Apps OAuth Usage` and confirm Clay is not blocked. Set `IP Relaxation` to `Relax IP Restrictions` and `Permitted Users` to `All users may self-authorize`.
 -   **SSO enforcement:** If SSO is enforced, the OAuth approval screen may be blocked. Try a non-SSO user, or create a non-SSO service account.
 -   **Missing permission:** The user's profile may lack `Approve uninstalled connected apps`. Ask a Salesforce admin to grant it, or connect with a System Administrator account.
+
+-   **`missing required code challenge` when connecting via User Sign In**
+
+Salesforce returns `invalid_request: missing required code challenge` when your Salesforce org requires PKCE (Proof Key for Code Exchange) for browser sign-ins. Clay's User Sign In method doesn't send a PKCE code challenge, so the license, connected app, SSO, and permission fixes above don't resolve this error. Switch the connection to `Client Credentials`, which connects server-to-server with no browser sign-in. Use `Reconnect` on your existing Salesforce connection rather than deleting it, so the tables and columns that use it keep working — see [Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?](salesforce-integration-faqs.md#why-am-i-seeing-missing-required-code-challenge-when-connecting-salesforce-with-user-sign-in) for the steps.
 
 -   **`invalid_grant: no valid scopes defined` when connecting via Client Credentials**
 
@@ -188,7 +193,37 @@ LIMIT 1
 -   **Always include `LIMIT`.** If your query matches many Salesforce records (for example, a global brand with regional accounts sharing the same domain), the total response can exceed the 200 kB cell size limit, which produces a "Cell data size exceeds limit (200 kB)" error. Adding `LIMIT 1` or a small number keeps the response size manageable.
 -   **Use `LIKE` for website and domain fields.** Salesforce often stores URLs with inconsistent prefixes (`www.example.com`, `https://example.com`, `example.com`). The `LIKE` operator with `%` wildcards matches all formats: `WHERE Website LIKE '%/Company Domain%'`.
 -   **Handle missing values with an `OR NULL` fallback.** If the extra filter field is not consistently populated in Salesforce, a strict `AND` will drop valid records. Add a null check so rows with a blank field are still returned: `AND (BillingCountryCode = '/Country Code Column' OR BillingCountryCode = null)`.
--   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the first non-empty result.
+-   **Use a waterfall for optional tiebreakers.** To use an extra field as a preference rather than a hard filter, create two SOQL columns — one matching on website + country code, one on website only — and use a Formula column to return the result from the first SOQL column whose `foundAtLeastOne` is `true`. A SOQL column is never empty, even when nothing matched (see the next section), so "first non-empty result" always picks the first column.
+
+**What does Lookup records via SOQL return when no records are found?**
+
+The **Lookup records via SOQL** action (shown in the enrichment picker as **Look up records with SOQL**) always returns a result object, including when your query matches no Salesforce records. It doesn't leave the cell empty. The SOQL result object has these three top-level fields:
+
+| Field | When records are found | When no records are found ("No records found") |
+| --- | --- | --- |
+| `records` | List of the matching Salesforce records | Empty list: `[]` |
+| `foundAtLeastOne` | `true` | `false` |
+| `totalSize` | Number of records returned | `0` |
+
+So a no-match SOQL lookup returns `{ "records": [], "foundAtLeastOne": false, "totalSize": 0 }`. This has been the case since October 28, 2026. Before that date, a no-match SOQL lookup left the cell empty.
+
+**How do I check in a run condition whether a SOQL lookup found any records?**
+
+To make a run condition depend on whether a **Lookup records via SOQL** column found records, check one of the fields inside the result, not the whole column. In the examples below, `{{SOQL lookup}}` is your SOQL column, inserted with the `/` picker.
+
+-   **Only run when records were found:** `{{SOQL lookup}}?.records?.length`, `{{SOQL lookup}}?.foundAtLeastOne`, or `{{SOQL lookup}}?.totalSize > 0`
+-   **Only run when no records were found** (for example, a fallback lookup step): `!{{SOQL lookup}}?.records?.length` or `!{{SOQL lookup}}?.foundAtLeastOne`
+
+These checks give the right answer whether or not the SOQL query found records.
+
+Don't use checks on the whole SOQL column or on the `records` list itself:
+
+-   `!{{SOQL lookup}}` is always `false`, because the column always contains a result object. Fallback steps that use it never run.
+-   `!!{{SOQL lookup}}?.records` is always `true`, because an empty list still counts as true. Dependent steps that use it run on every row, including rows with no match, so they run on empty data.
+
+If your fallback steps stopped running or dependent columns started running on empty SOQL results, update those run conditions to one of the checks above. For more on run condition syntax, see [Conditional runs](conditional-runs.md).
+
+The **Lookup record** action also returns `records` and `foundAtLeastOne` when nothing matches (`{ "records": [], "foundAtLeastOne": false }`), but it doesn't return `totalSize`. Use `?.foundAtLeastOne` or `?.records?.length` if you want one check that works for both Salesforce lookup actions.
 
 ### `Action` Create record
 
@@ -225,11 +260,11 @@ Use this action to find existing records in Salesforce.
 **Inputs:**
 
 -   **Salesforce object:** The object type to look for in your Salesforce.
--   **Exact match? (optional):** When enabled, finds exact matches across all search fields.
+-   **Exact Match? (optional):** When enabled, the lookup only returns records whose values exactly match your search values, in every search field. When disabled (the default), it does a contains search instead, so a search for `Acme` also returns `Acme Corp`. Searches on the `Id` field always use an exact match.
 
 **How matching works**
 
-The **Exact match?** toggle controls how Clay queries Salesforce:
+The **Exact Match?** toggle controls how Clay queries Salesforce:
 
 -   **Exact match ON:** Clay uses an equality filter (`field = 'value'`). Only records whose field value matches your Clay value exactly are returned.
 -   **Exact match OFF (default):** Clay uses a contains filter (`field LIKE '%value%'`). Salesforce returns records where the field value **contains** your Clay value as a substring. This is **not** fuzzy matching — there is no tolerance for typos or partial words.
