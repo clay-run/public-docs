@@ -1147,6 +1147,19 @@ To make a SOQL record subset query fast enough for Salesforce to finish:
 
 **Why doesn't Contacts show a record count in the object type list?** In the **Add records from Salesforce** object type list, each object shows a record count under its name (for example, "420,633 records"). Clay gets that number by asking Salesforce to count every record of the object. On a very large object, the count query can take too long to finish, and Clay then shows no number under that object. A missing count doesn't mean your Salesforce setup or your Clay connection has a problem.
 
+### Why does my Salesforce SOQL query show "Field aliases are not supported"?
+
+This applies to Salesforce **Record subset** (SOQL) imports in Audiences. Clay checks your SOQL query before sending it to Salesforce. If two fields in the `SELECT` list aren't separated by a comma, Clay reads the second field name as an alias for the first, and the query stops with **"Field aliases are not supported."**
+
+For example, the comma after `Example_one__c` is missing in this query, so Clay treats `Example_two__c` as an alias:
+
+```sql
+SELECT Id, Name, Example_one__c Example_two__c, SystemModstamp, IsDeleted
+FROM Account
+```
+
+**Fix:** Put a comma between every field in the `SELECT` list (`Example_one__c, Example_two__c`), then preview the query again. Audiences SOQL queries don't support field aliases, so list each field by its Salesforce API name only. In a long field list, check the end of each line for a missing comma.
+
 ### Why do some of my Salesforce Lead records not appear as separate person records in Clay?
 
 When Salesforce data syncs into Audiences, Leads and Contacts are not always separate Clay person records. Clay applies a built-in record-matching rule using the `ConvertedContactId` field on Lead records.
