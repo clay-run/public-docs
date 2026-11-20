@@ -115,7 +115,18 @@ The user you authenticate with Clay can now:
 
 ## **Static IP addresses for allowlisting**
 
-On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no configuration needed. To allowlist these IPs in Salesforce, go to `Setup` → `Network Access` → `New` and enter each address. Contact [Clay support](https://www.clay.com/support) to get the current list of IP addresses to allowlist.
+On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed in Clay. Clay's static IP addresses cover all of Clay's Salesforce traffic, including syncs, lookups, enrichments, and record updates, so you don't need separate IP ranges for different Clay workflows.
+
+Clay uses more than one static IP address. If you already have one Clay IP address (for example, from a previous setup), allowlist every address on Clay's current list, not just that one.
+
+To restrict your Salesforce org to Clay's static IP addresses:
+
+1.  Contact [Clay support](https://www.clay.com/support) to get the current list of Clay IP addresses to allowlist.
+2.  In Salesforce, go to `Setup` → `Network Access` → `New`.
+3.  Enter one Clay IP address as both the `Start IP Address` and the `End IP Address`. Each address on Clay's list is a single IP address (Clay support may write it with a `/32` suffix, which means one address), so the start and end of the range are the same. Enter the address without the `/32` suffix.
+4.  Click `Save`, then repeat steps 2–3 for each remaining Clay IP address.
+
+When you're done, `Network Access` lists one range per Clay IP address.
 
 ## **FAQs**
 

@@ -142,7 +142,7 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 ### Retrying failed workflow runs via the CLI
 
-If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins) and a workspace API key with `cli:all` scope.
+If you want an agent or script to catch and re-trigger failed workflow runs on a schedule — for example, when records fail due to provider outages — the Clay CLI's `clay workflows runs` command group covers this without opening the UI. Available on all plans; requires the [Clay CLI Agent Plugin](https://github.com/clay-run/agent-plugins), signed in with `clay login` as a workspace Admin or Editor. API keys don't include the `cli:all` scope these commands need. To run the loop from a cron job or server, see [Running the Clay CLI unattended](using-clay-as-an-api.md#running-the-clay-cli-unattended-cron-jobs-scheduled-scripts-and-servers).
 
 **Typical agent-driven retry loop:**
 
@@ -211,7 +211,7 @@ To run enrichment or waterfall columns on a targeted subset of rows — for exam
 
 This triggers all enrichment and waterfall columns on those rows only, leaving other rows unaffected.
 
-**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**.
+**To run a single column on specific rows only**, select the cells in that column for your target rows, then right-click → **Run [N] cells**. Use **Run [N] cells** (not **Run [N] rows**) when you want to re-run cells that already have results — **Run [N] rows** skips cells that already ran successfully with unchanged inputs.
 
 **If an enrichment column shows a clock icon after "Run [N] rows" and doesn't complete**, this typically occurs on tables with auto-run turned off (shown as **Manual** in the top navigation bar). When Clay runs a row, it dispatches upstream columns first. While upstream columns are in progress, Clay marks any downstream columns that depend on them as out-of-date. On manual tables, those downstream columns are not automatically re-triggered after the upstream run finishes — leaving a clock icon that doesn't resolve on its own. On tables with auto-run enabled, downstream cells can re-run automatically after upstream columns complete.
 
@@ -223,6 +223,24 @@ This triggers all enrichment and waterfall columns on those rows only, leaving o
 Running the column directly rather than the rows bypasses the dependency timing issue — the column run executes as a manual trigger and processes all visible rows in the current filtered view, regardless of the table's auto-run setting.
 
 Remove the filter when the run finishes to return to the full table view.
+
+### Why did Run column run every row when I only highlighted a few?
+
+The run options on an enrichment column's header don't use the rows or cells you've highlighted. Column header runs cover every row in the current view: all rows in the table, unless you've applied a filter or [row limit](#setting-a-row-limit). For example, say you highlight rows 1–50 and then choose **Run [N] empty or out-of-date rows** from the column header. Clay runs that column on every empty, errored, or out-of-date row in the view, not just the 50 you highlighted, and uses credits for each one. If your workspace runs out of credits partway through, the remaining cells show **Not enough Clay credits 😢**.
+
+The column header has the following run options:
+
+-   **Run first [N] rows** (play button on the column header): runs the first 10 rows in the view, or every row if the view has fewer than 10.
+-   **Choose number of rows to run** (column header menu → **Run column**): opens a dialog where you enter how many rows to run and, optionally, a **Starting from row**. These rows are force-run, so rows that already have results run again and use credits again.
+-   **Run [N] empty or out-of-date rows** (column header menu → **Run column**): runs every empty, errored, or out-of-date row in the view.
+-   **Force run all [N] rows** (column header menu → **Run column**): re-runs every row in the view, including rows that already have results.
+
+To run a column only on the rows you've highlighted:
+
+1.  Select the cells in that column for the rows you want.
+2.  Right-click and choose **Run [N] cells**. Only the selected cells run. **Run [N] cells** is a force run: selected cells that already have results run again and use credits again.
+
+If you select whole rows instead (by clicking row numbers), the right-click option is **Run [N] rows**. It runs every enrichment column on those rows only. **Run [N] rows** skips cells that already ran successfully with unchanged inputs, so those cells aren't charged again.
 
 ## Setting a row limit
 
