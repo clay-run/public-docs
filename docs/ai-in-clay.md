@@ -255,7 +255,7 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Provider | Models |
 | :------- | :----- |
 | Clay | Helium, Neon, Argon, Clay Navigator |
-| OpenAI | GPT 6 Sol, GPT 6 Luna, GPT 5.5, GPT 5.4, 5.4 Mini, 5.4 Nano, GPT 5 Mini, 5 Nano, o3, o4 Mini, GPT 4.1, 4.1 Mini, 4.1 Nano, GPT 4o, 4o Mini, GPT Image 1 (Low, Medium, High) |
+| OpenAI | GPT 6 Sol, GPT 6 Luna, GPT 5.5, GPT 5.4, 5.4 Mini, 5.4 Nano, GPT 5 Mini, 5 Nano, o3, o4 Mini, GPT 4.1, 4.1 Mini, 4.1 Nano, GPT 4o, 4o Mini |
 | Anthropic | Claude Opus 5, Claude 4.8 Opus, Claude 4.7 Opus, Claude Sonnet 5, Claude 4.6 Sonnet, Claude 4.5 Haiku |
 | Gemini | 3.1 Pro, 3.8 Flash, 3.7 Flash, 3.5 Flash Lite, 3.1 Flash Lite, 2.5 Pro, Gemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image |
 | Kimi | Kimi K2.6, Kimi K3 |
