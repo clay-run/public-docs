@@ -58,7 +58,7 @@ Optional:
 
 ### `Action` Lookup row in BigQuery
 
-Looks up rows in a Google BigQuery table by matching one or more column values.
+Looks up rows in a Google BigQuery table by matching one or more column values. This is a native integration — it uses your connected service account for authentication and loads column options directly from your BigQuery schema, rather than requiring a generic API callout.
 
 **Inputs**
 
@@ -78,6 +78,11 @@ Optional:
 **Outputs**
 
 -   Row data: Returns the column values of matching rows, dynamically based on the selected table's schema and the `Returned fields` configuration.
+
+**Things to keep in mind**
+
+-   **Queries always hit BigQuery live — results are not cached.** The Lookup Row action queries your BigQuery table directly every time it runs. The 50,000-row cap described above applies only to the Import Data source — there is no Clay-imposed limit on the size of the BigQuery table you're looking up against.
+-   **Performance and cost depend on your BigQuery table's clustering or partitioning.** Clay issues live SELECT queries against your BigQuery table for each enrichment run. If the lookup column is not clustered or the table is not partitioned on that column, BigQuery may scan the full table on each query, increasing both cost and latency at scale. To minimize scan costs and query time, cluster or partition your BigQuery table on the column(s) you plan to look up by before running at large scale.
 
 ### `Action` Update row in BigQuery
 

@@ -75,11 +75,24 @@ _Note: Sequences must be "Active" in Outreach for a lead to be successfully adde
 
 -   **Prospect ID**
 -   **Sequence ID**
--   **Mailbox ID**
+-   **Mailbox ID** — Outreach's internal numeric ID for the sending mailbox, not the mailbox's email address. The Mailbox ID dropdown in Clay displays each mailbox by its email address but stores the underlying numeric ID. If you need to select a mailbox dynamically based on a sender email column, use the **Lookup mailbox by email address** action first to retrieve the ID — see [Selecting a mailbox dynamically](#selecting-a-mailbox-dynamically) below.
+
+#### Selecting a mailbox dynamically
+
+If you have a formula column that outputs a sender email address and want to use it to control which Outreach mailbox sends the sequence, you cannot token the email address directly into the Mailbox ID field — Outreach requires the internal numeric ID, not the email address, and will return an error if you pass an email there instead.
+
+To select a mailbox dynamically:
+
+1.  Add a **Lookup mailbox by email address** enrichment column to your table and point its **Email address** input at your sender-email formula column.
+2.  The enrichment returns the matching mailbox's internal ID when a connected mailbox is found.
+3.  In your **Add to sequence** column, use **text with tokens** for the Mailbox ID field and select the ID returned by the lookup column — not the email column.
+4.  Add a run condition to the **Add to sequence** column so it only runs when the lookup result is not empty. This skips rows where the sender email doesn't match any connected mailbox in your Outreach org.
+
+_Note: The lookup only finds mailboxes that are actively connected in your Outreach org. If a sender email has no matching connected mailbox, the lookup returns an empty result for that row. Check the lookup column's results before enabling the **Add to sequence** action on the full table._
 
 ### `Action` Lookup mailbox by email address
 
-Find the mailbox ID for a given email address in Outreach.
+Find the mailbox ID for a given email address in Outreach. This is most commonly used to enable dynamic mailbox selection in the **Add to sequence** action — see [Selecting a mailbox dynamically](#selecting-a-mailbox-dynamically).
 
 **Inputs**
 
