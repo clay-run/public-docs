@@ -2,7 +2,7 @@
 title: Zerobounce integration
 description: Email validation and deliverability tools boost inbox placement and
   marketing ROI.
-last_synced: 2026-04-26T01:40:59.101Z
+last_synced: 2026-11-19T06:49:23.244Z
 ---
 
 # Zerobounce integration
@@ -19,7 +19,7 @@ Within Clay, you have two ways to access the Zerobounce enrichment.
 
 ### Option 1: Use the Clay-managed Zerobounce account
 
-By default, Zerobounce enrichments will use the Clay-managed Zerobounce account. This means that any new enrichment will charge 1 credit.
+By default, Zerobounce enrichments will use the Clay-managed Zerobounce account. This means that any new enrichment will charge credits.
 
 Simply pull up any Zerobounce enrichment within Clay to use the Clay-managed Zerobounce account.
 
@@ -36,7 +36,7 @@ Below is an example of where to click within the enrichment panel to add your AP
 With Zerobounce's **Validate Email** action, you can determine if a certain email has a valid inbox.
 
 **Step 1: Choose the ZeroBounce account you want to use**  
-You can use either the Clay-managed ZeroBounce account or bring your own key. If you use the Clay-managed ZeroBounce account you will be charged at 1 credit per enriched cell.
+You can use either the Clay-managed ZeroBounce account or bring your own key. If you use the Clay-managed ZeroBounce account you will be charged credits per enriched cell.
 
 **Step 2: Select the email you want to verify**  
 Input the email address you want to verify.

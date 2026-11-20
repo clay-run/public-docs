@@ -55,6 +55,17 @@ How to screen phone numbers returned by Clay depends on the contact's country:
 -   **Countries Meer covers:** Add Meer's **Screen phone number against DNC registries** action downstream of your phone column. Meer covers the US (federal and state registries), UK, Ireland, Belgium, Germany, Spain, New Zealand, and Australia. See "Scrub Against Regulatory DNC Lists" below and the [Meer integration guide](https://university.clay.com/docs/meer-integration) for setup steps.
 -   **Countries Meer doesn't cover (for example, Singapore):** Meer can't screen phone numbers from countries outside its coverage. If the national registry for that country offers an API and you have an account with the registry operator, you can call that API from an [HTTP API](https://university.clay.com/docs/http-api-integration-overview) column in your Clay table. Otherwise, screen those numbers outside Clay before calling.
 
+### **Does Clay screen UK phone numbers against TPS and CTPS?**
+
+Clay doesn't automatically screen UK phone numbers against the UK Telephone Preference Service (TPS) or the Corporate Telephone Preference Service (CTPS). Phone numbers from Clay's phone-finding enrichments and phone waterfalls come back unscreened. To screen UK numbers against TPS and CTPS in Clay, use Meer's **Screen phone number against DNC registries** action, whose UK coverage includes the TPS and CTPS registers:
+
+1.  **Turn on Do Not Call Suppression (workspace admins only).** Go to **Settings → Enrichments → Compliance**, enter your company domain, and click **Agree and activate**. Admins can also click **Accept terms** when they first open Meer in the `Add enrichment` panel. Non-admins need to ask a workspace admin to do this.
+2.  **Add the Meer action to your table.** Click `Add enrichment`, search for `Meer`, and add **Screen phone number against DNC registries** downstream of your phone number column. Turning on Do Not Call Suppression doesn't screen any numbers by itself. Clay screens only the rows where you run this action.
+3.  **Format UK numbers as E.164.** Map the **Phone Number** input to a number that starts with `+44`, followed by the number without its leading `0` and with no spaces. UK numbers in local `07…` format may fail to screen and return an error instead of a DNC result. If your numbers aren't in E.164 format, add a **Clay Formatters → Normalize Phone Number** step and map its **E164** output to the Meer action.
+4.  **Gate your calling lists on the result.** **Do Not Call = true** means the number was found on a covered registry. Add an **Only run if** condition to your CRM-sync or dialer export so only contacts with **Do Not Call = false** are exported.
+
+See the [Meer integration guide](https://university.clay.com/docs/meer-integration) for the action's outputs and credit cost.
+
 ### **a. Scrub Against Regulatory DNC Lists**
 
 Before initiating outbound calls:
