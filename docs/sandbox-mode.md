@@ -1,7 +1,8 @@
 ---
 title: Sandbox mode
 description: Learn about sandbox mode, a playground to safely iterate +
-  experiment with your data!
+  experiment with your data! Also covers how to safely test a new version of a
+  Clay workflow that your table calls, without affecting the published version.
 last_synced: 2026-10-07T01:17:19.137Z
 ---
 
@@ -91,3 +92,41 @@ When you are ready to publish the changes in your sandbox to your regular table,
 
 -   `Publish and don't run` will sync all your column configuration changes to all data but will _not start_ a run for any of these columns. You would need to manually run them later.
 -   `Publish and run` will sync all column configuration changes to all data **and** run all affected columns on all rows in the full table.
+
+## Testing a new version of a workflow that your table calls
+
+Sandbox mode is for tables only. Clay Workflows has its own draft-and-publish versioning instead. This section answers a common question: *"My table triggers a workflow I've published as V1. If I edit the workflow for V2, will V1 keep working, and how do I test V2 from a table?"* Workflows is currently in beta — if you don't see Workflows in your workspace, contact your Clay account team or support to enable it.
+
+### Does editing a published workflow change the version my table runs?
+
+No. Editing a published workflow doesn't change the version your table runs. After you publish a workflow, any edits you make go to a draft. Your table's **Invoke workflow** column (the "Run workflow" step that sends rows to a workflow) keeps running the published version until you click **Publish** again. The same is true for webhook, schedule, and segment triggers. Each workflow run is also pinned to the version it started on, so publishing a new version doesn't change runs already in progress.
+
+If your table sends a field that the published workflow version doesn't use, the published version ignores that field — it doesn't cause an error.
+
+### Can a table's Invoke workflow column run the draft version of a workflow?
+
+No. A table's **Invoke workflow** column always runs the currently published version of the workflow. There's no setting to point a table column — or any other trigger outside the workflow editor, such as a webhook, schedule, or segment — at a draft.
+
+The only way to run a draft workflow without publishing it is from inside the workflow editor: start a manual run from the editor, or hover a node and click its run button to test that one step.
+
+### How do I test a new workflow version with new inputs from a test table?
+
+To test a new version of a workflow from a table — for example, a version that needs inputs your published workflow doesn't have — create a separate copy of the workflow and test the copy, so your published workflow keeps running unchanged:
+
+1.  Open your published workflow, open workflow settings, and click **History** to open the **Workflow history** panel.
+2.  On the version you want to start from, open the **⋮** menu and select **Create new workflow**. Clay creates a new workflow from that version.
+3.  In the new workflow, add the new inputs and logic, then click **Publish**.
+4.  In a copy of your table (not your live table), add or edit an **Invoke workflow** column, select the new workflow in the **Workflow** field, and map its inputs. Run the column on a few rows to test.
+5.  When the new workflow is ready, open the **Invoke workflow** column in your live table, select the new workflow in the **Workflow** field, and map its inputs again. Changing the selected workflow clears the existing input mapping, so you'll need to re-map every input.
+
+Test from a copy of your table rather than your live table. Changes to your table — its columns, or the inputs your **Invoke workflow** column sends — aren't part of the workflow's version history, so changing them in your live table immediately changes what the published workflow receives.
+
+### How do I roll a workflow back to an earlier version?
+
+To roll a workflow back to an earlier version:
+
+1.  Open workflow settings and click **History** to open the **Workflow history** panel.
+2.  On the version you want, open the **⋮** menu and select **Restore this version**, then confirm with **Restore draft**. This replaces your current draft with that version — your live workflow doesn't change yet.
+3.  Click **Publish** to make the restored version live.
+
+The **Versions** dropdown in the workflow editor's top bar switches which version you're viewing in the editor. It doesn't roll the workflow back.

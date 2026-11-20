@@ -50,7 +50,7 @@ Clay formulas are powered by **Clayscript**, a JavaScript-based language that ev
 
 **What's available in formulas:**
 
--   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more.
+-   **Standard JavaScript**: All standard JavaScript objects and methods including `Math`, `String`, `Array`, `Date`, `RegExp`, `Number`, `Object`, and more. Node.js-only APIs such as `Buffer` are not available; to Base64-encode text, use `btoa()` (see the FAQ below).
 -   **Lodash**: Access the full [Lodash](https://lodash.com) library using `_` for advanced data manipulation.
 -   **Moment.js**: Use [Moment.js](https://momentjs.com) with `moment` for powerful date and time operations.
 -   **Excel and Google Sheets functions**: Clay supports hundreds of familiar spreadsheet functions like `VLOOKUP`, `IF`, `SUM`, `CONCATENATE`, and many more through the [FormulaJS](https://formulajs.info) library.
@@ -197,7 +197,21 @@ A few important notes:
 
 -   **The formula preview sidebar will show nothing** — this is expected. `Clay.*` functions are evaluated on the backend and cannot run in the preview. Save the column and the values will populate.
 -   **Only works for enrichment (action) columns.** The function reads the cell's stored status; it returns `"UNKNOWN"` for formula columns or cells that have never been processed. Cells that were skipped due to a run condition return `"ERROR_RUN_CONDITION_NOT_MET\"`, not `"UNKNOWN"`.
--   The function reflects the cell's **current** status — including in-progress states. A cell actively retrying returns `"RETRY"`, a cell waiting to execute returns `"QUEUED"`.
+-   The function returns the cell's **stored** status at the moment the formula evaluates, and in-progress values such as `"RETRY"` or `"QUEUED"` are possible return values. However, a formula that references an action column does not recalculate while that action is in progress — see the next question.
+
+### **Can `Clay.getCellStatus()` show a "busy" or "please wait" message while an action column is running?**
+
+No. A formula using `Clay.getCellStatus()` cannot show a busy message while the referenced action column is in progress, and it does not replace the old result when a rerun starts.
+
+A formula column that references an action column depends on that column. While the action cell is `"QUEUED"`, `"RUNNING"`, `"RATE_LIMITED"`, `"RETRY"`, or `"AWAITING_CALLBACK"`, Clay holds the dependent formula and does not recalculate it. The formula keeps its previous output for the whole run. It recalculates once, after the action finishes with a final success or error status. For example, this formula will **not** show "Busy, please wait" at the start of a run:
+
+```javascript
+Clay.getCellStatus({{Action Column}}) === "RUNNING" ? "Busy, please wait" : {{Action Column}}
+```
+
+When you click to run or rerun the action, the formula column keeps its old value. When the action finishes, the formula updates to the new result on its own, without an extra click or refresh. The formula never sees the `"RUNNING"` status, so the busy branch is never shown.
+
+There is currently no setting that clears a dependent formula column's previous output when an upstream action rerun starts, and no "on start" event that writes a value to a cell before the action begins processing.
 
 ### **Why does my regex formula work in the preview but fail when the table runs?**
 
@@ -221,6 +235,29 @@ To fix it: expand the **Formula** section below the prompt, find any `/Column Na
 **A related cause** is describing the formula with a column's name as plain text — for example, writing *"clean the company name field"* — instead of inserting the column via the `/` picker. When the AI generates a formula from a description that references a column only by plain text rather than a column chip, it may produce code with incorrect column references, causing every row to error.
 
 To fix it: in the description field, delete any plain-text column mention, type `/`, select the column from the picker to insert it as a chip, then click **Regenerate**. This gives the AI the exact column reference it needs and is more reliable than editing the formula code directly.
+
+### **Why does my Base64 formula using `Buffer` error on every row?**
+
+Clay formulas run JavaScript in a sandbox that does not include Node.js APIs, so the Node.js `Buffer` object isn't available in formula columns. A formula like `Buffer.from({{Profile URL}} || "").toString("base64")` fails on every row, and the cells show *"This formula could not be calculated"*. This applies whether you wrote the formula yourself or the formula generator produced it.
+
+To Base64-encode a value in a formula column, use `btoa()` instead:
+
+1.  Open the formula column to open the **Formula generator** sidebar.
+2.  Expand the **Formula** section and replace the `Buffer` expression with `btoa()`. For example:
+
+    ```javascript
+    btoa({{Profile URL}} || "")
+    ```
+
+3.  Click **Save column** and re-run the column. Each cell now shows the Base64-encoded value.
+
+**Values with non-English characters:** `btoa()` only accepts characters in the Latin-1 range. If the value can contain characters outside Latin-1, such as emoji or non-Latin scripts, encode it as UTF-8 first:
+
+```javascript
+btoa(unescape(encodeURIComponent({{Profile URL}} || "")))
+```
+
+**Decoding isn't available:** `atob()`, the matching Base64-decode function, is not available in Clay formulas.
 
 ### **Why does my formula return 0 when combining values from other formula columns?**
 

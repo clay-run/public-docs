@@ -1,7 +1,7 @@
 ---
 title: Modash integration
 description: Discover and analyze social media creators.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-11-19T06:52:16.518Z
 ---
 
 # Modash integration
@@ -15,7 +15,7 @@ Modash provides real-time creator data and analytics across Instagram, TikTok, a
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Modash` and select from the results.
 3.  In the modal, you will be asked to `Select Modash account`.
-    -   If you haven't already connected your Modash account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided key.
+    -   If you haven't already connected your Modash account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Source` Find Instagram creators (keyword search)
 
@@ -64,7 +64,7 @@ Find TikTok creators using natural language descriptions.
 1.  While in a Clay table, click `Add enrichment` and search for `Modash`.
 2.  Under `Integrations`, select one of the Modash options.
 3.  In the modal, you will be asked to `Select Modash account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided key.
+    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Get Instagram user info
 
