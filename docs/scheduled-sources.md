@@ -125,6 +125,20 @@ Each subsequent run appends newly matched entries to your table without removing
 
 **Note:** Scheduled sources are not available on the Free plan.
 
+### Why does my source column show "Updating..."? Is the source stuck, and can I stop it?
+
+A spinner with **Updating...** under a source column (for example, **Find mentions on Reddit**) means the source's latest run hasn't finished yet. When that run completes, the source column shows **Up to date** with a checkmark instead. A scheduled source that is waiting between scheduled runs shows **Up to date**, not **Updating...**.
+
+**There is no button to stop, pause, or cancel a source run that's in progress.** These controls don't affect a running source:
+
+-   **The table's Stop button** (in the run summary panel at the bottom-right of the table) cancels enrichment column runs only. It does not stop a source run.
+-   **Column re-run options** such as **Force rerun column** apply to enrichment columns only. Source columns don't have a run or re-run option.
+-   **Switching Run this source to Manually** stops future scheduled runs, but a source run that's already in progress continues until it completes.
+
+While a source run is in progress, the **Run now** button in the source panel's **Run settings** section is disabled and shows **Running...**.
+
+**Rows the source has already imported stay in your table.** On each scheduled run, the source adds newly found records as new rows. Some sources show their own message in the source panel when they run out of results. For example, Find mentions on Reddit shows "No more results available. Use scheduled runs to capture new mentions as they appear." This means there are no more matching results for now, and later scheduled runs add new mentions as they're found.
+
 ### Why did my scheduled source stop importing records after previously working?
 
 If a source was running on a schedule and has now stopped importing new records — even though the schedule is still enabled and the table appears to have space — the most likely cause is that the source has reached its 50,000 total records processed limit.
