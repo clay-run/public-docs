@@ -43,6 +43,7 @@ Sandbox mode is a special table mode that lets you safely build, test, and publi
 In sandbox mode, you can test formulas, waterfalls, and enrichments. **Here are some other helpful notes:**
 
 -   You cannot add or edit sources in sandbox mode. To make these changes, first return to your normal table, then re-enable sandbox mode.
+    -   If you try to save a search into a table that has an active sandbox (for example, saving search results to an existing table or updating that table's search source), Clay blocks the save and shows: **"Cannot save changes to this table while it has an active sandbox. Publish or turn off the sandbox to continue."** To fix this, publish your sandbox changes with **Review changes**, or click **Exit Sandbox** to turn the sandbox off (this discards unpublished sandbox changes), then save the search again.
 -   To prevent accidental updates, all outbound actions (actions that send data such as exporting or [Write to Other Table](https://www.clay.com/university/guide/write-to-table-integration-overview)) are automatically disabled in sandbox mode.
     -   However, you can still manually run individual cells or columns if needed.
 
