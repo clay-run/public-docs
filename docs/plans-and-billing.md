@@ -99,6 +99,14 @@ To downgrade your Clay workspace plan:
 
 **What happens to your Data Credits:** When the plan change takes effect, your credit balance is reduced to the applicable rollover cap of your new plan. For a monthly plan, that is 2× its monthly credit limit. For the free plan (100 credits/month), that cap is 200 credits. Any credits above the cap are forfeited. If you have a large balance, spend it down before the change takes effect.
 
+**What happens to existing HTTP API, CRM, and email sequencing columns and workflow steps:** Clay checks HTTP API, CRM, and email sequencing actions against your workspace plan every time they run — not only when you add the column or workflow step. HTTP API and CRM actions (for example, HubSpot, Salesforce, Pipedrive) require the Growth plan or higher; email sequencing actions (for example, Outreach, Salesloft, Smartlead, Instantly) require the Launch plan or higher. If your workspace moves to a plan that doesn't include one of these categories — after a downgrade, a cancellation, or the end of a trial — columns and workflow steps you already built with those actions stay in place but fail when they run, with one of these messages:
+
+-   "This workspace's plan doesn't include HTTP API actions. Upgrade to continue: <link>"
+-   "This workspace's plan doesn't include CRM actions. Upgrade to continue: <link>"
+-   "This workspace's plan doesn't include email sequencing actions. Upgrade to continue: <link>"
+
+To run these actions again, upgrade to a plan that includes them using the link in the message or `Settings` → `Plans & billing`.
+
 ### Cancel your plan
 
 Clay subscriptions **auto-renew by default** — if you do not cancel before your renewal date, your plan renews and you are billed for the next period.
@@ -155,7 +163,7 @@ If your team wants to do a trial, each team member can create their own trial ac
 
 Trial tables can hold up to **1,000 rows each**. The table view also displays only the first **50 rows** — rows beyond that are blurred in the UI until you upgrade to a paid plan. When you export to CSV, only these first 50 rows are included in the download. Sending data through third-party integrations (such as Google Sheets) is not subject to this row limit.
 
-When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md).
+When your trial ends, your account automatically moves to the free plan — you won't be charged unless you actively choose to upgrade to a paid plan. Clay does not auto-upgrade you. For details on what happens to your trial data credits at that point, see [Actions and data credits](actions-data-credits.md). HTTP API, CRM, and email sequencing columns and workflow steps you built during the trial stop running once the trial ends, unless you upgrade to a plan that includes them — see [Downgrade your plan](#downgrade-your-plan).
 
 **Trial extension:** Clay offers a one-time self-serve extension for workspaces on a trial or free plan. While logged in, visit [https://app.clay.com/extend-my-trial/](https://app.clay.com/extend-my-trial/) to add 14 more days to your trial. If your workspace doesn't immediately reflect the extension, refresh your browser. Each workspace can use this self-serve extension once — if you've already used it and need additional time, contact [Clay support](https://app.clay.com).
 
