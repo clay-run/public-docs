@@ -92,7 +92,7 @@ That's the shape of a typical inbound play. The webhook starts the run, a lookup
 
 ## Working with the agent's output
 
-The agent's conclusions come back as its output fields, readable by any downstream node in the same run the way any other node's output is. Because those fields are the agent's fields on the account, the same conclusions are available in Audiences rather than living only inside the run — which is what lets the next play read what this one decided.
+The agent's conclusions come back as its output fields, readable by any downstream node in the same run the way any other node's output is. When an Account Agent runs inside a workflow, those outputs stay in the workflow run — they aren't written to the account's fields in Audiences automatically. To save a result on the account so other segments and plays can read what this one decided, add a `Write to Audiences` node after the agent.
 
 A few habits make the downstream wiring much easier:
 
@@ -118,6 +118,18 @@ A three-way play makes the shape concrete: the agent returns one field per path 
 ### How is this different from an Account Agent in Audiences?
 
 An Account Agent in Audiences keeps a data point true about every account, all the time — an account health score, an ICP tier, a closed-lost reason — on a schedule, written back as a field you can export anywhere. An Account Agent in a workflow answers a narrower question: something happened, what's the right response right now. Most teams run both, with the Audiences agent keeping the account layer current and the workflow reading that layer and acting on it. See [Account Research Agents](https://university.clay.com/docs/account-research-agents) for the Audiences side.
+
+### Can I run an Account Agent without writing back to Audiences?
+
+Yes. An Account Agent in a workflow doesn't update the account in Audiences unless the workflow has a `Write to Audiences` node, so you can run the agent on its own to see how a new AI field or prompt performs before it changes anything on your accounts. This is useful when the test in the agent builder isn't enough to judge results across a large segment.
+
+1.  Add the Account Agent to a workflow (see **Adding an Account Agent to a workflow** above) and leave out any `Write to Audiences` node.
+2.  Click `Run test` in the workflow header to run the workflow on its test dataset. On a segment trigger, the test dataset holds up to 50 records. Test runs don't update the Account Agent's per-account memory.
+3.  Open `View all runs` and switch to `Table view` to compare the agent's outputs across records, then open individual runs to read its reasoning.
+4.  To run the Account Agent across more than 50 accounts, publish the workflow without a `Write to Audiences` node. In the publish dialog, check `Run workflow after publishing` and click `Next`; Clay shows how many segment records the run covers and a credit estimate before you confirm with `Publish and run`. The outputs land only in the workflow runs.
+5.  When you're happy with the results, add a `Write to Audiences` node after the agent and publish a new version.
+
+Published (non-test) runs spend credits on every record — variable data credits plus 1 action per record — and can update the Account Agent's per-account memory, so for a large segment such as 50,000 accounts, scale up in steps and check the per-node cost in the run trace between passes.
 
 ### Which model does the agent use?
 
