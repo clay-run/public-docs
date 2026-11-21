@@ -177,6 +177,9 @@ No value of `{{DNC}}` can satisfy both clauses simultaneously.
 | Column is not empty | `!!{{Email}}` |
 | Numeric column equals zero | `{{DNC}} == 0` |
 | Column is not empty AND another column equals zero | `!!{{Email}} && {{DNC}} == 0` |
+| Checkbox (true/false) column is checked | `{{Checkbox Column}} == true` |
+
+**Checkbox columns:** On a checkbox column (for example, a formula column that returns `true` or `false`), `!!` does not mean \"has a value\". An unchecked checkbox stores `false`, so `!!{{Checkbox Column}}` is `false` for unchecked rows as well as empty ones. To run a column only on rows where the checkbox is checked, write the condition as `{{Checkbox Column}} == true`. This is clearer than `!!{{Checkbox Column}}`, which the **Use AI** formula generator may produce from a prompt like \"Run if Checkbox Column is true\". On a checked row, `{{Checkbox Column}} == true` is `true` and the column runs. On unchecked or empty rows, it is `false` and the cell shows **\"Run condition not met\"**.
 
 **Never write** `!!{{Column}} && {{Column}} == 0` — that is a self-contradicting condition and will always evaluate to false.
 
@@ -410,15 +413,17 @@ With this setting off, the enrichment re-runs whenever the condition is met — 
 
 ### Run condition is set but new rows never execute — verify column auto-run is on
 
-When a column has an "Only run if" condition AND column-level auto-run is OFF, new rows are marked out-of-date (the clock indicator appears) but the column never fires — even when the condition would evaluate to true for those rows. The run condition is only evaluated after Clay confirms that auto-run is enabled for the column; if column-level auto-run is off, the cell is marked stale and skipped before the condition is checked.
+When a column has an "Only run if" condition AND column-level auto-run is OFF, new rows are marked out-of-date (the clock indicator appears) but the column never fires — even when the condition would evaluate to true for those rows. If column-level auto-run is off, Clay marks the cell stale and skips it, so the run condition's result is never applied to the cell.
+
+Clicking one of these cells opens a card that says **\"This cell is out of date\"** with the message **\"Its inputs have changed since it last ran. Re-run this cell if you want the most up-to-date results.\"** If you see this card on a new row that has never run, check that column-level auto-run is on before you change the run condition.
 
 **This is the most common cause of a pattern like:** "I have a run condition set to `/Work Email is not empty`, Work Email is populated for several rows, but the action column never ran for those rows."
 
-The cell status you will see is **out-of-date** (a clock icon), **not** "Run condition not met" — because Clay never reached the point of evaluating the condition.
+The cell status you will see is **out-of-date** (a clock icon), **not** "Run condition not met" — because Clay never applied the run condition's result to the cell.
 
 To distinguish the two states:
 
--   **Clock icon (out-of-date)**: column auto-run is OFF — the run condition was never evaluated for that row
+-   **Clock icon (out-of-date)**: column auto-run is OFF — the run condition's result was never applied for that row
 -   **"Run condition not met"**: column auto-run is ON but the condition evaluated to false for that row
 
 **To fix:** Click the column header → **Edit column** → scroll to **Run settings** → enable the **Auto-run** toggle → click **Save**. With column-level auto-run on, Clay evaluates the run condition for each new row and fires the column only when the condition is met.
