@@ -1,16 +1,16 @@
 ---
 title: Sequencer FAQs and best practices
 description: Answers to common Sequencer questions on costs, limits, sequences, and leads, plus deliverability best practices and troubleshooting.
-last_synced: 2026-11-06T22:48:34.763Z
+last_synced: 2026-11-17T20:58:15.255Z
 ---
 
 # Sequencer FAQs and best practices
 
-Answers to common questions about Clay's Sequencer, plus the best practices that keep cold campaigns landing in the primary inbox.
+Answers to common questions about Clay's Sequencer, plus the best practices that keep cold sequences landing in the primary inbox.
 
-Answers to common questions about Clay's Sequencer, plus the best practices that keep cold campaigns landing in the primary inbox.
+Answers to common questions about Clay's Sequencer, plus the best practices that keep cold sequences landing in the primary inbox.
 
-Sequencer is Clay's cold email product: you attach a set of leads to a campaign — either a segment of People from Audiences or rows from a Clay table in a workbook — and Clay sends a sequence of up to four emails to every lead that enters it. This page is the catch-all for questions that span the whole product — costs and limits, behavior you can't change, and what to check when something looks off. It also collects the practices that separate campaigns landing in the inbox from campaigns that don't.
+Sequencer is Clay's cold email product: you attach a set of leads to a sequence — either a segment of People from Audiences or rows from a Clay table in a workbook — and Clay sends up to four emails to every lead that enters it. This page is the catch-all for questions that span the whole product — costs and limits, behavior you can't change, and what to check when something looks off. It also collects the practices that separate sequences landing in the inbox from sequences that don't.
 
 ## Best practices
 
@@ -18,58 +18,58 @@ Five habits do most of the work here.
 
 -   **Send emails the way you'd want to receive them.** The golden rule of outbound: your goal is the recipient's primary inbox, and a message that lands in Spam or Promotions is unlikely to be read. Whether you get there depends as much on what you write as on how you send it. Two habits carry most of the weight — keep the offer specific to the person receiving it, and be straightforward about who you are and what you want. For a deeper treatment of cold email as a craft, [Za-zu's Cold Email Handbook](https://za-zu.com/docs/handbook/intro) is the best external guide we know of.
 -   **Vary your copy.** An identical message sent thousands of times is easy for spam filters to recognize and easy for recipients to spot. Vary it at the sentence level with spintax and per-lead variables, and let AI snippets write the parts that genuinely differ from lead to lead. One thing to know about spintax: it randomizes wording, but it isn't tracked as a test arm, so Clay doesn't measure which variation performed better. When you want a measurable comparison between two versions of your copy, set up an [A/B test](https://university.clay.com/docs/ab-test-sequence-copy) instead.
--   **Mimic human sending patterns.** Pace your sends the way a person would — spread across the working day with some randomness, rather than all at once. Clay defaults to a 20-minute minimum gap between emails from the same account, which is a sensible starting point. When you need more volume, add sender accounts rather than raising the per-account limit: more accounts means faster pacing across the campaign without asking any single inbox to send more than it comfortably can.
+-   **Mimic human sending patterns.** Pace your sends the way a person would — spread across the working day with some randomness, rather than all at once. Clay defaults to a 20-minute minimum gap between emails from the same account, which is a sensible starting point. When you need more volume, add sender accounts rather than raising the per-account limit: more accounts means faster pacing across the sequence without asking any single inbox to send more than it comfortably can.
 -   **Warm up before you scale.** A brand-new inbox that suddenly sends hundreds of emails looks suspicious to email providers. Warmup builds reputation gradually by exchanging mail with other inboxes, and accounts purchased in Clay take roughly three weeks to become fully warmed. Plan for about 20 emails per day per inbox and 3 inboxes per domain — 5 at the most — once you're at steady state. Keep warmup on at all times, not just during the initial ramp.
--   **Iterate across many small campaigns.** Launching locks a campaign's shape — you can edit copy and step timing while the campaign is paused, but you can't add, remove, or reorder steps, because that would break the analytics underneath. Smaller campaigns are easier to learn from for exactly that reason: you find out whether a sequence works before you've committed a large segment to it. A lead also receives only one sequence per campaign, so running several narrower campaigns leaves you room to come back later with a genuinely different angle.
+-   **Iterate across many small sequences.** Launching locks a sequence's shape — you can edit copy and step timing while the sequence is paused, but you can't add, remove, or reorder steps, because that would break the analytics underneath. Smaller sequences are easier to learn from for exactly that reason: you find out whether a sequence works before you've committed a large segment to it. A lead also goes through a sequence only once, so running several narrower sequences leaves you room to come back later with a genuinely different angle.
 
 **Note:** Warmup is enabled and managed for you on accounts purchased in Clay. On accounts you connect yourself it's opt-in — turn it on from the 3-dot menu next to the account, where you'll also find advanced settings like warmup emails per day.
 
 ## General FAQs
 
-### What's the difference between table-based and segment-based campaigns?
+### What's the difference between table-based and segment-based sequences?
 
-The main difference is where leads come from. A table-based campaign syncs rows from a Clay table in a workbook; a segment-based campaign attaches a segment of People in [Audiences](https://university.clay.com/docs/audiences) and enrolls leads continuously as they enter it.
+The main difference is where leads come from. A table-based sequence syncs rows from a Clay table in a workbook; a segment-based sequence attaches a segment of People in [Audiences](https://university.clay.com/docs/audiences) and enrolls leads continuously as they enter it.
 
-Because every lead in a segment-based campaign is an Audiences record, campaign activity writes back onto that person — and rolls up to their company — so replies and bounces become data you can segment and act on later.
+Because every lead in a segment-based sequence is an Audiences record, sequence activity writes back onto that person — and rolls up to their company — so replies and bounces become data you can segment and act on later.
 
-|  | Table campaigns | People campaigns |
+|  | Table sequences | People sequences |
 | --- | --- | --- |
 | Lead source | Rows synced from a Clay table in a workbook | A segment of People in Audiences |
-| Enrollment | Rows you sync into the campaign | Continuous, as leads enter the segment |
-| Scale | Bounded by the size of the source table | Up to 500,000 leads per campaign |
+| Enrollment | Rows you sync into the sequence | Continuous, as leads enter the segment |
+| Scale | Bounded by the size of the source table | Up to 500,000 leads per sequence |
 | Activity tracking | Not available | Every event written back to the person and company in Audiences |
 | Lead-level detail | The Leads tab | The Activity tab |
 | Plans | Launch, Growth, Enterprise, legacy Explorer and Pro | Launch, Growth, and Enterprise |
-| Development | New development goes into segment-based campaigns | Where new features ship |
+| Development | New development goes into segment-based sequences | Where new features ship |
 
-On the `Campaigns` page, table-based campaigns are labeled `Table` and segment-based campaigns are labeled `People`.
+On the `Sequencer` page, table-based sequences are labeled `Table` and segment-based sequences are labeled `People`.
 
-### What happens to my existing table-based campaigns?
+### What happens to my existing table-based sequences?
 
-They keep running on Launch, Growth, and Enterprise plans, and on legacy Explorer and Pro plans. On a plan that doesn't include table-based campaigns, existing campaigns stop sending and editing is turned off. Your leads, sequences, and campaign history stay where they are. Table-based campaigns stay supported, and new development is going into segment-based campaigns.
+They keep running on Launch, Growth, and Enterprise plans, and on legacy Explorer and Pro plans. On a plan that doesn't include table-based sequences, existing sequences stop sending and editing is turned off. Your leads, messages, and sequence history stay where they are. Table-based sequences stay supported, and new development is going into segment-based sequences.
 
-If you're starting something new, build it as a segment-based campaign. [Table-based campaigns](https://university.clay.com/docs/email-sequencer) covers the table-based flow.
+If you're starting something new, build it as a segment-based sequence. [Table-based campaigns](https://university.clay.com/docs/email-sequencer) covers the table-based flow.
 
-### Which plans include segment-based campaigns?
+### Which plans include segment-based sequences?
 
-Launch, Growth, and Enterprise. Table-based campaigns stay available on Launch, Growth, and Enterprise plans, and on legacy Explorer and Pro plans.
+Launch, Growth, and Enterprise. Table-based sequences stay available on Launch, Growth, and Enterprise plans, and on legacy Explorer and Pro plans.
 
-Buying email accounts in Clay is a step up from there: it needs Growth or Enterprise. On Launch, connect email accounts you already own and send your campaigns from those.
+Buying email accounts in Clay is a step up from there: it needs Growth or Enterprise. On Launch, connect email accounts you already own and send your sequences from those.
 
 ### What does Sequencer cost?
 
-Each lead enrolled in a campaign costs 1 action credit. AI snippets add data credits per lead on top of that, varying with the model you choose, and the campaign shows you an estimate before you launch.
+Each lead enrolled in a sequence costs 1 action credit. AI snippets add data credits per lead on top of that, varying with the model you choose, and the sequence shows you an estimate before you launch.
 
 Two things are easy to miss:
 
--   Relaunching a paused campaign doesn't re-charge for leads that were already sequenced.
--   Credit budgets live at the workspace level and get attached to a campaign at launch. Once a budget's limit is reached, the campaigns drawing on it stop spending credits, which stops new leads enrolling.
+-   Relaunching a paused sequence doesn't re-charge for leads that were already sequenced.
+-   Credit budgets live at the workspace level and get attached to a sequence at launch. Once a budget's limit is reached, the sequences drawing on it stop spending credits, which stops new leads enrolling.
 
 [Launch and manage a campaign](https://university.clay.com/docs/launch-and-manage-a-campaign) covers how to set a budget.
 
-### How many leads can one campaign hold?
+### How many leads can one sequence hold?
 
-Up to 500,000. Enrollment is paced rather than everyone starting at once: each campaign's `Max new leads per day` setting caps how many new leads it contacts on any single day. That cap defaults to 100,000, and you can set it lower to slow a campaign down without changing its schedule.
+Up to 500,000. Enrollment is paced rather than everyone starting at once: each sequence's `Max new leads per day` setting caps how many new leads it contacts on any single day. That cap defaults to 100,000, and you can set it lower to slow a sequence down without changing its schedule.
 
 At the default, your sender accounts' daily limits set the real pace, well below that cap.
 
@@ -77,19 +77,19 @@ At the default, your sender accounts' daily limits set the real pace, well below
 
 A cold lead doesn't know you or your company yet. A warm lead has replied to you, or shown interest some other way.
 
-The distinction matters because it changes how much you can send, and from where. You can send far more email to warm leads from your main domain than you can to cold leads — which is why cold campaigns usually run from separate, brand-adjacent domains, either [purchased in Clay](https://university.clay.com/docs/buying-email-accounts) or brought in yourself.
+The distinction matters because it changes how much you can send, and from where. You can send far more email to warm leads from your main domain than you can to cold leads — which is why cold sequences usually run from separate, brand-adjacent domains, either [purchased in Clay](https://university.clay.com/docs/buying-email-accounts) or brought in yourself.
 
 ### Is Sequencer built on Smartlead?
 
-Yes. Smartlead is the sending infrastructure behind campaigns, and Clay provides the data, personalization, and orchestration around it. Everything is billed in Clay credits, and you don't need a Smartlead account of your own.
+Yes. Smartlead is the sending infrastructure behind sequences, and Clay provides the data, personalization, and orchestration around it. Everything is billed in Clay credits, and you don't need a Smartlead account of your own.
 
-You can't connect your own Smartlead API key to a campaign. If you have a key, you can still use it with Clay's table enrichments.
+You can't connect your own Smartlead API key to a sequence. If you have a key, you can still use it with Clay's table enrichments.
 
 ### Can I sequence channels other than email?
 
-Sequencer is a cold email product today — a campaign sends email, and everything in it is built around that. It isn't a sales engagement platform: there's no dialer, and no assignment of manual tasks to reps.
+Sequencer is a cold email product today — a sequence sends email, and everything in it is built around that. It isn't a sales engagement platform: there's no dialer, and no assignment of manual tasks to reps.
 
-If your motion spans more than email, drive the other steps from campaign events. Every send, reply, and bounce lands in the campaign `Events` table, so you can trigger another tool, notify a rep, or create a task elsewhere the moment something happens. [Automate campaign events](https://university.clay.com/docs/automate-campaign-events) covers what's available there.
+If your motion spans more than email, drive the other steps from sequence events. Every send, reply, and bounce lands in the sequence `Events` table, so you can trigger another tool, notify a rep, or create a task elsewhere the moment something happens. [Automate campaign events](https://university.clay.com/docs/automate-campaign-events) covers what's available there.
 
 ## Sequence FAQs
 
@@ -111,11 +111,11 @@ Clay recognizes out-of-office auto-replies and doesn't count them as a real repl
 
 Out-of-office replies are counted in your reply rate, and the `Reply rate` card's tooltip also shows the figure excluding them. They're tagged neutral, so they never move your positive reply rate — and they do confirm you reached the inbox, which is worth something on its own.
 
-### Can a lead go through the same campaign twice?
+### Can a lead go through the same sequence twice?
 
-No — it's one sequence per lead per campaign. Once a lead finishes or stops, that campaign is done with them.
+No — a lead goes through each sequence only once. After a lead finishes or stops, that sequence is done with them.
 
-Sequences end on their own in two ways: every email has been sent, or the lead replies. Out-of-office replies are the exception, as above.
+A sequence ends on its own for a lead in two ways: every email has been sent, or the lead replies. Out-of-office replies are the exception, as above.
 
 ### What's the maximum message size?
 
@@ -123,20 +123,20 @@ Each message in a sequence supports up to 8 KB of text. That's more room than a 
 
 ### How do unsubscribes work?
 
-With HTML enabled, `Enable unsubscribe link` appends a link to the bottom of every message, using wording you set in `Unsubscribe text`. Unsubscribes then appear alongside your other campaign metrics.
+With HTML enabled, `Enable unsubscribe link` appends a link to the bottom of every message, using wording you set in `Unsubscribe text`. Unsubscribes then appear alongside your other sequence metrics.
 
-On plaintext campaigns — the default — handle it directly instead, in one of two places:
+On plaintext sequences — the default — handle it directly instead, in one of two places:
 
--   The `Add email to blocklist` action in the campaign `Events` table.
--   The `Blocklist` tab on the `Campaigns` page, where you add the address yourself.
+-   The `Add email to blocklist` action in the sequence `Events` table.
+-   The `Blocklist` tab on the `Sequencer` page, where you add the address yourself.
 
-Either route excludes that address from every future campaign, not just the current one.
+Either route excludes that address from every future sequence, not just the current one.
 
 ## Lead FAQs
 
 ### Why can't I delete a lead that's already enrolled?
 
-At enrollment a lead is handed to the sending infrastructure with its copy already generated, so there's no draft record left to remove. Pausing is the equivalent action: it stops any remaining emails to that person while the rest of the campaign keeps running, and it's reversible.
+At enrollment a lead is handed to the sending infrastructure with its copy already generated, so there's no draft record left to remove. Pausing is the equivalent action: it stops any remaining emails to that person while the rest of the sequence keeps running, and it's reversible.
 
 Two related behaviors are worth knowing:
 
@@ -147,24 +147,24 @@ Two related behaviors are worth knowing:
 
 No. Copy is generated from the lead's Audiences data at the moment of enrollment and then frozen, AI snippets included, so every remaining email uses the data as it stood then. That's deliberate: it means a mid-sequence data change can't produce a message that contradicts the one before it.
 
-Leads enrolled after your fix pick up the corrected data. To reach an already-enrolled person with the corrected version, pause them and enroll them in a different campaign.
+Leads enrolled after your fix pick up the corrected data. To reach an already-enrolled person with the corrected version, pause them and enroll them in a different sequence.
 
 ### How do I send someone a second sequence?
 
-Build a separate campaign and enroll them there — a lead can run through a given campaign's sequence only once. To control the gap between one sequence and the next, set a `Cooldown window` on each campaign and keep `Trigger cooldowns` on. A new campaign starts with no cooldown window, so until you set one nothing prevents the same person being live in two campaigns at once.
+Build a separate sequence and enroll them there — a lead can run through a given sequence only once. To control the gap between one sequence and the next, set a `Cooldown window` on each sequence and keep `Trigger cooldowns` on. A new sequence starts with no cooldown window, so until you set one nothing prevents the same person being live in two sequences at once.
 
 As a rule of thumb, wait a couple of months before sequencing the same person again, and only when the offer is genuinely different from the one they didn't respond to.
 
 ### How do I build a re-engagement sequence for leads who haven't been contacted in 30 days?
 
-A re-engagement sequence in Sequencer is a separate segment-based campaign that picks leads up again once they've had a rest period, such as 30 days. You can't send the same lead back through the original campaign, because a lead can only be enrolled in a given campaign once.
+A re-engagement sequence in Sequencer is a separate segment-based sequence that picks leads up again once they've had a rest period, such as 30 days. You can't send the same lead back through the original sequence, because a lead can only be enrolled in a given sequence once.
 
-1.  In Audiences, build the People segment for your re-engagement campaign. To surface leads who haven't been in a campaign recently, add the `Campaign statuses activity` filter with `not in the last` and set it to `30` days.
-2.  Create a new campaign and attach that segment.
-3.  In `Lead setup`, click the pencil on the `Exclusions` row to open `Configure exclusions`, and set `Cooldown window` to `30 days` (or `Custom`, for any number of days up to 365). The cooldown skips anyone enrolled in another of your workspace's campaigns within that window.
-4.  Launch the campaign. Clay checks the attached segment for leads to enroll when you launch it and then once a day, so leads are enrolled automatically as their rest period ends and they qualify.
+1.  In Audiences, build the People segment for your re-engagement sequence. To surface leads who haven't been in a sequence recently, add the `Campaign statuses activity` filter with `not in the last` and set it to `30` days.
+2.  Create a new sequence and attach that segment.
+3.  In `Lead setup`, click the pencil on the `Exclusions` row to open `Configure exclusions`, and set `Cooldown window` to `30 days` (or `Custom`, for any number of days up to 365). The cooldown skips anyone enrolled in another of your workspace's sequences within that window.
+4.  Launch the sequence. Clay checks the attached segment for leads to enroll when you launch it and then once a day, so leads are enrolled automatically as their rest period ends and they qualify.
 
-Neither setting looks at individual email sends. The `Cooldown window` counts from when a lead was last enrolled in a campaign, and the `Campaign statuses activity` filter looks for any campaign status event (such as enrolled, paused, or stopped) within the window. A new campaign starts with `Cooldown window` set to `None`, so set it before you launch.
+Neither setting looks at individual email sends. The `Cooldown window` counts from when a lead was last enrolled in a sequence, and the `Campaign statuses activity` filter looks for any campaign status event (such as enrolled, paused, or stopped) within the window. A new sequence starts with `Cooldown window` set to `None`, so set it before you launch.
 
 ## Troubleshooting
 
@@ -176,13 +176,13 @@ Work through the most common causes first:
 
 -   The lead's address is on the workspace `Blocklist`.
 -   The lead is missing data the sequence needs — the email column itself, or a field a variable or an AI snippet reads. Those leads wait outside the sequence until the data lands, then enroll on a later run.
--   The lead is held out by the campaign's own filters: an exclusion segment, or a `Cooldown window` that an enrollment in another campaign put them inside.
--   The same address appears more than once in the campaign — a duplicate is only sequenced once.
+-   The lead is held out by the sequence's own filters: an exclusion segment, or a `Cooldown window` that an enrollment in another sequence put them inside.
+-   The same address appears more than once in the sequence — a duplicate is only sequenced once.
 -   A sender account is disconnected, or has hit its daily send limit.
--   The campaign is out of room on its credit budget, or its schedule window hasn't opened yet.
--   A lead is assigned to a specific sender account that's no longer selected on the campaign.
+-   The sequence is out of room on its credit budget, or its schedule window hasn't opened yet.
+-   A lead is assigned to a specific sender account that's no longer selected on the sequence.
 
-The `Activity` tab shows status per lead, including `Enrollment failed`, which usually points straight at the cause. Auth errors live elsewhere: on `Email accounts`, and on the account and domain tables in a campaign's `Deliverability` section.
+The `Activity` tab shows status per lead, including `Enrollment failed`, which usually points straight at the cause. Auth errors live elsewhere: on `Email accounts`, and on the account and domain tables in a sequence's `Deliverability` section.
 
 ### A sender account disconnected
 
@@ -209,4 +209,4 @@ Events reach Clay within five minutes for 99% of sends on accounts purchased in 
 ### An error appeared and the action didn't complete
 
 -   Retry the operation. Most errors of this kind are transient, particularly anything reporting a 502.
--   If the same error keeps returning, contact support with the campaign name and roughly when it happened.
+-   If the same error keeps returning, contact support with the sequence name and roughly when it happened.
