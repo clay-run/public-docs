@@ -117,6 +117,18 @@ With `Ask for approval`, the global agent stops and shows you an approval card b
 -   Archiving a segment, deleting a segment field, or deleting a workflow, a workflow alert, or a Claygent.
 -   Accepting or dismissing a suggested change to your Knowledge Hub.
 
+### Why an approval card says "It may change data outside Clay."
+
+A workflow run the global agent asks to start runs every step for real, including steps that write to other tools. When the run includes a step that may change data outside Clay, the approval card adds the sentence `It may change data outside Clay.` Approving that card lets those steps run.
+
+The global agent's approval card counts these workflow steps as ones that may change data outside Clay:
+
+-   An HTTP call that does more than read, such as a `POST`, `PUT`, `PATCH`, or `DELETE` request.
+-   An action that writes to another tool — for example, one that creates, updates, deletes, sends, or enrolls records, such as creating a CRM record or enrolling a contact in a sequence. Sources and writes to Audiences don't count.
+-   A function, or a call into another workflow.
+
+The sentence appears on the cards for `Run workflow`, `Run test data`, and `Re-run workflow runs`. A card for a run with no such steps shows no extra sentence. Cards for resuming a paused run, resuming a trigger, and running a workflow on a trigger's existing records don't add the sentence, so check the workflow's steps before you approve those.
+
 ### What runs without asking under Ask for approval
 
 With `Ask for approval`, building and editing go ahead on their own, and so does some work that spends credits. These need no approval:
