@@ -73,6 +73,20 @@ This is useful for **flattening lists**. For example, if you run Find Active Job
 
 You can also select additional data to send along with the flattened list, just like with `Send row`.
 
+**Getting each contact's details (name, email, title) into columns in the destination table**
+
+When you use `Send row for each item in a list`, each new row in the destination table holds that one list item's own fields. For example, if you flatten a `records` or `People` list of contacts, each destination row holds one contact's name, email, title, and profile URL. These fields are stored in the destination table's leftmost **"rows from: [source table name]"** cell. Any additional data you selected (such as the account name or account ID) is stored in the same cell under a `parent` field.
+
+**Auto-extract new columns** only creates destination columns for the additional data you selected. It doesn't create columns for the list item's own fields. So after the first send, you may see your account-level columns in the destination table but no columns for each contact's details. To add a list item's fields as columns in the destination table:
+
+1.  Open the destination table and click a **"rows from: [source table name]"** cell.
+2.  In the cell details panel, hover over the field you want (for example, the contact's email).
+3.  Click **Add to column**.
+4.  Name the column and click **Create column**, or select a column under **Map to an existing column**.
+5.  Repeat for each contact field you need.
+
+Each new column pulls that field from its row's **"rows from"** cell, so every row shows its own contact's details.
+
 **Tip: Use "Take action on list" to set this up automatically**
 
 The easiest way to configure `Send row for each item in a list` is to use the **Take action on list** shortcut from the cell details panel:
@@ -175,7 +189,7 @@ Automatically maps incoming fields to existing destination columns that share th
 
 When you send data to a destination table, it appears in the leftmost column as **"rows from: \[source table name\]"**. The data is stored within this cell and needs to be extracted into individual columns to use it in your workflow.
 
-**Tip:** `Auto-extract new columns` is **on by default** and automatically creates a new column for each sent field — but only for fields that don't already have a matching column in the destination table. If your destination table already has columns with plain-text (non-formula) data, those columns won't be updated automatically. Use **Add to column** below to map those fields manually, or enable `Auto-map existing columns` in the advanced settings.
+**Tip:** `Auto-extract new columns` is **on by default** and automatically creates a new column for each sent field — but only for fields that don't already have a matching column in the destination table. If your destination table already has columns with plain-text (non-formula) data, those columns won't be updated automatically. Use **Add to column** below to map those fields manually, or enable `Auto-map existing columns` in the advanced settings. With `Send row for each item in a list`, `Auto-extract new columns` only creates columns for the additional data you selected, not for each list item's own fields (such as a contact's name or email). Use **Add to column** to extract those fields — see [Using Send row for each item in a list](#using-send-row-for-each-item-in-a-list).
 
 To manually map data from the source column to columns in the destination table:
 
@@ -344,7 +358,7 @@ Scheduled column re-runs force-run every row in the selected columns regardless 
     4. **Extract only the specific keys you need from large JSON or object fields.** Rather than sending a whole object, pull just the keys your destination actually uses into individual formula columns and send those.
     5. **Pass a reference instead of the full content.** If the large field already lives in an external system (Salesforce, Airtable, etc.), send only the record ID or a URL — the destination can look it up when needed.
 
--   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically. However, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
+-   **"✅ Sent" means Clay dispatched the data — not that individual columns in the destination table have been populated.** The `Sent At` timestamp and `Number Of Rows Sent` confirm that Clay placed those rows into the **"rows from: [source table]"** column in the destination table. For fields that don't yet have a matching column, `Auto-extract new columns` (on by default) creates them automatically — except for each list item's own fields when you use `Send row for each item in a list`, which you extract with **Add to column**. Also, if the destination table already has columns with plain-text data — for example, rows filled in manually or imported from a CSV — those existing columns won't be updated automatically. In that case, open the destination table, click the source cell, and use **Add to column** to map each field. See [Mapping table data in the destination table](#mapping-table-data-in-the-destination-table) above.
 -   **A mapped column never appears in the destination table even though `Auto-extract new columns` is on, while other mapped columns work:** The destination table has most likely hit its column limit. `Auto-extract new columns` checks the column limit against the total number of new columns a Send table data column needs to create, not one column at a time. If the destination table's current column count plus those new columns is more than the table's column limit (**100** by default, or a higher custom limit if Clay support raised it for your workspace), **none** of the new columns are created, and no error message appears. Mapped fields that already have a matching column in the destination table still receive data, which is why some columns keep working while the new ones are missing.
 
     **Example:** A destination table has 111 columns and a custom column limit of 120. A Send table data column maps 63 fields, and 51 of them don't have a matching destination column yet. 111 + 51 = 162, which is over 120, so none of the 51 new columns are created. A Send table data column that needs only 1 new column gives 111 + 1 = 112, which is within 120, so that column is created.

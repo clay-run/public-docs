@@ -1,7 +1,7 @@
 ---
 title: Launch and manage a campaign
 description: Set a campaign's schedule and credit budget, launch it, and pause, resume, or complete it as leads move through the sequence.
-last_synced: 2026-11-06T23:41:09.596Z
+last_synced: 2026-11-19T19:14:14.559Z
 ---
 
 # Launch and manage a campaign
@@ -14,7 +14,7 @@ From there, managing a campaign comes down to three controls: pause it to make c
 
 ## Schedule settings
 
-A campaign's sending window lives on the `Settings` tab, in the `Schedule` section at the top. Start with `Schedule type` — it sets the shape of the window, and only `Custom schedule` exposes the individual fields.
+A campaign's sending window lives in its settings: click the campaign's name at the top of the page and choose `Settings`. `Schedule` is the section at the top. Start with `Schedule type` — it sets the shape of the window, and only `Custom schedule` exposes the individual fields.
 
 `Timezone` applies to every schedule type but `As fast as possible`, which hides the field. `Custom schedule` opens four more:
 
@@ -34,7 +34,7 @@ As you change these fields, the line above them updates with what the schedule a
 
 `Max new leads per day` caps how many new leads the campaign contacts each day, whichever schedule type you've picked. It defaults to 100,000 and limits new leads only, not follow-ups to leads already in the sequence. Daily volume comes from the sender accounts you've selected and their individual send limits, which is why selecting several accounts is what makes a campaign move faster.
 
-One setting does shape how that capacity gets spent. `Follow-up percentage`, further down the `Settings` tab, sets the share of emails allocated to follow-ups for leads already in the sequence before Clay reaches out to new ones.
+One setting does shape how that capacity gets spent. `Follow-up percentage`, further down in `Settings`, sets the share of emails allocated to follow-ups for leads already in the sequence before Clay reaches out to new ones.
 
 ## Setting a credit budget
 
@@ -93,6 +93,19 @@ From there, an enrolled lead:
 -   Runs to the end of the sequence if it's left alone.
 -   Stops early when the lead replies. An out-of-office auto-reply is recognized as such, so it doesn't end the lead's sequence the way a genuine reply does.
 -   Stays in the campaign for good. You can pause it, and pausing is how you stop sending to someone, but you can't remove it.
+
+### Following a lead's status
+
+Each lead's progress is written to its feed on the `Activity` tab, and the `Lead status` filter narrows the feed to one kind of entry. Before a lead's first email goes out, its feed shows where enrollment stands:
+
+| Status | What it means |
+| --- | --- |
+| Pending enrollment | The lead has been picked up from the segment and is waiting to be added to the campaign. |
+| Enrolled | The lead’s emails are rendered and it’s in the campaign, sending on schedule. |
+| Enrollment failed | The lead couldn’t be added, so it isn’t receiving emails from this campaign. The entry’s Failure reason says why, and the lead is marked with an icon in the lead rail. |
+| Paused | The lead has stopped receiving emails, for example after leaving the segment. |
+
+Once sending starts, the lead's email events follow in the same feed: `Sent`, `Opened`, `Clicked`, `Replied`, `Bounced`, and `Unsubscribed`. For counts across the whole campaign rather than one lead, the `Lead status snapshot` on the `Analytics` tab groups every lead by where it stands. [Campaign analytics and replies](https://university.clay.com/docs/campaign-analytics-and-replies) walks through its buckets.
 
 ## Pause, resume, and complete
 
