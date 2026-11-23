@@ -67,3 +67,18 @@ The Initial check does not compare against your current CRM data. It scans each 
 For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
 
 To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.
+
+### My contacts are in Audiences — why don't their job changes show up in Audiences filters?
+
+A Job Change Signal created on a workbook table writes results to that table's dedicated results table only — signal data is **not** forwarded to Audiences. Because of this, an Audiences filter for job changes will return no results even if the same contacts were later imported into Audiences.
+
+To track job changes for contacts in Audiences and filter on them:
+
+1.  Open your People audience (or a specific People segment).
+2.  Click `Enrich` → `Signals` → `Job Change`.
+3.  Enable **Initial check** and choose a lookback window (**3 months**, **6 months**, or **1 year**). This scans each contact's work history so past changes — including contacts who had already changed jobs before you set up the signal — are captured.
+4.  Set the recurrence frequency, then click `Save and Run`.
+
+After the signal completes its initial run, you can filter any segment by **Job change results** to surface matching contacts.
+
+**Why importing from a CRM doesn't help:** When a contact's record in Audiences already reflects their new company (because the CRM was updated before the import), the signal has no prior company to compare against on future runs. Enabling Initial check (step 3 above) picks up those past changes by scanning each contact's work history rather than comparing old versus current company records.
