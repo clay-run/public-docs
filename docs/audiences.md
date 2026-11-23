@@ -1082,7 +1082,7 @@ If you open Salesforce under **Add source** in Audiences and see your sandbox (o
 1.  In Audiences, open **All People** or **All Companies** and click the **Sources** tab.
 2.  Open the Salesforce source settings page. Either click **Add source**, select **Salesforce** in the **Browse sources** panel, and click **View settings**, or click the **⋮** menu next to any Salesforce import row on the Sources tab and select **Settings**.
 3.  In the header of the Salesforce settings page, click **Manage** and select **Disconnect**.
-4.  In the **Disconnect Salesforce account from Audiences?** dialog, click **Disconnect**.
+4.  Review the disconnect dialog, then click **Disconnect Salesforce**. If the Salesforce account has imports, the dialog title shows how many imports will stop syncing (for example, **2 imports will stop syncing**) and lists the name of every import from that account that will disconnect. If the account has no imports, the dialog title reads **Disconnect Salesforce account from Audiences?**.
 5.  Back on the **Sources** tab, click **Add source** and select **Salesforce**. Now that no Salesforce account is linked, the **Select Salesforce account** dropdown appears. Choose the account you want to use, for example your production org.
 6.  Set up your Salesforce imports and field mappings again on the new account.
 
