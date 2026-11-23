@@ -81,15 +81,21 @@ See [Knowledge Hub](https://university.clay.com/docs/knowledge-hub) for what liv
 
 ### Saving a workspace skill from a chat
 
-You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires a Workspace Admin.
+You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires the `Admin` or `Editor` role in the workspace.
 
--   **Workspace Admins:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
--   **Everyone else:** the global agent doesn’t save the skill. It tells you to ask a Workspace Admin to add it.
+-   **Admins and Editors:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
+-   **Without access:** if Clay refuses the save, the global agent doesn’t save the skill. It tells you to ask a Workspace Admin for access to Clay’s agent.
 -   **Drafts:** anyone can ask for a skill draft. The global agent shows the draft as formatted text in the chat and doesn’t save it.
 
 A saved workspace skill shows up when you type `$` or `/` in the message box as soon as the run finishes, without reloading the page. If a skill with that name already exists, the new skill is saved under the same name with `-2`, `-3`, and so on added to the end, and the global agent tells you the name it used.
 
 Saving a skill from a chat stores the Markdown instructions only. To upload a skill folder with reference files, scripts, or other assets, use the `Agent skills` page in workspace settings.
+
+### Who can manage workspace skills
+
+Workspace Admins and Editors can create, update, and delete workspace skills — from a chat with the global agent, on the `Agent skills` page in workspace settings, or by adding a skill from the Clay marketplace. A workspace skill saved by any Admin or Editor is available to everyone in the workspace who uses the global agent.
+
+If you open a skill link from the Clay marketplace without Editor access, Clay shows `Editor access required` instead of adding the skill. Ask a Workspace Admin to give you editor access, then open the link again.
 
 ## Permissions and approvals
 
