@@ -30,6 +30,14 @@ To create a user group:
 
 All workspace members — admins, editors, and viewers — can view the group directory at `Settings` → `Teams` → `Groups` tab. You can see each group's name and member count, and click into any group to see its full membership list. Use the search bar to filter groups by name.
 
+To narrow the Groups tab by where each user group comes from, use the `Type` filter:
+
+-   `All`: shows every user group.
+-   `SCIM`: shows only SCIM-managed user groups synced from your identity provider.
+-   `Clay`: shows only user groups created in Clay.
+
+If SCIM provisioning isn't enabled for your workspace, or your SCIM connection isn't actively syncing, the `SCIM` option is unavailable and shows as `SCIM (not enabled)`. See [SCIM-managed user groups](#scim-managed-user-groups).
+
 You can also view groups from the member perspective by navigating to `Settings` → `Members`. From this view, you can see which groups each member belongs to. Clicking on a group name will take you to that group's detail page.
 
 ### Editing a group
