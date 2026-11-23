@@ -35,12 +35,12 @@ To upgrade your Clay workspace plan:
 3.  Select the plan you want to upgrade to and review the details.
 4.  Confirm your selection by clicking `Review change → Continue to payment`.
 
-Your new plan will activate immediately, and any applicable charges will be applied.
+Your new plan activates as soon as the upgrade payment goes through. If the payment fails, your workspace stays on its previous plan and balances until the payment succeeds — see [Why didn't my Actions or Data Credits update after I upgraded?](#why-didnt-my-actions-or-data-credits-update-after-i-upgraded).
 
 **How upgrade billing works:**
 
 -   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
--   You receive the **full** Actions and Data Credits for your new plan right away.
+-   You receive the **full** Actions and Data Credits for your new plan as soon as the upgrade payment succeeds.
 -   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
 -   Your existing unused Data Credits are preserved when you upgrade.
 
@@ -181,13 +181,25 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### Is upgrading my plan prorated?
 
-No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, once the upgrade payment succeeds, you receive the **full** Actions and Data Credits for your new tier, not just the incremental difference over your current plan.
 
 Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
 
 If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
+
+### Why didn't my Actions or Data Credits update after I upgraded?
+
+When you upgrade your plan (for example, from Launch to Growth), Clay adds your new plan's Actions and Data Credits only after the upgrade invoice is paid successfully. If the upgrade payment fails — for example, because your card was declined — your Actions and Data Credits are not refreshed. If you had already used up your previous plan's Actions, `Settings` → `Usage` keeps showing **0** available Actions and the message "You've exceeded your plan's usage limit" until the payment goes through.
+
+To check for and fix a failed upgrade payment:
+
+1.  Click your profile picture in the top-right corner and select `Settings`.
+2.  Navigate to `Plans & billing`. If the upgrade payment failed, you'll see the notice "Your latest invoice payment has failed."
+3.  In that notice, click `update` to change your billing information, or click `retry your payment` to charge your payment method again. You can also update your card with `Edit payment method...` (see [Billing](#billing)).
+
+Once the upgrade invoice is paid, your new plan's Actions and Data Credits are added to your workspace automatically — you don't need to contact support. If the payment keeps failing, see [Why might my payment fail?](#why-might-my-payment-fail). If the invoice shows as paid but your Actions or Data Credits still haven't updated, contact [Clay support](https://app.clay.com).
 
 ### What if I need more actions or data credits?
 
