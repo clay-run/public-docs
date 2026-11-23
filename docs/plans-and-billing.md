@@ -39,10 +39,9 @@ Your new plan will activate immediately, and any applicable charges will be appl
 
 **How upgrade billing works:**
 
--   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
+-   When you upgrade immediately to a more expensive self-serve plan, Clay automatically credits the value of your unused Data Credits and Actions from your current billing period toward the new plan. This appears as **Unused plan credit** in the checkout summary and reduces the amount due today. See [Is upgrading my plan prorated?](#is-upgrading-my-plan-prorated) for how it's calculated and when it doesn't apply.
 -   You receive the **full** Actions and Data Credits for your new plan right away.
--   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+-   After an immediate upgrade, your Data Credit balance resets to the new plan's allocation — your previous balance doesn't carry over, because its value is already included in the Unused plan credit.
 
 ### Free plan
 
@@ -181,9 +180,28 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### Is upgrading my plan prorated?
 
-No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+Yes, through an **Unused plan credit**. When you upgrade a self-serve Clay plan immediately to a more expensive plan, Clay calculates the value of the unused Data Credits and Actions from your current billing period and applies it automatically as a discount on your upgrade invoice. You then receive the **full** Actions and Data Credits for your new plan right away, not just the incremental difference over your current plan.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+The Unused plan credit is calculated as follows:
+
+-   **Monthly plans:** The unused Data Credits and Actions from your current billing period, valued at your current plan's rate. Data Credits count only up to one month's plan allocation — rolled-over credits above that allocation aren't included.
+-   **Annual plans:** The same calculation (Data Credits count up to your annual allocation), capped at the prorated value of the time left on your annual term.
+-   **Actions on legacy plans:** Legacy plans don't charge for Actions, so only unused Data Credits contribute to the Unused plan credit.
+-   **All plans:** The Unused plan credit can't reduce your upgrade invoice below $1.
+
+After an immediate upgrade with an Unused plan credit, your Data Credit balance resets to the new plan's allocation. Your previous balance doesn't carry over, because its value is already included in the credit. Before you confirm, the checkout shows "Data credit balance will refresh to [N] when your plan is updated."
+
+**When the Unused plan credit doesn't apply:**
+
+-   **Scheduled plan changes, downgrades, and renewals.** Changes set to take effect at the end of your billing period, downgrades, and renewals don't receive an Unused plan credit. They follow the standard rollover rules in [Do credits roll over?](#do-credits-roll-over).
+-   **Annual plan to monthly plan.** Moving from an annual plan to a monthly plan doesn't receive an Unused plan credit, even if the monthly plan costs more, and the unused part of the annual plan isn't refunded. When the change takes effect, your Data Credit balance is reduced to the monthly plan's rollover cap (2× its monthly credit limit), and any credits above that cap are forfeited. If you want to use all the credits you've already paid for, stay on your annual plan until it renews, then switch to the monthly plan.
+-   **Enterprise plans.** Contact your Growth Strategist about plan changes.
+
+**Preview your exact upgrade cost:** Before you pay, you can see the Unused plan credit and the amount due today:
+
+1.  Click the credits indicator in the top bar and select `View plan options`.
+2.  Select the plan you want to move to and click `Review changes`.
+3.  Check the `Plan cost summary` and `Transaction summary`. The **Unused plan credit** line shows the discount, followed by the estimated amount due today before tax.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
 
