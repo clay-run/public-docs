@@ -43,7 +43,7 @@ To add a data source, open `All People` or `All Companies`, go to the `Sources` 
 
 If Audiences has no data yet, the **All People** or **All Companies** page opens on **Get started with Audiences** instead. Pick a source there or click **Browse all sources**.
 
-The location of these controls varies by interface. A missing **Add data** button alone does not mean you lack permissions. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot ask you to connect an account first, then add each object through a wizard.
+The location of these controls varies by interface. Adding or configuring a source still requires Admin access. Most sources open a guided wizard that takes the import one step at a time — `CSV file`, `Clay table`, `Snowflake`, `Google BigQuery`, and `Databricks` all work this way. Salesforce and HubSpot ask you to connect an account first, then add each object through a wizard.
 
 **Note:** Non-admin workspace members (Editors and Viewers) can view, browse, and filter audience data, but adding or configuring data sources requires Admin access. Non-admins do not see source setup or configuration controls — those controls are hidden for Editors and Viewers, who instead see a prompt to contact a workspace Admin. If you need to add a data source, ask a workspace Admin to do it, or have your role upgraded to Admin.
 
@@ -179,7 +179,7 @@ A record subset import works alongside any standard Salesforce import. You can a
 
 **Note:** Each HubSpot object is set up as its own import, and one connection can hold several, including list imports. Clay lists every import you add in the HubSpot source settings, where you can open or remove any of them.
 
-1.  Open **All People** or **All Companies** → **Sources** → **Add source** (or **Add data** → **Add Source**), select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview), then choose your account under `Select HubSpot account`.
+1.  Open **All People** or **All Companies** → **Sources** → **Add source**, select your [**HubSpot integration**](https://university.clay.com/docs/hubspot-integration-overview), then choose your account under `Select HubSpot account`.
 2.  Click `Connect`, or `Add records` if the account is already connected to Audiences. Either one opens the `Add records from HubSpot` wizard.
 3.  Choose the `Object type` — `Companies`, `Contacts`, or `Deals` — and select `All records` under `Record selection`.
     -   Deal data is associated with both your Companies and People records. In a Companies audience, you can filter by deal attributes. In a People audience, only contacts directly linked to a deal via HubSpot contact associations appear when you filter on deal attributes — not all contacts at the company that owns the deal.
