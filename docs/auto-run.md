@@ -90,6 +90,20 @@ To refresh downstream cells after running an upstream column:
 -   **Force-run the downstream column**: right-click the column header → **Run column → Force run all [N] rows**. Force run re-executes every cell regardless of its current state, bypassing the keep-existing check.
 -   **Turn off "Keep existing results"** (⛭ icon → **Run Settings** → uncheck **Keep existing results**), then right-click the downstream column header → **Run column → Run [N] empty or out-of-date rows**. You can re-enable "Keep existing results" after the downstream columns have finished running.
 
+**Ran cells in one column and a different column ran too (for example, a work email waterfall also triggered a personal email waterfall)**
+
+When table-level auto-run is on, running cells in one column (even a handful of selected cells) can cause another column to run on those same rows if that other column uses the first column as an input. Auto-run is dependency-driven: each time a cell in an input column runs on a row, Clay checks every column that references that input and runs it on that row if it's eligible. That means it has its own Auto-run toggle on, any run condition is met, and "Keep existing results" doesn't skip it.
+
+This also applies to waterfalls. If a step in a waterfall references another column as an input, the whole waterfall depends on that column. For example, if the first provider step of a personal email waterfall takes the work email column as an input, running work email cells with auto-run on also triggers the personal email waterfall on those rows. Two waterfalls can look independent in the table and still be linked through one step's input.
+
+**Column order doesn't affect this.** Clay decides which columns run, and in what order, based on which columns feed into each other, not on where they sit in the table. Moving the dependent column to the left of its input column won't stop it from running.
+
+To stop the dependent column from running automatically when you run its input column, do one of the following:
+
+-   **Turn off auto-run for the dependent column**: click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**. For a waterfall, this setting applies to the whole waterfall. You can still run it on demand from the column header (**Run column → Run N rows**).
+-   **Remove the reference**: edit the dependent column (or the waterfall step) and remove the input that points to the other column. This breaks the dependency entirely.
+-   **Turn off table-level auto-run** (⛭ icon → **Run Settings** → toggle **Auto-run** off) while testing, so that no column runs unless you trigger it yourself.
+
 ### Understanding the out-of-date indicator
 
 The out-of-date clock indicator on a cell means the cell is stale — it has an existing result but auto-run is not re-running it. The most common cause is "Keep existing results" being enabled: Clay skips cells that already have a result rather than overwriting them and spending credits. The cell's current value is still usable downstream; other columns can reference it normally.
