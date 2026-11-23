@@ -188,7 +188,7 @@ A record subset import works alongside any standard Salesforce import. You can a
 10.  Name the corresponding Clay fields.
 11.  Click `Save and Preview`, then `Confirm`.
 
-**Note: HubSpot is currently import-only.** Clay imports HubSpot records and enriches them in your Audience, but does not currently write enriched data or segment membership back to HubSpot. Salesforce is the only native write-back destination — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+**Note: HubSpot is currently import-only.** Clay imports HubSpot records and enriches them in your Audience, but the HubSpot source doesn't natively write enriched data or segment membership back to HubSpot. Salesforce is the only native write-back destination. To send Audiences data to HubSpot, use a workflow export — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 **Troubleshooting — "Export permission required":** If the HubSpot account you select is missing the **Export CRM data** permission, Clay displays a warning and disables the Connect button. Click **Re-authorize HubSpot** in the warning to reconnect your account with the required permission enabled, then continue setup.
 
@@ -843,7 +843,7 @@ With **Premium** or **Standard**, Clay queries its provider network to find and 
 
 ## Writing back to your CRM
 
-**Note:** Salesforce is currently the only native export destination in Audiences. HubSpot export from Audiences is not yet available — to write data to HubSpot, see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
+**Note:** Salesforce is the only native export destination in Audiences — the only CRM with Export sync and per-field write rules. HubSpot has no native export from Audiences. To send Audiences data to HubSpot or another tool, create a workflow export from the **Exports** tab in **All People** or **All Companies** — see [How do I write enriched data back to HubSpot from Audiences?](#how-do-i-write-enriched-data-back-to-hubspot-from-audiences) in the FAQs below.
 
 Audiences supports **bidirectional sync** with Salesforce. Write-back covers Salesforce `Accounts` and `Contacts`. To push data from Audiences back to Salesforce, you must first enable the **Export sync** toggle in your Salesforce source settings — this is the master switch for all outbound writes. Even if individual fields are configured with an "Always write" rule, no data flows to Salesforce until Export sync is enabled.
 
@@ -1815,7 +1815,17 @@ To write Clay enrichments to fields on a Salesforce custom object, use a Salesfo
 
 ### How do I write enriched data back to HubSpot from Audiences?
 
-To push enriched data to HubSpot, [connect a workflow to your Audience segment](#connecting-a-workflow-to-a-segment). Add your enrichment steps, then add a HubSpot **Update object** action for existing records or **Create object** for new records. Map the required record identifiers and properties to your Audience data and enrichment outputs.
+HubSpot isn't a native export destination in Audiences. Only Salesforce has native Export sync. You send Audiences data to HubSpot with a workflow export instead. If you only see Salesforce offered as an export destination, use a workflow export to write to HubSpot.
+
+**To create a HubSpot workflow export from Audiences:**
+
+1.  Open **All People** or **All Companies** and select the **Exports** tab. If you have no exports yet, the tab shows **No exports yet**.
+2.  Click **Add workflow export**. If your workspace has more than one credit budget, a **Create workflow** dialog opens: keep the default name (**New Audiences Export Workflow**) or rename it, pick a budget, and click **Create**.
+3.  The workflow editor opens with a scheduled segment trigger, set to run weekly by default, and an empty export step. On the trigger, select the segment you want to export and adjust the schedule if needed.
+4.  In the export step, add a HubSpot **Update object** action to update existing HubSpot records, or **Create object** to create new ones. Map the HubSpot record identifiers and properties to your Audience fields.
+5.  Test on a small set of records, confirm the results in HubSpot, then publish the workflow. Your workflow export then appears in the **Exports** tab.
+
+You can also push enriched data to HubSpot by [connecting a workflow to your Audience segment](#connecting-a-workflow-to-a-segment). Add your enrichment steps, then add a HubSpot **Update object** action for existing records or **Create object** for new records. Map the required record identifiers and properties to your Audience data and enrichment outputs.
 
 Test on a small set of records and confirm the results in HubSpot before publishing. Use a segment trigger to process new members, or a scheduled segment trigger for recurring processing, subject to your plan's trigger access.
 
