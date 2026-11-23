@@ -290,6 +290,19 @@ When adding a new source to an existing table, you must have the appropriate col
 
 **Note:** If Sculptor put the table into Sandbox mode, use the **Review changes** button instead of **Exit Sandbox** — clicking Exit Sandbox discards all of Sculptor's proposed changes without saving them. See [Sandbox mode](sandbox-mode.md) for the full publishing step-by-step.
 
+### I see "You do not have update access to the source's subscribed tables" when saving a search
+
+**This error is not a permissions problem. It means a table the source feeds into is in sandbox mode.** Workspace admins and table owners see this error too. Clay shows "You do not have update access to the source's subscribed tables" when you save changes to a source's search (for example, editing the filters of a Find Companies or Find People search), re-run the source, or delete the source while a table that the source adds rows to is in [sandbox mode](sandbox-mode.md).
+
+While a table is in sandbox mode, the original table is locked: changes can only be made in the sandbox copy. Saving a search writes directly to the original table, so Clay blocks it. Sandbox mode can be turned on without you clicking **Sandbox Mode** yourself. When the AI chat ([Sculptor](sculptor.md)) builds or updates columns in a table, it automatically puts that table into sandbox mode.
+
+**To fix this error, take the destination table out of sandbox mode in one of two ways:**
+
+-   **Publish the sandbox (keeps the sandbox changes):** In the table, click **Review changes** in the tab bar above the table, then click **Publish and don't run** or **Publish and run** in the **Sandbox review** window. This copies the sandbox changes, including any columns the AI chat added, into the original table and ends sandbox mode.
+-   **Turn off sandbox mode (discards the sandbox changes):** Click the **⚙️** icon on the right side of the tab bar above the table (the bar with the **Test data** and **All data** tabs), select **Turn off sandbox mode**, and confirm. This deletes the sandbox copy and all unpublished changes in it, and leaves the original table as it was. Discarded sandbox changes can't be recovered, so only use this option if you don't need what was built in the sandbox.
+
+Once the table is out of sandbox mode, save the search again. The save should now go through.
+
 ### I see "Limit of 20 sources for source field reached" when adding a source
 
 **Each Clay table supports a maximum of 20 sources.** If you try to add a 21st source, Clay shows the error: *"Limit of 20 sources for source field reached. Please create another table to add more sources."*

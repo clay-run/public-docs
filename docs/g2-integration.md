@@ -1,7 +1,7 @@
 ---
 title: G2 integration
 description: Find G2 products and pull their ratings, features, reviews, and competitors, and build lists of companies showing buyer intent on G2.
-last_synced: 2026-10-26T23:46:19.454Z
+last_synced: 2026-11-18T19:19:26.200Z
 ---
 
 # G2 integration
@@ -15,7 +15,7 @@ G2 is a software marketplace where buyers research, compare, and review business
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `G2` and select from the results.
 3.  In the modal, you will be asked to `Select G2 account`.
-    -   G2 runs on a Clay-managed account, so you don't need your own credentials for most actions. `Find companies with G2 Buyer Intent` is the exception — it requires your own G2 API key.
+    -   G2 runs on a Clay-provided account, so you don't need your own credentials for most actions. `Find companies with G2 Buyer Intent` is the exception — it requires your own G2 API key.
     -   To use your own key instead, click `+ Add account` and enter your G2 API key. You can then select that account on any G2 action. ([Learn more about managing integration accounts](https://university.clay.com/docs/managing-integration-accounts))
 
 ### `Source` Find companies with G2 Market Signals
@@ -51,7 +51,7 @@ Build a list of the companies researching your own G2 products, with the activit
 
 **Note:** This is the one G2 action that requires your own G2 API key.  
 
-It reads the intent data G2 collects for the products your own company owns, which a Clay-managed account can't retrieve, so add your key under `+ Add account` before setting this source up.
+It reads the intent data G2 collects for the products your own company owns, which a Clay-provided account can't retrieve, so add your key under `+ Add account` before setting this source up.
 
 **Inputs**
 

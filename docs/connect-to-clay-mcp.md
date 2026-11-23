@@ -1,7 +1,7 @@
 ---
 title: Connect your platform to Clay MCP
-description: Register your platform as an OAuth client via Dynamic Client Registration and connect it to Clay's MCP server.
-last_synced: 2026-11-10T19:42:42.327Z
+description: Register your platform as an OAuth client via Dynamic Client Registration, connect it to Clay's MCP server, and learn how long tokens last and how MCP rate limits work.
+last_synced: 2026-11-19T07:39:05.014Z
 ---
 
 # Connect your platform to Clay MCP
@@ -91,6 +91,8 @@ Access tokens last one hour. Refresh an expired token with `grant_type=refresh_t
 
 Clay rotates refresh tokens. Every refresh returns a new `refresh_token` alongside the new `access_token`, and the token you sent is retired — persist the new one each time, or the next refresh fails with `invalid_grant`. Presenting a refresh token under a different `client_id` than the one it was issued to revokes that token immediately, so don't reuse tokens across registrations.
 
+Refresh tokens issued to clients registered at `/oauth/register` have no set expiry, so as long as you persist the rotated token after every refresh, the user doesn't need to sign in again. The user only has to run the authorization flow again if the refresh token is revoked (for example, through the revocation endpoint) or the refresh is refused — for example, because a workspace admin turned your client off under `Allowed MCP clients` (see [Authorization or refresh returns `access_denied`](#authorization-or-refresh-returns-access_denied)).
+
 ### Connecting to the MCP server
 
 1.  `POST` to `https://api.clay.com/v3/mcp` with an `Authorization: Bearer <access_token>` header.
@@ -103,7 +105,7 @@ Two things on the customer's side decide whether your client can connect at all.
 
 First, the person authorizing has to be a member of the workspace they select, since tools run against that workspace's data.
 
-Second, admins choose which clients their workspace accepts. Under `Allowed MCP clients` on the `MCP` page, which admins open from the sidebar on the Clay homepage, each client Clay recognizes gets its own toggle, alongside an `Unknown` option described in-product as `Use this for any other MCP client not listed above.` That `Unknown` toggle is the one that governs clients registered through DCR. Clay re-checks the policy every time it issues a token, so turning it off blocks token refreshes as well as new connections.
+Second, admins choose which clients their workspace accepts. Under `Allowed MCP clients` on the `Agent users` page, which admins open from the sidebar on the Clay homepage, each client Clay recognizes gets its own toggle, alongside an `Unknown` option described in-product as `Use this for any other MCP client not listed above.` That `Unknown` toggle is the one that governs clients registered through DCR. Clay re-checks the policy every time it issues a token, so turning it off blocks token refreshes as well as new connections.
 
 For how admins manage MCP access, credit limits, and functions, see [**MCP in Clay**](https://university.clay.com/docs/mcp-settings).
 
@@ -141,7 +143,24 @@ Because registration is open, Clay can't treat a self-chosen `client_name` as an
 
 ### Can I use the device authorization flow instead?
 
-Not through DCR. Clay advertises a `device_authorization_endpoint` and its token endpoint accepts the device code grant, but registration only accepts `authorization_code` and `refresh_token` as grant types. Use the authorization-code flow, and reach out to the Clay team if the device flow is genuinely the only option for your client.
+Not through DCR. Clay advertises a `device_authorization_endpoint` and its token endpoint accepts the device code grant, but device-code sign-in is limited to Clay's own apps. Registration only accepts `authorization_code` and `refresh_token` as grant types, so a client registered at `/oauth/register` that calls the device authorization endpoint gets `unauthorized_client` with the description `Client is not authorized for the device authorization grant`. Use the authorization-code flow instead.
+
+### Is there a service token or non-interactive sign-in for servers?
+
+No. Clay's MCP server doesn't offer a service token, API key, or `client_credentials` grant. For a backend service, the supported route is to run the authorization-code flow once in a browser, then keep the connection alive with refresh tokens: access tokens last one hour, refresh tokens from `/oauth/register` clients have no set expiry, and each refresh returns a new refresh token to store.
+
+### Can a backend service use Clay MCP through one shared Clay user?
+
+Technically, yes. A backend service can authorize once as a dedicated Clay user — a service account — and make MCP requests on behalf of many of your own users through that one connection. Tools run as that Clay user against the workspace they selected at consent, and Clay's MCP rate limits apply per workspace rather than per user, so one shared account gets the same request headroom as several individual users in the same workspace (see [What are the rate limits for Clay MCP?](#what-are-the-rate-limits-for-clay-mcp)).
+
+### What are the rate limits for Clay MCP?
+
+Clay MCP rate limits apply per workspace and are shared by every user and client connected to that workspace. The two limits are:
+
+-   **All MCP requests:** 600 requests per minute, with bursts of up to 200 requests.
+-   **Tool calls (`tools/call`):** 300 tool calls per minute, with bursts of up to 30 tool calls.
+
+Tool calls count toward both limits. When a workspace goes over either Clay MCP limit, the request returns HTTP `429` with a `Retry-After: 60` header and a JSON-RPC error with code `-32002` — `Rate limit exceeded. Please retry in 60 seconds.` for the all-requests limit, or `Too many tool calls. Please retry in 60 seconds.` for the tool-call limit. Wait 60 seconds before retrying.
 
 ### How long does a session last?
 

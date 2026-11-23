@@ -1,7 +1,7 @@
 ---
 title: Connect your own email accounts
-description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect accounts with auth errors.
-last_synced: 2026-11-10T20:17:32.598Z
+description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, how to reconnect or bulk-delete accounts with auth errors, and what happens to connected accounts when you downgrade to the Free plan.
+last_synced: 2026-11-19T19:10:36.670Z
 ---
 
 # Connect your own email accounts
@@ -105,9 +105,10 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 | IMAP settings (receiving) | IMAP host | Your provider’s incoming mail server |
 | IMAP settings (receiving) | IMAP type | SSL and TLS both use port 993, and None uses 143. |
 
-Two provider-specific details to watch for:
+Three provider-specific details to watch for:
 
--   Gmail mailboxes need an app password for SMTP access rather than the normal account password. You can create one in your Google account security settings, under 2-step verification.
+-   For a consumer Gmail address, Clay fills in the SMTP and IMAP hosts for you. When the `Sender email` ends in `@gmail.com` or `@googlemail.com`, the `SMTP host` field is set to `smtp.gmail.com` and the `IMAP host` field to `imap.gmail.com`. Both fields stay editable, and a host you type yourself is never overwritten. If you change the `Sender email` to a non-Gmail address, the hosts Clay filled in are cleared. Google Workspace addresses on your own domain aren't filled in automatically, so enter `smtp.gmail.com` and `imap.gmail.com` yourself for those.
+-   Gmail mailboxes need an app password for SMTP access rather than the normal account password. 2-step verification has to be turned on for the Google account before you can create one, and the app password option sits under it in your Google account security settings.
 -   If you enter an Outlook or Office 365 hostname, the modal points you back to Microsoft OAuth. Outlook retired IMAP access in 2022, so OAuth is the path that works for those mailboxes.
 
 ### Upload accounts in bulk
@@ -147,6 +148,18 @@ An account in `Auth error` can't send or fetch replies until it's reconnected. R
 
 For an account added through `Manual SMTP setup` or `Bulk CSV upload`, delete it and add it again with current credentials — that's the reliable fix. For accounts purchased through Clay, contact Clay support and they'll resolve it on their side.
 
+### Delete many accounts with auth errors at once
+
+You don't have to delete SMTP accounts one at a time. If a whole batch of accounts added through `Manual SMTP setup` or `Bulk CSV upload` shows `Auth error` (for example, after a CSV upload with the wrong passwords), delete them together on the `Email accounts` tab, then add them again with corrected credentials:
+
+1.  On the `Email accounts` tab, open the `Status` filter and tick `Auth error` so only those accounts are listed.
+2.  Tick the checkbox next to each account, or tick the checkbox in the column header to select them all. Shift-click selects a range. You'll see `N of M selected` at the top right.
+3.  Click `Actions`, then `Delete`.
+4.  Confirm with `Delete` in the dialog. Campaigns stop sending from the deleted accounts.
+5.  Add the accounts again through `Bulk CSV upload` with the corrected credentials.
+
+Any workspace role except Viewer can delete email accounts. Accounts connected through SMTP or CSV can be added again after you delete them. Accounts purchased through Clay can't be added again, and deleting one deletes every account on the same domain, so contact Clay support about purchased accounts instead of deleting them.
+
 ## FAQs
 
 ### Why does an admin have to authorize the Clay Sequencer app at all?
@@ -172,3 +185,11 @@ Either way, replies are fetched from the mailbox over IMAP and collected on the 
 Smartlead allows an email address to be connected to one account at a time, so an address that was previously linked to another Smartlead account has to be released there before it can connect here.
 
 If you have access to that Smartlead account, delete the address there and connect it again in Clay. If you don't, contact Clay support with the address you're trying to add and they can remove it for you.
+
+### What happens to my connected email accounts if I downgrade to the Free plan?
+
+The Free plan doesn't include Sequencer, so when a workspace moves to Free (or to any plan without Sequencer access), Clay deletes the email accounts you connected yourself — through Google OAuth, Microsoft OAuth, manual SMTP setup, or bulk CSV upload — from Clay and from Smartlead, Clay's email integration partner. Connected email accounts aren't kept in the workspace with warmup turned off; they're removed, and campaigns can no longer send from them. Deletion starts as soon as the plan change takes effect, with no grace period.
+
+Before you confirm a cancellation or a downgrade to Free, the confirmation dialog lists the connected email accounts that will be disconnected. Downgrading to a plan that still includes Sequencer keeps your connected email accounts in place.
+
+Email accounts purchased through Clay are handled separately: they're cancelled and deleted permanently when you downgrade to Free. See [What happens to my purchased email accounts if I downgrade my plan?](https://university.clay.com/docs/buying-email-accounts#what-happens-to-my-purchased-email-accounts-if-i-downgrade-my-plan).

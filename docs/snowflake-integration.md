@@ -1,7 +1,7 @@
 ---
 title: Snowflake integration
 description: Cloud-based data platform enabling data storage, analysis, and sharing.
-last_synced: 2026-04-26T01:40:42.804Z
+last_synced: 2026-11-17T20:51:15.788Z
 ---
 
 # Snowflake integration
@@ -243,6 +243,11 @@ Any valid `SELECT` works — tables, views, joins, and aggregations are all supp
 -   **Test your query in a Snowflake worksheet first** to confirm it returns the rows you expect before connecting it to Clay.
 
 Click `Test` to preview results, then click `Continue`.
+
+If a query runs too long, Clay stops it and shows `Your query took too long to complete. Simplify the query or precompute its results into a table, then import from that table.` There are two ways to fix it:
+
+-   **Simplify the query.** Remove joins, aggregations, or columns you don't need so the query finishes faster.
+-   **Precompute the results in Snowflake.** Run the expensive query in Snowflake, save its output to a table, then point your Clay query at that table with a simple `SELECT`.
 
 ### Configuring Import sync
 
