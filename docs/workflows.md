@@ -64,6 +64,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
+| Classify (alpha) | Sorts each record into one of the categories you define, like ICP fit, persona, or lead quality | Labeling records consistently against a fixed set of categories | Free during the alpha, through January 31, 2027 |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
 | Delay | Pauses the branch it sits on before the next node runs | Giving a downstream step time it needs | Free |
 
@@ -118,6 +119,28 @@ A `Code` conditional takes its branches from the code itself: Clay reads the `co
 Write both arguments out as text in the call rather than building them from a variable, since Clay reads them from the code without running it. If two nodes share a name, Clay asks you to use a unique name or the node's ID instead.
 
 Branches are keyed on the label, so two calls sharing one label collapse into a single branch — vary the label when you want separate paths. A code conditional has no `Otherwise` branch once its script has branches of its own, so a run whose code chooses nothing fails rather than falling through. Route to a name that isn't connected and the run fails too, naming the steps it could have continued to.
+
+### `Classify`
+
+**Classify is in alpha.** The `Classify` node sorts each record into one of the categories you define — ICP fit, persona, or lead quality, for example. You can add Classify as a node in a workflow (it sits under `Logic` in the node palette), add it as an enrichment column in a table by searching for `Classify`, or ask Sculptor to build a Classify step for you.
+
+To set up a Classify node:
+
+1.  Under `Input`, reference the column or upstream output you want classified.
+2.  Under `Categories`, write `Instructions` that describe how to classify the input.
+3.  Add your categories, each with a unique name and an optional description. A Classify node needs at least 2 categories and allows up to 255.
+4.  Optionally, set a `Minimum probability` between 0 and 1 so that low-confidence results are marked as uncertain. Leave it empty to always pick a category.
+
+**Classify pricing during the alpha.** Classify costs no data credits and no action credits through January 31, 2027. Pricing will be set before Classify becomes generally available.
+
+**Classify run limits during the alpha.** Limits apply per workspace:
+
+| Plan | Classify run limit |
+| --- | --- |
+| Free and Trial plans | 100 runs total |
+| Paid plans | 10,000 runs per day (resets at midnight UTC) and 500,000 runs total through January 31, 2027 |
+
+When your workspace reaches a Classify limit, further Classify runs stop with a message naming the limit you hit — for example, `Your workspace has reached its daily limit of 10,000 Classify runs.` On a Free or Trial plan, upgrade to a paid plan to keep using Classify. On a paid plan, wait for the daily limit to reset at midnight UTC, or contact Clay support to request a higher limit.
 
 ### `Run code`
 
