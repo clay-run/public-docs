@@ -103,6 +103,7 @@ Each lead's progress is written to its feed on the `Activity` tab, and the `Lead
 | Pending enrollment | The lead has been picked up from the segment and is waiting to be added to the campaign. |
 | Enrolled | The lead’s emails are rendered and it’s in the campaign, sending on schedule. |
 | Enrollment failed | The lead couldn’t be added, so it isn’t receiving emails from this campaign. The entry’s Failure reason says why, and the lead is marked with an icon in the lead rail. Once you’ve fixed the cause, you can retry the enrollment — see [Retrying a failed enrollment](#retrying-a-failed-enrollment). |
+| Retry requested | Someone retried the lead’s failed enrollment from the `Activity` tab. The lead is eligible to enroll again, and Clay attempts the enrollment again on a later run. |
 | Paused | The lead has stopped receiving emails, for example after leaving the segment. |
 
 Once sending starts, the lead's email events follow in the same feed: `Sent`, `Opened`, `Clicked`, `Replied`, `Bounced`, and `Unsubscribed`. For counts across the whole campaign rather than one lead, the `Lead status snapshot` on the `Analytics` tab groups every lead by where it stands. [Campaign analytics and replies](https://university.clay.com/docs/campaign-analytics-and-replies) walks through its buckets.
@@ -123,6 +124,8 @@ To retry several leads at once:
 3.  Confirm in the `Retry enrollment for N leads?` dialog, which shows the exact number of leads.
 
 While Clay processes the retry, the lead shows `Retrying enrollment` until its status changes. A lead that's no longer failed by the time the retry is processed is skipped rather than failing the whole batch, and after a multi-lead retry the toast tells you how many leads were no longer failed.
+
+Each lead that Clay reopens for enrollment gets a `Retry requested` entry in its feed on the `Activity` tab, whether you retried it on its own or as part of a multi-lead retry. Leads skipped because they were no longer failed don't get one. To see only `Retry requested` entries, choose `Retry requested` in the `Lead status` filter.
 
 **Note:** `Select all failed` only ticks the failed leads loaded in the lead rail. If the rail has more leads to load, scroll down to load them before selecting all.
 
