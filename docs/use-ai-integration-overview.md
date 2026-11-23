@@ -2,14 +2,14 @@
 title: Use AI
 description: Leverage AI to process, categorize, and conduct web research for
   actionable insights.
-last_synced: 2026-04-26T01:40:51.610Z
+last_synced: 2026-10-27T16:51:34.279Z
 ---
 
 # Use AI
 
 Leverage AI to process, categorize, and conduct web research for actionable insights.
 
-The **Use AI** feature in Clay allows users to automate tasks like content creation, data enrichment, and web research using GPT, Claude, Gemini, and other AI models.
+The **Use AI** feature in Clay allows users to automate tasks like content creation, data enrichment, and web research using a range of AI models.
 
 Here are some key capabilities of the Use AI integration:
 
@@ -50,8 +50,9 @@ After generating a setup, you can easily edit your original description and rege
 
     **Note:** If you want to analyze website content using a **Create or modify content** column, first add a **Scrape Website** column (click **Add column**, search for "Scrape Website", and select it) to pull the page text into a table column, then reference that column in your AI prompt. The scraped content lives in that column only — it is not globally available to other AI columns unless you explicitly reference it. For more complex web research — visiting multiple pages, following links, or multi-step browsing — a **Claygent** agent column (accessible via **Add column → [AI section]**) is the most reliable option; it has web browsing built in and supports a range of models including Clay's parallel models, Claude, GPT, Gemini, Grok, Mistral, and others.
 4.  Select a `Model` from the dropdown.
-    1.  Click `Compare models` to get more detailed information about each model.
-    2.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value sent to the model's API varies by provider:
+    1.  For `Web research (Claygent)`, the `Auto` toggle at the top of the dropdown is on by default, and Clay picks the model for each row. Turn it off to choose a model yourself. `Auto` is currently in beta — if you don't see the toggle, contact support to enable it.
+    2.  Click `Compare models` to get more detailed information about each model.
+    3.  _(Optional)_ Set the **Temperature** to control how creative or consistent the model's output is. Options are **Very Low**, **Low**, **Medium** (default), **High**, and **Very High** — lower values produce more predictable, repeatable results; higher values produce more varied responses. The underlying numeric value sent to the model's API varies by provider:
 
         | Temperature | OpenAI / Gemini / DeepSeek | Anthropic (Claude) |
         | --- | --- | --- |
@@ -116,21 +117,36 @@ The **Templates** dropdown at the top of the Use AI panel lets you explore pre-c
 
 ## Selecting specific AI models
 
-Clay's Use AI feature supports multiple AI providers, including GPT (OpenAI), Claude (Anthropic), Gemini (Google), and DeepSeek.
+Use AI offers Clay's own AI models alongside models from outside providers, and the lineup changes as new ones ship. Open the `Model` dropdown for the current list, where each model carries a short description and its credit cost.
 
 **Note:** The models listed in this section are available in the **Use AI** action. Claygent supports a broad set of models — including Clay's parallel models (Argon, Neon, Helium), Claude, GPT, Gemini, xAI/Grok, Mistral, and others. **DeepSeek V4 Pro** is available in both Use AI and Claygent (currently in beta — contact support to enable); to use it, select **DeepSeek V4 Pro** from the model dropdown.
 
-To learn more about each model's capabilities and prompting best practices, refer to their official documentation:
+Some of the providers behind these models publish their own prompting guides:
 
 -   [Anthropic](https://docs.anthropic.com/en/docs/about-claude/models)
 -   [OpenAI](https://platform.openai.com/docs/models)
 -   [Google Gemini](https://ai.google.dev/gemini-api/docs/models/gemini)
 
+### Using Auto
+
+**`Auto` is currently in beta and rolling out to workspaces gradually.** If you don't see the `Auto` toggle at the top of the `Model` dropdown, contact support to enable it.
+
+For `Web research (Claygent)`, new columns use `Auto` by default when it's available in your workspace. Clay classifies each row's task and runs it on a model that fits:
+
+-   A fast, inexpensive one for a quick lookup
+-   Stronger ones for hard research
+
+You get a model matched to the work without choosing one. Most rows run on a cheaper model than a single choice for the whole column would have to be, since one model has to cover your hardest row.
+
+**Note: `Auto` applies to `Web research (Claygent)` only.** Switching it off applies to that column alone rather than your whole workspace, and columns you built before keep the model they already use.
+
+Because the credit cost follows whichever model ran the task, cost per row varies — a quick row and a deep research row in the same column can differ. Our doc on [how AI is priced](ai-pricing.md) covers how variable pricing works.
+
 ### Connecting your own API keys
 
 By default, Use AI uses the Clay-managed account, though you can select other accounts during setup.
 
-While you don't need your own GPT, Claude, or Gemini API key to use the AI features, having one may reduce costs.
+You don't need your own API key from an AI provider to use the AI features, but you can bring one if you prefer.
 
 1.  Select the desired `Model` from the dropdown.
 2.  Click on the `Account` dropdown and click `+ Add account`.
