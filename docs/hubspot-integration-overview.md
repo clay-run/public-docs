@@ -399,12 +399,31 @@ Add a **HubSpot → Create association** column:
 No — Clay does not have a customer-facing "Create or Update" (upsert) action for HubSpot. To create new records and update existing ones in the same run, use three separate columns:
 
 1. Add a **Lookup object** column. Filter by the same field you will write to when creating (for contacts, use **Email**). This checks whether the record already exists in HubSpot.
-2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found.
+2. Add a **Create object** column. Open **Run settings → Only run if** and add a condition that the HubSpot Object ID returned by your Lookup column is empty — this ensures Create only runs for rows where no existing record was found. Also require the value you looked up (for example, the email) to be present, or rows with a blank email will create a new record on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
 3. Add an **Update object** column. Set an **Only run if** condition to check that the Lookup column returned a result, then map the returned `hs_object_id` to the **HubSpot Object ID** input.
 
 **Important:** Map all the fields you want to write (first name, last name, email, job title, and so on) in **both** the Create object and Update object columns. A common mistake is mapping only some fields in the Update object step — for example, mapping only Company — which means the other fields never reach HubSpot for contacts that already exist.
 
 For full details on writing run conditions, see [Conditional runs](conditional-runs.md).
+
+### Why is my HubSpot Create object creating duplicate contacts even though I look them up first?
+
+If you check for existing HubSpot contacts with a **Lookup object** column and only run **Create object** when nothing is found, but HubSpot still gets duplicate contacts, look at rows where the email is blank. Those are usually the cause.
+
+**Why rows with no email create duplicates:**
+
+-   When the email mapped to the Lookup object's **Email** filter is blank for a row, the Lookup object cell doesn't search HubSpot. It shows **Missing input** and returns no value.
+-   A run condition like `!{{Look up contact}}?.totalFound` ("only run if totalFound is zero") is **true** when the lookup has no value. A Missing input lookup therefore passes the condition, the same way a lookup that searched and found nothing does.
+-   **Create object** then creates a new HubSpot contact, with no email, every time the row runs. A person with no email is never matched, so each run adds another contact.
+
+Rows that have an email aren't affected. When the email is present and no contact matches, Lookup object returns `totalFound: 0` and Create object runs once. When a contact matches, `totalFound` is 1 or more and Create object is skipped.
+
+**To stop the duplicates:**
+
+1.  Open the **Create object** column, go to **Run settings → Only run if**, and add the email to the condition so the create is skipped when the email is blank. For example: `{{Work Email}} && !{{Look up contact}}?.totalFound`. Type `/` to insert your own email column and lookup column.
+2.  *(Optional)* To update contacts that already exist, add an **Update object** column with the run condition `{{Look up contact}}?.totalFound`. Map the record ID from the lookup result (for example, `results[0].id` from your Lookup object column) to the **HubSpot Object ID** input. Without an Update object column, a found contact is skipped and nothing in HubSpot changes.
+3.  *(Optional)* For rows with no email, add a second Lookup object column that searches by another identifier, such as a professional profile URL or name plus company.
+4.  Merge the duplicate contacts with no email that were already created, in HubSpot.
 
 ### Why does my Lookup Object return no results, but my Create Object still fails with "contact already exists"?
 
@@ -422,7 +441,7 @@ If your Lookup Object filters by "Work email" but your Create Object maps data t
 To handle both new and existing contacts without hitting duplicate errors:
 
 1.  Add a **Lookup object** column. Configure it to search by the same identifier (e.g., email address) and the same field you write to when creating contacts.
-2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found.
+2.  Add a **Create object** column. In **Run settings**, open **Only run if** and add a condition that the ID field returned by your Lookup column is empty — this ensures Create only runs for rows where no existing contact was found. Also require the email you looked up to be present, or rows with a blank email will create a new contact on every run — see [Why is my HubSpot Create object creating duplicate contacts even though I look them up first?](#why-is-my-hubspot-create-object-creating-duplicate-contacts-even-though-i-look-them-up-first)
 3.  *(Optional)* Add an **Update object** column for existing contacts. Set an **Only run if** condition to check that the Lookup column returned a result, and map the returned contact ID to the **HubSpot Object ID** input.
 
 For full details on writing run conditions, see [Conditional runs](https://university.clay.com/docs/conditional-runs).
@@ -503,7 +522,7 @@ If these scopes were checked during setup and your HubSpot subscription doesn't 
 
 1. Go to **Settings → Connected accounts**.
 2. Find your HubSpot account and click **Reconnect**.
-3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked** — they are unchecked by default.
+3. In the scopes screen, make sure the **Sequences** permissions (`automation.sequences.read` and `automation.sequences.enrollments.write`) are **unchecked**. They're unchecked by default on a new connection, but the reconnect modal keeps the scopes your previous HubSpot connection had, so uncheck them if they're selected.
 4. Complete the reconnection flow.
 
 You only need to enable these scopes if you're specifically using Clay to enroll contacts in HubSpot Sequences. For standard CRM syncing, contact and company management, or Audiences setup, leave them unchecked.
@@ -518,13 +537,15 @@ The scopes in the error message are the ones Clay requested during that connecti
 -   `crm.lists.write` — used by the **Add record to list** action. Enabled by default in Clay's HubSpot connection.
 -   `automation.sequences.read` and `automation.sequences.enrollments.write` — used by the **Enroll a contact in a sequence** action. Disabled by default; they're only requested if you check them under **Optional scopes** when connecting or reconnecting HubSpot.
 
+**If you only need to add contacts to a HubSpot list,** you don't need the sequence scopes. The **Add record to list** action needs `crm.lists.write`, not `automation.sequences.read` or `automation.sequences.enrollments.write`. Clay only requests the optional scopes that are checked under **Optional scopes** in Clay's connection modal, so unchecking both sequence scopes when you reconnect removes them from the request. Your HubSpot super admin then only needs to approve `crm.lists.write` (and any other scopes still listed in the error). You choose which scopes Clay requests in Clay's reconnect modal; your super admin approves them in HubSpot's App Governance settings.
+
 **To fix:**
 
 1.  In HubSpot, go to **Settings → Integrations → Connected Apps** (or search "App Governance" in HubSpot Settings).
 2.  Find **Clay** in the list and click **Manage**.
 3.  On the app detail page, expand **App access and permissions**.
 4.  Under **Conditionally required** permissions, enable every scope listed in the error message (for example, `crm.export`, or `automation.sequences.read`, `automation.sequences.enrollments.write`, and `crm.lists.write`).
-5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal — they stay unchecked on reconnect unless you select them.
+5.  Return to Clay, go to **Settings → Connections**, find your HubSpot connection, and click **Reconnect** to complete the authorization. If you're setting up **Enroll a contact in a sequence**, make sure both sequence scopes are checked under **Optional scopes** in the reconnect modal. If you don't use that action, make sure both sequence scopes are unchecked. The reconnect modal keeps the scopes your previous HubSpot connection had, so review the **Optional scopes** checkboxes before you continue.
 
 **Note:** Only a HubSpot super admin can approve permissions in App Governance. If you are not a super admin, ask your HubSpot account administrator to complete steps 1–4.
 
@@ -601,6 +622,27 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
 
+### Should I use Lookup in Audiences or a live HubSpot lookup to pull CRM context into a workflow?
+
+If HubSpot is connected to [Clay Audiences](audiences.md#importing-from-hubspot), you can pull HubSpot context into a table or workflow in two ways: `Lookup in Audiences`, which reads the HubSpot records Clay has already synced into Audiences, or a native HubSpot action such as **Lookup object** or **Retrieve associated objects**, which reads from your HubSpot account when the step runs.
+
+The following table compares `Lookup in Audiences` with live HubSpot actions for pulling CRM context:
+
+| | `Lookup in Audiences` | Live HubSpot action (**Lookup object**, **Retrieve associated objects**) |
+|---|---|---|
+| Where the data comes from | HubSpot records already synced into Audiences | Your HubSpot account, at the time the step runs |
+| HubSpot API calls | None — reads Clay's Audiences data | Calls HubSpot's API each time the step runs |
+| How current the data is | As of the last Audiences HubSpot sync — see [Importing from HubSpot](audiences.md#importing-from-hubspot) for the sync schedule | Current HubSpot values |
+| HubSpot objects available | Contacts, Companies, and Deals | Company, Contact, Deal, Lead, and custom objects |
+| HubSpot activities (calls, emails, meetings, notes) | Not available | Not available |
+
+**HubSpot activities aren't available through either option.** The Audiences HubSpot source imports Contacts, Companies, and Deals only — unlike the Salesforce source in Audiences, it has no option to import activities. Clay's native HubSpot actions don't read calls, emails, meetings, or notes either; **Retrieve associated objects** returns associated Company, Contact, Deal, Lead, and custom object records, not activities. To reference HubSpot activity history in downstream steps or messaging, use one of the workarounds in [Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?](#why-cant-i-import-hubspot-activities-calls-emails-meetings-notes-or-tasks-into-clay):
+
+-   **Rollup properties:** Store the activity data you need in HubSpot rollup properties on the Contact or Company. A live **Lookup object** action reads them like any other property, and `Lookup in Audiences` reads them once you add them to your Audiences HubSpot import field mapping.
+-   **HTTP API:** Call HubSpot's Engagements endpoints directly with Clay's **HTTP API** integration and a HubSpot Private App token.
+
+**Call transcripts and other data in a data warehouse:** To combine HubSpot context with data stored in your warehouse, such as call transcripts, add a Snowflake, Google BigQuery, or Databricks lookup step alongside your HubSpot steps. Select only the columns you need so results stay within Clay's cell size limits — see [Manage cell data](manage-cell-data.md).
+
 ### Can I create HubSpot tasks from Clay?
 
 Clay's HubSpot integration does not include a native action for creating Tasks — tasks aren't one of the object types available in the HubSpot **Create object** action. To create HubSpot tasks from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's Tasks API directly.
@@ -614,3 +656,15 @@ Clay's HubSpot integration does not include a native action for creating Tasks �
 5.  Save the column and test it on 1 row before running it on the whole table.
 
 To create HubSpot notes instead, see [How can I create HubSpot notes from Clay?](#how-can-i-create-hubspot-notes-from-clay)
+
+### How do I find which Clay tables are creating contacts in HubSpot?
+
+If contacts, companies, or other records are arriving in your HubSpot CRM from Clay and you want to know which tables or workflows are sending them, check which resources use your HubSpot connection in **Settings → Connections**.
+
+1.  Go to `Settings` > `Connections` and type "hubspot" into the search bar.
+2.  If your workspace has more than one HubSpot connection (for example, one per teammate), repeat the next steps for each one — the **Added by** column shows who connected each account.
+3.  Click the count in the **Resources** column for a HubSpot connection (or click `…` > **View resources**). A panel opens with the message "This connection is used in the resources below."
+4.  Expand each workbook and table in the panel. Under each table you'll see the columns and sources that use this connection, listed by column or source name — for example, `Create object`, `Look up object`, or `Import objects from HubSpot`.
+5.  Tables with a column that uses the HubSpot **Create object** action are the ones creating new records in HubSpot. Click the external-link icon next to a table to open it in a new tab and review that column.
+
+The panel also lists Audiences, Claygents, Signals, Ads, workflows, and functions that use the connection. Use the **Resource type** filter to narrow the list. For more detail, see [Viewing resources that use a connection](connections-and-integration-accounts.md#viewing-resources-that-use-a-connection).

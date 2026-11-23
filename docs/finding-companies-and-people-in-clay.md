@@ -36,6 +36,23 @@ For an advanced query such as `select from people ...` or `select from companies
 
 Standard people and company table searches do not have a per-search Data Credit charge. Paid options, such as technographics in the standard company import flow, and enrichments can add charges. Workflow search execution can also use Actions. Review the displayed estimate before importing or running a Workflow; do not assume that every search option or follow-up action is free.
 
+## How do I check if upgraded search is on?
+
+Upgraded search (also called advanced search) is Clay's newer search experience in **Find leads**, described in the product as "Custom queries across people, companies, & jobs." **Upgraded search is currently in beta and is turned on per workspace by Clay, so not every workspace has it.** Pricing for upgraded search is subject to change while it is in beta.
+
+To check whether upgraded search is on in your workspace:
+
+1.  In the left sidebar, click **Find leads**.
+2.  Choose **Companies** or **People**.
+3.  At the top of the sidebar, click the **gear icon** (Search settings).
+4.  The dropdown shows the upgraded search toggle with a **Beta** badge:
+    -   **Upgraded search is on** — "Custom queries across people, companies, & jobs." You're using upgraded search.
+    -   **Upgraded search is off** — "Less filtering, limited flexibility." Click the toggle to turn upgraded search on.
+
+You can use the same toggle to switch upgraded search off and go back to the standard search. Clay remembers your choice the next time you open Find leads.
+
+**If you don't see the gear icon or the upgraded search toggle:** your workspace either doesn't have upgraded search yet, or is set up to always use upgraded search, in which case there's no toggle to switch it off. If a Clay course or your Clay contact asked you to confirm you have upgraded search and you can't tell, contact Clay support.
+
 ## Company search
 
 ### Anchor on description keywords
@@ -654,6 +671,18 @@ The per-source limit for Find People and Find Companies sources varies by plan a
 
 **Note:** this limit is separate from the 50,000-row table limit. A source can hit its plan-based record limit even when the table shows fewer visible rows — the source tracks every record it has ever introduced, including rows you've since deleted from the table.
 
+### "Your workspace has reached its monthly limit for search results" error in Find People or Find Companies
+
+If a Find People or Find Companies search shows **Enter a valid query** with the message **"Your workspace has reached its monthly limit for search results."**, your workspace has used its monthly allowance of search results. Some workspaces have a monthly cap on how many people and company results Clay searches can return. Workspaces without a cap never see this error.
+
+-   **What counts toward the monthly search results limit:** people and company results returned to you, including search previews, results added to tables, and exports. Checking how many records match your filters doesn't count.
+-   **When the monthly search results limit resets:** on the 1st of each calendar month at 00:00 UTC. This is a calendar-month reset, not a rolling 30-day window. For example, results returned on October 20 stop counting on November 1.
+-   **Your filters aren't the problem:** "Enter a valid query" is the header Clay shows above every search error. The message under it is the actual cause, and the same search works again once the monthly limit resets.
+-   **The monthly search results limit is separate from the Search API quota:** the **Search usage** section on the **API and CLI** page tracks only results returned through Clay's Public API and CLI. It doesn't include Find People or Find Companies searches in the app, so it can show low usage while this error appears.
+-   **The monthly search results limit is separate from the per-source limit** described in the section above.
+
+To review your workspace's monthly search results limit, or to ask about more results before it resets, [contact Clay support](https://www.clay.com/contact-form).
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
@@ -663,6 +692,19 @@ Clay's company and people search relies on snapshot data that may lag behind rea
 ### Why am I finding people with unexpected job titles?
 
 First, check that you're filtering on **Job title keywords** (not just function or seniority). If you're using **Is similar to** mode, you may get some fuzzy matches — filter those out with a formula or AI after the fact.
+
+### Can I prioritize certain job titles over others in a people search?
+
+No. A single Find People search (in **Find with filters** or **Find with query**) can't rank one job title above another. For example, you can't tell it to return Head of People or Head of HR first and CEO or COO only after that. Find with query doesn't support `order by` either.
+
+**Why CEOs and founders fill the slots first:** When you set **Limit per company** (or `limit N by clay_company_id` in a query), the search ranks every matching person at each company by their estimated audience size, largest first. How closely their job title matches your list doesn't change the order. CEOs and founders often have large audiences, so with a low limit such as 3 per company they tend to take every slot.
+
+**Workarounds for getting the titles you want first:**
+
+-   **Run one search per title tier.** Create one search that includes only your top-priority titles (for example, HR and People titles) with **Limit per company** set to 3. Then create a second search for the next tier (for example, CEO and COO). Use a formula or **Use AI** column to keep the first-tier results and fill any remaining slots from the second tier.
+-   **Exclude the titles you never want.** Add titles such as CEO, Founder, and Co-founder to **Job title keywords to exclude**. People whose current title contains those keywords are filtered out before the per-company limit is applied, so they can't take the slots.
+-   **Return more people, then rank them yourself.** Raise **Limit per company** (for example, to 10; the maximum is 100), then use a formula or **Use AI** column to rank the results by title and keep the top 3. This uses more credits on any enrichments you run, because more people are returned.
+-   **Search title by title with a fallback.** Add **Find Contacts at Company** columns to your company table and use run conditions so each lower-priority title search only runs when the higher-priority one found nobody. See [Target ICP contacts first with a senior fallback](#target-icp-contacts-first-with-a-senior-fallback).
 
 ### Why do I still see people with excluded job titles when they hold multiple current roles?
 
@@ -695,10 +737,57 @@ Two main causes:
 
 The answer depends on which feature you're using:
 
--   **Enrich Person / Enrich Company** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Person** — data is fetched close to real-time each time you run the enrichment, pulling the provider's latest available data at the moment of the run.
+-   **Enrich Company** — Enrich Company looks up the company in Clay's own company dataset. If the company's record is missing or hasn't been updated in more than 180 days, Enrich Company can fetch fresher data at the moment of the run.
 -   **Find People / Find Companies / Find Contacts at Company (CPJ sourcing)** — these features draw from a pre-indexed dataset that providers refresh through bulk record processing. Results can show some deviation from what you see live on LinkedIn, because the index reflects the provider's most recent batch update rather than an immediate lookup. Data freshness has improved significantly over time, so deviation is rarely a problem in practice.
 
-Across both, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+Across all three, high-importance profiles (frequently accessed records, decision-makers, active companies) refresh more often than long-tail profiles.
+
+### Why do professional profile URLs from Find People show "page not found" or an error when I open them?
+
+Professional profile URLs returned by **Find people** come from Clay's stored people dataset, not from a live lookup on the professional network at the moment you search. Each Find people result reflects the profile as it was when that dataset last refreshed it. If the person later deleted or deactivated their account, or changed their profile URL (for example, from `jane-doe-12345abc` to `jane-doe`), the profile URL stored in your table still points to the old address — so opening it shows a "page not found" error.
+
+To get the current profile URL for rows with broken links:
+
+1.  In your people table, click **Add enrichment**, search for **Enrich person**, and add it. Map the **Professional URL** input to the profile URL column from Find people.
+2.  Run Enrich person on the rows with broken links. Enrich person makes a live profile lookup each time it runs, so its **Url** output returns the person's current profile URL — including the new URL if they changed it.
+3.  Use the **Url** returned by Enrich person instead of the original Find people profile URL.
+
+If the person deleted their account entirely, there is no current profile to look up, so Enrich person can return **❌ No Profile Found** for that row. In that case, there is no working profile URL for that person to replace the broken one.
+
+### Where does the total funding data in Enrich Company come from?
+
+The **Total Funding Amount Range Usd** field in **Enrich Company** comes from Clay's own company dataset — the same company data that powers Enrich Company's other fields, such as employee count, industry, and annual revenue. Enrich Company doesn't call a separate funding data vendor when it fills this field.
+
+The Total Funding Amount Range Usd field shows a company's total funding as a range, not an exact dollar amount. The possible values are:
+
+-   `Under $1M`
+-   `$1M - $5M`
+-   `$5M - $10M`
+-   `$10M - $25M`
+-   `$25M - $50M`
+-   `$50M - $100M`
+-   `$100M - $250M`
+-   `$250M+`
+-   `Funding unknown` — Clay's company dataset has no funding amount on record for the company
+
+### Can other data providers enrich total funding instead of Enrich Company?
+
+Yes. If you need an exact funding amount, funding round details, or a second source for companies where Enrich Company shows `Funding unknown`, you can add a funding enrichment from another data provider. To find funding enrichments:
+
+1.  In your table, click **Tools** in the top right corner and select the **Enrich** tab.
+2.  Search for `funding`.
+3.  Pick a provider's funding enrichment, map your company input (for example, the company domain), and run it.
+
+Funding enrichments available in Clay include:
+
+-   **CB Insights** — **Get company total funding**
+-   **Crunchbase** — **Enrich company's financials** and **Enrich company's latest funding round**
+-   **Harmonic** — **Get fundraising data for company**
+-   **Dealroom** — **Get fundraising data for company**
+-   **PitchBook** — **Enrich company with PitchBook**
+
+To use more than one funding provider without paying for duplicate lookups, add them to a [waterfall](building-a-data-waterfall.md) so each next provider only runs when the previous one returns no result.
 
 ### Can I run a people search only on companies that meet certain criteria?
 

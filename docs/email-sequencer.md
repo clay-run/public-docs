@@ -372,6 +372,28 @@ If you've moved to a new email provider (for example, switching from a third-par
 2.  **Enable warmup on the new account.** The new account starts warmup from scratch — the initial phase typically takes 3 weeks before the account shows as **Ready**. Enable warmup right after connecting to start building sender reputation.
 3.  **Update your campaigns.** Open each active campaign that used the old sending account. In the `Sender accounts` tab, add the new account, then use the ⋯ menu next to the old account to remove it.
 
+Changing a campaign's sender accounts only affects leads enrolled after the change. Leads that were already enrolled stay assigned to the old sending account and aren't moved to the new one. See [What happens to my campaign if a sender leaves the company mid-campaign?](#what-happens-to-my-campaign-if-a-sender-leaves-the-company-mid-campaign)
+
+### What happens to my campaign if a sender leaves the company mid-campaign?
+
+When someone who sends a campaign's emails leaves your company, their sender account is usually deleted or disconnected. What happens next depends on whether a lead was already enrolled with that sender account.
+
+**Leads already enrolled with the departed sender's account stop receiving emails.** Clay assigns each lead to one sender account when the lead is enrolled. People-based (Sequencer v2) campaigns always do this. Table-based (Sequencer v1) campaigns do it when `Assign sender account field to lead` is mapped. If a lead's sender account is later deleted or disconnected, the lead isn't moved to another sender account (even if the campaign has several) and it stops receiving the rest of its sequence. Clay doesn't have an in-product option to move already-enrolled leads to a different sender account. Pausing the campaign and changing its sender accounts only affects leads enrolled afterward.
+
+**Leads enrolled after the sender account is deleted or disconnected aren't assigned to it** (people-based campaigns). If `Assign sender account field to lead` isn't mapped, new leads are spread across the campaign's remaining active sender accounts. If it is mapped, a lead whose sender column still holds the departed sender's address isn't enrolled.
+
+**How to tell a sender account is disconnected:** the campaign header shows a red badge such as `1 sender auth error`, and the account's status in `Sequencer` → `Email accounts` shows **Auth error**.
+
+**To replace a departed sender in a campaign:**
+
+1.  **Connect the replacement sender account** and enable warmup. See [How do I switch my campaign's sending email to a new provider or address?](#how-do-i-switch-my-campaigns-sending-email-to-a-new-provider-or-address)
+2.  **Pause the campaign** (`Pause` in the campaign header) and add the replacement account in the campaign's `Sender accounts` tab.
+3.  **If you use `Assign sender account field to lead`,** update that column in your source table so leads that haven't been enrolled yet point to the replacement sender's address. Then re-run the `Sync lead data to campaign` column for those rows.
+4.  **Resume the campaign.**
+5.  **Delete the departed sender's account (optional).** Go to `Sequencer` → `Email accounts`, click the ⋯ menu on the account's row, and select `Delete account`. The confirmation warns that sequences will no longer send emails from this account.
+
+**To keep new leads flowing when a sender leaves:** If you don't need specific reps to own specific leads, add several sender accounts to the campaign (for example, 2–3) and leave `Assign sender account field to lead` empty. In people-based campaigns, new leads then keep enrolling through the remaining active accounts when one sender account is deleted or disconnected.
+
 ### What is email account warmup?
 
 Warmup is the process of automatically sending and receiving emails from other inboxes in Smartlead's warmup pool so your actual campaign traffic looks similar to the emails you're already sending. We recommend you keep warmup on at all times for email accounts in the sequencer to maximize deliverability.
@@ -750,6 +772,10 @@ This is expected. When a lead replies using an HTML-capable email client like Mi
 -   `Text`: a plain text version of the same content
 
 To work with the reply as clean text — for example, when mapping it to a CRM note or passing it to an AI action — use the `Text` sub-field instead. If you prefer to use `Html` and strip the tags, add a formula column to do so.
+
+**To read an HTML reply the way the lead's email looked:** click the cell to open the Cell details panel, then click **View HTML** next to the `Html` value. The **HTML preview** window shows the email rendered as it would appear in an inbox. Scripts in the email don't run, and links open in a new tab. To see the raw HTML source, turn off the **HTML viewer** switch (it's on by default); a **Copy** button appears so you can copy the source.
+
+The **View HTML** button appears in the Cell details panel for any field whose name contains "html" (for example, `Html` or `body_html`) and whose value starts with `<` and ends with `>`. This includes HTML in bounce notifications and other campaign event data, not only replies.
 
 ### Useful links
 
