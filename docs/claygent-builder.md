@@ -370,6 +370,10 @@ Claygent builder has two buttons at the top of the editor: **Save** and **Deploy
 -   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
 -   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
 
+When you open Claygent builder from a workflow step — to create or edit the Claygent that step uses — Claygent builder shows only **Save**. The **Deploy** button is hidden there, and clicking **Save** saves the Claygent and takes you back to the workflow step you came from.
+
+The **Save** and **Deploy** buttons in Claygent builder are disabled while Sculptor is generating changes to your Claygent, including while a Sculptor generation is queued or resuming. Wait for Sculptor to finish, then click **Save**.
+
 To apply prompt or configuration changes to a Claygent column that's already in your table:
 
 1.  Edit the Claygent in Claygent builder.
