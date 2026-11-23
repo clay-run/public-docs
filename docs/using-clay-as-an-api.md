@@ -215,6 +215,17 @@ All four commands return `auth_forbidden` (exit 3) if Audiences is not enabled f
 
 **Note: `clay workflows ensure-audience-writeback` creates or reconnects the shared Audiences upsert node for an audience enrichment workflow.** `clay workflows ensure-audience-writeback <workflowId>` calls the server-side helper to create or reuse the single `upsert-audiences-record` terminal node for a workflow of type `audience_enrichment`, and wires every eligible terminal route to it. The command is available on both the stable and experimental channels; it requires the `cli:all` scope (granted when you sign in with `clay login`) and workspace Admin or Member role (Viewers cannot use this command). Workflow commands (`clay workflows get`, `list`, `create`, `update`, `publish`) now include a `type` field in their output with three possible values: `audience_enrichment` (created by the audience enrichment experience; writes results back to Audiences), `account_agents` (managed by the account agents experience), or `null`/omitted for general workflows. Common errors: `validation_error` (exit 2) if the workflow is not of type `audience_enrichment` or has no eligible terminal route; `auth_forbidden` (exit 3) if the credential lacks the required scope or the caller does not have Admin or Member access; `not_found` (exit 6) if no workflow with that id exists.
 
+**Note: `clay workflows estimate-credits` estimates what a workflow will spend before you run it.** Available in Clay CLI 1.23.0 and later, on the stable channel, on all plans; it requires the `cli:all` scope (granted when you sign in with `clay login`) and read access to the workflow. `clay workflows estimate-credits <workflowId>` estimates the credits for one run of the workflow's draft. Narrow or change what's priced with these flags:
+
+-   `--node <nodeId>` — estimate a single node for one run of it.
+-   `--trigger-node <nodeId>` — estimate the run started by that trigger (the trigger and its branch).
+-   `--published` — estimate the live published version instead of the draft.
+-   `--snapshot-id <id>` — estimate a specific workflow snapshot instead of the draft.
+
+`--node` and `--trigger-node` can't be combined, and neither can `--published` and `--snapshot-id`.
+
+**Note: `clay workflows publish` launches the draft sequences the published version uses.** Starting with Clay CLI 1.23.0, publishing a workflow from the Clay CLI also launches any draft sequences that the published version references, so records the workflow enrolls aren't left waiting on a sequence that hasn't launched. To publish without launching those sequences, run `clay workflows publish <workflowId> --no-launch-sequences`. Publishing requires the `cli:all` scope and workspace Admin or Editor access to the workflow.
+
 #### Running the Clay CLI unattended (cron jobs, scheduled scripts, and servers)
 
 You can run the Clay CLI on a schedule — for example, a cron job on an internal server that calls `clay workflows runs steps` every 15–30 minutes to pull workflow run data into your data warehouse. Signing in to the Clay CLI requires the **Admin** or **Editor** role in the workspace. Viewers can't sign in to the CLI and see the error "You must be an editor of this workspace to sign in to the Clay CLI."
