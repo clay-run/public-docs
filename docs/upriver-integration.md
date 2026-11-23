@@ -1,7 +1,7 @@
 ---
 title: Upriver integration
 description: Use Upriver in Clay to find a brand's sponsors and sponsorship placements, pull its product catalog and product details, and research its brand identity and audience personas.
-last_synced: 2026-10-07T03:19:19.408Z
+last_synced: 2026-11-19T06:52:15.743Z
 ---
 
 # Upriver integration
@@ -15,7 +15,7 @@ Upriver is a brand intelligence tool for researching the sponsorships, product c
 1.  While in a Clay table, click `Add enrichment` and search for `Upriver`.
 2.  Under `Integrations`, select one of the Upriver actions.
 3.  In the modal, you will be asked to `Select Upriver account`.
-    -   If you have your own account, click `+ Add account` and enter your Upriver API key. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and enter your Upriver API key. Otherwise, use the Clay-provided account.
 
 **Note:** The `Find sponsors` and `Find sponsorships` actions search either a publication or a set of categories. Fill in `Publication URL` or `Categories`, not both in the same run.
 
