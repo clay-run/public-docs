@@ -19,6 +19,16 @@ With this integration, you can automatically find and verify contact information
 3.  In the modal, you will be asked to `Select BetterContact account`.
     1.  If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
 
+### What to enter in the BetterContact Username and Password fields
+
+When you add your own BetterContact account in Clay, the **Add BetterContact Account** form asks for **Name your connection**, **Username**, and **Password**. There is no field labeled "API key" — the BetterContact API key goes in the **Password** field.
+
+-   **Name your connection:** Any label you choose to identify this BetterContact account in Clay.
+-   **Username:** The email address of your BetterContact account.
+-   **Password:** Your BetterContact **API key** — not the password you use to log in to BetterContact.
+
+If Clay says your BetterContact credentials are wrong, check that you entered your BetterContact API key (not your login password) in the **Password** field, then click `Save` again.
+
 ## Using the BetterContact integration
 
 ### `Action` Find work email
