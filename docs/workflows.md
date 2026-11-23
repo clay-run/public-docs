@@ -62,7 +62,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run enrichment | Runs one Clay action, like finding an email, enriching a company, or writing to a CRM | Any single data lookup or external action | 1 action + credit cost of enrichment |
 | Run function | Calls a reusable Clay function | Reusing governed enrichment or qualification logic | No added credit or action cost — the steps inside it charge as usual |
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
-| Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
+| Write to Audiences | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
 | Delay | Pauses the branch it sits on before the next node runs | Giving a downstream step time it needs | Free |
@@ -148,9 +148,33 @@ Return a dictionary with string keys, like `{'score': 42}`, and that dictionary 
 
 Calls a Clay function — a reusable block of logic shared across tables and workflows. The function has to exist before you can add it, and it charges the actions inside it. Use it to keep standard enrichment or qualification logic in one place rather than rebuilding it in each workflow. See [Functions](https://university.clay.com/docs/functions) and [Managed functions](https://university.clay.com/docs/managed-functions).
 
-### `Update audience members`
+### `Write to Audiences`
 
 Writes what the run produced back to the contact or account in Audiences. Results land on the record rather than in the run, so anything you write back is immediately filterable in every other segment. Writing back is free.
+
+Each field you map in `Write to Audiences` has a write rule, chosen in the dropdown at the end of that field's mapping row:
+
+-   `If workflow value is present` (the default) — overwrites the Audience field unless the workflow value is empty. Empty workflow values are skipped, so existing data is never erased.
+-   `If Audience field is empty` — only writes when the Audience field is currently empty.
+-   `Always` — overwrites the Audience field with any workflow value, blanks included, so existing data can be cleared.
+
+#### How do I clear (blank out) a field on an Audience record?
+
+To blank out a field on Audience records — for example, the professional network URL on People records — use a workflow with a `Write to Audiences` node and set that field's write rule to `Always`. Clearing the value in Salesforce, or writing a blank from a Clay table, does not clear the Audience field when another source still has a value for it.
+
+-   **Clearing the field in Salesforce doesn't blank it in Audiences.** An Audience record combines field values from every source that contributed to it (listed under **Sources** on the record). Audiences skips blank values from a source and shows the highest-priority non-blank value from another source, such as another Salesforce record matched to the same person or Clay's people data. The field only shows blank when no source has a value. See conflict resolution in [Audiences](https://university.clay.com/docs/audiences#entity-resolution-and-deduplication).
+-   **A Clay table doesn't clear it either.** The `Update Audiences Record` and `Upsert Audiences Record` table actions don't clear a field, even with **Ignore blank values** turned off. With **Ignore blank values** on, blank values aren't sent to Audiences at all. With it off, the blank is sent but treated like any other blank source value, so the field keeps showing the non-blank value from another source.
+
+To clear the field with a workflow:
+
+1.  Create a workflow that runs on the records you want to clear.
+2.  Add a `Write to Audiences` node and map the field you want to clear to a blank value.
+3.  In that field's mapping row, set the write rule to `Always`.
+4.  Test the workflow on one record, then open that record in Audiences and confirm the field now shows blank before running it on the rest.
+
+The `Always` write rule clears the field on the Audience record, including values that came from Salesforce or other sources. If a source writes a new non-blank value to that field after the clear — for example, someone fills the field in Salesforce again — the new value appears on the record. Clearing a field in Audiences doesn't send a blank to Salesforce; the Audiences export to Salesforce never sends blank values.
+
+**Note:** Workflows is in open beta. To clear Audience fields with a workflow, your workspace must be enrolled in the Workflows beta program from your workspace settings.
 
 ### `Delay`
 
