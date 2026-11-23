@@ -1,7 +1,7 @@
 ---
 title: Enrich CRM integration
 description: Use Enrich CRM in Clay to enrich people and companies, find and verify work emails, and add website traffic, tech stack, funding, and French business registry data to your tables.
-last_synced: 2026-09-24T19:36:22.712Z
+last_synced: 2026-11-19T06:54:25.200Z
 ---
 
 # Enrich CRM integration
@@ -15,7 +15,7 @@ Enrich CRM is a data provider that covers both people and companies, from contac
 1.  While in a Clay table, click `Add enrichment` and search for `Enrich CRM`.
 2.  Under `Integrations`, select one of the Enrich CRM actions.
 3.  In the modal, you will be asked to `Select Enrich CRM account`.
-    -   If you have your own Enrich CRM account, click `+ Add account` and enter your `Enrich CRM API Key`. Otherwise, use the Clay provided key.
+    -   If you have your own Enrich CRM account, click `+ Add account` and enter your `Enrich CRM API Key`. Otherwise, use the Clay-provided account.
 
 **Note:** `Enrich contact` and `Reverse email lookup` search Enrich CRM's underlying sources while the action runs, so a row can take anywhere from a few seconds to around two minutes — rows with no match take the longest, because the search runs all the way to the end before giving up. Clay keeps checking for the result in the background, so you don't need to stay on the table.
 
@@ -318,7 +318,7 @@ Clay treats that as the final answer for the row, because the usual cause is a d
 
 When you connect your API key, Clay checks the credit balance on your Enrich CRM account and reports it back to you. You'll get a warning if you're down to 100 credits or fewer, and a clearer one if you've run out.
 
-Rows that run against an empty account come back with an out-of-credits message, so top up in Enrich CRM and re-run the column. If you'd rather not manage a separate balance, use the Clay provided key instead.
+Rows that run against an empty account come back with an out-of-credits message, so top up in Enrich CRM and re-run the column. If you'd rather not manage a separate balance, use the Clay-provided account instead.
 
 ### Which identifier should I map for the company actions?
 

@@ -272,7 +272,7 @@ Select the field that uniquely identifies each record in your Snowflake data. Cl
 
 Import record matching lets Clay deduplicate records across multiple sources. For example, if you're importing from both Snowflake and Salesforce, matching on `domain` ensures a single company row reflects data from both.
 
-Click `Edit` next to `Import record matching (optional)`, then:
+When `Import sync` is on, you must choose an Import record matching option before you can save the import — otherwise Clay shows "Choose how to match records before saving." Click `Set up` next to `Import record matching`, choose **Match existing records (Recommended)** or **Import without matching**, and if you're matching:
 
 1.  Choose an alias field (e.g. `Domain`) under `When`.
 2.  Map that alias to the corresponding field in each connected source under `In`.
@@ -280,7 +280,7 @@ Click `Edit` next to `Import record matching (optional)`, then:
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69d69a4ceb012f4e97a8ad42_Snowflake%20Integration%20Image%20\(1\).webp)
 
-Import record matching is currently in beta — contact your Growth Strategist to enable it for your workspace. Matching settings apply only to records imported after you save them; records already in Audiences are not merged retroactively.
+Matching runs when each record is first imported: settings apply only to records imported after you save them, and records already in Audiences are not merged retroactively. See [Import record matching](audiences.md#entity-resolution-and-deduplication) in the Audiences docs for both options.
 
 #### What if my Snowflake source doesn't have a domain column for Import record matching?
 

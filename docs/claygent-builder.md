@@ -86,6 +86,10 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 **Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
 
+**Using an uploaded document in your prompt:** Claygent uses an uploaded document only when your prompt mentions it. Uploading a file doesn't add it to every run on its own. To point your Claygent at a document, type `@` in the prompt and select the document from the list. If your Claygent seems to ignore a document you uploaded, check that the prompt @-mentions it.
+
+**Who can manage uploaded documents:** Workspace Admins and Editors can upload, rename, replace, and delete documents in the **Browse documents** window. Admins and Editors can delete any document in the workspace, including ones someone else uploaded. Viewers can't upload or delete documents.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
@@ -295,6 +299,10 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
+### Why do I see "Failed to delete file" when I try to delete an uploaded document?
+
+Deleting a document from the Claygent **Browse documents** window needs the Admin or Editor workspace role. If you have the Viewer role, Clay won't delete the file and shows "Failed to delete file." To remove the document, ask a workspace Admin or Editor to delete it for you, or ask an Admin to change your role (see [Workspace administration](workspace-administration-documentation.md)).
+
 ### Can I duplicate a Claygent?
 
 Yes. From the Agents homepage, click the **⋯** (three-dot) menu on any agent and select **Duplicate**. Clay creates a copy named `{original name} (Copy)` in the same workspace. Duplication is available to workspace admins and members; viewers cannot duplicate agents.
@@ -465,6 +473,20 @@ To fix the account mismatch on a Claygent column:
 4.  Click **Save** and re-run the failed rows.
 
 The same rule applies to other providers. GPT models need an OpenAI account (for example, **Clay-managed OpenAI account**), and Gemini models need a Google Gemini account. To review or add accounts, click **Manage accounts** next to the dropdown.
+
+### How do I turn off AI input mapping suggestions on my Claygent column?
+
+There's no setting to turn off AI input mapping suggestions on a Claygent column. When you add a new Claygent column to a table, the **Map agent inputs** section ("Connect table columns to the agent's inputs") automatically uses AI to suggest which table column feeds each of the agent's inputs. You can also request new suggestions at any time by clicking **Suggest input mappings with AI**.
+
+Automatic input mapping suggestions run only once, when you first create the Claygent column. Reopening the settings of an existing Claygent column doesn't re-run them, so the mappings you saved are kept.
+
+To change an input mapping the AI suggested:
+
+1.  In the **Map agent inputs** section, click the **x** on the column chip in the input you want to change.
+2.  Type `/` in that input and select the table column you want to use.
+3.  Save the column.
+
+**Note:** Clicking **Suggest input mappings with AI** replaces your current input mappings — including manual changes you haven't saved — with new AI suggestions. Only click it when you want Clay to re-suggest your inputs.
 
 ### How do I mark a Claygent input as optional?
 

@@ -1,7 +1,7 @@
 ---
 title: Account and workspace settings
 description: How to manage your Clay account and workspace settings, team member roles, integration connections, plans and billing, and referrals.
-last_synced: 2026-11-03T18:30:51.228Z
+last_synced: 2026-11-18T19:26:35.358Z
 ---
 
 # Account and workspace settings
@@ -220,11 +220,11 @@ An **integration account** is a configured connection between your workspace and
 -   Configured by users with their own credentials, such as personal API keys or OAuth tokens.
 -   Ideal for integrations that require team- or project-specific access.
 
-**Clay-managed accounts:**
+**Clay-provided accounts:**
 
 -   Provided by Clay and configured for public use.
 -   These accounts use workspace credits instead.
--   Clearly labeled in the `Connections` section, and often pre-set as default.
+-   Labeled `Clay-provided` in the `Account type` column of the `Connections` page, and often pre-set as default.
 
 ## **Add a new integration account**
 
@@ -277,11 +277,11 @@ A **default account** is automatically selected for workflows or integrations wh
 -   Click the `…` menu next to the account and select `Delete`.
 -   Confirm the deletion.
 
-### **Clay-managed accounts**
+### **Clay-provided accounts**
 
-Clay-managed accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
+Clay-provided accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
 
-For some integrations, only Clay-managed accounts are supported. For others, you will need to provide your own API key.
+For some integrations, only Clay-provided accounts are supported. For others, you will need to provide your own API key.
 
 # **Plans and billing**
 

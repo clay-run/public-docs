@@ -1,16 +1,16 @@
 ---
 title: Build your sequence
 description: Write a campaign's email sequence before launch — add steps and delays, personalize with variables, spintax, and AI snippets, then check data coverage, spam score, and test sends.
-last_synced: 2026-11-10T20:19:46.174Z
+last_synced: 2026-11-18T19:12:01.431Z
 ---
 
 # Build your sequence
 
-Write, personalize, and pressure-test the emails your campaign sends — before a single one goes out.
+Write, personalize, and pressure-test the emails your sequence sends — before a single one goes out.
 
-A campaign's `Sequence` tab is where you write the messages, set how far apart they land, and personalize them with your lead data. Everything here happens before launch, so you can iterate freely: preview the copy against real leads from your segment, check how well your fields are filled in, and send yourself a test.
+The `Sequence` tab is where you write the messages, set how far apart they land, and personalize them with your lead data. Everything here happens before launch, so you can iterate freely: preview the copy against real leads from your segment, check how well your fields are filled in, and send yourself a test.
 
-**Note:** A campaign costs 1 action credit per lead enrolled. Adding AI snippets adds a variable number of data credits per lead on top of that, depending on how much work each snippet does. Clay shows you an estimate in the campaign, so you can see what a change to your sequence will cost before you commit to it.
+**Note:** Each lead enrolled in a sequence spends action credits. Adding AI snippets adds a variable number of data credits per lead on top of that, depending on how much work each snippet does. Clay shows you an estimate in the sequence, so you can see what a change will cost before you commit to it.
 
 ## Adding steps
 
@@ -21,15 +21,15 @@ A sequence holds up to four messages. The first one does most of the work, so gi
 3.  On every message after the first, set the `Send as reply` toggle. On, the message goes out as a reply on the same thread as the previous email and inherits that thread's subject line; off, it starts a fresh thread with a subject of its own.
 4.  To remove a message, open its 3-dot `Message actions` menu and choose `Delete message`. A sequence always keeps at least one message, so `Delete message` is unavailable while a single message is all you have.
 
-Delays count from the previous message in that lead's own sequence, not from when the campaign launched, so leads who enroll later simply run the same spacing on their own clock. Each message can hold up to 8 KB of text, which is comfortably more room than a cold email should ever need.
+Delays count from the previous message sent to that lead, not from when the sequence launched, so leads who enroll later simply run the same spacing on their own clock. Each message can hold up to 8 KB of text, which is comfortably more room than a cold email should ever need.
 
-One thing worth settling before you go live: launching locks the shape of your sequence. The number of messages and their order are fixed once the campaign is live, because changing them mid-flight would break the analytics for leads already part-way through. Copy and step timing both reopen while a campaign is paused, so the delay between two messages is still yours to change.
+One thing worth settling before you go live: launching locks the shape of your sequence. The number of messages and their order are fixed once the sequence is live, because changing them mid-flight would break the analytics for leads already part-way through. Copy and step timing both reopen while a sequence is paused, so the delay between two messages is still yours to change.
 
 ## Plaintext vs. HTML
 
 Sequences send plaintext by default, and for cold outbound that's the right call. Mailbox providers read heavy HTML as a signal of bulk marketing mail, so a plain message from a person tends to land in the primary inbox where a designed one lands in Promotions.
 
-If you do need rich formatting, turn on `Enable HTML` under `Email format` in the campaign's `Settings`. Clay is upfront about the trade-off in the setting itself: `HTML enables links, images, formatting, and tracking`, and `HTML can negatively affect deliverability for cold outbound`. Everything HTML unlocks carries that same deliverability cost, which is why it is all off by default. For cold campaigns, replies are the more reliable signal to measure anyway.
+If you do need rich formatting, turn on `Enable HTML` under `Email format` in the sequence's `Settings`. Clay is upfront about the trade-off in the setting itself: `HTML enables links, images, formatting, and tracking`, and `HTML can negatively affect deliverability for cold outbound`. Everything HTML unlocks carries that same deliverability cost, which is why it is all off by default. For cold sequences, replies are the more reliable signal to measure anyway.
 
 | Available with Enable HTML on | What it adds |
 | --- | --- |
@@ -37,7 +37,7 @@ If you do need rich formatting, turn on `Enable HTML` under `Email format` in th
 | Track email opens and Track link clicks | Open and click tracking. Each needs a link or an image in the message body, which is why HTML is the prerequisite. |
 | Enable unsubscribe link | An unsubscribe link in the message, along with the Unsubscribe text that goes with it. |
 
-Switching HTML back off is fine, but a message that already carries HTML-only formatting can't be rendered in the plaintext editor. Clay locks that message's body and says so on the card, pointing you back to the campaign settings to turn HTML on again if you want to see and edit it there.
+Switching HTML back off is fine, but a message that already carries HTML-only formatting can't be rendered in the plaintext editor. Clay locks that message's body and says so on the card, pointing you back to the sequence settings to turn HTML on again if you want to see and edit it there.
 
 ## Personalizing with variables
 
@@ -50,6 +50,18 @@ Type `/` anywhere in a subject line or message body to open the insert menu — 
 | Spintax | One value picked at random, per lead, from a short list of alternatives you supply. |
 | Sender data | Opens a submenu of details drawn from whichever sending account the email goes out from. |
 | Link | A hyperlink with its own display text. Appears only when Enable HTML is on. Both the URL and the Label accept lead fields and sender variables. |
+
+### Why bracketed text isn't inserted as a variable
+
+Typing a field name inside brackets, such as `{{first_name}}`, `{first_name}`, or `[first_name]`, doesn't insert a variable in a sequence message. The text goes out to leads exactly as typed, brackets included. To insert a variable, type `/` and choose the field from the insert menu.
+
+When the editor spots bracketed text that looks like a variable, the message card shows a `Did you mean to insert a variable?` warning at the bottom, explaining `Text inside brackets is not inserted as a variable. To insert a variable, type / and choose a field.` If the bracketed text matches one of your lead fields, the warning also suggests that field by name.
+
+-   Text in double curly braces (`{{…}}`) always triggers the warning.
+-   Text in single curly braces (`{…}`) or square brackets (`[…]`) triggers it only when it looks like a field name: it matches a lead field, ignoring capitalization, spaces, underscores, and hyphens, or it's a short name of up to three words, such as `first_name` or `company name`.
+-   The warning checks both the `Subject` and the body of each message. It doesn't appear on copy you can't edit: a reply's inherited subject line, an A/B variant field that mirrors the default variant, copy that's locked while the sequence is live, or a message locked because it carries HTML-only formatting.
+
+To clear the warning, replace the bracketed text with a variable inserted from the `/` menu. You can also close the warning; it comes back if you type different bracketed text.
 
 ### Lead variables
 
@@ -66,9 +78,9 @@ Variables you insert start out required, with no fallback. That's the safe defau
 
 ### Sender variables
 
-Sender variables let campaign copy reference something that differs per sending account, like a meeting link or a signature. Insert one from the `Sender data` submenu, and the value resolves per lead based on which account that lead's email is sent from.
+Sender variables let sequence copy reference something that differs per sending account, like a meeting link or a signature. Insert one from the `Sender data` submenu, and the value resolves per lead based on which account that lead's email is sent from.
 
-This is what lets a single sequence work across a whole pool of senders without reading as though it came from one person. They work inside a link too, in both the `URL` and the `Label`, so one shared campaign can give every rep their own booking link.
+This is what lets a single sequence work across a whole pool of senders without reading as though it came from one person. They work inside a link too, in both the `URL` and the `Label`, so one shared sequence can give every rep their own booking link.
 
 You manage the values on the `Sender variables` tab of the `Sequencer` page, and creating a variable walks you straight into filling them in:
 
@@ -103,11 +115,11 @@ Three buttons sit at the bottom of the panel:
 -   `Discard` — throws the draft away and leaves your message as it was.
 -   `Accept` — saves the brief and closes the panel.
 
-Snippets are generated per lead at enrollment and then frozen, so what a lead receives is whatever the brief produced for them at that moment. Iterate on the brief while the campaign is still in draft, and preview across several leads rather than judging it on one.
+Snippets are generated per lead at enrollment and then frozen, so what a lead receives is whatever the brief produced for them at that moment. Iterate on the brief while the sequence is still in draft, and preview across several leads rather than judging it on one.
 
 ## Giving the AI context
 
-Snippets write better copy when they know what you're selling and why you're writing. That context lives in the `AI context` section of the left sidebar, and every snippet in the campaign inherits it automatically — you don't restate it per snippet.
+Snippets write better copy when they know what you're selling and why you're writing. That context lives in the `AI context` section of the left sidebar, and every snippet in the sequence inherits it automatically — you don't restate it per snippet.
 
 Start with `Sequence goals`. Describe the offer, the audience, and what a good outcome looks like, in a few sentences. It accepts `/` for variables and `@` for documents, so you can make the goal itself lead-aware where that helps. Then attach reference material with `Add context`:
 
@@ -116,10 +128,10 @@ Start with `Sequence goals`. Describe the offer, the audience, and what a good o
 | Files | Documents uploaded to your workspace. |
 | Google Docs | Available once a Google account is connected. |
 | Notion | Available once a Notion account is connected. |
-| Any skill under Skills, listed by name | One of your workspace's skills — a saved set of instructions the AI follows, so an approach you have already refined carries into a campaign without being written out again. |
-| Create skill | Opens the skill editor, where you give the skill a Skill name, a Description, and its Instructions. It attaches to this campaign as soon as you create it. |
+| Any skill under Skills, listed by name | One of your workspace's skills — a saved set of instructions the AI follows, so an approach you have already refined carries into a sequence without being written out again. |
+| Create skill | Opens the skill editor, where you give the skill a Skill name, a Description, and its Instructions. It attaches to this sequence as soon as you create it. |
 
-`Manage business context` sits at the bottom of the same popover, as a link out to where your workspace's business context is defined — shared facts about your company that every campaign can draw on.
+`Manage business context` sits at the bottom of the same popover, as a link out to where your workspace's business context is defined — shared facts about your company that every sequence can draw on.
 
 Everything you attach shows up under `Documents and skills`, and you can remove any of it at any time. Fewer, sharper documents generally beat a large pile: a one-page positioning summary is easier for the AI to use well than a fifty-page deck.
 
@@ -174,6 +186,6 @@ A test send is the only way to see the finished article: variables resolved, sni
 
 1.  Save your changes and select a lead in the preview — Clay needs both to build the message.
 2.  Open a message's 3-dot `Message actions` menu and choose `Send test email`.
-3.  Pick a sender under `Send from`, which lists the accounts this campaign sends from, put your own address in `Send to`, and choose `Send test email`.
+3.  Pick a sender under `Send from`, which lists the accounts this sequence sends from, put your own address in `Send to`, and choose `Send test email`.
 
 If a test send fails, it's usually transient, so try once more; if it keeps failing, check that the sender account is still connected.

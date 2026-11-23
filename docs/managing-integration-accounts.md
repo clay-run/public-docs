@@ -1,24 +1,24 @@
 ---
 title: Managing integration accounts
 description: How to use Clay-managed accounts, and how to add, edit, delete, or reconnect your own integration accounts in Settings → Connections.
-last_synced: 2026-10-07T00:16:31.181Z
+last_synced: 2026-11-18T19:12:47.029Z
 ---
 
 # Managing integration accounts
 
-Manage your Clay-managed and personal integration accounts.
+Manage your Clay-provided and personal integration accounts.
 
 Clay consolidates multiple data providers into a single platform and integrates with your tech stack through 100+ available integrations.
 
--   **Eliminate data procurement fatigue:** Clay-managed accounts simplify contract management with data providers, handling billing through Actions and Data Credits.
+-   **Eliminate data procurement fatigue:** Clay-provided accounts simplify contract management with data providers, handling billing through Actions and Data Credits.
 -   **Integrate with core tools:** Choose from 100+ integrations to ensure compatibility with your go-to-market system.
--   **Flexibility to bring your own API key:** Use Clay-managed accounts for quick setup or connect your own API keys at no extra cost (paid feature).
+-   **Flexibility to bring your own API key:** Use Clay-provided accounts for quick setup or connect your own API keys at no extra cost (paid feature).
 
-## Using Clay-managed accounts
+## Using Clay-provided accounts
 
-Clay-managed accounts are pre-configured integrations that let you access data providers without individual credentials or API keys. These accounts use actions (for platform orchestration) and data credits (for data costs) to simplify access and eliminate the need for individual service contracts.
+Clay-provided accounts are pre-configured integrations that let you access data providers without individual credentials or API keys. These accounts use actions (for platform orchestration) and data credits (for data costs) to simplify access and eliminate the need for individual service contracts.
 
-Some integrations only support Clay-managed accounts, while others let you use either Clay-managed accounts or your own API keys.
+Some integrations only support Clay-provided accounts, while others let you use either Clay-provided accounts or your own API keys.
 
 ### Move existing columns to a different account
 

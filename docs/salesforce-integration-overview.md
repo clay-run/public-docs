@@ -1,7 +1,7 @@
 ---
 title: Salesforce integration
 description: Cloud-based customer relationship management software.
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-11-18T15:41:31.197Z
 ---
 
 # Salesforce integration
@@ -260,11 +260,11 @@ Use this action to find existing records in Salesforce.
 **Inputs:**
 
 -   **Salesforce object:** The object type to look for in your Salesforce.
--   **Exact match? (optional):** When enabled, finds exact matches across all search fields.
+-   **Exact Match? (optional):** When enabled, the lookup only returns records whose values exactly match your search values, in every search field. When disabled (the default), it does a contains search instead, so a search for `Acme` also returns `Acme Corp`. Searches on the `Id` field always use an exact match.
 
 **How matching works**
 
-The **Exact match?** toggle controls how Clay queries Salesforce:
+The **Exact Match?** toggle controls how Clay queries Salesforce:
 
 -   **Exact match ON:** Clay uses an equality filter (`field = 'value'`). Only records whose field value matches your Clay value exactly are returned.
 -   **Exact match OFF (default):** Clay uses a contains filter (`field LIKE '%value%'`). Salesforce returns records where the field value **contains** your Clay value as a substring. This is **not** fuzzy matching — there is no tolerance for typos or partial words.
