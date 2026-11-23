@@ -148,6 +148,30 @@ Return a dictionary with string keys, like `{'score': 42}`, and that dictionary 
 
 Calls a Clay function — a reusable block of logic shared across tables and workflows. The function has to exist before you can add it, and it charges the actions inside it. Use it to keep standard enrichment or qualification logic in one place rather than rebuilding it in each workflow. See [Functions](https://university.clay.com/docs/functions) and [Managed functions](https://university.clay.com/docs/managed-functions).
 
+### Workflow functions
+
+A workflow function is a function built in Clay Workflows — a workflow graph that other workflows can call as a step. Build the logic once, then reuse it across as many workflows as need it. Workflow functions are separate from table functions, which are built in a table: in the step picker, a workflow function is labeled `Workflow function`, and on the Functions homepage you can filter by `Tables` or `Workflows`.
+
+**Creating a workflow function.** You can create one in either of these ways:
+
+-   From the Functions homepage, open the create-from-scratch menu and choose `Workflow function`.
+-   In an existing workflow, open the menu on a group of nodes and choose `Convert to function` to turn the group into a workflow function.
+
+A workflow function has defined inputs and outputs, so each workflow that calls it maps values into its inputs and uses its outputs downstream.
+
+**Calling a workflow function.** Add it to a workflow from the step picker, where it appears with the `Workflow function` label, then map each of its inputs to a static value or an upstream field.
+
+**Choosing which version a workflow calls.** Each workflow function step has a `Function version` setting:
+
+-   `Latest` (the default) always calls the most recently published version of the function, shown as `Latest (currently Version X)`. When the function's owner publishes a new version, every workflow set to `Latest` picks it up.
+-   A specific published version (for example `V2`) pins the step to that version, so later changes to the function don't affect this workflow until you change the setting.
+
+**Seeing what happened inside a workflow function.** When you open a run of the calling workflow, the workflow function step shows the function's own steps as a nested trace inline, and you can click through to a specific step inside the function to read its inputs and outputs.
+
+**Credits for workflow functions.** Everything the workflow function spends while it runs — data credits and actions — is attributed to the step in the calling workflow that called it.
+
+**List mode isn't available for workflow functions yet.** A workflow function step can't run in list mode (once for each item in a list). Call it for one record at a time.
+
 ### `Update audience members`
 
 Writes what the run produced back to the contact or account in Audiences. Results land on the record rather than in the run, so anything you write back is immediately filterable in every other segment. Writing back is free.

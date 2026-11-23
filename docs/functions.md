@@ -212,7 +212,7 @@ Yes. Functions can be nested — a function can call another function as part of
 
 ### Can I call a Workflow Function from a table?
 
-No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, using a **Function** step. You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, by adding it as a step (it's labeled **Workflow function** in the step picker). You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
 
 Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
 
@@ -237,7 +237,7 @@ If you have existing column group templates, you can convert each one to a funct
 
 ### Is there version history for functions?
 
-No, functions don't currently have a version history.
+No, table functions don't currently have a version history. Workflow functions (functions built in Clay Workflows) do have versions: each workflow that calls a workflow function can follow the `Latest` published version or be pinned to a specific version. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 ### What is the main use case for functions?
 

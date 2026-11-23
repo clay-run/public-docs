@@ -48,7 +48,7 @@ A few errors have recognizable causes. A tool-not-found error usually means the 
 
 ### Can one workflow call another?
 
-Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
+Yes, through workflow functions. A workflow is started by its trigger, but you can build reusable workflow logic as a workflow function and call it as a step from any number of other workflows. Each calling workflow either follows the `Latest` published version of the function or is pinned to a specific version, and the calling workflow's run shows the function's steps as a nested trace. You can also call table functions from a workflow. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
 
