@@ -2132,6 +2132,33 @@ Two behaviors to keep in mind:
 
 If you need to look up a record that may be missing one of your identifier fields, filter by the field most likely to be populated (typically `Email` or `Profile URL`), and use a single-field filter rather than combining multiple conditions.
 
+### Can I delete a source from All People or All Companies?
+
+No. You can't delete a source, or the records it imported, from the **Sources** tab in Audiences (**All People** or **All Companies** → **Sources**). What the **⋮** menu on a source row shows depends on the source type, and no source type has a delete option:
+
+-   **Clay table import:** **View table**, which opens the Clay table the import came from.
+-   **CRM or data warehouse integration** (for example Salesforce, HubSpot, or Snowflake): workspace Admins see **Settings**, plus **Turn off import** when import sync is on and **Reconnect** when the connected account can be reconnected.
+-   **CSV upload:** no options.
+
+The source stays listed in the Sources tab.
+
+To remove the people or companies a source added, for example after you imported a Clay table of companies into All People by mistake:
+
+1.  In **All People** or **All Companies**, click **+ Filter**, choose **Sources**, keep the operator as **contains**, and select the source.
+2.  Click **Create segment** to save the filtered list as a named segment.
+3.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+4.  Select **Archive records in segment**, or, to remove the records permanently, **Delete records in segment** (available only to workspace Admins).
+
+Archiving or deleting the records in Audiences doesn't change the original Clay table the source imports from. The table and its rows stay as they are. For the difference between archiving and deleting, see [How do I remove records from an audience?](#how-do-i-remove-records-from-an-audience) below.
+
+### How do I remove records from an audience?
+
+You can remove records from your Audience in two ways:
+
+-   **Archive records (can be restored):** available to workspace Admins and Editors.
+-   **Delete records permanently (cannot be restored):** available only to workspace Admins. See **To permanently delete records** later in this section.
+
+Archiving moves a record to the **Archived** section in the left sidebar — it is no longer visible in any active segment, including All People or All Companies. Archived records can be restored from the **Archived** section at any time.
 ### Why is `Upsert Audiences Record` creating duplicate people instead of updating existing ones?
 
 The most common cause: **Look up fields** is set to Email (or professional network URL or Phone), but the people already in your Audience were not registered with that value as an identifier.
@@ -2164,7 +2191,24 @@ To remove people or company records from your Audience, you archive them. Archiv
 5.  Select **Archive records in segment**.
 6.  In the **Archive people in this segment?** dialog (or **Archive companies in this segment?** for Companies), click **Archive**. Only records that match the segment's latest saved filters are archived. They are moved to the Archived section and removed from all active segments. The segment itself stays in your sidebar.
 
-**Note:** Deleting a segment (or saved list) does not remove the people or companies in it. **Delete segment** in the same **⋮** menu removes only the segment from the sidebar — the records stay in All People or All Companies. Use **Archive records in segment** when you want to remove the contact or company records themselves.
+**Note:** **Delete segment** in the same segment menu removes the segment from the sidebar but leaves its records in place. Use **Archive records in segment** when you want to remove the contact or company records themselves.
+
+**To permanently delete records:**
+
+Only workspace Admins can permanently delete records. If you don't see **Delete records in segment** in the segment menu, contact Clay support.
+
+1.  Save the records you want to delete as a segment, as in steps 1–2 of the bulk-archive instructions above. The delete option, like the archive option, appears only on saved segments.
+2.  In the left sidebar, click the **⋮** (three-dot) menu next to the segment's name.
+3.  Select **Delete records in segment**.
+4.  In the **Permanently delete people in this segment?** dialog (it says "companies" for a Companies segment), tick the confirmation checkbox and click **Delete permanently**.
+
+How permanently deleted records differ from archived records:
+
+-   **Deleting can't be undone.** Deleted records don't go to the **Archived** section, and you can't restore them from Clay.
+-   **A syncing source can bring a deleted record back.** If the record still exists in a source that keeps syncing, such as a connected CRM, a future sync can import it again as a new record. Archived records aren't re-imported this way. Use archiving to keep records out for good while the source keeps syncing, and use deleting for cleanup, such as removing test data or a source you imported by mistake.
+-   **The original source data is unchanged.** Deleting records in Audiences doesn't delete rows from the Clay table the source imports from, or records in your CRM.
+
+Workspace Admins can also delete records in two other places: **Delete record** in the **⋮** menu of a single record's detail panel, and **Delete records** in the **Archived** section.
 
 **Note:** Archived records can be restored from the **Archived** section in the left sidebar. Archiving a record also stops sources from updating it. If a source sends an archived record again — for example, when the underlying Salesforce record is modified and re-synced, or when a CSV import includes the same **Unique identifier** value — Audiences skips it. The record isn't created again as a new record, and it stays in **Archived**. For a source to update the record again, restore it from **Archived** first.
 
