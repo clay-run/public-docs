@@ -1681,13 +1681,13 @@ No. The Audiences export to Salesforce never sends blank values. Before each exp
 
 With **Always write**, Clay replaces an existing Salesforce value only with a non-blank Audiences value.
 
-**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **If workflow value is present**, skips blank workflow values so they don't overwrite your Audience record. **If Audience field is empty** only writes when the Audience field is currently empty. Only the **Always** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export. If your Audiences workflow step has no write rule option, see [Why doesn't my Audiences workflow step show a Write rule option?](#why-doesnt-my-audiences-workflow-step-show-a-write-rule-option) below.
+**Workflows writing to your Audience:** The **Upsert Audiences record** workflow action has its own per-field write mode. The default, **Write unless blank**, skips blank workflow values so they don't overwrite your Audience record. **Write if empty** only writes when the Audience field is currently empty. Only the **Always write** mode writes blank values into the Audience record — and even then, the blank is not sent on to Salesforce by the Audiences export. If your Audiences workflow step has no write rule option, see [Why doesn't my Audiences workflow step show a Write rule option?](#why-doesnt-my-audiences-workflow-step-show-a-write-rule-option) below.
 
 ### Why doesn't my Audiences workflow step show a Write rule option?
 
-The Audiences workflow **Write rule** options (**If workflow value is present**, **If Audience field is empty**, and **Always**) are available only on Audiences write steps whose **Field mapping** (**Save your data to Audiences**) has a **Write rule** column. Older Audiences workflow steps have no write rules. These include the **Update Audiences record** step and Audiences write steps added to a workflow before write rules were introduced. Older Audiences steps always skip blank values, even with **Ignore blank values** turned off, so they can't clear a field on an Audience record.
+The Audiences workflow **Write rule** options (**Write unless blank**, **Write if empty**, and **Always write**) are available only on Audiences write steps whose **Field mapping** (**Save your data to Audiences**) has a **Write rule** column. Audiences write steps that set write rules in the step's side panel instead of the **Field mapping** view may still show the same three rules under their previous names: **If workflow value is present** (now **Write unless blank**), **If Audience field is empty** (now **Write if empty**), and **Always** (now **Always write**). Older Audiences workflow steps have no write rules. These include the **Update Audiences record** step and Audiences write steps added to a workflow before write rules were introduced. Older Audiences steps always skip blank values, even with **Ignore blank values** turned off, so they can't clear a field on an Audience record.
 
-An older Audiences workflow step can't be upgraded in place. To get write rules, for example to clear a field by setting its write rule to **Always** and mapping it to a blank value:
+An older Audiences workflow step can't be upgraded in place. To get write rules, for example to clear a field by setting its write rule to **Always write** and mapping it to a blank value:
 
 1.  Delete the older Audiences step from the workflow.
 2.  Add a new Audiences write step to the workflow canvas.
@@ -1695,7 +1695,7 @@ An older Audiences workflow step can't be upgraded in place. To get write rules,
 4.  Map your fields again, set each field's write rule, save the step, and re-run the workflow.
 5.  Open the record in Audiences to confirm the values changed.
 
-**Why does my Audiences workflow run show success when the Audience value didn't change?** The **Fields Updated Count** in an Audiences step's output counts the fields the workflow sent to Audiences, not the fields whose stored value changed. A step that skips blank values — an older Audiences step, or a step using the default **If workflow value is present** write rule — can report every field as updated while the existing Audience values stay in place.
+**Why does my Audiences workflow run show success when the Audience value didn't change?** The **Fields Updated Count** in an Audiences step's output counts the fields the workflow sent to Audiences, not the fields whose stored value changed. A step that skips blank values — an older Audiences step, or a step using the default **Write unless blank** write rule — can report every field as updated while the existing Audience values stay in place.
 
 ### How does the "Write if empty" export rule decide whether to update a Salesforce field?
 
