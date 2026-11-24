@@ -145,6 +145,7 @@ The objects available in Clay are determined entirely by the permissions of the 
 -   **Object-level permissions:** Does the connected user's profile or permission set include **Read** access to the Account object? In Salesforce, go to `Setup` → `Profiles` (or `Permission Sets`) → find the user's profile → `Object Settings` → `Account` → confirm `Read` is enabled.
 -   **Org-wide sharing defaults:** Are there sharing rules that restrict Account visibility for this user? Go to `Setup` → `Sharing Settings` and check the organization-wide default for Accounts.
 -   **API access per object:** Some Salesforce orgs restrict which objects are accessible via the API. Confirm the Account object is API-accessible for the connected user.
+-   **Permission set license (Salesforce Integration User license only):** If the connected user has a **Salesforce Integration** user license (a lower-cost, API-only license designed for system integrations), standard object permissions must be granted through a permission set whose **License** field is set to **Salesforce API Integration** — not the default **Salesforce** license type. A permission set using the **Salesforce** license will appear to be assigned successfully in Salesforce Setup, but its object permissions do not take effect for Salesforce Integration license holders, leaving standard objects like Account, Contact, and Lead absent from Clay's dropdown even after the assignment. To resolve this: go to `Setup` → `Users` → open the integration user → under **Permission Set License Assignments**, confirm **Salesforce API Integration** is listed (add it if it is not). Then create a new permission set with **License** set to **Salesforce API Integration**, grant **Read** (and **Edit** if needed) on the required objects under **Object Settings**, and assign that permission set to the integration user. After saving in Salesforce, click **Refresh fields** in Clay.
 
 Once your Salesforce admin grants the necessary permissions, the updated access will be reflected in Clay automatically. You can verify by logging into Salesforce as the connected user and confirming Account records are visible there.
 
@@ -435,7 +436,18 @@ Clay's report picker automatically filters to show only Tabular and Matrix repor
 
 For an overview of Salesforce report formats, see Salesforce's [Report Formats documentation](https://trailhead.salesforce.com/content/learn/modules/lex_implementation_reports_dashboards/lex_implementation_reports_dashboards_report_formats).
 
-**If the report format is correct but the report still doesn't appear in the picker**, the report's folder permissions may be the cause. Clay queries the Salesforce Report API using the connected Salesforce user's credentials, and Salesforce only returns reports in folders that user can read — making a report public in Salesforce is not sufficient if the connected user lacks read access to the folder containing the report. To fix this, ask your Salesforce admin to grant the connected Salesforce user read access to the folder where the missing report is stored.
+## Why does Clay show "The connected Salesforce user's profile doesn't have access to the Report object via the API"?
+
+This error appears in the **Import records from a Salesforce report** source when Salesforce determines that the connected user's profile does not have API access to the Report object. Clay calls Salesforce's Analytics API to fetch and run the report — if Salesforce rejects the request with a Report access error, Clay surfaces: *"The connected Salesforce user's profile doesn't have access to the Report object via the API. Ask your Salesforce admin to enable API access to Reports on this profile."*
+
+**To resolve this**, ask your Salesforce admin to enable Report API access for the integration user:
+
+1.  In Salesforce, go to `Setup` → `Profiles` (or `Permission Sets`) and open the profile or permission set assigned to the connected user.
+2.  Under **System Permissions**, enable **Run Reports** and **View Reports in Public Folders**.
+3.  Make sure the specific report's folder is shared with the integration user — reports stored in private folders are inaccessible to other users via the API.
+4.  Back in Clay, open the **Import records from a Salesforce report** source and click **Refresh fields** to re-fetch the available report list.
+
+**If you are using a Salesforce Integration User license:** a standard permission set will not apply system permissions to this license type. You need a permission set whose **License** is set to **Salesforce API Integration** in order for the Report permissions to take effect. See [Why is a Salesforce object not appearing in Clay?](#why-is-a-salesforce-object-such-as-account-not-appearing-in-clay) for the full setup steps.
 
 ## Why did my Salesforce report import only bring in 2,000 rows when my report has more?
 
@@ -475,6 +487,30 @@ The most common cause is that the source reached the 50,000 total records proces
 - **Create a new source.** Deleting the existing source and adding a new "Import records from a Salesforce list" source on the same table resets the processed-record counter to zero, giving you a fresh 50,000 records. This is a short-term workaround — the new source will eventually reach the limit again as it processes records.
 
 For a full explanation of which source types are compatible with auto-delete's continuous passthrough mode, see [Auto-delete in tables](auto-delete.md).
+
+## Why does importing Salesforce records into Clay only show a limited number of fields?
+
+This is expected behavior. When you use the **Import records from a Salesforce list** source, Clay imports exactly the fields that are configured as columns in your selected Salesforce list view — not all fields on the Salesforce object. A default list view in Salesforce (such as "All Contacts" or "All Accounts") typically includes only a small set of system fields — for example, Name, Owner, Created Date, and the record ID — so only those fields appear in your Clay table after the import.
+
+**The fastest way to get all fields: add a Lookup Record enrichment**
+
+The Salesforce **Lookup Record** action, when given the Salesforce Object ID of a record, returns the full record — all fields the connected Salesforce user has Read access to — regardless of what columns were in the list view. Because the record ID is always included in a list view import, you can use it as the lookup key without any additional setup:
+
+1. In your Clay table, click **Add enrichment** and search for **Salesforce Lookup record**.
+2. Set **Salesforce Object** to match the object type you imported (for example, **Contact** or **Account**).
+3. Under **Object Field(s)**, select **Salesforce Object ID** (or any specific fields you want returned).
+4. Under **Salesforce Object ID to search for**, select the `Id` column from your Clay table.
+5. Save and run the column. Click into any cell in the Lookup Record column to see and extract individual fields.
+
+Make sure the Lookup Record column uses the **same Salesforce connection** as your import source. If they point to different accounts, the lookup returns "No records found" even when the record exists in Salesforce.
+
+**If the Lookup Record column also shows only a limited number of fields**
+
+The connected Salesforce user may not have Read access to those fields. Salesforce field-level security (FLS) controls which fields the integration user can read — fields without Read permission are not returned by the lookup regardless of whether they exist in Salesforce. See [Why are some Salesforce fields missing from the Object Field(s) selector in the Lookup Record action?](#why-are-some-salesforce-fields-missing-from-the-object-fields-selector-in-the-lookup-record-action) for instructions on granting the necessary permissions.
+
+**Alternative: add the missing fields to your Salesforce list view**
+
+In Salesforce, edit the list view to include the fields you need, then re-run the source in Clay — new columns will be picked up on the next sync. For fields stored on a related object (such as Account Name on a Contact record), create a formula field on the Contact object that copies the related value, then add that formula field to the list view. See [Fields not in your Salesforce list view](salesforce-integration-overview.md#source-import-records-from-a-salesforce-list) in the Salesforce integration overview for details.
 
 ## Will Clay create duplicate records in Salesforce?
 
@@ -626,6 +662,50 @@ To set the correct Account ID, you need the Salesforce Account record's ID — n
 
 In both cases, map the returned Account ID to the **Account ID** field in your **Create Record** or **Update Record** column for the Contact — never to a text "Account Name" field. Salesforce displays the account name automatically once the Account ID is linked. For a step-by-step example of the lookup approach, see [Why am I seeing a `MALFORMED_ID` error when creating or updating a Salesforce record?](#why-am-i-seeing-a-malformed_id-error-when-creating-or-updating-a-salesforce-record).
 
+## How do I link new contacts to the correct Salesforce account when prospecting?
+
+When your prospecting function creates new Salesforce contacts, Salesforce requires the contact's `AccountId` — the Salesforce record ID of the account the person belongs to. The account name, company domain, or any other identifier will not satisfy this requirement. How you resolve that ID depends on whether you're prospecting under a single account or across many.
+
+**Scenario 1: Single-account prospecting**
+
+If all new contacts belong to the same account, pass the Salesforce Account ID directly as a fixed input. Map that value to `AccountId` in the **Map fields** section of your **Create Record** step — no per-row lookup is needed.
+
+**Scenario 2: Multi-account prospecting**
+
+When new contacts span multiple accounts — for example, prospecting contacts across companies already in your book of business — add a **Lookup Record** step to resolve each person's account before creating the contact:
+
+1. **Look up the Salesforce Account by company domain.** Add a **Lookup Record** column, set the Salesforce object to **Account**, and search by company website or domain. The action returns all fields from the matched account — including `Id`, `Name`, and `ParentId`.
+2. **Map the Account ID.** In the **Create Record** step for the contact, add `AccountId` in **Map fields** and map the `Id` returned by the Account Lookup column. The company name or domain alone will not link the contact — Salesforce requires the actual record ID.
+3. **Map the contact's email.** Add `Email` in **Map fields** and map the work email from your enrichment waterfall. Many Salesforce orgs have custom validation rules that require both `AccountId` and `Email` before a contact can be created.
+4. **Add a run condition.** Gate the Create Record step so it only fires when both `AccountId` and `Email` are resolved. Open the column's **Run settings** → **Only run if**, and enter a condition such as:
+
+   `/Account Lookup is not empty AND /Work Email is not empty`
+
+   Replace the column names with your actual column names. Rows where either field is missing are skipped — no Salesforce record is attempted and no credits are consumed for those rows.
+
+5. **Route unmatched rows for review.** Rows where the Account Lookup returned no match, or where no email was found after enrichment, should be flagged for manual review rather than retried — retrying won't help if the account isn't in Salesforce or no email exists for that person.
+
+**Parent-child account hierarchies**
+
+If your Salesforce org uses parent-child accounts (for example, subsidiaries reporting to a parent company), set `AccountId` to the **child account** — the account that represents the person's actual employer in your hierarchy. You do not need to map `ParentId` on the contact itself. Salesforce maintains the relationship to the parent automatically through the child account's own `ParentId` field.
+
+## Will enabling Salesforce "Contacts to Multiple Accounts" affect my Clay integration?
+
+No. Enabling Contacts to Multiple Accounts in Salesforce won't break your existing Clay Salesforce workflows. Each Salesforce contact still has one primary account, stored in the contact's `AccountId` field. Clay's Salesforce actions (**Create record**, **Update record**, **Look up record**, and **Look up records with SOQL**) keep reading and writing `AccountId` the same way they did before.
+
+Salesforce keeps a contact's additional account links in a separate object called **Account Contact Relationship** (API name `AccountContactRelation`). Keep these points in mind when you use Clay with Contacts to Multiple Accounts:
+
+-   **Clay imports only the primary account.** Clay's Salesforce table sources and Clay Audiences don't import Account Contact Relationship records. In Clay, each contact is linked only to its primary account (`AccountId`), so any account-based segments, filters, or routing you build in Clay use that primary account.
+-   **To add extra account links from Clay**, add a **Create record** column, set the Salesforce object to **Account Contact Relationship**, and map `AccountId` and `ContactId`. The **Create record** object picker lists every object your connected Salesforce user can access.
+-   **To pull every account a contact is linked to**, add a **Look up records with SOQL** column and query the Account Contact Relationship object, for example:
+
+    `SELECT AccountId FROM AccountContactRelation WHERE ContactId = '/Contact ID'`
+
+    Replace `/Contact ID` with the column from your Clay table that holds the Salesforce Contact ID, using the `/` picker in the query editor.
+-   **Your connected Salesforce user needs access to Account Contact Relationship.** Clay's Salesforce actions run with the permissions of the connected Salesforce user, such as your integration user. If that user's profile or permission set can't read or create Account Contact Relationship records, the object won't appear in Clay or Salesforce will reject the request.
+
+Test the setup in a Salesforce sandbox before you roll it out in production. For more on connecting a sandbox, see [Is there a way I can test Salesforce enrichments?](#is-there-a-way-i-can-test-salesforce-enrichments).
+
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
 When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
@@ -658,6 +738,46 @@ If the Salesforce user connected to Clay has write access but not read access to
 
 -   Search your **Salesforce Recycle Bin** — if the record was auto-deleted by an automation, it may still be recoverable there.
 -   In Salesforce Setup, review active **Flows** and **triggers** on the object to see if any run on record creation.
+
+## How do I prevent Clay from updating a Salesforce field when a specific condition is met on that record?
+
+Add a **conditional run** to your Update Record column to skip records that match a given condition — for example, to leave accounts whose Account Status is "Active" untouched.
+
+**Step 1: Make sure the field you want to check is in your Clay table**
+
+A run condition on an Update Record column evaluates values already present in your Clay table — it cannot read Salesforce field values directly at run time. If the field you want to gate on (such as Account Status) is not already a column in your table, add a **Lookup record** column to pull it in:
+
+1.  In the Lookup record column settings, select the Salesforce object (for example, Account) and add the field to **Object Field(s)**.
+2.  Run the column to populate values for each row.
+
+If your table already imports the field from a Salesforce list source, skip this step — the value is already in your table.
+
+**Step 2: Add a run condition to your Update Record column**
+
+1.  Open your **Update Record** column settings and click **Run settings → Only run if**.
+2.  Set a condition that excludes the records you don't want updated — for example, to skip accounts whose Account Status is "Active":
+
+    `/Account Status is not "Active"`
+
+    *(Replace "Account Status" with the name of your column, and "Active" with the exact picklist value used in your Salesforce org.)*
+
+3.  Click **Generate formula**, verify the preview shows the correct rows as "Will run" vs. "Run condition not met," then save.
+
+Rows where Account Status equals "Active" show **"Run condition not met"** in the Update Record cell — Clay skips those rows, the Salesforce fields are left unchanged, and no credits are consumed for those rows.
+
+**Alternatively, omit specific fields from the field mapping**
+
+If you only want to protect a specific Salesforce field rather than skip the entire update, don't include that field in the **Map fields** section of your Update Record column. Fields not added to Map fields are left unchanged in Salesforce, regardless of the value in your Clay table.
+
+**What the "Ignore blank values" toggle does — and doesn't do**
+
+The **Ignore blank values** toggle on Update Record addresses a narrower scenario: when enabled (the default for new Update Record columns), blank Clay cells are omitted from the update payload, so they don't clear existing Salesforce field values. It does not prevent a populated Clay value from overwriting a populated Salesforce field. For that, use a conditional run as described above.
+
+**Applying this consistently across multiple tables**
+
+Clay doesn't have a workspace-wide setting to automatically apply a run condition to all Update Record columns — each column must be configured individually. The most practical approach for teams: configure your Update Record column with the condition in place, then use that table as the starting point when creating new projects — the column configuration, including the run condition, carries over when you duplicate the table.
+
+For guaranteed enforcement at the CRM level — so that the rule applies regardless of how individual Clay tables are configured — create a Salesforce user dedicated to Clay with field-level security that restricts editing the relevant fields on the records you want to protect. See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md) for setup instructions.
 
 ## How do I prevent Salesforce records from being created or updated when there is no valid email?
 
@@ -820,9 +940,44 @@ The queries you see from Clay come from two sources: **Lookup Record columns** r
 
 5.  **Narrow your import.** If you import records via a Salesforce list view, filter that list view so Clay scans fewer records each sync.
 
-**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load.
+**Note:** The **Run in batches** setting is not available on the standard **Lookup Record** or **Lookup records via SOQL** columns, so it cannot be used to throttle these read queries. The adjustments above are the levers for reducing read-query load. If you're looking up records by their Salesforce record ID or an External ID field, the **Look up record by ID (batch-enabled)** action does support **Run in batches**. See [How does Clay handle Salesforce API limits, and what happens if a run hits them?](#how-does-clay-handle-salesforce-api-limits-and-what-happens-if-a-run-hits-them)
 
 On the Salesforce side, asking your admin to add custom indexes on the fields Clay filters against will also help those queries run more efficiently.
+
+## How does Clay handle Salesforce API limits, and what happens if a run hits them?
+
+Your Salesforce org's API limits, including the daily API request limit and the concurrent request limit, are set by Salesforce based on your Salesforce edition and licenses. Clay doesn't set or change them. This section covers how Clay's Salesforce table actions use your org's Salesforce API limits, how many Salesforce API calls each action makes, and what happens when a run hits a Salesforce limit.
+
+**How to see your Salesforce API usage:** If you use Clay Audiences, the **API usage** card on your Salesforce source settings page in Audiences shows **Calls used** against your org's daily API request limit for the **Last 24 hours**. The card shows API usage for your whole Salesforce org, not just Clay. See [What does the API usage percentage on my Salesforce settings page mean?](audiences.md#what-does-the-api-usage-percentage-on-my-salesforce-settings-page-mean-is-that-all-clays-usage) Your Salesforce admin can also see your org's API limits and usage in Salesforce under **Setup → System Overview → API Usage**.
+
+**Concurrent Salesforce requests:** Clay sends at most **20** Salesforce requests at a time per connected Salesforce account. Every Salesforce column and action that uses the same connected Salesforce account shares this limit of 20, so a large table run can't send more than 20 requests to Salesforce at once. Clay keeps this limit below Salesforce's own concurrent request limit so your other Salesforce integrations still have room to run.
+
+**Daily Salesforce API limit:** Salesforce actions in Clay tables don't slow down as your org gets close to its daily API request limit. They keep running until Salesforce returns a rate-limit error (see below). Salesforce syncs in Audiences work differently: they pause automatically once your org has used 90% of its daily API request limit, then resume on their own. See [Why is my Salesforce sync paused because of API limits?](audiences.md#why-is-my-salesforce-sync-paused-because-of-api-limits-is-there-a-workaround)
+
+**How many Salesforce API calls each action makes:** The following table shows how many Salesforce API calls each Clay Salesforce action makes, and which actions support **Run in batches**.
+
+| Action | Salesforce API calls | Run in batches |
+| --- | --- | --- |
+| **Look up records with SOQL** (Lookup records via SOQL) | One SOQL query per row (1 row = 1 API call). Returns only the first page of results from Salesforce. Works the same way in a table, in an Audiences segment enrichment, and in a workflow. | Not available |
+| **Look up record by ID (batch-enabled)** | One call per row, or one call for up to 200 rows when **Run in batches** is on. Matches on the Salesforce record ID or an External ID field and returns one record per row. Works with any Salesforce object, including CampaignMember. | Available |
+| **Create record**, **Update record**, **Create or update record** | One call per row, or one call for up to 200 rows when **Run in batches** is on. | Available |
+
+**Batch size for Run in batches:** **Run in batches** is off by default on the Salesforce actions that support it. To turn it on:
+
+1.  Open the Salesforce action column and go to **Run settings**.
+2.  Turn on **Run in batches**.
+3.  Optionally, set **Number of rows per batch** to any number from 1 to 200. The default is 200.
+
+**What happens when a run hits a Salesforce rate limit or the daily API limit:**
+
+-   **Create record, Update record, Create or update record, and Look up records with SOQL:** Each affected cell fails with **"Rate Limited, Please try again"**. These cells don't retry automatically.
+-   **Create record, Update record, and Create or update record with Run in batches on:** The whole batch fails together, and the cells show the error message returned by Salesforce. Batches don't retry automatically.
+-   **Look up record by ID (batch-enabled):** When Salesforce returns a rate-limit error, Clay retries the cell automatically after about 5 seconds, up to 5 times, before the cell fails.
+-   **Import records from a Salesforce SOQL query source:** The import stops with **"Rate limited by Salesforce API. Please wait and try again later."** Records imported before the error stay in your table.
+
+To re-run failed cells once your Salesforce API quota frees up, right-click the column header → **Run column** → **Run N empty or out-of-date rows**. This re-runs only the rows that returned empty or errored results.
+
+**SOQL import limit:** The **Import records from a Salesforce SOQL query** source imports up to 50,000 records per import. This limit is the same on every Clay plan, including Enterprise. To work with more Salesforce records than that, import them into Audiences. See [Why did my scheduled "Import records from a Salesforce list" stop running?](#why-did-my-scheduled-import-records-from-a-salesforce-list-stop-running)
 
 ## Why does enriching a Salesforce timestamp field cause records to keep re-running?
 
@@ -845,6 +1000,11 @@ To connect to a Salesforce sandbox:
 3.  Under `User Sign In`, click `Sign in with Salesforce sandbox` and complete the OAuth sign-in flow.
 
 Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
+
+**Can Clay be connected to a Salesforce sandbox and Salesforce production at the same time?** Yes, for Clay tables. Your Salesforce sandbox connection and your Salesforce production connection are separate connections in `Settings` → `Connections`, and both can be active in the same workspace at the same time. A common testing setup is one table that pulls sandbox data using the sandbox connection, and a separate table that pulls production data using the production connection. Choose the connection for each Salesforce action or source from its account dropdown. Two things to keep in mind:
+
+-   **Audiences uses only one Salesforce connection.** Audiences supports one Salesforce connection per workspace, so Audiences can sync with either your sandbox org or your production org, not both. See [Can I connect multiple Salesforce accounts to Audiences?](audiences.md#can-i-connect-multiple-salesforce-accounts-to-audiences).
+-   **You can restrict who uses the production connection.** On Enterprise plans, use [Access settings for connections](access-settings-for-connections.md) to set your production Salesforce connection to `Specific people and groups`, so only the members who need it can build columns or workflows with it.
 
 ## Can I reverse my Salesforce enrichment?
 
@@ -901,6 +1061,21 @@ This error typically occurs when:
 1.  **API-only or Integration User license:** Switch to [Client Credentials](https://university.clay.com/docs/salesforce-integration-overview) — it works with these license types and requires no browser login. If you must use User Sign In, switch to a full Salesforce user license (not Integration User) with a profile or permission set that includes API Enabled and Connected App Access.
 2.  If your org enforces SSO, temporarily allow direct username/password login for this user, or create a non-SSO service account for authorization.
 3.  In `Setup` → `Connected Apps OAuth Usage`, verify the Clay app is listed and not blocked. If your org uses App Access Control, pre-install or whitelist the app first.
+
+If the Salesforce error page or URL also says `missing required code challenge`, the fixes above won't resolve it — see [Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?](#why-am-i-seeing-missing-required-code-challenge-when-connecting-salesforce-with-user-sign-in).
+
+## Why am I seeing "missing required code challenge" when connecting Salesforce with User Sign In?
+
+Salesforce returns `invalid_request: missing required code challenge` when your Salesforce org requires PKCE (Proof Key for Code Exchange — an extra OAuth security check) for browser sign-ins and the sign-in request doesn't include a PKCE code challenge. Clay's **User Sign In** connection method doesn't send a PKCE code challenge. When your Salesforce org requires PKCE, Salesforce rejects the User Sign In request before the approval screen, and the Clay connection or reconnect fails with a general connection error. The Salesforce error page may also show `OAUTH_APPROVAL_ERROR_GENERIC`.
+
+Because Salesforce rejects the request for the missing code challenge, the fixes for other `OAUTH_APPROVAL_ERROR_GENERIC` causes — using a full Salesforce user license, pre-approving Clay's connected app, adjusting SSO, or granting "Approve uninstalled connected apps" — don't resolve this error.
+
+**How to fix:** Connect Salesforce with **Client Credentials** instead of User Sign In. Client Credentials gets a token server-to-server using your external client app's consumer key and consumer secret, with no browser sign-in step, so Salesforce's PKCE requirement doesn't apply. You don't need to turn off PKCE or weaken other OAuth security settings in Salesforce.
+
+1.  **Set up Client Credentials in Salesforce.** Your Salesforce admin creates an External Client App with the Client Credentials flow enabled. See [Client Credentials setup instructions](salesforce-integration-overview.md#client-credentials-integration-user) in the Salesforce integration overview.
+2.  **Reconnect the existing connection in Clay.** In the home sidebar, click `Settings` → `Connections` → `Salesforce`, click `…` next to the connection, and choose **Reconnect**. Select **Client Credentials**, enter your **My Domain URL**, **Consumer key**, and **Consumer secret**, then click `Authenticate`. If you don't have a Salesforce connection yet, click `Add connection` instead.
+
+**Reconnect your Salesforce connection — don't delete it.** Reconnect updates the credentials on the same Salesforce connection, so every table, column, and source that uses it keeps working on its next run. Deleting the connection and adding a new one doesn't move anything over: tables, columns, and sources that referenced the deleted connection stay pointed at it and may stop working until you repoint each one to the new connection. For the full walkthrough, see [How do I switch from User Sign In to Client Credentials?](#how-do-i-switch-from-user-sign-in-to-client-credentials).
 
 ## Do I need to install Clay's Connected App in my Salesforce org?
 
@@ -1120,6 +1295,21 @@ In Salesforce, open the App Launcher and search for **Enrichment Menus**. Create
 5.  Save the layout.
 
 The **Launch Enrichment** button now appears on records of that object type. When a Salesforce user clicks it, the record is sent to your Clay webhook table for enrichment, and results are written back to Salesforce.
+
+## Can I install the Clay Salesforce package in a Salesforce sandbox?
+
+Yes. You can install the Clay Salesforce managed package in a Salesforce sandbox org as well as in production. The Clay Salesforce package is available on **Enterprise plans**, and a Salesforce admin needs to run the install.
+
+The Clay package installation link you get from your Clay account team or Clay support usually points to Salesforce's production login (`login.salesforce.com`). If you open that link while you're signed in to a sandbox, the install won't land in your sandbox. To install the Clay Salesforce package in a sandbox:
+
+1.  Take the installation link and replace `login.salesforce.com` with `test.salesforce.com`. Keep the rest of the link, including the `p0=` package ID, exactly the same. If you're not sure you have the right link, ask Clay support for the sandbox installation link.
+2.  Open the edited link and sign in with your **sandbox** credentials.
+3.  Confirm you're in the correct sandbox org, then click **Install**.
+4.  Continue with Step 2 onward in [How do I install the Clay Salesforce package to get the Launch Enrichment button on records?](#how-do-i-install-the-clay-salesforce-package-to-get-the-launch-enrichment-button-on-records) (permission sets, webhook table, Enrichment Menu, and page layouts) inside the sandbox.
+
+**If your sandbox uses a custom domain:** if the `test.salesforce.com` link doesn't open your sandbox, swap in your sandbox's own My Domain URL (for example, `yourcompany--sandboxname.sandbox.my.salesforce.com`) in place of `test.salesforce.com`, again keeping the `p0=` package ID the same.
+
+If the sandbox installation still fails, send Clay support the exact error message Salesforce shows.
 
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 

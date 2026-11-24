@@ -1,7 +1,7 @@
 ---
 title: Lunar.io integration
 description: Use Lunar.io in Clay to find verified work email addresses and mobile phone numbers, with strong phone coverage in EMEA and APAC.
-last_synced: 2026-11-07T03:26:23.099Z
+last_synced: 2026-11-18T19:16:31.472Z
 ---
 
 # Lunar.io integration
@@ -15,7 +15,7 @@ Lunar.io is a contact data provider for work email addresses and mobile phone nu
 1.  While in a Clay table, click `Add enrichment` and search for `Lunar.io`.
 2.  Under `Integrations`, select one of the Lunar.io actions.
 3.  In the modal, you will be asked to `Select Lunar.io account`.
-    -   If you have your own Lunar.io account, click `+ Add account` and enter your `Lunar.io API Key`. Otherwise, use the Clay-managed account.
+    -   If you have your own Lunar.io account, click `+ Add account` and enter your `Lunar.io API Key`. Otherwise, use the Clay-provided account.
 
 **Note:** Both actions search for the contact while they run, so a row can take anywhere from a few seconds to about a minute to fill in, and phone searches are usually the slower of the two. The row fills in on its own once the result comes back, so you don't need to stay on the table while it works.
 
@@ -73,4 +73,4 @@ Passing both is also fine: if one of the two values turns out to be unusable, th
 
 ### What happens if my own Lunar.io account runs low on credits?
 
-When you connect your `Lunar.io API Key`, Clay reads the credit balance on that Lunar.io account and flags it when you are under 100 credits or out entirely. Rows that run against an empty account come back with an out-of-credits message, so top up in Lunar.io and re-run the column. If you would rather not track a second balance, use the Clay-managed account instead.
+When you connect your `Lunar.io API Key`, Clay reads the credit balance on that Lunar.io account and flags it when you are under 100 credits or out entirely. Rows that run against an empty account come back with an out-of-credits message, so top up in Lunar.io and re-run the column. If you would rather not track a second balance, use the Clay-provided account instead.

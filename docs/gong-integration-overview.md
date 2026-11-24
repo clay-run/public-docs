@@ -68,7 +68,7 @@ Use this action to add a prospect to a Gong Engage flow.
 
 **Inputs**
 
--   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect.
+-   **Prospect Owner email:** Email of the Gong Engage user who owns the flow instance. Once this is selected, you'll be able to assign the prospect. The Prospect Owner is the user the flow's emails are sent from. To send from the rep assigned to each contact (for example, a BDR or SDR) instead of the person who built the flow, map a column containing that rep's email here. See [Sending Gong Engage flow emails from the assigned BDR or SDR](#guide-sending-gong-engage-flow-emails-from-the-assigned-bdr-or-sdr).
 -   **Flow ID:** ID of the Gong Engage flow you want to add the prospect to.
 -   **CRM Prospect ID:** The Contact ID of the prospect from whichever CRM (Salesforce or HubSpot) is connected to your Gong account. To get this value, add a **Salesforce Lookup Record** or **HubSpot Lookup Contact** enrichment column to your table, look up the contact record, and map the Contact ID it returns to this field. Do not map a raw table column (such as a "Contact ID" column from an imported Salesforce report) directly — even if it looks correct, it may not match the identifier format Gong expects, resulting in an "Invalid prospect crm id" error.
 -   **Flow instance description (Optional):** A description for this flow instance for this prospect. Useful for flows triggered automatically via workflows, to give reps context about who they're engaging with and why.
@@ -106,6 +106,30 @@ Clay.getCellErrorMessagePreview({{Add prospect to flow}})
 ```
 
 See [Formulas — How do I pull an error message from an action column into another column?](formula-generator.md) for full usage details, including limitations on preview behavior and which cells are supported.
+
+**Troubleshooting: Email copy sent to a Gong Engage flow shows up as one block of text**
+
+If the email copy you send from Clay to a Gong Engage flow doesn't keep the formatting from your Clay column — the paragraphs and line breaks in your template or AI-generated email run together into a single block in Gong — the cause is that Gong renders the flow step body as HTML. The **Add Prospect to Flow** action sends the value mapped to **Override for step N body** to Gong exactly as it appears in Clay, without converting line breaks, and HTML ignores plain line breaks. The action has no plain-text or HTML setting to change this, so the fix is to add HTML tags to the email body before it's sent.
+
+To keep your email formatting in Gong Engage:
+
+1.  Format the email body with HTML tags:
+    -   Wrap each paragraph in `<p>` and `</p>`.
+    -   Use `<br>` for a single line break inside a paragraph, such as a multi-line signature.
+2.  Produce that format in one of these ways:
+    -   **AI column prompt:** instruct the AI column (or Claygent) that writes the email to wrap each paragraph in `<p>` tags and use `<br>` for single line breaks, instead of plain line breaks.
+    -   **Formula column:** add a Formula column after the column that holds the email body that converts its line breaks into HTML tags, then map the formula column to **Override for step N body** instead of the original column.
+3.  Rerun the column on one row, enroll a test prospect, and check the rendered step in Gong. Once the paragraphs display correctly, run the remaining rows.
+
+For example, a body formatted like this displays as three separate paragraphs in Gong, with the signature on two lines:
+
+```html
+<p>Hi Jordan,</p>
+<p>Quick question about how your team tracks corrective actions today.</p>
+<p>Alex Morgan<br>Example Co</p>
+```
+
+Blank lines between the `<p>` blocks are optional — the `<p>` tags are what create the paragraph spacing in Gong.
 
 ### `Action` Get Assigned Flows for Prospect
 
@@ -160,3 +184,17 @@ To move a prospect from one Gong Engage flow owner to another—for example, whe
 1.  **Remove the prospect from their current flow:** Add a **Remove Prospect from Flow** enrichment action. Provide the current owner's email, the Flow ID, and the CRM Prospect ID (the contact's Salesforce or HubSpot ID).
 2.  **Look up the new owner's email:** If your table doesn't already have the new owner's email, add a **Salesforce Lookup Record** enrichment column set to look up the **User** object using the contact's `OwnerId` field and pull back the `Email` field.
 3.  **Re-enroll the prospect under the new owner:** Add an **Add Prospect to Flow** enrichment action. Map the new owner's email to **Prospect Owner email**, provide the Flow ID, and map the CRM Prospect ID.
+
+## `Guide` Sending Gong Engage flow emails from the assigned BDR or SDR
+
+In the **Add Prospect to Flow** action, the **Prospect Owner email** field decides who a Gong Engage flow's emails are sent from. It doesn't matter who created the flow or set up the Clay table. For example, a RevOps user can build the flow and the Clay table, and each prospect's emails can still come from the BDR or SDR assigned to that contact.
+
+To send Gong Engage flow emails from the assigned rep:
+
+1.  **Add a column with each rep's email:** Make sure your Clay table has a column with the email of the BDR or SDR who owns each contact (for example, a "BDR Email" column). If you need to look it up from Salesforce, see step 2 of [Reassigning a prospect to a new flow owner](#guide-reassigning-a-prospect-to-a-new-flow-owner).
+2.  **Map that column to Prospect Owner email:** In the **Add Prospect to Flow** action, insert the rep email column into the **Prospect owner email** field. Don't pick a single fixed user from the dropdown. Each row can have a different Prospect Owner, so one flow can send from a different rep on every row.
+3.  **Fill in the remaining required fields:** Provide the **Flow ID** and **CRM prospect ID**, then run the column.
+
+**Overriding `{{sender.first_name}}` doesn't change who sends the email.** Use **Override flow instance variables** to replace the text of a placeholder such as `{{sender.first_name}}`. These overrides don't change the flow owner or the sending user. If you override the sender's first name with the BDR's name but **Prospect Owner email** is still mapped to someone else, the email comes from that other user and only shows the BDR's name. To make the sender and the name match, map the BDR's email to **Prospect Owner email**.
+
+If a row fails with "Prospect is already assigned to the same flow", the contact is already enrolled in that flow. To re-enroll the contact, see **Common "Add Prospect to Flow" error messages** in the [Add Prospect to Flow](#action-add-prospect-to-flow) section above.

@@ -155,6 +155,17 @@ Build a separate campaign and enroll them there — a lead can run through a giv
 
 As a rule of thumb, wait a couple of months before sequencing the same person again, and only when the offer is genuinely different from the one they didn't respond to.
 
+### How do I build a re-engagement sequence for leads who haven't been contacted in 30 days?
+
+A re-engagement sequence in Sequencer is a separate segment-based campaign that picks leads up again once they've had a rest period, such as 30 days. You can't send the same lead back through the original campaign, because a lead can only be enrolled in a given campaign once.
+
+1.  In Audiences, build the People segment for your re-engagement campaign. To surface leads who haven't been in a campaign recently, add the `Campaign statuses activity` filter with `not in the last` and set it to `30` days.
+2.  Create a new campaign and attach that segment.
+3.  In `Lead setup`, click the pencil on the `Exclusions` row to open `Configure exclusions`, and set `Cooldown window` to `30 days` (or `Custom`, for any number of days up to 365). The cooldown skips anyone enrolled in another of your workspace's campaigns within that window.
+4.  Launch the campaign. Clay checks the attached segment for leads to enroll when you launch it and then once a day, so leads are enrolled automatically as their rest period ends and they qualify.
+
+Neither setting looks at individual email sends. The `Cooldown window` counts from when a lead was last enrolled in a campaign, and the `Campaign statuses activity` filter looks for any campaign status event (such as enrolled, paused, or stopped) within the window. A new campaign starts with `Cooldown window` set to `None`, so set it before you launch.
+
 ## Troubleshooting
 
 **Note:** Accounts purchased in Clay are the quickest to diagnose, because Clay manages the domain, its DNS records, and the inbox directly and can trace a send end to end. The checks below apply to both sending paths.

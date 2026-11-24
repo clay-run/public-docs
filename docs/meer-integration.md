@@ -2,7 +2,7 @@
 title: Meer integration
 description: Screen phone numbers against national do-not-call registries before
   initiating outbound calls.
-last_synced: 2026-09-24T19:43:53.173Z
+last_synced: 2026-11-18T19:16:16.736Z
 ---
 
 # Meer integration
@@ -22,7 +22,7 @@ With this integration, you can check phone numbers against regularly updated DNC
 
 1.  While in a Clay table, click `Add enrichment` and search for `Meer`.
 2.  Under `Integrations`, select `Screen phone number against DNC registries`.
-3.  Choose to use your own Meer API key or the Clay-managed account.
+3.  Choose to use your own Meer API key or the Clay-provided account.
 
 ### `Action` Screen phone number against DNC registries
 

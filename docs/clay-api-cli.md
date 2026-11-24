@@ -1,7 +1,7 @@
 ---
 title: Clay API & CLI
 description: How to access Clay's data and enrichments programmatically using the Clay CLI and Public API, including setup, plan limits, and available features.
-last_synced: 2026-07-09T18:04:07.240Z
+last_synced: 2026-11-19T07:41:30.596Z
 ---
 
 # Clay API & CLI
@@ -43,7 +43,7 @@ The platform has three core primitives:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and, for a limited time, on legacy plans through the end of 2026.
+The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and on legacy plans.
 
 Search result limits vary by plan:
 
@@ -53,6 +53,10 @@ Search result limits vary by plan:
 | Trial | 50 | 10k per 14 days |
 | Paid self-serve plans | 10,000 | 1M/yr |
 | Enterprise | 10,000 | 10M/yr |
+
+### Checking your search usage
+
+To see how much of your search limit you've used, open the `API and CLI` page in the left sidebar. The `Search usage` card shows the results your workspace has used out of its limit for the current period. A rolling 30-day period shows `Counts the last 30 days`, and a fixed period shows `Resets on` followed by the date it resets.
 
 ## FAQs
 

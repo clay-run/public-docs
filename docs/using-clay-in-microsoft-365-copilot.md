@@ -1,7 +1,7 @@
 ---
 title: Using Clay in Microsoft 365 Copilot
-description: How to find people, enrich contacts, and draft personalized outreach using the Clay agent within Microsoft 365 Copilot.
-last_synced: 2026-07-16T15:28:26.197Z
+description: Find people, enrich contacts, and draft personalized outreach — all within Microsoft 365 Copilot.
+last_synced: 2026-11-19T07:38:29.038Z
 ---
 
 # Using Clay in Microsoft 365 Copilot
@@ -18,7 +18,7 @@ Microsoft 365 Copilot is an AI assistant embedded across Microsoft's productivit
 
 1.  Go to the [**Clay listing in the Microsoft Marketplace**](https://marketplace.microsoft.com/en-us/product/WA200011257) and click **Get it now**, or find Clay in the **Agent Store** inside Microsoft 365 Copilot at [**aka.ms/m365\_copilot\_app**](https://aka.ms/m365_copilot_app).
 2.  Deploy the Clay agent to your organization through the [**Microsoft 365 Admin Center**](https://admin.microsoft.com/). IT controls deployment, access, and governance from there.
-3.  In your Clay workspace, go to `Settings → Team` and invite reps. Then set credit limits from the `MCP users` table on the `MCP` page (`MCP` under **Orchestration** in the left sidebar), and enable any Functions you want them to use from the `Functions` tab.
+3.  In your Clay workspace, go to `Settings → Team` and invite reps. Then set credit limits from the `Agent users` page, which you open from the sidebar on the Clay homepage, and enable any Functions you want them to use from the `Functions` tab.
 
 **For reps:**
 
@@ -31,7 +31,7 @@ Microsoft 365 Copilot is an AI assistant embedded across Microsoft's productivit
     -   Enrich contacts with additional data points (email address, work history summary, thought leadership)
     -   Click `View info` next to a person's name for more details or `Draft email`
         -   **Note:** You'll need to enrich and find a person's email address before you can draft an outreach email.
-5.  Results are returned in groups of 20. Click `View 10 more` to see additional results — up to 100 total.
+5.  Results are returned in groups of 20, with the first 10 shown inline. Click `View 10 more` to open the full results view, then `Load more` to pull in the next group.
 6.  At any time, click `Open` in the top right of the widget to unlock more powerful enrichment and workflow capabilities directly in your Clay table.
 
 ## **Use cases for Clay in Microsoft 365 Copilot**
@@ -93,7 +93,7 @@ Microsoft 365 Copilot will find the matching function, run it, and return the re
 
 ## **MCP settings for your team**
 
-Workspace admins can set credit limits and monitor rep usage from the `MCP users` table on the `MCP` page (click `MCP` under **Orchestration** in the left sidebar). For a full walkthrough of the admin controls, see [**MCP settings**](https://university.clay.com/docs/mcp-settings).
+Workspace admins can set credit limits and monitor rep usage from the `Agent users` page. For a full walkthrough of the admin controls, see [**MCP settings**](https://university.clay.com/docs/mcp-settings).
 
 ## **FAQ**
 
@@ -115,4 +115,4 @@ If you need additional data points or more advanced workflows, access the full C
 
 **How do credits work in Microsoft 365 Copilot?**
 
-Credits are consumed at the same rate as using Clay directly — if a Function that finds an email and phone number costs 12 credits in a Clay table, it costs 12 credits when triggered from Microsoft 365 Copilot. Searching for people and companies is free; enrichments consume credits. Your workspace admin controls your credit limit from the `MCP users` table on the `MCP` page (`MCP` under **Orchestration** in the left sidebar).
+Credits are consumed at the same rate as using Clay directly — if a Function that finds an email and phone number costs 12 credits in a Clay table, it costs 12 credits when triggered from Microsoft 365 Copilot. Searching for people and companies is free; enrichments consume credits. Your workspace admin controls your credit limit from the `Agent users` page.

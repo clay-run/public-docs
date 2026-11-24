@@ -1,7 +1,7 @@
 ---
 title: Credit usage
 description: Track credit consumption across your workspace.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-11-19T07:39:08.059Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
 ---
 
@@ -32,7 +32,8 @@ The columns in this view display:
 -   `Name:` The folder, workbook, or table. Click the dropdown next to a folder or workbook to see the contents.
 -   `Usage:` Marked as `Recurring` when it contains recurring credit usage (e.g., scheduled runs or signals).
 -   `Owner:` The workbook's creator or assigned owner — not necessarily who triggered the credit spend within it.
--   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total includes credits from tables that have since been deleted. Hover over the ⓘ icon on the Workspace row to see how many credits came from deleted tables.
+-   `Credits used:` The amount of credits used for this period. On the top-level **Workspace** row, this total also includes credits from tables deleted more than 30 days ago, which no longer have their own row. Hover over the ⓘ icon on the Workspace row to see that amount ("Includes N credits from deleted tables."). These credits are already counted in the Workspace total, not added on top of it. Tables deleted within the last 30 days still have their own rows, marked `Archived`. See [Why do archived or deleted tables still show credits used?](#why-do-archived-or-deleted-tables-still-show-credits-used)
+-   `Credit spend limit:` Shown on Enterprise plans for workbooks that have a credit spend limit. Shows how many credits the workbook has spent against its limit, with a progress bar — for example, `112,550.9 spent` of `130,000`. This spend is tracked from when the limit was created or last reset, and it is not filtered by the `When` dropdown, so it can differ from the workbook's `Credits used` value. See [Why doesn't a workbook's Credit spend limit match its Credits used?](#why-doesnt-a-workbooks-credit-spend-limit-match-its-credits-used)
 
 Filter any of the content on this page by:
 
@@ -133,15 +134,33 @@ Clay automatically monitors workspace credit spend and proactively notifies work
 
 The credit usage dashboard is organized into tabs, each covering a different slice of your workspace spend. Use the `When` dropdown and `Apply filters` to scope each tab to a specific time period.
 
+-   **Overview** — the default tab when you open `Settings → Usage`. Shows a chart of your workspace credits over time that includes all credit activity, including spend that isn't tied to a table (such as paid Audiences imports). See [Reading the Overview chart](#reading-the-overview-chart).
 -   **Workbooks** — shows credit spend broken down by folder, workbook, and table. Click the dropdown next to any folder or workbook to drill into its contents. Sort by `Name` or `Credits used`. Click `Export` to download a CSV for offline analysis.
 -   **Workflows** — shows credit spend broken down by individual workflow. Expand any workflow row to see a node-by-node breakdown. Click the chart icon next to a workflow to open the workflow credit usage dashboard, which breaks down spend by time, by run, or by node. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
--   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
--   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
+-   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see the `Agent users` table on the `Agent users` page in the homepage sidebar. The `Agent users` page is currently in beta and may not appear in every workspace — contact support if you don't see it.
+-   **API** — shows programmatic spend broken down by surface, with one row for each surface your workspace used — `API`, `CLI`, or `Chrome extension`. Click the caret next to a surface to expand it and see credits spent by each user (and actions used, on plans that show `Actions used`). Users who have since been removed from the workspace appear as `[Name] (removed)`, or `Former user · [user ID]` if their name is no longer available. Spend that can't be attributed to a specific user is included in the surface's total rather than listed as a separate row — hover the total to see how many credits had no attributed user (for example, from deleted accounts or older logs). Searching the API tab matches both surface names and user names, and sorting by `Credits used` sorts the user rows within each surface. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
-**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. To see your complete workspace credit spend for a given period, review the totals across all relevant tabs.
+**Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. Credits spent on paid Audiences imports aren't tied to a table either, so they don't appear in the Workbooks tab or its CSV export (see [Why don't my Audiences import credits show up in the Workbooks tab?](#why-dont-my-audiences-import-credits-show-up-in-the-workbooks-tab)). To see your complete workspace credit spend for a given period, review the totals across all relevant tabs, or use the **Overview** chart.
+
+### Reading the Overview chart
+
+The **Overview** tab of the credit usage dashboard (`Settings → Usage`) shows a chart with a toggle between two views:
+
+-   **Balance** — your workspace's remaining credit balance over time. Hovering over a point shows the date and time and your balance at that moment (for example, "Nov 2, 10 PM" and "62,686.34 credits"). Credit spend shows up as a **drop** in the Balance line. A **rise** in the Balance line means credits were added to your workspace — for example, a plan renewal, a credit top-up, or a credit refund — not that credits were spent.
+-   **Spend breakdown** — the credits spent in each time interval, shown as bars. Hovering over a bar shows the credits spent in that interval (for example, "1,234 credits spent").
+
+The Spend breakdown interval depends on the time range you select in the `When` dropdown:
+
+| Selected time range | Each bar shows spend per |
+| --- | --- |
+| Less than 6 hours | Minute |
+| 6 hours to less than 7 days | Hour |
+| 7 days or longer | Day |
+
+To find out how many credits were spent on a specific day, select that day with `Custom range` in the `When` dropdown, then switch the chart to **Spend breakdown** rather than reading the Balance line.
 
 ### What "Other" means under AI in the Integrations tab
 
@@ -256,6 +275,34 @@ Clicking **Stop** on a running table or canceling a column run does not immediat
 
 To avoid unexpected spend before it starts, disable [auto-run](auto-run.md) before importing large batches of rows. See [Stopping a run](run-progress.md) for full details on stop and cancel behavior.
 
+### Why do archived or deleted tables still show credits used?
+
+In the **Workbooks** tab of the credit usage dashboard (`Settings → Usage`), an `Archived` badge next to a workbook or table means it was deleted and is in Trash. Tables don't have a separate archive state. The credits shown for an archived or deleted table are the credits it used in the period selected in the `When` filter, before it was deleted. They don't mean the table is still running.
+
+-   **Tables deleted within the last 30 days:** Deleted tables stay in Trash for 30 days. During that time they still appear as their own rows in the Workbooks tab, with an `Archived` badge, and are included individually in the CSV export. To open an archived table, restore it from Trash first (see [Delete content within your workspace](delete-content-within-your-workspace.md)).
+-   **Tables deleted more than 30 days ago:** These tables no longer have their own row. Their credits are still counted in the **Workspace** row total, and you can hover over the ⓘ icon on the Workspace row to see the amount ("Includes N credits from deleted tables."). On plans that show `Actions used`, a matching tooltip shows "Includes N action executions from deleted tables." In the CSV export, these credits appear as a single row labeled "Deleted tables (unattributed)", with no table name or ID.
+-   **Deleted tables don't start new runs:** Deleting a table cancels its queued enrichments, scheduled runs, and source imports. Requests that had already been sent to a data provider when you deleted the table can still finish, so their final charge or refund may appear after the deletion time.
+
+### Why doesn't a workbook's Credit spend limit match its Credits used?
+
+Workbook credit spend limits are available on Enterprise plans. In the **Workbooks** tab of the credit usage dashboard (`Settings → Usage`), a workbook with a credit spend limit can show different numbers in the `Credit spend limit` and `Credits used` columns — for example, `112,550.9 spent` of `130,000` under `Credit spend limit`, but `82,821` under `Credits used`. Both numbers are accurate; the two columns measure different things:
+
+-   **`Credit spend limit`** — all credits deducted from the workbook's limit since the limit was created or last reset. The dashboard describes it as "Credit spend is tracked from when the limit is created or last reset." This number ignores the `When` dropdown.
+-   **`Credits used`** — credits spent by the tables currently in the workbook during the period selected in the `When` dropdown.
+
+The most common reasons the two numbers differ:
+
+-   **The `When` range doesn't match the limit period.** Spend that happened after the limit was set but outside your selected `When` range counts toward the `Credit spend limit` but not toward `Credits used`.
+-   **Tables were moved into or out of the workbook.** `Credits used` follows each table to the workbook it's in now, including spend from before the move. The `Credit spend limit` keeps every credit charged while a table was in the workbook, even after the table moves out.
+
+To compare the two numbers for the same period:
+
+1.  Open the **Workbooks** tab in `Settings → Usage`.
+2.  In the `When` dropdown, choose `Custom range` and set the start date to the day the workbook's limit was created or last reset, and the end date to today.
+3.  Click `Apply filters` and compare the workbook's `Credits used` with its `Credit spend limit`. Any remaining difference can come from tables moved into or out of the workbook.
+
+For how credit spend limits work, see the [Credit spend limits FAQ](/docs/credit-spend-limits-faq).
+
 ### Credits spiked after editing a formula or upstream column
 
 When an upstream column runs and its output changes — whether it's a formula, AI, or Claygent column — Clay marks all downstream cells that reference it as stale. If **Keep existing results** is off, this triggers a re-run for every stale cell across all rows — which can fire every dependent enrichment column at once and produce a large, unexpected credit charge.
@@ -306,12 +353,31 @@ These run options skip rows that already ran successfully with unchanged inputs,
 
 Only use **Force run all [N] rows**, **Choose number of rows to run**, or **Run [N] cells** when you deliberately want a fresh lookup on rows that already have results. See [Run progress](run-progress.md#why-did-run-column-run-every-row-when-i-only-highlighted-a-few) for all column run options.
 
+### Why don't my Audiences import credits show up in the Workbooks tab?
+
+If your credit balance dropped but no table in the **Workbooks** tab, and no row in its CSV export, shows the spend, check whether you imported records into Clay Audiences during that period. Paid Audiences imports aren't tied to a table, so their credits are not listed in the **Workbooks** tab or its CSV export — every table can show 0 credits even when your balance dropped.
+
+These Audiences imports charge credits for each record imported:
+
+-   **Lookalike imports** — companies or people found with [Clay Lookalikes](clay-lookalikes.md) and imported into Audiences. The cost is charged per result imported. See [Clay Lookalikes](clay-lookalikes.md) for per-result rates.
+-   **Search imports that include paid data fields** — the cost is charged per row imported, based on the paid fields included.
+
+Importing people or companies with **Find people from this list** or **Find companies**, using only standard (non-paid) fields, and adding rows with the **Send to Audiences** table action don't charge credits for the import itself. Enrichment columns that run in a Clay table before **Send to Audiences** charge credits as usual and appear in the **Workbooks** tab under that table.
+
+To find credits spent on Audiences imports:
+
+1.  Go to `Settings → Usage`.
+2.  On the **Overview** tab, set the `When` dropdown to the period you're investigating and switch the chart to **Spend breakdown** to see when the spend happened. See [Reading the Overview chart](#reading-the-overview-chart).
+3.  Open the **Integrations** tab. Paid Audiences import credits are grouped under the **Companies, People, Jobs** integration.
+
+Because Audiences import costs scale with the number of records, narrow your filters before importing, and run a small test import first. Then check the **Overview** chart to see what it cost before you import the full list.
+
 ### Accidental credit spend
 
 Clay generally does not offer credit refunds for accidentally consumed credits — for example, from a misconfigured scheduled run or an unintended large batch. If you believe something went wrong, you can contact [Clay support](https://app.clay.com) and the team will investigate. When reaching out, include:
 
 -   Your workspace name
--   The table where the credits were consumed
+-   The table where the credits were consumed (or the Audiences import, if the spend isn't tied to a table)
 -   The number of credits used
 
 To prevent accidental spend, turn off auto-run while building or testing workflows, and set credit spend limits for your workspace.

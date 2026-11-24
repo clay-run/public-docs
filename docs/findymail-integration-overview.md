@@ -1,7 +1,7 @@
 ---
 title: Findymail integration
 description: Verified B2B email data for sales outreach.
-last_synced: 2026-04-26T01:39:59.775Z
+last_synced: 2026-11-18T20:50:08.695Z
 ---
 
 # Findymail integration
@@ -15,7 +15,7 @@ Findymail is a verified email finder and validator for B2B prospecting. Within C
 1.  While in a Clay table, click `Add enrichment` and search for `Findymail`.
 2.  Under `Integrations`, select one of the Findymail actions.
 3.  In the modal, you will be asked to `Select Findymail account`.
-    -   If you haven't already connected your Findymail account, click `+ Add account` and enter your Findymail API key. You can find your API key at [https://app.findymail.com/user/api-tokens](https://app.findymail.com/user/api-tokens). Otherwise, use the Clay provided key.
+    -   If you haven't already connected your Findymail account, click `+ Add account` and enter your Findymail API key. You can find your API key at [https://app.findymail.com/user/api-tokens](https://app.findymail.com/user/api-tokens). Otherwise, use the Clay-provided account.
 
 ### `Action` Find Work Email
 
@@ -31,7 +31,7 @@ Use this action to find a work email address for a person using their full name 
 -   **Email:** The work email address found for the person.
 -   **Status:** The validity status of the email (e.g., `valid`).
 
-**Pricing:** 2 credits per enriched cell with Clay-managed account.
+**Pricing:** Charges credits per enriched cell on the Clay-provided account.
 
 ### `Action` Find Work Email from Profile URL
 
@@ -46,7 +46,7 @@ Use this action to find a work email address for a person using their LinkedIn p
 -   **Email:** The work email address found for the person.
 -   **Status:** The validity status of the email (e.g., `valid`).
 
-**Pricing:** 2 credits per enriched cell with Clay-managed account.
+**Pricing:** Charges credits per enriched cell on the Clay-provided account.
 
 ### `Action` Find Mobile Phone
 
@@ -60,7 +60,7 @@ Use this action to retrieve a mobile phone number associated with a LinkedIn pro
 
 -   **Mobile Phone:** The mobile phone number associated with the LinkedIn profile (e.g., `+19199463022`).
 
-**Pricing:** 9 credits per enriched cell with Clay-managed account.
+**Pricing:** Charges credits per enriched cell on the Clay-provided account.
 
 ### `Action` Validate Email
 
@@ -75,7 +75,7 @@ Use this action to verify whether an email address is valid using Findymail.
 -   **Email:** The validated email address.
 -   **Verified:** Whether the email address is valid (`true` or `false`).
 
-**Pricing:** 1 credit per enriched cell with Clay-managed account.
+**Pricing:** Charges credits per enriched cell on the Clay-provided account.
 
 ### Run settings
 

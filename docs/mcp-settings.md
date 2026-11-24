@@ -1,18 +1,18 @@
 ---
 title: MCP settings
 description: Connect your Clay workspace to AI tools.
-last_synced: 2026-10-19T16:50:28.293Z
+last_synced: 2026-11-19T07:25:33.509Z
 ---
 
 # MCP settings
 
 Connect your Clay workspace to AI tools.
 
-MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms.
+MCP (Model Context Protocol) is how Clay connects your workspace to AI tools like ChatGPT, Claude, Codex, and Glean. Clay lets workspace admins set credit limits and monitor usage for team members who access Clay through these platforms. Admins and editors also choose which Functions and workflows are available to reps.
 
 Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory — not a generic server URL you configure manually.
 
-Navigate to it from the Clay homepage by clicking `MCP` under **Orchestration** in the left sidebar. The MCP settings page is currently in beta (it shows a `Beta` badge in the sidebar). It appears only when you're a workspace admin **and** the MCP page is turned on for your workspace. If you aren't a workspace admin and don't see it, ask your workspace admin. If you are a workspace admin and still don't see `MCP` in the left sidebar, contact Clay support (see [I'm a workspace admin but I don't see MCP in the left sidebar](#im-a-workspace-admin-but-i-dont-see-mcp-in-the-left-sidebar)).
+Navigate to it from the Clay homepage by clicking `Agent users` under **Orchestration** in the left sidebar. The MCP settings page is only visible to workspace admins — if you don't see it in the sidebar, ask your workspace admin.
 
 **Note:**  
 
@@ -26,7 +26,7 @@ Glean integration is available on Enterprise plans only.
 
 ## **Enabling a function for MCP**
 
-Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins build them once and enable them for MCP — reps never need to open Clay to use them.
+Functions are reusable enrichment workflows built in Clay that reps can invoke directly from ChatGPT, Claude, or Glean with a single prompt. Admins and editors build them once and enable them for MCP — reps never need to open Clay to use them.
 
 1.  Go to the `Functions` tab in your workspace and find the function you want (or click `+ New function` to create a new one.)
 2.  Click the function to open it's settings and check `MCP for reps` in the Integrations section.
@@ -46,7 +46,7 @@ Credit limits cap how many Clay credits a rep can spend through ChatGPT, Claude,
 
 There are two levels of control:
 
--   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit.
+-   **Default credit limit** — applies automatically to all new MCP users when they first connect ChatGPT, Claude, or Glean. Click `Set default limit` to configure. Reps without an individual override inherit this limit at their first connection — until then, they show `No limit`. To apply the default to current workspace members right away, see [Why do new MCP users show `No limit` after I set a default credit limit?](#why-do-new-mcp-users-show-no-limit-after-i-set-a-default-credit-limit)
 -   **Per-user override** — find the rep in the user table and click the pencil icon next to their `Credit limit` to set an individual amount. Their current usage tracks against this limit in real time (e.g., `0 / 1,000`). Reps showing `No limit` have no cap applied.
 
 ## Monitoring usage
@@ -222,3 +222,14 @@ MCP usage appears in the main credit usage dashboard at `Settings` → `Usage`, 
 ### What's the difference between the default credit limit and a per-user override?
 
 The default limit is a workspace-wide setting that applies automatically to any new rep who connects ChatGPT, Claude, or Glean. A per-user override replaces the default for a specific rep. Reps showing `No limit` have neither a default nor an override applied.
+
+### Why do new MCP users show `No limit` after I set a default credit limit?
+
+The MCP default credit limit isn't applied when you invite or add a user to your workspace. Clay copies the default credit limit onto a user the first time that user connects Clay to ChatGPT, Claude, Glean, or another AI tool. Until that first connection, the user has no credit limit of their own, so the `Credit limit` column in the `MCP users` table shows `No limit` — even though a workspace default is set. Users who already have a manually set limit keep it when they first connect; the default doesn't replace it.
+
+To make sure every user is capped by the MCP default credit limit, a workspace admin can do either of the following:
+
+-   **Apply the default to current members.** From the Clay homepage, click `MCP` under **Orchestration** in the left sidebar. In the **Default credit limit** card, click `Set default limit` (or the pencil icon next to the current default), enter the amount, and set `Apply to` to `New and existing users`. Clay applies the limit to every current workspace member, including members who haven't connected an AI tool yet, and to future users. This overwrites any manually set individual limits — the modal warns: "This will overwrite any manually-set individual credit limits."
+-   **Set individual limits before users connect.** In the `MCP users` table, click the pencil icon (`Set credit limit`) next to a user who shows `No limit` and enter an amount. Use this if you want to cap specific users without overwriting other users' manual limits.
+
+Choosing `New users only` saves the default without changing current members — they keep their existing limit, or `No limit` until they first connect. After saving, the `Credit limit` column shows the limit (for example, `1,000 credits`) for each user it was applied to.
