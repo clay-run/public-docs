@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-24T03:38:03.085Z
 ---
 
 # Workflows
@@ -64,6 +64,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
+| Classify | Sorts a record into one of the categories you define | Yes/no or fixed-category decisions on data you already have | Free for a limited time during alpha |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
 | Delay | Pauses the branch it sits on before the next node runs | Giving a downstream step time it needs | Free |
 
