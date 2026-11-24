@@ -2,7 +2,7 @@
 title: Plans & billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
-last_synced: 2026-04-26T01:40:29.319Z
+last_synced: 2026-11-24T08:11:25.411Z
 ---
 
 # Plans & billing
@@ -22,7 +22,7 @@ This separation gives you transparency and control over exactly what you're payi
 
 ### AI usage
 
-Every AI prompt counts as **one action**. Data credits are consumed based on the model you select—Clay offers both fixed and variable AI pricing. For details on how AI pricing works, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
+Every AI prompt counts as **one action**. The exception is Classify, which sorts records into categories you define: while it's free for a limited time during alpha, a Classify run doesn't count as an action or use data credits. Data credits are consumed based on the model you select—Clay offers both fixed and variable AI pricing. For details on how AI pricing works, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
 For more details on actions and data credits, see our comprehensive guide on [actions and data credits](https://www.clay.com/university/guide/actions-and-data-credits).
 
