@@ -2,7 +2,7 @@
 title: How AI is priced
 description: This guide explains how each works, which models they apply to, and
   how credits are calculated.
-last_synced: 2026-04-26T01:39:39.981Z
+last_synced: 2026-11-24T02:59:16.533Z
 ---
 
 # How AI is priced
@@ -18,6 +18,12 @@ _Clay uses two pricing structures for AI models—fixed and variable—so you pa
 **Variable AI pricing** charges data credits based on the actual cost of each run, with **0% markup**. It applies to 20% of models—the most advanced reasoning models available in Clay, typically used for sophisticated web-research tasks with multi-step reasoning—where the underlying compute cost can vary significantly from one prompt to the next. You'll see the exact cost per row in your Clay table once the run is completed. Rather than setting a flat rate high enough to cover the most expensive use cases—which would overcharge most users—variable pricing ensures each task is priced according to what it actually costs to run. This blended model of fixed and variable pricing results in customers paying less overall for AI in Clay.
 
 You can always see which pricing structure applies when selecting a model in the product.**‍**
+
+### **How Classify is priced**
+
+Classify, the Use AI `Use case` and Workflows node that sorts each record into one of the categories you define, is free for a limited time during alpha. Unlike other AI prompts, a Classify run doesn't use data credits or count as an action. Usage limits still apply.
+
+Classify is currently in alpha and may not be enabled in every workspace yet. There's no model to pick for Classify, so it isn't in the pricing reference table below. For more on setting up Use AI and Workflows, see [Use AI](https://university.clay.com/docs/use-ai-integration-overview) and [Workflows](https://university.clay.com/docs/workflows).
 
 ## **Select model pricing reference**
 
