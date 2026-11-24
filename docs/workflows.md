@@ -64,6 +64,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
+| Classify | Sorts a record into one of the categories you define | Yes/no or fixed-category decisions on data you already have | Free for a limited time during alpha |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
 | Delay | Pauses the branch it sits on before the next node runs | Giving a downstream step time it needs | Free |
 
@@ -118,6 +119,35 @@ A `Code` conditional takes its branches from the code itself: Clay reads the `co
 Write both arguments out as text in the call rather than building them from a variable, since Clay reads them from the code without running it. If two nodes share a name, Clay asks you to use a unique name or the node's ID instead.
 
 Branches are keyed on the label, so two calls sharing one label collapse into a single branch — vary the label when you want separate paths. A code conditional has no `Otherwise` branch once its script has branches of its own, so a run whose code chooses nothing fails rather than falling through. Route to a name that isn't connected and the run fails too, naming the steps it could have continued to.
+
+### `Classify`
+
+Sorts a record into exactly one of the categories you define, so later steps act on a fixed answer instead of free text. Classify doesn't research or reason through several steps. Reach for it when the answer is already in the record, like an ICP fit check or a persona tag, and use `Run Claygent` when the step needs web research.
+
+**Note:** Classify is in alpha, and during the alpha its results may not always be accurate. Classify is free for a limited time during alpha. Check its output on a few test runs before you publish a workflow that depends on it.
+
+To add one, open the node palette and choose `Classify`, then fill in its two sections:
+
+1.  `Input` — reference the upstream output you want classified. The node needs at least one reference here before it can run.
+2.  `Categories` — write a `Prompt` that describes how to classify the input, then give each category a `Name`, an `ID`, and an optional `Description` of when the input belongs in it. A new node starts with `Yes` and `No`, and `Add category` adds more. `Minimum probability (%)` sets how likely the top category has to be, and starts at 85.
+
+The node returns:
+
+-   `categoryId` and `category` — the ID and name of the category it picked.
+-   `probability` — how likely that category is, from 0 to 1.
+-   `confidence` — the model's overall confidence, from 0 to 1.
+-   `probabilities` — every category with its own probability.
+-   `usedUncertain` — true when the top category falls below the minimum probability, or when the input couldn't be classified at all.
+-   `refused` — true when the input couldn't be classified, in which case the category fields come back empty.
+
+To branch on the result, add a `Conditional` after the node and compare `categoryId` to a category's ID. Check `usedUncertain` too, since a low-probability result still carries the top category's ID. Category IDs can't be edited once the node is saved, so renaming a category never breaks a rule that compares against it.
+
+Classify has usage limits. Each record Classify processes counts as one run, and runs in workflows and tables share one allowance per workspace. If Clay retries the step after an error, it still counts once.
+
+-   Paid workspaces: up to 10,000 runs a day, resetting at midnight UTC, and 500,000 in total during the alpha.
+-   Free and trial workspaces: 100 runs in total. Upgrading to a paid plan raises the limit, and runs you've already used still count toward the total.
+
+When a workspace reaches a limit, the step fails and the run's details show `Plan limit reached`, with a message naming which limit was hit. Runs that failed this way don't retry on their own once the limit is raised, so re-run them.
 
 ### `Run code`
 
