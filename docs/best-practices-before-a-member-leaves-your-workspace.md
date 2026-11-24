@@ -70,6 +70,6 @@ Review the email accounts tied to the departing member so sender names and repli
 
 Clay rejects the removal and tells you it can't remove the last admin from the workspace. Workspaces that provision members through a directory sync are the exception — deprovisioning there can remove a directory-managed admin even when no other admin would remain.
 
-### Why is `Remove member` greyed out for someone on my team?
+### Why don't I see `Remove member` for someone on my team?
 
-Members provisioned through a directory sync can't be removed in Clay directly. Remove them in your identity provider instead and let the sync deprovision the account.
+Members provisioned through SCIM directory sync can't be removed in Clay directly. In `Settings` > `Team`, the `…` menu for a SCIM-managed member shows `View user access` but no `Remove member` option. When your workspace has an active directory sync, the `Managed via` column on the Team page shows `SCIM` for these members and `Clay` for members you can remove in Clay. Remove SCIM-managed members in your identity provider instead and let the sync deprovision the account.
