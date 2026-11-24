@@ -16,3 +16,6 @@ Clay runs free live product walkthroughs and demos multiple times a week — the
 
 -   **Live sessions and demos** — Register for an upcoming walkthrough or product demo at [clay.com/livestreams](https://www.clay.com/livestreams). Sessions cover use cases such as Sales & RevOps, Growth & Marketing, and more, each with a live table build and an open Q&A segment. Times are listed in Eastern Time.
 -   **Clay University cohorts** — Clay University offers multi-day cohort programs that include live sessions, hands-on exercises, and a private Slack channel. Browse available programs and schedules at [university.clay.com/cohorts](https://university.clay.com/cohorts).
+## Clay Community Slack
+
+Clay has a community Slack where you can connect with other Clay users, share workflows, and get help from the community. To join, visit [clay.com/slack](https://clay.com/slack).
