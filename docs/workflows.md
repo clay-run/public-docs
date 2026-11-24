@@ -1,7 +1,7 @@
 ---
 title: Workflows
 description: "Build Clay workflows: graphs of connected nodes that start on a trigger, branch on your logic, and run once per record, with node types, testing, versioning, and credit guidance."
-last_synced: 2026-10-27T22:38:34.560Z
+last_synced: 2026-11-24T08:11:27.311Z
 ---
 
 # Workflows
@@ -189,7 +189,7 @@ The longest single delay is 60 minutes, and the delay applies every time the bra
 
 ### Where the deterministic and agentic parts sit
 
-The graph itself is deterministic: the edges are fixed and every run follows the same connections. The judgment happens inside `Run Claygent` steps and `AI` conditionals. That split is the main design lever you have. Keep a step in `Run enrichment`, `Run code`, or a `Rules` conditional when you want it predictable and repeatable, and move it into a Claygent when you want it to adapt.
+The graph itself is deterministic: the edges are fixed and every run follows the same connections. The judgment happens inside `Run Claygent` steps, `Classify` steps (Classify is in alpha), and `AI` conditionals. That split is the main design lever you have. Keep a step in `Run enrichment`, `Run code`, or a `Rules` conditional when you want it predictable and repeatable, and move it into a Claygent when you want it to adapt.
 
 A common division of labor is to let a Claygent derive the judgment — scoring weights, say — from a sample, then have a `Run code` step apply it across the full set, so you get reasoning where it helps and repeatable math at scale.
 
