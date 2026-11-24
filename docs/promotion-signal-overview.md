@@ -14,11 +14,11 @@ Simply set up event tracking for your contacts, and Clay will monitor their care
 
 **_Cost:_** _Each check consumes 1 action plus 0.2 data credits._
 
-## Monitoring job changes
+## Monitoring promotions
 
-To set up Promotion Signals in your table:
+To set up Promotion Signals in your workbook:
 
-1.  Click `Tools`, then select `Monitor for job changes`.
+1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select **Promotion**.
 2.  Select your table containing LinkedIn URLs of contacts you want to monitor.
 3.  Set how often the Signal should run.
 4.  Optionally, add enrichments to gather additional data.

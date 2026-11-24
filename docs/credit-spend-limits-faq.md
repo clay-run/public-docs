@@ -1,7 +1,7 @@
 ---
 title: Credit spend limits FAQ
 description: Answering questions about the credit spend limits feature.
-last_synced: 2026-04-26T01:39:48.764Z
+last_synced: 2026-11-19T07:28:48.978Z
 ---
 
 # Credit spend limits FAQ
@@ -56,6 +56,10 @@ To set a default limit:
 3.  Set your desired default credit limit.
 
 Previously, admins had to manually set the limit for each individual workbook. With default limits, all new workbooks automatically inherit the workspace default limit, streamlining credit management across your workspace.
+
+**How do I set a limit on a single workbook?**
+
+Workspace admins can set a credit limit on an individual workbook: open the workbook's overview and click `Manage` next to `Workbook credit limit`. Members who aren't workspace admins can see the workbook's current limit there, but they won't see the `Manage` button.
 
 **Can limits be increased or decreased after they're set?**
 
@@ -122,11 +126,13 @@ Notifications are sent to:
 
 Notifications will be delivered via both email and in-product UI across various surfaces.
 
-**Is there an automated alert for my workspace's monthly Data Credit balance?**
+**Is there an automated alert for my workspace's overall credit spend?**
 
-No. The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap. There is currently no automated alert when your workspace's overall monthly Data Credit allotment is running low or is exhausted.
+Yes, for Enterprise plan workspaces. Clay's [credit spike alerts](/docs/credit-usage#credit-spike-alerts) proactively notify all workspace admins by email when an unusually high burst of credit spend is detected relative to your plan's monthly allocation — for example, from a misconfigured table or an accidental full-table rerun. A 24-hour cooldown prevents repeated notifications for the same sustained spend period. Detected spikes also appear as markers on the balance and spend breakdown graphs in `Settings → Usage` so admins can see exactly when a spike occurred and investigate what drove it.
 
-To manually monitor your monthly credit balance, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
+The notifications above are for workbook-level credit spend limits only — they fire when a specific workbook reaches its configured cap.
+
+To manually monitor your monthly credit balance at any time, go to **Settings → Usage**. The Usage Dashboard shows your remaining Data Credits and your current billing period end date. For a detailed breakdown of credit consumption, see [Credit usage](/docs/credit-usage).
 
 ## Credit Budgets (open beta)
 

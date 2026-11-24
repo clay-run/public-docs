@@ -17,7 +17,28 @@ Google BigQuery is a fully managed, serverless data warehouse built for large-sc
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Google BigQuery` and select it from the results.
 3.  In the modal, you will be asked to `Select Google BigQuery account`.
-    -   If you haven't connected BigQuery yet, click `+ Add account` and upload your service account JSON key file. Follow the prompts to assign the required IAM roles, or use [Google's service account docs](https://developers.google.com/workspace/guides/create-credentials#service-account).
+    -   If you haven't connected BigQuery yet, click `+ Add account` and choose how to connect: upload a service account JSON key file (**Service Account**), or connect without a key using **Workload Identity Federation** (see [Connect BigQuery without a service account key](#connect-bigquery-without-a-service-account-key-workload-identity-federation)). For a service account key, follow the prompts to assign the required IAM roles, or use [Google's service account docs](https://developers.google.com/workspace/guides/create-credentials#service-account).
+
+### Connect BigQuery without a service account key (Workload Identity Federation)
+
+You can connect Google BigQuery to Clay with **Workload Identity Federation** instead of a service account JSON key. Google trusts short-lived tokens from Clay and lets Clay act as a service account you control, so there is no key file to store or rotate. A Workload Identity Federation connection works everywhere a Google BigQuery account is used in Clay — the BigQuery source, the BigQuery enrichment actions, and BigQuery imports in Audiences.
+
+**Before you start connecting BigQuery with Workload Identity Federation**, you need:
+
+-   Permission to create workload identity pools, service accounts, and IAM bindings in your Google Cloud project.
+-   The **BigQuery API**, **IAM Service Account Credentials API**, and **Security Token Service API** enabled in that project.
+-   Your Google Cloud **project ID** and **project number**.
+
+**To connect BigQuery with Workload Identity Federation:**
+
+1.  In Clay, go to **Settings** → **Connections**, click **Create**, choose **Google BigQuery**, and open the **Workload Identity Federation** tab. (You can also click `+ Add account` from a BigQuery source or action.)
+2.  Copy the two values Clay shows: the **Issuer** (`https://identity.clay.com`) and the **Connection subject** (formatted like `workspace:12345:connection:oidc_…`). The connection subject stays the same when you reconnect. The setup window lasts seven days — if it lapses, click **Renew authorization**.
+3.  In Google Cloud, go to **IAM & Admin** → **Workload Identity Federation** and create a pool with an **OpenID Connect (OIDC)** provider. Set the provider's issuer to the Issuer from Clay, map `google.subject` to `assertion.sub`, and add the attribute condition `assertion.sub == 'CONNECTION_SUBJECT'` using your connection subject. Copy the provider's resource name, which starts with `//iam.googleapis.com/projects/`.
+4.  Create a service account (for example, `clay-bigquery`) and grant it **BigQuery User** and **BigQuery Data Viewer**. Add **BigQuery Data Editor** if you'll use the insert, update, or upsert actions.
+5.  In your workload identity pool, click **Grant access** → **Grant access using service account impersonation**, select the service account, and choose the **subject** principal with your connection subject. This grants the **Workload Identity User** role on the service account.
+6.  Back in Clay, fill in **Google Cloud project ID** (the project ID, not the project number), **Workload identity provider resource name**, and **Service account to impersonate** (the service account email). Click save.
+
+Clay checks the connection by listing the datasets in your project. If saving fails, confirm the provider resource name starts with `//` (not `https://`), the attribute condition and impersonation grant use the exact connection subject, and the service account has the BigQuery roles above.
 
 ### `Source` Import data from BigQuery
 
@@ -35,7 +56,7 @@ Imports records from Google BigQuery into a Clay table using a custom SQL query.
 1.  While in a Clay table, click `Add enrichment` and search for `Google BigQuery`.
 2.  Under `Integrations`, select one of the options.
 3.  In the modal, you will be asked to `Select Google BigQuery account`.
-    -   If you haven't already connected your Google BigQuery account, click `+ Add account` and upload your service account JSON key file.
+    -   If you haven't already connected your Google BigQuery account, click `+ Add account` and either upload your service account JSON key file or connect with **Workload Identity Federation** (see [Connect BigQuery without a service account key](#connect-bigquery-without-a-service-account-key-workload-identity-federation)).
 
 ### `Action` Insert row into BigQuery
 
@@ -58,7 +79,7 @@ Optional:
 
 ### `Action` Lookup row in BigQuery
 
-Looks up rows in a Google BigQuery table by matching one or more column values.
+Looks up rows in a Google BigQuery table by matching one or more column values. This is a native integration — it uses your connected service account for authentication and loads column options directly from your BigQuery schema, rather than requiring a generic API callout.
 
 **Inputs**
 
@@ -78,6 +99,11 @@ Optional:
 **Outputs**
 
 -   Row data: Returns the column values of matching rows, dynamically based on the selected table's schema and the `Returned fields` configuration.
+
+**Things to keep in mind**
+
+-   **Queries always hit BigQuery live — results are not cached.** The Lookup Row action queries your BigQuery table directly every time it runs. The 50,000-row cap described above applies only to the Import Data source — there is no Clay-imposed limit on the size of the BigQuery table you're looking up against.
+-   **Performance and cost depend on your BigQuery table's clustering or partitioning.** Clay issues live SELECT queries against your BigQuery table for each enrichment run. If the lookup column is not clustered or the table is not partitioned on that column, BigQuery may scan the full table on each query, increasing both cost and latency at scale. To minimize scan costs and query time, cluster or partition your BigQuery table on the column(s) you plan to look up by before running at large scale.
 
 ### `Action` Update row in BigQuery
 
@@ -128,7 +154,7 @@ This action does not return output values.
 
 ### Dataset ID shows "No options found"
 
-The Dataset ID dropdown lists datasets from the GCP project specified by the `project_id` field in your service account JSON key file. If the dropdown is empty, check these three things:
+The Dataset ID dropdown lists datasets from the GCP project specified by the `project_id` field in your service account JSON key file (or, for a Workload Identity Federation connection, the **Google Cloud project ID** you entered). If the dropdown is empty, check these three things:
 
 -   **Wrong project ID in the service account key.** The `project_id` in your service account JSON must match the GCP project where your BigQuery datasets live. If the service account key references a different project, Clay cannot discover any datasets — even if the connection tests as successful. Reconnect using a service account key generated from the GCP project that contains your datasets.
 -   **Service account lacks dataset-listing permissions.** The service account needs at least the `BigQuery Data Viewer` or `BigQuery Metadata Viewer` IAM role at the project or dataset level in Google Cloud IAM. Without this, Clay cannot list available datasets.

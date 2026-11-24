@@ -59,6 +59,16 @@ Search ZoomInfo's database for contacts matching specific criteria. Use this act
 -   **Required fields:** Comma-separated fields a contact must have to be returned (e.g., `email`).
 -   **Sort by:** How to sort results. Defaults to relevance (most to least).
 -   **Page size:** Number of contacts to return per page, from 1 to 100. Defaults to 25.
+-   **Additional search fields:** Any other ZoomInfo contact search field, entered as a key (**ZoomInfo field**) and a **Value**. Clay passes these straight through to ZoomInfo's contact search, so you can filter on criteria that don't have a dedicated input above. For arrays and booleans, use formula mode for the value. See [ZoomInfo's contact search reference](https://docs.gtm.ai/reference/searchinterface_searchcontact) for the available field names and values. If a key matches one of the dedicated inputs above, the dedicated input takes precedence.
+
+### **`Action` Enrich contact(s) by ID**
+
+Enrich up to 25 contacts at once using their ZoomInfo contact IDs. Use this action when you already have ZoomInfo contact IDs and want to bulk-retrieve full contact details in a single run.
+
+**Inputs**
+
+-   **Contact IDs:** ZoomInfo contact IDs to enrich, entered as a comma-separated list. Only the first 25 IDs are enriched per call.
+-   **Output fields (optional):** The contact fields to return. Defaults to all available fields if none are specified.
 
 ### **Run settings**
 
@@ -88,11 +98,27 @@ If issues persist, reach out to ZoomInfo support to resolve any remaining accoun
 
 ### **I'm seeing a ZI0001 "The token provided is invalid" or "Unauthorized access" error. Why?**
 
-The ZI0001 error (*"The token provided is invalid. Please provide a valid token and try again."*, shown under the title "Unauthorized access") is a **transient issue**, not a credential setup problem. It occurs because of how ZoomInfo handles OAuth token refresh cycles: there can be a brief window after a token is issued or refreshed when the new token hasn't fully propagated on ZoomInfo's end, causing enrichments to temporarily return a 401 rejection.
+The ZI0001 error (*"The token provided is invalid. Please provide a valid bearer token and try again."*, shown under the title "Unauthorized access") appears when ZoomInfo rejects Clay's authentication token. There are two distinct causes with different fixes:
+
+**Cause 1 — Transient token propagation (retry fixes it)**
+
+ZoomInfo's OAuth tokens can take a moment to propagate after a refresh. There may be a brief window where a new token hasn't fully registered on ZoomInfo's end, causing enrichments to temporarily return a 401 rejection.
 
 **Fix:** Re-run the affected cells. In most cases they succeed immediately on retry.
 
-If ZI0001 persists across multiple cells after retrying, or if you see it consistently on every run, contact Clay support so we can investigate your ZoomInfo connection.
+**Cause 2 — Expired or revoked OAuth connection (reconnect required)**
+
+ZoomInfo's OAuth tokens and sessions expire and must be periodically renewed. This can happen when the connected user's ZoomInfo password changes, their session is invalidated, or the OAuth session reaches its expiration. When this is the cause, retrying will keep returning ZI0001 on every attempt — retrying alone will not resolve it.
+
+**Fix:**
+
+1.  Go to **Settings → Connections** and find your ZoomInfo OAuth connection.
+2.  Reconnect it by clicking to re-authenticate and signing in to ZoomInfo again.
+3.  Re-run a single row first to confirm the enrichment returns data, then run the rest of your table.
+
+**Tip:** If your ZoomInfo connection is shared across multiple tables or team members, consider using a **ZoomInfo service account** (a shared login not tied to an individual user) rather than a personal account. This prevents one person's password change or session expiry from interrupting enrichments for the whole team.
+
+If ZI0001 persists after reconnecting, contact Clay support to investigate your ZoomInfo account configuration.
 
 ### **Why are some rows returning "out of credits" errors when I still have ZoomInfo credits?**
 
@@ -184,3 +210,54 @@ The Company Search endpoint uses a different structure and does **not** support 
 **ZoomInfo API tokens are short-lived**
 
 ZoomInfo API tokens expire after a short window. Once a token expires, your HTTP API column will return authentication errors until you update the token in the column's header configuration. Plan to refresh the token periodically — go to the HTTP API column's **Headers** section (or **Settings → Connections** if you saved the token as a header account) and replace the expired token with a new one.
+### **What is the difference between the built-in ZoomInfo integration and using the ZoomInfo API directly in Clay?**
+
+Clay offers two ways to use ZoomInfo data, and the right choice depends on your use case.
+
+**ZoomInfo enrichment (built-in Clay integration)**
+
+The built-in ZoomInfo integration is the easiest way to use ZoomInfo inside Clay. When you add a ZoomInfo action to a Clay table, you get a set of pre-built actions powered by your connected ZoomInfo credentials:
+
+-   **Enrich Contact** — Pull contact details using a name, email address, or company name
+-   **Enrich Company** — Get firmographic data like revenue, employee count, and competitors
+-   **Search contacts** — Find contacts using filters like job title, department, or country
+-   **Enrich contact(s) by ID** — Enrich up to 25 contacts at once using their ZoomInfo contact IDs
+
+These actions handle authentication, rate limiting, and error handling automatically. Each run costs 1 Clay credit and draws on your connected ZoomInfo account. For most enrichment needs — contact data, company data, and prospecting searches — the built-in integration is the quickest path.
+
+**ZoomInfo API via Clay's HTTP Connector**
+
+If you have direct API access provisioned from ZoomInfo, you can also call the ZoomInfo API via Clay's [HTTP API integration](http-api-integration-overview.md). This approach is better suited for advanced use cases that go beyond what the pre-built actions support — for example, calling ZoomInfo endpoints not covered by the built-in actions (such as intent data or custom field selections).
+
+For most use cases, start with the built-in integration. Use the HTTP Connector path only when you need a specific ZoomInfo endpoint or data type not available through the four built-in actions.
+
+### **Can I search my ZoomInfo data to see how many contacts exist at an account before running a people waterfall?**
+
+Yes. Use the native ZoomInfo **Search contacts** action to search ZoomInfo's contact database with your connected ZoomInfo account. You don't need to set up an HTTP API call to ZoomInfo for this.
+
+1.  In your Clay table of accounts, click **Add enrichment**, search for ZoomInfo, and select **Search contacts**.
+2.  Map the account's domain to **Company website** so results are limited to contacts at that company.
+3.  Narrow results to the people you care about (for example, your buying group personas) with **Include title keywords**, **Exclude title keywords**, **Departments**, **Management level**, and **Country**.
+4.  To filter on any other ZoomInfo contact search criteria that doesn't have a dedicated input, add it under **Additional search fields** as a ZoomInfo field name and value. See [ZoomInfo's contact search reference](https://docs.gtm.ai/reference/searchinterface_searchcontact) for valid field names.
+5.  Run the column. Each row returns the matching ZoomInfo contacts (up to the **Page size**, from 1 to 100, default 25).
+
+You can then use the results to decide which accounts still have a persona gap, and add a run condition (**Run settings → Only run if**) to your people waterfall so it only runs on those accounts. See [Conditional runs](conditional-runs.md).
+
+### **Does using the ZoomInfo API via Clay's HTTP Connector require a ZoomInfo subscription?**
+
+Yes. To call the ZoomInfo API directly via Clay's HTTP Connector, you need an active ZoomInfo plan that includes API access. ZoomInfo's API access is a separate entitlement from a standard ZoomInfo subscription — even if you have ZoomInfo credits available, you may need API access specifically provisioned or purchased through your ZoomInfo Account Manager. Contact your ZoomInfo Account Manager to confirm whether your plan includes API access before setting up an HTTP API connection to ZoomInfo in Clay.
+
+### **Why is the email field blank even though ZoomInfo shows "Contact found"?**
+
+ZoomInfo's "Enrich Contact" action can return an email address in one of two different fields depending on the record:
+
+-   **`email`** — a single email value that maps directly to Clay's pre-built email output field. When ZoomInfo populates this field, your email column fills in automatically.
+-   **`emailAlt`** — an array of alternate email addresses returned in the raw ZoomInfo response. This field is not pre-mapped as a click-selectable output, so it does not automatically populate your email column.
+
+When ZoomInfo only populates `emailAlt` for a record (and leaves `email` empty), your email column will appear blank even though the row shows "Contact found" and email data is present in the enrichment result.
+
+**To capture both fields, add a formula column:**
+
+1.  Add a formula column to your table next to the ZoomInfo enrichment column.
+2.  In the formula input, describe the logic in plain language — for example: *"Return the email from the ZoomInfo result. If it's empty, return the value from the first item in the emailAlt array."* Clay's AI formula generator will write the correct formula for you.
+3.  Use this formula column as your email source everywhere downstream instead of the direct email output field.
