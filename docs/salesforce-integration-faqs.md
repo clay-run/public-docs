@@ -1296,6 +1296,21 @@ In Salesforce, open the App Launcher and search for **Enrichment Menus**. Create
 
 The **Launch Enrichment** button now appears on records of that object type. When a Salesforce user clicks it, the record is sent to your Clay webhook table for enrichment, and results are written back to Salesforce.
 
+## Can I install the Clay Salesforce package in a Salesforce sandbox?
+
+Yes. You can install the Clay Salesforce managed package in a Salesforce sandbox org as well as in production. The Clay Salesforce package is available on **Enterprise plans**, and a Salesforce admin needs to run the install.
+
+The Clay package installation link you get from your Clay account team or Clay support usually points to Salesforce's production login (`login.salesforce.com`). If you open that link while you're signed in to a sandbox, the install won't land in your sandbox. To install the Clay Salesforce package in a sandbox:
+
+1.  Take the installation link and replace `login.salesforce.com` with `test.salesforce.com`. Keep the rest of the link, including the `p0=` package ID, exactly the same. If you're not sure you have the right link, ask Clay support for the sandbox installation link.
+2.  Open the edited link and sign in with your **sandbox** credentials.
+3.  Confirm you're in the correct sandbox org, then click **Install**.
+4.  Continue with Step 2 onward in [How do I install the Clay Salesforce package to get the Launch Enrichment button on records?](#how-do-i-install-the-clay-salesforce-package-to-get-the-launch-enrichment-button-on-records) (permission sets, webhook table, Enrichment Menu, and page layouts) inside the sandbox.
+
+**If your sandbox uses a custom domain:** if the `test.salesforce.com` link doesn't open your sandbox, swap in your sandbox's own My Domain URL (for example, `yourcompany--sandboxname.sandbox.my.salesforce.com`) in place of `test.salesforce.com`, again keeping the `p0=` package ID the same.
+
+If the sandbox installation still fails, send Clay support the exact error message Salesforce shows.
+
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 
 When using the Clay Salesforce package, the **Launch Enrichment** button on a Lead, Contact, or Account record sends that record to Clay for enrichment and writes the results back to Salesforce. For Salesforce users to receive a notification ("Your record has been enriched by Clay") after the enrichment completes, the **Get Enrichment Notifications** toggle must be enabled on the corresponding workflow.
