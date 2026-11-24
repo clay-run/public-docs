@@ -19,9 +19,9 @@ Monitoring new hires is beneficial because they:
 
 ## Monitoring for new hires
 
-To set up new hires Signals in your table:
+To set up new hires Signals in your workbook:
 
-1.  Click `Tools`, then select `Monitor for new hires`.
+1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select **New hire**.
 2.  Select your company table and identify the correct company identifiers (website, LinkedIn URL).
 3.  Configure your filters to specify which new hires you want to track (job titles, experience, etc.)
 4.  Set how often the Signal should run.
