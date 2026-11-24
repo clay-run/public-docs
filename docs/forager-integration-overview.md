@@ -1,7 +1,7 @@
 ---
 title: Forager integration
 description: Find phone numbers and emails based on a social profile.
-last_synced: 2026-04-26T01:40:00.773Z
+last_synced: 2026-11-18T20:51:07.557Z
 ---
 
 # Forager integration

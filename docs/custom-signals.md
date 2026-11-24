@@ -42,6 +42,67 @@ Custom Signals let you monitor data sources for specific changes on a regular sc
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
 
+## FAQs
+
+### How do Custom Signals with data sources like HG Insights work?
+
+When you select an external data source — such as **Source Companies by product usage with HG Insights** — as the source for your Custom Signal, the signal actively queries that provider on each scheduled run to discover companies that match your criteria. You do not need a pre-existing list of companies to get started.
+
+On each run, the signal queries the provider (for example, HG Insights) for companies matching your configuration, then compares the results against companies already in your signal's results table. Any newly identified companies are added as new rows. Companies already present in the table are not duplicated.
+
+This means your signal automatically surfaces net-new companies on each run — for example, companies that HG Insights has newly identified as using your target technology since the last time the signal ran. Each newly detected company gets added as a row in your Clay table, where you can trigger enrichment columns, Slack notifications, or outreach workflows.
+
+The preview shown in the signal wizard (labeled "This is a preview showing up to 10 sample results") displays example companies that match your current configuration. It is illustrative — it does not represent results that are already being continuously tracked.
+
+### What does the recurring credit cost in the signal wizard mean?
+
+Credits for a Custom Signal using HG Insights as the source are charged per company result that HG Insights returns on each run. If HG Insights returns no companies on a given run, no source-query credits are charged for that run.
+
+One important nuance: credits are charged for every company HG Insights returns in the query, including companies already present in your results table from a previous run. Those existing companies are not added as duplicate rows, but they do count toward the run's credit cost.
+
+The estimate shown in the wizard reflects the expected total cost per run based on the number of company results your configuration is likely to return. Changing the run cadence (daily, weekly, monthly) does not change the per-result credit rate — it only changes how often the signal queries HG Insights.
+
+To manage your credit spend:
+-   Reduce the **Max companies** input in your signal configuration to limit how many results HG Insights can return per run.
+-   Review any enrichment columns in your results table — each enrichment with **Auto-update** enabled will also run automatically on newly added rows and will consume additional credits on top of the source query cost. Turn off **Auto-update** on enrichment columns you don't want to fire automatically.
+-   To see your full credit breakdown after a signal run, click `History` in the lower right corner of your results table and select `Usage history`.
+
+### What happened to the brand mentions option in Custom Signals?
+
+The social network brand mentions source — along with several related social listening actions — was discontinued in March 2026. Clay's data partner for these features updated their terms of use, and to remain aligned with their guidelines, Clay sunset this functionality. If you previously had a brand mentions signal set up, it will show an error when run and cannot be re-enabled.
+
+**To monitor brand mentions going forward, use the Monitor Professional Posts signal.** Go to **Tools → Monitor for... → Professional Posts** in your table, set the **Companies filter** to **Mentions companies**, and provide your company domain or professional profile URL as the identifier. Up to 5 domains or URLs are supported per run.
+
+For additional alternatives — including Claygent and third-party social listening tools — see the [Signals in Clay](/docs/signals) documentation.
+
+### Can I monitor competitors' social media posts with a Custom Signal?
+
+Yes, on the professional network. To monitor posts from specific competitor companies, use the Monitor Professional Posts signal. Clay's earlier social network sources that monitored activity and mentions from specific accounts have been retired and no longer appear in the **Social listening** section of the Custom Signal source picker.
+
+To track what competitors are posting, use one of these options:
+
+-   **Monitor Professional Posts signal** — Monitor competitor activity on the professional network. Provide up to 5 competitor domains or company profile URLs, then set the **Companies filter** to one of three options:
+    -   **Posted by companies** — posts published by the competitor companies themselves.
+    -   **Posted by companies' employees** — posts written by people who work at the competitor companies.
+    -   **Mentions companies** — posts that mention the competitor companies.
+-   **Bring in your own social data** — If you have API access to a social network or a third-party social listening tool, send that data into a Clay table with a [webhook](webhook-integration-guide.md) or an [HTTP API](http-api-integration-overview.md) column. You can then enrich those rows and trigger actions like any other data in Clay. This option requires your own account with that service.
+
+### Why does the Slack channel dropdown show "No options found" when I add a Slack enrichment?
+
+The Slack channel dropdown only lists channels where the Clay app has been added as a member. Adding the Clay app to your Slack workspace alone is not enough — Clay must be invited to each channel individually before that channel appears in the dropdown.
+
+To add Clay to a channel and populate the dropdown:
+
+1. Open the channel in Slack and type `/invite @Clay` in the message box, then press Enter.
+2. Return to Clay, open the enrichment configuration, and click **Refresh fields** to reload the channel list.
+
+Alternatively, if you don't want to add the Clay app to the channel, you can enter the channel ID directly:
+
+1. In Slack, right-click the channel name and select **Get channel details** (or **Copy link**). The channel ID starts with `C` — for example, `C04F8AWK44T`.
+2. In the Clay enrichment config, click the gear icon next to the **Slack channel** field, switch to **Text with tokens**, and paste the channel ID.
+
+For additional Slack troubleshooting — including reconnecting your Slack account and verifying OAuth scopes — see [Slack integration troubleshooting](slack-integration-overview.md#new-channels-not-appearing-in-the-channel-picker).
+
 ## Guide: Turning enrichments into signals
 
 You may occasionally need to monitor changes in an enrichment. Below is a step-by-step guide on creating a signal for any enrichment. **In this guide, we'll start with a list of companies and add enrichments to monitor.**
