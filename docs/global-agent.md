@@ -202,6 +202,8 @@ Free credits don’t cover what the global agent runs for you. Enrichments, work
 
 When the global agent stops for your approval, the card carries an `Estimated cost` in credits and action executions before anything runs. Some actions can’t be priced ahead of time, and the card says `Cost can’t be estimated` when that happens.
 
+The `Estimated cost` on an approval card shows the total for the whole request whenever the number of rows, items, or leads is known, for example `~1,938 total`. Hover over the total to see the price per unit, such as credits per row; the hover tooltip is left out when the price per unit equals the total. When the number isn’t known ahead of time, the card shows only the price per unit instead, for example `~1.9 / row`, `/ item` for tool runs, or `/ lead` for sequence launches. Amounts are written in full and start with `~` because they’re estimates; an exact zero has no `~`.
+
 The permission level you set decides how often you see a card at all, so it’s also the lever on how much runs unwatched.
 
 While your workspace has free credits left, the global agent shows how many of them have been used so far.
