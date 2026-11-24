@@ -1,7 +1,7 @@
 ---
 title: Launch and manage a campaign
 description: Set a campaign's schedule and credit budget, launch it, and pause, resume, or complete it as leads move through the sequence.
-last_synced: 2026-11-10T20:23:38.238Z
+last_synced: 2026-11-19T19:14:14.559Z
 ---
 
 # Launch and manage a campaign
@@ -93,6 +93,40 @@ From there, an enrolled lead:
 -   Runs to the end of the sequence if it's left alone.
 -   Stops early when the lead replies. An out-of-office auto-reply is recognized as such, so it doesn't end the lead's sequence the way a genuine reply does.
 -   Stays in the campaign for good. You can pause it, and pausing is how you stop sending to someone, but you can't remove it.
+
+### Following a lead's status
+
+Each lead's progress is written to its feed on the `Activity` tab, and the `Lead status` filter narrows the feed to one kind of entry. Before a lead's first email goes out, its feed shows where enrollment stands:
+
+| Status | What it means |
+| --- | --- |
+| Pending enrollment | The lead has been picked up from the segment and is waiting to be added to the campaign. |
+| Enrolled | The lead’s emails are rendered and it’s in the campaign, sending on schedule. |
+| Enrollment failed | The lead couldn’t be added, so it isn’t receiving emails from this campaign. The entry’s Failure reason says why, and the lead is marked with an icon in the lead rail. Once you’ve fixed the cause, you can retry the enrollment — see [Retrying a failed enrollment](#retrying-a-failed-enrollment). |
+| Paused | The lead has stopped receiving emails, for example after leaving the segment. |
+
+Once sending starts, the lead's email events follow in the same feed: `Sent`, `Opened`, `Clicked`, `Replied`, `Bounced`, and `Unsubscribed`. For counts across the whole campaign rather than one lead, the `Lead status snapshot` on the `Analytics` tab groups every lead by where it stands. [Campaign analytics and replies](https://university.clay.com/docs/campaign-analytics-and-replies) walks through its buckets.
+
+### Retrying a failed enrollment
+
+A lead marked `Enrollment failed` has used up its enrollment attempts, so Clay stops trying to add it to the campaign. After you fix whatever the Failure reason points to, you can retry the enrollment from the campaign's `Activity` tab. Retrying makes the lead eligible to enroll again, and Clay attempts the enrollment again on a later run.
+
+To retry one lead:
+
+1.  Open the campaign's `Activity` tab and select the failed lead in the lead rail.
+2.  Click `Retry enrollment` in the header of the lead's feed.
+
+To retry several leads at once:
+
+1.  On the `Activity` tab, tick the checkbox next to each failed lead in the lead rail, or click `Select all failed (N)` to tick every failed lead.
+2.  Click `Retry enrollment` in the footer that shows how many leads are selected. `Clear` unticks them all.
+3.  Confirm in the `Retry enrollment for N leads?` dialog, which shows the exact number of leads.
+
+While Clay processes the retry, the lead shows `Retrying enrollment` until its status changes. A lead that's no longer failed by the time the retry is processed is skipped rather than failing the whole batch, and after a multi-lead retry the toast tells you how many leads were no longer failed.
+
+**Note:** `Select all failed` only ticks the failed leads loaded in the lead rail. If the rail has more leads to load, scroll down to load them before selecting all.
+
+Retry controls only appear for people who can manage the campaign. They aren't shown on `Completed` campaigns, or on campaigns that receive their leads from a workflow, since those leads enroll through the workflow.
 
 ## Pause, resume, and complete
 

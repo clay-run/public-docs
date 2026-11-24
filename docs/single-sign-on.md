@@ -42,13 +42,22 @@ In the WorkOS setup portal, look for the **Service Provider Details** section, w
 -   Email + password sign-in is blocked for users on your domain. Clay rejects password logins and new password signups for your domain with the message `Your organization requires you to sign in with SSO.`, and password reset emails are not sent to addresses on your domain. This applies to users who already had an email + password Clay account before SSO was enabled.
 -   Google OAuth sign-in is disabled for users on your domain. Clicking the **Sign in with Google** button on the login page will return an error (`Google OAuth is disabled for this account`) — this button uses Google OAuth, which is a separate authentication path from SSO.
 -   SSO is configured at the email domain level, not per workspace — if your organization uses multiple Clay workspaces, users on your domain sign in through SSO for all of them. See [Does SSO apply to all of my Clay workspaces?](#does-sso-apply-to-all-of-my-clay-workspaces)
--   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). If clicking the IdP tile returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO has likely not yet been activated on Clay's side — contact Clay support to complete activation.
+-   Once SSO is activated, users can sign in from either the Clay login page or directly from your IdP dashboard (for example, clicking the Clay tile in your Okta launcher). See [Can users sign in to Clay directly from Okta or another identity provider dashboard?](#can-users-sign-in-to-clay-directly-from-okta-or-another-identity-provider-dashboard)
 
 **How SSO users should sign in:** On the Clay login page, type your **email address** into the email field and click **Continue** — do **not** click the `Sign in with Google` button. Entering your email triggers domain detection, which redirects you to your SSO provider automatically.
 
 **If your Clay account was originally created with Google (no password set):** Once SSO is enabled for your domain, the `Sign in with Google` button will return an error — Google OAuth is disabled for SSO domains. Because your account was created through Google, you have no Clay email + password; attempting to enter a password or trigger a password reset will not work (there is no Clay password on your account to reset). To sign in, simply type your **email address** into the email field and click **Continue** to be redirected to your SSO provider. If the redirect does not work after SSO has been activated by Clay support, contact Clay support to verify the configuration.
 
 **Confirming SSO enforcement is active:** To verify that SSO has been activated for your workspace, open a private or incognito browser window, navigate to the Clay login page, and enter a company email address in the email field, then click **Continue**. If SSO is active, you will be redirected to your identity provider's login page. If you are not redirected, contact Clay support to confirm that SSO activation has been completed on Clay's side.
+
+### Can users sign in to Clay directly from Okta or another identity provider dashboard?
+
+Yes. Once Clay support has activated SSO for your email domain, Clay supports IdP-initiated sign-in (signing in by starting from your identity provider instead of from Clay). Users on your domain can sign in to Clay in either of these ways:
+
+-   **From your identity provider's dashboard (IdP-initiated):** Click the Clay tile or app in your identity provider's dashboard, for example the Okta dashboard.
+-   **From the Clay login page:** Type your work email address into the email field and click **Continue**. Clay redirects you to your identity provider, and you're returned to Clay signed in after you authenticate.
+
+IdP-initiated sign-in to Clay only works after SSO is activated on Clay's side. If clicking the Clay tile in your identity provider returns `{"type":"BadRequest","message":"Unable to login","details":null}`, SSO isn't active yet for your email domain, or your WorkOS organization doesn't match Clay's record for your domain. Contact Clay support to complete or check SSO activation — only Clay support can activate SSO for a domain.
 
 ### Does SSO apply to all of my Clay workspaces?
 
@@ -124,6 +133,7 @@ Once SCIM provisioning is connected, the button in the **SCIM provisioning** sec
 -   Enabling SCIM provisioning won't remove existing workspace members.
 -   Users your identity provider assigns to Clay are added to the workspace with the role mapped from their group.
 -   Users your identity provider unassigns or deprovisions are removed from the Clay workspace.
+-   Groups your identity provider pushes to Clay sync as SCIM-managed [user groups](./user-groups.md), with names and membership kept up to date.
 -   Clay has no SCIM sync schedule to configure and no "sync now" button — Clay picks up changes automatically after your identity provider sends them, so when users appear in Clay depends on your identity provider's provisioning schedule.
 
 ## Disabling or re-enabling SSO

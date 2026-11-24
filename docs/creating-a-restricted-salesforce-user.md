@@ -28,6 +28,16 @@ We'll configure all three to ensure Clay has just the access it needs.
     -   `License`: Salesforce
 3.  Click `Save`
 
+### **If your Clay user has a Salesforce Integration user license**
+
+If the dedicated Salesforce user you're connecting to Clay has the **Salesforce Integration** user license (the API-only integration license), a standard permission set can't grant it object and field access. Salesforce requires the **Salesforce API Integration** permission set license first:
+
+1.  In Salesforce, go to `Setup` → `Users` and open the integration user.
+2.  Under `Permission Set License Assignments`, assign `Salesforce API Integration`.
+3.  When you create the custom permission set above, set `License` to `Salesforce API Integration` instead of `Salesforce`, then assign the permission set to the integration user.
+
+Users with the Salesforce Integration license can only connect to Clay with the **Client Credentials** connection method — see [Can I use an integration-only or API-only user license for this?](#can-i-use-an-integration-only-or-api-only-user-license-for-this)
+
 ## **Set object-level permissions**
 
 1.  Within your new permission set, go to `Object Settings`
@@ -90,6 +100,10 @@ Everything else should remain hidden.
     -   `Modify All Data`
     -   `Customize Application`
 
+`API Enabled` is the only system permission Clay's Salesforce connection requires. Beyond that, the Clay user only needs object- and field-level permissions for the data you want Clay to use: `Read` for lookups and imports, plus `Edit` if Clay will write data back to Salesforce. Admin-level permissions such as `View All Data` and `Modify All Data` aren't needed.
+
+**Optional — `View Setup and Configuration` for the Audiences API usage card:** If you use Clay Audiences with a Salesforce source, the **API usage** card on the Salesforce source settings page shows your org's daily Salesforce API usage. Clay reads that figure from Salesforce's Limits API, which Salesforce only makes available to users with the `View Setup and Configuration` permission. Enable `View Setup and Configuration` on the Clay user's permission set if you want the API usage card to show your org's usage; Clay's lookups and write-backs don't need it.
+
 ## **Restrict record visibility (optional)**
 
 If you only want Clay to see a subset of your `Accounts` (e.g., certain regions or segments), configure record-level sharing:
@@ -115,13 +129,26 @@ The user you authenticate with Clay can now:
 
 ## **Static IP addresses for allowlisting**
 
-On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no configuration needed. To allowlist these IPs in Salesforce, go to `Setup` → `Network Access` → `New` and enter each address. Contact [Clay support](https://www.clay.com/support) to get the current list of IP addresses to allowlist.
+On **Enterprise plans**, Salesforce connections in Clay automatically route through Clay's static IP addresses — no toggle or configuration is needed in Clay. Clay's static IP addresses cover all of Clay's Salesforce traffic, including syncs, lookups, enrichments, and record updates, so you don't need separate IP ranges for different Clay workflows.
+
+Clay uses more than one static IP address. If you already have one Clay IP address (for example, from a previous setup), allowlist every address on Clay's current list, not just that one.
+
+To restrict your Salesforce org to Clay's static IP addresses:
+
+1.  Contact [Clay support](https://www.clay.com/support) to get the current list of Clay IP addresses to allowlist.
+2.  In Salesforce, go to `Setup` → `Network Access` → `New`.
+3.  Enter one Clay IP address as both the `Start IP Address` and the `End IP Address`. Each address on Clay's list is a single IP address (Clay support may write it with a `/32` suffix, which means one address), so the start and end of the range are the same. Enter the address without the `/32` suffix.
+4.  Click `Save`, then repeat steps 2–3 for each remaining Clay IP address.
+
+When you're done, `Network Access` lists one range per Clay IP address.
 
 ## **FAQs**
 
 ### **Can I use an integration-only or API-only user license for this?**
 
 It depends on the connection method. Integration User and API-only licenses cannot complete the browser-based OAuth flow used by **User Sign In** — attempting this produces an `OAUTH_APPROVAL_ERROR_GENERIC` error. To use an integration or API-only license, switch to the **Client Credentials** connection method instead, which works server-to-server without a browser login. See [Salesforce integration](https://university.clay.com/docs/salesforce-integration-overview) for setup instructions.
+
+If you use the Salesforce Integration user license, also assign the `Salesforce API Integration` permission set license to the user before assigning your permission set — see [If your Clay user has a Salesforce Integration user license](#if-your-clay-user-has-a-salesforce-integration-user-license).
 
 ### **What if I need Clay to access multiple objects?**
 

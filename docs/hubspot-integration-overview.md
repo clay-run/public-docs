@@ -622,6 +622,27 @@ HubSpot Activities — including calls, emails, meetings, notes, and tasks — a
 
 **Advanced workaround — HTTP API:** To fetch raw Activity records directly, use Clay's **HTTP API** integration with a HubSpot Private App token to call HubSpot's Engagements endpoints — for example, `https://api.hubapi.com/crm/v3/objects/calls` for calls or `https://api.hubapi.com/crm/v3/objects/meetings` for meetings. This requires configuring the HTTP API action manually and does not use Clay's native HubSpot connection.
 
+### Should I use Lookup in Audiences or a live HubSpot lookup to pull CRM context into a workflow?
+
+If HubSpot is connected to [Clay Audiences](audiences.md#importing-from-hubspot), you can pull HubSpot context into a table or workflow in two ways: `Lookup in Audiences`, which reads the HubSpot records Clay has already synced into Audiences, or a native HubSpot action such as **Lookup object** or **Retrieve associated objects**, which reads from your HubSpot account when the step runs.
+
+The following table compares `Lookup in Audiences` with live HubSpot actions for pulling CRM context:
+
+| | `Lookup in Audiences` | Live HubSpot action (**Lookup object**, **Retrieve associated objects**) |
+|---|---|---|
+| Where the data comes from | HubSpot records already synced into Audiences | Your HubSpot account, at the time the step runs |
+| HubSpot API calls | None — reads Clay's Audiences data | Calls HubSpot's API each time the step runs |
+| How current the data is | As of the last Audiences HubSpot sync — see [Importing from HubSpot](audiences.md#importing-from-hubspot) for the sync schedule | Current HubSpot values |
+| HubSpot objects available | Contacts, Companies, and Deals | Company, Contact, Deal, Lead, and custom objects |
+| HubSpot activities (calls, emails, meetings, notes) | Not available | Not available |
+
+**HubSpot activities aren't available through either option.** The Audiences HubSpot source imports Contacts, Companies, and Deals only — unlike the Salesforce source in Audiences, it has no option to import activities. Clay's native HubSpot actions don't read calls, emails, meetings, or notes either; **Retrieve associated objects** returns associated Company, Contact, Deal, Lead, and custom object records, not activities. To reference HubSpot activity history in downstream steps or messaging, use one of the workarounds in [Why can't I import HubSpot Activities (calls, emails, meetings, notes, or tasks) into Clay?](#why-cant-i-import-hubspot-activities-calls-emails-meetings-notes-or-tasks-into-clay):
+
+-   **Rollup properties:** Store the activity data you need in HubSpot rollup properties on the Contact or Company. A live **Lookup object** action reads them like any other property, and `Lookup in Audiences` reads them once you add them to your Audiences HubSpot import field mapping.
+-   **HTTP API:** Call HubSpot's Engagements endpoints directly with Clay's **HTTP API** integration and a HubSpot Private App token.
+
+**Call transcripts and other data in a data warehouse:** To combine HubSpot context with data stored in your warehouse, such as call transcripts, add a Snowflake, Google BigQuery, or Databricks lookup step alongside your HubSpot steps. Select only the columns you need so results stay within Clay's cell size limits — see [Manage cell data](manage-cell-data.md).
+
 ### Can I create HubSpot tasks from Clay?
 
 Clay's HubSpot integration does not include a native action for creating Tasks — tasks aren't one of the object types available in the HubSpot **Create object** action. To create HubSpot tasks from Clay, use the **HTTP API** integration with a HubSpot Private App token to call HubSpot's Tasks API directly.
