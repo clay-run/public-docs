@@ -19,11 +19,17 @@ You can also click the `⛭` icon in the top toolbar to open the Run Settings pa
 
 ## Auto-dedupe
 
-Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells, stale cells, and cells with more than 200 characters are excluded from this process.
+Duplicate rows in a Clay table can occur when the same record is added more than once — for example, from repeated CSV uploads, overlapping source imports, or webhook sends that deliver the same contact multiple times. Auto-dedupe continuously monitors a specified column to detect and resolve duplicate values. When duplicates are found, Clay keeps one row and deletes the rest — you choose whether to keep the **oldest** or **newest** row (defaults to **Keep oldest row**). Blank cells and cells with more than 200 characters in the dedupe column are excluded from this process — those rows will not be deleted by auto-dedupe, even if the same value appears in another row.
 
-**When does auto-dedupe fire?** Auto-dedupe runs whenever a row is added to the table **and** whenever a cell value in the dedupe column changes — including when a formula field recalculates from an empty or stale state to its final value. This means if a formula field is blank or still processing when a row is first inserted, the duplicate check runs again automatically once the formula resolves. You don't need to manually trigger deduplication after a formula updates.
+**When does auto-dedupe fire?** Auto-dedupe runs whenever a row is added to the table **and** whenever a cell value in the dedupe column changes — including when a formula field or enrichment column fills in from an empty or stale state. This means if the dedupe column cell is blank or still processing when a row is first inserted, the duplicate check runs again automatically once the cell resolves. You don't need to manually trigger deduplication after a cell updates.
+
+**Note — using an enrichment column as your dedupe key:** If the column selected for deduplication is populated by an enrichment action (for example, a "Find Website" enrichment that fills in a company's website URL), rows will be deduped as enrichment fills in those values. If multiple companies resolve to the same URL, only one row is kept and the rest are automatically deleted. To avoid unexpected row deletions, use a column that already contains a unique identifier before enrichment runs — such as company name, a social profile URL, or a CRM ID.
+
+**View deduplication history:** To see which rows were removed by auto-dedupe, open the **History** panel (bottom-right of the table) and select **Row deduplication**. Each entry shows the deleted row, the column value that triggered the deletion, and the timestamp.
 
 **Note — enabling auto-dedupe on a table with existing rows:** When you first set a dedupe column (or change it to a different column), Clay immediately runs deduplication against all existing rows in the table, retroactively removing any pre-existing duplicates. Before you save, the settings panel shows how many duplicate rows will be deleted so you can confirm the impact.
+
+**Note — dedupe column values longer than 200 characters are skipped:** If the settings panel shows that rows will be deleted but no rows are actually removed after saving, the most common cause is that every matching row's dedupe column value is longer than 200 characters. Auto-dedupe silently skips any row whose dedupe column value exceeds 200 characters — those rows will not be deleted even when an apparent duplicate exists. This frequently occurs when using a column populated by a hash function that concatenates multiple values, or any column that stores long identifiers. To resolve this, switch to a dedupe column whose values are 200 characters or fewer — for example, a company domain, a Salesforce ID, or a short unique key — rather than a long hash string.
 
 **Note:** Auto-dedupe only works with **Text**, **Email**, and **URL** column types. If the selected column uses a different data type (such as Number), auto-dedupe is automatically disabled. Convert the column to **Text** type first to use it for deduplication.
 
@@ -31,15 +37,26 @@ Auto-dedupe continuously monitors a specified column to detect and resolve dupli
 
 To enable or disable auto-dedupe:
 
-1.  Open the table name dropdown menu.
-2.  Select `Edit table settings`.
-3.  In the settings panel, find the **Auto-dedupe rows** toggle and turn it on or off.
-4.  Select the column to be used for identifying duplicate values.
-5.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
+1.  Click the gear (`⚙`) icon at the bottom right of the table to open Table Settings — or open the table name dropdown and select `Edit table settings`.
+2.  Find the **Deduplication** section and toggle **Auto-dedupe rows** on.
+3.  Under **Dedupe via column**, select the column to use for identifying duplicates.
+4.  Choose **Keep oldest row** or **Keep newest row** to set which duplicate is retained.
+5.  Click **Save changes**.
 
 **Note:** Auto-dedupe monitors a **single column** only. If you need to deduplicate on a combination of fields — for example, treating each unique `OpportunityId + ContactId + Role` as a distinct row — use the **Uniqueness fields** setting in your source configuration instead (e.g., the [Salesforce SOQL source](salesforce-soql.md)). Source-level uniqueness fields apply at import time, before rows reach the table.
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
+
+### Why did my deduplicated table use more credits than its row count?
+
+If the same records are sent to a table again and again (for example, a webhook or other source that re-sends the same companies every night), the auto-dedupe option you choose decides whether you pay to enrich those records again:
+
+-   **Keep newest row:** The incoming row is kept and the existing row is deleted. The new row is a brand-new row: values from the deleted row, including enrichment results, are not copied over. Enrichment columns set to auto-run therefore run on the new row and charge credits again. In the settings panel, this option is described as "Any existing row will be deleted; enrichments will run on the new row."
+-   **Keep oldest row** (the default): The existing row is kept unchanged and the incoming duplicate is deleted before any enrichment runs on it, so the duplicate doesn't charge credits.
+
+The table's row count only includes the rows left after auto-dedupe, so it doesn't show how many times a record was re-sent and enriched again. For example, if a webhook sends `openai.com` five nights in a row to a table that dedupes on **Domain** with **Keep newest row**, the table shows one row for openai.com. An auto-run enrichment column that costs 1 credit per row has run five times on that domain and charged 5 credits, one per night.
+
+To check whether this is happening, open the **History** panel (bottom-right of the table) and select **Row deduplication** to see the rows auto-dedupe has deleted. To stop paying again for records that are already in the table, switch the table's Deduplication setting to **Keep oldest row**.
 
 ## Auto-run
 
@@ -62,6 +79,13 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
 -   Source import history — the duplicate starts with a fresh record count
+-   Unpublished sandbox mode changes — see the note below
+
+**Columns missing after you duplicate a table or workbook? Check for unpublished sandbox changes.** Duplicating a table or workbook copies the live, published version of each table. Columns you've added or edited in [sandbox mode](sandbox-mode.md) but haven't published yet are not part of the published table, so they don't come along — for example, the duplicate may contain only the source column (such as a Salesforce import) even though the original table shows many more columns in its sandbox. The duplicate itself worked; the sandbox columns never reached the live table. To include those columns in a copy:
+
+1.  Open the original table and click **Review changes (N)** in the tab bar above the table, where N is the number of unpublished column changes.
+2.  In the **Sandbox review** window, click **Publish and don't run** (publishes the column changes without starting a run) or **Publish and run** (publishes and runs the affected columns on all rows).
+3.  Duplicate the table or workbook again. The new copy includes the published columns. You can delete the earlier copy if you don't need it.
 
 **To copy existing enriched data without re-running enrichments:** Use [Send Table Data](send-table-data.md) to transfer rows from the original table to the duplicate. Add a Send Table Data column to the original table, select the columns you want to copy, and set the destination to the duplicate. This moves the already-computed cell values directly — the Send Table Data action itself consumes no credits. **Important:** Because auto-run carries over to the duplicate (see below), enrichment columns in the destination (such as Claygent) will automatically re-fire on incoming rows and consume credits unless you turn off auto-run in the duplicate — or disable it on individual enrichment columns you don't want to re-run — before sending data.
 
@@ -70,6 +94,15 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **Connected sources (Salesforce, SOQL queries, and similar):** If a table has a Salesforce report, SOQL query, or other import source configured, duplicating copies the source configuration but does **not** automatically start the import. You will need to manually trigger the source in the duplicated table when you're ready to populate it with data.
 
 **Webhook sources:** If a table has a webhook source column, duplicating generates a **brand new, unique webhook URL** for the copy. The original table's URL is not affected. Any external system sending data to the original URL will not automatically send to the new table — you need to update your sending tool to POST to the new URL. To find the new URL, click the webhook source column in the duplicate. See [Webhooks in Clay](webhook-integration-guide.md) for more details.
+
+**Running a workflow on a new set of inputs:** Duplicating is also the recommended approach when you want to run an existing set of enrichment columns and automations on a completely different batch of data — for example, running the same people-finding and enrichment pipeline for a new city or a new target list. The duplicate starts with zero rows but all your column logic intact. After duplicating:
+
+1.  In the duplicate, open the existing source column header and click **Edit source** to update the source to your new data — for example, swap in a different CSV file, change a location filter, or point it at a different reference table.
+2.  Run the updated source. Your downstream enrichment columns, formulas, and conditional runs will repopulate automatically on the new rows without any rebuilding.
+
+**Important:** Update the source by clicking **Edit source** in the source column header — do not add a second source alongside the existing one. Adding a new source leaves both active simultaneously; if you then delete the original, any downstream columns that reference it will break.
+
+For workflows you want to run across many different input datasets over time, consider saving the downstream enrichment columns as a [Function](functions.md). Functions let you define the pipeline once and call it from multiple tables with different inputs, without re-creating the enrichment columns each time.
 
 To duplicate a table:
 

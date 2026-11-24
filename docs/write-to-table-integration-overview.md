@@ -93,7 +93,7 @@ The **Only run if** allows you to set conditions to control when the AI runs. Fo
 
 The **Write to Other Table** action has two main constraints that you might come across.
 
--   Write to Other Table connections count toward the same workspace-wide table connection limit as Send Table Data (20 tables by default). **This includes tables across workbooks.** If you exceed the limit, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*.
+-   Saving a Write to Other Table column runs the same loop check as Send Table Data. Clay follows the chain of tables downstream of the column's destination table, including tables in other workbooks, and checks at most 20 tables by default. A table that the chain reaches by more than one path counts once for each path. If the chain is longer, you'll see the error: *"Maximum number of table ID checks exceeded (limit: 20)"*. See [Send table data](https://university.clay.com/docs/send-table-data) for how the tables are counted and how to get under the limit.
 -   Data can only be sent in a linear direction (A → B → C). In other words, loops are not possible (A → B → A).
     -   If you want to go the other direction, you can reference data from any table (B→ A) using one of these other actions:
         -   **`Lookup Multiple Rows in Other Table`**
