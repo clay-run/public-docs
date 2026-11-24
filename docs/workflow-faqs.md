@@ -128,4 +128,6 @@ When you need one that isn't, build that part where it does exist and meet the w
 
 ### Are waterfalls available in Workflows?
 
-Not as a step type — a `Run enrichment` step runs one action, so a waterfall's provider fallback isn't something you draw on the canvas. Where you need one, put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. That keeps the fallback logic in one governed place and available to your tables at the same time. See [Managed functions](https://university.clay.com/docs/managed-functions).
+Yes. Waterfalls are available in Workflows for every workspace that has Workflows turned on. To add one, click **+** below the step it should run after, choose **Enrich**, and in the enrichment panel either click the **Waterfalls** card on the **For you** tab or search for the data point you need, such as `Phone number`. To build your own provider sequence instead of a pre-built waterfall, click **New waterfall** in the same panel. See [Adding a waterfall in Clay Workflows](https://university.clay.com/docs/building-a-data-waterfall#adding-a-waterfall-in-clay-workflows) for the full steps.
+
+If you want the same waterfall shared between your workflows and your tables, you can still put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. See [Managed functions](https://university.clay.com/docs/managed-functions).
