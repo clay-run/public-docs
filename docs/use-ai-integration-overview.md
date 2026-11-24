@@ -2,7 +2,7 @@
 title: Use AI
 description: Leverage AI to process, categorize, and conduct web research for
   actionable insights.
-last_synced: 2026-04-26T01:40:51.610Z
+last_synced: 2026-11-24T07:49:40.766Z
 ---
 
 # Use AI
@@ -99,6 +99,33 @@ After generating a setup, you can easily edit your original description and rege
 The **Templates** dropdown at the top of the Use AI panel lets you explore pre-configured setups for common use cases. Click **Templates** → **Browse templates** to open the template browser and apply a ready-made configuration to your column—useful when you want to start from a working example rather than writing a prompt from scratch.
 
 **Tip — testing prompt changes on a sample:** To iterate on a prompt without running your entire table, select a few rows, right-click, and choose **Run [N] rows** (or select specific cells and choose **Run [N] cells**). This lets you validate results before spending credits on every row. Note that when an AI column produces new output, any downstream columns that reference it will automatically re-run — this is expected behavior. To prevent downstream columns from triggering while you refine a prompt, use [Sandbox mode](sandbox-mode.md), which isolates your changes to a test copy of the table. See [Run progress and row management](run-progress.md) for full details on running specific rows.
+
+## Classifying rows with Use AI
+
+Classify is a `Use case` in Use AI that sorts each row into one of the categories you define — `Yes` or `No`, say, or SMB, Mid-market, and Enterprise. It doesn't research or write free text, so it fits best when the answer is already in your table and comes from a fixed list, like an ICP fit check or a persona tag. For anything that needs web research, use `Web research (Claygent)` instead.
+
+**Note:** Classify is in alpha, and during the alpha its results may not always be accurate. Classify is free for a limited time during alpha. Check a sample of rows before you rely on it across a whole table.
+
+1.  While in a Clay table, click `Add column` and click `Use AI`.
+    -   You can also search for `Classify` when adding an enrichment, which opens Use AI with Classify already selected.
+2.  In the `Configure` tab, select the `Use case` → `Classify`. There's no model to pick for Classify, so the `Model` dropdown doesn't appear.
+3.  Under `Input`, add the data you want classified. Type `/` to insert a column — the input needs at least one column reference.
+4.  Under `Categories`, write a `Prompt` that describes how to classify each row.
+5.  Set up your categories. A new Classify column starts with `Yes` and `No`.
+    -   Give each category a `Name` and, optionally, a `Description` of when a row belongs in it.
+    -   Click `Add category` for more. You need at least two, each with a name.
+6.  _(Optional)_ Adjust `Minimum probability (%)`, which starts at 85.
+
+Each row gets exactly one category, and the cell shows its name. When no category is likely enough to clear the minimum probability, the cell shows `Uncertain` instead.
+
+Leave `Minimum probability (%)` empty for no minimum. A row can still come back `Uncertain` when its input can't be classified at all, like a garbled value in place of a company domain.
+
+Classify has usage limits. Each row Classify processes counts as one run, and runs in tables and workflows share one allowance per workspace. If Clay retries a run after an error, it still counts once.
+
+-   **Paid workspaces:** up to 10,000 runs a day, resetting at midnight UTC, and 500,000 in total during the alpha.
+-   **Free and trial workspaces:** 100 runs in total. Upgrading to a paid plan raises the limit, and runs you've already used still count toward the total.
+
+When a workspace reaches a limit, the cell's details name the limit that was hit, and paid workspaces can contact Clay to request a higher one. Rows that failed on a limit don't run again on their own once it's raised, so rerun them.
 
 ## Generating images with Use AI
 
