@@ -64,7 +64,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
-| Classify (alpha) | Sorts each record into one of the categories you define, like ICP fit, persona, or lead quality | Labeling records consistently against a fixed set of categories | Free during the alpha, through January 31, 2027 |
+| Classify | Sorts a record into one of the categories you define | Yes/no or fixed-category decisions on data you already have | Free for a limited time during alpha |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
 | Delay | Pauses the branch it sits on before the next node runs | Giving a downstream step time it needs | Free |
 
@@ -122,43 +122,32 @@ Branches are keyed on the label, so two calls sharing one label collapse into a 
 
 ### `Classify`
 
-The `Classify` node sorts a record into exactly one of the categories you define, so later steps act on a fixed answer instead of free text. It doesn't research or reason through several steps. Use it when the answer is already in the record, like an ICP fit check or a persona tag. Use `Run Claygent` when the step needs web research.
+Sorts a record into exactly one of the categories you define, so later steps act on a fixed answer instead of free text. Classify doesn't research or reason through several steps. Reach for it when the answer is already in the record, like an ICP fit check or a persona tag, and use `Run Claygent` when the step needs web research.
 
-You can add Classify as a node in a workflow (it sits under `Logic` in the node palette), add it as an enrichment column in a table by searching for `Classify`, or ask Sculptor to build a Classify step for you.
+**Note:** Classify is in alpha, and during the alpha its results may not always be accurate. Classify is free for a limited time during alpha. Check its output on a few test runs before you publish a workflow that depends on it.
 
-**Note:** Classify is in alpha, so results may not always be accurate. Check the output on a few test runs before you publish a workflow that depends on it.
+To add one, open the node palette and choose `Classify`, then fill in its two sections:
 
-To add a Classify node:
+1.  `Input` — reference the upstream output you want classified. The node needs at least one reference here before it can run.
+2.  `Categories` — write a `Prompt` that describes how to classify the input, then give each category a `Name`, an `ID`, and an optional `Description` of when the input belongs in it. A new node starts with `Yes` and `No`, and `Add category` adds more. `Minimum probability (%)` sets how likely the top category has to be, and starts at 85.
 
-1.  Open the node palette and choose `Classify`.
-2.  Under `Input`, reference the upstream output you want classified. The node needs at least one reference before it can run.
-3.  Under `Categories`, write a `Prompt` that describes how to classify the input.
-4.  Give each category a `Name`, an `ID`, and an optional `Description` of when an input belongs in it. A new node starts with `Yes` and `No` categories. Select `Add category` to add more. A Classify node needs at least 2 categories and allows up to 255.
-5.  Set `Minimum probability (%)` to the probability the top category must reach. The default is 85.
+The node returns:
 
-Classify returns these outputs:
+-   `categoryId` and `category` — the ID and name of the category it picked.
+-   `probability` — how likely that category is, from 0 to 1.
+-   `confidence` — the model's overall confidence, from 0 to 1.
+-   `probabilities` — every category with its own probability.
+-   `usedUncertain` — true when the top category falls below the minimum probability, or when the input couldn't be classified at all.
+-   `refused` — true when the input couldn't be classified, in which case the category fields come back empty.
 
-| Output | What it contains |
-| --- | --- |
-| `categoryId` and `category` | The ID and name of the chosen category |
-| `probability` | The probability of the chosen category, from 0 to 1 |
-| `confidence` | The model's overall confidence, from 0 to 1 |
-| `probabilities` | Every category with its own probability |
-| `usedUncertain` | `true` when the top category is below the minimum probability, or when the input could not be classified |
-| `refused` | `true` when the input could not be classified. The category fields are then empty |
+To branch on the result, add a `Conditional` after the node and compare `categoryId` to a category's ID. Check `usedUncertain` too, since a low-probability result still carries the top category's ID. Category IDs can't be edited once the node is saved, so renaming a category never breaks a rule that compares against it.
 
-To branch on the result, add a `Conditional` after the Classify node and compare `categoryId` to a category's ID. Also check `usedUncertain`, because a low-probability result still carries the ID of the top category. You can't edit a category ID after you save the node, so renaming a category doesn't break your rules.
+Classify has usage limits. Each record Classify processes counts as one run, and runs in workflows and tables share one allowance per workspace. If Clay retries the step after an error, it still counts once.
 
-**Classify pricing during the alpha.** Classify costs no data credits and no action credits through January 31, 2027. Pricing will be set before Classify becomes generally available.
+-   Paid workspaces: up to 10,000 runs a day, resetting at midnight UTC, and 500,000 in total during the alpha.
+-   Free and trial workspaces: 100 runs in total. Upgrading to a paid plan raises the limit, and runs you've already used still count toward the total.
 
-**Classify run limits during the alpha.** Each record Classify processes counts as one run. Workflows and tables share one allowance per workspace. A retry after an error counts once.
-
-| Plan | Classify run limit |
-| --- | --- |
-| Free and Trial plans | 100 runs total. If you upgrade, the limit rises, and runs you already used still count |
-| Paid plans | 10,000 runs per day (resets at midnight UTC) and 500,000 runs total through January 31, 2027 |
-
-When your workspace reaches a limit, the Classify step fails. The run details show `Plan limit reached` with a message that names the limit you hit. On a Free or Trial plan, upgrade to a paid plan to keep using Classify. On a paid plan, wait for the daily limit to reset at midnight UTC, or contact Clay support to request a higher limit. Runs that failed at a limit don't retry on their own after the limit rises, so re-run them.
+When a workspace reaches a limit, the step fails and the run's details show `Plan limit reached`, with a message naming which limit was hit. Runs that failed this way don't retry on their own once the limit is raised, so re-run them.
 
 ### `Run code`
 
