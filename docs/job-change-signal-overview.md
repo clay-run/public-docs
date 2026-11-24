@@ -47,6 +47,12 @@ No. Clay does not have a native persistent person identifier equivalent to a thi
 
 For this reason, the Job Change Signal requires each contact's professional profile URL as input. When Clay detects that the person's current employer no longer matches your records, it fires an event so you can re-enrich or update your CRM.
 
+### Can I change which contacts my Job Change Signal monitors?
+
+No — the contacts table a Job Change Signal monitors is selected when the signal is first created and cannot be changed afterward via **Edit Signal**. Attempting to edit the signal will show the contacts table field as locked.
+
+To switch to monitoring a different contacts table, create a new signal pointing to the new table. To preserve your enrichment column configurations from the existing signal's results table, save it as a template first: click the table title → scroll to **Share as template** → toggle it on and copy the link. Open the link in a new tab — the resulting table will include all your enrichment column configurations, so you don't have to rebuild them from scratch.
+
 ### How do I track contacts who change jobs ("movers") and refresh their details?
 
 Use the **Job Change Signal** (see setup steps above). It monitors each contact's professional profile URL on a schedule you set. When a job change is detected, you can attach enrichment columns — such as Enrich Person, Find Work Email, or Find Phone — to pull the contact's updated company, title, and contact information automatically.

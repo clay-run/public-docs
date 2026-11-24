@@ -2,7 +2,7 @@
 title: Crunchbase integration
 description: Access company data including financials, growth metrics, funding
   details, and acquisition history.
-last_synced: 2026-04-27T18:09:41.382Z
+last_synced: 2026-11-19T06:52:31.990Z
 ---
 
 # Crunchbase integration
@@ -18,7 +18,7 @@ Through this integration, you can access company data directly in Clay, includin
 1.  While in a Clay table, click `Add enrichment` and search for `Crunchbase`.
 2.  Under `Integrations`, select one of the Crunchbase options.
 3.  In the modal, you will be asked to `Select Crunchbase account`.
-    -   If you haven't already connected your Crunchbase account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you haven't already connected your Crunchbase account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Enrich a company's financials
 
@@ -88,3 +88,13 @@ Get essential company details like name, website, headquarters location, and ind
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## FAQs
+
+### Can I use Crunchbase data to find companies that may be seeking capital or funding?
+
+Yes. The **Enrich a company's funding predictions** action surfaces Crunchbase's statistical predictions of a company's likelihood of receiving funding, along with the factors influencing those predictions. Add this enrichment to a company table and sort or filter by the funding likelihood score to prioritize outreach to companies most likely to be in fundraising mode.
+
+To set it up: in your company table, click `Add enrichment`, search for `Crunchbase`, and select **Enrich a company's funding predictions**. A Crunchbase API key is required — click `+ Add account` in the setup modal to authenticate.
+
+To complement this with real-time monitoring, pair it with Clay's **Monitor for news & fundraising** signal (select **Fundraising** as the news topic) — that signal fires whenever a company in your list appears in fundraising-related news articles such as funding round announcements.

@@ -58,3 +58,15 @@ There is no native one-click migration between two unrelated Clay accounts. The 
 4. Reconnect any integrations and reconfigure enrichment columns that reference connections from the source workspace.
 
 **Clay Lookup Rows columns:** Lookup Rows columns store a reference to a specific table ID within a workspace. That reference does not carry over to the new account — in the new workspace, each Lookup Rows column has no target table configured. After rebuilding all tables in the destination account, open each Lookup Rows column and repoint it at the correct migrated table. One reconnection is required per lookup target table.
+
+### Billing when consolidating two workspaces
+
+Each Clay workspace has its own plan and bills independently — there is no automatic billing merge. Consolidating two workspaces means keeping one plan and canceling the other.
+
+Once you have moved all workbooks and data to the workspace you're keeping:
+
+1. Verify everything you need is accessible in the destination workspace.
+2. Go to **Settings → Plans & billing** in the workspace you're leaving.
+3. Select **Cancel plan** to cancel its subscription.
+
+**Credits and plan features do not transfer between workspaces.** If the workspace you're leaving has unused data credits, spend them before canceling — when a plan is canceled, the credit balance is capped at the Free plan's rollover limit (200 credits), and any credits above that are forfeited. See [Plans & billing](plans-and-billing.md) for details on how cancellation affects your credit balance.
