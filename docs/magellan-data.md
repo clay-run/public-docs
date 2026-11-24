@@ -18,8 +18,6 @@ Magellan Data is a B2B data enrichment tool for discovering corporate ownership 
     -   You can run these actions on Clay's shared Magellan Data account, or bring your own key.
     -   To bring your own, click `+ Add account` and enter your Magellan Data API key. You can find your API key in your Magellan Data account settings.
 
-**Note:** `Find corporate family` and `Enrich PE portfolio companies` cost more the more companies they return, so the size threshold on each one doubles as a cost control. Raise it when you want the whole family or portfolio regardless of how large it is, and lower it to skip the very large ones.
-
 ### `Action` Find corporate family
 
 Returns all subsidiaries, divisions, and sister companies within the same corporate family for a given company.
