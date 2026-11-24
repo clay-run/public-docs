@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-10-23T20:15:53.279Z
+last_synced: 2026-11-24T08:11:24.744Z
 ---
 
 # AI in Clay
@@ -59,7 +59,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 ### Use AI
 
-**What it does**: A powerful table action that gives you access to AI for web research, content generation, and image generation.
+**What it does**: A powerful table action that gives you access to AI for web research, content generation, classification, and image generation.
 
 [View Use AI documentation →](https://university.clay.com/docs/use-ai-integration-overview)
 
@@ -67,6 +67,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   **Web research**: AI searches and synthesizes information from the web.
 -   **Content generation**: Transforms unstructured text (like call transcripts) into structured data.
+-   **Classification**: Sorts each row into one of the categories you define, like a yes/no ICP fit check. In Use AI, this option is labeled **Classify**. Classify is currently in alpha: it's free for a limited time during alpha and has run limits.
 -   **Image generation**: Creates images based on text prompts.
 
 **Model options**:
