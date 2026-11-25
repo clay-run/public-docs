@@ -131,6 +131,18 @@ Workflow canvas shortcuts only work when the canvas has focus — they don't fir
 -   `Cmd/Ctrl` + `Shift` + `G` — Ungroup
 -   `Shift` + `A` — Auto-arrange nodes: arranges the selected nodes when two or more are selected, otherwise arranges the whole workflow. Auto-arrange isn't available on read-only or empty workflows.
 
+### Zoom the workflow canvas with Z
+
+Hold `Z` to use the zoom tool on the Workflows canvas. Hold `Option/Alt` + `Z` to zoom out instead.
+
+-   `Z` + `click` — Zoom in one step around the point you clicked (the same step as the canvas's zoom-in button)
+-   `Z` + `drag` — Draw a rectangle and zoom in so that area fills the canvas
+-   `Option/Alt` + `Z` + `click` — Zoom out one step around the point you clicked
+-   `Option/Alt` + `Z` + `drag` — Zoom out one step around the center of the rectangle you drew
+-   `Esc` while dragging with `Z` held — Cancel the zoom rectangle without zooming
+
+The `Z` zoom tool only works when the canvas has focus. It doesn't trigger while you're typing in a text field or using a dialog or menu, and it isn't available on an empty workflow with no steps to zoom.
+
 ## FAQs
 
 **Can I undo an enrichment after it runs?**
