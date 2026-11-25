@@ -364,6 +364,27 @@ You can either:
 
 You don't need to change your Actions tier.
 
+### What happens to my table if I run out of Data Credits in the middle of a run?
+
+If your workspace's Data Credit balance runs out while an enrichment column is running, the remaining cells in that column don't run. Each of those cells shows the status **Not enough Clay credits 😢**. Click a cell to open the cell details panel, which says "Oh no! Looks like you ran out of credits. Please click the link below to get more." Cells with the "Not enough Clay credits" status count as errored in the column progress bar. You are not charged Data Credits for these cells. Results in cells that finished before your balance ran out stay in your table.
+
+To finish the run after you run out of Data Credits:
+
+1.  Add Data Credits. Either buy a one-time top-up (`Settings` → `Usage` → `Add one-time data credits`, see [Purchase one-time Data Credit top-ups](#purchase-one-time-data-credit-top-ups)) or upgrade your Data Credits tier in `Settings` → `Plan & billing`.
+2.  Right-click the enrichment column header, click **Run column**, and choose **Run [N] empty or out-of-date rows**. This option includes every cell that hasn't run yet or ended in an error, including cells showing "Not enough Clay credits," so you don't need to select those rows by hand.
+
+### Are Data Credits charged for enrichment cells that show an error?
+
+Cells that show **Not enough Clay credits 😢** aren't charged Data Credits. Most other enrichment errors aren't charged either. For example, if an enrichment fails because of a provider or platform problem during the run, the credits held for that cell are returned to your balance automatically.
+
+A few error types are still charged Data Credits:
+
+-   The enrichment returns invalid output data.
+-   The enrichment returns an **Empty response**.
+-   The enrichment can't find the table, row, or column it writes its results to (for example, because it was deleted before the cell ran).
+
+To check what a single cell cost, click the cell and look at **Charged** at the bottom of the cell details panel. To retry errored cells, right-click the column header, click **Run column**, and choose **Run [N] empty or out-of-date rows**.
+
 ### What happens if I run out of Actions but not Data Credits?
 
 You must upgrade to a higher action tier. Actions cannot be topped up separately because they're tied to your action tier's capacity.
