@@ -72,7 +72,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
     -   `Google OAuth` (recommended): Connect your Google Workspace account via OAuth.
         -   ⚠️ Note: You or your Google Workspace admin must authorize Clay Sequencer as a Trusted app for your domain before connecting. If you or a teammate sees **"Access blocked: clay.com has not completed the Google verification process" (Error 403: access_denied)** when connecting, follow [Connecting Google Workspace via OAuth](#connecting-google-workspace-via-oauth) for the required admin setup steps. Until this is done, all users in your domain will see this error.
     -   `Microsoft Outlook OAuth` (recommended): Connect your Outlook account via OAuth.
-        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com).
+        -   ℹ️ Note: Unlike Google OAuth, no Clay-side admin setup is required upfront. If your Microsoft 365 / Entra tenant requires admin approval for third-party apps, your admin may need to grant consent for "Clay Sequencer – Smartlead" in the [Microsoft Entra Admin Center](https://entra.microsoft.com). If the page shown after admin consent displays an error, see [Microsoft 365 admin consent showed an error page (such as 502 Bad Gateway). Was consent recorded?](#microsoft-365-admin-consent-showed-an-error-page-such-as-502-bad-gateway-was-consent-recorded)
     -   `SMTP`: Connect a single account via SMTP credentials directly. The form requires both SMTP settings (host, port, username, password) and IMAP settings (host, port) — Clay does not provide a built-in inbox, so your IMAP credentials must come from an existing IMAP-capable mailbox under your domain (such as Google Workspace, Microsoft 365, Zoho, or Fastmail). If your sending service is send-only (for example, SendGrid or another transactional email relay), you must pair it with a separate IMAP-enabled mailbox.
     -   `Bulk CSV upload`: Add multiple accounts at once by uploading a CSV. Download the example template from the modal and fill in the following eight columns for each account: `from_email`, `from_name`, `user_name`, `password`, `smtp_host`, `smtp_port`, `imap_host`, `imap_port`. For Google Workspace accounts, generate an app password for each account (Google Account → Security → 2-Step Verification → App passwords) and use it as the `password` value. **Note:** Bulk CSV upload uses SMTP/IMAP credentials — it does not work for Microsoft 365 / Outlook accounts unless your Microsoft 365 admin has enabled SMTP AUTH (disabled by default). If SMTP AUTH is not enabled, use `Microsoft Outlook OAuth` to connect those accounts instead — each account must be connected one at a time via OAuth.
     -   You can also [buy email accounts directly in Clay](https://university.clay.com/docs/buying-email-accounts) if you want to increase your sending capacity.
@@ -694,6 +694,25 @@ If the error persists more than 24 hours after your admin marked the app as `Tru
 ### What exact Microsoft permissions does sequencer require?
 
 These are disclosed when you add your account via OAuth. We request: offline\_access, openid, email, profile, Mail.Send, Mail.Send.Shared, Mail.ReadWrite, Mail.ReadWrite.Shared, [User.Read](http://User.Read), MailboxSettings.ReadWrite.
+
+### Microsoft 365 admin consent showed an error page (such as 502 Bad Gateway). Was consent recorded?
+
+An error on the page you land on after granting Microsoft 365 admin consent for Clay Sequencer doesn't by itself mean the consent failed. When your Microsoft 365 admin grants tenant-wide admin consent, Microsoft processes the consent first and then redirects to a confirmation page hosted by Clay's email-sending partner — not by Clay. The app appears in your tenant as **Clay Sequencer - Smartlead (prod)**. If that confirmation page returns an error such as a 502 Bad Gateway, check the consent in Microsoft Entra before repeating it.
+
+To confirm Microsoft 365 admin consent and finish connecting mailboxes to Clay Sequencer:
+
+1.  In the [Microsoft Entra admin center](https://entra.microsoft.com), go to `Enterprise applications` → `Clay Sequencer - Smartlead (prod)` → `Permissions` and check that admin consent shows as granted. If it doesn't, have your admin grant admin consent again.
+2.  Have each person who will send from Clay Sequencer connect their own mailbox: in Clay, go to `Sequencer` → `Email accounts` → `Add email account` and choose Microsoft Outlook OAuth.
+3.  When the `Add email accounts` modal asks **Is your Microsoft 365 already configured?**, choose `Yes, it's already set up` and click `Continue`.
+4.  Click `Connect your Microsoft account` and sign in with the Microsoft 365 mailbox you want to send from.
+
+If someone sees an error during Microsoft sign-in, contact Clay support with the exact error message.
+
+### Does Clay Sequencer need application permissions or access to every mailbox in my Microsoft 365 tenant?
+
+No. Clay Sequencer's Microsoft Outlook OAuth connection uses delegated permissions only — it doesn't need application (app-only) permissions. Each user signs in and connects one mailbox at a time, and Clay Sequencer only gets access to mailboxes whose users have signed in themselves. Granting admin consent doesn't connect any mailbox automatically. See [What exact Microsoft permissions does sequencer require?](#what-exact-microsoft-permissions-does-sequencer-require) for the permissions requested.
+
+If your Microsoft 365 admin has set the Clay Sequencer app to require user assignment in Microsoft Entra, only the users assigned to the app can connect their mailboxes. Microsoft blocks sign-in for anyone else in your tenant.
 
 ### How can I tell if a lead has finished a campaign sequence?
 
