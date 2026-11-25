@@ -97,7 +97,7 @@ The following table covers common Sculptor use cases and key notes for each.
 
 While Sculptor is powerful, there are a few things to keep in mind:
 
--   **Weekly conversation limits apply** — Each workspace is limited to **20 in-table Sculptor conversations per week** and **50 homepage conversations per week**, on a rolling 7-day window. A "conversation" is an entire chat thread — every back-and-forth message within a single session counts as one conversation. If you hit the limit, you'll see a message like "You've reached the maximum number of conversations this week for your workspace." Contact support to have your workspace limit increased.
+-   **Weekly conversation limits apply** — Sculptor conversation limits are shared across your whole workspace (not per user) and count only *new* conversations started in the last 7 days, on a rolling window. Each workspace can start up to **20 in-table**, **50 homepage**, **100 Claygent Builder**, and **50 Workflows** Sculptor conversations per rolling 7 days. Continuing an existing conversation never counts toward the limit. There is no place in Clay to see how many conversations you've used — you'll only see a message such as "You've reached the weekly conversation limit for your workspace" once a limit is reached. See [the troubleshooting section](#youve-reached-the-weekly-conversation-limit-for-your-workspace) for details.
 -   **Daily limits apply when testing actions and code via Claude** — When using Sculptor through the [Clay connector in Claude](https://university.clay.com/docs/using-clay-in-claude), you can test-run Clay actions directly up to **25 times per day** per user, and test-run code snippets up to **10 times per day** per user. Limits reset after 24 hours. If you hit a limit, you'll see a message like "You can only test-run Clay actions directly 25 times a day — add the action to a workflow node or table column and run it there instead." Production workflow runs are not affected by these limits.
 -   **Supported sources are limited** — Sculptor can only generate sources using companies, people, jobs, Google Maps, CSV imports, or web search. If you want to use a different source, you'll need to manually create it before using Sculptor.
 -   **No direct CRM integration (yet)** — Connections must be set up manually for now.
@@ -130,13 +130,30 @@ Sculptor includes your table's schema and field configuration with every message
 
 If Sculptor is consistently slow regardless of conversation length, this is a known performance area the team is actively improving.
 
-### "You've reached the maximum number of conversations this week"
+### "You've reached the weekly conversation limit for your workspace"
 
-This error means your workspace has hit its weekly Sculptor conversation limit. Workspaces are limited to **20 in-table conversations per week** (launched from within a table) and **50 homepage conversations per week** (launched from the [app.clay.com](http://app.clay.com/) homepage), on a rolling 7-day window.
+This message means your workspace has hit its weekly Sculptor conversation limit for the place where you're using Sculptor. You may also see a version that names the surface, such as "You have reached the maximum number of weekly in-table conversations for your workspace." Workflows Sculptor conversations also show "in-table" in that message.
 
-A "conversation" is a full chat thread — multiple back-and-forth messages within one session count as a single conversation. The limit resets automatically after 7 days.
+Sculptor's weekly conversation limits apply per workspace, are the same on every plan, and cover the following surfaces:
 
-If you hit the limit and need it increased, contact support.
+| Where you use Sculptor | New conversations allowed per rolling 7 days |
+| --- | --- |
+| In-table (`Chat with Sculptor` inside a table) | 20 |
+| Homepage ([app.clay.com](http://app.clay.com/) homepage text box) | 50 |
+| Claygent Builder | 100 |
+| Workflows (workflow builder) | 50 |
+
+How the Sculptor conversation limits are counted:
+
+-   **Shared across the workspace.** Every conversation started by anyone in your workspace counts toward the same limit — limits are not per user.
+-   **Only new conversations count.** Sending more messages in an existing Sculptor conversation never counts toward the limit, no matter how long the thread gets.
+-   **Rolling 7-day window.** The limit doesn't reset on a fixed day. Each conversation stops counting 7 days after it was started, so space frees up gradually as older conversations roll past 7 days.
+
+To keep working after you hit a Sculptor limit, reopen an existing conversation from the **chat history** button (clock icon) in the Sculptor panel and continue there — this doesn't count toward the limit. If your workspace needs the limit lifted, contact support.
+
+### How can I see how many Sculptor conversations my workspace has used?
+
+There isn't currently a place in Clay to see how many Sculptor conversations your workspace has used this week or how many remain. The only indication is the "You've reached the weekly conversation limit for your workspace" message, which appears when you try to start a new conversation after a limit is reached. To stretch your Sculptor limit, continue existing conversations instead of starting new ones — continuing a conversation never counts toward the weekly limit.
 
 ### I asked Sculptor to update an existing column but can't find the changes
 
