@@ -75,3 +75,7 @@ Use this action to find a person's work email using their social URL, personal e
 ### Am I charged when SMARTe doesn't find a result?
 
 Rows where SMARTe finds nothing are refunded, so they don't cost you anything.
+
+### What changes when I use my own SMARTe API key?
+
+Runs on your own key don't use Clay credits. Each action also returns `SMARTe credits deducted`, the number of SMARTe credits the run used on your SMARTe account.
