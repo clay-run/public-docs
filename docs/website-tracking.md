@@ -13,7 +13,7 @@ Clay's website tracking enables teams to collect visitor information in order to
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
-**Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
+**Plan availability:** Web intent is available on Growth and Enterprise plans.
 
 ## Using website tracking in Clay
 
@@ -369,6 +369,17 @@ Two approaches work well for cross-session analysis:
 For completely separate root domains, you can create a dedicated signal per domain. Note that using the same signal across different root domains does **not** merge a visitor's journey across those sites. Because the tracking relies on first-party cookies scoped to each domain, visitors on `company-a.com` and `company-b.com` will have separate session and visitor IDs even if they are the same person.
 
 For subdomain tracking (for example, `shop.company.com` and `blog.company.com`): you can add a subdomain to your existing Web Intent connection — no separate connection or signal is needed. You do need to install the Claydar tracking snippet separately on each subdomain using the same code from your connection settings.
+
+### Why does clicking "Add signal" → Web Intent in an Audiences segment take me to Settings?
+
+This is expected. In Clay Audiences, the Web Intent signal is workspace-level: your website connection in **Settings → Web intent** applies to your whole workspace, not to an individual segment. Web Intent is available only in **Companies** audiences.
+
+When you click `Signals` → `Add signal` → **Web Intent** in a Companies audience, Clay opens **Settings → Web intent** in a new browser tab every time, even if you already have a website connection. There is no step inside the segment to select a connection or set per-segment filters.
+
+-   **If you don't have a website connection yet:** on the **Settings → Web intent** page, click **Add connection** and follow [Creating the connection](#creating-the-connection) above.
+-   **If your website connection already exists** (for example, it shows **Receiving data** on the Settings → Web intent page): your Web Intent signal is already set up, and you don't need to add anything to the segment.
+
+Your workspace's Web intent connection appears in the **Signals** panel (the `Signals` button in the audience header) of every Companies audience, alongside your other signals. It's listed under **Active** when the connection is enabled, and under **Inactive** when the connection is disabled in **Settings → Web intent**.
 
 ### What do I need to know about GDPR and cookie consent for web intent?
 

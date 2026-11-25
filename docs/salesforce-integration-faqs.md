@@ -21,7 +21,7 @@ To connect Clay to Salesforce, your Clay user needs:
 2.  Manage User Data via APIs
 3.  Perform Requests Anytime (refresh\_token, offline\_access)
 
-An OAuth user must set up the initial connection. After that, any user in your Clay workspace can use the integration.
+An OAuth user must set up the initial connection. After that, by default, any member of your Clay workspace can use that Salesforce connection. On Enterprise plans, workspace admins and the member who added the connection can limit a Salesforce connection to specific people and groups — see [Can I give some Clay users read-only Salesforce access and others write access?](#can-i-give-some-clay-users-read-only-salesforce-access-and-others-write-access)
 
 **Connection Scope and Permissions**
 
@@ -53,6 +53,26 @@ You cannot restrict individual tables to specific Salesforce objects or fields. 
 If you need different tables to have different levels of access — for example, one table that can only read and another that can write — create separate Salesforce connections authenticated as different Salesforce users, each with the appropriate Salesforce permissions. Then select the correct connection when setting up each table's actions.
 
 For guidance on creating a Salesforce integration user with scoped access, see [Creating a restricted Salesforce user](https://university.clay.com/docs/creating-a-restricted-salesforce-user).
+
+## Can I give some Clay users read-only Salesforce access and others write access?
+
+Yes, by combining two controls. A Salesforce connection in Clay has no read-only or read/write setting of its own:
+
+-   **What a Salesforce connection can read or write** is set in Salesforce, by the permissions of the Salesforce user the connection authenticates as (the signed-in user for **User Sign In**, or the **Run As** user for **Client Credentials**).
+-   **Which Clay users can use a Salesforce connection** is set in Clay, by the connection's access setting in `Settings` → `Connections`. By default, every Salesforce connection is shared with `Anyone in the workspace`.
+
+A workspace can have more than one Salesforce connection, so you can set up one Salesforce connection for read-only Clay users and another for Clay users who are allowed to write to Salesforce:
+
+1.  **In Salesforce, set up two Salesforce users** — one whose profile or permission sets grant only **Read** on the objects and fields Clay uses, and one that also grants **Edit** (and **Create**, if Clay should create records). See [Creating a restricted Salesforce user](creating-a-restricted-salesforce-user.md).
+2.  **In Clay, add a Salesforce connection for each Salesforce user** in `Settings` → `Connections`. Give each connection a clear name, such as "Salesforce – read only" and "Salesforce – read/write".
+3.  **Restrict the read/write Salesforce connection (Enterprise plans).** In `Settings` → `Connections`, find the read/write Salesforce connection, choose `Specific people and groups` under access settings, add the members or user groups who are allowed to write to Salesforce, and click `Save`.
+4.  **Leave the read-only Salesforce connection set to `Anyone in the workspace`**, so every member can look up and import Salesforce records.
+
+Members who aren't on a Salesforce connection's access list don't see that connection when they set up Salesforce columns, sources, or workflows. For the full list of what restricted members can and can't do — including running existing columns that already use the connection — see [Access settings for connections](access-settings-for-connections.md).
+
+**Connection access settings are available on Enterprise plans.** In workspaces on other plans, every Salesforce connection is shared with `Anyone in the workspace`: all members can select either Salesforce connection, and Salesforce enforces what each connection can actually read or write. If you're on an Enterprise plan and don't see access settings on your Salesforce connections, contact Clay support.
+
+**Salesforce license cost:** You don't need a full Salesforce user license for each Clay connection. **Client Credentials** connections work with Salesforce Integration User and API-only licenses — see [What Salesforce license type is required to connect Clay?](#what-salesforce-license-type-is-required-to-connect-clay)
 
 ## How much data does Clay read from Salesforce, and can I limit it to only the records I enrich?
 
@@ -689,6 +709,23 @@ When new contacts span multiple accounts — for example, prospecting contacts a
 
 If your Salesforce org uses parent-child accounts (for example, subsidiaries reporting to a parent company), set `AccountId` to the **child account** — the account that represents the person's actual employer in your hierarchy. You do not need to map `ParentId` on the contact itself. Salesforce maintains the relationship to the parent automatically through the child account's own `ParentId` field.
 
+## Will enabling Salesforce "Contacts to Multiple Accounts" affect my Clay integration?
+
+No. Enabling Contacts to Multiple Accounts in Salesforce won't break your existing Clay Salesforce workflows. Each Salesforce contact still has one primary account, stored in the contact's `AccountId` field. Clay's Salesforce actions (**Create record**, **Update record**, **Look up record**, and **Look up records with SOQL**) keep reading and writing `AccountId` the same way they did before.
+
+Salesforce keeps a contact's additional account links in a separate object called **Account Contact Relationship** (API name `AccountContactRelation`). Keep these points in mind when you use Clay with Contacts to Multiple Accounts:
+
+-   **Clay imports only the primary account.** Clay's Salesforce table sources and Clay Audiences don't import Account Contact Relationship records. In Clay, each contact is linked only to its primary account (`AccountId`), so any account-based segments, filters, or routing you build in Clay use that primary account.
+-   **To add extra account links from Clay**, add a **Create record** column, set the Salesforce object to **Account Contact Relationship**, and map `AccountId` and `ContactId`. The **Create record** object picker lists every object your connected Salesforce user can access.
+-   **To pull every account a contact is linked to**, add a **Look up records with SOQL** column and query the Account Contact Relationship object, for example:
+
+    `SELECT AccountId FROM AccountContactRelation WHERE ContactId = '/Contact ID'`
+
+    Replace `/Contact ID` with the column from your Clay table that holds the Salesforce Contact ID, using the `/` picker in the query editor.
+-   **Your connected Salesforce user needs access to Account Contact Relationship.** Clay's Salesforce actions run with the permissions of the connected Salesforce user, such as your integration user. If that user's profile or permission set can't read or create Account Contact Relationship records, the object won't appear in Clay or Salesforce will reject the request.
+
+Test the setup in a Salesforce sandbox before you roll it out in production. For more on connecting a sandbox, see [Is there a way I can test Salesforce enrichments?](#is-there-a-way-i-can-test-salesforce-enrichments).
+
 ## Why does Clay show "✅ Record created" but the record doesn't appear in Salesforce?
 
 When Clay's Create Record action receives a valid record ID back from Salesforce, it marks the action as successful and displays **"✅ Record created"** with a link to the new record. Clay does not perform a follow-up check to verify the record still exists in Salesforce — so if Salesforce discards or removes the record after the initial creation response, the cell still shows success with the original URL.
@@ -982,7 +1019,14 @@ To connect to a Salesforce sandbox:
 2.  Click `Add connection` and search for `Salesforce`.
 3.  Under `User Sign In`, click `Sign in with Salesforce sandbox` and complete the OAuth sign-in flow.
 
-Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables.
+Once connected, select your sandbox connection when adding any Salesforce enrichment or source in your Clay tables. When you're ready to go live, switch the account selected in each Salesforce action column from your sandbox connection to your production Salesforce connection.
+
+**Keeping Salesforce sandbox test data out of Audiences:** Using your Salesforce sandbox connection in Salesforce actions in your Clay tables (such as Lookup record, Create record, or Update record) does not import anything into Clay Audiences and does not change which Salesforce account Audiences syncs from. Audiences only imports records from the one Salesforce account connected as its Salesforce source. To test Salesforce workflows in your sandbox without syncing sandbox test data into your production audiences, use the sandbox connection only in your Clay tables and connect your production Salesforce org as the Audiences Salesforce source.
+
+If you do connect your Salesforce sandbox as the Audiences Salesforce source, keep the following in mind:
+
+-   **Switching Audiences from sandbox to production means rebuilding your imports.** Audiences uses one connected Salesforce account at a time, and an existing Audiences Salesforce import can't be moved to a different Salesforce org. To move to production, disconnect the sandbox from Audiences, then set up your imports and field mappings again on the production account — see [How do I switch the Salesforce account connected to Audiences?](audiences.md#how-do-i-switch-the-salesforce-account-connected-to-audiences-for-example-from-a-sandbox-to-production).
+-   **Sandbox records stay in Audiences after you disconnect.** People, companies, and other records imported from the sandbox remain in Audiences, marked as unsynced, until you archive them — see [How do I remove records from an audience?](audiences.md#how-do-i-remove-records-from-an-audience).
 
 **Can Clay be connected to a Salesforce sandbox and Salesforce production at the same time?** Yes, for Clay tables. Your Salesforce sandbox connection and your Salesforce production connection are separate connections in `Settings` → `Connections`, and both can be active in the same workspace at the same time. A common testing setup is one table that pulls sandbox data using the sandbox connection, and a separate table that pulls production data using the production connection. Choose the connection for each Salesforce action or source from its account dropdown. Two things to keep in mind:
 
@@ -1278,6 +1322,21 @@ In Salesforce, open the App Launcher and search for **Enrichment Menus**. Create
 5.  Save the layout.
 
 The **Launch Enrichment** button now appears on records of that object type. When a Salesforce user clicks it, the record is sent to your Clay webhook table for enrichment, and results are written back to Salesforce.
+
+## Can I install the Clay Salesforce package in a Salesforce sandbox?
+
+Yes. You can install the Clay Salesforce managed package in a Salesforce sandbox org as well as in production. The Clay Salesforce package is available on **Enterprise plans**, and a Salesforce admin needs to run the install.
+
+The Clay package installation link you get from your Clay account team or Clay support usually points to Salesforce's production login (`login.salesforce.com`). If you open that link while you're signed in to a sandbox, the install won't land in your sandbox. To install the Clay Salesforce package in a sandbox:
+
+1.  Take the installation link and replace `login.salesforce.com` with `test.salesforce.com`. Keep the rest of the link, including the `p0=` package ID, exactly the same. If you're not sure you have the right link, ask Clay support for the sandbox installation link.
+2.  Open the edited link and sign in with your **sandbox** credentials.
+3.  Confirm you're in the correct sandbox org, then click **Install**.
+4.  Continue with Step 2 onward in [How do I install the Clay Salesforce package to get the Launch Enrichment button on records?](#how-do-i-install-the-clay-salesforce-package-to-get-the-launch-enrichment-button-on-records) (permission sets, webhook table, Enrichment Menu, and page layouts) inside the sandbox.
+
+**If your sandbox uses a custom domain:** if the `test.salesforce.com` link doesn't open your sandbox, swap in your sandbox's own My Domain URL (for example, `yourcompany--sandboxname.sandbox.my.salesforce.com`) in place of `test.salesforce.com`, again keeping the `p0=` package ID the same.
+
+If the sandbox installation still fails, send Clay support the exact error message Salesforce shows.
 
 ## Why aren't enrichment notifications being sent after I use the Launch Enrichment button in Salesforce?
 

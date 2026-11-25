@@ -54,7 +54,7 @@ If you are on a paid plan and have credits with other data providers, Clay allow
 You can access adding your API key two ways:
 
 1.  Profile picture  > Settings > Navigation Bar
-2.  Go to your profile picture in the top right corner, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
+2.  Go to your profile picture in the bottom-left corner of the sidebar, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
 3.  Enrichment Panel > Account > Add Account
 4.  When setting up an enrichment that accepts an API key, you can add an account linked to your API key. By default, Clay's API key will be selected, but if you want to use your own, simply switch to your account by selecting **Add Account**.
 

@@ -17,6 +17,7 @@ Signals are automated tracking systems that notify you of important changes rela
 -   [Promotions](https://www.clay.com/university/guide/promotion-signal-overview): Monitor when contacts receive promotions within their current company, allowing you to engage during high-intent decision-making periods.
 -   [Job changes](https://www.clay.com/university/guide/job-change-signal-overview): Track when your contacts move to new companies, helping you leverage existing relationships for new opportunities or prepare for shifts in account engagement.
 -   [News & fundraising](https://www.clay.com/university/guide/monitor-for-news-fundraising): Alert you to significant events at monitored companies, helping you spot timely engagement opportunities.
+-   [Topic intent](topic-intent.md): Monitor companies and people showing buying intent for topics relevant to your business, using data from Bombora, Delivr, and Intentsify. Currently in open beta.
 
 Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](https://www.clay.com/university/guide/custom-signals)
 
@@ -24,7 +25,7 @@ Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](
 
 To start a signal, you'll **need a table with** companies or contacts you want to monitor. This **table should include** LinkedIn URLs for individuals or company identifiers (such as website or LinkedIn URLs).
 
-**While in your table:**
+**From your workbook:**
 
 1.  In the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type — **New hire**, **Job change**, or **Promotion**.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).

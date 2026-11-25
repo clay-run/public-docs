@@ -29,11 +29,11 @@ In Clay Workflows (the graph editor where you build with nodes), there's no **To
 1.  Click the **+** below the node the waterfall should run after.
 2.  Choose **Enrich**. A node named **New Enrich Node** is added to your workflow, and the enrichment panel opens.
 3.  Find the waterfall in either of these ways:
-    -   In the **For you** tab, click the **Waterfalls** card to see the waterfalls available in your workspace. The **Waterfalls** card only appears when your workspace has waterfalls available to workflows.
+    -   In the **For you** tab, click the **Waterfalls** card to see the waterfalls available in your workspace.
     -   Type the data point you need, for example `Phone number`, in the search bar (**Search providers, enrichments, owners...**).
 4.  Select the waterfall you want to run. It's set up in your Enrich node.
 
-**Can't find a "Waterfalls" tab?** In both Clay tables and Clay Workflows, **Waterfalls** is a card inside the **For you** tab, not a tab of its own. In a table, click **Tools** and stay on the **For you** tab to see the **Waterfalls** card. In a workflow, the **Waterfalls** view is marked **Beta**.
+**Can't find a "Waterfalls" tab?** In both Clay tables and Clay Workflows, **Waterfalls** is a card inside the **For you** tab, not a tab of its own. In a table, click **Tools** and stay on the **For you** tab to see the **Waterfalls** card. In a workflow, add an **Enrich** node and look on its **For you** tab for the **Waterfalls** card.
 
 ## Editing an existing waterfall
 
