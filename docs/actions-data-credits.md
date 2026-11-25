@@ -116,6 +116,8 @@ Not all providers in Clay's marketplace can be accessed via Clay Data Credits. T
 
 -   **Bring Your Own Account (BYOA)**: Clay does not hold a managed key for these providers. You must have your own subscription or API credentials—there is no Clay Data Credit option. The account selector shows only **"Add account"** with no Clay-provided fallback. Example: ZoomInfo.
 
+**Note — Clay-managed keys and rate limits:** Clay-managed keys are shared across all Clay customers using that provider. Rate limit errors on a Clay-managed key can come from aggregate demand across all customers, not only your own workspace's usage. For any enrichment running on a schedule or at scale where consistent throughput matters, connecting your own API key gives you a dedicated quota with that provider — and you can raise your rate limits directly with the provider if needed.
+
 **Tip for mobile number enrichment without a provider subscription:** The built-in **Mobile Phone Waterfall** enrichment routes through multiple Clay-managed providers in sequence using your Data Credits—no individual provider account needed.
 
 ### How many Data Credits do I need?
