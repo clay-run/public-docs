@@ -82,4 +82,4 @@ Yes, Workflows are available from the CLI and plugin in Alpha. For production us
 
 ### Are credit budgets available via the developer platform?
 
-Credit budgets are not yet available in open beta. You can see run-level credit and action consumption from the `Runs` view in Workflows. Credit budget support is on the roadmap.
+Yes, for workspaces with credit budgets enabled (Enterprise plan workspaces). When you sign in with `clay login` and have access to more than one budget, the consent screen lets you choose the budget your CLI usage is charged to, and you can assign a budget to a workflow with `clay workflows create --budget-id <budget-id>` or `clay workflows update <workflow-id> --budget-id <budget-id>`. See [Credit budgets](https://university.clay.com/docs/credit-budgets). You can also see run-level credit and action consumption from the `Runs` view in Workflows.
