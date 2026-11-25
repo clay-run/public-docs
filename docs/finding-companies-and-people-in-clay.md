@@ -683,6 +683,17 @@ If a Find People or Find Companies search shows **Enter a valid query** with the
 
 To review your workspace's monthly search results limit, or to ask about more results before it resets, [contact Clay support](https://www.clay.com/contact-form).
 
+### "This search is too large to run" error in Find People or Find Companies
+
+If a Find People or Find Companies search shows **Enter a valid query** with the message **"This search is too large to run. Ask Sculptor to rewrite it to be more performant, or narrow it with fewer filters."**, the search needed more processing resources than Clay allows for a single search. The results preview shows **Couldn't load results** with the same message.
+
+To fix a search that's too large to run:
+
+-   **Click Rewrite with Sculptor (upgraded search only).** In upgraded search, the results preview shows a **Rewrite with Sculptor** button under the error. Clicking it opens Sculptor, Clay's AI search assistant, and sends it the request "Rewrite this search to run faster while preserving its intent." Sculptor suggests a revised search for you to review. It doesn't change your filters on its own.
+-   **Narrow the search with fewer filters.** For example, cut a long list of job title values down to the most important ones, or split one large search into two or three smaller searches.
+
+**If a search that ran fine before suddenly shows "This search is too large to run" without any changes**, the cause is more likely on Clay's side than in your filters. Check [status.clay.com](https://status.clay.com/) for ongoing issues and try the same search again later. Contact Clay support if the error continues.
+
 ## FAQs
 
 ### Why is this person showing up despite having moved companies?
@@ -719,6 +730,20 @@ There is no built-in option to require that *all* current experiences satisfy an
 *"The person's current job titles are: {{Experiences}}. Does any current role contain any of these terms: [your excluded terms]? Answer Yes if any match, No if none do."*
 
 Then add a view filter showing only rows where the AI returned "No." This catches mismatches from people with multiple concurrent roles, regardless of how many active positions they hold.
+
+### Why does the Experiences column in my people search show a different role than the one I searched for?
+
+When a people search uses experience filters, for example `≥ 1 current experience is any of: Job title contains Head of Engineering`, the **Experiences** column in the search preview shows the person's matched experiences. These are the roles that met your experience conditions, not just their headline title. The Experiences column shows one role inline, followed by a count such as `(2)`. Hover over the count to see every matched role with its title, company, dates, and location.
+
+**Each experience condition is checked on its own.** If your people search has more than one `≥ 1 current experience` condition, a different role can meet each one. The Experiences column lists every role that meets *any* of your experience conditions. It shows current roles first, and among current roles, the most recently started role first. So the role shown inline can be one that only matched a different condition, such as a company-size condition.
+
+**Example:** A people search has one current-experience condition for job titles (`Job title contains Head of Engineering` or `Job title is CTO`) and a second, separate current-experience condition for company size (`Company: Estimated employees ≥ 10` and `Company: Estimated employees ≤ 1000`). A person who currently holds two roles, Group CTO and Lecturer, passes the search: Group CTO meets the job title condition, and the Lecturer role meets the company-size condition. If the Lecturer role started more recently, the Experiences column shows Lecturer inline.
+
+When you import the results into a table, there's no Experiences column. Instead, the imported **Job Title** and **Company** columns come from the person's matched experience, so they can also show a role that only met a different condition, such as Lecturer in the example above.
+
+**To make the Experiences column show the role that matches your job titles**, put the company-size filters inside the same current-experience condition as the job title filters. One role then has to meet both, so the Experiences column only lists roles that match your job titles *and* are at a company of the right size. This also narrows your results to people whose matching role is at a company with 10–1,000 employees.
+
+Company filters inside an experience condition, such as **Company: Estimated employees**, are available on paid plans and trials. They aren't available on the Free plan.
 
 ### Why isn't someone I found on LinkedIn showing in Clay?
 
