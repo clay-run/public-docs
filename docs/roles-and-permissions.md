@@ -37,7 +37,7 @@ _They cannot:_
 
 ## Viewers (Enterprise only)
 
-Viewers have limited access to protect sensitive data. By default, they can only view workspace content and **cannot create new tables or workbooks**.
+Viewers have limited access to protect sensitive data. By default, they can only view workspace content and **cannot create new tables or workbooks**. Viewer access is available on Enterprise plans only — it cannot be purchased as a separate add-on or added to Starter, Pro, or Growth plan workspaces.
 
 Viewers can also authorize and use Clay's MCP integration to access Clay through AI tools like Claude, ChatGPT, or Glean.
 
