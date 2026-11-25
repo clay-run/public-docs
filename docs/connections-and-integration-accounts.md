@@ -1,6 +1,6 @@
 ---
 title: Connections and integration accounts
-description: Add, edit, test, and delete integration accounts in Clay's Connections settings, verify connection status (including why it resets to Verify after a refresh), view where each connection is used, and set default accounts for your workspace.
+description: Add, edit, test, and delete integration accounts in Clay's Connections settings, verify connection status (including why it resets to Verify after a refresh), view where each connection is used, and set default accounts for your workspace. Also covers which G2 actions (including G2 Buyer Intent) need your own G2 API key and how to fix G2 API key errors.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -187,7 +187,42 @@ Clay-managed accounts simplify access to external services by providing pre-conf
 
 For some integrations, only Clay-managed accounts are supported. For others, you will need to provide your own API key.
 
+#### G2: which actions need your own G2 API key
+
+G2 Buyer Intent data is only available with your own G2 API key. The `Find companies with G2 Buyer Intent` source can't run on the Clay-managed G2 account. You need to connect a `G2 API Key` account and select it as the account on the source.
+
+These G2 actions can run on the Clay-managed G2 account:
+
+-   `Find companies with G2 Market Signals` (source)
+-   `Find products`
+-   `Find product competitors`
+-   `Get product ratings`
+-   `Get product features`
+-   `Get product reviews`
+
+To set up the G2 Buyer Intent source with your own G2 API key:
+
+1.  Navigate to `Settings` > `Connections`, click `Create`, search for `G2`, paste your G2 API key with no extra spaces, and save the account.
+2.  In your table, add the `Find companies with G2 Buyer Intent` source.
+3.  In the source's `Account` dropdown, select the `G2 API Key` account you just added.
+4.  Enter your G2 product in the required `Product IDs or slugs` field. This field accepts a G2 product ID or a product slug, such as `hubspot-sales-hub`.
+
 ## FAQs
+
+**Why does my G2 API key show "Invalid G2 API key" or "Invalid G2 API credentials"?**
+
+Both G2 error messages mean that G2 rejected your G2 API key. The problem is with the key, not with your Clay setup.
+
+-   **"Invalid G2 API key. Please check your credentials and try again."** appears when you add or verify a `G2 API Key` connection and G2 rejects the key.
+-   **"Invalid G2 API credentials. Please check your API key."** appears when the `Find companies with G2 Buyer Intent` source runs and G2 rejects the key.
+
+Access to Buyer Intent data is controlled on G2's side. A key that connects successfully can still return "Invalid G2 API credentials" when the source runs if the key doesn't have access to G2's Buyer Intent data. To fix either error:
+
+1.  Check that you copied the full key and didn't paste any extra spaces or characters.
+2.  Check in G2 that the key hasn't been revoked or expired, and that it has access to Buyer Intent data. If you're not sure, generate a new key in G2.
+3.  In Clay, go to `Settings` > `Connections`, open the G2 account, and use `…` > **Reconnect** to paste the new key. Columns and sources that use this connection will use the new key on their next run (see [Rotating or updating credentials](#rotating-or-updating-credentials)).
+
+Buyer Intent data isn't available through the Clay-managed G2 account (see [G2: which actions need your own G2 API key](#g2-which-actions-need-your-own-g2-api-key)).
 
 **What should I do when a team member who owns connections is leaving?**
 
