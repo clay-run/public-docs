@@ -169,7 +169,38 @@ The MCP user credit limit is a rolling monthly limit. Credit spend automatically
 
 ### What happens when a rep hits their credit limit?
 
-Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately.
+Further actions through ChatGPT, Claude, or Glean are hard-blocked until the monthly reset — the rep won't be able to run enrichments or invoke Functions. Admins can increase the per-user limit at any time from the `MCP users` table to restore access immediately, or reset the rep's credit spend to zero (see [How do I reset a rep's credit spend?](#how-do-i-reset-a-reps-credit-spend)).
+
+### How do I reset a rep's credit spend?
+
+Workspace admins can reset an individual rep's MCP credit spend back to zero without changing their credit limit:
+
+1.  From the Clay homepage, open the `MCP` page from the left sidebar (the sidebar label reads `Agent users`).
+2.  In the `MCP users` table, find the rep (search by name or email).
+3.  Next to the rep's credit usage (for example, `850 / 1,000`), click the counter-clockwise arrow icon. Its tooltip reads `Reset credit spend to zero`.
+4.  In the `Reset credit spend` dialog, click `Reset spend`.
+
+The rep's used credits go back to `0` against the same limit. The reset can't be undone. The reset icon only appears for reps who have a credit limit — reps showing `No limit` have no spend to reset.
+
+Resetting a rep's credit spend only resets their individual MCP credit limit. It doesn't change the balance of any credit budget the rep's usage is charged to.
+
+### Why can't I unblock a rep after adding a credit budget, even though the budget still has credits?
+
+**Note:** Credit budgets are in beta and available to Enterprise plan workspaces. See [Credit budgets](/docs/credit-budgets) for how to create and manage budgets.
+
+When a rep has an individual MCP credit limit and their usage is also charged to a [credit budget](/docs/credit-budgets) (for example, a team budget for your BDRs), Clay checks both on every charged request the rep makes through ChatGPT, Claude, Glean, or another AI tool. Both the rep's individual credit limit and the credit budget must have credits left for the request to go through:
+
+-   **The rep has hit their individual limit, but the budget has credits left:** the rep is still blocked. Raise the rep's credit limit or reset their credit spend on the `MCP` page.
+-   **The budget has run out, but the rep has credits left on their individual limit:** the rep is still blocked. Resetting the rep's credit spend won't unblock them — a workspace admin needs to increase the budget's credit limit or reset the budget's spend from `Settings` → `Budgets`.
+
+Adding a credit budget doesn't remove or hide the per-rep `Reset credit spend to zero` button — you can still reset individual reps on the `MCP` page.
+
+**Best practice — pick one main control for a team of reps:**
+
+-   **Team cap:** let the credit budget control spend for the whole team, and remove the individual credit limits so every rep draws from the shared budget.
+-   **Per-person caps:** keep individual credit limits and reset or raise them as needed, and set the credit budget high enough that it only acts as a backstop.
+
+If you want both, set the individual credit limits so they add up to the budget. That way no rep is blocked by their own limit while the team budget still has room, and the budget still caps total team spend.
 
 ### Why am I seeing `ERROR_WORKSPACE_SALES_REP_CREDIT_LIMIT_REACHED` in Claude or ChatGPT?
 
