@@ -1,7 +1,7 @@
 ---
 title: Clay MCP for Reps vs. Agent Plugin
 description: How to choose between MCP for Reps and the Clay Agent Plugin based on who will use it, what each provides, and how governance and credit controls differ.
-last_synced: 2026-11-10T19:42:41.073Z
+last_synced: 2026-11-19T07:38:57.961Z
 ---
 
 # Clay MCP for Reps vs. Agent Plugin
@@ -100,7 +100,7 @@ No — Functions are built in the Clay app by someone with workspace access, the
 
 ### Which one gives us tighter control over credit spend?
 
-MCP for Reps. An admin sets a monthly credit budget per rep on the `MCP` page, which they open from the sidebar on the Clay homepage. A rep who reaches their cap is blocked until the next reset, which an admin can lift by raising the limit. The plugin doesn't carry per-person credit budgets; you see consumption after the fact from the `Runs` view in Workflows.
+MCP for Reps. An admin sets a monthly credit budget per rep on the `Agent users` page, which they open from the sidebar on the Clay homepage. The `Agent users` page appears in the sidebar for every workspace admin and shows a `Beta` badge next to its page title. The per-rep `Budget` column on that page appears only in workspaces with credit budgets enabled. A rep who reaches their cap is blocked until the next reset, which an admin can lift by raising the limit. The plugin doesn't carry per-person credit budgets; you see consumption after the fact from the `Runs` view in Workflows.
 
 Neither surface adds a surcharge. Work costs the same credits and actions as the equivalent work done in the Clay app.
 

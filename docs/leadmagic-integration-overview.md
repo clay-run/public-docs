@@ -1,7 +1,7 @@
 ---
 title: Leadmagic integration overview
 description: Accurate B2B data enrichment for improved prospecting and sales conversion.
-last_synced: 2026-04-26T01:40:14.609Z
+last_synced: 2026-11-18T20:49:51.521Z
 ---
 
 # Leadmagic integration overview
@@ -62,7 +62,7 @@ The **Enrich Company** action enriches a company using their LinkedIn URL.
 
 First, you can use either the Clay-managed LeadMagic account or your own API key.
 
-If you use the Clay-managed LeadMagic account you will be charged at 1 credit per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed LeadMagic account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -90,7 +90,7 @@ The **Find Mobile Number** integration finds a person’s mobile number from the
 
 First, you can use either the Clay-managed LeadMagic account or your own API key.
 
-If you use the Clay-managed LeadMagic account you will be charged at 6 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed LeadMagic account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -118,7 +118,7 @@ The **Find Social Profile** action finds a contact’s social profile from their
 
 First, you can use either the Clay-managed LeadMagic account or your own API key.
 
-If you use the Clay-managed LeadMagic account you will be charged at 10 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed LeadMagic account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -146,7 +146,7 @@ The **Find Work Email** helps find a person’s work email from name and company
 
 First, you can use either the Clay-managed LeadMagic account or your own API key.
 
-If you use the Clay-managed LeadMagic account you will be charged at 1 credit per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed LeadMagic account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
@@ -174,7 +174,7 @@ The **Validate Email** action helps you determine if an email address has a vali
 
 First, you can use either the Clay-managed LeadMagic account or your own API key.
 
-If you use the Clay-managed LeadMagic account you will be charged at 1 credit per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed LeadMagic account you will be charged credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 

@@ -1,7 +1,7 @@
 ---
 title: Audiences FAQs and best practices
 description: Answers to common questions and best practices for using Clay Audiences, covering segments, matching, field limits, enrichment, and setup.
-last_synced: 2026-08-11T13:50:33.269Z
+last_synced: 2026-11-18T19:16:00.401Z
 ---
 
 # Audiences FAQs and best practices
@@ -38,7 +38,7 @@ You don't need a clean CRM to get started — CRM cleanup is often the first use
 
 Yes. Segments update in real time as records enter or exit your filter criteria. The refresh frequency depends on your plan:
 
--   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update every 15 minutes.
+-   **Enterprise plan:** CRM and data warehouse syncs run every 15 minutes, and segments update every 15 minutes. HubSpot list imports, and warehouse imports without a timestamp field, run every 12 hours instead.
 -   **Growth plan:** CRM and data warehouse syncs run daily, and segment membership is recalculated approximately every 60 minutes.
 
 Enrichments configured with `Auto-enrich new records` enabled automatically process new records entering a segment, typically within 15 minutes.
@@ -73,6 +73,30 @@ Your plan sets the default limit for each bucket — roughly 70 fields of each t
 When you reach a bucket's limit, Clay tells you which type is full — for example, `You've reached the 135-field limit for text, email, and URL fields on people in Audiences.` — and confirms that you can still add fields of other types. To free up room, delete fields you no longer need; the slot becomes available again once Clay reclaims it. Hiding a field keeps it in your workspace, so it doesn't release capacity.
 
 The underlying system ceilings are much higher than the plan defaults — 600 text fields and 200 each of number, date, and checkbox — so there is real headroom. If you have a legitimate need for more than your plan's default, your Growth Strategist can raise the limits for your workspace.
+
+### **Can I save a segment's column layout so my whole team sees the same columns?**
+
+Yes. In Audiences, each People or Companies segment keeps its own saved column layout — the column order and which columns are shown or hidden. When you save a segment's column layout for everyone, every teammate who opens that segment sees the same columns, in the same order, across browsers and devices. Changing the column layout in one segment doesn't affect your other segments.
+
+Any workspace member who can view Audiences — Admins, Editors, and Viewers — can save a segment's column layout for everyone. Saving a column layout doesn't require segment-edit permission.
+
+To save a segment's column layout for everyone:
+
+1.  Open the segment in **People** or **Companies** in Audiences.
+2.  Click **Columns** in the segment's top bar. The button shows how many columns are visible out of the total, for example `12 / 40`.
+3.  Change the layout: drag columns to reorder them, show or hide individual columns, or use **Show all columns** or **Hide all columns**. Hiding a column with **Hide** from the column header dropdown is also a column layout change.
+4.  Click **Save for everyone** in the **Columns** menu.
+
+Column layout changes are only visible to you until you click **Save for everyone**. While you have unsaved changes, a small dot appears next to the column count on the **Columns** button, and the **Columns** menu shows "Changes are only visible to you until you save them for everyone." along with **Save for everyone** and **Discard changes**. These two options appear only after you change the layout. To undo your unsaved column changes and return to the segment's saved layout, click **Discard changes**.
+### **How do I filter an audience by date of creation?**
+
+To filter Audiences records by when they were added, use the **Company creation date** filter in a Companies audience or the **Person creation date** filter in a People audience. These filters use the date and time each record was first created in Audiences, and are available in every Audiences workspace.
+
+1.  Open your Companies or People audience and click **+ Filter**.
+2.  Search for **Company creation date** (or **Person creation date**) and select it.
+3.  Choose an operator — **before**, **after**, **within the last**, or **not within the last** — and enter a date and time (or a number of days, weeks, or months for the "within the last" operators).
+
+For example, if you added a large batch of companies today and want to work only with the companies that were already in your audience, set `Company creation date → before →` today's date and the time of the import. The filter chip then shows, for example, **Company creation date before Jul 2, 2026 11:42 AM**. To reuse this filter, save it as a segment — see [Creating an audience](audiences.md#creating-an-audience).
 
 ## **Best practices**
 

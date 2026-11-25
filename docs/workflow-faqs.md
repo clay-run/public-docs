@@ -48,7 +48,7 @@ A few errors have recognizable causes. A tool-not-found error usually means the 
 
 ### Can one workflow call another?
 
-Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
+Yes, through workflow functions. A workflow is started by its trigger, but you can build reusable workflow logic as a workflow function and call it as a step from any number of other workflows. Each calling workflow either follows the `Latest` published version of the function or is pinned to a specific version, and the calling workflow's run shows the function's steps as a nested trace. You can also call table functions from a workflow. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
 
@@ -128,4 +128,6 @@ When you need one that isn't, build that part where it does exist and meet the w
 
 ### Are waterfalls available in Workflows?
 
-Not as a step type — a `Run enrichment` step runs one action, so a waterfall's provider fallback isn't something you draw on the canvas. Where you need one, put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. That keeps the fallback logic in one governed place and available to your tables at the same time. See [Managed functions](https://university.clay.com/docs/managed-functions).
+Yes. Waterfalls are available in Workflows for every workspace that has Workflows turned on. To add one, click **+** below the step it should run after, choose **Enrich**, and in the enrichment panel either click the **Waterfalls** card on the **For you** tab or search for the data point you need, such as `Phone number`. To build your own provider sequence instead of a pre-built waterfall, click **New waterfall** in the same panel. See [Adding a waterfall in Clay Workflows](https://university.clay.com/docs/building-a-data-waterfall#adding-a-waterfall-in-clay-workflows) for the full steps.
+
+If you want the same waterfall shared between your workflows and your tables, you can still put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. See [Managed functions](https://university.clay.com/docs/managed-functions).

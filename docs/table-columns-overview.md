@@ -1,6 +1,6 @@
 ---
 title: Table columns
-description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, how to resolve circular dependency errors, and what the icons in a column header mean.
+description: Learn how to navigate columns in your Clay table, including column types, system columns (Created At and Updated At), limits, child column mapping, whether you can choose which field an enrichment cell displays, how to split a text address into separate street, city, state, country, and ZIP code columns, how to fix enrichment inputs flagged as an invalid domain or social profile URL, how to resolve circular dependency errors, and what the icons in a column header mean.
 last_synced: 2026-04-26T01:40:46.052Z
 ---
 
@@ -216,6 +216,18 @@ To create a new column with an endpoint from an enrichment (parent column):
 1.  Click on the cell of the enrichment containing the endpoint you want to use. This will open the **Cell details** panel on the right.
 2.  Hover over the endpoint you want to map out and to the right click `Add to column`.
 3.  In the **Add description as new column** section, enter your column description and click `Create column` to generate a new column.
+
+### Can I choose which field an enrichment cell displays?
+
+No. You can't change which output field an enrichment column shows in its cells. Each enrichment sets its own cell preview. For example, a People Data Labs person enrichment shows the person's name when it finds a match, or **No Match Found** when it doesn't. No column setting lets you swap that preview for another field, such as the mobile phone number.
+
+To see a different field, such as the mobile phone number, in the table, add that field as its own child column:
+
+1.  Click a populated cell in the enrichment column to open the **Cell details** panel on the right.
+2.  Hover over the field you want, for example the mobile phone number, and click `Add to column`.
+3.  Click `Create column`.
+
+The new column shows only that field for every row the enrichment has run on. The enrichment column itself still shows its default preview.
 
 ### Map child columns to an existing column
 

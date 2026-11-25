@@ -90,6 +90,12 @@ Standard HTTP API attaches static, pre-stored headers (like an API key or a perm
 
 Clay automatically refreshes the token approximately every 55 minutes. No manual action is needed when a token expires.
 
+### Why am I still getting a 401 error? Shouldn't Clay fetch a new token?
+
+Not right away. A 401 response does not trigger a token refresh. The token refreshes on a schedule: Clay requests a new JWT 5 minutes before the token's `expires_in` runs out, so roughly 55 minutes into a 1-hour token's lifetime. Until that scheduled refresh, Clay keeps using the cached token, and requests that return a 401 will continue to fail.
+
+If the 401 errors persist after the next refresh window, check that the credentials and token endpoint saved in your JWT account are still valid, then rerun the affected rows.
+
 ### What if the token is nested inside the response JSON?
 
 Use dot-notation in the `Location of JWT token in auth response` field. For example, if the token endpoint returns `{"data": {"access_token": "eyJ..."}}`, enter `data.access_token`.
@@ -174,3 +180,9 @@ The native ZoomInfo integration in Clay supports four actions: **Enrich Company*
 Clay refreshes the token automatically before it expires, so you won't encounter the hourly 401 errors that occur when managing short-lived ZoomInfo tokens manually.
 
 **Note:** HTTP API with JWT Authentication is available on Explorer and above (legacy plans) or Growth and above (new plans). It is not available on Free, Trial, or Launch plans. For ZoomInfo account prerequisites (API access requirements and supported authentication methods), see the [ZoomInfo integration guide](https://university.clay.com/docs/zoominfo-integration).
+
+### Can I use ZoomInfo PKI authentication (Client ID and Private Key) with HTTP API with JWT Authentication?
+
+No. ZoomInfo's PKI authentication requires signing a JWT locally with your ZoomInfo private key. The HTTP API with JWT Authentication account only stores a **Username**, **Password**, and **JWT Token Endpoint**, and Clay cannot sign a JWT with a private key in either this action or the standard **HTTP API** action. To call ZoomInfo's API with HTTP API with JWT Authentication, use the ZoomInfo username and password flow described above.
+
+If you can't use a ZoomInfo username and password (for example, because your ZoomInfo login uses SSO), check whether one of the native ZoomInfo actions covers your use case first. For example, the native **Search contacts** action searches ZoomInfo contacts at a company and accepts any other ZoomInfo contact search field under **Additional search fields**. See the [ZoomInfo integration guide](https://university.clay.com/docs/zoominfo-integration).

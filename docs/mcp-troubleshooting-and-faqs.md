@@ -1,7 +1,7 @@
 ---
 title: MCP troubleshooting and FAQs
 description: Fix common Clay MCP connection, Function, and ChatGPT issues, and get answers about MCP access, credits, data, and limits.
-last_synced: 2026-11-10T19:42:40.548Z
+last_synced: 2026-11-19T07:38:55.115Z
 ---
 
 # MCP troubleshooting and FAQs
@@ -31,7 +31,7 @@ Clients that register themselves at connection time — a CLI connection like `c
 
 #### **Rep connected to a personal workspace instead of the company workspace**
 
-This happens when a rep runs the Clay MCP connection flow in their AI tool _before_ accepting their Clay workspace invite. The OAuth flow spins up a personal workspace instead of connecting to the company workspace, and the rep won't appear in the `MCP users` table on the `MCP` page.
+This happens when a rep runs the Clay MCP connection flow in their AI tool _before_ accepting their Clay workspace invite. The OAuth flow spins up a personal workspace instead of connecting to the company workspace, and the rep won't appear in the `Agent users` table on the `Agent users` page.
 
 **Fix:**
 
@@ -108,7 +108,7 @@ Being more explicit in your prompt also helps — e.g. `Search companies in Clay
 
 ### **Setup and access**
 
-**Do MCP users need a full Clay seat?**  
+**Do agent users need a full Clay seat?**  
 Yes — every rep using MCP must be invited to the Clay workspace. However, you can assign them the **Sales Rep** role, which grants access exclusively through the MCP interface (Claude, ChatGPT, etc.). Reps with this role can't see the Clay UI, edit tables, view API keys, or access workflows directly. It's the lowest-permission profile for MCP access.
 
 **What's the minimum setup to get reps running?**  
@@ -118,7 +118,7 @@ Invite reps to your workspace, assign a credit budget, and share the connection 
 Yes. If a user isn't explicitly added to your workspace, they won't have access to your Clay data, workflows, or MCP — regardless of SSO. Add the specific users from `Settings → Team`.
 
 **Where are the MCP settings?**  
-Workspace-level MCP controls live on the `MCP` page, which you open from the sidebar on the Clay homepage. That's where you invite reps, set credit limits, and monitor usage. The setting for individual Functions is the `Users` checkbox, in the `Integrations` section of each Function's `Edit function settings`. Workflows have the same checkbox under `Integrations` in `Workflow settings`.
+Workspace-level MCP controls live on the `Agent users` page, which you open from the sidebar on the Clay homepage. That's where you invite reps, set credit limits, and monitor usage. The setting for individual Functions is the `Users` checkbox, in the `Integrations` section of each Function's `Edit function settings`. Workflows have the same checkbox under `Integrations` in `Workflow settings`.
 
 **Do reps need their own API keys to run Functions?**  
 No. Functions execute server-side within your workspace using credentials stored at the workspace level. Reps don't need their own keys to any of the integrations a Function uses — they just invoke it by name.
@@ -135,10 +135,10 @@ No. Asking questions about data that's already synced to Audiences consumes **ac
 Yes. Credit cost is identical regardless of where the Function is triggered. If a Function uses 15 action credits and 5 data credits inside Clay, it costs the same via MCP.
 
 **How do we prevent reps from burning through credits?**  
-Set a default credit limit on the `MCP` page before reps connect — this applies automatically to every new rep. You can also set per-user overrides for heavier or lighter users. The **Sales Rep** role provides an additional layer: reps with this role can only invoke Functions and workflows that you've explicitly enabled.
+Set a default credit limit on the `Agent users` page before reps connect — this applies automatically to every new rep. You can also set per-user overrides for heavier or lighter users. The **Sales Rep** role provides an additional layer: reps with this role can only invoke Functions and workflows that you've explicitly enabled.
 
-**Can I remove a rep's "connected" status from the MCP page?**  
-Not directly — admins can't revoke an OAuth connection from the MCP page itself. To block access, either remove the rep from the workspace entirely (`Settings → Team`) or set their credit limit to 0, which hard-blocks any further actions without removing them.
+**Can I remove a rep's "connected" status from the Agent users page?**  
+Not directly — admins can't revoke an OAuth connection from the `Agent users` page itself. To block access, either remove the rep from the workspace entirely (`Settings → Team`) or set their credit limit to 0, which hard-blocks any further actions without removing them.
 
 ### **Product behavior**
 

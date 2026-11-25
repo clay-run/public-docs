@@ -2,7 +2,7 @@
 title: Webhooks in Clay
 description: Real-time data updates enabling application integrations and
   automated workflows.
-last_synced: 2026-04-26T01:40:54.241Z
+last_synced: 2026-11-19T07:30:15.548Z
 ---
 
 # Webhooks in Clay
@@ -24,6 +24,8 @@ Your table updates instantly with new data, eliminating manual entry. This featu
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
 4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request. Clay's webhook authentication header is named `x-clay-webhook-auth`; each webhook table generates its own unique token.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
+5.  Optionally, add an idempotency key. Include a stable ID of 1 to 250 characters, such as an event ID or object ID, under the header key `x-clay-webhook-idempotency-key`. Repeated deliveries with the same idempotency key keep the latest payload instead of adding duplicate rows. For details, see [Use an idempotency key to stop retries from creating duplicate rows](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows).
+    -   Idempotency keys don't work on tables with auto-delete enabled.
 
 ## Limits
 
@@ -230,7 +232,7 @@ To start receiving data in the duplicate, add a new webhook source to it: in the
 
 This is different from CRM sources such as HubSpot and Salesforce, which track every record they have ever imported and automatically skip any record they have already seen — even if you delete the row from the table.
 
-**To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row.
+**To prevent the same record from being enriched multiple times,** enable [auto-dedupe](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) on a column containing a unique identifier for your records (such as an email address or a CRM contact ID). When a second submission arrives with the same value in that column, auto-dedupe detects and removes the duplicate row. Use the default **Keep oldest row** option: the new duplicate is deleted before its enrichments run. With **Keep newest row**, the existing row is deleted instead, and auto-run enrichment columns run again on the new row, charging credits each time the same record is re-sent. See [Why did my deduplicated table use more credits than its row count?](table-management-settings.md#why-did-my-deduplicated-table-use-more-credits-than-its-row-count)
 
 **Note:** Auto-dedupe may not catch duplicates when two payloads arrive within milliseconds of each other. See the [simultaneous insert limitation](https://www.clay.com/university/guide/table-management-settings#auto-dedupe) in the auto-dedupe docs for details and workarounds.
 

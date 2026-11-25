@@ -1,7 +1,7 @@
 ---
 title: MCP Security & Privacy
 description: Review how MCP connections are authenticated, which roles can use them, and how Clay handles your data.
-last_synced: 2026-11-10T19:42:41.460Z
+last_synced: 2026-11-19T07:39:00.710Z
 ---
 
 # MCP Security & Privacy
@@ -21,7 +21,7 @@ MCP connections use browser-based OAuth — there are no shared secrets or API k
 -   The resulting access token is scoped to that one user and that one workspace, and Clay stores only a hash of it.
 -   A connection only reaches the one workspace it was authorized for, and only the Functions and workflows an admin or editor has enabled for MCP. What a user can do through MCP is not identical to what they can do in the web app — see the roles below.
 
-Admins can also limit which applications are allowed to connect at all. On the `MCP` page, which they open from the sidebar on the Clay homepage, `Allowed MCP clients` controls which platforms members may connect to your workspace's MCP server. Turning a client off blocks new connections to it.
+Admins can also limit which applications are allowed to connect at all. On the `Agent users` page, which they open from the sidebar on the Clay homepage, `Allowed MCP clients` controls which platforms members may connect to your workspace's MCP server. Turning a client off blocks new connections to it.
 
 ## What each role can do via MCP
 
@@ -100,4 +100,4 @@ Lowering their role won't do it — a `Viewer` can still trigger runs. To cut of
 
 ### Does MCP usage appear in our audit and usage reporting?
 
-MCP credit consumption appears in the main dashboard at `Settings → Usage` alongside all other workspace usage, and per-user consumption is visible in the `MCP users` table. Enterprise workspaces using credit budgets can also attribute MCP spend to a specific budget.
+MCP credit consumption appears in the main dashboard at `Settings → Usage` alongside all other workspace usage, and per-user consumption is visible in the `Agent users` table. Enterprise workspaces using credit budgets can also attribute MCP spend to a specific budget.
