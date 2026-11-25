@@ -31,8 +31,8 @@ When a workbook (or other resource) is assigned to a budget, all credit-consumin
 2.  Click **Create**.
 3.  Enter a budget **name** and set a **credit limit**.
 4.  Choose a **default access** setting:
-    -   **All workspace members** — any member can assign their workbooks to this budget.
-    -   **Only specific users or groups** — only members you explicitly add can use the budget.
+    -   **Specific people and groups** (default) — only members you explicitly add can use the budget.
+    -   **Anyone in the workspace** — any member can assign their workbooks to this budget.
 5.  Optionally, add specific **users** or **user groups** who should have access.
 6.  Click **Save**.
 
@@ -84,10 +84,10 @@ Open a budget from `Settings` → `Budgets` to see its spend over time. Use the 
 
 Each budget has an access rule that controls which workspace members can assign their workbooks to it:
 
--   **All workspace members (default):** Any member can use this budget. Useful for shared cost pools.
--   **Only specific users or groups:** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
+-   **Specific people and groups (default):** Only the users or user groups listed on the budget can assign resources to it. Members not on the list will see "You don't have access to any budgets" when they try to assign a workbook. Useful for team-specific budgets.
+-   **Anyone in the workspace:** Any member can use this budget. Useful for shared cost pools.
 
-To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit**, and adjust the access settings.
+To update access for an existing budget, open it from `Settings` → `Budgets`, click **Edit budget**, and adjust the access settings.
 
 **Adding a member to a budget's access list only grants them permission to assign workbooks to that budget — it does not move any of their existing workbooks into it.** Workbook budget assignments are always an explicit, per-workbook action.
 
