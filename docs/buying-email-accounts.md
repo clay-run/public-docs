@@ -11,7 +11,7 @@ Protect your domain reputation while scaling cold outreach — buy alternative d
 
 Cold outbound often requires sending a high volume of emails to inboxes that may not engage — and over time, that can damage the reputation of the domain you're sending from. Buying email accounts in Clay lets you scale your sending capacity by purchasing alternative domains and email accounts directly with Clay credits, without sacrificing deliverability.
 
-**Available on Growth and Enterprise plans — currently in beta.** Free plan workspaces cannot purchase domains or email accounts in Clay. To request access, contact Clay support.
+**Available on Growth and Enterprise plans.** Pro and Free plan workspaces cannot purchase domains or email accounts in Clay.
 
 ## ‍**Buying email accounts**
 
