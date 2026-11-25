@@ -80,6 +80,7 @@ Your Actions capacity is determined by your plan tier. Plan tiers are designed s
 
 | Plan | Actions/month | Best for |
 | --- | --- | --- |
+| Free | 500 | Exploring Clay and testing small workflows |
 | Launch | 15,000 | Enriching ~10,000 records/year |
 | Growth | 40,000 | Enriching ~50,000 records/year |
 | Enterprise | 100,000+ | Enriching millions of records/year |
@@ -343,6 +344,21 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
 
+### Does finding a person's email use Actions or Data Credits?
+
+On current plans (Free, Launch, Growth, and Enterprise), finding a person's work email uses both Actions and Data Credits:
+
+-   **1 Action** per row for running the email finder enrichment.
+-   **Data Credits** for the email data: from 0.2 to 6 Data Credits per email, depending on the email finder provider you choose. For example, Findymail costs 0.5 Data Credits per email.
+
+With most email finder providers (including Findymail, Hunter, Prospeo, Enrow, Icypeas, FullEnrich, and BetterContact), if no email is found for a row, the Action and the Data Credits for that row are refunded.
+
+**Example:** Finding work emails for 30,000 contacts with Findymail (0.5 Data Credits per email) on a current plan uses at most 30,000 Actions and at most 15,000 Data Credits. If Findymail finds no email for a contact, the Action and the Data Credits for that row are refunded, so the actual cost depends on how many emails are found.
+
+**Which plan to choose for a large list:** The Free plan includes 500 Actions and 100 Data Credits per month — for example, 100 Data Credits covers up to 200 emails found with a 0.5-credit provider such as Findymail. To find emails for thousands of contacts, upgrade to a paid plan with enough Actions and Data Credits for your list. See [How many Actions do I need?](#how-many-actions-do-i-need) and [How many Data Credits do I need?](#how-many-data-credits-do-i-need).
+
+**Legacy plans:** If you're on a legacy plan (legacy Free, Starter, Explorer, or Pro), Actions aren't charged — finding an email only uses Data Credits, at the original legacy Data Credit prices. See [Legacy plans](./legacy-plans.md).
+
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
@@ -396,10 +412,10 @@ No credits are affected before your renewal date — you can use them freely unt
 
 **Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
 
-**Once you have an account:** The enrichment panel shows costs before you run:
+**Once you have an account:** Open an enrichment column's settings panel. Before you run, the bottom-right corner of the panel shows the cost per row as two badges. Hover over them to see "Uses actions and data credits."
 
--   Actions: Always 1 per result.
--   Data Credits: Displayed next to each enrichment option.
+-   **Actions:** The four-pointed star badge shows the Actions cost (1 per result).
+-   **Data Credits:** The green coin badge shows the Data Credit cost. The Data Credit cost is also displayed next to each enrichment option when you browse enrichments.
 
 For complex workflows, run a small test batch (10–50 records) to understand full costs.
 
