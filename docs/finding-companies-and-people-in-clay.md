@@ -658,9 +658,8 @@ The per-source limit for Find People and Find Companies sources varies by plan a
 | Free | 100 |
 | Trial | 1,000 |
 | Starter | 5,000 |
-| Launch | 15,000 |
 | Explorer | 25,000 |
-| Pro and above | 50,000 |
+| Launch, Flex, Pro, Growth, and Enterprise | 50,000 |
 
 **To check how many records a source has added:** open the table, click the Find People (or Find Companies) source column, and select **View Run History**. The run history lists each run's date and the number of rows imported and added. Run history shows only the 10 most recent runs, so older runs that also count toward the limit may not appear.
 
