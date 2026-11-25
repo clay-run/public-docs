@@ -11,7 +11,7 @@ Keep your Clay workspace membership and roles in sync with your identity provide
 
 SCIM provisioning lets you add and remove Clay workspace members and set their roles from your identity provider (IdP). You set up the connection in the WorkOS Admin Portal, the tool Clay uses to connect directories, which carries step-by-step instructions for each provider.
 
-**Note:** SCIM provisioning is available on Enterprise plans and is enabled per workspace. Contact the Clay team to turn it on for yours.
+**Note:** SCIM provisioning is available on all Enterprise plans. Workspace admins can set it up themselves in `Settings` → `Workspace` → `SCIM provisioning` — you don't need to contact the Clay team to turn it on.
 
 ## Before you begin
 

@@ -64,6 +64,8 @@ You can permanently delete your Clay account through your account settings. Befo
 -   Scroll to the `Account deletion` section at the bottom of the page.
 -   Click the `Delete account` button.
 -   Complete the email verification step to confirm your request.
+    -   Clay emails you a 6-digit verification code. Enter the code within 15 minutes of receiving it, then finish deleting your account within 15 minutes of confirming the code.
+    -   If either 15-minute window passes, Clay shows `Your code has expired`. Click `Restart verification` to get a new code and start the verification step again.
 
 **What happens when you delete your account:**
 
@@ -120,6 +122,8 @@ You can permanently delete your Clay workspace through workspace settings. This 
 -   Scroll to the `Delete workspace` section at the bottom of the page.
 -   Click the `Delete workspace` button.
 -   Complete the email verification step to confirm your request.
+    -   Clay emails you a 6-digit verification code. Enter the code within 15 minutes of receiving it, then finish deleting your workspace within 15 minutes of confirming the code.
+    -   If either 15-minute window passes, Clay shows `Your code has expired`. Click `Restart verification` to get a new code and start the verification step again.
 
 **What happens when you delete your workspace:**
 

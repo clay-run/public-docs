@@ -51,6 +51,18 @@ Type `/` anywhere in a subject line or message body to open the insert menu — 
 | Sender data | Opens a submenu of details drawn from whichever sending account the email goes out from. |
 | Link | A hyperlink with its own display text. Appears only when Enable HTML is on. Both the URL and the Label accept lead fields and sender variables. |
 
+### Why bracketed text isn't inserted as a variable
+
+Typing a field name inside brackets, such as `{{first_name}}`, `{first_name}`, or `[first_name]`, doesn't insert a variable in a sequence message. The text goes out to leads exactly as typed, brackets included. To insert a variable, type `/` and choose the field from the insert menu.
+
+When the editor spots bracketed text that looks like a variable, the message card shows a `Did you mean to insert a variable?` warning at the bottom, explaining `Text inside brackets is not inserted as a variable. To insert a variable, type / and choose a field.` If the bracketed text matches one of your lead fields, the warning also suggests that field by name.
+
+-   Text in double curly braces (`{{…}}`) always triggers the warning.
+-   Text in single curly braces (`{…}`) or square brackets (`[…]`) triggers it only when it looks like a field name: it matches a lead field, ignoring capitalization, spaces, underscores, and hyphens, or it's a short name of up to three words, such as `first_name` or `company name`.
+-   The warning checks both the `Subject` and the body of each message. It doesn't appear on copy you can't edit: a reply's inherited subject line, an A/B variant field that mirrors the default variant, copy that's locked while the sequence is live, or a message locked because it carries HTML-only formatting.
+
+To clear the warning, replace the bracketed text with a variable inserted from the `/` menu. You can also close the warning; it comes back if you type different bracketed text.
+
 ### Lead variables
 
 A lead variable is more than a raw field reference — click the token you inserted and you get a small panel of controls over how that value behaves.

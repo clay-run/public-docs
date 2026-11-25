@@ -1,7 +1,7 @@
 ---
 title: AI in Clay
 description: A comprehensive guide to how Clay uses AI across its features.
-last_synced: 2026-10-23T20:15:53.279Z
+last_synced: 2026-11-24T08:11:24.744Z
 ---
 
 # AI in Clay
@@ -59,7 +59,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 ### Use AI
 
-**What it does**: A powerful table action that gives you access to AI for web research, content generation, and image generation.
+**What it does**: A powerful table action that gives you access to AI for web research, content generation, classification, and image generation.
 
 [View Use AI documentation →](https://university.clay.com/docs/use-ai-integration-overview)
 
@@ -67,6 +67,7 @@ Clay is committed to transparent and responsible AI use. Here's what you need to
 
 -   **Web research**: AI searches and synthesizes information from the web.
 -   **Content generation**: Transforms unstructured text (like call transcripts) into structured data.
+-   **Classification**: Sorts each row into one of the categories you define, like a yes/no ICP fit check. In Use AI, this option is labeled **Classify**. Classify is currently in alpha: it's free for a limited time during alpha and has run limits.
 -   **Image generation**: Creates images based on text prompts.
 
 **Model options**:
@@ -237,7 +238,7 @@ To report a security vulnerability, email [security@clay.com](mailto:security@cl
 
 -   **Which AI features you use**: All AI features are opt-in through your actions.
 -   **What data AI sees**: You choose which table columns to include in AI requests. When configuring AI enrichments (Use AI, Claygent, etc.), you select which specific columns to send as context — the AI does not automatically access all columns in your table, and data is only processed when you explicitly run an AI action on specific rows. This means you can exclude PII columns from AI requests while still using Clay's AI features on non-PII data.
--   **API keys**: Option to bring your own API keys for supported providers (OpenAI, Anthropic, Google Gemini). AWS Bedrock is not available as a native provider in Use AI or Claygent — to route AI calls through Bedrock, use the [HTTP API enrichment](https://www.clay.com/university/guide/http-api-integration-overview) to configure a request to Bedrock's OpenAI-compatible endpoint.
+-   **API keys**: Option to bring your own API keys for supported providers (OpenAI, Anthropic, Google Gemini). Enterprise workspaces can also connect their own Amazon Bedrock account to run Use AI and Claygent on Bedrock models, using short-lived AWS credentials instead of access keys — see [Connect Clay to Amazon Bedrock](connect-clay-to-amazon-bedrock.md).
 -   **Data deletion**: Delete individual records, tables, or entire workspaces at any time. To request deletion of your personal data under privacy regulations such as CCPA, contact the Clay support team via the in-app chat — select **Talk to a person** and a team member will process your request and delete all data Clay holds for you.
 -   **Access permissions**: Control who in your organization can use AI features.
 
@@ -255,8 +256,8 @@ Clay provides access to a wide range of AI models from multiple providers. Below
 | Provider | Models |
 | :------- | :----- |
 | Clay | Helium, Neon, Argon, Clay Navigator |
-| OpenAI | GPT 6 Sol, GPT 6 Luna, GPT 5.6 Luna, GPT 5.5, GPT 5.4, 5.4 Mini, 5.4 Nano, GPT 5 Mini, 5 Nano, o3, o4 Mini, GPT 4.1, 4.1 Mini, GPT 4o, 4o Mini, GPT Image 1 (Low, Medium, High) |
-| Anthropic | Claude Opus 5, Claude 4.8 Opus, Claude 4.7 Opus, Claude Sonnet 5, Claude 4.6 Sonnet, Claude 4.5 Haiku |
+| OpenAI | GPT 6.1 Terra, GPT 6.1 Sol, GPT 6 Sol, GPT 6 Luna, GPT 5.6 Sol, GPT 5.6 Terra, GPT 5.6 Luna, GPT 5.5, GPT 5.4, GPT 5.4 Mini |
+| Anthropic | Claude Opus 5.5, Claude Opus 5, Claude 4.8 Opus, Claude Sonnet 5.5, Claude Sonnet 5, Claude 4.6 Sonnet, Claude Haiku 5.5, Claude 4.5 Haiku |
 | Gemini | 3.1 Pro, 3.8 Flash, 3.7 Flash, 3.5 Flash Lite, 3.1 Flash Lite, 2.5 Pro, Gemini 3.1 Flash Image, Gemini 3.1 Flash-Lite Image |
 | Kimi | Kimi K2.6, Kimi K3 |
 | Z.ai | GLM 5.3 Flash, GLM 5.3, GLM 5.2 |

@@ -1,7 +1,7 @@
 ---
 title: Definitive Healthcare integration
 description: Find US hospitals and enrich them with executives, physicians, networks, payor mix, technology, and financial metrics from Definitive Healthcare.
-last_synced: 2026-11-18T19:18:38.950Z
+last_synced: 2026-11-18T20:50:57.852Z
 ---
 
 # Definitive Healthcare integration
@@ -10,7 +10,7 @@ Find US hospitals in Clay and enrich them with executives, physicians, networks,
 
 Definitive Healthcare is a commercial intelligence provider for the US healthcare market, covering hospitals, the networks they belong to, and the executives and physicians affiliated with them. With this integration, you can build hospital lists in Clay and enrich them with firmographics, affiliations, installed technology, payor mix, financial and clinical metrics, and contact details for named executives and physicians.
 
-**Note:** These actions run on a Clay-provided account, so you don't need your own Definitive Healthcare subscription to use them. If you have one, connect your own API key instead — it costs fewer credits per record, and the data you get back matches the entitlements on your account.
+**Note:** These actions run on a Clay-provided account, so you don't need your own Definitive Healthcare subscription to use them. If you have one, connect your own API key instead so the data you get back matches the entitlements on your account.
 
 ## Creating a table with Definitive Healthcare
 

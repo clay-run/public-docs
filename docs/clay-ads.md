@@ -271,10 +271,10 @@ The ad sync page does not have a CSV download button. The **People** (or **Compa
 
 1. Open the ad sync from the **Ads** page and click **Setup** at the top of the page. This works for active syncs too — the Setup step opens in read-only mode.
 2. In the **Segment** card, click the **⋮** (three-dot) menu and select **Open segment in new tab**. The segment opens in Audiences.
-3. Click `Enrich`, then click **Add enrichment table**. (In some workspaces, the enrichment panel shows a `+` button instead — click it and select **Create enrichment table**.) You don't need to add enrichment columns.
-4. Open the new table, make sure no rows are selected, then click **Tools**, open the **Export** tab, and click **Download CSV**.
+3. In the segment, click **Export to CSV** (or open the **Export action** dropdown and select **Export to CSV**), choose your fields, and click **Start export**.
+4. When the export finishes, click **Exports** in the left sidebar, click **…** on the export's row, and select **Download**.
 
-Workspace Admins and Editors can create the enrichment table; Workspace Viewers can't.
+**Export to CSV** supports segments with up to 100,000 records. Workspace Admins and Editors can start the export; Workspace Viewers can't. For larger segments, or for the full steps, see [How do I export an audience segment to CSV or Excel?](https://university.clay.com/docs/audiences#how-do-i-export-an-audience-segment-to-csv-or-excel) in Audiences.
 
 ### **Why is my matched count higher than the number of contacts I sent?**
 

@@ -1,7 +1,7 @@
 ---
 title: Getting started with Sequencer
 description: Overview of Sequencer, Clay's cold email tool, covering sending infrastructure, lead preparation, building and launching campaigns, analytics, deliverability, and plan limits.
-last_synced: 2026-11-17T21:00:39.098Z
+last_synced: 2026-11-18T19:11:32.745Z
 ---
 
 # Getting started with Sequencer
@@ -100,4 +100,4 @@ The hard limits, in one place:
 | Enrollments per lead, per sequence | 1 |
 | Send limit per email account, per day | 10–500 (30 for accounts bought in Clay) |
 
-Credit costs, plan differences, and what happens to existing table-based sequences are covered in [Sequencer FAQs and best practices](https://university.clay.com/docs/sequencer-faqs-and-best-practices).
+How credits are charged, plan differences, and what happens to existing table-based sequences are covered in [Sequencer FAQs and best practices](https://university.clay.com/docs/sequencer-faqs-and-best-practices).

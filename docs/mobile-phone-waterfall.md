@@ -146,6 +146,12 @@ When `Only validate mobile phone types?` is off (the default), the validator onl
 **What's the difference between the two validation options?**
 `Only validate mobile phone types?` filters by *line type* — enable it so only mobile/cellular numbers count as valid (by default, all line types, including landline, are considered valid). `Require validation success?` gates by *validation outcome* — keep only numbers the validator confirms valid. You can use them independently or together.
 
+**What happens if the phone validator (Trestle or ClearoutPhone) is down or returns an error?**
+If the Mobile Phone waterfall's validator — Trestle or ClearoutPhone — is unavailable or returns an error, the validation cell for that provider step ends in an error state instead of a "valid" or "invalid" result. What the Mobile Phone waterfall does next depends on the `Require validation success?` setting:
+
+- **`Require validation success?` on:** A validation error counts as a failed validation. The number from that provider step is not written to the Mobile Phone output column, and the waterfall moves on to the next provider. If validation errors for every provider step, the Mobile Phone output column stays empty.
+- **`Require validation success?` off:** A validation error does not block the result. The number from that provider step is written to the Mobile Phone output column without being validated, and the waterfall stops — later providers don't run for that row.
+
 **Will stricter validation cost more credits?**
 It can. Rejecting more numbers means the waterfall calls more providers per contact before it finds an acceptable result, which can increase spend and reduce fill rate — in exchange for higher-quality output.
 
@@ -154,6 +160,19 @@ Enable **Output name of successful provider?** in your waterfall's **Additional 
 
 To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).
 
+**Is there a waterfall for work phone numbers or direct dials instead of mobile numbers?**
+No. The Mobile Phone waterfall is the only pre-built phone waterfall in Clay. It targets mobile (cell) numbers, so it can return personal mobiles. To find work phone numbers or direct dials (direct landlines), add individual provider enrichments to your table from `Add enrichment`:
+
+- **Bytemine — Find contact info:** turn on **Require direct dial** so Bytemine returns a result only when a direct dial is present. See [Bytemine](bytemine-integration.md).
+- **Lusha — Enrich person:** each returned phone number includes a **Type** and a **Do Not Call** indicator, so you can tell phone types apart and skip numbers flagged as Do Not Call. See [Lusha](lusha-integration.md).
+
+To keep credit usage efficient, combine a direct-dial enrichment with the Mobile Phone waterfall using a [run condition](conditional-runs.md) — for example, so the direct-dial enrichment only runs when your Mobile Phone column is empty.
+
+**How can I check whether a phone number is a mobile, a landline, or belongs to the contact?**
+Add a phone validation enrichment after your phone enrichment:
+
+- **ClearoutPhone — Check phone line type & status** returns the line type (for example, mobile or landline) for phone numbers worldwide. Include the country code for non-US numbers. See [ClearoutPhone](clearoutphone-integration-overview.md).
+- **Trestle — Verify contact** returns **Phone Name Match**, showing whether the number is associated with the contact's name. Trestle Verify contact only validates US and Canada numbers. See [Trestle](trestle-integration.md).
 **The Mobile Phone waterfall didn't find a number, or the number is wrong — what else can I try?**
 If the Mobile Phone waterfall comes back empty or returns an inaccurate number, try these options:
 

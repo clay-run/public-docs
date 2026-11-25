@@ -2,7 +2,7 @@
 title: Webhooks in Clay
 description: Real-time data updates enabling application integrations and
   automated workflows.
-last_synced: 2026-04-26T01:40:54.241Z
+last_synced: 2026-11-19T07:30:15.548Z
 ---
 
 # Webhooks in Clay
@@ -24,6 +24,8 @@ Your table updates instantly with new data, eliminating manual entry. This featu
     -   **cURL:** Paste the cURL command into your command line to send data directly to Clay.
 4.  Optionally, add authentication token. To secure your webhook, you can include an authentication token in the header of your request. Clay's webhook authentication header is named `x-clay-webhook-auth`; each webhook table generates its own unique token.
     -   Make sure to copy the token immediately, as you can only access authentication tokens once.
+5.  Optionally, add an idempotency key. Include a stable ID of 1 to 250 characters, such as an event ID or object ID, under the header key `x-clay-webhook-idempotency-key`. Repeated deliveries with the same idempotency key keep the latest payload instead of adding duplicate rows. For details, see [Use an idempotency key to stop retries from creating duplicate rows](#use-an-idempotency-key-to-stop-retries-from-creating-duplicate-rows).
+    -   Idempotency keys don't work on tables with auto-delete enabled.
 
 ## Limits
 
