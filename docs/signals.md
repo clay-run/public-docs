@@ -283,6 +283,28 @@ To stop a signal from consuming credits, you must pause or disable it directly f
 
 You can review all active signals and their individual credit spend in the `Signals` tab of the [credit usage dashboard](/docs/credit-usage) (`Settings` → `Usage`).
 
+### Why does my Signal say "Credit balance too low" when my workspace still has credits?
+
+A Signal shows **Errored** with the message **This Signal failed to execute: Credit balance too low** when the credits available to that Signal are less than the estimated cost of its next run. Clay checks this before the run starts, so the run doesn't process any records.
+
+The credits available to a Signal are the lower of these two amounts:
+
+-   Your workspace's remaining credit balance.
+-   The amount left on the Signal's own **Credit limit**, if one is set.
+
+This means a Signal can fail with "Credit balance too low" even when your workspace has plenty of credits. For example, a Signal estimated at 1.4K credits per week with a 1,000-credit limit fails on every run, even if the workspace has 267,000 credits available.
+
+The Signal **Credit limit** is a total cap on everything the Signal spends. It is not a weekly or monthly budget and does not reset — once the Signal has spent that many credits, it pauses.
+
+**To fix a Signal that fails with "Credit balance too low":**
+
+1.  Check the Signal's estimated **Credits** per run on the Signal card (for example, `1.4K / week`).
+2.  On the Signal card, click the arrow on the **This Signal failed to execute: Credit balance too low** banner to open the Signal's settings, then find the **Credit spend limit** section.
+3.  Raise the number in the **Credit limit** field above the Signal's expected spend, or switch the credit limit toggle off to remove the limit.
+4.  Click **Save and run** (or **Save and re-run**) to re-enable the Signal. When a Signal fails with this error, Clay pauses its schedule, and changing the credit limit alone doesn't restart it. If you click **Save only** instead, turn on the **Enabled** switch first, or the Signal stays paused.
+
+Signal credit limits aren't enabled in every workspace. If you don't see a **Credit spend limit** section in your Signal's settings, the "Credit balance too low" error means your workspace balance is below the run's estimated cost — [add credits or upgrade your plan](actions-data-credits.md#managing-your-plan-and-credits).
+
 ### Why does my signal keep writing results to a new table instead of my existing one?
 
 Signals always write their matching events to a **new dedicated results table** — one row per event. Whether you start signal setup from the workbook's **Create** panel (select **Signals**, then the signal type) or from the global **Signals** sidebar, the existing table you select is used as the **input source** that supplies the companies or contacts to monitor; it is not the destination for the events. Clay creates a fresh output table to capture matching events.
