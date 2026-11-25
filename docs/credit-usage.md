@@ -1,7 +1,7 @@
 ---
 title: Credit usage
 description: Track credit consumption across your workspace.
-last_synced: 2026-05-04T00:00:00.000Z
+last_synced: 2026-11-19T07:39:08.059Z
 upstream_hash: 49adc53e477510baa3bbdef7bf19e66afe61d2d6471b8803966d822f686ba5a4
 ---
 
@@ -44,7 +44,7 @@ Filter any of the content on this page by:
 
 **Tip:** To review your credit usage for a specific past month, use `Custom range` in the `When` dropdown and enter that month's start and end dates. Workspace usage data is available going back to **December 18, 2024**. The workspace dashboard shows an aggregate total for the selected period — it does not automatically break the window down month-by-month. For a month-by-month graph of credit spend over time, open the [table credit usage dashboard](#understanding-table-specific-credit-usage) and use the Time view with monthly aggregation (table-level data is available from November 5th, 2025).
 
-**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** and **API** tabs, which attribute spend to individual users for those access methods.
+**Note:** The Workbooks tab does not show per-user credit attribution — it groups spend by workbook or table, not by which team member ran the enrichments. If you need per-user credit tracking, see the **MCP** tab, which attributes spend to individual users who access Clay through MCP.
 
 ### Understanding table-specific credit usage
 
@@ -140,7 +140,7 @@ The credit usage dashboard is organized into tabs, each covering a different sli
 -   **Integrations** — shows credit spend grouped by integration across your entire workspace. Expand any integration row to see a breakdown by individual API key — useful when you have both Clay-managed and personal (BYOK) keys connected, or multiple keys for the same provider. If your workspace uses Audiences agent runs, credits for those runs appear as a **Clay Auto** row under the **AI** integration. Sort by `Name` or `Credits used`. Click `Export` to download a CSV.
 -   **Signals** — shows credit spend broken down by individual signal. A totals row (`All Signals`) appears at the top, followed by a per-signal breakdown of `Credits used` and `Actions used`.
 -   **MCP** — shows programmatic spend from team members who access Clay through ChatGPT or Claude, broken down by user. Expand any user row to see which Clay functions that user invoked via MCP and how many credits each consumed — the sub-row names match the function names configured for MCP access (see [MCP settings](/docs/mcp-settings)). Spend that cannot be attributed to a specific function appears as **Other**. Spend that can't be attributed to a specific user appears as `Unattributed`. For per-user credit limits and live usage tracking, see `Settings → MCP users`.
--   **API** — shows programmatic spend from Clay's People & Company Search API and Exportly, broken down by user. Like MCP, unattributable spend appears as `Unattributed`. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
+-   **API** — shows programmatic spend broken down by surface, with one row for each surface your workspace used — `API`, `CLI`, or `Chrome extension`. Click the caret next to a surface to expand it and see credits spent by each user (and actions used, on plans that show `Actions used`). Users who have since been removed from the workspace appear as `[Name] (removed)`, or `Former user · [user ID]` if their name is no longer available. Spend that can't be attributed to a specific user is included in the surface's total rather than listed as a separate row — hover the total to see how many credits had no attributed user (for example, from deleted accounts or older logs). Searching the API tab matches both surface names and user names, and sorting by `Credits used` sorts the user rows within each surface. Credits from Routines API runs are not tracked here — those appear in the **Workbooks** tab, attributed to the function table that processed each run.
 -   **Budgets** — shows credit spend broken down by budget. Visible only on workspaces with Credit Budgets enabled (currently in open beta for Enterprise customers). See [Credit Budgets](/docs/credit-spend-limits-faq#credit-budgets-open-beta) for details.
 
 **Note:** The `Credits used` total on the **Workbooks** tab reflects only workbook and table activity. Credits consumed by Workflows, Signals, MCP, or API access appear on those respective tabs and are not included in the Workbooks total. Credits spent on paid Audiences imports aren't tied to a table either, so they don't appear in the Workbooks tab or its CSV export (see [Why don't my Audiences import credits show up in the Workbooks tab?](#why-dont-my-audiences-import-credits-show-up-in-the-workbooks-tab)). To see your complete workspace credit spend for a given period, review the totals across all relevant tabs, or use the **Overview** chart.

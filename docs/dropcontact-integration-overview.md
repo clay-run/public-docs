@@ -2,7 +2,7 @@
 title: DropContact integration overview
 description: B2B email finder to find emails, enrich contacts, validate data,
   and clean duplicates.
-last_synced: 2026-04-26T01:39:54.261Z
+last_synced: 2026-11-19T06:47:39.708Z
 ---
 
 # DropContact integration overview
@@ -28,7 +28,7 @@ But first let's talk a bit about data enrichment waterfalls.
 
 For better coverage on email data, we recommend using [Clay's waterfall enrichments](https://www.clay.com/waterfall-enrichment), which will let you search sequentially across multiple data providers. Learn more on how to use Clay waterfalls with this [Clay University lesson](https://www.clay.com/university/lesson/enrich-people-waterfalls-clay-101).
 
-That said, let's get into it on how to use DropContact with Clay! 
+That said, let's get into it on how to use DropContact with Clay! 
 
 ## Connecting with Clay with DropContact
 
@@ -40,13 +40,13 @@ By default, DropContact enrichments will use the Clay-managed DropContact accoun
 
 Simply pull up any DropContact enrichment within Clay to use the Clay-managed DropContact account.
 
-### Option 2: Add your own DropContact API key
+### Option 2: Add your own DropContact API key
 
 If you are currently on a paid plan, you can use your own DropContact account within Clay through an API key.
 
-You can add your own API key for any DropContact enrichment when selecting an account within the enrichment panel.
+You can add your own API key for any DropContact enrichment when selecting an account within the enrichment panel.
 
-Below is an example of where to click within the enrichment panel to add your API key. For more instructions on how to find your DropContact API key, [follow these instructions](https://support.dropcontact.com/article/237-how-to-use-the-dropcontact-api-key) within DropContact's documentation.
+Below is an example of where to click within the enrichment panel to add your API key. For more instructions on how to find your DropContact API key, [follow these instructions](https://support.dropcontact.com/article/237-how-to-use-the-dropcontact-api-key) within DropContact's documentation.
 
 ## `Action` Find Work Email
 
@@ -54,7 +54,7 @@ The **Find Work Email** action allows for you to find a person's email address w
 
 **Step 1: Choose the Dropcontact account you want to use**  
 You can use either the Clay-managed Dropcontact account or bring your own key.  
-If you use the Clay-managed Dropcontact account you will be charged at 2 credits per enriched cell.
+If you use the Clay-managed Dropcontact account you will be charged credits per enriched cell.
 
 **Step 2: Select Inputs to provide**  
 Make the to provide the inputs to Dropcontact. Please note that while all the inputs are optional, the data quality will improve with the amount of data you put in.  
@@ -72,7 +72,7 @@ The **Find Company Name from Company Domain** action helps you search for a comp
 
 **Step 1: Choose the Dropcontact account you want to use**  
 You can use either the Clay-managed Dropcontact account or bring your own key.  
-If you use the Clay-managed Dropcontact account you will be charged at 2 credits per enriched cell.
+If you use the Clay-managed Dropcontact account you will be charged credits per enriched cell.
 
 **Step 2: Select Company Domain as input**  
 Enter the company domain to receive the company name as the output.

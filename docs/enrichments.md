@@ -1,7 +1,7 @@
 ---
 title: Enrichments
 description: Learn how to run enrichments in Clay, including how enrichment search works, run settings, delay options, and custom rate limits.
-last_synced: 2026-04-26T01:39:56.840Z
+last_synced: 2026-11-18T19:16:01.156Z
 ---
 
 # Enrichments
@@ -18,7 +18,7 @@ You can run enrichments in several ways:
 
 -   Individually
 -   Using pre-built templates
--   Creating powerful recipes to automate complex workflows
+-   Saving a whole enrichment sequence as a [function](functions.md) to reuse across tables
 
 ## Running an enrichment
 

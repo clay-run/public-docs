@@ -148,6 +148,27 @@ Optional:
 -   **Auto-update:** When enabled, the action re-runs automatically whenever its input values change.
 -   **Only run if:** The enrichment will only run if conditions are met. [**Learn more about conditional formulas here.**](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101)
 
+## **Classify and reply to emails from a shared inbox (such as Gmail)**
+
+You can use AgentMail with Clay to monitor a shared inbox — for example a media inquiry or support inbox in Gmail — classify each incoming email into categories you define, and reply to each category differently. This uses the AgentMail table source plus the `Create draft` and `Reply to message` actions in a Clay table. It requires your own AgentMail account and API key (see Setting up AgentMail above).
+
+**How Clay connects to your inbox:** Clay connects to AgentMail with your AgentMail API key, not to Gmail. Clay never needs access to your Gmail account. To bring Gmail emails into Clay, set up forwarding in Gmail from your shared inbox to your AgentMail inbox address. Emails are stored in AgentMail, and each forwarded email lands in your Clay table as a new row.
+
+**To set up email classification and replies:**
+
+1.  Create a table with the `Import AgentMail message events` source, subscribed to your AgentMail inbox (see Creating a table with AgentMail above).
+2.  Add a [**Use AI**](https://www.clay.com/university/guide/use-ai-integration-overview) column that reads the email subject and body and returns one of your categories (for example, 4–5 buckets such as press request, speaking invitation, partnership, or spam).
+3.  Add a `Reply to message` or `Create draft` column for each category, with its own reply instructions or AI-written reply. Map the row's `message.inbox_id` field to `Inbox ID` and `message.message_id` to `Message ID` (for `Create draft`, map `message.message_id` to `In reply to` to thread the draft).
+4.  Use `Only run if` on each reply column so it only runs when the classification column matches that category.
+
+**Which emails are processed:** Only new emails are processed. The source creates rows only for message events that arrive after you add it — emails and threads already in the inbox are not imported.
+
+**Where replies come from:** `Reply to message` sends the reply from your AgentMail inbox address (not your Gmail address), in the same thread as the original email. You can turn on `Reply all` or add CC and BCC recipients.
+
+**Sending automatically vs. reviewing drafts:** You choose per category. `Reply to message` sends the reply immediately. `Create draft` saves the reply as a draft in AgentMail for your team to review and send — leave `Send at` empty so no email goes out until someone sends it. For example, auto-reply to straightforward categories and create drafts for categories that need a closer look.
+
+**What this costs:** Each `Reply to message` or `Create draft` run uses 1 Action. A new email arriving as a row does not use any Actions or Data Credits. Your AI classification column is billed on top of that: AI uses count toward Actions, and Data Credits are charged based on the model you choose. For example, at 100 emails a month with one reply or draft per email, the replies and drafts use 100 Actions, plus the cost of classifying 100 emails with AI. AgentMail's own pricing is billed separately by AgentMail. See [**Actions & Data Credits**](https://www.clay.com/university/guide/actions-data-credits) for details.
+
 ## **Troubleshooting**
 
 ### **Domain won't verify**

@@ -18,7 +18,7 @@ The three options differ mainly in the identifier they need, which is the easies
 | Pull attendees from Sequel event | Source, which creates a new table | One or more Sequel event IDs |
 | Find Sequel events by ID | Enrichment, which adds a column to a table you already have | A single Sequel event ID |
 
-If you don't have Sequel event IDs in Clay yet, start with `Find Sequel events by company ID` — its `Id` column is the input the other two need.
+If you don't have Sequel event IDs in Clay yet, start with `Find Sequel events by company ID` — its `Id` field is the input the other two need.
 
 ## **Creating a table with Sequel**
 
@@ -41,7 +41,7 @@ Import every event under a Sequel company into a table, so you can pick out the 
 
 **Outputs**
 
-The source creates the following columns:
+`Find Sequel events by company ID` adds one row per event and stores each event's data in the source column. To give any of the following fields its own column, see [How do I add Sequel fields as their own columns?](#how-do-i-add-sequel-fields-as-their-own-columns) The source returns the following fields:
 
 -   **Id:** The event's Sequel ID, and the value `Pull attendees from Sequel event` and `Find Sequel events by ID` both run on.
 -   **Name:** The event's name.
@@ -76,11 +76,13 @@ Pull the attendee list for one or more finished Sequel events into a table, with
 
 **Inputs**
 
--   **Event IDs:** One or more Sequel event IDs to pull attendees from. You can select these values from another table, which is how you'd chain this onto a table built with `Find Sequel events by company ID`.
+-   **Event IDs:** One or more Sequel event IDs to pull attendees from. This is the only input — there's no separate step or text box for choosing which fields to import. Enter the IDs in one of two ways:
+    -   **Manual list:** Type or paste an event ID into the `Enter values` box and press Enter. Each ID becomes a chip, and you can add as many as you need. Pasting a comma-separated list adds every ID at once.
+    -   **From table:** Pick the `Table`, `View`, and `Column` that hold your event IDs, then choose which rows to use. This is how you'd chain this onto a table built with `Find Sequel events by company ID`.
 
 **Outputs**
 
-The source creates the following columns:
+`Pull attendees from Sequel event` adds one row per attendee and stores each attendee's data in the source column. To give any of the following fields its own column, see [How do I add Sequel fields as their own columns?](#how-do-i-add-sequel-fields-as-their-own-columns) The source returns the following fields:
 
 -   **Name:** The attendee's full name.
 -   **Email:** The attendee's email address.
@@ -166,6 +168,16 @@ Required:
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://university.clay.com/docs/conditional-runs))
 
 ## **FAQs**
+
+### How do I add Sequel fields as their own columns?
+
+Both Sequel sources store everything Sequel returns for a row in the source column, so there's no "add fields" step when you set up `Pull attendees from Sequel event` or `Find Sequel events by company ID`. After the rows land, you choose which fields to turn into columns:
+
+1.  Click a cell in the source column. The **Cell details** panel opens on the right and lists every field for that row, such as `Name`, `Email`, `Event ID`, and `Engagement Score`.
+2.  Hover over the field you want and click `Add to column`.
+3.  In the **Add [field name] as new column** section, keep or edit the column name and click `Create column`.
+
+Repeat steps 2 and 3 for each field you want as its own column.
 
 ### Can I pull attendees from several events in one table?
 

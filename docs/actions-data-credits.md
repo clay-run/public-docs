@@ -285,7 +285,7 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 To downgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you're currently on a free plan).
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
@@ -483,7 +483,7 @@ In some situations, Clay's support team can manually restore Data Credits that w
 
 -   **Accidental usage**: If credits were consumed unintentionally (for example, by a run you did not mean to trigger), support may grant a one-time exception.
 -   **Reactivating a paid plan after a lapse**: If you let a subscription lapse and then reactivate a paid plan, credits forfeited during the lapse may be eligible for restoration. Contact support after reactivating to request a review.
--   **Missing rollover credits after a plan upgrade**: If credits you expected to carry over are missing after upgrading your plan, contact support — this can be verified and manually corrected.
+-   **Missing rollover credits after a plan upgrade**: On a self-serve upgrade with a prorated invoice credit, your Data Credit balance is reset to the new plan's allotment and unused credits are credited to your invoice instead of carried over — check the first invoice of your new plan for the credit (see [Is upgrading my plan prorated?](plans-and-billing.md#is-upgrading-my-plan-prorated)). If credits you expected to carry over are missing after any other upgrade, contact support — this can be verified and manually corrected.
 
 **What support cannot restore:**
 

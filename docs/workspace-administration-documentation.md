@@ -1,7 +1,7 @@
 ---
 title: Account and workspace settings
 description: How to manage your Clay account and workspace settings, team member roles, integration connections, plans and billing, and referrals.
-last_synced: 2026-11-03T18:30:51.228Z
+last_synced: 2026-11-18T19:26:35.358Z
 ---
 
 # Account and workspace settings
@@ -64,6 +64,8 @@ You can permanently delete your Clay account through your account settings. Befo
 -   Scroll to the `Account deletion` section at the bottom of the page.
 -   Click the `Delete account` button.
 -   Complete the email verification step to confirm your request.
+    -   Clay emails you a 6-digit verification code. Enter the code within 15 minutes of receiving it, then finish deleting your account within 15 minutes of confirming the code.
+    -   If either 15-minute window passes, Clay shows `Your code has expired`. Click `Restart verification` to get a new code and start the verification step again.
 
 **What happens when you delete your account:**
 
@@ -120,6 +122,8 @@ You can permanently delete your Clay workspace through workspace settings. This 
 -   Scroll to the `Delete workspace` section at the bottom of the page.
 -   Click the `Delete workspace` button.
 -   Complete the email verification step to confirm your request.
+    -   Clay emails you a 6-digit verification code. Enter the code within 15 minutes of receiving it, then finish deleting your workspace within 15 minutes of confirming the code.
+    -   If either 15-minute window passes, Clay shows `Your code has expired`. Click `Restart verification` to get a new code and start the verification step again.
 
 **What happens when you delete your workspace:**
 
@@ -220,11 +224,11 @@ An **integration account** is a configured connection between your workspace and
 -   Configured by users with their own credentials, such as personal API keys or OAuth tokens.
 -   Ideal for integrations that require team- or project-specific access.
 
-**Clay-managed accounts:**
+**Clay-provided accounts:**
 
 -   Provided by Clay and configured for public use.
 -   These accounts use workspace credits instead.
--   Clearly labeled in the `Connections` section, and often pre-set as default.
+-   Labeled `Clay-provided` in the `Account type` column of the `Connections` page, and often pre-set as default.
 
 ## **Add a new integration account**
 
@@ -277,11 +281,11 @@ A **default account** is automatically selected for workflows or integrations wh
 -   Click the `…` menu next to the account and select `Delete`.
 -   Confirm the deletion.
 
-### **Clay-managed accounts**
+### **Clay-provided accounts**
 
-Clay-managed accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
+Clay-provided accounts simplify access to external services by providing pre-configured integrations that use workspace credits instead of requiring individual credentials.
 
-For some integrations, only Clay-managed accounts are supported. For others, you will need to provide your own API key.
+For some integrations, only Clay-provided accounts are supported. For others, you will need to provide your own API key.
 
 # **Plans and billing**
 

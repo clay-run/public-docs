@@ -1,7 +1,7 @@
 ---
 title: Debounce integration overview
 description: Validate and clean email lists for accurate and deliverable campaigns.
-last_synced: 2026-04-26T01:39:52.958Z
+last_synced: 2026-11-19T06:47:03.276Z
 ---
 
 # Debounce integration overview
@@ -40,7 +40,7 @@ Debounce’s **Validate Email** action allows you to verify one or multiple emai
 
 You can use either the Clay-managed Debounce account or bring your own key.
 
-If you use the Clay-managed Debounce account, you will be charged at 1 credit per enriched cell.
+If you use the Clay-managed Debounce account, you will be charged credits per enriched cell.
 
 **Step 2: Select the email(s) you want to verify**
 

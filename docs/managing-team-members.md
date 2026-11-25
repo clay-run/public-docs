@@ -174,8 +174,10 @@ The exported team member CSV contains the following columns:
 
 **If the `Export CSV` button is disabled:** The button is disabled when no members match your current search or filters — clear them to show members again. In workspaces that use user groups, the button is also disabled until members' group memberships finish loading.
 
-## Programmatic user management
+## Programmatic user management: API and SCIM provisioning
 
-Clay does not have a programmatic API for workspace member management. There is no API endpoint to invite users, update their roles, or remove or deactivate them from a workspace. All user management must be done manually through the workspace UI at `Settings` > `Team`.
+Clay doesn't have a public API for workspace member management. There's no API endpoint to invite users, update their roles, or remove them from a workspace, and the Clay CLI can only list and view users.
 
-For automated user lifecycle management through an identity provider (such as automatically adding or removing users when accounts are created or deactivated in Okta), see [Single Sign-On (SSO)](/docs/single-sign-on) — SSO handles authentication only and does not provision workspace membership automatically.
+To automate user provisioning and deprovisioning, Enterprise workspaces can use [SCIM provisioning](./scim-provisioning.md). SCIM provisioning adds members to your Clay workspace when they're assigned to Clay in your identity provider (such as Okta), removes them from the workspace when they're unassigned or deactivated, and sets their workspace roles from your identity provider groups. Workspace admins set it up in `Settings` > `Workspace` > `SCIM provisioning`.
+
+On plans without SCIM provisioning, manage members manually in `Settings` > `Team`. [Single Sign-On (SSO)](/docs/single-sign-on) handles sign-in only and doesn't add or remove workspace members.

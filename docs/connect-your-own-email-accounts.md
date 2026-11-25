@@ -1,16 +1,16 @@
 ---
 title: Connect your own email accounts
-description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, and how to reconnect or bulk-delete accounts with auth errors.
-last_synced: 2026-11-10T20:17:32.598Z
+description: How to connect Google Workspace, Microsoft 365, or SMTP mailboxes you already own as Sequencer sending accounts via OAuth, manual SMTP, or bulk CSV upload, how to reconnect or bulk-delete accounts with auth errors, and what happens to connected accounts when you downgrade to the Free plan.
+last_synced: 2026-11-19T19:10:36.670Z
 ---
 
 # Connect your own email accounts
 
-Connect email accounts you already own — Google Workspace, Microsoft 365, or any mailbox that supports SMTP — and use them as sending accounts for your campaigns.
+Connect email accounts you already own — Google Workspace, Microsoft 365, or any mailbox that supports SMTP — and use them as sending accounts for your sequences.
 
 Clay can sell you managed sending accounts, and it can also send from mailboxes you already own. Bringing your own accounts means you keep the domain, the DNS, and the mailboxes, and you connect each one to Clay once. Two paths cover almost everything: OAuth for Google Workspace and Microsoft 365, and SMTP for other providers or for migrating a batch of accounts in one go.
 
-**Note:** Campaigns send through Clay’s email integration partner, Smartlead, so the credentials you connect are shared securely with Smartlead. Accounts you connect sit at the workspace level, which means any campaign in the workspace can select them as senders. The connection modal links both the Smartlead privacy policy and Clay’s trust center if you want the detail on how that data is handled.
+**Note:** Sequences send through Clay’s email integration partner, Smartlead, so the credentials you connect are shared securely with Smartlead. Accounts you connect sit at the workspace level, which means any sequence in the workspace can select them as senders. The connection modal links both the Smartlead privacy policy and Clay’s trust center if you want the detail on how that data is handled.
 
 ## When to bring your own
 
@@ -21,7 +21,7 @@ Two situations make connecting your own accounts the right call:
 
 Bringing your own accounts also means the surrounding infrastructure stays with you. DNS records (SPF, DKIM, and DMARC), the warmup decision, and domain-level health are yours to manage, because Clay doesn't control the accounts.
 
-Domain deliverability monitoring is available for accounts purchased through Clay. For your own accounts, keep an eye on the bounce rate in campaign analytics and keep daily volume conservative per mailbox. [Deliverability and domain health](https://university.clay.com/docs/sequencer-deliverability) covers the numbers to watch and where to find them.
+Domain deliverability monitoring is available for accounts purchased through Clay. For your own accounts, keep an eye on the bounce rate in sequence analytics and keep daily volume conservative per mailbox. [Deliverability and domain health](https://university.clay.com/docs/sequencer-deliverability) covers the numbers to watch and where to find them.
 
 | Method | Best for | Admin authorization |
 | --- | --- | --- |
@@ -68,7 +68,7 @@ If connecting still fails more than 24 hours after your admin finished, reach ou
 1.  Back in the modal, click `Continue` to reach the `Connect your email account` step.
 2.  Decide who can see the account using the `Only show to me and workspace admins` toggle. On — the default — means `This email account will only be visible to you and workspace admins`; switching it off means `This email account will be visible to all workspace editors`.
 3.  Click `Connect your Google account`, sign in, and grant access.
-4.  The last step is `Enable email warming to improve deliverability`. The accounts you just added are listed with warmup already checked, so clicking `Enable warming` turns it on for all of them. Unchecking every account changes that same button to `Continue without warming`. [Email warmup](https://university.clay.com/docs/email-warmup) builds sender reputation before you send at volume, so leaving it on is the recommendation for almost every account.
+4.  The last step is `Enable email warming to improve deliverability`. At the top, a `Do not warm your main domain` warning reads `Turn warming on for secondary domains only. Warming your main domain can harm its reputation.` The Google accounts you just connected are listed unchecked, so the button reads `Continue without warming` and clicking it leaves warmup off. To warm an account on a secondary domain, check it and the button changes to `Enable warming`. [Email warmup](https://university.clay.com/docs/email-warmup) covers how warmup works and how to turn it on later from the `Email accounts` tab.
 
 ## Connect with Microsoft OAuth
 
@@ -80,7 +80,7 @@ Microsoft follows the same shape, with one difference: instead of configuring th
 4.  `Share with your admin` — send the URL to whoever administers your Microsoft 365 tenant.
 5.  `Admin grants consent` — the admin opens the URL and grants consent on behalf of the organization.
 6.  Click `Continue`, set the `Only show to me and workspace admins` toggle, then click `Connect your Microsoft account` and sign in.
-7.  Finish on the `Enable email warming to improve deliverability` step — the same last screen as the Google path, and the same choice between `Enable warming` and `Continue without warming`.
+7.  Finish on the `Enable email warming to improve deliverability` step — the same last screen as the Google path, with the same `Do not warm your main domain` warning. The Microsoft accounts you just connected are listed unchecked, so the button reads `Continue without warming` until you check an account on a secondary domain, which changes it to `Enable warming`.
 
 If the consent page returns a server error, that's usually a temporary hiccup rather than a sign the consent failed. Try connecting through OAuth anyway — and if the connection doesn't go through either, have your admin open the URL again a few minutes later.
 
@@ -97,7 +97,7 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 | Section | Field | What goes in it |
 | --- | --- | --- |
 | SMTP settings (sending) | Sender name | The sender name recipients see |
-| SMTP settings (sending) | Sender email | The address campaigns send from |
+| SMTP settings (sending) | Sender email | The address sequences send from |
 | SMTP settings (sending) | Username | The username the mail server expects, often the address itself |
 | SMTP settings (sending) | Password | The mail server password, or an app password for Gmail mailboxes |
 | SMTP settings (sending) | SMTP host | Your provider’s outgoing mail server |
@@ -105,9 +105,10 @@ SMTP is the most hands-on of the four methods and the one to reach for when OAut
 | IMAP settings (receiving) | IMAP host | Your provider’s incoming mail server |
 | IMAP settings (receiving) | IMAP type | SSL and TLS both use port 993, and None uses 143. |
 
-Two provider-specific details to watch for:
+Three provider-specific details to watch for:
 
--   Gmail mailboxes need an app password for SMTP access rather than the normal account password. You can create one in your Google account security settings, under 2-step verification.
+-   For a consumer Gmail address, Clay fills in the SMTP and IMAP hosts for you. When the `Sender email` ends in `@gmail.com` or `@googlemail.com`, the `SMTP host` field is set to `smtp.gmail.com` and the `IMAP host` field to `imap.gmail.com`. Both fields stay editable, and a host you type yourself is never overwritten. If you change the `Sender email` to a non-Gmail address, the hosts Clay filled in are cleared. Google Workspace addresses on your own domain aren't filled in automatically, so enter `smtp.gmail.com` and `imap.gmail.com` yourself for those.
+-   Gmail mailboxes need an app password for SMTP access rather than the normal account password. 2-step verification has to be turned on for the Google account before you can create one, and the app password option sits under it in your Google account security settings.
 -   If you enter an Outlook or Office 365 hostname, the modal points you back to Microsoft OAuth. Outlook retired IMAP access in 2022, so OAuth is the path that works for those mailboxes.
 
 ### Upload accounts in bulk
@@ -121,7 +122,7 @@ Your CSV needs one row per mailbox, with these columns:
 
 | Column | What goes in it |
 | --- | --- |
-| from_email | The address campaigns send from |
+| from_email | The address sequences send from |
 | from_name | The sender name recipients see |
 | user_name | The username the mail server expects, often the address itself |
 | password | The mail server password, or an app password for Gmail mailboxes |
@@ -163,7 +164,7 @@ Any workspace role except Viewer can delete email accounts. Accounts connected t
 
 ### Why does an admin have to authorize the Clay Sequencer app at all?
 
-Campaign sending comes with inbox warmup, which sends and receives mail on the account's behalf. That puts the app outside the scope Google and Microsoft will fully verify themselves, so the decision moves to the person who administers your domain instead. Every cold email sequencer that includes warmup works this way.
+Sequence sending comes with inbox warmup, which sends and receives mail on the account's behalf. That puts the app outside the scope Google and Microsoft will fully verify themselves, so the decision moves to the person who administers your domain instead. Every cold email sequencer that includes warmup works this way.
 
 The practical upside is that it's a single step per Workspace or organization. Once it's done, every mailbox on the domain can connect without involving the admin again.
 
@@ -173,14 +174,30 @@ OAuth connections are for business mailboxes on a domain you administer, through
 
 That lines up with what works for cold outbound anyway: a domain you control is what lets you set DNS records, spread sending across several mailboxes, and protect your reputation over time.
 
+### Can I connect a shared Outlook inbox to Sequencer?
+
+No. Clay Sequencer can't connect a Microsoft 365 shared mailbox (shared inbox). When you connect with `Outlook (OAuth)`, you sign in with a Microsoft account, and Clay sends from that signed-in account's own address. Connecting a shared inbox with just its email address and password isn't the path either: Outlook retired IMAP access in 2022, so `Manual SMTP setup` points Outlook and Office 365 hostnames back to Microsoft OAuth.
+
+Sending as a shared mailbox through another user's connection isn't supported either: a connected Outlook account always sends from its own address, and there's no option to pick a different "from" address.
+
+To send from Sequencer, connect each sender as its own Microsoft 365 mailbox that can sign in, using `Outlook (OAuth)` as described in [Connect with Microsoft OAuth](#connect-with-microsoft-oauth).
+
 ### Will campaign emails show up in my Sent folder?
 
-For accounts connected with Google or Microsoft OAuth, yes — campaign sends land in the mailbox's `Sent` folder alongside everything else you send. For SMTP accounts it depends on the mail server, and most don't copy messages sent over SMTP into `Sent`.
+For accounts connected with Google or Microsoft OAuth, yes — sequence sends land in the mailbox's `Sent` folder alongside everything else you send. For SMTP accounts it depends on the mail server, and most don't copy messages sent over SMTP into `Sent`.
 
-Either way, replies are fetched from the mailbox over IMAP and collected on the campaign's `Replies` tab, so you can answer from the same address the email went out from.
+Either way, replies are fetched from the mailbox over IMAP and collected on the sequence's `Replies` tab, so you can answer from the same address the email went out from.
 
 ### Clay says the address is already in use — what now?
 
 Smartlead allows an email address to be connected to one account at a time, so an address that was previously linked to another Smartlead account has to be released there before it can connect here.
 
 If you have access to that Smartlead account, delete the address there and connect it again in Clay. If you don't, contact Clay support with the address you're trying to add and they can remove it for you.
+
+### What happens to my connected email accounts if I downgrade to the Free plan?
+
+The Free plan doesn't include Sequencer, so when a workspace moves to Free (or to any plan without Sequencer access), Clay deletes the email accounts you connected yourself — through Google OAuth, Microsoft OAuth, manual SMTP setup, or bulk CSV upload — from Clay and from Smartlead, Clay's email integration partner. Connected email accounts aren't kept in the workspace with warmup turned off; they're removed, and campaigns can no longer send from them. Deletion starts as soon as the plan change takes effect, with no grace period.
+
+Before you confirm a cancellation or a downgrade to Free, the confirmation dialog lists the connected email accounts that will be disconnected. Downgrading to a plan that still includes Sequencer keeps your connected email accounts in place.
+
+Email accounts purchased through Clay are handled separately: they're cancelled and deleted permanently when you downgrade to Free. See [What happens to my purchased email accounts if I downgrade my plan?](https://university.clay.com/docs/buying-email-accounts#what-happens-to-my-purchased-email-accounts-if-i-downgrade-my-plan).

@@ -55,6 +55,8 @@ Deleting a single email account from a domain will delete **all** email accounts
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
 
+Each monthly email account renewal charges for the purchased email accounts that still exist on your order when the renewal is billed, not the number you originally bought. Email accounts that have been deleted aren't included in later renewal charges.
+
 ### **What happens if I don't have enough credits when my email accounts or domains renew?**
 
 Purchased email accounts and domains renew on their own schedule, separate from your plan's monthly credit refresh. So a renewal can come due before your new credits arrive. If your workspace doesn't have enough credits to cover a renewal:

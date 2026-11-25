@@ -86,6 +86,10 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 **Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
 
+**Using an uploaded document in your prompt:** Claygent uses an uploaded document only when your prompt mentions it. Uploading a file doesn't add it to every run on its own. To point your Claygent at a document, type `@` in the prompt and select the document from the list. If your Claygent seems to ignore a document you uploaded, check that the prompt @-mentions it.
+
+**Who can manage uploaded documents:** Workspace Admins and Editors can upload, rename, replace, and delete documents in the **Browse documents** window. Admins and Editors can delete any document in the workspace, including ones someone else uploaded. Viewers can't upload or delete documents.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
@@ -295,6 +299,10 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
+### Why do I see "Failed to delete file" when I try to delete an uploaded document?
+
+Deleting a document from the Claygent **Browse documents** window needs the Admin or Editor workspace role. If you have the Viewer role, Clay won't delete the file and shows "Failed to delete file." To remove the document, ask a workspace Admin or Editor to delete it for you, or ask an Admin to change your role (see [Workspace administration](workspace-administration-documentation.md)).
+
 ### Can I duplicate a Claygent?
 
 Yes. From the Agents homepage, click the **⋯** (three-dot) menu on any agent and select **Duplicate**. Clay creates a copy named `{original name} (Copy)` in the same workspace. Duplication is available to workspace admins and members; viewers cannot duplicate agents.
@@ -324,6 +332,12 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 ### Does testing cost credits?
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
+
+### Can I test a Claygent for free through the Clay CLI?
+
+No. Free Claygent testing happens only in the test panel of Claygent builder in the Clay app. The Clay CLI doesn't have a command for testing a Claygent — the `clay claygents` commands let you list, view (`get`), and delete Claygents.
+
+Work you run through the CLI uses credits the same way it would in the product. For example, testing a Workflow step that contains a Claygent with `clay workflows nodes test` is a real run of that step and is charged like any other Claygent run. To iterate on a Claygent's prompt without spending credits, test it in Claygent builder first, then use it from the CLI or in your Workflows. For more on CLI and API billing, see [Clay API & CLI](clay-api-cli.md).
 
 ### If I re-run a Claygent column on rows that already have results, am I still charged credits?
 
@@ -361,6 +375,10 @@ Claygent builder has two buttons at the top of the editor: **Save** and **Deploy
 
 -   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
 -   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
+
+When you open Claygent builder from a workflow step — to create or edit the Claygent that step uses — Claygent builder shows only **Save**. The **Deploy** button is hidden there, and clicking **Save** saves the Claygent and takes you back to the workflow step you came from.
+
+The **Save** and **Deploy** buttons in Claygent builder are disabled while Sculptor is generating changes to your Claygent, including while a Sculptor generation is queued or resuming. Wait for Sculptor to finish, then click **Save**.
 
 To apply prompt or configuration changes to a Claygent column that's already in your table:
 
