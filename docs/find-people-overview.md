@@ -255,6 +255,26 @@ Here's what happens to people the old Manual trigger already found:
 -   **They stay in your audience.** Removing a Find people trigger deletes that trigger's search source and schedule. It doesn't remove any contacts already written to Audiences or to your People segment.
 -   **The new trigger's first run may pull them again.** Each scheduled run of a Find people trigger adds only people that trigger hasn't already pulled. The new trigger has no record of what the old trigger found, so its first run can return people who are already in your segment. To avoid this, add your existing People segment under **Excluded people** in the new trigger's search. Clay re-checks the exclusion on every scheduled run. Audience exclusions match by professional profile URL or email only, so contacts without either can still be pulled again. See "Excluding people (or companies) from your search" under [Importing from people and companies search](audiences.md#importing-from-people-and-companies-search).
 
+### How do AND and OR logic work in Find People filters?
+
+**Advanced Search is currently in closed beta.** This section describes the Find People filter panel in Advanced Search (Search DSL) mode. Contact support to request access to the closed beta.
+
+In the Advanced Search filter panel for Find People, filters combine as follows:
+
+-   **Across different filters — AND by default.** When you add filters on different fields (for example, **Country** and **City**), a person must match every filter to be returned.
+-   **Within a single filter — OR.** When you enter several values in the same filter (for example, three job titles or two countries), a person matching any one of those values is returned.
+
+**Switching between "all" and "any":** Once you have 2 or more filters, the panel shows **People match [all] of:** above them. Click **all** to open the dropdown and choose:
+
+-   **all** — a person must match every filter (AND).
+-   **any** — a person must match at least one filter (OR).
+
+**Example:** To find people in one country who hold any of several job titles, keep **People match all of:**, add a **Country** filter, and add one job title filter that contains every title you want. The country filter is required (AND), and the titles inside the job title filter are alternatives (OR) — you don't need to switch the dropdown to **any**.
+
+**Custom AND/OR combinations with Query mode:** For logic the all/any dropdown can't express, switch to Query mode. At the top of the **Filters** panel, click the `</>` icon (tooltip: "Query mode") — or, in layouts that show a dropdown, select **Query**. Query mode shows your filters as a text query written in Clay's search query language (not SQL), which you can edit directly. Query mode supports nested `and` / `or` groups, such as condition A AND (condition B OR condition C).
+
+**Other sections apply in addition to your filters:** **Target companies**, **Excluded people**, and **Result limits** are applied on top of the filters you set. A person must match your filters and the Target companies setting, must not be in Excluded people, and the total is capped by Result limits.
+
 ## Importing from a Sales Navigator search URL
 
 If you have a saved Sales Navigator search and want to pull those results into Clay, use the **Find people from external search** source — not the standard Find People source described above.
