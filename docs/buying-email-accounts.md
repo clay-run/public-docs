@@ -22,7 +22,9 @@ From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Ema
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
     -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible.
-    -   **Auto-balance** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
+    -   Each persona must be linked to a user in your Clay workspace. The email accounts created for that persona are assigned to that user, who receives the replies. You can change the assigned user after purchase — see [Can I reassign a purchased email account to a different rep?](#can-i-reassign-a-purchased-email-account-to-a-different-rep)
+    -   **Auto-balance personas** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
+    -   Each email prefix must be unique within a domain. For example, you can't have two `partners@` email accounts on the same domain — use a different prefix for the second one (such as `partnerships@`).
 3.  **Add contact details.** Enter the contact details that will be attached to the generated Google Workspace.
     -   Set your **forwarding domain** — this is the domain where purchased domains will redirect. Clay recommends using your company's primary domain (e.g., `clay.com`).
 4.  **Review your order summary.** The summary shows the total credits you can expect to be charged annually and monthly. Confirm your purchase when you're ready.
@@ -52,6 +54,8 @@ Deleting a single email account from a domain will delete **all** email accounts
 ### **How are credit costs calculated?**
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
+
+Each monthly email account renewal charges for the purchased email accounts that still exist on your order when the renewal is billed, not the number you originally bought. Email accounts that have been deleted aren't included in later renewal charges.
 
 ### **What happens if I don't have enough credits when my email accounts or domains renew?**
 
@@ -94,11 +98,27 @@ As with any outbound email program, deliverability also depends on factors such 
 
 From `Sequencer → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
 
+For Outlook email accounts, the **From name** is read-only and shows "This field can't be changed for Outlook." The **Signature** can still be updated.
+
 ### **Can I change the email address of a provisioned mailbox?**
 
 No. The email address assigned to each mailbox at purchase (for example, `d.henriksen@cyberarkoselabs.com`) is permanent and cannot be changed after provisioning. You can update display-level details such as the **From name** and **Signature** using **Update sender variables** — see [How do I change the sender name or other details on a purchased email account?](#how-do-i-change-the-sender-name-or-other-details-on-a-purchased-email-account) for those steps — but the underlying email address is fixed.
 
+The profile picture set for the persona at checkout also can't be changed after purchase.
+
 If you need a different email address, purchase a new domain and select the desired email prefix during checkout.
+
+### **Can I reassign a purchased email account to a different rep?**
+
+Yes. If a rep leaves or a new rep joins, a workspace Admin can change which workspace user a purchased email account is assigned to. Replies to that email account then go to the newly assigned user.
+
+1.  Go to `Sequencer → Email Accounts`.
+2.  Click the **⋯** menu on the purchased email account's row.
+3.  Select **Assign to user** and choose a member of your workspace.
+
+Only users with the **Admin** workspace role can reassign purchased email accounts. The user you assign must already be a member of your Clay workspace — invite a new hire to the workspace first, then assign the email account to them.
+
+Reassigning a purchased email account changes only who it's assigned to. It doesn't change the email address, **From name**, or profile picture, so a rep's email account (for example, `kyle@`) can't be renamed for a new rep (for example, `newrep@`). To send under a new rep's own name and address, buy new email accounts with a persona for that rep — new accounts typically arrive within a few hours (up to 72 hours) and need about 3 weeks of warmup before you use them in campaigns.
 
 ### **Where are the purchased email accounts from?**
 

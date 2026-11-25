@@ -1,7 +1,7 @@
 ---
 title: Connect your platform to Clay MCP
 description: Register your platform as an OAuth client via Dynamic Client Registration, connect it to Clay's MCP server, and learn how long tokens last and how MCP rate limits work.
-last_synced: 2026-11-10T19:42:42.327Z
+last_synced: 2026-11-19T07:39:05.014Z
 ---
 
 # Connect your platform to Clay MCP
@@ -105,7 +105,7 @@ Two things on the customer's side decide whether your client can connect at all.
 
 First, the person authorizing has to be a member of the workspace they select, since tools run against that workspace's data.
 
-Second, admins choose which clients their workspace accepts. Under `Allowed MCP clients` on the `MCP` page, which admins open from the sidebar on the Clay homepage, each client Clay recognizes gets its own toggle, alongside an `Unknown` option described in-product as `Use this for any other MCP client not listed above.` That `Unknown` toggle is the one that governs clients registered through DCR. Clay re-checks the policy every time it issues a token, so turning it off blocks token refreshes as well as new connections.
+Second, admins choose which clients their workspace accepts. Under `Allowed MCP clients` on the `Agent users` page, which admins open from the sidebar on the Clay homepage, each client Clay recognizes gets its own toggle, alongside an `Unknown` option described in-product as `Use this for any other MCP client not listed above.` That `Unknown` toggle is the one that governs clients registered through DCR. Clay re-checks the policy every time it issues a token, so turning it off blocks token refreshes as well as new connections.
 
 For how admins manage MCP access, credit limits, and functions, see [**MCP in Clay**](https://university.clay.com/docs/mcp-settings).
 

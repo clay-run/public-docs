@@ -25,7 +25,7 @@ This feature is especially useful when you're building lists with similar criter
 ## Use a saved search
 
 1.  When setting up a new `Find companies`, `Find people`, or `Find jobs` source, click `Browse past searches` in the modal.
-2.  Click `Saved by you` to find your saved searches (ones you explicitly saved), `Recents` to find your last 5-10 searches, or `Workspace` to find searches saved by anyone.
+2.  Click `Saved by you` to find your saved searches (ones you explicitly saved), `Recent` to find your last 5-10 searches, or `Workspace` to find searches saved by anyone.
 3.  Select a saved search to load its filter criteria.
 4.  Make any adjustments if needed, or use it as-is.
 5.  Click `Next` through the remaining setup steps, then click `Save` (the button may read `Save and run N rows`) to add the results to your table. If you're running the search outside an existing table, the save menu offers `Save to new table` (when you're in a workbook) or `Save to new workbook and table` instead.

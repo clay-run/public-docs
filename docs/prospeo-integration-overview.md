@@ -1,7 +1,7 @@
 ---
 title: Prospeo integration overview
 description: Find work emails and enrich person details using name, domain, or LinkedIn.
-last_synced: 2026-04-26T01:40:30.619Z
+last_synced: 2026-11-19T06:48:52.890Z
 ---
 
 # Prospeo integration overview
@@ -57,7 +57,7 @@ The **Find Work Email** action lets you find the work email of a contact using a
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  
-If you use the Clay-managed Prospeo account you will be charged at 2 credits per enriched cell.
+If you use the Clay-managed Prospeo account you will be charged credits per enriched cell.
 
 **Step 2: Select Required and Optional Setup Inputs**  
 You will need to enter the Full Name and Company Domain of person you want to find the Work Email for.  
@@ -77,7 +77,7 @@ The **Find Mobile Number** action lets you find mobile numbers associated with a
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  
-If you use the Clay-managed Prospeo account you will be charged at 5 credits per enriched cell.
+If you use the Clay-managed Prospeo account you will be charged credits per enriched cell.
 
 **Step 2: Enter Professional URL as setup input**  
 Please input the **Professional URL** (the contact's LinkedIn profile URL) to find their mobile number.
@@ -98,7 +98,7 @@ The **Find Work Email and Enrich Person from LinkedIn URL** action lets you find
 
 **Step 1: Choose the Prospeo account you want to use**  
 You can use either the Clay-managed Prospeo account or bring your own key.  
-If you use the Clay-managed Prospeo account you will be charged at 2 credits per enriched cell.
+If you use the Clay-managed Prospeo account you will be charged credits per enriched cell.
 
 **Step 2: Enter LinkedIn URL as setup input**  
 Please input the **Linkedin URL** of your contact to find their work email and enriched profile.

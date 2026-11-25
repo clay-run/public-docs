@@ -1,7 +1,7 @@
 ---
 title: Clay API & CLI
 description: How to access Clay's data and enrichments programmatically using the Clay CLI and Public API, including setup, plan limits, and available features.
-last_synced: 2026-11-10T18:50:14.947Z
+last_synced: 2026-11-19T07:41:30.596Z
 ---
 
 # Clay API & CLI
@@ -43,7 +43,7 @@ The platform has three core primitives:
 
 ## Plan availability and limits
 
-The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and, for a limited time, on legacy plans through the end of 2026.
+The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and on legacy plans.
 
 Search result limits vary by plan:
 
@@ -63,6 +63,14 @@ To see how much of your search limit you've used, open the `API and CLI` page in
 ### Does using the API or CLI cost extra credits?
 
 No. API and CLI calls consume the same credits and actions as the equivalent work done in-product. There is no additional cost because work is triggered via the developer platform instead of the UI.
+
+### Does the CLI spend credits during the beta?
+
+The Clay CLI itself doesn't charge for its reasoning: the planning and chat happen in your own coding agent (such as Claude Code or Codex), on your own subscription, not on Clay credits. The November 19 change, when Clay's global agent starts spending data credits on its own work, applies only to the global agent you chat with under `Agent` in Clay, not to the Clay CLI.
+
+What the CLI runs for you does spend credits. Enrichments, functions, and workflow runs started from the CLI are billed at the same rates as running them in a table.
+
+To see what the CLI and the API have spent, go to `Settings` → `Usage` and open the `API` tab. CLI spend appears on its own `CLI` row, and spend from API-key requests (including functions run by your scripts) appears on the `API` row. The API tab isn't broken down by user or API key. See [Credit usage](/docs/credit-usage) for the rest of the dashboard, and [Clay (global agent)](/docs/global-agent#credits-and-pricing) for global agent pricing.
 
 ### What's the difference between the Clay Plugin and the Public API?
 

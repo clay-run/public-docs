@@ -1,7 +1,7 @@
 ---
 title: Set up SCIM provisioning in Clay
-description: SCIM provisioning syncs Clay workspace membership and roles with
-  your identity provider through the WorkOS Admin Portal.
+description: SCIM provisioning syncs Clay workspace membership, roles, and user
+  groups with your identity provider through the WorkOS Admin Portal.
 last_synced: 2026-11-03T20:20:47.024Z
 ---
 
@@ -9,11 +9,9 @@ last_synced: 2026-11-03T20:20:47.024Z
 
 Keep your Clay workspace membership and roles in sync with your identity provider.
 
-Keep your Clay workspace membership and roles in sync with your identity provider.
-
 SCIM provisioning lets you add and remove Clay workspace members and set their roles from your identity provider (IdP). You set up the connection in the WorkOS Admin Portal, the tool Clay uses to connect directories, which carries step-by-step instructions for each provider.
 
-**Note:** SCIM provisioning is available on Enterprise plans and is enabled per workspace. Contact the Clay team to turn it on for yours.
+**Note:** SCIM provisioning is available on all Enterprise plans. Workspace admins can set it up themselves in `Settings` → `Workspace` → `SCIM provisioning` — you don't need to contact the Clay team to turn it on.
 
 ## Before you begin
 
@@ -42,7 +40,9 @@ Your identity provider's groups decide each member's workspace role. You map eac
 
 Users without a mapped role get the `Editor` role. To change the default role, contact the Clay team.
 
-Groups from your identity provider are only used to assign roles. SCIM provisioning doesn't create or update [Clay user groups](https://university.clay.com/docs/user-groups).
+### User groups
+
+Groups you push from your identity provider also sync to Clay as SCIM-managed [user groups](https://university.clay.com/docs/user-groups), with group names and membership kept up to date automatically. You can share these user groups with workbooks, connections, and credit budgets, and members added to a group in your identity provider automatically inherit that access in Clay. In Clay, admins can edit a SCIM-managed user group's description, but its name and members are managed in your identity provider.
 
 ### What syncs to Clay
 
@@ -55,6 +55,10 @@ Here's what each change in your identity provider does in Clay.
 | Unassign or deactivate a user | The user is removed from the workspace. Their Clay account isn't deleted. |
 | Change a user's name | Not synced. Members can update their own name in Clay Account settings. |
 | Change a user's email | See Account emails below. |
+| Push a group | Clay creates a SCIM-managed user group with the same name. |
+| Rename a group | The user group's name updates to match. |
+| Add or remove a user in a group | The user is added to or removed from the user group, gaining or losing the access granted through it. |
+| Delete a group | The user group is deleted from Clay. |
 
 ## Set up SCIM provisioning
 
@@ -81,7 +85,7 @@ Okta is one of the identity providers the portal supports, and its guide walks y
 2.  **Configure the API integration.** On the app's `Provisioning` tab, enable API integration and paste the endpoint and bearer token from the portal.
 3.  **Configure provisioning actions.** Under `To App`, enable `Create Users`, `Update User Attributes`, and `Deactivate Users`.
 4.  **Assign people and groups.** Assign the people or groups who should have access to the workspace.
-5.  **Push groups.** On the `Push Groups` tab, push the groups you want to map to Clay roles.
+5.  **Push groups.** On the `Push Groups` tab, push the groups you want to map to Clay roles. Pushed groups also sync to Clay as SCIM-managed user groups.
 6.  **Map groups to roles.** In the portal, choose a Clay role for each pushed group.
 
     ![Mapping identity provider groups to Clay workspace roles in the WorkOS Admin Portal](https://cdn.prod.website-files.com/687e604972375496b891fe58/6acfab1f28a72435992431a9_6acfa8e5937082fd7209fe8e_scim-map-groups-to-roles.png)

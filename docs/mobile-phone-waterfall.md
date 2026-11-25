@@ -146,6 +146,12 @@ When `Only validate mobile phone types?` is off (the default), the validator onl
 **What's the difference between the two validation options?**
 `Only validate mobile phone types?` filters by *line type* — enable it so only mobile/cellular numbers count as valid (by default, all line types, including landline, are considered valid). `Require validation success?` gates by *validation outcome* — keep only numbers the validator confirms valid. You can use them independently or together.
 
+**What happens if the phone validator (Trestle or ClearoutPhone) is down or returns an error?**
+If the Mobile Phone waterfall's validator — Trestle or ClearoutPhone — is unavailable or returns an error, the validation cell for that provider step ends in an error state instead of a "valid" or "invalid" result. What the Mobile Phone waterfall does next depends on the `Require validation success?` setting:
+
+- **`Require validation success?` on:** A validation error counts as a failed validation. The number from that provider step is not written to the Mobile Phone output column, and the waterfall moves on to the next provider. If validation errors for every provider step, the Mobile Phone output column stays empty.
+- **`Require validation success?` off:** A validation error does not block the result. The number from that provider step is written to the Mobile Phone output column without being validated, and the waterfall stops — later providers don't run for that row.
+
 **Will stricter validation cost more credits?**
 It can. Rejecting more numbers means the waterfall calls more providers per contact before it finds an acceptable result, which can increase spend and reduce fill rate — in exchange for higher-quality output.
 
@@ -154,6 +160,19 @@ Enable **Output name of successful provider?** in your waterfall's **Additional 
 
 To compare providers directly before committing to a waterfall order, run individual provider enrichments on the same set of contacts rather than nesting waterfalls. Running them as separate columns makes each provider's result visible and attributable, so you can evaluate accuracy across sources side by side. Once you've identified which providers consistently return the most accurate results for your use case, reorder or disable underperformers in the waterfall's **Waterfall sequence** configuration (open via the waterfall tab → **Edit group** → **Full configuration** tab).
 
+**Is there a waterfall for work phone numbers or direct dials instead of mobile numbers?**
+No. The Mobile Phone waterfall is the only pre-built phone waterfall in Clay. It targets mobile (cell) numbers, so it can return personal mobiles. To find work phone numbers or direct dials (direct landlines), add individual provider enrichments to your table from `Add enrichment`:
+
+- **Bytemine — Find contact info:** turn on **Require direct dial** so Bytemine returns a result only when a direct dial is present. See [Bytemine](bytemine-integration.md).
+- **Lusha — Enrich person:** each returned phone number includes a **Type** and a **Do Not Call** indicator, so you can tell phone types apart and skip numbers flagged as Do Not Call. See [Lusha](lusha-integration.md).
+
+To keep credit usage efficient, combine a direct-dial enrichment with the Mobile Phone waterfall using a [run condition](conditional-runs.md) — for example, so the direct-dial enrichment only runs when your Mobile Phone column is empty.
+
+**How can I check whether a phone number is a mobile, a landline, or belongs to the contact?**
+Add a phone validation enrichment after your phone enrichment:
+
+- **ClearoutPhone — Check phone line type & status** returns the line type (for example, mobile or landline) for phone numbers worldwide. Include the country code for non-US numbers. See [ClearoutPhone](clearoutphone-integration-overview.md).
+- **Trestle — Verify contact** returns **Phone Name Match**, showing whether the number is associated with the contact's name. Trestle Verify contact only validates US and Canada numbers. See [Trestle](trestle-integration.md).
 **The Mobile Phone waterfall didn't find a number, or the number is wrong — what else can I try?**
 If the Mobile Phone waterfall comes back empty or returns an inaccurate number, try these options:
 
@@ -162,3 +181,27 @@ If the Mobile Phone waterfall comes back empty or returns an inaccurate number, 
 -   **Keep validation on** so invalid numbers fail and the waterfall moves on to the next provider instead of keeping a bad result. See [Validation](#validation).
 -   **Check that the number belongs to the person.** Phone validators (Trestle and ClearoutPhone) confirm that a number is valid and what line type it is, but not who it belongs to. To check whether a number is likely to reach the person you're enriching, add SureConnect's **Verify phone number** enrichment as a separate column after the waterfall. It takes the phone number and the person's full name (company name is optional). SureConnect can't be selected as a validator inside the waterfall, and its results arrive asynchronously. See [SureConnect integration](sureconnect-integration-overview.md).
 -   **Search for a publicly listed number with Claygent.** Add a Claygent (AI web researcher) column that searches the web — for example the person's bio, their company website, or a business listing — for a published phone number. This can work well for small businesses whose numbers aren't in phone data providers' databases.
+
+**Why do some rows show "Run condition not met" on provider or validation columns?**
+
+This is expected when the waterfall is working correctly. "Run condition not met" on a subset of rows — not all rows — means the waterfall's built-in logic skipped that step for those rows:
+
+- **An earlier provider already found a valid number for that row.** The Mobile Phone waterfall runs providers in sequence and stops as soon as one returns a result (or a validated result, if validation is enabled). Once an earlier provider succeeds for a row, all subsequent provider columns are skipped for that row — they show "Run condition not met" because the built-in condition "only run if no valid number has been found yet" is no longer true. This is the waterfall stopping early as intended, saving credits by not running additional providers once a match is found.
+
+- **The corresponding provider returned no number, so the validation step was skipped.** Each validation column runs only when the provider step before it returned a phone number. If a provider found nothing for a row, the paired validation column shows "Run condition not met" — there is no number to check. No credits are charged for skipped validation steps.
+
+In both cases, "Run condition not met" on some rows is not an error — it means the waterfall is operating as designed.
+
+**If all rows on every provider step show "Run condition not met"**, that indicates a run condition set on the waterfall column itself or on each provider step is blocking all rows from running. This is different from normal per-row skipping. To diagnose: click into one of the affected cells and use the **Explain** button next to the "Run condition not met" status to see why the condition evaluated to false for that row, then review and adjust the **Only run if** condition on the waterfall column or that provider step. See [Conditional runs](conditional-runs.md) for how run conditions work.
+
+**What match rate should I expect?**
+
+Individual phone providers typically cover only 20–40% of contacts — that low per-provider rate is why the waterfall exists. By stacking providers in sequence, each one checking contacts that previous providers missed, overall coverage rises substantially above what any single provider achieves.
+
+Match rates vary based on:
+
+- **Input data quality** — providing a LinkedIn or personal profile URL is the single strongest input; rows with only a name and company domain will have lower match rates.
+- **Your list composition** — coverage differs by geography, industry, and contact seniority. Select the regional waterfall option that matches where your contacts are based (for example, `US & Canada Mobile Phone` or `Europe Mobile Phones`).
+- **Number of providers** — a longer provider sequence gives more opportunities to find a number that earlier providers missed. If your current match rate is low and input data is populated, try expanding the waterfall sequence by adding more providers.
+
+If you're seeing unexpectedly low results after providing strong input data and using multiple providers, switch from `Mobile Phone (Global)` to a region-specific option if most of your contacts are in one geography.
