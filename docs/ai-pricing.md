@@ -2,7 +2,7 @@
 title: How AI is priced
 description: This guide explains how each works, which models they apply to, and
   how credits are calculated.
-last_synced: 2026-04-26T01:39:39.981Z
+last_synced: 2026-11-24T02:59:16.533Z
 ---
 
 # How AI is priced
@@ -19,6 +19,12 @@ _Clay uses two pricing structures for AI models—fixed and variable—so you pa
 
 You can always see which pricing structure applies when selecting a model in the product.**‍**
 
+### **How Classify is priced**
+
+Classify, the Use AI `Use case` and Workflows node that sorts each record into one of the categories you define, is free for a limited time during alpha. Unlike other AI prompts, a Classify run doesn't use data credits or count as an action. Usage limits still apply.
+
+Classify is currently in alpha and may not be enabled in every workspace yet. There's no model to pick for Classify, so it isn't in the pricing reference table below. For more on setting up Use AI and Workflows, see [Use AI](https://university.clay.com/docs/use-ai-integration-overview) and [Workflows](https://university.clay.com/docs/workflows).
+
 ## **Select model pricing reference**
 
 The table below lists the data credit cost per task for select AI models available in Clay, organized by provider and use case (Content Generation or Web Research).
@@ -32,14 +38,10 @@ The table below lists the data credit cost per task for select AI models availab
 | GPT-5.1 | 2 | variable |
 | GPT-5 Mini | 0.4 | 1 |
 | GPT-5 Nano | 0.2 | 0.5 |
-| o3 | 5 | variable |
 | Anthropic | Claude 4.5 Haiku | 1 | variable |
 | Claude 4.5 Sonnet | 1.5 | variable |
 | Claude 4.6 Sonnet | 1 | variable |
 | Claude 4.6 Opus | 7.5 | variable |
-| Gemini | 2.5 Pro | 3 | variable |
-| 2.5 Flash | 0.5 | 1 |
-| 2.5 Flash Lite | 0.5 | 1 |
 
 _Costs are in data credits._
 

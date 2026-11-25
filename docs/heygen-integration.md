@@ -1,7 +1,7 @@
 ---
 title: HeyGen integration
 description: Generate videos with AI avatars using your scripts.
-last_synced: 2026-04-26T01:40:07.040Z
+last_synced: 2026-11-19T08:03:08.434Z
 ---
 
 # HeyGen integration
@@ -17,9 +17,9 @@ With this integration, you can easily generate high-quality videos featuring AI 
 1.  While in a Clay table, click `Add enrichment` and search for HeyGen.
 2.  Under `Integrations`, select one of the HeyGen options.
 3.  In the modal, you will be asked to `Select HeyGen account`.
-    1.  If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    1.  HeyGen actions need your own HeyGen account. Click `+ Add account` and go through authentication.
 
-_Note: If you want to use a custom avatar, authenticate with your own HeyGen account._
+_Note: The `Avatar image` and `Avatar voice` lists load from your connected HeyGen account, so they include your custom avatars and voice clones._
 
 ## Using the HeyGen integration
 

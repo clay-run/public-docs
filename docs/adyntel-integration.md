@@ -1,7 +1,7 @@
 ---
 title: Adyntel integration
 description: Analyze ad content, campaign duration, media types, and ad counts
-last_synced: 2026-04-27T18:09:11.856Z
+last_synced: 2026-11-19T06:47:56.176Z
 ---
 
 # Adyntel integration
@@ -16,7 +16,7 @@ With this integration, you can analyze ad content, campaign duration, media type
 
 1.  While in a Clay table, click `Add enrichment` and search for `Adyntel`.
 2.  Under `Integrations`, select one of the Adyntel options.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay provided key.
+    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
 
 ### `Action` Get Meta ads
 

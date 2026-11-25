@@ -23,15 +23,11 @@ You can connect and pay for Influencer Club enrichments in two options.
 
 ### `Action` **Find social profiles by creator email**
 
-Use this action to find a creator's social media profiles — including Instagram, TikTok, and YouTube — starting from their email address. This is the best option when you have a personal email and want to find the creator's Instagram or other social profiles.
+Use this action to find a creator's social media profile URLs from their email address. Returns profile links for Instagram, TikTok, YouTube, Twitch, OnlyFans, Linktree, and Patreon.
 
 **Setup Inputs**
 
--   **Email address**: Enter the creator's email address to look up their social profiles.
-
-**Output**
-
-Returns profile URLs across platforms including Instagram, TikTok, YouTube, Twitch, OnlyFans, LinkTree, and Patreon (where available for the creator).
+-   **Email address**: Enter the creator's email address.
 
 ### `Action` **Find Creator Personal Email**
 
@@ -49,9 +45,9 @@ Use this action to retrieve a creator's phone number based on their profile URL.
 
 -   **Profile URL**: Enter the creator's profile URL on a supported social media platform to find their phone number.
 
-### `Action` **Find Social Profiles**
+### `Action` **Find all social profiles from one**
 
-Use this action to find all social media profiles associated with a creator based on an existing profile URL.
+Use this action to find all social media profiles associated with a creator based on an existing profile URL, username, or Influencer Club user ID.
 
 **Setup Inputs**
 
