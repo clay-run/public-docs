@@ -103,7 +103,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
 Once all your settings are saved, you can launch your campaign. Launching a campaign does the following:
 
 -   Emails begin sending according to your schedule, following deliverability best practices.
--   The `Analytics` tab shows campaign-level engagement metrics — including open rate and click-through rate — as totals across your entire campaign. You can refresh data manually using the button in the top right.
+-   The `Analytics` tab shows campaign-level engagement metrics — including open rate and click-through rate — as totals across your entire campaign. While a campaign is active, the `Analytics` and `Activity` tabs refresh automatically every 30 seconds while you're viewing them, so new enrollments and events appear without reloading the page. For about 18 seconds after you launch or resume a campaign, the `Analytics` tab refreshes every 5 seconds. Once you load a second page of a list in the `Activity` tab, that list stops refreshing automatically so you keep your place.
 -   The `Replies` tab shows you any incoming replies and lets you respond to them directly in Clay
 -   Actions are consumed for each email sent (1 Action per lead, plus standard Action and Data Credit rates for any AI snippets used).
 -   Your campaign becomes live, which means:
