@@ -33,8 +33,8 @@ Once a sequence has a segment, `Lead setup` at the top of the `Sequence` tab sid
 
 The 3-dot menu there gives you:
 
--   `Open segment in new tab`
--   `Change segment`
+-   `View lead list` — opens the attached segment in Audiences in a new browser tab.
+-   `Change lead list` — swaps in a different segment.
 -   `Lead email field` — by default a sequence sends to the contact's standard email field. If your leads carry more than one email field and you want a different one, choose from this menu; the standard column is listed with `(default)` after its name.
 
 ### Readiness warnings
