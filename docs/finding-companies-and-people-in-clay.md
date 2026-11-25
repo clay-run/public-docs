@@ -26,13 +26,24 @@ Choose one result type at a time: **People**, **Companies**, or **Jobs**. A peop
 
 **Already in Audiences?** The **People** and **Companies** lists there contain records already in your workspace. Segment filters organize those records. To discover additional prospects, start a **Find leads** search and import its results. See [Creating an audience](audiences.md#creating-an-audience).
 
-## Find with filters and Find with query
+## Find with filters and the query editor
 
 Start with **Find with filters** when it is available, or describe what you want in the search assistant. For example: “Find sales leaders at software companies with at least 500 employees.” Review the criteria and preview before importing.
 
-For an advanced query such as `select from people ...` or `select from companies ...`, open **Find people** or **Find companies**, then use the mode menu in the search panel header to switch from **Find with filters** to **Find with query**, if offered. Enter the query in that mode's query editor. Query syntax is not a table formula or a Find AI input.
+### Where is the query editor in Find People and Find Companies?
 
-**Find with query is in beta, and pricing is subject to change.** Availability and the layout of the filter/query controls vary by workspace. Some workspaces open directly in the query experience; others do not offer it. If you do not see the option, use the available filters or search assistant rather than looking for Find AI. The **Jobs** search UI uses filters and does not offer **Find with query**.
+With upgraded search on, the Find People and Find Companies search panel always opens with the filter editor, so the query (code) editor isn't the first thing you see. The query editor hasn't been removed, and your access hasn't changed. To write an advanced query such as `select from people ...` or `select from companies ...`:
+
+1.  Open **Find people** or **Find companies**.
+2.  In the **Criteria** section, click the **Filters** dropdown on the right side of the section header.
+3.  Choose **Query**. The dropdown now reads **Query**, and the query editor replaces the filter list.
+4.  Enter your query in the query editor. Query syntax is not a table formula or a Find AI input.
+
+Clay doesn't remember this choice. Each time you open Find People or Find Companies, the Criteria section starts in **Filters** again, so switch to **Query** whenever you want the query editor. In some search layouts the switch is an icon toggle in the search panel header instead: the funnel icon (**Editor mode**) shows filters and the code icon (**Query mode**) shows the query editor.
+
+The **Find with filters** menu at the top of the search panel is a different control. It switches between search modes, such as **Find lookalikes** for companies, and doesn't open the query editor.
+
+**The query editor is part of upgraded search, which is in beta and turned on per workspace by Clay.** Pricing is subject to change. If upgraded search is on in your workspace, the query editor is available through the **Filters** dropdown — there is no separate setting to enable it. To check whether upgraded search is on, see [How do I check if upgraded search is on?](#how-do-i-check-if-upgraded-search-is-on). The **Jobs** search UI uses filters only and has no query editor.
 
 Standard people and company table searches do not have a per-search Data Credit charge. Paid options, such as technographics in the standard company import flow, and enrichments can add charges. Workflow search execution can also use Actions. Review the displayed estimate before importing or running a Workflow; do not assume that every search option or follow-up action is free.
 
@@ -695,7 +706,7 @@ First, check that you're filtering on **Job title keywords** (not just function 
 
 ### Can I prioritize certain job titles over others in a people search?
 
-No. A single Find People search (in **Find with filters** or **Find with query**) can't rank one job title above another. For example, you can't tell it to return Head of People or Head of HR first and CEO or COO only after that. Find with query doesn't support `order by` either.
+No. A single Find People search (using filters or the query editor) can't rank one job title above another. For example, you can't tell it to return Head of People or Head of HR first and CEO or COO only after that. The query editor doesn't support `order by` either.
 
 **Why CEOs and founders fill the slots first:** When you set **Limit per company** (or `limit N by clay_company_id` in a query), the search ranks every matching person at each company by their estimated audience size, largest first. How closely their job title matches your list doesn't change the order. CEOs and founders often have large audiences, so with a low limit such as 3 per company they tend to take every slot.
 
