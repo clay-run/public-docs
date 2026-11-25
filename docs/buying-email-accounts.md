@@ -120,6 +120,10 @@ Only users with the **Admin** workspace role can reassign purchased email accoun
 
 Reassigning a purchased email account changes only who it's assigned to. It doesn't change the email address, **From name**, or profile picture, so a rep's email account (for example, `kyle@`) can't be renamed for a new rep (for example, `newrep@`). To send under a new rep's own name and address, buy new email accounts with a persona for that rep — new accounts typically arrive within a few hours (up to 72 hours) and need about 3 weeks of warmup before you use them in campaigns.
 
+### **How many emails should I send from each inbox per day?**
+
+Clay recommends no more than 20 emails per inbox per day — approximately 600 emails per inbox per month. Clay warns you when you try to set a daily send limit above 20, as higher volumes can trigger spam filters and damage your sender reputation. The maximum daily send limit for purchased inboxes is 30 emails per inbox per day.
+
 ### **Where are the purchased email accounts from?**
 
 Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision and manage the email accounts.
