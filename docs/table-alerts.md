@@ -136,6 +136,10 @@ A column error is triggered by failures during action runs, such as missing requ
 
 Yes. Marking an alert as resolved clears it from your active feed, but if the underlying condition persists or recurs, a new alert will fire.
 
+### **Do table alerts work for Clay Workflows?**
+
+No. Table alerts monitor only Clay tables, not workflow runs. Clay Workflows don't currently include built-in alerts for failed runs. To monitor a workflow for failures, filter the workflow's **Runs** dashboard by **Failed** status, or check for failed runs on a schedule with the Clay CLI — see [Can I get notified when a workflow's runs fail or errors spike?](run-progress.md#can-i-get-notified-when-a-workflows-runs-fail-or-errors-spike).
+
 ### **Does the feature cost credits?**
 
 No, table alerts is a monitoring feature and does not consume actions or data credits.
