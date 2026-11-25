@@ -100,14 +100,21 @@ The most common reason is that most of your contacts are located outside the Uni
 
 To reach non-US contacts, use your own first-party data: contacts from your CRM, data warehouse, or a CSV upload where you have collected the appropriate consent. See [How audience sourcing works by region](#how-audience-sourcing-works-by-region) for the complete breakdown of what is eligible by platform and location.
 
-**Why is my match rate lower than expected for audiences that include non-US contacts from Find People?**  
-When Enhanced Matching runs for an ad sync, Clay generates hashed email identifiers for each contact before sending them to the ad platform. Ad platforms use these hashes to identify your contacts — a contact without a hashed identifier cannot be matched, even if it is included in the sync.
+**The people count next to Meta Ads in my ad sync is much lower than my segment. Is that my match rate?**  
+No. On the `Setup` step of an ad sync, the number shown on each destination card under `Sync destinations` (for example, `Meta Ads` showing 1,264 people for a segment of 72,461) is how many contacts in your segment can be sent to that destination after Clay's sourcing and country filters. It is not a match rate. The same section shows the note `Your synced audience may be smaller due to regulatory restrictions.` to flag this.
 
-For contacts sourced solely from Find People (CPJ-only contacts), Clay skips the hashing step when the contact is located outside the US. Those contacts count toward your audience total but cannot be matched by the ad platform, which pulls your overall match rate down. The most common scenario is a Find People search that included non-US locations — for example, a query covering both Canada and the United States — where non-US contacts are included in the audience but cannot contribute to the matched count.
+A match rate only exists after the ad sync runs and the ad platform processes the upload, so an ad sync that's still in `Draft` doesn't have a match rate yet. Once a run completes, the match rate appears on the destination's status card in the `Sync` step and in `Sync history`.
 
-A contact that has any first-party source alongside Find People — such as the same person existing in your CRM — is treated as first-party and is eligible for Enhanced Matching regardless of country.
+If your segment targets a market outside the US, such as France, and its contacts come from Clay's data (Find People and Clay's data providers), most of them have a non-US country and are left out for Meta Ads. That's why the destination count can be a small fraction of the segment. To reach that market, add your own first-party contacts from your CRM, data warehouse, or a CSV upload to the segment. Those contacts aren't filtered on country.
 
-To improve match rates in this situation: limit your Find People searches to US contacts if US-only reach fits the campaign, or source non-US contacts from your CRM, data warehouse, or a CSV upload with appropriate consent. Importing Find People contacts into a CRM and re-syncing them does not change their sourcing eligibility — use this path only for contacts your organization independently owns in first-party systems.
+**Do non-US contacts from Find People lower my ad sync match rate?**  
+No. Contacts whose only source is Find People and whose country is outside the US are removed before Clay builds the file it uploads, so they're never sent to Meta Ads, Reddit Ads, Vibe, or any other destination that applies this country rule. Contacts whose only source is Clay's data are never sent to Google Ads or Bing Ads, in any country. The match rate for an ad sync is calculated on the contacts Clay actually sent, so excluded contacts don't count against it.
+
+`Enhanced matching` can't bring excluded contacts back. Enhanced matching only enriches the contacts that remain after the filters, and only those contacts are charged credits. The `Enrich and sync` confirmation reflects this: it says Enhanced matching will enrich up to a given number of contacts `after ad sync filters are applied`.
+
+A contact that has any first-party source alongside Find People, such as the same person existing in your CRM, is treated as first-party and isn't filtered on country.
+
+To reach more non-US contacts, source them from your CRM, data warehouse, or a CSV upload where you've collected the appropriate consent. Only bring contacts in this way when your organization independently owns them in its own systems.
 
 **How quickly do opt-outs take effect?**  
 Recurring syncs run every 3 days. Opt-outs updated in your source system are reflected in your connected ad account on the next sync cycle.
