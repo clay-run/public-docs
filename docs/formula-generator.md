@@ -347,3 +347,22 @@ There are three approaches to work around the limit:
 -   **Extract only the fields you need (no cost).** Instead of stringifying the entire enrichment object, reference the specific sub-fields your workflow requires — for example, `{{Enrich Person}}?.name`, `{{Enrich Person}}?.title`, or `{{Enrich Person}}?.summary`. Individual field values are almost always well under 8 kB. Formula columns have no credit or action cost.
 -   **Split across multiple formula columns (no cost).** If you need several nested sections of the data, create one formula column per section — for example, `JSON.stringify({{Enrich Person}}?.experience)` in one column and `JSON.stringify({{Enrich Person}}?.education)` in another. Each column stores its slice independently within the 8 kB limit.
 -   **Use an HTTP API column (1 action per row, no data credits).** An HTTP API column that echoes its request payload stores the full response as an action column cell — and action columns support up to 200 kB per cell. This uses 1 action per row but no data credits. Avoid this approach for sensitive or private data. For the full breakdown of what consumes actions vs. data credits, see [Actions and data credits](actions-data-credits.md).
+
+### **Why do I see "This formula is too long to save"?**
+
+Clay limits the size of a formula's own code when you save it. A formula can be saved only if both of these are true:
+
+-   The formula text you write is no larger than **64 KiB** (65,536 bytes).
+-   The compiled version of the formula that Clay runs is no larger than **128 KiB** (131,072 bytes).
+
+Sizes are measured in bytes, so characters outside basic ASCII (such as accented letters or emoji) count as more than one byte. If a formula is over either limit, Clay doesn't save it and shows: **"This formula is too long to save. For logic this large, use a workflow instead."**
+
+The formula size limit applies to every formula you save in a table, including:
+
+-   Formula columns and waterfall step formulas
+-   Formulas used as inputs to enrichment and action columns
+-   **Only run if** (conditional run) formulas and delay formulas
+
+Existing formulas aren't affected. A formula that's already saved keeps working, and re-saving a column with that formula unchanged still succeeds. The limit applies when you create a new formula or edit an existing one.
+
+This limit is separate from the 8 kB cell limit described above: the 8 kB limit applies to the value a formula produces in each cell, while the 64 KiB / 128 KiB formula size limit applies to the formula's code. For logic too large to fit within the formula size limit, use a workflow instead, as the error message suggests.
