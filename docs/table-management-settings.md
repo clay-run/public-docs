@@ -74,7 +74,7 @@ When you duplicate a table, Clay copies the table structure and run settings —
 **What is copied:**
 -   Column headers and their configuration (enrichment settings, formulas, conditional run logic)
 -   Run settings, including the **Auto-run** toggle and "Keep existing results" setting
--   Scheduling configuration (if the table has a scheduled source import)
+-   Scheduling configuration (if the table has a scheduled source import) — Clay attempts to carry over the schedule to the duplicate. If it cannot — for example, because your workspace has reached its scheduled-table limit — the table is still duplicated but the schedule is not copied. You can add the schedule to the duplicate manually once a slot is available.
 
 **What is not copied:**
 -   Enriched data — enrichment columns start empty in the duplicate
@@ -113,14 +113,12 @@ To duplicate a table:
 
 ## View table graph
 
-View Graph helps you visualize the enrichments and their relationships in your table. It enables you to explore data connections and edit directly within the graph.
+Graph view helps you visualize the enrichments and their relationships in your table. It enables you to explore data connections and edit directly within the graph.
 
-To view your table graph:
+To open Graph view:
 
-1.  Open your table settings dropdown.
-    -   If you're in a **table**, locate the dropdown in the top-left corner.
-    -   If you're in a **workbook**, locate the dropdown in the bottom navigation bar.
-2.  Select `View Graph`.
+1.  Click the view selector dropdown in your table toolbar — it is labeled **Default view** (or your current view name) and is located in the top-left area of the table.
+2.  Select **Graph view** from the list.
 
 ## Manage enrichments from table graph view
 

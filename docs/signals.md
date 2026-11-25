@@ -25,7 +25,7 @@ Looking to monitor a specific enrichment? [Learn how to create Custom Signals.](
 
 To start a signal, you'll **need a table with** companies or contacts you want to monitor. This **table should include** LinkedIn URLs for individuals or company identifiers (such as website or LinkedIn URLs).
 
-**While in your table:**
+**From your workbook:**
 
 1.  In the workbook's **Create** panel (click `+` to expand it if collapsed), select **Signals**, then choose a signal type — **New hire**, **Job change**, or **Promotion**.
 2.  Select the **company table** you want to monitor, then select a **view** from that table — the signal will only check rows visible in that view (not the entire table). Identify the correct company identifiers (website, LinkedIn URL, etc.).

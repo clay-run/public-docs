@@ -54,7 +54,7 @@ If you are on a paid plan and have credits with other data providers, Clay allow
 You can access adding your API key two ways:
 
 1.  Profile picture  > Settings > Navigation Bar
-2.  Go to your profile picture in the top right corner, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
+2.  Go to your profile picture in the bottom-left corner of the sidebar, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
 3.  Enrichment Panel > Account > Add Account
 4.  When setting up an enrichment that accepts an API key, you can add an account linked to your API key. By default, Clay's API key will be selected, but if you want to use your own, simply switch to your account by selecting **Add Account**.
 
@@ -76,9 +76,9 @@ When you add a **Use AI** or **Claygent** column, the model you select directly 
 
 **How do you implement this?**
 
-When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 4.1 Nano** costs 0.1 credits/row for content generation (Use AI) and 0.5 credits/row for web research (Claygent) — compared to **Neon** at 2 credits/row and **Argon** at 3 credits/row for Claygent tasks.
+When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 5.6 Luna** costs 0.1 credits/row for content generation (Use AI). For web research (Claygent), **Neon** costs 2 credits/row and **Argon** costs 3 credits/row.
 
-As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 4.1 Nano for high-volume, simpler tasks where efficiency is the priority.
+As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 5.6 Luna for high-volume, simpler tasks where efficiency is the priority.
 
 See [How AI is priced](ai-pricing.md) for the full model pricing comparison.
 

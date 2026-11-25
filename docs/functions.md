@@ -90,6 +90,16 @@ For a full walkthrough, see [MCP settings](https://university.clay.com/docs/mcp-
 
 Functions is available on all paid plans at no additional cost, including paid legacy plans. Advanced capabilities such as MCP access are gated to higher tiers.
 
+### Can I run a function that includes a phone number enrichment on a free or trial plan?
+
+No. Phone number enrichments aren't available on free or trial plans, and that applies to functions too. If a function contains a phone number enrichment and your workspace is on a free or trial plan, the function won't run.
+
+-   **In a table:** when you choose that function in a function column's configuration panel, Clay shows a **Paid plan required** notice that reads "Phone number enrichments need a paid plan." with an **Upgrade plan** button.
+-   **In Browse Clay managed functions:** Clay-managed functions that include a phone number enrichment show a **Paid plan required** badge, and the same notice appears when you open one.
+-   **Through the API or MCP:** running the function returns the same "Phone number enrichments need a paid plan." message with an upgrade link.
+
+To run the function, upgrade to a paid plan, or remove the phone number enrichment from the function. Editing a Clay-managed function detaches it from Clay's updates — see [What happens when I try to edit a Clay-managed function?](#what-happens-when-i-try-to-edit-a-clay-managed-function).
+
 ### Does running a function cost extra credits?
 
 No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a profile lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Estimated cost is visible in the function editor panel and also in the table where the function is referenced.
@@ -150,6 +160,25 @@ This happens because the function's Live view retains at most 1,000 completed ro
 
 To view historical rows that have aged out, click **View archive** in the function's footer. Archived rows are kept for 30 days, and you can download them as a CSV with **Export full archive** in the archive table's toolbar.
 
+### How do I find which table a row in my function came from?
+
+A function can be called from many tables, so each row in a function stores where it came from in an **Origin** object in its **Function inputs** column. Use the Origin to trace a function row back to the table and row that sent it, for example when something breaks.
+
+**To open the source table and row from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click the **Function inputs** cell on the row you want to trace. The **Cell details** panel opens on the right and shows the **Origin** object, including:
+    -   **Table Id** (`t_...`): the table that called the function.
+    -   **Field Id** (`f_...`): the function column in that table.
+    -   **Record Id** (`r_...`): the row in that table that sent the data.
+3.  Click **Go to row in origin table** at the top of the **Cell details** panel. The source table opens in a new tab, scrolled to that row with the row selected.
+
+**Go to row in origin table** appears when the function was called directly from a table. If you don't see the button, you can still open the source table by adding its **Table Id** to your workspace URL: `https://app.clay.com/workspaces/<your workspace ID>/tables/<Table Id>`. Your workspace ID is the number after `/workspaces/` in your browser's address bar.
+
+**To find the function column in the source table:** in the source table's toolbar, click the columns button (for example, **8/10 columns**), then paste the **Field Id** into the **Search for a column** box. Column search matches column names and exact column IDs, so the function column appears in the results.
+
+**Searching by ID on the Clay homepage isn't supported.** The homepage **All files** search matches table, workbook, and folder names only, so pasting a **Table Id** there shows "No results found." Use the **Go to row in origin table** button or the workspace URL above instead.
+
 ### What's the difference between an input and a column in a function?
 
 Inputs are the values that change from table to table — typically identifiers like a company domain, a person's full name, or a LinkedIn URL. You define them when saving the function, and map them when calling the function from a different table. Columns that aren't marked as inputs are fixed enrichment logic that runs the same way every time.
@@ -183,7 +212,7 @@ Yes. Functions can be nested — a function can call another function as part of
 
 ### Can I call a Workflow Function from a table?
 
-No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, using a **Function** step. You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, by adding it as a step (it's labeled **Workflow function** in the step picker). You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
 
 Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
 
@@ -208,7 +237,7 @@ If you have existing column group templates, you can convert each one to a funct
 
 ### Is there version history for functions?
 
-No, functions don't currently have a version history.
+No, table functions don't currently have a version history. Workflow functions (functions built in Clay Workflows) do have versions: each workflow that calls a workflow function can follow the `Latest` published version or be pinned to a specific version. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 ### What is the main use case for functions?
 
@@ -382,7 +411,29 @@ If a formula or text column inside your function goes over 8 kB — for example,
 3.  Under **Additional outputs**, click **Add field** and use the field picker to select the specific field inside the action column's output — for example, the `Csv` field inside your **Run workflow** column.
 4.  Click **Review changes**, then click **Publish to function** (or **Publish** if the function has never been published).
 
-Because the value is read from the action column's stored output, it isn't subject to the 8 kB formula-column limit. The total data sent back for each row must still fit within the **200 kB** limit of the "Send data back" column. If your output can exceed 200 kB, return only the fields your calling table or agent actually needs.
+Because the value is read from the action column's stored output, it isn't subject to the 8 kB formula-column limit. The total data sent back for each row must still fit within the **200 kB** limit of the "Send data back" column. If your output can exceed 200 kB, return only the fields your calling table or agent actually needs — see [Why does my function's "Send data back" column show "Cell data size exceeds limit (200 kB)"?](#why-does-my-functions-send-data-back-column-show-cell-data-size-exceeds-limit-200-kb).
+
+### Why does my function's "Send data back" column show "Cell data size exceeds limit (200 kB)"?
+
+A function's **"Send data back"** column is an action column, so each of its cells holds up to **200 kB**. Everything checked under **Configure → Choose output data to send** is returned together in that one "Send data back" cell for the row. When the combined data for a row is larger than 200 kB, the "Send data back" cell shows **"Cell data size exceeds limit (200 kB)"**, the data isn't saved, and the calling table doesn't receive the function's output for that row. Rows with smaller outputs still send their data back normally.
+
+This 200 kB cell size limit is fixed and applies on every plan; it can't be raised. Splitting your outputs across more columns inside the function doesn't help, because all the selected outputs still come back in the same "Send data back" cell.
+
+Function outputs usually go over 200 kB for one of these reasons:
+
+-   **The same large data is sent back more than once.** For example, a jobs list from a job-postings enrichment (such as **Find jobs** or **Find Active Job Openings**) is checked as an output and a copy of the same list (such as a **Jobs 2** column) is checked too, so the size doubles.
+-   **An enrichment returns many items with lots of detail.** Job-postings enrichments return one entry per job, and each entry can include a full company profile, so companies with many openings produce very large outputs. The enrichment column itself is also an action column with a 200 kB limit, so on some rows the enrichment can go over the limit on its own.
+
+**To fix "Cell data size exceeds limit (200 kB)" on "Send data back":**
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, then click **Edit function**).
+2.  Click the **"Send data back"** column header to open its settings.
+3.  Under **Configure → Choose output data to send**, uncheck any duplicate columns and any columns your calling table doesn't need.
+4.  If an enrichment inside the function returns a list, lower the number of results it returns (for example, the result limit on a job-postings enrichment) so each row's output is smaller.
+5.  Click **Publish Changes**.
+6.  Rerun the enrichment on the affected rows, then rerun **"Send data back"** (or rerun the function column for those rows in the calling table). The calling table updates once the data comes back.
+
+For the other cell size limits in Clay, see [Manage cell data](manage-cell-data.md).
 
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 

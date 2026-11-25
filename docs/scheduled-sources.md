@@ -73,6 +73,8 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 
 If your workspace has reached its limit, you can remove schedules from sources you no longer need, or contact Clay support to request a higher limit.
 
+There is no in-app counter showing your current scheduled source count against the plan limit. To review which sources are on a recurring schedule, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**. This view includes scheduled columns and signals in addition to scheduled sources, so it captures more than just sources — but it is the most direct way to find recurring schedules across all your tables when you are approaching the limit.
+
 ## Troubleshooting
 
 ### What should I do when I see "workspace has reached the scheduled sources limit for your plan"?
@@ -124,6 +126,44 @@ To have your table automatically import new matching entries on a recurring basi
 Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
 
 **Note:** Scheduled sources are not available on the Free plan.
+
+### Why does my source column show "Updating..."? Is the source stuck, and can I stop it?
+
+A spinner with **Updating...** under a source column (for example, **Find mentions on Reddit**) means the source's latest run hasn't finished yet. When that run completes, the source column shows **Up to date** with a checkmark instead. A scheduled source that is waiting between scheduled runs shows **Up to date**, not **Updating...**.
+
+**There is no button to stop, pause, or cancel a source run that's in progress.** These controls don't affect a running source:
+
+-   **The table's Stop button** (in the run summary panel at the bottom-right of the table) cancels enrichment column runs only. It does not stop a source run.
+-   **Column re-run options** such as **Force rerun column** apply to enrichment columns only. Source columns don't have a run or re-run option.
+-   **Switching Run this source to Manually** stops future scheduled runs, but a source run that's already in progress continues until it completes.
+
+While a source run is in progress, the **Run now** button in the source panel's **Run settings** section is disabled and shows **Running...**.
+
+**Rows the source has already imported stay in your table.** On each scheduled run, the source adds newly found records as new rows. Some sources show their own message in the source panel when they run out of results. For example, Find mentions on Reddit shows "No more results available. Use scheduled runs to capture new mentions as they appear." This means there are no more matching results for now, and later scheduled runs add new mentions as they're found.
+
+### When I try to duplicate a table, I see "This duplication includes scheduled sources, but your workspace has reached the scheduled sources limit for your plan"
+
+This error appears when you try to duplicate a table that contains one or more scheduled sources and your workspace is already at or above the plan limit for scheduled sources.
+
+To resolve it, remove the schedule from one or more sources before duplicating:
+
+1.  In the table you want to duplicate, click a source column header.
+2.  Under **Run this source**, switch from **On a schedule** to **Manually**.
+3.  Click **Update Source Schedule**.
+4.  Repeat for any other scheduled sources in that table.
+5.  Duplicate the table. After duplication, you can re-enable the schedule on sources in either copy.
+
+Alternatively, remove the schedule from existing sources elsewhere in your workspace to free up a slot, then try duplicating again. If you need to identify which sources are scheduled across your workspace, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**.
+
+If you have reduced your scheduled sources but still see the error, contact support — your workspace may need a limit increase.
+
+### I see "You have exceeded the maximum number of scheduled sources on your plan"
+
+This error appears when your workspace has reached its scheduled source limit (Launch and Growth plans: 100 sources; Enterprise: 1,000 sources). To free up slots:
+
+1.  **Switch unneeded sources to Manual** — click the source column title, select the source under **Sources**, change **Run this source** to **Manually**, and click **Update Source Schedule**. Switching a source to Manual immediately frees one slot.
+2.  **Delete tables you no longer use** — deleting a table frees all of its scheduled source slots immediately. You do not need to permanently remove the table from Trash; the count updates as soon as the table is moved there.
+3.  **Contact support if the error persists** — if you still see this error after reducing your scheduled sources, reach out to support with your workspace URL. The team can verify your current usage count and help assess the options.
 
 ### Why did my scheduled source stop importing records after previously working?
 

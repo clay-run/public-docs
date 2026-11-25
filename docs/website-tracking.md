@@ -13,7 +13,7 @@ Clay's website tracking enables teams to collect visitor information in order to
 
 This tracking provides insights into how visitors engage with your content and helps you identify high-intent accounts at the optimal moment.
 
-**Plan availability:** Web intent is available on Trial, Pro, Growth, and Enterprise plans.
+**Plan availability:** Web intent is available on Growth and Enterprise plans.
 
 ## Using website tracking in Clay
 
