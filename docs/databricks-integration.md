@@ -29,7 +29,7 @@ Connect to Databricks using OAuth M2M with a Service Principal for secure, serve
 2.  Click `Add connection` and search for `Databricks`.
 3.  Under `Service Principal`, fill in the following fields:
     -   `Name your connection`: A descriptive name for this connection.
-    -   `Workspace URL`: Your Databricks workspace URL (e.g. `https://adb-1234567890123456.7.azuredatabricks.net/`).
+    -   `Workspace URL`: Your Databricks workspace URL (e.g. `https://abc-123.456.azuredatabricks.net/`).
     -   `Client ID`: The client ID from your Databricks Service Principal.
     -   `Client secret`: The client secret from your Databricks Service Principal.
 4.  Click `Authenticate` to save the connection.
@@ -167,7 +167,7 @@ To fix it, a Databricks admin on your side can:
 
 **2. The Workspace URL is missing `https://`.**
 
-The Databricks `Workspace URL` field must be a full URL that starts with `https://` — for example `https://adb-1234567890123456.7.azuredatabricks.net/` (Azure) or `https://dbc-a1b2c3d4-e5f6.cloud.databricks.com/` (AWS). A hostname entered without `https://` (such as `dbc-a1b2c3d4-e5f6.cloud.databricks.com/`) can't be reached, so the connection fails with the same generic error.
+The Databricks `Workspace URL` field must be a full URL that starts with `https://` — for example `https://abc-123.456.azuredatabricks.net/` (Azure) or `https://abc-def456-g789.cloud.databricks.com/` (AWS). A hostname entered without `https://` (such as `abc-def456-g789.cloud.databricks.com/`) can't be reached, so the connection fails with the same generic error.
 
 If you've checked both causes and still see the error when adding a Databricks Service Principal connection, contact [Clay support](https://www.clay.com/support) and include roughly when you retried.
 
