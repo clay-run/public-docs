@@ -1,0 +1,93 @@
+---
+title: Clay API & CLI
+description: How to access Clay's data and enrichments programmatically using the Clay CLI and Public API, including setup, plan limits, and available features.
+last_synced: 2026-11-19T07:41:30.596Z
+---
+
+# Clay API & CLI
+
+Access Clay's data and enrichments programmatically with the Clay CLI and Public API — no UI required.
+
+Clay's Agent Plugin lets you use Clay programmatically — from coding agents, terminals, and backend systems — without working in the UI. With the API and CLI, you can run searches over Clay's GTM dataset, call Clay enrichment functions, and build Workflows, all using Clay's existing integrations and data infrastructure.
+
+**Note:** Clay's Agent Plugin is in open beta. Some capabilities — particularly Workflows — are in an earlier Alpha stage and are actively evolving.
+
+## Getting started
+
+### Install the Clay plugin
+
+Copy and paste this into any coding agent (Claude Code, Codex, Cursor, etc.)
+
+`Set up the Clay plugin by following the steps in <https://github.com/clay-run/agent-plugins>   `
+
+Your agent will install the plugin, put `clay` on its PATH, and sign you in. The same prompt works regardless of which coding agent you use.
+
+For the full CLI quickstart, Public API setup, code examples, and guides for Searches, Routines, and Workflows, see [**developers.clay.com**](https://developers.clay.com/).
+
+## What you can do
+
+Agent Plugin has two primary features:
+
+-   **CLI** — Build GTM workflows in natural language from coding agents (including Claude Code, Codex, and Cursor).
+-   **Public API** — Access data from Clay or 200+ vendors in the data marketplace. Trigger functions, Claygents, or workflows.
+
+Both paths consume the same credits and actions as equivalent in-product work. There is no additional cost to use the Agent Plugin.
+
+The platform has three core primitives:
+
+-   **Searches** — Find companies and people using structured filters over Clay's GTM dataset. Learn more about Searches in [this video walkthrough](https://www.loom.com/share/6a125988c8b14b89aded2e75b8265d5c).
+-   **Routines** — Run Clay-managed functions, custom functions, and Workflows for enrichment, research, scoring, routing, and other repeatable GTM logic. Learn more about functions in [this video walkthrough](https://www.loom.com/share/7050c0b62b0648a984d6438112d02985).
+-   **Tables** — Read structured data from known Clay tables. Available on Enterprise plans only.
+
+**Note:** The CLI and API are currently supported on Mac and Linux. Windows is not supported in open beta.
+
+## Plan availability and limits
+
+The developer platform is available across all Clay plans, including free and trial plans. Clay's Agent Plugin open beta is available on all modern plans and on legacy plans.
+
+Search result limits vary by plan:
+
+| Plan | Search results per request | Total search results |
+| --- | --- | --- |
+| Free | 50 | 100/mo |
+| Trial | 50 | 10k per 14 days |
+| Paid self-serve plans | 10,000 | 1M/yr |
+| Enterprise | 10,000 | 10M/yr |
+
+### Checking your search usage
+
+To see how much of your search limit you've used, open the `API and CLI` page in the left sidebar. The `Search usage` card shows the results your workspace has used out of its limit for the current period. A rolling 30-day period shows `Counts the last 30 days`, and a fixed period shows `Resets on` followed by the date it resets.
+
+## FAQs
+
+### Does using the API or CLI cost extra credits?
+
+No. API and CLI calls consume the same credits and actions as the equivalent work done in-product. There is no additional cost because work is triggered via the developer platform instead of the UI.
+
+### Does the CLI spend credits during the beta?
+
+The Clay CLI itself doesn't charge for its reasoning: the planning and chat happen in your own coding agent (such as Claude Code or Codex), on your own subscription, not on Clay credits. The November 19 change, when Clay's global agent starts spending data credits on its own work, applies only to the global agent you chat with under `Agent` in Clay, not to the Clay CLI.
+
+What the CLI runs for you does spend credits. Enrichments, functions, and workflow runs started from the CLI are billed at the same rates as running them in a table.
+
+To see what the CLI and the API have spent, go to `Settings` → `Usage` and open the `API` tab. CLI spend appears on its own `CLI` row, and spend from API-key requests (including functions run by your scripts) appears on the `API` row. The API tab isn't broken down by user or API key. See [Credit usage](/docs/credit-usage) for the rest of the dashboard, and [Clay (global agent)](/docs/global-agent#credits-and-pricing) for global agent pricing.
+
+### What's the difference between the Clay Plugin and the Public API?
+
+The Clay Plugin gives agent environments (Claude Code, Codex, Cursor) both Clay's MCP server and the Clay CLI — the fastest path for agent-first and interactive coding workflows. The Public API is better suited for backend services, queue workers, batch jobs, and custom app integrations where you want direct HTTP access without a CLI layer.
+
+### What's the difference between MCP and the CLI/API?
+
+MCP is used by interactive AI assistants (such as Claude Desktop and ChatGPT) using OAuth for conversational access. The CLI and Public API are designed for programmatic, headless, or automated workflows — including scripts, backend services, and coding agents.
+
+### Can I build or write to Clay tables via CLI or API?
+
+No. The CLI builds logic via Workflows, not tables. The `Tables` primitive in the Public API is read-only and is for querying data that already exists in known Clay tables (Enterprise only). There are no current plans to support table building via the developer platform.
+
+### Can I build Workflows with the API or CLI?
+
+Yes, Workflows are available from the CLI and plugin in Alpha. For production use, Clay-managed functions and custom functions are the more stable option.
+
+### Are credit budgets available via the developer platform?
+
+Credit budgets are not yet available in open beta. You can see run-level credit and action consumption from the `Runs` view in Workflows. Credit budget support is on the roadmap.

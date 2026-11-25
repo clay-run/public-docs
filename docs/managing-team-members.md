@@ -1,6 +1,6 @@
 ---
 title: Managing team members
-description: Understand Clay's Admin, Editor, and Viewer roles and learn how to invite, update, and remove team members in your workspace.
+description: Understand Clay's Admin, Editor, and Viewer roles, learn how to invite, update, and remove team members, export your member list as a CSV, and transfer ownership of workbooks and tables.
 last_synced: 2026-04-26T01:40:56.525Z
 ---
 
@@ -54,7 +54,9 @@ If a colleague needs access to your tables, workbooks, or other data in your Cla
 
 ## Add a team member to your workspace
 
-Workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
+By default, workspace access in Clay is invitation-only. When a new user signs up for Clay, they are automatically placed in their own workspace — they will not join yours unless you explicitly invite them. Your workspace remains private to you until you send an invite.
+
+**Enterprise workspaces** can also use [Trusted domain access](./trusted-domain-access.md) to let teammates with a verified company email address join in one click, without a per-person invite.
 
 **If your workspace uses SSO (such as Okta or another SAML identity provider):** Clay's SSO handles authentication only — it does not provision users or add them to your workspace. Adding a user in your identity provider does not create a Clay account or grant access to your organization's workspace. You must send a Clay workspace invite before a user can log in via SSO and be directed to your workspace. If a user clicks the SSO tile before receiving a Clay invite, they will be routed to a new, empty workspace of their own instead of your organization's workspace. Sending a Clay invite after the fact still works — once the user accepts the invite and logs in via SSO, they will be directed to the correct workspace.
 
@@ -110,7 +112,33 @@ To remove a member from your workspace:
 
 **Transferring ownership when a team member leaves**
 
-If a former employee owns tables or workbooks in your workspace, there is no separate "transfer ownership" UI in Clay — removing the former member from the workspace is how you do it. All tables, workbooks, and groups they owned will automatically reassign to the longest-tenured admin (the workspace admin whose admin role was assigned earliest).
+If a former employee owns tables or workbooks in your workspace, how you transfer ownership depends on your plan:
+
+-   **All plans:** Removing the former member from the workspace transfers ownership automatically. All tables, workbooks, and groups they owned reassign to the remaining admin whose admin role was granted earliest — the member being removed isn't counted. For example, if you and the departing member are the only two admins, ownership transfers to you.
+-   **Enterprise plans:** You can also transfer ownership of an individual workbook or table without removing anyone. See [Transfer ownership of a workbook or table (Enterprise only)](#transfer-ownership-of-a-workbook-or-table-enterprise-only).
+
+On non-Enterprise plans there's no `Transfer ownership` option — removing the former member is how ownership changes.
+
+## Transfer ownership of a workbook or table (Enterprise only)
+
+**Note:** Manually transferring ownership of a workbook or table is available on the Enterprise plan only. Workspace admins and the current owner of a workbook or table can transfer its ownership.
+
+To transfer ownership of a workbook or table to another workspace member:
+
+1.  Open the settings panel:
+    -   For a workbook, open the workbook, click the workbook name in the top bar, and select `Edit workbook settings`.
+    -   For a standalone table (a table that isn't inside a workbook), click the `Table settings` gear icon in the table's title bar.
+2.  Open the `Access permissions` section.
+3.  Under `Owner`, open the `…` menu on the current owner's row and select `Transfer ownership`.
+4.  Choose the new owner. Any workspace member can be selected, whatever their role.
+5.  Click `Save changes`. Until you save, the panel shows a notice that ownership of the workbook or table "will be transferred to [new owner's name] when you save your changes."
+
+**If you don't see the `Owner` row:** The `Owner` row and `Transfer ownership` option only appear when access is set to `Admins and editors in this workspace`. If the workbook or table is set to `Admins and invited collaborators only`, switch it to `Admins and editors in this workspace` first.
+
+**Things to know about transferring ownership:**
+
+-   Transferring ownership of a workbook also transfers every table inside it. Tables inside a workbook don't have their own `Access permissions` section — transfer the workbook instead.
+-   Ownership transfers one workbook or table at a time. There's no bulk transfer — to move everything a former member owns at once, remove them from the workspace.
 
 ## Cancel a pending invite
 
@@ -125,10 +153,31 @@ Once removed, you can re-invite the same email address if needed. Only workspace
 
 ## Export your team member list
 
-Clay does not currently offer a built-in option to export your workspace team members as a CSV. Your team member list can only be viewed and managed directly in `Settings` > `Team`. To contact support for assistance with bulk user management tasks, reach out via the in-app chat.
+Workspace admins can download the workspace team member list as a CSV file from `Settings` > `Team`. Only the Admin role sees the `Export CSV` button — Editors, Viewers, and Sales Reps don't.
 
-## Programmatic user management
+To export your team member list:
 
-Clay does not have a programmatic API for workspace member management. There is no API endpoint to invite users, update their roles, or remove or deactivate them from a workspace. All user management must be done manually through the workspace UI at `Settings` > `Team`.
+1.  Go to `Settings` > `Team`. If your workspace shows `Members` and `Groups` tabs, stay on the `Members` tab.
+2.  Optionally, narrow the list with the search box or the role, status, and `Managed via` filters, and sort the list the way you want it.
+3.  Click `Export CSV` next to the search box (beside `Invite`).
 
-For automated user lifecycle management through an identity provider (such as automatically adding or removing users when accounts are created or deactivated in Okta), see [Single Sign-On (SSO)](/docs/single-sign-on) — SSO handles authentication only and does not provision workspace membership automatically.
+The CSV file downloads immediately — no dialog opens — and you'll see a "CSV exported" confirmation. The file is named `workspace-members-YYYY-MM-DD.csv`, using today's date.
+
+The exported team member CSV contains the following columns:
+
+-   **Name** — the member's full name. For pending invitations, the email address is used instead.
+-   **Email** — the member's email address.
+-   **Role** — Admin, Editor, Viewer, or Sales Rep.
+-   **Groups** — the names of the [user groups](./user-groups.md) the member belongs to, separated by a semicolon and a space (for example, `Analysts; Revenue`). This column is blank for members who aren't in any group.
+
+**What's included in the export:** The CSV contains exactly the members shown in your current view, in the order they're displayed. Your current search, role, status, and `Managed via` filters all apply, and pending invitations are included when they appear in the list. To export every member, clear all filters and the search box before clicking `Export CSV`.
+
+**If the `Export CSV` button is disabled:** The button is disabled when no members match your current search or filters — clear them to show members again. In workspaces that use user groups, the button is also disabled until members' group memberships finish loading.
+
+## Programmatic user management: API and SCIM provisioning
+
+Clay doesn't have a public API for workspace member management. There's no API endpoint to invite users, update their roles, or remove them from a workspace, and the Clay CLI can only list and view users.
+
+To automate user provisioning and deprovisioning, Enterprise workspaces can use [SCIM provisioning](./scim-provisioning.md). SCIM provisioning adds members to your Clay workspace when they're assigned to Clay in your identity provider (such as Okta), removes them from the workspace when they're unassigned or deactivated, and sets their workspace roles from your identity provider groups. Workspace admins set it up in `Settings` > `Workspace` > `SCIM provisioning`.
+
+On plans without SCIM provisioning, manage members manually in `Settings` > `Team`. [Single Sign-On (SSO)](/docs/single-sign-on) handles sign-in only and doesn't add or remove workspace members.

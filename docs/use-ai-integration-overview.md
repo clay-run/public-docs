@@ -2,7 +2,7 @@
 title: Use AI
 description: Leverage AI to process, categorize, and conduct web research for
   actionable insights.
-last_synced: 2026-04-26T01:40:51.610Z
+last_synced: 2026-11-24T07:49:40.766Z
 ---
 
 # Use AI
@@ -100,6 +100,33 @@ The **Templates** dropdown at the top of the Use AI panel lets you explore pre-c
 
 **Tip — testing prompt changes on a sample:** To iterate on a prompt without running your entire table, select a few rows, right-click, and choose **Run [N] rows** (or select specific cells and choose **Run [N] cells**). This lets you validate results before spending credits on every row. Note that when an AI column produces new output, any downstream columns that reference it will automatically re-run — this is expected behavior. To prevent downstream columns from triggering while you refine a prompt, use [Sandbox mode](sandbox-mode.md), which isolates your changes to a test copy of the table. See [Run progress and row management](run-progress.md) for full details on running specific rows.
 
+## Classifying rows with Use AI
+
+Classify is a `Use case` in Use AI that sorts each row into one of the categories you define — `Yes` or `No`, say, or SMB, Mid-market, and Enterprise. It doesn't research or write free text, so it fits best when the answer is already in your table and comes from a fixed list, like an ICP fit check or a persona tag. For anything that needs web research, use `Web research (Claygent)` instead.
+
+**Note:** Classify is in alpha, and during the alpha its results may not always be accurate. Classify is free for a limited time during alpha. Check a sample of rows before you rely on it across a whole table.
+
+1.  While in a Clay table, click `Add column` and click `Use AI`.
+    -   You can also search for `Classify` when adding an enrichment, which opens Use AI with Classify already selected.
+2.  In the `Configure` tab, select the `Use case` → `Classify`. There's no model to pick for Classify, so the `Model` dropdown doesn't appear.
+3.  Under `Input`, add the data you want classified. Type `/` to insert a column — the input needs at least one column reference.
+4.  Under `Categories`, write a `Prompt` that describes how to classify each row.
+5.  Set up your categories. A new Classify column starts with `Yes` and `No`.
+    -   Give each category a `Name` and, optionally, a `Description` of when a row belongs in it.
+    -   Click `Add category` for more. You need at least two, each with a name.
+6.  _(Optional)_ Adjust `Minimum probability (%)`, which starts at 85.
+
+Each row gets exactly one category, and the cell shows its name. When no category is likely enough to clear the minimum probability, the cell shows `Uncertain` instead.
+
+Leave `Minimum probability (%)` empty for no minimum. A row can still come back `Uncertain` when its input can't be classified at all, like a garbled value in place of a company domain.
+
+Classify has usage limits. Each row Classify processes counts as one run, and runs in tables and workflows share one allowance per workspace. If Clay retries a run after an error, it still counts once.
+
+-   **Paid workspaces:** up to 10,000 runs a day, resetting at midnight UTC, and 500,000 in total during the alpha.
+-   **Free and trial workspaces:** 100 runs in total. Upgrading to a paid plan raises the limit, and runs you've already used still count toward the total.
+
+When a workspace reaches a limit, the cell's details name the limit that was hit, and paid workspaces can contact Clay to request a higher one. Rows that failed on a limit don't run again on their own once it's raised, so rerun them.
+
 ## Generating images with Use AI
 
 1.  While in a Clay table, click `Add column` and click `Use AI`.
@@ -139,6 +166,10 @@ While you don't need your own GPT, Claude, or Gemini API key to use the AI featu
 
 **Note:** Connecting your own OpenAI API key does not enable OpenAI's Batch API. Clay sends all AI column requests in real-time using the standard API — regardless of which account is connected. You will not get OpenAI's batch pricing (50% discount) or the extended processing window (up to 24 hours). If you need to process a large volume of data at batch pricing, the workaround is to export your data from Clay, run it through the OpenAI Batch API externally, then re-import the results.
 
+### Connecting your own Amazon Bedrock account
+
+Enterprise workspaces can run Use AI and Claygent on models in their own Amazon Bedrock account. See [Connect Clay to Amazon Bedrock](connect-clay-to-amazon-bedrock.md) for setup steps, supported models, and billing.
+
 ## Using additional or custom LLMs
 
 Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemini, and DeepSeek). Custom or additional LLMs — including open-source models like LLaMA, or models accessed through a proxy such as LiteLLM — cannot be added directly to the Use AI enrichment interface.
@@ -147,7 +178,7 @@ Use AI supports a fixed set of built-in AI providers (such as GPT, Claude, Gemin
 
 To call a custom or additional LLM from Clay, use the [HTTP API enrichment](https://university.clay.com/docs/http-api-integration-overview) to send requests to any OpenAI-compatible endpoint:
 
--   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI, AWS Bedrock): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
+-   **Hosted proxy services** (e.g., LiteLLM, Azure OpenAI): Configure the HTTP API enrichment to call the provider's OpenAI-compatible endpoint. See [LiteLLM's API documentation](https://docs.litellm.ai/docs/providers/openai_compatible) for endpoint and authentication details.
 -   **Self-hosted open-source models** (e.g., LLaMA): Host the model at a reachable HTTP endpoint, then configure the HTTP API enrichment to call it.
 
 **Limitations compared to Use AI:**
@@ -191,8 +222,11 @@ The triangle icon next to a value in an AI column is not an error message. A sma
 The confidence icon in an AI column is display-only:
 
 -   It does not change the cell's value.
--   It does not mark the cell as errored. Cells that fail show a status message instead of a confidence icon.
+-   It does not mark the cell as errored. Cells that fail show a status message, such as **Error** or **Timed out**, instead of a result and a confidence icon.
 -   It does not trigger, block, or change downstream columns or run conditions, unless you explicitly reference the `confidence` sub-field in a formula.
+-   It does not change the credits charged. A run with `low` or `medium` confidence is billed at the same rate as a run with `high` confidence.
+
+Changing the output format between **Fields** and **JSON Schema** does not remove the triangle, because the icon reflects the AI's confidence in its answer, not how the output is formatted.
 
 To see why the AI was less certain about a specific row, click the cell to open it and review the `reasoning` field in the output. If many rows come back with an orange triangle, add clearer instructions or examples to your prompt.
 
@@ -209,6 +243,8 @@ You can update an AI column's prompt at any time without losing the existing res
     -   **Save and run _N_ rows** — queues all rows to re-run with the updated prompt.
 
 To test the updated prompt on a small sample before committing to a full re-run, select a few rows, right-click, and choose **Run [N] rows**. This lets you validate the new output before spending credits on every row.
+
+**Why existing AI results don't change after you edit the prompt:** Saving a new prompt does not mark existing results as out of date. Cells that already have a result keep their old value until you re-run them, so an AI column can keep showing the same answer for a row no matter how many times you edit the prompt. **Run column → Run [N] empty or out-of-date rows** skips cells that already have a result. To apply the edited prompt to those rows, right-click the column header and select **Run column → Force run all [N] rows**. Force run re-runs every row, including rows that already have results, and uses credits again. The estimated cost is shown before you confirm.
 
 **If the Prompt field appears read-only:** the column is linked to a standalone agent managed in Claygent Builder. Click the **Edit** button in the settings panel to open the agent in Claygent Builder, update the prompt there, and save. The change applies to all tables using that agent. See [Claygent Builder](claygent-builder.md) for details.
 
@@ -237,6 +273,8 @@ There are two ways to resolve this:
 -   **Fill in the missing data.** Ensure that the columns referenced in your prompt have values for the rows you want to run.
 -   **Make the inputs optional.** In the column prompt, hover your cursor over a `{{Column Name}}` reference token — a **Required to run** toggle appears inline on that token. Switch it off for any input you want to be optional. When toggled off, the cell will still run even if that column is blank — the empty field is simply omitted from the prompt for that row.
 
+**Writing "optional" in the prompt text does not make an AI column input optional.** Instructions such as "this field is optional" or "ignore if blank" only change what the AI reads. Before running, Clay checks only the **Required to run** toggle on each `{{Column Name}}` reference. Cells keep showing **"Some inputs missing"** until you switch that toggle off for every input that can be blank. After you save the change, re-run the affected rows.
+
 ### Column header shows "Settings contains deleted column" error
 
 A **warning icon (⚠)** on the Use AI column header with the tooltip **"Settings contains deleted column for "prompt" input"** means the column's prompt contains a reference to a column that no longer exists in your table — because it was deleted, renamed, or because the AI column came from a waterfall template built with different column names than your table uses.
@@ -246,14 +284,14 @@ This error blocks the column from running entirely. No rows will process until t
 **To fix:**
 
 1.  Click the column name → **Edit column** to open the settings panel.
-2.  Go to the **Configure** tab and find the **Prompt** field. Any reference pointing to a missing column appears as a **"(Deleted column)"** chip instead of the normal column name chip.
-3.  Click and delete each **"(Deleted column)"** chip.
+2.  Go to the **Configure** tab and find the **Prompt** field. Any reference that can't be matched to a column in your table — for example, a reference to a deleted or renamed column — appears as an **"(Invalid reference)"** chip with a warning icon instead of the normal column name chip. Hovering the warning icon shows: *"This reference couldn’t be matched to a column. Remove it and select a column again."*
+3.  Click and delete each **"(Invalid reference)"** chip.
 4.  Type `/` in the prompt editor to open the column picker, then select the correct column from your table.
 5.  Click **Save** and re-run the column.
 
 **Note:** Do not type the column reference as `{{Column Name}}` literal text — only references inserted via the `/` picker are substituted with real row data when the column runs. Text typed in `{{...}}` form is treated as a plain string.
 
-**Common cause — waterfall templates:** When you add a pre-built waterfall from the enrichment library (for example, the Funding Stage waterfall), the included Use AI step may reference column names from the template's original table — such as `Company Name` or `Company Domain` — which may not match the column names in your table. If your table uses different names (for example, `Name` and `Domain`), those references appear as deleted immediately. Replacing them with your table's actual columns resolves the error.
+**Common cause — waterfall templates:** When you add a pre-built waterfall from the enrichment library (for example, the Funding Stage waterfall), the included Use AI step may reference column names from the template's original table — such as `Company Name` or `Company Domain` — which may not match the column names in your table. If your table uses different names (for example, `Name` and `Domain`), those references appear as **"(Invalid reference)"** chips immediately. Replacing them with your table's actual columns resolves the error.
 
 ### AI column running but producing unexpected output
 
@@ -322,6 +360,8 @@ When a Use AI web research column or Claygent column runs, the result is stored 
 -   **`confidence`** — Clay's built-in quality indicator (`low`, `medium`, `high`, or `very high`), which drives the color dot on each cell.
 -   **`stepsTaken`** — descriptions of each research step the AI took (for example: `"Searched Google for: 'company headquarters'"` or `"Visited https://example.com to find: 'company revenue'"`).
 
+**`reasoning`, `confidence`, and `stepsTaken` also appear when you define your own outputs.** In a Claygent column, these extra keys are added even when you configure **Fields** or a custom **JSON Schema**, including a schema that sets `"additionalProperties": false`. Clay adds `confidence` and `reasoning` to your schema before it is sent to the model and adds `stepsTaken` after the run, so these keys never cause a schema validation failure and do not affect the output fields you defined. To keep only your own fields, extract each one into its own column with the `/` picker, as described below.
+
 If this JSON object appears in a downstream column, that column is referencing the full AI column object instead of a specific sub-field.
 
 **To get just the `response` text into a cell:** In a formula column, use the `/` property picker and select `YourAIColumn > response`. You can also use dot notation directly: `{{YourAIColumn}}.response`.
@@ -347,7 +387,7 @@ If a Use AI or Claygent column completes without error — and the cell shows a 
 
 ### Cells showing "This request exceeds your budget limit" (Clay Credit Budget)
 
-For Use AI columns using variable-priced models (such as GPT-4o, GPT-4.1, Claude Sonnet, or Gemini 2.5 Pro) with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
+For Use AI columns using variable-priced models with Clay's managed account, a **Clay Credit Budget** setting appears in the column configuration. The Clay Credit Budget sets the maximum number of Clay credits that a single row can spend.
 
 Before running each row, Clay estimates the row's cost from the length of your prompt, including the column values you insert into it. If the estimated cost is higher than the Clay Credit Budget, the row does not run and the cell shows an error like this one:
 
@@ -375,10 +415,25 @@ If your AI column cells show an **"Invalid credentials"** error with the message
 
 There are two ways to resolve this:
 
--   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the default Clay-managed account. This uses Clay's shared credits and does not require your own API key.
+-   **Switch to a Clay-managed account (recommended).** Open the column settings, find the **Account** dropdown, and select the Clay-managed account for the selected model's provider — for example, the Clay-managed OpenAI account for GPT models or the Clay-managed Anthropic account for Claude models. This uses Clay's shared credits and does not require your own API key.
 -   **Connect your own API key.** If you prefer to use a specific provider (OpenAI, Anthropic, or Google Gemini), open the column settings, click the **Account** dropdown, click **+ Add account**, and follow the prompts to add your key.
 
 **Note:** If you updated the model using Sculptor and the error persists, the change may not have saved correctly. Open the column settings directly (click the column name → **Edit column**) and confirm the **Model** and **Account** fields reflect what you expect, then re-save and re-run.
+
+### Account field shows "This account can't serve the selected model"
+
+If the **Account** field in a Use AI column's **Configure** tab shows the warning **"This account can't serve the selected model. Choose a different account or model."**, the account saved on the column belongs to a different provider than the selected model. For example, the column may be set to a "Clay-managed Predict Leads account" while the model is Claude Sonnet 5.5, which needs an Anthropic account. Until you select a compatible account, every row in the column fails with an **"Invalid credentials"** error — editing the prompt or re-running the column does not fix it.
+
+The mismatched account still appears as the current selection in the **Account** field, even though it is not listed when you open the **Account** dropdown. The dropdown lists only accounts that can serve the selected model's provider.
+
+To fix the "This account can't serve the selected model" warning:
+
+1.  Click the column name → **Edit column**, then open the **Configure** tab.
+2.  Click the **Account** dropdown.
+3.  Select the Clay-managed account for the model's provider — for example, the Clay-managed Anthropic account for Claude models or the Clay-managed OpenAI account for GPT models — or select your own API key for that provider.
+4.  Confirm the warning no longer appears below the **Account** field, then click **Save** and re-run the affected rows.
+
+If several AI columns in your table show this warning, update the **Account** on each column separately: a column using a GPT model needs an OpenAI account, and a column using a Claude model needs an Anthropic account.
 
 ### OpenAI key shows "Success" but cells fail with "The API key is invalid"
 

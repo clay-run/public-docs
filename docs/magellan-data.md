@@ -1,7 +1,7 @@
 ---
 title: magellan-data
 description: Enrich company records in Clay with corporate ownership, parent company details, and private equity relationships using Magellan Data.
-last_synced: 2026-09-24T19:43:06.868Z
+last_synced: 2026-09-28T16:56:51.086Z
 ---
 
 # Magellan Data integration
@@ -17,8 +17,6 @@ Magellan Data is a B2B data enrichment tool for discovering corporate ownership 
 3.  In the modal, you will be asked to `Select Magellan Data account`.
     -   You can run these actions on Clay's shared Magellan Data account, or bring your own key.
     -   To bring your own, click `+ Add account` and enter your Magellan Data API key. You can find your API key in your Magellan Data account settings.
-
-**Note:** `Find corporate family` and `Enrich PE portfolio companies` cost more the more companies they return, so the size threshold on each one doubles as a cost control. Raise it when you want the whole family or portfolio regardless of how large it is, and lower it to skip the very large ones.
 
 ### `Action` Find corporate family
 
