@@ -166,6 +166,8 @@ When you exceed the period limit, Clay returns `402` with a message naming the l
 
 **Note:** Credits consumed when you run a function through the API with an API key (for example, Routines API runs from a script) appear in the **API** tab of the credit usage dashboard (`Settings → Usage → API`), under the `API` row. Credits spent through the Clay CLI appear in the same tab under a separate `CLI` row. The API tab isn't broken down by user or by API key. To see which providers and columns used the credits, open the function itself.
 
+**Note:** Enrichments triggered via the API — whether through the Routines API, a webhook, or the CLI — do not appear in a workspace-wide activity log. Clay does not currently provide a log of individual API requests or tasks created programmatically. To check the status of a specific Routines API run, poll `GET /routines/run/{routine_run_id}/results`. To review recent runs in the UI, open the function's live view (`Functions → [your function]`), which shows processed rows and their status.
+
 **Note:** If you're using Clay as an API, **Auto-delete** helps keep things fast and lightweight. It automatically enriches incoming webhook data, sends results to your destination (like Salesforce or Google Sheets), then deletes the rows—so Clay streams data through rather than storing it. Perfect for high-volume or continuous enrichment jobs. [Learn more](https://www.clay.com/university/guide/auto-delete).
 
 ### 4\. **MCP / AI tool integration** (Best for AI assistants and agent workflows)
