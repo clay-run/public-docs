@@ -111,7 +111,22 @@ No. `Hashed email 1`, `Hashed email 2`, and `Hashed email 3` are default fields 
 
 The hashed email fields are hidden in the People view by default. If one is showing and you want it out of the way, click its column header and select **Hide**.
 
-Deleting a source from Audiences doesn't clear the values that source already wrote into `Hashed email 1`, `Hashed email 2`, or `Hashed email 3`. Values stored in these fields stay on the contact and can be sent to ad platforms by later contact syncs, so check them before you run an ad sync if a source may have filled them in by mistake.
+Deleting a source from Audiences doesn't clear the values that source already wrote into `Hashed email 1`, `Hashed email 2`, or `Hashed email 3`. Values stored in these fields stay on the contact and can be sent to ad platforms by later contact syncs, so check them before you run an ad sync if a source may have filled them in by mistake. To empty them, see [How do I clear wrong values from Hashed email 1, 2, or 3?](#how-do-i-clear-wrong-values-from-hashed-email-1-2-or-3)
+
+### How do I clear wrong values from Hashed email 1, 2, or 3?
+
+You can clear the values stored in `Hashed email 1`, `Hashed email 2`, and `Hashed email 3` with an Audiences workflow, even though the fields themselves can't be deleted. The **Data hub** has no bulk edit or clear-values option, so a workflow is how you empty these fields across many contacts — for example, when a Salesforce or other CRM import mapped the wrong data into `Hashed email 1`.
+
+Clear wrong hashed email values before you use Enhanced matching. By default, Enhanced matching skips contacts that already have a value in any of the three hashed email fields instead of looking their emails up again — this is the **Skip enhanced matching if it was already run for this contact** option in the **Enhanced matching** step of an ad sync, which is turned on when you pick a tier. With that option on, a wrong value stays on the contact and is what gets sent to the ad platform.
+
+To clear the hashed email fields for the affected contacts:
+
+1.  In **People**, add a filter on the field you want to clear (for example, `Hashed email 1`) with the operator **is not empty**, then save it as a segment.
+2.  Create a workflow that runs on that segment and has an Audiences write step mapping the hashed email field to a blank value, with that field's write rule set to **Always write**. You can ask the global agent to build it for you — for example: *"Create a workflow for my Hashed email cleanup segment that clears the Hashed email 1 field on every person."*
+3.  Review the workflow, then run it on the segment.
+4.  Open a few of the contacts in Audiences and check that the hashed email field is now empty.
+
+Only the hashed email fields you map in the write step are cleared; every other field on the contact stays as it is. For how Audiences write rules handle blank values, see [Why doesn't my Audiences workflow step show a Write rule option?](https://university.clay.com/docs/audiences#why-doesnt-my-audiences-workflow-step-show-a-write-rule-option)
 
 ## Related
 

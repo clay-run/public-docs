@@ -1,7 +1,7 @@
 ---
 title: Company URL Finder integration
 description: Find a company's website domain from its name using Company URL Finder in Clay tables.
-last_synced: 2026-09-23T19:09:02.755Z
+last_synced: 2026-11-19T06:51:05.790Z
 ---
 
 # Company URL Finder integration
@@ -15,7 +15,7 @@ Company URL Finder is a data provider that matches company names to the websites
 1.  While in a Clay table, click `Add enrichment` and search for `Company URL Finder`.
 2.  Under `Integrations`, select `Find domain from company name`.
 3.  In the modal, you will be asked to `Select Company URL Finder account`.
-    -   If you have your own Company URL Finder account, click `+ Add account` and enter your API key. Otherwise, use the Clay provided key.
+    -   If you have your own Company URL Finder account, click `+ Add account` and enter your API key. Otherwise, use the Clay-provided account.
 
 **Note:** The `Country` field defaults to `United States`, so a list that spans several countries will come back empty for the companies outside it. To set the country row by row instead, click the gear button on `Country` and switch it to the `Text with tokens` input mode, then map a column holding each company's two-letter country code, such as `DE` or `BR`.
 
@@ -41,9 +41,9 @@ Required:
 
 ## FAQs
 
-### How many credits does this action use?
+### When does this action use credits?
 
-1 action and 0.6 credits per row when you use the Clay provided key.
+Credits are charged per row, and only when the column runs on the Clay-provided account. Rows that run on your own Company URL Finder API key use no Clay credits.
 
 ### Am I charged for rows where no domain comes back?
 
@@ -51,7 +51,7 @@ No. When Company URL Finder has no match for a name in the country you selected,
 
 ### Can I use my own Company URL Finder API key?
 
-Yes. Click `+ Add account` and paste the key, and Clay checks it right away so you know whether it is valid before you run a column. If the key is valid but has no credits left, Clay warns you when you connect it, and rows come back with an out-of-credits message, so top up in Company URL Finder and re-run the column. If you would rather not manage a separate balance, use the Clay provided key instead.
+Yes. Click `+ Add account` and paste the key, and Clay checks it right away so you know whether it is valid before you run a column. If the key is valid but has no credits left, Clay warns you when you connect it, and rows come back with an out-of-credits message, so top up in Company URL Finder and re-run the column. If you would rather not manage a separate balance, use the Clay-provided account instead.
 
 ### Will this work on a long list of company names?
 
