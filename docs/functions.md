@@ -3,7 +3,7 @@ title: Functions
 description: Functions let you convert any enrichment sequence into a reusable
   workflow. Once created, you can use it across any table — and any updates you
   make to the…
-last_synced: 2026-04-26T01:40:01.780Z
+last_synced: 2026-11-18T19:56:07.816Z
 ---
 
 # Functions
@@ -42,9 +42,14 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
 
 **Create function from scratch:**
 
-1.  From the homepage, click on `Functions` in the sidebar.
-2.  Click on `+ New Function` on the top right.
-3.  This will create a blank function that you can directly edit, add inputs/outputs, etc.
+Creating a new custom function from scratch is available on paid plans, including Trial. Functions aren't available on the Free plan.
+
+1.  From the homepage, click `Functions` in the sidebar.
+2.  Click `New` in the top right. (If a menu appears, select `Function`.)
+3.  The **Browse Clay managed functions** window opens. Click `Create from scratch` at the bottom left of the window.
+4.  Clay creates a blank table function named "New Function" and opens it so you can edit it directly: rename it, and add inputs, outputs, and columns.
+
+**Create a function by duplicating an existing one:** To make a second version of a function you already have (for example, the same enrichment logic with different formulas or a different destination), duplicate it instead of starting from scratch. See [How do I duplicate a function within my workspace?](#how-do-i-duplicate-a-function-within-my-workspace).
 
 ## Calling a function from a table
 
@@ -71,7 +76,7 @@ Functions are built for workflows you'd otherwise rebuild from scratch in every 
     -   **Edit mode runs in a manual-run sandbox.** Table-level auto-run is intentionally off while you are in Edit mode, so that modifying and testing your function cannot trigger real side effects — such as external API writes or CRM updates. Column-level Auto-run settings on individual columns do not override this. When you manually rerun a column inside Edit mode, dependent downstream columns are skipped (shown as "Table auto-run is off") and keep their previous results, even if their run conditions evaluate to true. There is no setting inside the function UI to enable automatic dependent reruns in Edit mode — this behavior is by design. Automatic dependent reruns work as expected once the function is saved and invoked from a regular table with auto-run enabled.
     -   **Conditional-run previews ("Will run" / "Will not run") use values from when the panel opened.** The preview is evaluated in the browser and does not recalculate on re-renders — so time-varying expressions like `Date.now()` stay frozen at their value when you opened the panel. The preview also uses each column's display value rather than its full underlying value, which can differ for HTTP response and JSON columns. As a result, the preview can disagree with a live formula column evaluating the same condition. If the preview looks wrong, save the condition and test on real rows — the actual run results are the authoritative source.
     -   Note that no changes made here will apply to the live function until published.
-4.  Once your changes are ready, click `Review Changes` to view your pending changes and click `Publish Changes` to apply your changes to your live function.
+4.  Once your changes are ready, click `Review changes` to view your pending changes and click `Publish to function` to apply your changes to your live function.
 
 ## Managing MCP access and credit budgets
 
@@ -85,6 +90,16 @@ For a full walkthrough, see [MCP settings](https://university.clay.com/docs/mcp-
 
 Functions is available on all paid plans at no additional cost, including paid legacy plans. Advanced capabilities such as MCP access are gated to higher tiers.
 
+### Can I run a function that includes a phone number enrichment on a free or trial plan?
+
+No. Phone number enrichments aren't available on free or trial plans, and that applies to functions too. If a function contains a phone number enrichment and your workspace is on a free or trial plan, the function won't run.
+
+-   **In a table:** when you choose that function in a function column's configuration panel, Clay shows a **Paid plan required** notice that reads "Phone number enrichments need a paid plan." with an **Upgrade plan** button.
+-   **In Browse Clay managed functions:** Clay-managed functions that include a phone number enrichment show a **Paid plan required** badge, and the same notice appears when you open one.
+-   **Through the API or MCP:** running the function returns the same "Phone number enrichments need a paid plan." message with an upgrade link.
+
+To run the function, upgrade to a paid plan, or remove the phone number enrichment from the function. Editing a Clay-managed function detaches it from Clay's updates — see [What happens when I try to edit a Clay-managed function?](#what-happens-when-i-try-to-edit-a-clay-managed-function).
+
 ### Does running a function cost extra credits?
 
 No. Functions do not add their own credit or action cost. Credits are consumed by the individual enrichment actions inside the function (e.g., a profile lookup, an email waterfall step) and are attributed to the table where the function is called, not to the function itself. If a function only contains formula columns and no enrichment steps, it will cost zero credits. Estimated cost is visible in the function editor panel and also in the table where the function is referenced.
@@ -95,9 +110,45 @@ When a function contains a waterfall, the estimated cost shown (marked with a `~
 
 No. As of General Availability, functions support unlimited rows via passthrough. Functions also include a 10x speedup and fair sharding for parallel execution, so large workloads are distributed efficiently instead of queuing. Prior to GA, Functions had a 50,000-row limit.
 
-**Note:** The function's live view displays only the most recent **1,000 rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows.
+**Note:** The function's live view keeps only the most recent **1,000 completed rows** at a time. This limit is intentional: functions are passthrough tables, and keeping the active row count low ensures there is enough space for new incoming records to be processed. All rows are fully processed and their results returned to the calling table regardless of this limit. When the function is called from multiple tables, the live view allocates up to **50 rows per calling table** (prioritizing the most recently active tables first), with any remaining capacity filled by the globally newest rows. Rows that haven't completed — rows showing **Run stopped**, errored rows, and queued or in-progress rows — aren't removed, so the live view can show more than 1,000 rows in total.
 
-To review rows beyond the 1,000 shown in the live view, click the **Archive** button in the function table's toolbar. The Archive section shows historically processed rows organized by timeline, and you can export the full set as a CSV. If you need to retain more active rows in the live view (for example, for easier auditing of recent runs), open the auto-delete settings for the function table and update the **Number of rows to keep** field — though increasing this limit on high-volume functions can slow processing.
+To review completed rows that are no longer in the live view, click **View archive** in the function's footer, then click **Export full archive** in the archive table's toolbar to download them as a CSV. The function's row-retention setting isn't editable from the function itself; contact support if you need the function to keep more rows. See [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats) for details.
+
+### Can I set up auto-delete on a function?
+
+You don't need to set up auto-delete on a function, because functions already auto-delete. Every function is a passthrough table with auto-delete always turned on, so the **auto-delete icon** and **Enable auto-delete** option you see on regular tables aren't shown in functions. You don't need to configure anything for a function's rows to be cleaned up.
+
+How function auto-delete works:
+
+-   **Completed rows are removed automatically.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it's eligible for removal. The function's live view keeps the **1,000 most recent completed rows**.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed.
+-   **Removed rows are archived.** Click **View archive** in the function's footer, then **Export full archive** to download them as a CSV.
+
+For more detail, see [Is there a row limit for functions?](#is-there-a-row-limit-for-functions) and [Why does my function show fewer rows than the run count in "View run stats"?](#why-does-my-function-show-fewer-rows-than-the-run-count-in-view-run-stats). To turn on auto-delete for a regular table, see [Auto-delete in tables](auto-delete.md).
+
+### Why does my function show fewer rows than the run count in "View run stats"?
+
+A function's **View run stats** chart and the function's row list measure different things, so their numbers don't match:
+
+-   **View run stats** counts every run (execution) of the function in each time period.
+-   **The function's row list** shows only the rows the function is currently keeping.
+
+For example, a function that ran about 6,000 times in a period can show only about 1,900 rows in its list. This is expected: the row list isn't a log of every run, and completed rows that leave the list have already sent their results back to the calling table.
+
+Functions are passthrough tables, so Clay cleans up the function's row list automatically:
+
+-   **Completed rows are removed.** Once a row finishes and sends its data back to the calling table (or its run condition isn't met), it becomes eligible for removal. The function keeps the **1,000 most recent completed rows** and removes older ones.
+-   **Rows that haven't completed stay.** Rows showing **Run stopped**, errored rows, and queued or in-progress rows aren't removed, and they're listed on top of the 1,000 completed rows.
+
+For example, a function list showing 1,930 rows can be 1,000 recent completed rows plus 930 rows where **Send data back** was stopped.
+
+**To view or download completed rows that were removed from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click **View archive** in the function's footer, at the bottom of the screen. This opens the function's archive table.
+3.  In the archive table's toolbar, click **Export full archive** to download the archived rows as a CSV.
+
+Archived function rows are kept for **30 days** after they're removed from the function's row list. Archiving is turned on by default for new functions. If you don't see **View archive** in a function's footer, archiving isn't enabled for that function — contact support.
 
 ### Why does "Go to row in function" say the function row has been archived?
 
@@ -105,9 +156,28 @@ When you click a cell in your table that was processed by a function and see **"
 
 **Your results are not lost, and you do not need to re-run anything.** The function already ran successfully, wrote the output back to your calling table, and charged credits at the time of execution. The "archived" message means only that the drill-through record inside the function's own view is no longer accessible — not that the enrichment failed or that data is missing from your table.
 
-This happens because the function's Live view retains at most 1,000 rows total, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
+This happens because the function's Live view retains at most 1,000 completed rows, with up to 50 rows allocated per calling table. On high-volume runs — or when the same function is called from many tables — earlier rows age out of that window as newer ones arrive.
 
-To view historical rows that have aged out, click **Archive** in the function table's toolbar. The Archive section shows processed rows organized by timeline and can be exported as a CSV.
+To view historical rows that have aged out, click **View archive** in the function's footer. Archived rows are kept for 30 days, and you can download them as a CSV with **Export full archive** in the archive table's toolbar.
+
+### How do I find which table a row in my function came from?
+
+A function can be called from many tables, so each row in a function stores where it came from in an **Origin** object in its **Function inputs** column. Use the Origin to trace a function row back to the table and row that sent it, for example when something breaks.
+
+**To open the source table and row from a function:**
+
+1.  Open the function from **Functions** on your Clay homepage.
+2.  Click the **Function inputs** cell on the row you want to trace. The **Cell details** panel opens on the right and shows the **Origin** object, including:
+    -   **Table Id** (`t_...`): the table that called the function.
+    -   **Field Id** (`f_...`): the function column in that table.
+    -   **Record Id** (`r_...`): the row in that table that sent the data.
+3.  Click **Go to row in origin table** at the top of the **Cell details** panel. The source table opens in a new tab, scrolled to that row with the row selected.
+
+**Go to row in origin table** appears when the function was called directly from a table. If you don't see the button, you can still open the source table by adding its **Table Id** to your workspace URL: `https://app.clay.com/workspaces/<your workspace ID>/tables/<Table Id>`. Your workspace ID is the number after `/workspaces/` in your browser's address bar.
+
+**To find the function column in the source table:** in the source table's toolbar, click the columns button (for example, **8/10 columns**), then paste the **Field Id** into the **Search for a column** box. Column search matches column names and exact column IDs, so the function column appears in the results.
+
+**Searching by ID on the Clay homepage isn't supported.** The homepage **All files** search matches table, workbook, and folder names only, so pasting a **Table Id** there shows "No results found." Use the **Go to row in origin table** button or the workspace URL above instead.
 
 ### What's the difference between an input and a column in a function?
 
@@ -140,6 +210,17 @@ You cannot look up directly into a function's background table — the **Lookup 
 
 Yes. Functions can be nested — a function can call another function as part of its enrichment sequence, letting you compose complex workflows from smaller, validated building blocks.
 
+### Can I call a Workflow Function from a table?
+
+No. A Workflow Function (a function built in Clay Workflows) can only be called from inside another workflow, by adding it as a step (it's labeled **Workflow function** in the step picker). You can't call Workflow Functions from a table right now. They don't appear in the table's **Function** picker (under `Tools` → `Functions`) or under **Run workflow**, so you won't find them there.
+
+Table functions, which are the table-based functions described on this page, can be called from both tables and workflows:
+
+-   **From a table:** click `Tools` and select an option under `Functions`. See [Calling a function from a table](#calling-a-function-from-a-table).
+-   **From a workflow:** add a **Table function** step.
+
+If you need the same logic in both tables and workflows, build it as a table function.
+
 ### What happens if I edit a function while it's running in a production table?
 
 While in edit mode, your function continues to process inputs it receives from production tables. When you publish an edit to your function, the changes apply to all inflight and future rows that the function processes. Note that you can pause your function before publishing changes to ensure that inflight rows are applied with the changes.
@@ -156,7 +237,7 @@ If you have existing column group templates, you can convert each one to a funct
 
 ### Is there version history for functions?
 
-No, functions don't currently have a version history.
+No, table functions don't currently have a version history. Workflow functions (functions built in Clay Workflows) do have versions: each workflow that calls a workflow function can follow the `Latest` published version or be pinned to a specific version. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 ### What is the main use case for functions?
 
@@ -171,6 +252,21 @@ No. Saving columns as a function preserves the existing data without rerunning t
 Yes. When you save columns as a function using **Save as function** from the right-click menu, run conditions on the original columns are automatically carried over to the new function. Clay copies the run condition formulas and remaps formula references to the new function context — so the columns inside the function will have the same run conditions as they had in your original table.
 
 **One edge case to be aware of:** If a run condition references a column that was not included in the function and is not wired as a function input, that reference is carried over verbatim but will point to the original table's field ID — which doesn't exist inside the function. In that situation the run condition needs to be updated manually. To access column settings inside a function: open the function in edit mode (click **Live function** → **Edit draft** from the function's live view, or **Edit function** from the settings panel), then click the column header and select **View column** to open the settings panel on the right.
+
+### Can I set a run condition on a function so it only runs when a column is populated?
+
+Yes. You set the run condition on the **function column in the table that calls the function**, not on the function itself. A function column has the same **Run settings** as any other enrichment column, so you can make a function run only on rows where another column has a value. For example, you can make an "Enrich Management Contact" function run only when the "Management Contact 2" column is populated.
+
+To add a run condition to a function column:
+
+1.  In the table that calls the function, click the function column header → **Edit column**.
+2.  Scroll to **Run settings** and check **Add run condition** ("Only run if this formula resolves to true").
+3.  Enter the condition. Type `/` to reference the column, for example `/Management Contact 2 is not empty`. See [Conditional runs](conditional-runs.md) for formula tips.
+4.  Click **Save**.
+
+Rows where the condition isn't met show **"Run condition not met"** in the function column, and those rows aren't sent to the function, so they use no credits.
+
+**Functions don't have a run condition at the function level.** The function's own settings panel has no run condition that applies everywhere the function is used. If you call the same function from several tables, add the run condition to the function column in each of those tables. The columns *inside* a function can also have their own run conditions, which you edit in the function's edit mode. These control which steps run within the function for each input it receives.
 
 ### What happened to my original columns and prompts after I used "Replace columns with function"?
 
@@ -220,6 +316,23 @@ No. Changes to a function don't backfill — they won't reapply to rows that hav
 
 To apply the updated logic to a row that already ran, re-run that row's function column in the calling table. This dispatches a fresh invocation against the current function configuration.
 
+### Why is a new function column filled in while editing, but empty after I exit edit mode?
+
+When you add a new column to a function (for example, a second AI column like **Industry**), it can look populated in edit mode but empty in the live function after you click **Exit edit mode**. Nothing is broken. You're looking at two different sets of rows:
+
+-   **In edit mode**, the rows are sandbox test rows. Rows copied from your live function show as **Row (copy)** in the **Function inputs** column. They run on your draft configuration, so the new column fills in. Results on these test rows stay in the sandbox and are never sent back to your calling table.
+-   **In the live function**, the rows are the real runs your function already processed. Publishing a new column adds it to the live function but doesn't run it on rows that already exist there. On those rows, the new column stays empty and nothing new is sent back to the calling table.
+
+If **Review changes** shows "This function has no unpublished changes," your new column is already published. Rows the function receives from now on run every column, including the new one.
+
+**To fill in the new column for rows that already ran:**
+
+1.  Open the calling table, which is the table where the function column lives.
+2.  Select the affected rows and re-run the function column for them.
+3.  Each re-run sends a fresh row to the function. The new row runs on the published configuration, including the new column, and **Send data back** returns the new value to your calling table.
+
+You can't re-run past rows from inside the live function itself. See [Why can't I run/edit a function in "Live" mode directly?](#why-cant-i-runedit-a-function-in-live-mode-directly).
+
 ### What columns should I include when building a function?
 
 Include action columns (enrichments, Claygents, waterfalls) — not static input columns like company name or domain. Action columns contain the reusable logic you want to apply across tables.
@@ -249,7 +362,7 @@ When a Claygent or Use AI column runs inside a function, all its output fields a
 3.  Hover over the specific output field you want to add (for example, **Agency Name** or **Buying Model**).
 4.  Click **Add to column** — this creates a standalone basic column for that field in the function table.
 5.  Repeat for each output field you want to expose.
-6.  Click **Publish Changes**.
+6.  Click **Review changes**, then click **Publish to function**.
 
 After publishing, each promoted field appears as its own column in the function and is listed in the **"Choose output data to send"** checklist. Check those columns there to have them returned to the calling table and included in any export. See [How do I configure which columns are returned from my function to the calling table?](#how-do-i-configure-which-columns-are-returned-from-my-function-to-the-calling-table) for the next step.
 
@@ -264,9 +377,63 @@ Every function includes a built-in **"Send data back"** column — the final ste
 3.  Click its column header to open the settings panel.
 4.  Under **Configure → Choose output data to send**, you'll see a checklist labeled **"Selected columns (N of M)"** listing the function's columns.
 5.  Check each column whose values you want returned to the calling table.
-6.  Click **Publish Changes** to apply.
+6.  Click **Review changes**, then click **Publish to function** to apply.
 
 If a column's data is not appearing in the calling table, check whether that column is selected here — it may exist in the function but be unchecked in this list.
+
+### Why does my function output a field like "Website (2)", and how do I get that value into my "Website" column?
+
+A function's output fields are named after the columns inside the function. Column names in a Clay table must be unique, so when a column is added to the function with a name that's already taken — for example, a second **Website** column extracted from another enrichment — Clay automatically names it **Website (2)**. Both columns then show up in the function's output (and in the **Cell details** panel in your calling table) under those names: one called **Website** and one called **Website (2)**, which may hold the value you actually want. The **"Choose output data to send"** checklist doesn't let you rename an output; each output uses its function column's name.
+
+To put the **Website (2)** value into an existing **Website** column in your calling table:
+
+1.  In the calling table, click any populated cell in the function column to open the **Cell details** panel.
+2.  Hover over the **Website (2)** field.
+3.  Click **Add to column**, then under **Map to an existing column**, select your **Website** column.
+
+What happens to the destination column depends on what's already in it:
+
+-   **The Website column already has a formula:** Clay keeps the existing formula and adds the function's **Website (2)** value as a fallback. Rows keep their current value and only use **Website (2)** when the existing formula returns nothing.
+-   **The Website column holds manually entered or imported data (no formula):** Clay shows a **Data overwrite** warning — "Mapping to this destination column will overwrite all of its existing data. This action cannot be undone." If you need to keep that data, add **Website (2)** as a new column instead of mapping it.
+
+For details, see [Map child columns to an existing column](table-columns-overview.md#map-child-columns-to-an-existing-column).
+
+### Why doesn't my function send back large outputs that show "Cell data size exceeds limit (8 kB)"?
+
+Functions follow Clay's standard cell size limits: formula, text, and other basic columns hold up to **8 kB** per cell, while action columns — such as enrichments, **Run workflow**, and the function's own **"Send data back"** column — hold up to **200 kB** per cell. See [Manage cell data](manage-cell-data.md) for the full list of limits.
+
+If a formula or text column inside your function goes over 8 kB — for example, a `Csv` column that pulls a large CSV string out of a Clay Workflow's output — that cell shows **"Cell data size exceeds limit (8 kB)"** and its value isn't saved. The **"Send data back"** column can still show **"Data sent successfully"** for that row, but the value it returns for the oversized column is empty. The calling table — or an AI agent (such as Claude) calling the function over MCP — doesn't receive the data.
+
+**Fix: send the field directly from the action column with Additional outputs.** Instead of returning the oversized formula column, return the field straight from the action column that produced it:
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, then click **Edit function**).
+2.  In the function's settings panel, go to the **Outputs** section.
+3.  Under **Additional outputs**, click **Add field** and use the field picker to select the specific field inside the action column's output — for example, the `Csv` field inside your **Run workflow** column.
+4.  Click **Review changes**, then click **Publish to function** (or **Publish** if the function has never been published).
+
+Because the value is read from the action column's stored output, it isn't subject to the 8 kB formula-column limit. The total data sent back for each row must still fit within the **200 kB** limit of the "Send data back" column. If your output can exceed 200 kB, return only the fields your calling table or agent actually needs — see [Why does my function's "Send data back" column show "Cell data size exceeds limit (200 kB)"?](#why-does-my-functions-send-data-back-column-show-cell-data-size-exceeds-limit-200-kb).
+
+### Why does my function's "Send data back" column show "Cell data size exceeds limit (200 kB)"?
+
+A function's **"Send data back"** column is an action column, so each of its cells holds up to **200 kB**. Everything checked under **Configure → Choose output data to send** is returned together in that one "Send data back" cell for the row. When the combined data for a row is larger than 200 kB, the "Send data back" cell shows **"Cell data size exceeds limit (200 kB)"**, the data isn't saved, and the calling table doesn't receive the function's output for that row. Rows with smaller outputs still send their data back normally.
+
+This 200 kB cell size limit is fixed and applies on every plan; it can't be raised. Splitting your outputs across more columns inside the function doesn't help, because all the selected outputs still come back in the same "Send data back" cell.
+
+Function outputs usually go over 200 kB for one of these reasons:
+
+-   **The same large data is sent back more than once.** For example, a jobs list from a job-postings enrichment (such as **Find jobs** or **Find Active Job Openings**) is checked as an output and a copy of the same list (such as a **Jobs 2** column) is checked too, so the size doubles.
+-   **An enrichment returns many items with lots of detail.** Job-postings enrichments return one entry per job, and each entry can include a full company profile, so companies with many openings produce very large outputs. The enrichment column itself is also an action column with a 200 kB limit, so on some rows the enrichment can go over the limit on its own.
+
+**To fix "Cell data size exceeds limit (200 kB)" on "Send data back":**
+
+1.  Open the function in edit mode (from your Clay homepage → **Functions**, then click **Edit function**).
+2.  Click the **"Send data back"** column header to open its settings.
+3.  Under **Configure → Choose output data to send**, uncheck any duplicate columns and any columns your calling table doesn't need.
+4.  If an enrichment inside the function returns a list, lower the number of results it returns (for example, the result limit on a job-postings enrichment) so each row's output is smaller.
+5.  Click **Publish Changes**.
+6.  Rerun the enrichment on the affected rows, then rerun **"Send data back"** (or rerun the function column for those rows in the calling table). The calling table updates once the data comes back.
+
+For the other cell size limits in Clay, see [Manage cell data](manage-cell-data.md).
 
 ### Why doesn't my function output appear in the formula column's `/` field picker?
 
@@ -342,7 +509,7 @@ If multiple rows are stuck and the function appears to have run (you can see val
 3.  Click the column header to open its settings, then check whether an **"Only run if..."** run condition is set.
 4.  If the condition requires a specific enrichment field to have a value, rows where that enrichment returned nothing will never trigger the callback — leaving the calling table stuck until the 24-hour timeout.
 5.  Remove the run condition, or loosen it so **"Send data back"** runs for every row — including rows where the enrichment returned nothing. Sending back an empty result still resolves the calling table's "Awaiting Callback" status immediately.
-6.  Click **Publish Changes** to apply.
+6.  Click **Review changes**, then click **Publish to function** to apply.
 
 After fixing the condition, re-run the stuck rows in the calling table (see "To re-run rows stuck in Awaiting Callback" below).
 
@@ -369,19 +536,24 @@ To find your data:
 
 Other useful column status filters you can apply to any function or enrichment column: **has no results** (ran but returned nothing), **has not run** (not yet processed), **is queued** (waiting to be processed), **is retrying** (a retry is in progress), and **is awaiting callback** (waiting for the function to finish and return results).
 
-### Can I share a function with someone outside my workspace?
+### Can I share a function with someone outside my workspace, or copy a function to another workspace?
 
-Yes. Use the **Share as template** toggle to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
+Yes. To share a function with another workspace, or to duplicate a function from one workspace to another, use the **Share as template** toggle in the function's settings panel to generate a shareable link. Anyone with the link can create a copy of the function in their own workspace.
 
-**To generate and share the link:**
+You need edit access to the function to see the **Share as template** option. The destination workspace must be on a plan that includes Functions (Functions aren't available on the Free plan).
+
+**To generate and share the function link:**
 
 1.  Open the function from your Clay homepage. Make sure you are **not** in edit mode — the Share as template section is only visible when viewing a function live, not while editing it. If you see an edit-mode banner, click **Exit edit mode** first.
-2.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
-3.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the section that appears.
-4.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
-5.  When the link opens, Clay shows a workspace picker listing the workspaces you have access to. Select the destination workspace and confirm to create the copy.
+2.  Open the function's settings panel by clicking **Details** in the function toolbar. **Details** is available both on the function table and on the function's run stats page (the page with the **View runs** button).
+3.  In the settings panel on the right, scroll down to the **Share as template** section (a collapsible panel near the bottom of the settings panel).
+4.  Toggle on **Share as template**. A shareable link is generated automatically — copy it from the **Template link** field. To restrict who can open the link, add addresses under **Share with specific email(s)**; leave it blank to let anyone with the link open it.
+5.  Send the link to whoever needs the function, or open it yourself while signed into the destination workspace.
+6.  When the link opens, Clay shows a preview of the function. Click **Create function using template**, choose the destination in the **Workspace** dropdown, and confirm to create the copy.
 
 The copy is fully independent of the original. Any changes you make to the original function after sharing do not sync to the copy — each workspace's version is maintained separately.
+
+If the function contains a **Run workflow** column, it can't be copied to another workspace. Clay shows: *This table has a "Run workflow" column, and workflows can't be copied to another workspace yet. Remove the "Run workflow" column from the original table and try again.*
 
 ### How do I duplicate a function within my workspace?
 
@@ -438,14 +610,18 @@ Clay returns a run ID immediately — poll `GET /routines/run/{run_id}/results` 
 
 To allow a field to have no value, make the input optional — see [How do I make a function input optional?](#how-do-i-make-a-function-input-optional).
 
-**Rate limits and batch sizes:**
+For rate limits, batch sizes, and concurrency limits, see [What are the concurrency and rate limits when calling a function via the API?](#what-are-the-concurrency-and-rate-limits-when-calling-a-function-via-the-api).
 
--   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace.
+### What are the concurrency and rate limits when calling a function via the API?
+
+When you call a Clay function from an external system through the public API, throughput is limited at the workspace level, not per function or per API key. These function API limits are the same for every paid plan, and there's no per-workspace setting to raise them. The limits are:
+
+-   **Rate limit:** 300 requests per minute across all public API endpoints in your workspace, with short bursts of up to 30 requests. Polling for results counts toward this limit. If you exceed it, the API returns a `429` error with a `Retry-After` header (at least 5 seconds) — wait that long before retrying.
 -   **Inline run (single request):** Up to 100 items per call. Submit your items as a JSON array and Clay returns results asynchronously — poll the run ID to retrieve them.
 -   **File upload batch:** Up to 100,000 items per batch. Upload a JSONL file, start the batch run, then poll for a downloadable results file when processing is complete.
 -   **Concurrent batch runs:** Up to 20 file upload batch runs can be in progress at once per workspace. If 20 batches are already running, starting another returns a `429` error: *"Workspace has 20 batch runs in progress (limit 20). Wait for one to finish before starting another."* A batch stops counting toward the limit once it completes or fails. Wait for an in-progress batch to finish, then start the next one. Inline runs don't count toward this limit.
 
-**Note:** Processing speed is subject to workspace-level throttling. If you upload several large batches at once, expect slower completion rates as Clay distributes the workload across your workspace.
+**Note:** Function processing speed via the API is subject to workspace-level throttling. If you upload several large batches at once, expect slower completion rates as Clay distributes the workload across your workspace.
 
 ### How can I limit who can edit my functions?
 
@@ -478,7 +654,7 @@ To make an input optional:
 1.  From your Clay homepage, click **Functions** and open the function you want to change.
 2.  Click **Edit function** in the settings panel.
 3.  In the inputs list, find the input you want to make optional and toggle off its **Required input** setting.
-4.  Click **Publish Changes** to apply.
+4.  Click **Review changes**, then click **Publish to function** to apply.
 
 After this change, rows that don't have a value for that input will still run — they'll pass an empty value for that field instead of being skipped.
 
@@ -507,7 +683,7 @@ If your function has an input whose **Semantic type** is **Email**, Clay validat
 2.  Click **Function inputs** and find the affected input (e.g., **Email**).
 3.  Click the input, then click **Remove input**.
 4.  Click **+ Add input** and create a new input with the exact same name (e.g., **Email**). A freshly created input has no semantic type restriction and accepts any string value, including values that arrive as objects.
-5.  Click **Publish Changes**.
+5.  Click **Review changes**, then click **Publish to function**.
 
 Columns inside the function that reference this input by name continue to work without modification — inputs are looked up by name.
 

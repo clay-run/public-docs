@@ -1,7 +1,7 @@
 ---
 title: Snowflake integration
 description: Cloud-based data platform enabling data storage, analysis, and sharing.
-last_synced: 2026-04-26T01:40:42.804Z
+last_synced: 2026-11-17T20:51:15.788Z
 ---
 
 # Snowflake integration
@@ -156,7 +156,7 @@ If a batch fails, the error message will include **"Note: Try reducing the batch
 
 ### `Action` Update row
 
-Update a row in a Snowflake database using a single field as a unique identifier. If the identifier exists, the row will be updated. If not, a new row will be created.
+Update existing rows in a Snowflake table. The Snowflake Update row action runs an `UPDATE` statement that changes only the rows already in your Snowflake table that match the **Where Clause** (for example, `WHERE EMAIL = '<Email column>'`). Update row never inserts new rows: if no rows in the Snowflake table match the Where Clause, nothing is written.
 
 **Inputs**
 
@@ -166,10 +166,29 @@ Update a row in a Snowflake database using a single field as a unique identifier
 -   **Table name**
 -   **Snowflake warehouse**
 -   **Role** (optional)
+-   **Where Clause** (required): A SQL condition that must start with `WHERE` and determines which rows to update (e.g. `WHERE id = 1`).
+-   One input per Snowflake table column: map the Clay columns whose values you want to write to each Snowflake column.
 
 **Batching**
 
-The Update row action also supports **Run in batches** mode with the same behavior: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
+The Update row action also supports **Run in batches** mode: up to 1,000 rows are combined into a single request. If you see a **"Note: Try reducing the batch size"** error, lower the **Number of rows per batch** setting — 500 is a good starting point.
+
+#### Why is my Snowflake table still empty after running Update row?
+
+The Snowflake Update row action only changes rows that already exist in the Snowflake table and match the Where Clause. If the Snowflake table is new or empty, or none of its rows match (for example, none of the emails in your Clay table are in Snowflake yet), Update row writes nothing. The cell still shows a success result rather than an error — usually **⚠️ Completed, 0 rows matched**, and in some cases **✅ Update completed**. When rows do match, the cell shows **✅ Updated 1 row** (or the number of rows updated).
+
+To add rows to Snowflake instead:
+
+1.  Change the column's action to **Insert row** to add every Clay row as a new Snowflake row, or to **Create or update row** to update rows whose lookup field value already exists in Snowflake and insert the rest (avoids duplicates).
+2.  Map your Clay columns (for example, Email, Job Function, Department, Job Level) to the matching Snowflake columns.
+3.  Run the column again, then query the Snowflake table to confirm the rows were written.
+
+#### Update row error: "All rows in batch must have the same columns"
+
+When **Run in batches** is turned on, every row in a batch must have values in the same set of mapped columns. Mapped columns whose value is blank (empty, whitespace-only, or null) for a row are skipped for that row, so if some rows have a blank value in a mapped column (for example, Job Function) and others don't, the batch fails with "All rows in batch must have the same columns". To fix it, do one of the following:
+
+-   Fill in the blank values, or map only columns that are populated for every row.
+-   Turn off **Run in batches** — when each row runs individually, blank columns are simply left out of that row's update and no error occurs.
 
 ### Run settings
 
@@ -225,16 +244,21 @@ Any valid `SELECT` works — tables, views, joins, and aggregations are all supp
 
 Click `Test` to preview results, then click `Continue`.
 
+If a query runs too long, Clay stops it and shows `Your query took too long to complete. Simplify the query or precompute its results into a table, then import from that table.` There are two ways to fix it:
+
+-   **Simplify the query.** Remove joins, aggregations, or columns you don't need so the query finishes faster.
+-   **Precompute the results in Snowflake.** Run the expensive query in Snowflake, save its output to a table, then point your Clay query at that table with a simple `SELECT`.
+
 ### Configuring Import sync
 
 Once your source is connected, toggle on `Import sync` to keep your Audiences data current automatically.
 
 When enabled, `Import sync` runs:
 
--   **Incremental imports:** every **15 minutes** when a timestamp field (cursor) is configured — picks up new or changed records; every **12 hours** when no timestamp field is set — reruns the full SQL query
+-   **Incremental imports:** when a timestamp field (cursor) is configured, every **15 minutes** on Enterprise plans or once **daily** on Growth plans — picks up rows whose timestamp changed; when no timestamp field is set, every **12 hours** on Enterprise plans or once **daily** on Growth plans
 -   **A full sync once a week** — refreshes all data and reconciles deleted records
 
-You can also trigger a manual sync at any time from the source settings, which is useful when testing.
+There is no manual **Sync now** button for a Snowflake Audiences import. To get specific rows into Audiences sooner, update their timestamp field value in Snowflake so the next incremental sync picks them up. If you add a new column to your field mapping, see [I added a new Snowflake column to my mapping — when will the data sync in?](audiences.md#i-added-a-new-snowflake-column-to-my-mapping--when-will-the-data-sync-in).
 
 To check sync status or update settings, click `Add data` in your Audiences workspace, find the Snowflake integration, click the `⋯` menu, and select `Settings`.
 
@@ -248,13 +272,25 @@ Select the field that uniquely identifies each record in your Snowflake data. Cl
 
 Import record matching lets Clay deduplicate records across multiple sources. For example, if you're importing from both Snowflake and Salesforce, matching on `domain` ensures a single company row reflects data from both.
 
-Click `Edit` next to `Import record matching (optional)`, then:
+When `Import sync` is on, you must choose an Import record matching option before you can save the import — otherwise Clay shows "Choose how to match records before saving." Click `Set up` next to `Import record matching`, choose **Match existing records (Recommended)** or **Import without matching**, and if you're matching:
 
 1.  Choose an alias field (e.g. `Domain`) under `When`.
 2.  Map that alias to the corresponding field in each connected source under `In`.
 3.  Clay will merge records where the alias values match exactly.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69d69a4ceb012f4e97a8ad42_Snowflake%20Integration%20Image%20\(1\).webp)
+
+Matching runs when each record is first imported: settings apply only to records imported after you save them, and records already in Audiences are not merged retroactively. See [Import record matching](audiences.md#entity-resolution-and-deduplication) in the Audiences docs for both options.
+
+#### What if my Snowflake source doesn't have a domain column for Import record matching?
+
+In the Import record matching dialog, each source under `In` gets one dropdown, and you can select one field per source. You don't have to map every source. If your Snowflake query doesn't return a column that matches the alias field — for example, no domain or website column when matching on `Domain` — leave the Snowflake dropdown blank and click `Done`. Import record matching still runs for the sources you did map, such as Salesforce and CSV imports.
+
+Keep in mind:
+
+-   **An unmapped Snowflake source isn't deduplicated against your other sources.** Import record matching can't merge Snowflake records with matching records from your other sources when the Snowflake dropdown is blank, so the same company may appear as separate records.
+-   **You can map the Snowflake column later.** Once your team confirms which column holds the domain (or you add one to your SQL query), click `Edit` next to `Import record matching` and select it. The change applies only to records imported after you save.
+-   **Domains are normalized before they're compared.** When the alias field is `Domain`, Clay strips the protocol (`https://`), `www.`, any path or query string, and subdomains before comparing values, so `https://www.acme.com/about` and `acme.com` match. Different top-level domains (for example, `acme.com` and `acme.io`) do not match.
 
 ### Mapping fields
 
