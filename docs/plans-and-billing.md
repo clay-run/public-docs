@@ -51,7 +51,7 @@ Your new plan will activate immediately, and any applicable charges will be appl
 -   **Monthly pricing:** $0
 -   **Table limit:** 200 rows per table
 -   **Key limitations:**
-    -   Source record limit: up to **100 records total** per source across all runs (compared to 15,000+ on paid plans). Once a source reaches this limit, it stops adding new records — create a new source to continue.
+    -   Source record limit: up to **100 records total** per source across all runs (compared to 50,000 on Launch and higher plans). Once a source reaches this limit, it stops adding new records — create a new source to continue.
     -   Scheduled source runs are not available
     -   Phone number enrichments are not available (see [Trials](#trials) for details)
     -   CRM integrations (e.g., HubSpot, Salesforce, Pipedrive) require Growth plan or higher
