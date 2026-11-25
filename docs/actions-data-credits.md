@@ -317,6 +317,8 @@ _**Note:** The credit balance icon in the top-right corner of your workspace sho
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
 
+**Downgrading to a paid plan:** If your current balance is at or below 2× the new plan's monthly Data Credit limit, all your credits carry over. Credits above that cap are forfeited at the end of your billing cycle. For example, downgrading to a plan with 2,500 Data Credits/month sets your cap at 5,000 credits — a 3,000-credit balance carries over in full, but a 7,000-credit balance would be reduced to 5,000.
+
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
 
 ## Cost optimization tips
@@ -472,6 +474,8 @@ Common causes:
 -   Your balance is capped at 2× the new plan's monthly Data Credit limit.
 -   Your data remains intact.
 -   Features are limited to the new plan's capabilities.
+
+**Downgrading to a paid plan:** If your current balance is at or below 2× the new plan's monthly Data Credit limit, all your credits carry over. Credits above that cap are forfeited at the end of your billing cycle. For example, downgrading to a plan with 2,500 Data Credits/month sets your cap at 5,000 credits — a 3,000-credit balance carries over in full, but a 7,000-credit balance would be reduced to 5,000.
 
 **Downgrading to the free plan:** The free plan includes only 100 Data Credits per month (rollover cap: 200 credits). Credits at or below 200 carry over; any credits above 200 are forfeited at the end of your billing cycle. If you have a large credit balance, spend it down before your cycle ends or contact support before downgrading to explore your options.
 
