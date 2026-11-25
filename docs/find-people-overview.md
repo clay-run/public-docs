@@ -51,11 +51,11 @@ To add more profiles from the same search to an existing people table without cr
     -   **Job title must contain exact:** Each result must contain at least one of your search terms, ignoring capitalization and special characters. Synonyms and similar titles are excluded. For example, "Founder/CEO" matches "ceo", but "Frontend Engineer" does not match "Software Developer."
     -   **Job title must match exactly:** Each result must match at least one search term exactly, including capitalization. Special characters are not allowed. For example, neither "Founder/CEO" nor "ceo" will match "CEO."
     -   **Exact phrase matching:** Wrap multi-word terms in quotes to search for exact phrases. For example, "Google Cloud" finds profiles with that specific expertise. Note: Special characters (#, +, !) and stopwords ('a', 'an', 'of', 'the') are removed.
--   **Experience:** Filter by current role duration, number of positions held, and keywords in experience descriptions. The Experience section contains three sub-filters in the standard search UI, with a fourth available in Advanced Search (see note below):
+-   **Experience:** Filter by current role duration, number of positions held, and keywords in experience descriptions. The Experience section contains three sub-filters in the standard search UI, with a fourth available in Upgraded search (see note below):
     -   **Months in current role:** Set a minimum and/or maximum number of months a person has been in their current position.
     -   **Number of experiences:** Set a minimum and/or maximum count of separate job entries listed on a person's profile. **This counts individual roles, not total years of career experience.** For example, setting Max = 2 returns people with two or fewer job entries, which is a useful proxy for early-career candidates. To approximate total career experience without a direct filter, combine this with a cap on **Months in current role**, or import results and use a **Use AI** column to analyze each person's full work history.
     -   **Experience description keywords:** Return only people whose experience descriptions include specific keywords (e.g., "construction", "machine learning").
-    -   **Years of experience** *(Advanced Search — currently in closed beta):* Set a minimum and/or maximum number of estimated full-time years of experience based on the person's profile. This filter is part of the Advanced Search (Search DSL) mode. Contact support to request access to the closed beta.
+    -   **Years of experience** *(Upgraded search — currently in beta):* Set a minimum and/or maximum number of estimated full-time years of experience based on the person's profile. This filter is available only in Upgraded search (DSL) mode — contact support to enable Upgraded search for your workspace. Once enabled, click the **gear icon** (⚙ **Search settings**) at the top of the search criteria panel and toggle **Upgraded search** on to access this filter.
 -   **Location:** Include or exclude specific regions, countries, or cities. Distance-based filtering (for example, "within 35 miles of a location") is not available — location filters accept named regions, countries, and cities only.
 -   **Profile:** Filter by names, connection count, or follower count ranges.
     -   **Bio keywords:** Return only people whose profile mentions at least one of your keywords (searches across headline, bio, experience descriptions, and languages). Multiple keywords use OR logic — entering `Python, CPA` returns profiles mentioning either term, not only profiles that mention both.
@@ -254,6 +254,17 @@ Here's what happens to people the old Manual trigger already found:
 
 -   **They stay in your audience.** Removing a Find people trigger deletes that trigger's search source and schedule. It doesn't remove any contacts already written to Audiences or to your People segment.
 -   **The new trigger's first run may pull them again.** Each scheduled run of a Find people trigger adds only people that trigger hasn't already pulled. The new trigger has no record of what the old trigger found, so its first run can return people who are already in your segment. To avoid this, add your existing People segment under **Excluded people** in the new trigger's search. Clay re-checks the exclusion on every scheduled run. Audience exclusions match by professional profile URL or email only, so contacts without either can still be pulled again. See "Excluding people (or companies) from your search" under [Importing from people and companies search](audiences.md#importing-from-people-and-companies-search).
+
+### How do I switch to Upgraded search (DSL mode)?
+
+Find People supports two search modes:
+
+- **Standard filters** (default) — form-based filters for job title, company, location, and experience.
+- **Upgraded search** — a DSL query-based mode that unlocks additional capabilities, including a free-text query input and the **Years of experience** filter.
+
+Upgraded search is currently in beta — contact support to enable it for your workspace.
+
+If Upgraded search is enabled on your workspace, click the **gear icon** (⚙ **Search settings**) at the top of the search criteria panel to open the settings popover, then toggle **Upgraded search** on. To return to standard filters, click the gear icon again and toggle **Upgraded search** off. Your mode preference is saved and persists across page refreshes.
 
 ## Importing from a Sales Navigator search URL
 
