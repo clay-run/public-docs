@@ -10,7 +10,20 @@ Comparing legacy plans to our new plans
 
 In March 2026, Clay introduced a new pricing model to give you more flexibility and value. The new model uses two simple usage meters: **Actions** (measures platform usage of enrichments and GTM execution) and **Data credits** (for accessing data from our marketplace).
 
-**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward.
+**What this means for you:** If you're on and choose to stay on your legacy plan, you'll keep your familiar pricing and all the features you have today. However, you won't have access to new features and integrations that we build going forward. Some features are available to legacy plans only temporarily, through December 31, 2026 — see [Legacy feature trial ending December 31, 2026](#legacy-feature-trial-ending-december-31-2026).
+
+## Legacy feature trial ending December 31, 2026
+
+Paid legacy plans (Starter, Explorer, and Pro) have temporary access to Audiences, Account agents, Workflows, the Clay Plugin, and Sequencer on Audiences through **December 31, 2026**. This legacy feature trial doesn't apply to legacy Enterprise plans. After December 31, 2026, legacy Starter, Explorer, and Pro plans lose access to these trial features. You can still stay on your legacy plan; to keep using the trial features, move to a modern plan.
+
+### What legacy plans lose after December 31, 2026
+
+If you're building something on a legacy Starter, Explorer, or Pro plan that needs to keep running in January 2027, check this list first. After the legacy feature trial ends on December 31, 2026, the following changes apply:
+
+-   **Audiences (all paid legacy plans):** You can no longer run Signals, Account agents, or Sequencer from Audiences.
+-   **Audiences (legacy Pro only):** You also lose syncing CRM and data warehouse data into Audiences.
+-   **Sequencer on Audiences:** Campaigns running from Audiences stop. Sequencer campaigns running from a Clay table remain available on your legacy plan.
+-   **Workflows:** Each workflow is capped at 100 runs, and the code node and AI mode in conditional nodes are no longer available. The 100-run cap is a total per workflow, not a monthly limit — successful and in-progress runs count toward it, while failed and cancelled runs don't.
 
 ## **Key differences between legacy and modern plans**
 
