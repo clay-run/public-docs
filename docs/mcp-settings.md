@@ -84,6 +84,43 @@ The native Clay MCP contact enrichment — including the `search-contacts` and `
 
 The `MCP for reps` option requires a modern Launch, Growth, Enterprise, or Legacy Enterprise plan.
 
+### How do I find people by seniority, department, or keywords through Clay MCP?
+
+Use Clay MCP's built-in contact search (the `search-contacts` tool), not a Function. Clay's built-in MCP tools are listed separately from Functions (subroutines), so check the full tool list in your AI tool — not only the Functions section.
+
+The `search-contacts` tool takes up to 10 companies per request plus optional filters:
+
+-   Job title keywords to include or exclude
+-   Profile keywords
+-   Locations to include or exclude
+-   Schools
+-   Certifications
+-   Languages
+-   Time in current role (minimum and maximum months)
+-   Names
+
+You can also set how many people to return per company, up to 100.
+
+To target a seniority level or department, put those words in your request so Clay matches them against job titles — for example, "VP", "Head of", "Director", "Sales", or "Marketing". You don't need to name the tool: ask in plain language, such as `@Clay Find Directors and VPs of Sales at acme.com who started in the last 12 months`, and the AI tool picks the right Clay search.
+
+**Why the "Find People at Company" Function returns a general list:** A Function called through Clay MCP only shows the inputs defined on that Function. The Clay-managed "Find People at Company" Function has two inputs — a company domain (required) and the company's professional network profile URL (optional) — and no seniority, department, or keyword inputs, so it returns a general list of people at the company. To keep using a Function for contact finding, make your own version of the Function in your workspace, add inputs such as "Job title keywords" and "Limit", and connect them to the filters on its Find People step. Clay MCP then shows those inputs whenever the Function is called. See [Enabling a function for MCP](#enabling-a-function-for-mcp).
+
+### How do I find companies through Clay MCP?
+
+Clay MCP has a built-in company search (the `search-companies` tool) — there's no need for a "Find Company" Function. It's available in Claude, ChatGPT, Glean, Microsoft 365 Copilot, and other connected AI tools. Company search in Clay MCP filters by:
+
+-   Industry (include or exclude)
+-   Company size
+-   Company type
+-   Location and country (include or exclude)
+-   Funding amount
+-   Annual revenue
+-   Description keywords (include or exclude)
+-   Technologies used (vendors and products)
+-   Minimum follower count
+
+After a company search, you can load more results and add company data points to the companies Clay found. Ask in plain language — for example, `@Clay Find SaaS companies in the UK with 200–1,000 employees that use [technology]` — and the AI tool runs the company search for you.
+
 ### Does Clay provide an MCP server URL I can paste into any AI tool?
 
 No. Clay's MCP integrations are pre-built apps within each supported platform's native connector or app directory. Connect through:
