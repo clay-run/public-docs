@@ -51,5 +51,22 @@ Use this action to find all social media profiles associated with a creator base
 
 **Setup Inputs**
 
--   **Social platform**: Select the platform of the profile you are providing (e.g., Instagram, TikTok, YouTube).
--   **Profile URL, username, or user ID**: Enter the creator's existing profile URL, username, or Influencer Club user ID.
+-   **Profile URL**: Enter the existing profile URL of the creator to pull other associated social media profiles.
+
+### `Action` **Enrich creator details**
+
+Use this action to enrich a creator's profile with audience and content data, including follower count, bio, linked URLs, and recent posts.
+
+**Setup Inputs**
+
+-   **Social platform**: Select the platform (Instagram, TikTok, or YouTube).
+-   **Profile URL / Username / User ID**: Enter the creator's profile URL, username, or Influencer Club user ID for the selected platform.
+
+### `Action` **Find lookalike creator profiles**
+
+Use this action to find up to 10 creators similar to a given profile, based on niche, engagement rate, and content style.
+
+**Setup Inputs**
+
+-   **Social platform**: Select the platform (Instagram, TikTok, or YouTube).
+-   **Profile URL / Username / User ID**: Enter the creator's profile URL, username, or Influencer Club user ID for the selected platform.
