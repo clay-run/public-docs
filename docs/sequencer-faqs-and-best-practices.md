@@ -1,7 +1,7 @@
 ---
 title: Sequencer FAQs and best practices
 description: Answers to common Sequencer questions on costs, limits, sequences, and leads, plus deliverability best practices and troubleshooting.
-last_synced: 2026-11-06T22:48:34.763Z
+last_synced: 2026-11-10T20:19:44.864Z
 ---
 
 # Sequencer FAQs and best practices
@@ -42,7 +42,7 @@ Because every lead in a segment-based campaign is an Audiences record, campaign 
 | Plans | Launch, Growth, Enterprise, legacy Explorer and Pro | Launch, Growth, and Enterprise |
 | Development | New development goes into segment-based campaigns | Where new features ship |
 
-On the `Campaigns` page, table-based campaigns are labeled `Table` and segment-based campaigns are labeled `People`.
+On the `Sequencer` page, table-based campaigns are labeled `Table` and segment-based campaigns are labeled `People`.
 
 ### What happens to my existing table-based campaigns?
 
@@ -128,7 +128,7 @@ With HTML enabled, `Enable unsubscribe link` appends a link to the bottom of eve
 On plaintext campaigns — the default — handle it directly instead, in one of two places:
 
 -   The `Add email to blocklist` action in the campaign `Events` table.
--   The `Blocklist` tab on the `Campaigns` page, where you add the address yourself.
+-   The `Blocklist` tab on the `Sequencer` page, where you add the address yourself.
 
 Either route excludes that address from every future campaign, not just the current one.
 
