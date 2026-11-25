@@ -21,7 +21,7 @@ For a partner attribution or payout issue, contact Clay Support with your partne
 
 ## Earn workspace referral credits
 
-Clay's workspace referral program allows you to invite others to join and earn credits. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are not subject to the usual rollover rules, so they stay in your account until you use them.
+Clay's workspace referral program allows you to invite others to join and earn credits. When someone signs up using your referral link and activates a **paying workspace**, both of you will earn **3,000 Clay credits**. These credits are not added immediately — they are typically applied around **30 days after the referred user upgrades to a paid plan**. Referral credits are added to your Data Credit balance and follow the same rollover rules as your plan credits, including the balance reset on a prorated self-serve plan upgrade (see [Is upgrading my plan prorated?](plans-and-billing.md#is-upgrading-my-plan-prorated)).
 
 To access and share your referral link:
 
