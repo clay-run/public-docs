@@ -232,6 +232,20 @@ The update frequency is set by the run schedule you configure in Clay — not by
 
 To pull the latest HubSpot data immediately without waiting for the next scheduled run, click the source column title, select your source, and click **Run now**. This triggers a fresh source execution and updates your table with the current state of the HubSpot list.
 
+### My HubSpot import says it succeeded, but I don't see the contacts in my table
+
+**If you deleted rows from the table and then re-ran the same Import objects from HubSpot source, the contacts the source had already imported are skipped.** The HubSpot source remembers every record it has ever added to the table, including rows you've since deleted, so it doesn't create duplicates. On a re-run it adds only contacts that are new to the source.
+
+This is why the source panel can show a success message like *"89 rows were imported"* and *"Found 89 objects. The number of results added may be less than requested, as a result of deduping."* while the table shows no new rows, or only a few. "Found 89 objects" counts every contact the source found in HubSpot, including the ones it skipped. The rows in your table are the accurate result.
+
+**To import the full HubSpot list again:**
+
+1.  Click the source column title, click **Sources**, then click the name of your HubSpot source.
+2.  Click **Delete source**.
+3.  Add **Import objects from HubSpot** again (`Tools` → `Import`) with the same object type and list.
+
+A new source has no import history, so it pulls in all matching contacts again. If some of the contacts are still in your table, turn on [auto-dedupe](table-management-settings.md#auto-dedupe) on a unique column (such as Email) first to avoid duplicate rows. For more detail, see [I deleted rows from my table and re-ran the source, but they didn't reappear](sources.md#i-deleted-rows-from-my-table-and-re-ran-the-source-but-they-didnt-reappear).
+
 ### When I schedule my HubSpot list source to refresh, does it pick up removals from the list?
 
 **No — scheduled refreshes are additive only.** When a HubSpot list source runs on a schedule, it adds new records from the list to your Clay table but does not remove records that have since been dropped from the list. Records stay in your table even after they are no longer members of the HubSpot list in HubSpot.
