@@ -69,6 +69,10 @@ Reddit matches on email and mobile advertiser ID, with no name or location fallb
 
 Reddit's one-year retention runs from the audience's last update, so your sync type decides whether expiry needs attention at all. An always-on sync updates the audience each time it runs and resets the clock with it, which keeps the audience available for as long as the sync stays on. A one-time sync leaves the clock running from that single upload, so an audience you synced once and left alone will reach the end of its year and need a manual resync to come back.
 
+### My Reddit ad sync says my access token has expired — what do I do?
+
+A Reddit ad sync that fails with **Your access token has expired. Please reconnect your app account.** means Clay can't reach Reddit Ads through your connected Reddit account, because that account no longer has a valid access token. Retrying the sync won't clear this error — reconnect your Reddit account in Clay, then run the sync again. The same problem shows up earlier as a reconnect prompt when you choose the business and ad account for Reddit Ads under `Sync destinations`.
+
 ## Related
 
 -   [Clay Ads](https://university.clay.com/docs/clay-ads)
