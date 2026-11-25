@@ -131,13 +131,13 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 1.  Open the **Runs** dashboard for your workflow.
 2.  Use the dashboard filters — for example, filter by **Failed** status or by time range — to scope to the runs you want to re-run, or select individual runs by checking them manually.
-3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run** in that bar.
-4.  Choose a restart mode:
-    -   **From where they failed** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
-    -   **From a specific node** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
-    -   **From the top** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
+3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run from** in that bar to open the **Re-run options** dialog with a recommended starting point already chosen. To pick the starting point yourself, click the arrow next to **Re-run from** and choose **Trigger**, **Specific node**, or **Failed node** — the same dialog opens with that option selected. Nothing re-runs until you confirm in the dialog.
+4.  In the **Re-run options** dialog, choose where each run restarts:
+    -   **Failed node** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
+    -   **Run from specific node** — Each run restarts from a workflow step you choose in the dialog. Useful when you want to resume from a particular point rather than only from the point of failure.
+    -   **Run from trigger** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
 5.  Review the **preview** before confirming. The preview shows exactly how many new runs will be created and an estimated credit cost, so you can verify the scope before committing any credits.
-6.  Click **Confirm** to start the bulk re-run.
+6.  Click **Re-run [N] runs** (for example, **Re-run 12 runs**) to start the bulk re-run.
 
 **No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
 
