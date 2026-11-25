@@ -370,7 +370,7 @@ Both steps are required — the action needs to know which field to search AND w
 
 ### How do I create a contact-to-company association in HubSpot from Clay?
 
-Use the **Lookup object** and **Create association** actions together in your contacts table — you don't need Send table data for this workflow.
+If your **Create object** column created a contact in HubSpot but didn't associate the contact with a company, that's expected: when **Object type** is Contact, the Create object action doesn't set any associations. To link the contact to its company, use the **Lookup object** and **Create association** actions together in your contacts table — you don't need Send table data for this workflow.
 
 **Step 1 — get the company's `hs_object_id` onto each contact row**
 
@@ -380,7 +380,11 @@ Add a **HubSpot → Lookup object** column to your contacts table:
 2.  Under **Fields to filter by**, select **Domain Name** (or another shared identifier like email domain).
 3.  Map the filter value to the domain column on your contacts table.
 
+Lookup object needs a value from each row to search with. If your contacts table doesn't have a company domain column (or another identifier HubSpot can search by), add one before this step.
+
 This returns the matching company record directly on each contact row, with `hs_object_id` surfaced at the top of the result.
+
+**If the company isn't in HubSpot yet:** Lookup object returns no result for that row (`totalFound: 0`), so there's no company ID to associate. Create the company first with a **HubSpot → Create object** column (**Object type**: Company), then use the `id` that column returns as the **To Object ID** in step 2.
 
 **Step 2 — create the association**
 
@@ -389,10 +393,12 @@ Add a **HubSpot → Create association** column:
 -   **From object type**: Contact
 -   **To object type**: Company
 -   **Association type**: select the appropriate relationship (e.g., "Contact to Company")
--   **From Object ID**: your contact's `hs_object_id` (from your HubSpot contacts source column)
+-   **From Object ID**: your contact's HubSpot record ID — the `id` returned by your **Create object** column if you created the contact from Clay, or `hs_object_id` from your HubSpot contacts source column if you imported the contact from HubSpot
 -   **To Object ID**: the `hs_object_id` returned by the Lookup object column in step 1
 
 **Note:** The **From Object ID** and **To Object ID** fields appear only after you have selected both object types and an association type.
+
+Create association works on contacts that already exist in HubSpot, so you can run it on contacts your Create object column created earlier to link them to their companies.
 
 ### Is there a single "Create or Update" action for HubSpot contacts or companies?
 
