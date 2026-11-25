@@ -69,6 +69,12 @@ You can assign a budget to a workflow in any of these ways:
 
 **When a workflow's budget runs out:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
 
+### Can a workflow have a separate budget for each trigger?
+
+A workflow can't have a separate credit budget for each trigger. A credit budget is assigned to a workflow as a whole, not to individual triggers. If one workflow has multiple triggers — for example, a Salesforce webhook trigger and an API or manual input trigger — every run of that workflow spends from the same workflow budget, no matter which trigger started the run. There is no per-trigger budget setting. Workflow budgets are available to all Enterprise plan workspaces.
+
+To give different inputs separate budget controls, use a separate workflow for each input and assign each workflow its own budget. For example, put the Salesforce webhook trigger in one workflow and the API input trigger in another, then assign each workflow a different budget.
+
 ### Setting workflow budgets from the Clay CLI and Clay's Agent
 
 The Clay CLI and Clay's Agent have the same workflow budget controls as the Clay app, so workflows built by the agent carry the same spend guardrails.
