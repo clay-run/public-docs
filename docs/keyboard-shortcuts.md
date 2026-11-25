@@ -97,22 +97,60 @@ Use the drag-fill handle (small square in the bottom-right corner of a selected 
 -   Cut, copy, and paste operations
 -   Table and column width, order, and color changes
 -   Column setting edits (restores draft settings)
--   Row deletions
 
 ### What you cannot undo or redo
 
 -   Enrichment cell runs (because they consume credits)
 -   Column deletions
+-   CSV imports
+
+**Note:** Row deletions are not covered by Cmd/Ctrl+Z. Instead, a brief **Undo** toast appears immediately after rows are deleted — click it to restore the rows before the toast closes. See [Recover deleted rows](delete-content-within-your-workspace.md#recover-deleted-rows).
 
 ## Workflow canvas shortcuts
 
-These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder.
+These shortcuts apply in the Clay **Workflows editor** — the node-based workflow builder. To see the full list of workflow canvas shortcuts inside Clay, open the workflow title dropdown at the top of the editor and click `Keyboard shortcuts`. The canvas tooltips for select, pan, zoom in, zoom out, fit view, and auto-arrange also show each control's shortcut keys.
 
+Workflow canvas shortcuts only work when the canvas has focus — they don't fire while you're typing in a text field, menu, or dialog.
+
+### Zoom and view
+
+-   `+` (or `Z` + `click`) — Zoom in
+-   `-` (or `Alt/Option` + `Z` + `click`) — Zoom out
+-   `Cmd/Ctrl` + `0` — Zoom the canvas to 100%
+-   `Shift` + `1` — Fit the whole workflow in view
+
+### Select and pan
+
+-   `V` — Switch the canvas to select mode
+-   `H` — Switch the canvas to pan mode
+-   `Space` + `drag` — Pan the canvas temporarily in any direction
 -   `Click and drag` on empty canvas area — Draw a selection rectangle to select multiple nodes at once
--   `Space` + `drag` — Pan the canvas in any direction
+-   `Cmd/Ctrl` + `A` — Select all
+
+### Organize nodes
+
+-   `Cmd/Ctrl` + `G` — Create group
+-   `Cmd/Ctrl` + `Shift` + `G` — Ungroup
+-   `Shift` + `A` — Auto-arrange nodes: arranges the selected nodes when two or more are selected, otherwise arranges the whole workflow. Auto-arrange isn't available on read-only or empty workflows.
+
+### Zoom the workflow canvas with Z
+
+Hold `Z` to use the zoom tool on the Workflows canvas. Hold `Option/Alt` + `Z` to zoom out instead.
+
+-   `Z` + `click` — Zoom in one step around the point you clicked (the same step as the canvas's zoom-in button)
+-   `Z` + `drag` — Draw a rectangle and zoom in so that area fills the canvas
+-   `Option/Alt` + `Z` + `click` — Zoom out one step around the point you clicked
+-   `Option/Alt` + `Z` + `drag` — Zoom out one step around the center of the rectangle you drew
+-   `Esc` while dragging with `Z` held — Cancel the zoom rectangle without zooming
+
+The `Z` zoom tool only works when the canvas has focus. It doesn't trigger while you're typing in a text field or using a dialog or menu, and it isn't available on an empty workflow with no steps to zoom.
 
 ## FAQs
 
 **Can I undo an enrichment after it runs?**
 
 No, you cannot undo enrichments because they consume credits. However, you can undo changes to enrichment column settings before running them.
+
+**Can I undo a CSV import?**
+
+No, CSV imports cannot be undone. To remove rows that were imported via CSV, delete them directly from the table — see [Delete rows](delete-content-within-your-workspace.md#delete-rows) for instructions on selecting a range of rows and deleting them at once.

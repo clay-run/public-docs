@@ -19,12 +19,16 @@ Job Change Signals notify you when monitored contacts switch roles, helping you 
 
 ## Monitoring job changes
 
-To set up Job Change Signals in your table:
+To set up Job Change Signals in your workbook:
 
-1.  Click `Tools`, then select `Monitor for job changes`.
-2.  Select your table of the contacts you want to monitor for job changes. It must contain the contact's LinkedIn URL as an identifier.
-    -   **LinkedIn URL stored in Salesforce?** If the LinkedIn URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including custom LinkedIn URL fields.
-    -   **Note:** The contacts table selected here cannot be changed after the signal is saved. To monitor a different set of contacts, create a new signal.
+1.  Click `+ Add` in the bottom navigation bar of your workbook, then under **Signals** select **Job change**. This opens the "Track people for job changes" setup wizard.
+2.  In **Step 1 (Select a source)**, choose how to provide the contacts you want to monitor:
+    -   **Use existing Clay table** (most common): select the Clay table and view containing your contacts, then choose the column that holds each contact's professional profile URL.
+    -   **Import from CRM**: import contacts directly from your connected CRM.
+    -   **Import CSV**: upload a CSV file containing professional profile URLs.
+
+    The source must include a professional profile URL for each contact you want to monitor.
+    -   **Professional profile URL stored in Salesforce?** If the professional profile URL exists in Salesforce but isn't yet a column in your Clay table, add a [Salesforce Lookup Record](salesforce-integration-overview.md) column first — it returns all fields on the Contact record, including any profile URL fields.
 3.  Optionally, enable `Initial check`.
     1.  The Job Change Signal monitors for new changes **going forward** from when you set it up — it will not automatically surface contacts who had already changed jobs before monitoring started. Enable Initial check to also scan for recent past job changes. It checks each contact's **work history** for role changes within your chosen lookback window: **3 months**, **6 months**, or **1 year**.
 4.  Set how often the Signal should run.
@@ -59,11 +63,3 @@ If you also want a stable custom contact ID that survives job changes, build a *
 -   **Professional profile URL** — follows the person across jobs (note: the URL's custom username portion can occasionally be edited by the user, so it is not fully immutable)
 
 Avoid basing a custom ID on work email, company name, or a CRM contact ID, since all of these can change when someone switches employers.
-
-### Why does the signal flag contacts whose company information already matches my CRM?
-
-The Initial check does not compare against your current CRM data. It scans each contact's work history for role changes within the lookback window you chose (3 months, 6 months, or 1 year) and surfaces all changes detected in that period — regardless of whether your CRM has since been updated to reflect those changes.
-
-For example: if a contact changed companies 5 months ago and your CRM was updated at the time, a 6-month Initial check will still flag that contact, because the signal is reporting what it found in the contact's work history, not what currently differs from your CRM.
-
-To filter out job changes your CRM has already captured, add a filter on your results table to exclude rows where the contact's **email domain** already matches their **Most Recent Company Domain** column. This limits your results to contacts whose job change is not yet reflected in your CRM.

@@ -1,7 +1,7 @@
 ---
 title: Claygent builder
 description: Build smarter agents faster
-last_synced: 2026-05-11T17:47:40.000Z
+last_synced: 2026-10-27T17:00:17.792Z
 ---
 
 # Claygent builder
@@ -86,6 +86,10 @@ Attach tone guides, messaging docs, PDFs, or CSVs directly into your agent. For 
 
 **Important:** After uploading a file, wait until its status shows **Completed** before saving. If you save before the upload finishes, the file will not be attached and your agent will run without that document.
 
+**Using an uploaded document in your prompt:** Claygent uses an uploaded document only when your prompt mentions it. Uploading a file doesn't add it to every run on its own. To point your Claygent at a document, type `@` in the prompt and select the document from the list. If your Claygent seems to ignore a document you uploaded, check that the prompt @-mentions it.
+
+**Who can manage uploaded documents:** Workspace Admins and Editors can upload, rename, replace, and delete documents in the **Browse documents** window. Admins and Editors can delete any document in the workspace, including ones someone else uploaded. Viewers can't upload or delete documents.
+
 ### Web search
 
 Enable web search when your agent needs live research (recent company news, hiring signals, etc.). Disable it when working from data already in your table to keep runs faster and more consistent.
@@ -125,9 +129,18 @@ You can also add MCP server connections workspace-wide from `Settings` → `Conn
 
 ### Model selection
 
-Swap between different AI models in the configuration panel to test output quality without touching your prompt.
+New Claygents you build in Claygent builder start on `Auto`, which routes each task to the model that fits it:
 
-**Auto model (currently in beta — contact support to enable):** If the Auto toggle is available in your workspace, it appears at the top of the model selector. Switching **Auto** on lets Clay automatically select the right model for your task — balanced quality and speed, recommended for most tasks. When Auto is on, the model list is hidden; toggle it off to choose a specific model manually. New Claygent columns default to Auto when it is available in your workspace.
+-   A fast, inexpensive one for a straightforward lookup
+-   Stronger ones for hard research
+
+Each run gets an appropriate model without you picking one.
+
+Claygents you built earlier keep the model they already use, as do duplicates of them.
+
+In the model selector, `Auto` sits at the top as a toggle. Switch it off to see the full model list, where you can choose a specific model at any time. This lets you test output quality without touching the prompt.
+
+**Note: per-row cost varies under `Auto`.** Each row is billed at the rate of whichever model ran it. For how model rates work, see [How AI is priced](ai-pricing.md).
 
 Clay's parallel models differ in power and cost:
 
@@ -165,7 +178,7 @@ Common errors when writing schema by hand:
     }
     ```
 
--   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue.
+-   **Trailing comma in the JSON.** Standard JSON does not allow a comma after the last property in an object or array. A stray trailing comma — for example `"items": { "type": "string" },` when `items` is the last property — causes a parse error displayed as: `Your JSON Schema configuration is invalid. Please try using the "Generate from prompt" button in the column config to create a valid schema, or check your JSON Schema for formatting errors.` Note: if you see the "array schema missing items" error but `items` is already present, a trailing comma elsewhere in that object is the likely cause — the in-app AI debugger may point to the wrong issue. When you save the column or run a test preview, Clay catches a trailing comma before the column runs: it shows `Your output JSON schema isn't valid JSON.` followed by the parser's error message, and won't save the column until you fix the JSON.
 
 -   **Numeric enum with integer type (Grok models).** Grok models have stricter structured output requirements than other providers. Combining `"type": "integer"` with a numeric `"enum"` array — for example `"enum": [1000, 500, 100]` — causes a `Bad Request` (400) error that surfaces as `Error: Bad Request` on every row. Other providers (Claude, GPT-4o, Gemini) accept this combination without error. Two fixes:
     -   **Remove the enum**: delete the `"enum"` array and keep only `"type": "integer"`, letting the model return any integer.
@@ -215,7 +228,13 @@ Once you're happy with the output:
 4.  Variables automatically map to your table columns.
 5.  Save and run.
 
-You can also deploy directly from Claygent builder by clicking `Add to table`.
+You can also deploy directly from Claygent builder:
+
+1.  Click **Deploy** at the top of the Claygent builder editor. The **Deploy agent** dialog opens.
+2.  Select **Tables**.
+3.  Choose the table, map the Claygent's inputs to your table columns, and click **Add to table**.
+
+**Deploy always adds a new column.** Clicking **Deploy** → **Tables** → **Add to table** creates a brand-new Claygent column every time — it never updates a column that's already in your table. If the Claygent is already used in the table you pick, Clay shows the warning "This Claygent is already being used in this table" but still lets you continue, and the new column gets a numbered name such as "Company Researcher (2)" with its own input mapping. To update a Claygent that's already on a table, click **Save** instead — see [What's the difference between Save and Deploy in Claygent builder?](#whats-the-difference-between-save-and-deploy-in-claygent-builder) below.
 
 ## Centralized management
 
@@ -280,6 +299,14 @@ To get started, enable **Web search** in your Claygent's **Configuration** panel
 
 Agent access follows your workspace permissions. Editors can create and modify agents, while viewers can reference approved agents in tables.
 
+### Why do I see "Failed to delete file" when I try to delete an uploaded document?
+
+Deleting a document from the Claygent **Browse documents** window needs the Admin or Editor workspace role. If you have the Viewer role, Clay won't delete the file and shows "Failed to delete file." To remove the document, ask a workspace Admin or Editor to delete it for you, or ask an Admin to change your role (see [Workspace administration](workspace-administration-documentation.md)).
+
+### Can I duplicate a Claygent?
+
+Yes. From the Agents homepage, click the **⋯** (three-dot) menu on any agent and select **Duplicate**. Clay creates a copy named `{original name} (Copy)` in the same workspace. Duplication is available to workspace admins and members; viewers cannot duplicate agents.
+
 ### Can I move a Claygent to a different workspace or account?
 
 No. Claygents are scoped to the workspace they are created in, and there is no built-in export, import, or transfer feature.
@@ -306,6 +333,12 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### Can I test a Claygent for free through the Clay CLI?
+
+No. Free Claygent testing happens only in the test panel of Claygent builder in the Clay app. The Clay CLI doesn't have a command for testing a Claygent — the `clay claygents` commands let you list, view (`get`), and delete Claygents.
+
+Work you run through the CLI uses credits the same way it would in the product. For example, testing a Workflow step that contains a Claygent with `clay workflows nodes test` is a real run of that step and is charged like any other Claygent run. To iterate on a Claygent's prompt without spending credits, test it in Claygent builder first, then use it from the CLI or in your Workflows. For more on CLI and API billing, see [Clay API & CLI](clay-api-cli.md).
+
 ### If I re-run a Claygent column on rows that already have results, am I still charged credits?
 
 Yes. Every Claygent run costs credits regardless of whether the new output matches what is already in the cell. Clay does not compare the incoming result against the existing value before charging — a re-run starts from 0 on cost every time.
@@ -318,7 +351,7 @@ To prevent cells that already have results from being re-run automatically when 
 
 Credit cost depends on the AI model you select. Claygent defaults to **Argon** for web research — Clay's model for open-ended web lookups — which costs **3 credits per row**. Switching to **Helium** (1 credit per row) is a cost-effective alternative for simpler web research tasks. For a full model pricing reference, see [How AI is priced](ai-pricing.md).
 
-**Note:** If your workspace has the **Auto model** beta enabled, new Claygent columns default to Auto instead of Argon. Auto runs on a third-party model and is priced differently from Clay's fixed parallel models — see [How AI is priced](ai-pricing.md) for details once Auto is generally available, or contact support to confirm current pricing.
+**Note:** New Claygents you build in Claygent builder start on **Auto** instead of Argon. Under Auto, per-row cost varies — each row is billed at the rate of whichever model ran it. See [How AI is priced](ai-pricing.md) for model rates.
 
 If your goal is to find people associated with companies at scale — rather than open-ended web research — **Find People** is significantly more cost-effective: the **Find Contacts at Company** action costs 0.5 credits per row on current pricing plans (1 credit per row on legacy plans), versus 3 credits per row for Argon-based Claygent. Use Claygent when you need judgment-based research (summarizing company news, scoring leads, writing personalized outreach). Use Find People when you need structured contact lookups at scale.
 
@@ -333,6 +366,27 @@ Yes. Switch models in the configuration panel and rerun tests to compare output 
 ### Do I need to remove and re-add a Claygent from a table after updating it?
 
 No — you do not need to remove and re-add a Claygent after making changes in Claygent builder. Updates are picked up automatically without any changes to the table column. New runs use the latest saved version of the agent. If a run is already in progress when you save an update, that run continues using the version it started with and completes normally before any new runs pick up the change.
+
+**Note:** The AI model is an exception — it stays with the table column. A Claygent column keeps the model selected on that column, so changing the model in Claygent builder does not change the model an existing column runs on. To change the model for an existing column, open the column settings (click the column name → **Edit column**) and update the **Model** picker there.
+
+### What's the difference between Save and Deploy in Claygent builder?
+
+Claygent builder has two buttons at the top of the editor: **Save** and **Deploy**. They do different things, and you only need **Save** to update a Claygent that's already running in your tables.
+
+-   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
+-   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
+
+When you open Claygent builder from a workflow step — to create or edit the Claygent that step uses — Claygent builder shows only **Save**. The **Deploy** button is hidden there, and clicking **Save** saves the Claygent and takes you back to the workflow step you came from.
+
+The **Save** and **Deploy** buttons in Claygent builder are disabled while Sculptor is generating changes to your Claygent, including while a Sculptor generation is queued or resuming. Wait for Sculptor to finish, then click **Save**.
+
+To apply prompt or configuration changes to a Claygent column that's already in your table:
+
+1.  Edit the Claygent in Claygent builder.
+2.  Click **Save** (not **Deploy**).
+3.  Go back to your table and re-run the existing Claygent column, or just the cells you want to refresh.
+
+You don't need to remap inputs or add the Claygent to the table again. If you clicked **Deploy** after each edit and now see duplicate columns such as "Company Researcher (2)" or "Company Researcher (3)", those are separate copies created by Deploy — your original column was already using your latest saved changes.
 
 ### I switched to a cheaper model in my Claygent column but new runs still charge the old price — why?
 
@@ -415,6 +469,35 @@ To check your current tier: go to **platform.openai.com → Settings → Limits*
 
 Until your key is on Tier 2 or higher, use **Clay's managed account** (the default selection in the model picker) — Claygent runs as normal and deducts Data Credits instead of charging your API key.
 
+### My Claygent fails with "The API key is invalid" even though I'm using Clay's Claude Sonnet model — what's wrong?
+
+If a Claygent column (or a function or template built on a Claygent) fails with **"The API key is invalid. Please check your API key and try again."** while you're using a Clay-managed Claude model such as Claude Sonnet, check which account the column is connected to. The account must come from the same provider as the selected model. A Claude model only runs on an Anthropic account. If the column is connected to **Clay-managed OpenAI account** instead, Anthropic rejects the request and every row fails with this error. This is a configuration mismatch, not an outage.
+
+The Claygent account dropdown is labeled for the provider of the model you selected. For a Claude model it reads **Select Anthropic account**. Check the account shown in that dropdown, not just the label.
+
+To fix the account mismatch on a Claygent column:
+
+1.  Open the column settings (click the column name → **Edit column**).
+2.  In the **API key** section, open the **Select Anthropic account** dropdown.
+3.  Select **Clay-managed Anthropic account**, or an Anthropic account with your own API key. To connect your own key, click **+ Add account**.
+4.  Click **Save** and re-run the failed rows.
+
+The same rule applies to other providers. GPT models need an OpenAI account (for example, **Clay-managed OpenAI account**), and Gemini models need a Google Gemini account. To review or add accounts, click **Manage accounts** next to the dropdown.
+
+### How do I turn off AI input mapping suggestions on my Claygent column?
+
+There's no setting to turn off AI input mapping suggestions on a Claygent column. When you add a new Claygent column to a table, the **Map agent inputs** section ("Connect table columns to the agent's inputs") automatically uses AI to suggest which table column feeds each of the agent's inputs. You can also request new suggestions at any time by clicking **Suggest input mappings with AI**.
+
+Automatic input mapping suggestions run only once, when you first create the Claygent column. Reopening the settings of an existing Claygent column doesn't re-run them, so the mappings you saved are kept.
+
+To change an input mapping the AI suggested:
+
+1.  In the **Map agent inputs** section, click the **x** on the column chip in the input you want to change.
+2.  Type `/` in that input and select the table column you want to use.
+3.  Save the column.
+
+**Note:** Clicking **Suggest input mappings with AI** replaces your current input mappings — including manual changes you haven't saved — with new AI suggestions. Only click it when you want Clay to re-suggest your inputs.
+
 ### How do I mark a Claygent input as optional?
 
 Each input in the Claygent builder shows **(required)** or **(optional)** next to its name. To change whether an input is required:
@@ -467,6 +550,27 @@ When chaining Claygent A → Claygent B, whether B runs for a given row is contr
 This gates B on whether A returned any result for that row, regardless of which sub-fields were populated. You can also combine conditions with OR logic — for example, `/scale_signals has a value OR /other_field has a value` — for more flexibility.
 
 **To gate strictly on a specific field:** Leave that input variable's **Required to run** toggle on in B. B will only run for rows where that specific field from A has a value.
+
+### Every row in my Claygent column is failing with "Error. Please retry or contact Clay support." — what should I check?
+
+A generic **"Error. Please retry or contact Clay support."** error on every row — especially when the column was running correctly before — is almost always caused by an invalid output JSON Schema.
+
+Clay's column editor checks the output JSON Schema when you save the column or run a test preview. If the schema isn't valid JSON (for example, a trailing comma or a stray `}`) or breaks JSON Schema syntax rules, Clay won't save the column or run the preview and shows an error toast such as `Your output JSON schema isn't valid JSON.` An output schema that only becomes valid JSON after `{{column}}` references are filled in is also blocked at save and preview. Some schema problems still pass this check — most commonly an array field missing its `items` property. Those schemas save normally, and the error only appears when the column actually runs, because the AI provider rejects the schema at that point.
+
+Open the column settings (**click the column name → Edit column**) and go to the **Define column outputs** section to inspect the schema.
+
+**The fastest fix is to click Generate from prompt** in the **Define column outputs** section — Clay sends your existing prompt to AI and rebuilds the schema from scratch. This is more reliable than editing the JSON by hand, and is especially helpful if you've already tried a manual fix and the error persists.
+
+The most common underlying cause is an array field missing its `items` property. Any field with `"type": "array"` must include an `"items"` object that specifies the element type. For example:
+
+```json
+"providersFound": {
+  "type": "array",
+  "items": { "type": "string" }
+}
+```
+
+For the full list of schema issues that can produce this error — including trailing commas, `object` fields without a `properties` map, and model-specific enum restrictions — see the **Output schema** section above.
 
 ### My Claygent columns are showing an error or returning blank results — what does that mean?
 

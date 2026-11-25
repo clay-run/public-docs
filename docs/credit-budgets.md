@@ -55,6 +55,31 @@ Once a budget exists, workbooks and other resources can be assigned to it. You c
 
 Use the **Budget** filter on the workspace homepage to quickly see all workbooks assigned to a specific budget, making it easy to audit spend allocation across your org.
 
+## Assigning workflows to a budget
+
+Workflow budgets are available to all Enterprise plan workspaces. Any workflow can be assigned to a credit budget, the same way workbooks can. Workspace admins and members who can create workflows can assign a budget to a workflow, subject to each budget's access rule (see "Managing budget access" below).
+
+You can assign a budget to a workflow in any of these ways:
+
+-   **When you create the workflow:** pick a budget as part of creating the workflow.
+-   **From workflow settings:** open the workflow's settings, find the **Budget** field, and select the budget to assign. Use this to change a workflow's budget later.
+-   **Bulk assignment from the Workflows list:** select one or more workflows (up to 100 at a time), choose **Assign budget**, and select the target budget.
+
+**What a workflow budget pays for:** Everything a workflow calls spends that workflow's budget — including its own steps, plus any table functions and workflow functions the workflow calls.
+
+**When a workflow's budget runs out:** Workflow runs stop, and the run shows this error: "The budget paying for this run has hit its credit limit. A workspace admin can raise the limit or assign a different budget."
+
+### Setting workflow budgets from the Clay CLI and Clay's Agent
+
+The Clay CLI and Clay's Agent have the same workflow budget controls as the Clay app, so workflows built by the agent carry the same spend guardrails.
+
+-   **Create a workflow with a budget:** `clay workflows create --budget-id <budget-id>`
+-   **Change an existing workflow's budget:** `clay workflows update <workflow-id> --budget-id <budget-id>`
+
+## Tracking spend by resource on the Budgets page
+
+Open a budget from `Settings` → `Budgets` to see its spend over time. Use the **Breakdown** option to see that budget's spend split by resource — **Workflows** and **Workbooks** — so you can tell how much of a budget's credits went to workflows versus workbooks.
+
 ## Managing budget access
 
 Each budget has an access rule that controls which workspace members can assign their workbooks to it:
@@ -80,7 +105,33 @@ Alerts fire once per threshold crossing. They reset when an admin increases the 
 
 Admins can increase or decrease a budget's credit limit at any time from `Settings` → `Budgets`. If you need to restart tracking spend from zero, you can reset the budget's spend when editing it.
 
-When a budget is deleted, you can reassign all of its resources to a different budget — or leave them without a budget.
+## Deleting a budget
+
+Only workspace admins can delete a credit budget. Go to `Settings` → `Budgets` and delete the budget. If workbooks, workflows, or other resources are still assigned to the budget, Clay asks you to choose where they go: reassign them to a different budget, or pick **No budget** to leave them without one. The confirm button reads **Reassign & delete** when resources need to be moved, or **Delete budget** when nothing is assigned.
+
+### Will deleting a budget unpause my workflows?
+
+No. Deleting (removing) a credit budget doesn't unpause, resume, or turn on anything. Workflows, workflow triggers, signals, and tables you paused stay paused until you turn them back on yourself.
+
+### What happens to spend after a budget is deleted?
+
+Deleting a credit budget removes that budget's credit limit. Anything that was assigned to the budget and is still active can start spending credits again:
+
+-   Resources you reassigned to a different budget now count against that budget's credit limit.
+-   Resources left with **No budget** spend from your workspace's credits, subject to any other limits (such as credit spend limits) that still apply.
+-   Runs already in progress keep running. Any credits they use after the deletion are no longer capped by the deleted budget.
+
+If a resource was stopped only because the budget ran out of credits, it can start processing again once the budget is deleted.
+
+### Before you delete a budget to set up a new run
+
+If you want everything to stay stopped while you delete a budget (for example, before setting up a new budget for a fresh run), check the following first:
+
+1.  Every trigger on the workflows assigned to the budget is paused.
+2.  No workflow runs are still in progress.
+3.  Nothing else assigned to the budget — such as tables set to auto-run — is still on.
+
+Once those are off, you can safely delete the budget and set up the new run.
 
 ## Credit budgets vs. credit spend limits
 
@@ -88,7 +139,7 @@ Clay has two distinct credit governance features for Enterprise workspaces:
 
 | Feature | What it does | Where to find it |
 |---|---|---|
-| **Credit budgets** | Named credit pools — assign workbooks to a budget and track spend across teams. | `Settings` → `Budgets` |
+| **Credit budgets** | Named credit pools — assign workbooks and workflows to a budget and track spend across teams. | `Settings` → `Budgets` |
 | **Credit spend limits** | Per-workbook credit caps — set a maximum spend for a single workbook or table. | `Settings` → `Usage` → `Workbook limits` |
 
 These features are complementary. You can use spend limits to cap individual workbooks while also assigning them to a budget for team-level cost attribution.

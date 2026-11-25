@@ -15,27 +15,29 @@ Cold outbound often requires sending a high volume of emails to inboxes that may
 
 ## ‍**Buying email accounts**
 
-From the `Campaigns` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
+From the `Sequencer` homepage, go to the `Email Accounts` tab and click `Add Email Accounts`. Select `Buy email accounts` to open the purchase flow.
 
 1.  **Search for alt domains.** Clay automatically loads your workspace's company domain as a starting point. Search for available alternative domains and select the ones you want to add to your order.
     -   Each domain supports up to 5 email accounts.
     -   The preview panel on the right shows your current order, including per-domain pricing (yearly) and per-account pricing (monthly).
 2.  **Add personas.** Personas map directly to the reps who will manage replies coming into these inboxes.
     -   Each persona requires a first name, last name, and profile picture to appear as realistic as possible.
-    -   **Auto-balance** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
+    -   Each persona must be linked to a user in your Clay workspace. The email accounts created for that persona are assigned to that user, who receives the replies. You can change the assigned user after purchase — see [Can I reassign a purchased email account to a different rep?](#can-i-reassign-a-purchased-email-account-to-a-different-rep)
+    -   **Auto-balance personas** is enabled by default and distributes email accounts evenly across personas. Turn it off to assign accounts manually per domain or to customize email prefixes.
+    -   Each email prefix must be unique within a domain. For example, you can't have two `partners@` email accounts on the same domain — use a different prefix for the second one (such as `partnerships@`).
 3.  **Add contact details.** Enter the contact details that will be attached to the generated Google Workspace.
     -   Set your **forwarding domain** — this is the domain where purchased domains will redirect. Clay recommends using your company's primary domain (e.g., `clay.com`).
 4.  **Review your order summary.** The summary shows the total credits you can expect to be charged annually and monthly. Confirm your purchase when you're ready.
 
 ![](https://cdn.prod.website-files.com/687e604972375496b891fe58/69c6b5ea48b4f4c966867201_Buying%20Email%20Accounts%20in%20Clay%20\(1\).png)
 
-**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Campaigns → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 2–3 weeks for the warmup process to complete before using the accounts in campaigns.
+**Note:** After confirming your purchase, your order appears in the `Account orders` tab (`Sequencer → Account orders`) with a **Pending fulfillment** status — this is expected and means the order is being processed. Email accounts typically arrive within a few hours but may take up to 72 hours to be provisioned. Once they appear in your `Email Accounts` tab, warmup is automatically enabled — allow 3 weeks for the warmup process to complete before using the accounts in campaigns.
 
 ## **FAQs**
 
 ### **What does "Pending fulfillment" mean?**
 
-After placing an order, you can track its progress in the `Account orders` tab (`Campaigns → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
+After placing an order, you can track its progress in the `Account orders` tab (`Sequencer → Account orders`). **Pending fulfillment** is the expected status shown while your accounts are being provisioned — it means your payment was processed and Clay is working to set up your accounts. Once complete, the status changes to **Active** and the accounts appear in your `Email Accounts` tab.
 
 ### **Can I add more email accounts to a domain after I've purchased it?**
 
@@ -53,9 +55,33 @@ Deleting a single email account from a domain will delete **all** email accounts
 
 Credit costs are calculated using your workspace's cost-per-credit (CPC) against target prices of **$4.50/account/month** and **$15/domain/year**.
 
+Each monthly email account renewal charges for the purchased email accounts that still exist on your order when the renewal is billed, not the number you originally bought. Email accounts that have been deleted aren't included in later renewal charges.
+
+### **What happens if I don't have enough credits when my email accounts or domains renew?**
+
+Purchased email accounts and domains renew on their own schedule, separate from your plan's monthly credit refresh. So a renewal can come due before your new credits arrive. If your workspace doesn't have enough credits to cover a renewal:
+
+-   The order is not cancelled. Clay records the renewal as a failed billing attempt.
+-   Your purchased email accounts keep working: they still send and receive email, so replies keep coming in.
+-   Clay retries the charge once a day until it succeeds. There is no limit on retries, and Clay doesn't suspend or cancel the email accounts while it retries.
+-   When your workspace has enough credits again, for example after your plan's monthly credits refresh or after you buy more credits, the next daily retry charges the renewal.
+
+**Example:** Your email account renewals are due November 18, but your plan's credits refresh November 20. The November 18 charge fails and Clay retries it once a day. Once the November 20 credits arrive, the next daily retry goes through, and your email accounts keep working the whole time.
+
+### **Can I change the renewal date of my purchased email accounts or domains?**
+
+No. You can't change the renewal date of purchased email accounts or domains. If a renewal is due before your monthly credits refresh, Clay retries the charge once a day until it succeeds, and your email accounts stay active in the meantime (see [What happens if I don't have enough credits when my email accounts or domains renew?](#what-happens-if-i-dont-have-enough-credits-when-my-email-accounts-or-domains-renew)).
+
+### **What happens to my purchased email accounts if I downgrade my plan?**
+
+Buying email accounts requires a Growth or Enterprise plan, but what happens to accounts you've already bought depends on the plan you downgrade to:
+
+-   **Downgrading to Launch (or another plan that includes Sequencer):** Your purchased email accounts and domains stay active and keep renewing in credits. You can keep using them in campaigns and receiving replies. You just can't buy new email accounts until you upgrade back to Growth or Enterprise. Make sure your new plan gives you enough credits to cover the renewals.
+-   **Downgrading to the Free plan:** The Free plan doesn't include Sequencer. All campaigns are paused, warmup is turned off, and your purchased email accounts are cancelled and deleted permanently. Their recurring charges stop and there's no prorated refund. Upgrading again later doesn't bring the deleted email accounts back.
+
 ### **Are purchased domains pre-warmed?**
 
-No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 2–3 weeks to complete — plan to wait before using purchased accounts in campaigns.
+No. Purchased accounts are not pre-warmed when they arrive. Warmup is automatically enabled during provisioning, but the warmup process takes approximately 3 weeks to complete — plan to wait before using purchased accounts in campaigns.
 
 ### **What does Clay manage for purchased email accounts?**
 
@@ -64,19 +90,35 @@ For email accounts purchased directly through Clay, Clay manages the core sendin
 -   Provisioning the sending domains and mailboxes
 -   Configuring DNS and email authentication, including SPF, DKIM, and DMARC
 -   Automatically enabling warmup during provisioning
--   Monitoring domain deliverability and mailbox reputation — visible as the **Reputation** percentage next to each account in `Campaigns → Email Accounts`
+-   Monitoring domain deliverability and mailbox reputation — visible as the **Reputation** percentage next to each account in `Sequencer → Email Accounts`
 
 As with any outbound email program, deliverability also depends on factors such as list quality, sending volume, bounce rates, and recipient engagement.
 
 ### **How do I change the sender name or other details on a purchased email account?**
 
-From `Campaigns → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
+From `Sequencer → Email Accounts`, find the mailbox you want to edit. Click the **⋯** button on the far right of the account row, select **Update sender variables**, and update the **From name** (the sender display name shown to recipients), **Signature**, or any custom sender variables your workspace has configured. Click **Save** to apply the changes.
+
+For Outlook email accounts, the **From name** is read-only and shows "This field can't be changed for Outlook." The **Signature** can still be updated.
 
 ### **Can I change the email address of a provisioned mailbox?**
 
 No. The email address assigned to each mailbox at purchase (for example, `d.henriksen@cyberarkoselabs.com`) is permanent and cannot be changed after provisioning. You can update display-level details such as the **From name** and **Signature** using **Update sender variables** — see [How do I change the sender name or other details on a purchased email account?](#how-do-i-change-the-sender-name-or-other-details-on-a-purchased-email-account) for those steps — but the underlying email address is fixed.
 
+The profile picture set for the persona at checkout also can't be changed after purchase.
+
 If you need a different email address, purchase a new domain and select the desired email prefix during checkout.
+
+### **Can I reassign a purchased email account to a different rep?**
+
+Yes. If a rep leaves or a new rep joins, a workspace Admin can change which workspace user a purchased email account is assigned to. Replies to that email account then go to the newly assigned user.
+
+1.  Go to `Sequencer → Email Accounts`.
+2.  Click the **⋯** menu on the purchased email account's row.
+3.  Select **Assign to user** and choose a member of your workspace.
+
+Only users with the **Admin** workspace role can reassign purchased email accounts. The user you assign must already be a member of your Clay workspace — invite a new hire to the workspace first, then assign the email account to them.
+
+Reassigning a purchased email account changes only who it's assigned to. It doesn't change the email address, **From name**, or profile picture, so a rep's email account (for example, `kyle@`) can't be renamed for a new rep (for example, `newrep@`). To send under a new rep's own name and address, buy new email accounts with a persona for that rep — new accounts typically arrive within a few hours (up to 72 hours) and need about 3 weeks of warmup before you use them in campaigns.
 
 ### **Where are the purchased email accounts from?**
 
@@ -85,6 +127,22 @@ Clay fulfills orders through Smartlead, which in turn uses Zapmail to provision 
 ### **How can I look up the rep's details for a purchased account?**
 
 Use the **Get rep data** enrichment in a Clay table. Provide the SmartSender account email address as the input — the action returns the rep's email address and full name (when available). This is useful for personalizing campaign messages with the sender's name.
+
+### **How do I see or download attachments from replies to my purchased email accounts?**
+
+Files that leads attach to their replies (for example, photos or PDFs) can't be opened or downloaded in Clay. The campaign's `Replies` tab and the `Global inbox` show the reply message, but not its attached files. To view and download attachments on replies sent to an email account purchased through Clay, sign in to that mailbox directly.
+
+**Get authentication info** is available only for email accounts purchased through Clay, and only workspace admins and owners can see it.
+
+1.  Go to `Sequencer → Email Accounts`.
+2.  Click the **⋯** menu next to the purchased email account and select **Get authentication info**.
+3.  A window titled with the account's email address shows the account's **Password** and a **Security code**. The security code is one-time and expires at the time shown below it (**Expires** followed by a date and time), so use it right away.
+4.  Sign in to the mailbox with the account's email address, the password, and the security code. Purchased email accounts are Google Workspace or Microsoft 365 mailboxes, so sign in through Gmail or Outlook on the web, depending on the account's provider.
+5.  Open the lead's reply in the mailbox to view, download, or forward its attachments.
+
+If you're signed out of the mailbox later, select **Get authentication info** again to get a new security code.
+
+For email accounts you connected yourself through Google OAuth, Microsoft Outlook OAuth, or SMTP, open the lead's reply in that mailbox as usual to access its attachments.
 
 ### **Why does my sender's name appear with extra characters in Outlook?**
 
@@ -98,7 +156,7 @@ To ensure the sender name appears as expected across all inboxes, use a first na
 
 No. The **Buy email accounts** flow can only provision inboxes on new domains purchased through Clay — it cannot attach inboxes to a domain you already own.
 
-If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Campaigns → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
+If you want to send from an existing domain, create the mailbox through Google Workspace or Microsoft 365 and connect it to Clay under **Sequencer → Email Accounts** using Google OAuth, Microsoft Outlook OAuth, or SMTP. See the [Email sequencer guide](email-sequencer.md) for connection instructions.
 
 ### **Can I use email aliases (like name+eventname@example.com) to scale my sending?**
 

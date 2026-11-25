@@ -366,7 +366,29 @@ Action columns do not have a built-in rate limit control. To stay below Apollo's
 
 Apollo's database sources phone numbers from business directories, professional listings, and public records. Phone numbers returned by Apollo enrichments are typically direct dial numbers or business lines tied to a contact's work role — personal mobile numbers are rarely available, and when present tend to be for senior executives and US-based contacts.
 
+If phone numbers appear only for contacts you have previously revealed in Apollo, that is expected behavior. Clay's Enrich Person action retrieves data already stored on the Apollo person record and does not trigger Apollo's phone reveal feature. Contacts that have never been revealed in Apollo will not return a phone number through Clay's enrichment.
+
 To find personal mobile phone numbers, use a dedicated mobile phone waterfall. Clay's pre-built mobile phone waterfall (available under **Tools → Enrich → Phone number**) cascades through providers that aggregate personal mobile data from multiple sources. For provider recommendations and coverage by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
+### Mobile numbers revealed in Apollo don't appear in Clay
+
+Clay's Apollo actions do not trigger Apollo's mobile number reveal (the **Reveal number** button in the Apollo.io app). This means personal mobile numbers you can reveal inside Apollo won't be returned by the Apollo **Enrich Person** action in Clay, even if your Apollo plan includes mobile credits. The Enrich Person action has no option to request a phone reveal. It returns only the phone numbers Apollo already has on the person's record, which are usually direct-dial or business lines:
+
+-   `person.contact.phone_numbers` — a list of numbers, each with its raw number, sanitized number, and type
+-   `person.contact.sanitized_phone` — the contact's primary phone number
+-   `person.organization.phone` — the company's main phone line
+
+**Apollo as a step in a phone waterfall:** If you added Apollo Enrich Person as a step in your own mobile phone waterfall, that step runs the same Enrich Person action, so it also won't reveal mobile numbers. The other providers in the waterfall still run as normal and can return mobile numbers. Apollo is not one of the providers in Clay's pre-built mobile phone waterfall.
+
+**Workaround — reveal Apollo mobile numbers with your own Apollo credits:** If you specifically want mobile numbers revealed by Apollo, you can call Apollo's API directly from Clay. Apollo delivers revealed mobile numbers asynchronously to a webhook URL rather than in the immediate response, so the setup uses two tables:
+
+1.  Create a separate table with a **Monitor webhook** source to receive Apollo's replies, and copy its webhook URL. See [Webhook integration guide](webhook-integration-guide.md). Webhooks are available on Growth and Enterprise plans.
+2.  In your contacts table, add an [HTTP API](http-api-integration-overview.md) column that sends a `POST` request to Apollo's `https://api.apollo.io/api/v1/people/match` endpoint. Use your Apollo API key in the `x-api-key` header, and add these query string parameters: the person identifier (for example `id` set to the Apollo person ID from your Enrich Person column, or `email`), `reveal_phone_number` set to `true`, and `webhook_url` set to the URL from step 1. Set the column to run only when the identifier is not empty.
+3.  Run the HTTP API column. Each mobile reveal uses your Apollo account's credits. The immediate HTTP API response won't include mobile numbers. Apollo posts each result to the webhook table as a new row once its reveal finishes, with phone numbers under `people[0].phone_numbers`.
+4.  In the webhook table, add formula columns that extract the Apollo person ID (`people[0].id`) and the number whose `type_cd` is `mobile`.
+5.  Back in your contacts table, add a **Lookup single row in other table** column that matches the Apollo person ID against the webhook table and returns the mobile number. Run it after the webhook table has received Apollo's replies.
+
+For Apollo's request parameters, see Apollo's [People Enrichment API documentation](https://docs.apollo.io/reference/people-enrichment). For most tables, a mobile phone waterfall is the simpler way to find personal mobile numbers.
 
 ### Apollo API key connection errors
 

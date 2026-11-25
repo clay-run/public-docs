@@ -1,7 +1,7 @@
 ---
 title: Scheduled sources
 description: Automatically refresh data from sources on a set schedule.
-last_synced: 2026-04-26T01:40:37.604Z
+last_synced: 2026-10-07T01:52:12.763Z
 ---
 
 # Scheduled sources
@@ -20,8 +20,8 @@ This keeps your data current without manual updates by pulling in new informatio
 
 -   After adding a new source, a modal will appear to start scheduling runs.
 -   Under `Run this source`, select `On a schedule`.
--   Choose the frequency and click `Update Source Schedule`.
-    1.  Hour (Enterprise only)
+-   Choose the frequency and click `Save schedule`.
+    1.  Hourly (Enterprise only)
     2.  Day
     3.  Week
     4.  Month
@@ -33,8 +33,8 @@ This keeps your data current without manual updates by pulling in new informatio
 -   Click the source columns title.
 -   Under `Sources`, select your source.
 -   Under `Run this source`, select `On a schedule`.
--   Choose the frequency and click `Update Source Schedule`.
-    1.  Hour (Enterprise only)
+-   Choose the frequency and click `Save schedule`.
+    1.  Hourly (Enterprise only)
     2.  Day
     3.  Week
     4.  Month
@@ -69,11 +69,32 @@ Scheduled sources are not available on the Free plan. For paid plans, the limit 
 
 -   Launch: 100 sources
 -   Growth: 100 sources
--   Enterprise: 1,000 sources
+-   Enterprise: 1,000 sources by default (your contract may set a different limit)
+
+If your workspace has reached its limit, you can remove schedules from sources you no longer need, or contact Clay support to request a higher limit.
 
 There is no in-app counter showing your current scheduled source count against the plan limit. To review which sources are on a recurring schedule, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**. This view includes scheduled columns and signals in addition to scheduled sources, so it captures more than just sources — but it is the most direct way to find recurring schedules across all your tables when you are approaching the limit.
 
 ## Troubleshooting
+
+### What should I do when I see "workspace has reached the scheduled sources limit for your plan"?
+
+This error appears when your workspace has reached the scheduled sources limit for its plan. It can occur when you try to schedule a source or when copying a table that contains scheduled sources.
+
+To resolve it:
+
+1.  **Remove the schedule from sources you no longer need.** Click the source column title in any table, then switch the source to run **Manually** (or delete the source entirely) to free up a slot. See [How can I find which tables have scheduled sources?](#how-can-i-find-which-tables-have-scheduled-sources) below for tips on identifying candidates.
+2.  **Contact Clay support to request a higher limit.** Support can increase your workspace's scheduled sources limit on request.
+
+### How can I find which tables have scheduled sources?
+
+There is currently no dedicated view that lists all scheduled sources across a workspace. Two workarounds can help you identify candidates:
+
+**Credit usage page:** Go to **Settings → Credit Usage** and filter by **Recurring**. This shows all tables with any recurring activity — scheduled sources, scheduled enrichment columns, or signals. Use this as a starting point to find tables to review.
+
+**Connections page:** Go to **Settings → Connections** and filter by **Workbooks**. This shows all tables associated with a particular integration (for example, Salesforce). Tables named "Import records from [Provider]" are typically scheduled sources, though not all tables listed will have an active schedule.
+
+Neither method produces a definitive list of only scheduled sources. If you need an exact count of your workspace's scheduled sources, contact Clay support.
 
 ### Can I filter the table to see only rows affected by a specific source run?
 
@@ -100,7 +121,7 @@ To have your table automatically import new matching entries on a recurring basi
 1.  Click the source column title in your table.
 2.  Under **Sources**, select your source.
 3.  Under **Run this source**, select **On a schedule**.
-4.  Choose a frequency (Daily, Weekly, or Monthly) and click **Update Source Schedule**.
+4.  Choose a frequency (Daily, Weekly, or Monthly) and click **Save schedule**.
 
 Each subsequent run appends newly matched entries to your table without removing existing rows (see [Scheduled source runs are additive](#scheduling-source-runs) above).
 
@@ -121,3 +142,20 @@ To resolve it, remove the schedule from one or more sources before duplicating:
 Alternatively, remove the schedule from existing sources elsewhere in your workspace to free up a slot, then try duplicating again. If you need to identify which sources are scheduled across your workspace, open **Settings → Credit Usage**, select the **Workspace** tab, and filter by **Recurring**.
 
 If you have reduced your scheduled sources but still see the error, contact support — your workspace may need a limit increase.
+### I see "You have exceeded the maximum number of scheduled sources on your plan"
+
+This error appears when your workspace has reached its scheduled source limit (Launch and Growth plans: 100 sources; Enterprise: 1,000 sources). To free up slots:
+
+1.  **Switch unneeded sources to Manual** — click the source column title, select the source under **Sources**, change **Run this source** to **Manually**, and click **Update Source Schedule**. Switching a source to Manual immediately frees one slot.
+2.  **Delete tables you no longer use** — deleting a table frees all of its scheduled source slots immediately. You do not need to permanently remove the table from Trash; the count updates as soon as the table is moved there.
+3.  **Contact support if the error persists** — if you still see this error after reducing your scheduled sources, reach out to support with your workspace URL. The team can verify your current usage count and help assess the options.
+
+### Why did my scheduled source stop importing records after previously working?
+
+If a source was running on a schedule and has now stopped importing new records — even though the schedule is still enabled and the table appears to have space — the most likely cause is that the source has reached its 50,000 total records processed limit.
+
+Certain source types, including **Import records from a Salesforce list**, track the cumulative number of records pulled over the source's entire lifetime, not the rows currently visible in the table. Once that running total reaches 50,000, the schedule stops.
+
+**Auto-delete does not reset this limit.** For these source types, auto-delete clears rows from the table, but the source reimports those same records on the next scheduled run, continuing to accumulate toward the 50,000 total. Your table may show far fewer than 50,000 visible rows while the source has already reached its processed-record ceiling.
+
+For details and options to continue importing records, see [Salesforce integration FAQs](salesforce-integration-faqs.md) if you are using a Salesforce list source, or [Auto-delete in tables](auto-delete.md#source-compatibility) for a full explanation of which source types are subject to this limit.
