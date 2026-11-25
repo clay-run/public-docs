@@ -392,6 +392,33 @@ When your plan renews, your credit balance is capped at 2× your monthly allotme
 
 No credits are affected before your renewal date — you can use them freely until then. To preserve more credits, spend down your balance before the renewal date shown in the warning.
 
+### Which Data Credits are used first: rolled-over, newly added, or bonus credits?
+
+Clay spends your workspace's Data Credits in this order:
+
+1.  **Plan credits** — the Data Credits from your plan, including credits that rolled over from earlier billing cycles, any one-time top-ups you purchased, and most one-time rewards (such as referral credits and the 500-credit ChatGPT welcome bonus). Plan credits are a single pool: Clay does not track rolled-over credits separately from newly added plan credits, so there is no "older first" or "newer first" order within them.
+2.  **Bonus credits** — a separate balance used for certain grants, such as some promotional credits redeemed during a trial and credits Clay support adds as bonus credits. Clay uses bonus credits only after your plan credits run out.
+
+Because plan credits are a single pool, every plan credit you spend before your renewal date reduces the number of credits shown as "over the rollover limit" by the same amount, no matter when those credits were added.
+
+Bonus credits are not subject to the monthly rollover cap. They are not counted in the "over the rollover limit" warning or in the "credits will rollover" amount, and they are not removed when your plan renews. Rewards that are added to your plan credits follow the same rollover rules as the rest of your plan credits.
+
+### Why is my Data Credit balance higher than my plan's monthly credits?
+
+The **Credits** button in the top bar of your workspace shows your balance as *"[balance] / [monthly plan credits] credits available"*. The first number is your plan credits plus any bonus credits. The second number is only your plan's monthly Data Credit allotment, so your balance can be higher than it.
+
+The rollover warning in the same popover is calculated from your plan credits only, not your bonus credits.
+
+**Example:** A workspace on a monthly plan with 2,500 Data Credits per month (2× cap = 5,000) has 3,804 plan credits and 5,000 bonus credits.
+
+-   The popover shows *"8,804 / 2.5K credits available"* (3,804 plan credits + 5,000 bonus credits).
+-   Adding the 2,500-credit renewal to the 3,804 plan credits would reach 6,304 — 1,304 above the 5,000 cap. The warning shows: *"1,304 credits are over the rollover limit. Use them by [renewal date] or they will expire."*
+-   The popover also shows *"2,500 credits will rollover on [renewal date]."*
+-   If no more credits are spent before renewal, the plan credits are set to 5,000 (2,500 rolled over + 2,500 new), and the 5,000 bonus credits stay unchanged, for a total balance of 10,000.
+-   Because plan credits are spent before bonus credits, any credits used before renewal come out of the 3,804 plan credits and lower the 1,304 over-limit amount first.
+
+If you're not sure how much of your balance is bonus credits, contact Clay support through the in-app chat.
+
 ### How do I estimate what my workflow will cost?
 
 **Before purchasing a plan:** Use the [Clay Pricing Calculator](https://www.clay.com/credits-calculator) to scope out how many Actions and Data Credits your workflow is likely to consume.
