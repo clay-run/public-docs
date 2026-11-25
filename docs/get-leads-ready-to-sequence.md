@@ -96,6 +96,12 @@ The `Enroll in sequence` node identifies each lead by an `Entity ID` from Audien
 
 **Note:** The `Entity ID` has to come from a node upstream of the `Enroll in sequence` node — a mapping that points anywhere else is rejected with `This input must reference an upstream node.` Upstream is the whole of the constraint, so the two nodes don't have to be adjacent. An enrichment, a conditional, or a delay can sit between the Audiences node and the enroll node without breaking the mapping.
 
+**Launching a draft campaign when you publish the workflow (beta):** The `Add person to sequence` workflow node is currently in beta and requires Sequencer and Audiences access — contact support to enable it. With `Add person to sequence`, you don't have to launch the campaign before publishing the workflow. When the workflow you're publishing has an `Add person to sequence` node pointing at a campaign that's still a draft, the publish dialog shows a `Launch sequence after publishing` checkbox (`Launch sequences after publishing` when there's more than one draft campaign). The checkbox is unchecked by default, and it doesn't appear when none of the campaigns are drafts.
+
+-   **Checked** — once the publish completes, Clay launches each of those draft campaigns.
+-   **Unchecked** — the workflow publishes and the campaigns stay drafts.
+-   **If a campaign fails to launch** — the workflow stays published. The dialog switches to `Workflow published` and lists each campaign that didn't launch, with the reason and a link to the campaign so you can launch it from its own page.
+
 The node reports its outcome back into the workflow, so you can branch on it. Re-running it for someone already in that campaign is safe: it reports them as already enrolled instead of enrolling them twice.
 
 When it does decline a lead, the reason is specific:
