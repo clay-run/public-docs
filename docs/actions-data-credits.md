@@ -355,6 +355,15 @@ If you see an in-product pricing summary comparing old and new enrichment costs 
 
 Actions represent the platform orchestration Clay performs—ingesting, storing, and routing your data. Even with your own API keys, Clay is doing work to integrate that data into your workflows.
 
+### Does an AI column — like classification or categorization — consume Actions?
+
+Yes. Every AI run in Clay — including Use AI columns used for classification, categorization, research, or content generation — counts as **1 Action per row**, in addition to Data Credits for the model call. An AI column run on 100 rows consumes 100 Actions plus Data Credits proportional to the number of tokens the model processes. This applies whether you are using Clay's managed AI keys or your own — the Action is always charged; connecting your own API key eliminates the Data Credit cost only.
+
+**Before running an AI column across your full table:**
+
+-   **Test on a small sample first.** Right-click a selection of rows and choose **Run [N] rows** to validate the output and see actual credit costs before committing to the full table.
+-   **Filter your table first.** Narrow your dataset using formulas or conditions on data you already have — so you only run the AI column on rows that actually need it.
+
 ### What happens if I run out of Data Credits but not Actions?
 
 You can either:
