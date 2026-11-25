@@ -35,11 +35,20 @@ The **Find mobile phone number** action finds a person's mobile phone number fro
 
 First, you can use either the Clay-managed Forager account or your own account.
 
-If you use the Clay-managed Forager account you will be charged at 10 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Forager account, the credit cost per enriched cell for the **Find mobile phone number** action depends on the `Quality` setting you choose and on whether your workspace is on a legacy plan or a modern plan. The table below shows the credits charged per enriched cell:
+
+| Quality | Legacy plans | Modern plans |
+| --- | --- | --- |
+| Highest quality (default) | 10 credits | 8 data credits |
+| Most coverage | 7 credits | 5 data credits |
+
+For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
 Please input the contact's **Professional URL** (their LinkedIn profile URL) to find their mobile phone number.
+
+Optionally, choose a **Quality** for the Find mobile phone number action: `Highest quality` (the default) or `Most coverage`, which returns more numbers at a lower confidence.
 
 **Step 3 (Optional): Select Auto-update**
 
