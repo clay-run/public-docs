@@ -11,6 +11,16 @@ AI-powered platform for sales intelligence, engagement, and workflow automation.
 
 The Apollo and Clay integration enables users to find and enrich leads within Clay by leveraging [Apollo.io](http://Apollo.io)'s extensive B2B database.
 
+## How Apollo works in Clay
+
+Apollo is a **user-connected integration** — it is not a built-in Clay data source, and Clay does not automatically query Apollo on your behalf. To use Apollo data in Clay, you must have your own [Apollo.io](http://Apollo.io) account and connect it. Clay does not hold a managed Apollo credential, so there is no Clay-provided fallback option.
+
+**What data it returns:** The Apollo integration in Clay can return both email addresses and phone numbers, along with job titles, company details, professional profile URLs, and other contact information. The specific fields returned depend on which action you use and the inputs you provide.
+
+**Credits:** Apollo enrichments in Clay use your Apollo account's own lead credits — Clay Data Credits are not charged for Apollo actions. Clay still consumes 1 Action per enrichment run. You can track Apollo action usage in **Settings → Usage → Integrations**.
+
+**Overlap with standalone Apollo:** When you include Apollo in a Clay waterfall or enrichment column, Clay queries the same Apollo database you access directly in Apollo.io, using your own account credentials. Results for the same contacts will largely overlap. Differences can occur when your Clay workflow selects only specific fields from the response, or when other providers in a waterfall return data that Apollo's database does not include.
+
 ## **Creating a table with** [**Apollo.io**](http://Apollo.io)
 
 1.  In a workbook, click `+ Add` at the bottom.
@@ -317,18 +327,9 @@ To resolve:
 
 ### Insufficient credits
 
-Apollo enrichments in Clay can consume either **Clay Data Credits** or **Apollo lead credits**, depending on which integration type is in use:
+Apollo enrichments in Clay use your Apollo account's own lead credits — Clay Data Credits are not charged for Apollo actions, whether you use the current OAuth connection or a legacy API-key connection. Clay still consumes 1 Action per enrichment run.
 
--   **Clay Data Credits**: Used with the current OAuth-based Apollo integration. New Apollo columns use OAuth by default.
--   **Apollo lead credits**: Used with older API-key-based Apollo columns. If you set up Apollo columns before the OAuth integration launched, those columns may still run against your own Apollo account's lead credits.
-
-If an enrichment step fails with a credits error, first confirm which type of connection your column is using.
-
-**If using the OAuth integration (Clay Data Credits):**
-
-Check your Clay workspace credit balance. If credits are depleted, add more or upgrade your Clay plan.
-
-**If using a legacy API-key-based Apollo column (Apollo lead credits):**
+If an enrichment step fails with a credits error:
 
 1.  Check your Apollo subscription to confirm it includes enough lead credits for the action. If not, upgrade through Apollo's settings.
 2.  If you recently upgraded your Apollo account but still see the error in Clay, try reconnecting your Apollo account to refresh the connection. Ensure the credit type you have matches the activity you are performing.
@@ -365,7 +366,29 @@ Action columns do not have a built-in rate limit control. To stay below Apollo's
 
 Apollo's database sources phone numbers from business directories, professional listings, and public records. Phone numbers returned by Apollo enrichments are typically direct dial numbers or business lines tied to a contact's work role — personal mobile numbers are rarely available, and when present tend to be for senior executives and US-based contacts.
 
+If phone numbers appear only for contacts you have previously revealed in Apollo, that is expected behavior. Clay's Enrich Person action retrieves data already stored on the Apollo person record and does not trigger Apollo's phone reveal feature. Contacts that have never been revealed in Apollo will not return a phone number through Clay's enrichment.
+
 To find personal mobile phone numbers, use a dedicated mobile phone waterfall. Clay's pre-built mobile phone waterfall (available under **Tools → Enrich → Phone number**) cascades through providers that aggregate personal mobile data from multiple sources. For provider recommendations and coverage by region, see [[Data test] Mobile phone providers by region](data-test-methodology-mobile-phone-region.md).
+
+### Mobile numbers revealed in Apollo don't appear in Clay
+
+Clay's Apollo actions do not trigger Apollo's mobile number reveal (the **Reveal number** button in the Apollo.io app). This means personal mobile numbers you can reveal inside Apollo won't be returned by the Apollo **Enrich Person** action in Clay, even if your Apollo plan includes mobile credits. The Enrich Person action has no option to request a phone reveal. It returns only the phone numbers Apollo already has on the person's record, which are usually direct-dial or business lines:
+
+-   `person.contact.phone_numbers` — a list of numbers, each with its raw number, sanitized number, and type
+-   `person.contact.sanitized_phone` — the contact's primary phone number
+-   `person.organization.phone` — the company's main phone line
+
+**Apollo as a step in a phone waterfall:** If you added Apollo Enrich Person as a step in your own mobile phone waterfall, that step runs the same Enrich Person action, so it also won't reveal mobile numbers. The other providers in the waterfall still run as normal and can return mobile numbers. Apollo is not one of the providers in Clay's pre-built mobile phone waterfall.
+
+**Workaround — reveal Apollo mobile numbers with your own Apollo credits:** If you specifically want mobile numbers revealed by Apollo, you can call Apollo's API directly from Clay. Apollo delivers revealed mobile numbers asynchronously to a webhook URL rather than in the immediate response, so the setup uses two tables:
+
+1.  Create a separate table with a **Monitor webhook** source to receive Apollo's replies, and copy its webhook URL. See [Webhook integration guide](webhook-integration-guide.md). Webhooks are available on Growth and Enterprise plans.
+2.  In your contacts table, add an [HTTP API](http-api-integration-overview.md) column that sends a `POST` request to Apollo's `https://api.apollo.io/api/v1/people/match` endpoint. Use your Apollo API key in the `x-api-key` header, and add these query string parameters: the person identifier (for example `id` set to the Apollo person ID from your Enrich Person column, or `email`), `reveal_phone_number` set to `true`, and `webhook_url` set to the URL from step 1. Set the column to run only when the identifier is not empty.
+3.  Run the HTTP API column. Each mobile reveal uses your Apollo account's credits. The immediate HTTP API response won't include mobile numbers. Apollo posts each result to the webhook table as a new row once its reveal finishes, with phone numbers under `people[0].phone_numbers`.
+4.  In the webhook table, add formula columns that extract the Apollo person ID (`people[0].id`) and the number whose `type_cd` is `mobile`.
+5.  Back in your contacts table, add a **Lookup single row in other table** column that matches the Apollo person ID against the webhook table and returns the mobile number. Run it after the webhook table has received Apollo's replies.
+
+For Apollo's request parameters, see Apollo's [People Enrichment API documentation](https://docs.apollo.io/reference/people-enrichment). For most tables, a mobile phone waterfall is the simpler way to find personal mobile numbers.
 
 ### Apollo API key connection errors
 

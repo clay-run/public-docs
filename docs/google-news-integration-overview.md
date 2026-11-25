@@ -36,6 +36,28 @@ To run enrichment only under specific conditions, use formulas that trigger the 
 
 **Step 5:** Run your enrichment to find results from Google News.
 
+## Output fields
+
+The **Find News Results** action returns two output fields:
+
+- **`news_results`** — An array containing the individual news articles found. Each article includes the title, URL link, source name, publication date, and a text snippet.
+- **`total_news_results`** — A number representing the total count of articles returned.
+
+### Waterfall output: why the merged column shows a number
+
+When **Find News Results** is used as a step in a waterfall column, the **Waterfall output** dropdown controls which field appears in the merged column:
+
+- If you select **`total_news_results`**, the merged column displays a number — the count of articles found (for example, `5` or `60`). This is a count, not the articles themselves.
+- To display article data in the merged column, select a field from **`news_results`** — for example, `news_results > 0 > title` to show the first article's headline, or `news_results > 0 > link` for its URL.
+
+To browse all articles returned for a row — regardless of which field is selected in the merged column — expand the waterfall by clicking the **»** arrow on the column header, then click into the Google News sub-column cell for that row. The cell details panel shows the full list of articles.
+
+To change the waterfall output field: click the waterfall column header → **Edit column** → open the **Waterfall output** dropdown and select a different field → click **Save**.
+
+### "Run condition not met" on sub-columns
+
+If a sub-column within the waterfall shows **"Run condition not met"**, it means the waterfall's run condition was not satisfied for that row — for example, if the query input column is empty. Rows with no input will be skipped and shown with this status; no credits are consumed for those rows. See [Conditional runs](conditional-runs.md) for how to set or adjust run conditions.
+
 ## `Source` Pull Google News RSS Feed
 
 The **Pull Google News RSS Feed** source imports Google News articles into a Clay table as rows. Use it to monitor ongoing topics — such as business expansions, facility relocations, or company announcements — and enrich, filter, or route the results with other Clay columns.

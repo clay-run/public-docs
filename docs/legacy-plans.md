@@ -118,7 +118,7 @@ Here is a breakdown of what you gain, lose, and what changes when migrating from
 
 - **You are now charged for Actions:** Modern plans introduce action charges — each enrichment, AI run, or GTM export counts as one Action. Explorer (Legacy) does not charge for actions. The Launch plan starts at 15,000 actions per month.
 - **Credit volume:** The Launch plan starts at 2,500 credits per month. Because enrichment costs are ~50% lower on modern plans, your credits typically cover more records than the same nominal credit count on a legacy plan.
-- **Credit rollover:** Unused Data Credits on Launch roll over up to 2× your monthly credit limit at renewal (for example, a 2,500/mo plan can carry up to 5,000 credits). On an annual Launch plan, up to 15% of unused annual credits roll over when you renew.
+- **Credit rollover:** On a monthly Launch plan, unused Data Credits roll over up to a total balance of 2× your monthly credit limit at renewal (for example, a 2,500/mo plan can carry up to 5,000 credits). On an annual Launch plan, unused credits can carry over up to 15% of the annual allotment at an eligible renewal on the same or a higher tier. The percentage is a cap based on the allotment, not a percentage of the unused balance.
 
 For a full side-by-side comparison, see the [Pricing mechanics comparison](#pricing-mechanics-comparison) and [Feature access comparison](#feature-access-comparison) tables above.
 
@@ -150,7 +150,6 @@ If you're on Explorer (Legacy) and considering a move to Enterprise, here is a s
 
 **Features you gain on Enterprise** (not available on Explorer Legacy):
 
--   **Bulk enrichment** — process large datasets in rolling batches with no cumulative row cap; see [Bulk enrichment](./bulk-enrichment.md)
 -   **Web intent signals** — access website visitor activity data
 -   **CRM integrations** — connect to Salesforce, HubSpot, Marketo, and other CRMs
 -   **Data warehouse connections** — sync with Snowflake and other data warehouses

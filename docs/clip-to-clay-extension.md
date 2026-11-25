@@ -11,7 +11,7 @@ Learn how to clip your web pages into a Clay table.
 Clay offers two powerful Chrome extensions that help you gather and organize information from the web:
 
 -   **Clay for Chrome** lets you extract structured data from webpages, either from a list or an individual page.
--   **Clip to Clay** allows you to quickly save entire webpages to your Clay tables.
+-   **Clip to Clay** allows you to quickly save webpage URLs to your Clay tables.
 
 Both tools integrate seamlessly with your Clay workspace, making it easier to collect, organize, and act on web data.
 
@@ -19,7 +19,7 @@ Both tools integrate seamlessly with your Clay workspace, making it easier to co
 
 The Clay for Chrome extension allows you to extract structured data from webpages. You can capture data from a single page, lists across multiple pages, or even custom-defined structures. Once extracted, the data can be added directly to your Clay table, downloaded as a CSV, or copied to your clipboard.
 
-**Note:** Clay for Chrome does not work on professional networking sites. To add contacts from professional profiles to your Clay tables, use [Exportly](https://www.exportly.ai/) — a Clay partner extension built for professional networking.
+**Note:** Clay for Chrome does not work on professional networking sites. To capture contacts from professional profiles, use the [Clip to Clay extension](#clip-to-clay) below. For other professional networking workflows, [Exportly](https://www.exportly.ai/) is a Clay partner extension built for professional networking.
 
 ### Autodetected lists
 
@@ -65,7 +65,7 @@ To create a recipe for scraping structured data from profile or detail pages:
 
 ## Clip to Clay
 
-The Clip to Clay extension lets you quickly save full webpages into your Clay tables. It's useful for capturing unstructured data or bookmarking key pages.
+The Clip to Clay extension lets you quickly save the webpages you visit into your Clay tables as URLs. It's useful for bookmarking key pages and sending them to a table for enrichment.
 
 **Note:** Each person who uses Clip to Clay must have their own Clay user seat and be logged in to Clay. If you manage a team, add each rep to your Clay workspace before they use the extension.
 
@@ -93,6 +93,18 @@ To save a webpage:
 Clip to Clay works on professional networking sites. When you visit a professional profile page, the extension adds a button that lets you send that person directly to your Clay table with one click.
 
 Once added, any enrichment columns already configured in your table run automatically — no separate enrichment step needed.
+
+### What data does Clip to Clay send to Clay?
+
+Clip to Clay doesn't scrape or capture the content of the page you're on. When you click `Add to Table`, the Clip to Clay extension sends Clay only the following:
+
+-   The URL of the page you're viewing.
+-   The destination table you selected.
+-   Your Clay workspace.
+
+Clay adds the URL as a new row in your table. Any enrichment columns already configured in that table then run on the new row. The page's text and HTML are never sent to Clay by Clip to Clay.
+
+The `History` view inside Clip to Clay isn't your browser history. It lists only the pages you've already sent to Clay from the extension, along with their destination tables.
 
 ### Viewing history and customizing fields
 

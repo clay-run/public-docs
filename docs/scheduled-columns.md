@@ -26,6 +26,8 @@ This keeps your data current without manual updates (e.g., keeping enrichment da
 
 **Note:** If the Hour option is not visible in your Run Settings, your current plan does not include hourly scheduling. On non-Enterprise plans, Day is the most frequent schedule available.
 
+**Note:** When using **Only selected columns**, formula columns are not available in the column picker — only enrichment and action columns can be selected. If you need a date value (such as today's date) to update reliably on a schedule, use an enrichment column instead of a formula column. See [Formula column date value didn't update after a scheduled run](#formula-column-date-value-didnt-update-after-a-scheduled-run) for the recommended approach.
+
 ## Action columns and scheduled re-runs
 
 Scheduled column re-runs fire for **every row** in the table on each cycle — including rows that already have successful results. Unlike table-level Auto-run, scheduled column runs always force-run and do not respect the "Keep existing results" option.
@@ -50,6 +52,35 @@ Scheduled column runs force-run **only the selected columns**. After the schedul
 **To make a downstream column re-run on the same recurring cycle as the upstream scheduled column**, add it to the scheduled run list (**Table Settings → Run Settings → Re-run columns on a schedule → Only selected columns**). Scheduled column runs always force-run, so the downstream column executes every cycle regardless of "Keep existing results."
 
 To prevent the downstream column from running on every row on every cycle — for example, if you only want it to execute when the upstream value meets a condition — add a run condition. In the downstream column's **Run settings**, enable **Add run condition** and enter a formula that references the upstream column's value (for example, `Only run when [Sentiment] contains "BULLISH" & [Full Name] is not empty`). Clay evaluates the condition on each row and skips rows where it is not met, so you only consume credits for rows where the upstream result warrants it. See [Conditional runs](conditional-runs.md) for setup details.
+
+## Troubleshooting
+
+### Some rows show old timestamps after a scheduled run
+
+Scheduled column reruns force-run every cell in the selected columns — they don't skip cells because a previous result already exists or because the input value looks the same as before. If specific rows still show an older "last updated" timestamp after a scheduled run completes, those cells were skipped due to one of the following conditions:
+
+-   **Blank or missing inputs** — the cell's required input (such as a lookup key, email address, or referenced column value) is empty or could not be resolved. Clay skips the cell rather than running it with incomplete data.
+-   **Unmet run condition** — the column has an **Only run if** condition configured, and that condition evaluated to false for the row. The cell is intentionally skipped, and no new timestamp is recorded.
+-   **Formula or input validation error** — a formula feeding the column couldn't be evaluated (for example, a referenced column is missing, returns an unexpected type, or its value is invalid). The cell is skipped with an error status.
+
+**To diagnose:** hover over or click into the cells in the affected rows to see their current status and any error messages. Fixing the underlying input — filling in a blank field, correcting the run condition, or resolving a formula error — will allow the next scheduled run to process those rows.
+
+**Note:** A scheduled run completing successfully across the whole table does not guarantee every cell re-ran. The run itself fires for all rows, but individual cells with the issues above are skipped regardless.
+
+### Formula column date value didn't update after a scheduled run
+
+Formula columns cannot be manually selected in the **Only selected columns** picker — only enrichment and action columns appear there. When a formula uses `moment()` or similar date functions to generate today's date, it may not reliably recalculate on a schedule because there is no enrichment column dependency to trigger recalculation.
+
+The reliable approach is to use an enrichment/action column as a daily "clock" and reference it in your formula. Because formula columns automatically re-evaluate when a referenced enrichment column updates (with table-level Auto-run on), the formula recalculates each time the enrichment runs.
+
+1.  Add an **HTTP API** column (GET, no authentication) pointed at a free time API — for example, `https://timeapi.io/api/time/current/zone?timeZone=UTC`. This column returns the current date and time each time it runs.
+2.  Reference the HTTP API column's output in your formula instead of calling `moment()` directly — for example:
+    ```javascript
+    moment({{Today API.dateTime}}).format("YYYY-MM-DD")
+    ```
+3.  Add the HTTP API column to your scheduled run: **⛭ icon → Run Settings → Re-run columns on a schedule → Only selected columns → select the HTTP API column → Day → Save changes**. The formula column updates automatically as a downstream effect each time the HTTP API column runs.
+
+For full step-by-step instructions and formula examples, see [How do I use today's date in a formula?](formula-generator.md#how-do-i-use-todays-date-in-a-formula).
 
 ## Usage limits
 

@@ -139,3 +139,34 @@ Any standard or custom object in your Attio workspace is supported. The `Object`
 ### What is the difference between the View and Filter inputs?
 
 `View` lets you select a saved view from your Attio workspace, which applies any filters and segments already configured in that view. `Filter` accepts a raw JSON filter query for custom filtering logic. If both are provided, the `View` takes precedence and the `Filter` is ignored.
+
+### How do I push data to an Attio multi-select field?
+
+Use the **Update record** or **Upsert record** action and map your Clay column to the Attio multi-select attribute in the Object Schema. Values must exactly match the option labels configured in Attio.
+
+Clay accepts the following value formats for multi-select fields:
+
+-   A Clay **multi-select column** mapped directly to the field.
+-   A **formula column** that returns a JSON-encoded list — for example, `["Option 1", "Option 2"]`.
+
+If your data is a comma-separated string (for example, `"Option 1, Option 2"`), use a formula to split it into a proper list before mapping — passing a plain string will write it as a single option rather than multiple selections.
+
+**Controlling append vs. overwrite:** The **Update record** action includes a **Multiselect Behavior** setting — choose `Append multiselect values` to add to the existing selections on the record, or `Overwrite multiselect values` to replace them entirely. The **Upsert record** action does not have this setting and always overwrites existing multi-select values when updating an existing record.
+### How do I send multiple email addresses to Attio's Email addresses field?
+
+The **Email addresses** field accepts multiple values, but adding more than one column chip directly to the field input does not produce the correct format — Clay treats the field as plain text and concatenates the chip values into a single string (e.g. `"work@company.com personal@gmail.com"`), which Attio rejects as an invalid email address.
+
+**The correct approach:** Create a formula column that builds a proper array, then map that single formula column to the **Email addresses** field.
+
+1.  Add a new **Formula** column to your table.
+2.  Enter a formula that combines your email columns into an array and removes any empty values:
+
+    ```
+    [{{Your First Email Column}}, {{Your Second Email Column}}].filter(x => x)
+    ```
+
+    Replace the column references with your actual column names. The `.filter(x => x)` removes null or empty values so rows where one email column is blank still sync successfully.
+
+3.  In the Attio action, map this formula column — not the individual email columns — to the **Email addresses** field.
+
+This applies whether you are writing Email addresses as a data field or using it as the **Matching Attribute** in the Upsert record action.

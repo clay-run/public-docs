@@ -16,9 +16,9 @@ Clay credits are valuable resources that help you save both time by automating m
 
 **How does this save credits?**
 
-By default, auto-run is **on** for every new table — Clay automatically enriches each row as soon as it arrives. While this is useful for production workflows, it can consume credits faster than expected when you're still building or testing: add a large batch of rows before your setup is finalized and all enrichments fire immediately.
+By default, auto-run is **on** for every table — Clay automatically enriches each row as soon as it arrives. While this keeps production workflows current, it can consume credits faster than expected in two common situations: when you're still building or testing a table, and when you paste or import a large batch of rows into an existing table that already has enrichments configured — enrichments fire immediately on every row as it lands.
 
-The best practice is to **turn off table-level auto-run while building your table**. Once your setup is finalized and tested, turn it back on when you're ready to process your full list.
+The best practice is to **turn off table-level auto-run before adding rows** — whether you're setting up a new table or bulk-loading contacts into an existing one. Once you've added the rows and confirmed the data looks right, turn auto-run back on and choose which rows to process.
 
 **How do you implement this?**
 
@@ -27,15 +27,17 @@ To disable auto-run for the entire table (the master switch):
 1.  Click the `⛭` icon in the top toolbar to open Run Settings.
 2.  Toggle **Auto-run** off. The toggle shows **"Manual"** when disabled.
 
+**Note:** The Auto-run toggle is disabled while the table is actively running. If the table is running when you want to turn off auto-run, click **Stop** in the run summary panel at the bottom-right first, then toggle auto-run off.
+
 With table-level auto-run off, no columns will run automatically when rows are added — regardless of individual column settings. You can still trigger enrichments manually by clicking individual cells.
 
-**Recommended testing workflow:**
+**Recommended workflow before adding a large batch:**
 
-1.  Turn table-level auto-run **OFF** before adding any rows.
-2.  Add a small sample (5–10 rows).
-3.  Manually click individual cells to test enrichments.
-4.  Refine your configuration until results look right.
-5.  Turn auto-run back **ON** when you're ready to process the full list.
+1.  If the table is actively running, click **Stop** in the bottom-right run summary panel.
+2.  Turn table-level auto-run **OFF** (click `⛭` → **Run Settings** → toggle off).
+3.  Paste or import your rows.
+4.  Review the table to confirm the data is aligned and complete.
+5.  Turn auto-run back **ON** and choose `Update cells` to process the new rows — or select specific rows and right-click → **Run [N] rows** to enrich only those you've verified.
 
 To turn off auto-run for a single column instead of the whole table, click the column name → **Edit column** → toggle **Auto-run** off under **Run settings** → **Save**.
 
@@ -52,7 +54,7 @@ If you are on a paid plan and have credits with other data providers, Clay allow
 You can access adding your API key two ways:
 
 1.  Profile picture  > Settings > Navigation Bar
-2.  Go to your profile picture in the top right corner, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
+2.  Go to your profile picture in the bottom-left corner of the sidebar, navigate to Settings, and head over to the Connections section. From there, you can add your API keys to the Clay panel.
 3.  Enrichment Panel > Account > Add Account
 4.  When setting up an enrichment that accepts an API key, you can add an account linked to your API key. By default, Clay's API key will be selected, but if you want to use your own, simply switch to your account by selecting **Add Account**.
 
@@ -74,9 +76,9 @@ When you add a **Use AI** or **Claygent** column, the model you select directly 
 
 **How do you implement this?**
 
-When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 4.1 Nano** costs 0.1 credits/row for content generation (Use AI) and 0.5 credits/row for web research (Claygent) — compared to **Neon** at 2 credits/row and **Argon** at 3 credits/row for Claygent tasks.
+When configuring an AI column, open the **Model** dropdown in the column settings and select a more cost-effective option. For example, **GPT 5.6 Luna** costs 0.1 credits/row for content generation (Use AI). For web research (Claygent), **Neon** costs 2 credits/row and **Argon** costs 3 credits/row.
 
-As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 4.1 Nano for high-volume, simpler tasks where efficiency is the priority.
+As a general rule: match the model to the task complexity. Reserve higher-credit models like Argon for multi-step research tasks where quality matters most; use lower-cost models like GPT 5.6 Luna for high-volume, simpler tasks where efficiency is the priority.
 
 See [How AI is priced](ai-pricing.md) for the full model pricing comparison.
 
@@ -120,11 +122,17 @@ There are two ways to implement conditional runs:
 2.  In the **"Only run if"** box, add your conditional formula to specify when the enrichment should run.
 3.  **Tip:** Use the **"Use AI"** button to input plain language instructions, making it easier to define your conditions without needing complex formulas.
 
-**Method #2: Filter Existing Rows**
+**Method #2: Manually run on a filtered view**
 
-You can also conditionally run columns through filtering rows.
+Filtered views in Clay are display-only — they control which rows appear in your current view but do not gate auto-run enrichments. If auto-run is on, all new or empty rows in the table are enriched as they arrive, regardless of which filtered view is active.
 
-Filtered views only enriches the rows you're viewing so this can be used as a way to run enrichments conditionally
+However, when you trigger a column run **manually** from a filtered view, Clay processes only the rows visible in that view. To enrich a specific subset of rows without running on the entire table:
+
+1. Turn off table-level **Auto-run** (click the `⛭` icon → toggle **Auto-run** off).
+2. Filter the table to show only the rows you want to enrich.
+3. Right-click the enrichment column header and choose **Run column** → **Run [N] empty or out-of-date rows**.
+
+With auto-run off, only the rows visible in the filtered view will be processed when you trigger the manual run.
 
 ## Look up existing data to avoid duplicate enrichments
 
