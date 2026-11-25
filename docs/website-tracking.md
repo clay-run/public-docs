@@ -24,6 +24,13 @@ This tracking provides insights into how visitors engage with your content and h
 3.  Copy the code under `Install tracking snippet` and install with one of the two methods.
     -   **Directly installing a tracking snippet (Recommended):**
         -   We recommend installing the tracking snippet before the closing `</body>` tag on **all pages** of your website to collect comprehensive data. This snippet loads tracking scripts asynchronously, ensuring it won't affect your page loading time.
+        -   Where to find the footer code section on common website platforms:
+            -   **Webflow:** Project Settings → Custom Code → Footer Code
+            -   **Wix:** Settings → Tracking & Analytics → New Tool → Custom → Body - End
+            -   **Squarespace:** Settings → Advanced → Code Injection → Footer
+            -   **WordPress (classic theme):** Appearance → Theme Editor → `footer.php`, before `</body>`
+            -   **Custom HTML site:** Paste directly before `</body>` in your main layout or template file
+            -   If your platform isn't listed, look for a "footer code," "footer injection," or "custom HTML" section in your site's settings.
     -   **Installing via** [**Google Tag Manager**](https://support.google.com/tagmanager/answer/6107167#CustomHTML)**:**
 
         -   _Note: While this method works, we recommend installing directly as ad blockers often disable Tag Manager._
