@@ -704,6 +704,17 @@ Clay's campaign events table doesn't include a dedicated "sequence completed" ev
 
 To check this from your leads table, add a **Lookup rows in other table** column pointing to your campaign events table, matching on email address. You can then use a formula column to evaluate whether any matched event has `Event type = EMAIL_REPLY`, or whether the extracted sequence number equals your campaign's total step count.
 
+### I ran Pause lead in campaign, but my table still shows the lead as INPROGRESS. Did the pause work?
+
+Check the `Pause lead in campaign` cell for that row. If it shows a ✅ message, the pause went through, even if a status column in your table still says `INPROGRESS`. The Clay Sequencer `Pause lead in campaign` action pauses the lead in the campaign but doesn't re-run or update any other column in your table. A column that tracks lead status keeps the value from its last run (for example, `INPROGRESS`) after the lead is paused, so the table can look like nothing happened.
+
+The `Pause lead in campaign` cell shows one of these success messages:
+
+-   `✅ Lead paused in campaign`: the lead was paused in the campaign you selected.
+-   `✅ Lead paused in N/M campaigns`: you selected `All campaigns`, and the lead was paused in N of the M campaigns they're enrolled in.
+
+The `Pause lead in campaign` action takes two inputs: `Campaign` (a dropdown of your campaigns, including an `All campaigns` option that pauses the lead in every campaign they're in) and `Lead email address`. Any other inputs you map to the action, such as a static `paused = true` field, are ignored.
+
 ### Can I see open rate, click-through rate, or bounce rate broken out per email step in my sequence?
 
 The **Analytics** tab shows open rate, click-through rate, and other engagement metrics as campaign-level totals only — there is no per-step breakdown in that view.
