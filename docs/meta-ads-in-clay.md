@@ -85,6 +85,14 @@ OAuth tokens last 60 days by design. Set up a system user token as described abo
 
 Meta's Custom Audience terms are the most common explanation, and Clay surfaces this at the point you pick the ad account — either as a `Meta custom audience terms` prompt with a link to accept them, or as an unselectable account with a tooltip pointing you to your ads manager. If the terms are signed and it's still failing, confirm the ad account is in good standing.
 
+### The sync says Completed but Match rate and Meta audience size show "—"
+
+A Meta Ads sync can show **Completed** in Clay while **Match rate** and **Meta audience size** still show "—". This means your contacts were sent, but Meta hasn't returned a usable audience size yet. It doesn't mean the sync failed.
+
+-   **Why both numbers are blank together:** Clay calculates the Meta match rate from the audience size Meta reports. It takes the midpoint of Meta's audience size range and divides it by **People sent**. Until Meta reports a size, Clay can't calculate a match rate either.
+-   **How long Clay keeps checking:** After a sync, Clay checks Meta every 30 minutes for up to 72 hours, even after the sync is marked ready. If Meta reports an audience size during those 72 hours, Clay fills in Meta audience size and Match rate on the sync card.
+-   **If the audience matched fewer than about 1,000 people:** Meta doesn't report a real size for audiences this small. Clay leaves both numbers as "—" and marks the audience **Too small**, with the message "Your Audience processed successfully but is too small for use in campaigns." To get past the threshold, add more people to the segment, or map phone and location fields (city, state, country, zip code) and run `Enhanced matching` so Meta can match more of your contacts. Field mapping can't be changed on an existing Ad Sync, so adding new fields means creating a new sync — see [Clay Ads](https://university.clay.com/docs/clay-ads#why-does-my-ad-audience-show-too-small-for-use-in-campaigns).
+
 ### Match rates are under 20%
 
 This is nearly always work emails on their own. Run `Enhanced matching`, and add phone and location fields if you have them — together they usually move the number substantially.

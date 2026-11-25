@@ -1,20 +1,20 @@
 ---
 title: Email warmup
 description: How email warmup builds sending reputation, how it differs on purchased and self-connected accounts, and how to turn it on, adjust it, and filter warmup emails.
-last_synced: 2026-11-02T22:24:46.028Z
+last_synced: 2026-11-17T21:04:36.919Z
 ---
 
 # Email warmup
 
 What email warmup does, how it differs on purchased and self-connected accounts, and why you'll see unfamiliar emails while it runs.
 
-Email warmup builds a sending account's reputation before it starts carrying real campaign volume, which makes your emails more likely to land in the primary inbox. It works the same way whether you bought your accounts in Clay or connected your own.
+Email warmup builds a sending account's reputation before it starts carrying real sequence volume, which makes your emails more likely to land in the primary inbox. It works the same way whether you bought your accounts in Clay or connected your own.
 
-**Note:** While warmup is running, you'll see unfamiliar emails arriving in and going out from your account, sometimes with odd subject lines or filler content. That's warmup traffic between your account and other accounts in the pool, and it's expected — none of it reaches the leads in your campaigns. The filtering section below shows you how to keep it out of your inbox.
+**Note:** While warmup is running, you'll see unfamiliar emails arriving in and going out from your account, sometimes with odd subject lines or filler content. That's warmup traffic between your account and other accounts in the pool, and it's expected — none of it reaches the leads in your sequences. The filtering section below shows you how to keep it out of your inbox.
 
 ## What warmup is
 
-Warmup enrolls your account in a shared pool of other sending accounts. Your account automatically sends and receives email to and from accounts in that pool on a steady daily schedule. Providers then see an account holding ordinary back-and-forth conversations, rather than one that goes from silent to hundreds of cold emails overnight — and that history is what builds the reputation your campaigns rely on.
+Warmup enrolls your account in a shared pool of other sending accounts. Your account automatically sends and receives email to and from accounts in that pool on a steady daily schedule. Providers then see an account holding ordinary back-and-forth conversations, rather than one that goes from silent to hundreds of cold emails overnight — and that history is what builds the reputation your sequences rely on.
 
 A new account takes about three weeks to warm fully. Its status in the `Email accounts` list tells you where it is:
 
@@ -37,11 +37,11 @@ Because Clay manages warmup on purchased accounts, those accounts don't show war
 
 ## Turning warmup on and off
 
-We recommend keeping warmup on at all times for every account you connect, including accounts that have been sending for a while.
+Turn warmup on only for accounts on secondary sending domains — domains you set up separately from your company's main domain. Don't warm accounts on your main domain: the `Enable email warming to improve deliverability` modal shows a `Do not warm your main domain` warning, because warming your main domain can harm its reputation.
 
-1.  Select `Campaigns` in the sidebar, then open `Email accounts`.
+1.  Select `Sequencer` in the sidebar, then open `Email accounts`.
 2.  Open the 3-dot menu on the account and select `Enable warming`. The option is there whenever warming isn't already running on the account.
-3.  In the `Enable email warming to improve deliverability` modal, the accounts are listed already checked. Select `Enable warming` to turn it on for everything still checked. Uncheck all of them and that same button becomes `Continue without warming`, which closes the modal and leaves the accounts as they are.
+3.  In the `Enable email warming to improve deliverability` modal, a `Do not warm your main domain` warning appears at the top, and the accounts are listed already checked. Select `Enable warming` to turn it on for everything still checked. Uncheck all of them and that same button becomes `Continue without warming`, which closes the modal and leaves the accounts as they are.
 
 To change how much warmup mail an account sends, open the same menu and select `Edit warmup frequency`, then set `Emails per day` to anything from 1 to 30. This option appears only once warming is active on the account.
 

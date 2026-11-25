@@ -47,6 +47,17 @@ To enable or disable auto-dedupe:
 
 **Note — simultaneous row inserts:** Auto-dedupe may not catch duplicates when rows with the same value are added at the same time — for example, when a bulk import, a batch webhook, or concurrent sends push rows within milliseconds of each other. Each insert is processed in its own transaction and is not aware of the other before both are committed to the table, so both can slip through. This is a known limitation. As a workaround, add a dedupe or filter step in your workflow just before any downstream push (such as a CRM or email sequencer) to catch any duplicates that slip through.
 
+### Why did my deduplicated table use more credits than its row count?
+
+If the same records are sent to a table again and again (for example, a webhook or other source that re-sends the same companies every night), the auto-dedupe option you choose decides whether you pay to enrich those records again:
+
+-   **Keep newest row:** The incoming row is kept and the existing row is deleted. The new row is a brand-new row: values from the deleted row, including enrichment results, are not copied over. Enrichment columns set to auto-run therefore run on the new row and charge credits again. In the settings panel, this option is described as "Any existing row will be deleted; enrichments will run on the new row."
+-   **Keep oldest row** (the default): The existing row is kept unchanged and the incoming duplicate is deleted before any enrichment runs on it, so the duplicate doesn't charge credits.
+
+The table's row count only includes the rows left after auto-dedupe, so it doesn't show how many times a record was re-sent and enriched again. For example, if a webhook sends `openai.com` five nights in a row to a table that dedupes on **Domain** with **Keep newest row**, the table shows one row for openai.com. An auto-run enrichment column that costs 1 credit per row has run five times on that domain and charged 5 credits, one per night.
+
+To check whether this is happening, open the **History** panel (bottom-right of the table) and select **Row deduplication** to see the rows auto-dedupe has deleted. To stop paying again for records that are already in the table, switch the table's Deduplication setting to **Keep oldest row**.
+
 ## Auto-run
 
 Auto-run controls whether enrichments fire automatically when rows are added or edited, keeping your table current. For complete documentation — including the run decision tree, table-level and column-level controls, "Keep existing results," the out-of-date indicator, the Update Existing Rows toggle, common scenarios, and best practices — see **[Auto-run](auto-run.md)**.

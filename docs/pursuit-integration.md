@@ -1,7 +1,7 @@
 ---
 title: Pursuit integration
 description: Build lists of U.S. public sector accounts, verify government contacts, and find public sector signals with Pursuit.
-last_synced: 2026-11-05T21:07:59.080Z
+last_synced: 2026-11-18T19:20:06.468Z
 ---
 
 # Pursuit integration
@@ -15,7 +15,7 @@ Pursuit is a data provider for the U.S. public sector, covering government organ
 1.  In a workbook, click `+ Add` at the bottom.
 2.  Search for `Pursuit` and select one of the two Pursuit sources, both listed under `Find`.
 3.  In the modal, you will be asked to `Select Pursuit account`.
-    -   Every Pursuit action runs on a Clay-managed account, so you don't need your own credentials. If you'd rather use your own Pursuit account, click `+ Add account` and enter your Pursuit API key. ([Learn more about managing integration accounts](https://university.clay.com/docs/managing-integration-accounts))
+    -   Every Pursuit action runs on a Clay-provided account, so you don't need your own credentials. If you'd rather use your own Pursuit account, click `+ Add account` and enter your Pursuit API key. ([Learn more about managing integration accounts](https://university.clay.com/docs/managing-integration-accounts))
 
 ### `Source` Search Pursuit's universe of US government entities
 

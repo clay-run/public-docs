@@ -6,11 +6,12 @@ description: Clay provides multiple ways to track and monitor run progress
   (including why action nodes fail with timeout errors, and how Repeat mode's "If an item fails" setting works), bulk re-run many workflow runs at once
   from the runs dashboard, set a row limit to control which rows are processed,
   manually trigger unrun enrichment cells, run enrichments on a specific subset
-  of rows, troubleshoot cells stuck in Queued status, recover action column cells
-  stuck in Queued status when the Stop button is grayed out, diagnose enrichments
-  that aren't triggering automatically, resolve persistent error messages by
-  clearing the browser cache, and troubleshoot slow cell loading when using
-  multiple tables in a workbook.
+  of rows, troubleshoot cells stuck in Queued status, cancel a queued write-back
+  action column, recover action column cells stuck in Queued status when the
+  Stop button is grayed out, diagnose enrichments that aren't triggering
+  automatically, resolve persistent error messages by clearing the browser
+  cache, and troubleshoot slow cell loading when using multiple tables in a
+  workbook.
 last_synced: 2026-04-26T01:40:34.620Z
 ---
 
@@ -130,13 +131,13 @@ Filter or select the runs you care about, choose how to restart them, and kick t
 
 1.  Open the **Runs** dashboard for your workflow.
 2.  Use the dashboard filters — for example, filter by **Failed** status or by time range — to scope to the runs you want to re-run, or select individual runs by checking them manually.
-3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run** in that bar.
-4.  Choose a restart mode:
-    -   **From where they failed** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
-    -   **From a specific node** — Each run restarts from a workflow step you choose. Useful when you want to resume from a particular point rather than only from the point of failure.
-    -   **From the top** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
+3.  A bulk actions bar appears at the top of the runs list when runs are selected. Click **Re-run from** in that bar to open the **Re-run options** dialog with a recommended starting point already chosen. To pick the starting point yourself, click the arrow next to **Re-run from** and choose **Trigger**, **Specific node**, or **Failed node** — the same dialog opens with that option selected. Nothing re-runs until you confirm in the dialog.
+4.  In the **Re-run options** dialog, choose where each run restarts:
+    -   **Failed node** — Each run restarts at its failed step. Steps that already completed successfully are not re-run, so no credits are spent repeating work that already succeeded.
+    -   **Run from specific node** — Each run restarts from a workflow step you choose in the dialog. Useful when you want to resume from a particular point rather than only from the point of failure.
+    -   **Run from trigger** — Each run restarts fresh from its original trigger. Runs that were created manually or via API (without a trigger) are excluded from this mode and will not be re-run.
 5.  Review the **preview** before confirming. The preview shows exactly how many new runs will be created and an estimated credit cost, so you can verify the scope before committing any credits.
-6.  Click **Confirm** to start the bulk re-run.
+6.  Click **Re-run [N] runs** (for example, **Re-run 12 runs**) to start the bulk re-run.
 
 **No duplicate work.** Bulk re-run deduplicates runs by record — if the same person or company appears in multiple selected runs, only one new run is created for them. The preview's run count already reflects this deduplication, so the number of runs created may be lower than the number you selected.
 
@@ -271,7 +272,7 @@ If cells remain Queued for an extended period, common causes include:
 
 -   **High concurrency in progress** — Clay runs many rows at once; if a large number are queued simultaneously, later rows wait while earlier ones complete. The queue will clear on its own.
 -   **External API rate limits** — Integrations such as OpenAI or HubSpot enforce per-minute request limits. For Clay's managed integrations (where Clay provides the API key), Clay handles this automatically and the queue resumes once the rate-limit window resets. If you are using your own API key, Clay may send requests faster than your account's tier allows — rows that exhaust the retry window return a **"Rate limit wait time exceeded"** error. To prevent this on enrichment columns that support it (such as HTTP API), configure the **Custom rate limit** setting on the column to match your provider's tier; see [Enrichments](enrichments.md) for details. For AI enrichments using a personal API key, see [AI tokens](ai-tokens.md).
--   **API quota exhausted** — If you've hit a quota ceiling (e.g., OpenAI, Google), new runs are blocked until the quota resets or is increased in the provider's dashboard.
+-   **API quota exhausted** — If you've hit a daily or hourly quota ceiling (e.g., a Marketo daily API limit, OpenAI, Google), rows are blocked from processing until the quota resets or is increased in the provider's dashboard. For **write-back action columns** — columns that push data to an external system such as a CRM or marketing platform — do not trigger a second run while the existing queue is active. The queued rows will process automatically once the quota resets; running the column again before that point creates duplicate queue entries, which causes the same rows to be written to the external system twice.
 -   **Auto-run settings** — If auto-run is enabled and triggering repeated re-runs, rows may accumulate in the queue unexpectedly. See [Auto-run](auto-run.md) for how to adjust auto-run and scheduled run behavior.
 -   **Column edited or stopped mid-run** — If a column's settings were changed while a run was in progress, or if a run was stopped partway through, some rows may remain stuck in Queued status and not resume on their own.
 
@@ -292,6 +293,15 @@ If cells remain Queued for an extended period, common causes include:
 3.  Remove the filter when the run finishes.
 
 > **Note:** **Run column → Run [N] empty or out-of-date rows** will not work here — queued rows are classified as "running," not as empty or stale, so that option shows 0 eligible rows and does nothing for this scenario. Use **Force run all [N] rows** instead.
+
+**If you need to cancel a queued write-back action column without stopping the whole table:** The Stop button stops all columns in the table at once. There is no column-level cancel or pause button for action columns. To clear the queue for one specific write-back column — such as Update Marketo, Update HubSpot, or another CRM or marketing platform action — without affecting other running columns:
+
+1.  Right-click the action column header and select **Duplicate column**. The duplicate is created with auto-run off and starts with no queued rows.
+2.  Delete the original column. Deleting the column removes all of its queued rows.
+
+The duplicate retains your column settings. When you're ready to run it again, trigger it manually or re-enable auto-run.
+
+> **Note:** If rows are queued because an API quota was exhausted, wait for the quota to reset before running the duplicate column. The same quota applies to the duplicate — running it before the quota resets will re-queue the rows but they will remain blocked until the quota window refreshes.
 
 **If action column cells are stuck in Queued status and the Stop button is grayed out:** The Stop button becomes active when there are active run records in the queue. If an action column — a column that pushes data to an external system such as a CRM or marketing platform (for example, Update Marketo or Update HubSpot) — shows cells in "Queued..." status but the Stop button in the run summary panel is grayed out, those cells' run records are no longer present. There is nothing for Stop to cancel, and force-running the column will not clear these cells either.
 

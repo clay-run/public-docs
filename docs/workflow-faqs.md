@@ -1,6 +1,6 @@
 ---
 title: Workflow FAQs
-description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, list handling, and how Workflows works with Audiences and tables."
+description: "Answers to common questions about Clay Workflows, including access and plans, run failures, costs and credit limits, pausing triggers, list handling, and how Workflows works with Audiences and tables."
 last_synced: 2026-11-10T19:03:47.302Z
 ---
 
@@ -48,7 +48,7 @@ A few errors have recognizable causes. A tool-not-found error usually means the 
 
 ### Can one workflow call another?
 
-Not from inside the graph — a workflow is started by its trigger rather than called by another workflow. Functions are the reuse mechanism: build the logic once as a function, then drop `Run function` into as many workflows as need it, and each one stays in sync with the single definition. The framing that tends to click is that functions are ingredients and workflows are recipes; you can put an ingredient into any number of recipes, just not a whole recipe into another recipe.
+Yes, through workflow functions. A workflow is started by its trigger, but you can build reusable workflow logic as a workflow function and call it as a step from any number of other workflows. Each calling workflow either follows the `Latest` published version of the function or is pinned to a specific version, and the calling workflow's run shows the function's steps as a nested trace. You can also call table functions from a workflow. See [Workflow functions](https://university.clay.com/docs/workflows#workflow-functions).
 
 There is one indirect route worth knowing about. A workspace admin or editor can expose a workflow as a routine under `Integrations` in workflow settings, including to `Claygent` — and a `Run Claygent` step can then reach it as a tool. It's a longer way around than a function, and the calling step is agentic rather than deterministic, so treat a function as the default and this as the exception.
 
@@ -98,6 +98,28 @@ The limit is one running total across the workflow's runs, so spend keeps buildi
 
 When a run reaches the limit, it fails, and opening it shows `The workflow paying for this run has reached its credit limit. A workspace admin can increase it.` For which runs count against the limit, see [Credit spend limits FAQ](https://university.clay.com/docs/credit-spend-limits-faq).
 
+### How do I pause a workflow so it stops running and spending credits?
+
+To stop a workflow without deleting anything, pause its triggers. Pausing is per trigger. There's no single switch that pauses a whole workflow, so pause every trigger that can start it. A paused trigger stays on the workflow with its settings intact, which suits a workflow you only need at certain times, like during an outreach push or around an event, and want to switch back on later.
+
+To pause a workflow trigger:
+
+1.  Open the workflow and select the trigger node on the canvas. Its triggers appear as cards in the side panel.
+2.  On the trigger's card, click the `⋮` menu and choose `Pause`.
+3.  The card's status badge changes from `Live` to `Paused`. Once every trigger on the node is paused, the node shows `paused` instead of `live`.
+
+Pausing a trigger also pauses any runs it started that are still in progress. Those runs stop where they are rather than being cancelled.
+
+These triggers can be paused: `New member in segment`, `Segment on a schedule`, `On a schedule`, and `On webhook call`. `Run manually` and `On CSV upload` don't have a `Pause` option because they only run when you start them. A `Clay table` trigger has no `Pause` option in the workflow's side panel either, because Clay table triggers are managed from the table rather than from the workflow.
+
+To turn a paused trigger back on:
+
+1.  On the trigger's card, click the `⋮` menu and choose `Resume`.
+2.  In the `Resume trigger?` dialog, decide whether to tick `Also resume all paused runs from this trigger`. Ticked, the runs that were paused continue from where they stopped and may use credits. Left unticked, those runs stay paused and only new runs start.
+3.  Click `Resume trigger`. The badge goes back to `Live`.
+
+If you won't need a trigger again, `Remove` in the same `⋮` menu deletes it instead of pausing it.
+
 ### Is every enrichment, source, and signal available in Workflows?
 
 The action library is at parity, so anything you can run as an enrichment in a table you can run in a `Run enrichment` step. Table data sources and signals are still being brought across, so a few aren't in Workflows yet, and which actions you see depends on your plan exactly as it does in a table.
@@ -106,4 +128,6 @@ When you need one that isn't, build that part where it does exist and meet the w
 
 ### Are waterfalls available in Workflows?
 
-Not as a step type — a `Run enrichment` step runs one action, so a waterfall's provider fallback isn't something you draw on the canvas. Where you need one, put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. That keeps the fallback logic in one governed place and available to your tables at the same time. See [Managed functions](https://university.clay.com/docs/managed-functions).
+Yes. Waterfalls are available in Workflows for every workspace that has Workflows turned on. To add one, click **+** below the step it should run after, choose **Enrich**, and in the enrichment panel either click the **Waterfalls** card on the **For you** tab or search for the data point you need, such as `Phone number`. To build your own provider sequence instead of a pre-built waterfall, click **New waterfall** in the same panel. See [Adding a waterfall in Clay Workflows](https://university.clay.com/docs/building-a-data-waterfall#adding-a-waterfall-in-clay-workflows) for the full steps.
+
+If you want the same waterfall shared between your workflows and your tables, you can still put it inside a function and call that function with `Run function`: the function runs the waterfall, and the workflow branches on whatever it returns. See [Managed functions](https://university.clay.com/docs/managed-functions).

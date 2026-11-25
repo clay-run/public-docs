@@ -170,6 +170,30 @@ To fix it, a Databricks admin on your side can:
 The Databricks `Workspace URL` field must be a full URL that starts with `https://` — for example `https://abc-123.456.azuredatabricks.net/` (Azure) or `https://abc-def456-g789.cloud.databricks.com/` (AWS). A hostname entered without `https://` (such as `abc-def456-g789.cloud.databricks.com/`) can't be reached, so the connection fails with the same generic error.
 
 If you've checked both causes and still see the error when adding a Databricks Service Principal connection, contact [Clay support](https://www.clay.com/support) and include roughly when you retried.
+### How do I tell when a row was last refreshed from Databricks?
+
+Clay does not surface a built-in per-row "last refreshed" timestamp for source data. There is no system column that records when a specific row was most recently pulled from Databricks.
+
+**Recommended approach — include a timestamp column in your SQL query**
+
+If your Databricks table has a column tracking when each record was last updated — such as `updated_at`, `last_modified`, or a similar field — include it in your SQL SELECT statement. That column becomes a regular column in your Clay table and shows exactly how fresh each row's Databricks data is.
+
+For example:
+
+```sql
+SELECT *, updated_at FROM my_schema.my_table
+```
+
+This is the most reliable way to diagnose timing mismatches between Databricks and Clay: compare the `updated_at` value on a row in Clay against what Databricks shows for the same record.
+
+**If your Databricks table has no timestamp column**
+
+Clay maintains two system timestamps on every row, available in the row detail panel:
+
+-   **Created At** — set once when the row is first inserted into the Clay table. This timestamp does not update when a subsequent source run refreshes the row's column values.
+-   **Updated At** — updated whenever any column on the row is written, by any source run or enrichment. Because enrichments and source refreshes both update this field, it cannot reliably isolate when the Databricks source specifically ran.
+
+For a run-level view of source activity, open the source column header and click **View Run History**. This shows a log of past runs — including status, rows added, and timestamps — but does not let you filter the table to show which rows a specific run affected.
 
 ### "Missing column data" error on Upsert Row
 
