@@ -174,7 +174,15 @@ OAuth connections are for business mailboxes on a domain you administer, through
 
 That lines up with what works for cold outbound anyway: a domain you control is what lets you set DNS records, spread sending across several mailboxes, and protect your reputation over time.
 
-### Will sequence emails show up in my Sent folder?
+### Can I connect a shared Outlook inbox to Sequencer?
+
+No. Clay Sequencer can't connect a Microsoft 365 shared mailbox (shared inbox). When you connect with `Outlook (OAuth)`, you sign in with a Microsoft account, and Clay sends from that signed-in account's own address. Connecting a shared inbox with just its email address and password isn't the path either: Outlook retired IMAP access in 2022, so `Manual SMTP setup` points Outlook and Office 365 hostnames back to Microsoft OAuth.
+
+Sending as a shared mailbox through another user's connection isn't supported either: a connected Outlook account always sends from its own address, and there's no option to pick a different "from" address.
+
+To send from Sequencer, connect each sender as its own Microsoft 365 mailbox that can sign in, using `Outlook (OAuth)` as described in [Connect with Microsoft OAuth](#connect-with-microsoft-oauth).
+
+### Will campaign emails show up in my Sent folder?
 
 For accounts connected with Google or Microsoft OAuth, yes — sequence sends land in the mailbox's `Sent` folder alongside everything else you send. For SMTP accounts it depends on the mail server, and most don't copy messages sent over SMTP into `Sent`.
 
