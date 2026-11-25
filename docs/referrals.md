@@ -25,7 +25,7 @@ Clay's workspace referral program allows you to invite others to join and earn c
 
 To access and share your referral link:
 
-1.  Click on your profile picture in the top-right corner and select **Settings**.
+1.  Click on your profile picture in the bottom-left corner of the sidebar and select **Settings**.
 2.  Navigate to **Referrals** in the sidebar.
 3.  Copy your unique referral link displayed in the Referrals section.
 4.  Share the link with friends, colleagues, or teams who might benefit from using Clay.

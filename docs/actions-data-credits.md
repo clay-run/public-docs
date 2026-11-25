@@ -285,7 +285,7 @@ Credits are added to your balance immediately upon purchase. Top-ups do not chan
 
 To downgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plan & billing` and click `Switch plan` (or `Upgrade` if you're currently on a free plan).
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
