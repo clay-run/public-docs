@@ -343,6 +343,24 @@ Run new workflows on 10–20 records to validate results before scaling to avoid
 
 Actions measure platform work (what you do). Data Credits measure data purchases (what you buy). Every enrichment typically consumes both—1 Action for the platform work, plus variable Data Credits for the data itself.
 
+### Where can I find a complete list of Clay's data providers?
+
+The complete, up-to-date list of all Clay data providers is available at [clay.com/integrations](https://clay.com/integrations). You can filter the list by:
+
+-   **Integration category** — the type of information a provider returns, such as People Data, Contact Data, Company Data, or AI.
+-   **Data point category** — the specific data field the provider covers, such as Email, Phone, Location, or Job.
+
+For security and compliance documentation — including Clay's Data Processing Agreement (DPA) and Standard Contractual Clauses (SCCs) — visit the [Clay Trust Center](https://trust.clay.com).
+
+### What's the difference between People Data and Contact Data in Clay's integrations catalog?
+
+In Clay's integrations catalog, **People Data** and **Contact Data** are two of the **Integration category** filter tags that describe the type of information a provider returns:
+
+-   **People Data** — information about a person or their professional profile, such as job title, work history, skills, and company affiliation.
+-   **Contact Data** — information used to identify, match, or reach a person, such as email addresses and phone numbers.
+
+The two categories can overlap — many providers are tagged with both. These are product taxonomy labels, not GDPR classifications. Both People Data and Contact Data can contain personal data under privacy regulations. For a compliance or legal review, evaluate the specific data points and providers you plan to use rather than relying on the category labels alone.
+
 ### Why do Data Credits cost different amounts?
 
 Unlike Actions (always 1 per enrichment), Data Credits reflect the real-world value of each data point. You'll see the exact cost displayed next to each enrichment option in the product.
