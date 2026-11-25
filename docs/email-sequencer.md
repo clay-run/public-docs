@@ -82,7 +82,7 @@ Connect and enable warmup on your sender account as early as possible so it's re
         -   `Update send limit`: Change the daily number of emails the account can send per day
         -   `Update sender variables`: Change the sender variable values for the account
     -   **Searching and bulk actions:** Use the **search bar** and **Filter** control in `Sender accounts` to quickly find accounts by email address or name. Filter by account type (Google OAuth, Outlook, or SMTP) or status (Ready, Warming, Not warming, or Auth error). Select multiple accounts to bulk-enable warmup or remove them from the campaign at once.
-    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty.
+    -   **Assign sender account field to lead (optional):** At the bottom of the `Sender accounts` section, you can optionally map a column to assign a specific sending account to each lead. When this field is set, Clay uses the email address in that column as the sender for each lead — that address must match one of the sender accounts already configured in the campaign. If the mapped column contains an email that is not a configured sender account, that lead's row in the `Sync lead data to campaign` column will fail with a validation error when it runs. Leads where the column is blank (no value) are distributed evenly across all configured sender accounts. If you are not deliberately routing leads to specific senders, leave this field empty. Campaigns built from an Audience segment use the **Sender account assignment** setting instead — see [How do I assign each lead to a specific sender or rep in a campaign built from an Audience segment?](#how-do-i-assign-each-lead-to-a-specific-sender-or-rep-in-a-campaign-built-from-an-audience-segment)
 6.  Adjust your `Schedule settings`:
     -   `Timezone`: Select the timezone to send from (we recommend matching your prospects').
     -   `Days of the week`: Choose which days emails are sent.
@@ -458,6 +458,32 @@ If your emails are going out from an unexpected account, the most likely cause i
 2. Scroll to the bottom and find **Assign sender account field to lead (optional)**.
 3. Click the field and select the column in your source table that contains the sending account's email address for each lead. The values in that column must match one of the sender accounts already configured in the campaign.
 4. Click **Save settings**. Future sends will use each lead's designated sender account. Leads whose column value is blank are distributed evenly across all configured accounts.
+
+### How do I assign each lead to a specific sender or rep in a campaign built from an Audience segment?
+
+Sequencer campaigns that use an Audience segment as their lead source have a **Sender account assignment** setting in the campaign's sender account settings. It controls which sender account (inbox) each lead is sent from, and has three options:
+
+-   **No per-lead assignment**: Leads are distributed evenly across all sender accounts selected in the campaign.
+-   **Assign sender directly to each lead**: Pick a field that holds the exact sender email address to use for each lead.
+-   **Round robin rep assignment to lead**: Pick a field that holds a rep's email address. Clay spreads that rep's leads across the rep's email accounts.
+
+**The sender assignment field must contain an email address.** The field dropdown lists every email or text field on the segment — you don't need a special Clay record owner field. If your CRM stores the lead owner as an ID rather than an email (for example, the Salesforce record owner is stored as a Salesforce user ID like `005...`), that ID won't match any sender account or Clay user, so it can't be used as-is. Instead, add a field that holds the owner's email address to the records in your Audience — for example, a Salesforce formula field that returns `Owner.Email` — and select that field in the dropdown.
+
+Which email address the field should contain depends on the option you choose:
+
+-   **Assign sender directly to each lead:** the email address of a sender account that is connected and selected in this campaign. If a rep sends from an inbox on an alternate domain, use that inbox's address, not the rep's primary email. Matching ignores capitalization and leading or trailing spaces.
+-   **Round robin rep assignment to lead:** the email address the rep uses to log in to Clay. Each of the rep's inboxes must have that rep assigned and be selected in the campaign. Clay picks one of the rep's inboxes for each lead — the split across inboxes is roughly even rather than a strict rotation — and each lead stays with the same inbox for the whole sequence.
+
+**Round robin rep assignment works only with inboxes purchased through Clay.** Assigning a rep to an inbox is supported for SmartSender accounts bought in Clay only (see [Buying email accounts](buying-email-accounts.md)). Inboxes you connected yourself through Google OAuth, Microsoft Outlook OAuth, or SMTP can't have a rep assigned, so they can't be part of a rep's round robin. If a rep sends from their own connected Google or Outlook inbox, use **Assign sender directly to each lead** for those leads, with the exact inbox address in the field.
+
+**Leads without a matching sender:** The **Skip lead if sender is not present in selected email accounts** toggle controls what happens when a lead's field has a value that doesn't match a selected sender account (or a rep with selected inboxes):
+
+-   **On:** the lead is not enrolled in the campaign.
+-   **Off:** the lead is assigned a random sender from the campaign's selected accounts.
+
+Leads whose sender assignment field is empty use the campaign's default distribution across all selected sender accounts, whether the toggle is on or off. We recommend turning the toggle on and testing a few records before launch, so leads without a matching sender aren't sent from an unexpected inbox.
+
+**Example:** Three SDRs each own 3–5 inboxes purchased through Clay. Assign each inbox to its SDR, select all the inboxes in the campaign, choose **Round robin rep assignment to lead**, and pick the segment field that holds each lead's owner email (the SDR's Clay login email). Each SDR's leads are then spread across that SDR's inboxes.
 
 ### Why are some leads failing with "Sender email address is not a configured sender account in this campaign"?
 
