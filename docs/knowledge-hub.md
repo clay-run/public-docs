@@ -67,6 +67,26 @@ To disconnect an app, open it from `Add from files or apps`, open the `Connectio
 
 As a workspace admin, you can ask our global agent to update your `Knowledge Hub`, or select `Refine your context` in the `Keep building` panel to start a chat where it asks about your business. Each change it proposes shows up in the chat as a suggestion you can `Accept` or `Dismiss`, and it waits under `Review suggestions` too. Nothing changes until it’s accepted. If five suggestions are already waiting, accept or dismiss one before asking for another.
 
+## Reviewing suggestions in ChatGPT and other AI apps
+
+When you use [Clay in ChatGPT](https://university.clay.com/docs/using-clay-in-chatgpt), or another AI app connected to Clay that supports Clay's widgets, a `Knowledge Hub` suggestion can show up right in the chat. This happens when Clay proposes a change to your `Knowledge Hub` from the chat, or when you ask to see a suggestion that's waiting.
+
+The suggestion widget shows:
+
+-   The suggestion's title, and the section and entry it changes, written as `Section › Entry`.
+-   The change itself, with removed lines and added lines. If the suggestion renames an entry, the old title shows as a removed line and the new title as an added line.
+-   A `View` link that opens the affected section in your `Knowledge Hub` in Clay.
+
+To review a `Knowledge Hub` suggestion in the chat:
+
+1.  Read the change in the widget.
+2.  Choose `Accept` to write the change into your `Knowledge Hub`, or `Dismiss` to leave it as it is.
+3.  The widget then shows the suggestion's status: `Accepted`, `Dismissed`, or `Out of date`.
+
+Only workspace admins can accept or dismiss `Knowledge Hub` suggestions. Anyone else sees the change without the buttons, and the message `Only admins can accept or dismiss suggestions.`
+
+If the suggestion or your `Knowledge Hub` changed after the widget loaded, `Accept` fails with `The suggestion or Knowledge Hub changed. Review it again before accepting.` The widget then refreshes, so review the updated change before you accept it.
+
 ## Using the Clay CLI
 
 The Clay CLI, our command-line tool, can read your `Knowledge Hub` and work with its suggestions from a terminal or a coding agent. To set it up, see [Installing Clay Plugin (API & CLI)](https://university.clay.com/docs/clay-api-cli). Its commands sit under `clay knowledge-hub business-context`:
