@@ -122,7 +122,7 @@ Clear wrong hashed email values before you use Enhanced matching. By default, En
 To clear the hashed email fields for the affected contacts:
 
 1.  In **People**, add a filter on the field you want to clear (for example, `Hashed email 1`) with the operator **is not empty**, then save it as a segment.
-2.  Create a workflow that runs on that segment and has an Audiences write step mapping the hashed email field to a blank value, with that field's write rule set to **Always**. You can ask the global agent to build it for you — for example: *"Create a workflow for my Hashed email cleanup segment that clears the Hashed email 1 field on every person."*
+2.  Create a workflow that runs on that segment and has an Audiences write step mapping the hashed email field to a blank value, with that field's write rule set to **Always write**. You can ask the global agent to build it for you — for example: *"Create a workflow for my Hashed email cleanup segment that clears the Hashed email 1 field on every person."*
 3.  Review the workflow, then run it on the segment.
 4.  Open a few of the contacts in Audiences and check that the hashed email field is now empty.
 

@@ -10,7 +10,7 @@ Creator data and outreach platform.
 
 ## Influencer Club Overview
 
-The Influencer Club integration in Clay provides access to creators’ verified contact information and social media profiles across popular platforms like TikTok, Instagram, YouTube, OnlyFans, and more.
+The Influencer Club integration in Clay provides access to creators' verified contact information and social media profiles across popular platforms like TikTok, Instagram, YouTube, OnlyFans, and more.
 
 ### Setting up Influencer Club and Clay
 
@@ -21,9 +21,17 @@ You can connect and pay for Influencer Club enrichments in two options.
 
 ## **Available Actions with the Influencer Club Integration**
 
+### `Action` **Find social profiles by creator email**
+
+Use this action to find a creator's social media profile URLs from their email address. Returns profile links for Instagram, TikTok, YouTube, Twitch, OnlyFans, Linktree, and Patreon.
+
+**Setup Inputs**
+
+-   **Email address**: Enter the creator's email address.
+
 ### `Action` **Find Creator Personal Email**
 
-Use this action to retrieve a creator’s personal email address based on their existing profile URL.
+Use this action to retrieve a creator's personal email address based on their existing profile URL.
 
 **Setup Inputs**
 
@@ -31,16 +39,34 @@ Use this action to retrieve a creator’s personal email address based on their 
 
 ### `Action` **Find Creator Phone Number**
 
-Use this action to retrieve a creator’s phone number based on their profile URL.
+Use this action to retrieve a creator's phone number based on their profile URL.
 
 **Setup Inputs**
 
--   **Profile URL**: Enter the creator’s profile URL on a supported social media platform to find their phone number.
+-   **Profile URL**: Enter the creator's profile URL on a supported social media platform to find their phone number.
 
-### `Action` **Find Social Profiles**
+### `Action` **Find all social profiles from one**
 
-Use this action to find all social media profiles associated with a creator based on an existing profile URL.
+Use this action to find all social media profiles associated with a creator based on an existing profile URL, username, or Influencer Club user ID.
 
 **Setup Inputs**
 
 -   **Profile URL**: Enter the existing profile URL of the creator to pull other associated social media profiles.
+
+### `Action` **Enrich creator details**
+
+Use this action to enrich a creator's profile with audience and content data, including follower count, bio, linked URLs, and recent posts.
+
+**Setup Inputs**
+
+-   **Social platform**: Select the platform (Instagram, TikTok, or YouTube).
+-   **Profile URL / Username / User ID**: Enter the creator's profile URL, username, or Influencer Club user ID for the selected platform.
+
+### `Action` **Find lookalike creator profiles**
+
+Use this action to find up to 10 creators similar to a given profile, based on niche, engagement rate, and content style.
+
+**Setup Inputs**
+
+-   **Social platform**: Select the platform (Instagram, TikTok, or YouTube).
+-   **Profile URL / Username / User ID**: Enter the creator's profile URL, username, or Influencer Club user ID for the selected platform.

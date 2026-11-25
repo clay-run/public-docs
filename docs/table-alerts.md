@@ -96,11 +96,11 @@ By default, alerts appear inside the `Table alerts` panel. You can also receive 
 
 ### **Slack notifications**
 
-1.  Go to your `Workspace Settings`.
-2.  Connect your Slack workspace to Clay's delivery system (workspace admin access required). This connection uses a separate Slack app called **Clay Alerts Bot**, not the **Clay** app used for Slack actions in tables. If your Slack workspace restricts app installs, your Slack admin must approve **Clay Alerts Bot** separately. See [Clay vs. Clay Alerts Bot](slack-integration-overview.md#clay-vs-clay-alerts-bot-two-separate-slack-apps).
+1.  Go to **Settings → Workspace** and scroll to the **Notifications** section ("Connect Slack to your workspace"). There is no separate **Alerts** page in Settings.
+2.  Click **Connect to Slack** and authorize in Slack. Only workspace admins can do this; other members see the button disabled with the message *"Only workspace admins can configure notifications. Contact your admin to set this up."* This connection uses a separate Slack app called **Clay Alerts Bot**, not the **Clay** app used for Slack actions in tables, so a Slack account listed in **Settings → Connections** does not count. If your Slack workspace restricts app installs, your Slack admin must approve **Clay Alerts Bot** separately. See [Clay vs. Clay Alerts Bot](slack-integration-overview.md#clay-vs-clay-alerts-bot-two-separate-slack-apps).
 3.  Return to the `Table alerts` panel.
-4.  Click `Connect Channel`.
-5.  Select the Slack channel where you want to receive alerts.
+4.  Next to **Slack alerts**, click `Connect`. If you see *"Slack is not connected for this workspace,"* step 2 hasn't been completed for this Clay workspace yet.
+5.  Enter the ID of the Slack channel where you want to receive alerts. To find it, open the channel in Slack and select **View channel details**; the channel ID is at the bottom of the dialog. The Slack alerts bot must be a member of the channel. If Clay shows *"Bot is not a member of this channel. Please invite the bot to the channel."*, invite the bot to that channel in Slack and try again.
 6.  Choose your notification frequency:
     -   **Immediately** (default) — alerts sent to Slack as they trigger
     -   **Daily digest** — a single message per day with all alerts

@@ -23,7 +23,7 @@ We'll cover how to connect Clay to Forager, then we'll go over each action that 
 1.  While in a Clay table, click `Add enrichment` and search for `Forager`.
 2.  Under `Integrations`, select one of the Forager options.
 3.  In the modal, you will be asked to `Select Forager account`.
-    -   If you have your own account, click `+ Add account` and go through authentication. Otherwise, use the Clay-provided account.
+    -   If you have your own account, click `+ Add account`. Enter your **Forager Account ID** as the username and your **Forager API key** as the password. Your Account ID is the number that appears in your Forager API endpoint URL — for example, `1904` in `https://api-v2.forager.ai/api/1904/...`. Otherwise, use the Clay provided key.
 
 ### `Action` Find mobile phone number
 
@@ -35,11 +35,20 @@ The **Find mobile phone number** action finds a person's mobile phone number fro
 
 First, you can use either the Clay-managed Forager account or your own account.
 
-If you use the Clay-managed Forager account you will be charged at 10 credits per enriched cell. For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
+If you use the Clay-managed Forager account, the credit cost per enriched cell for the **Find mobile phone number** action depends on the `Quality` setting you choose and on whether your workspace is on a legacy plan or a modern plan. The table below shows the credits charged per enriched cell:
+
+| Quality | Legacy plans | Modern plans |
+| --- | --- | --- |
+| Highest quality (default) | 10 credits | 8 data credits |
+| Most coverage | 7 credits | 5 data credits |
+
+For more information on how Clay credits work, please refer to [this guide](https://www.clay.com/university/lesson/clay-credits-overview).
 
 **Step 2: Enter optional and required setup inputs**
 
 Please input the contact's **Professional URL** (their LinkedIn profile URL) to find their mobile phone number.
+
+Optionally, choose a **Quality** for the Find mobile phone number action: `Highest quality` (the default) or `Most coverage`, which returns more numbers at a lower confidence.
 
 **Step 3 (Optional): Select Auto-update**
 
@@ -119,3 +128,10 @@ Select which data from the enrichment you'd like to add as columns to your table
 
 -   **Auto-update**
 -   **Only run if:** The enrichment will only run if conditions are met. ([Learn more about conditional formulas here!](https://www.clay.com/university/lesson/ai-formulas-conditional-runs-clay-101))
+
+## Using Forager via HTTP API column
+
+If you call Forager's API directly through a Clay **HTTP API** column instead of the native Forager integration, two things must be correct for the request to succeed:
+
+1.  **Pass the professional profile slug, not the full URL.** The `linkedin_public_identifier` request body field expects the identifier only — the portion after `/in/` in the profile URL. For example, pass `doctor-cash-461a3b20`, not the full profile URL. To extract the slug automatically, add a formula column that pulls the text after the last `/in/` in the profile URL and strips any trailing slash, then map that formula column to `linkedin_public_identifier` in the HTTP API body.
+2.  **Match the Account ID in the endpoint path to your API key.** The Forager API endpoint includes your Account ID in the URL path: `https://api-v2.forager.ai/api/{accountId}/datastorage/...`. If this number does not match the account your API key belongs to, the API returns a 404 "Not found" error.

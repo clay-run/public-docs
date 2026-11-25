@@ -1,7 +1,7 @@
 ---
 title: Clay MCP in ChatGPT
 description: Connect the Clay MCP to ChatGPT, sign in to your workspace, and see what you can build and run from a chat on your plan.
-last_synced: 2026-11-19T07:40:14.942Z
+last_synced: 2026-11-24T06:21:11.473Z
 ---
 
 # Clay MCP in ChatGPT
@@ -88,7 +88,7 @@ Build and edit campaign sequences in Sequencer, Clay's email outreach tool. You 
 
 ### Signals
 
-Create and manage signals, which watch your accounts and contacts for changes such as job changes, new hires, and funding news. You can also edit, pause, resume, or delete a signal.
+Create and manage signals, which watch your accounts and contacts for changes such as job changes, new hires, and funding news. You can also edit, pause, resume, or delete a signal. Signals are available on every paid plan except Flex, and during a trial.
 
 -   _"Watch our target accounts for funding news."_
 

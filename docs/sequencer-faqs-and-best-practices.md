@@ -151,7 +151,7 @@ Leads enrolled after your fix pick up the corrected data. To reach an already-en
 
 ### How do I send someone a second sequence?
 
-Build a separate campaign and enroll them there — a lead can run through a given campaign's sequence only once. To control the gap between one sequence and the next, set a `Cooldown window` on each campaign and keep `Trigger cooldowns` on. A new campaign starts with no cooldown window, so until you set one nothing prevents the same person being live in two campaigns at once.
+Build a separate campaign and enroll them there — a lead can run through a given campaign's sequence only once. To control the gap between one sequence and the next, set a `Cooldown window` on each campaign and keep `Trigger cooldowns` on. A new campaign starts with `Cooldown window` set to `30 days`. Older campaigns that never had a window saved have no cooldown, so until you set one on those, nothing prevents the same person being live in two campaigns at once.
 
 As a rule of thumb, wait a couple of months before sequencing the same person again, and only when the offer is genuinely different from the one they didn't respond to.
 
@@ -161,10 +161,10 @@ A re-engagement sequence in Sequencer is a separate segment-based campaign that 
 
 1.  In Audiences, build the People segment for your re-engagement campaign. To surface leads who haven't been in a campaign recently, add the `Campaign statuses activity` filter with `not in the last` and set it to `30` days.
 2.  Create a new campaign and attach that segment.
-3.  In `Lead setup`, click the pencil on the `Exclusions` row to open `Configure exclusions`, and set `Cooldown window` to `30 days` (or `Custom`, for any number of days up to 365). The cooldown skips anyone enrolled in another of your workspace's campaigns within that window.
+3.  In `Lead setup`, click the pencil on the `Exclusions` row to open `Configure exclusions`, and check that `Cooldown window` is set to `30 days`, the default for a new campaign (or choose `Custom`, for any number of days up to 365). The cooldown skips anyone enrolled in another of your workspace's campaigns within that window.
 4.  Launch the campaign. Clay checks the attached segment for leads to enroll when you launch it and then once a day, so leads are enrolled automatically as their rest period ends and they qualify.
 
-Neither setting looks at individual email sends. The `Cooldown window` counts from when a lead was last enrolled in a campaign, and the `Campaign statuses activity` filter looks for any campaign status event (such as enrolled, paused, or stopped) within the window. A new campaign starts with `Cooldown window` set to `None`, so set it before you launch.
+Neither setting looks at individual email sends. The `Cooldown window` counts from when a lead was last enrolled in a campaign, and the `Campaign statuses activity` filter looks for any campaign status event (such as enrolled, paused, or stopped) within the window. A new campaign starts with `Cooldown window` set to `30 days`, so check it matches your rest period before you launch.
 
 ## Troubleshooting
 

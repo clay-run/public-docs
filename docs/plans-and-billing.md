@@ -2,7 +2,7 @@
 title: Plans & billing
 description: We'll walk through each of our pricing plans and information around
   billing your workspace.
-last_synced: 2026-04-26T01:40:29.319Z
+last_synced: 2026-11-24T08:11:25.411Z
 ---
 
 # Plans & billing
@@ -22,7 +22,7 @@ This separation gives you transparency and control over exactly what you're payi
 
 ### AI usage
 
-Every AI prompt counts as **one action**. Data credits are consumed based on the model you select—Clay offers both fixed and variable AI pricing. For details on how AI pricing works, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
+Every AI prompt counts as **one action**. The exception is Classify, which sorts records into categories you define: while it's free for a limited time during alpha, a Classify run doesn't count as an action or use data credits. Data credits are consumed based on the model you select—Clay offers both fixed and variable AI pricing. For details on how AI pricing works, see our guide on [how AI is priced](https://university.clay.com/docs/ai-pricing).
 
 For more details on actions and data credits, see our comprehensive guide on [actions and data credits](https://www.clay.com/university/guide/actions-and-data-credits).
 
@@ -30,7 +30,7 @@ For more details on actions and data credits, see our comprehensive guide on [ac
 
 To upgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  In the left sidebar, navigate to `Plans & billing`, then click `Switch plan`.
 3.  Select the plan you want to upgrade to and review the details.
 4.  Confirm your selection by clicking `Review change → Continue to payment`.
@@ -39,10 +39,11 @@ Your new plan will activate immediately, and any applicable charges will be appl
 
 **How upgrade billing works:**
 
--   Plan upgrades are **not prorated** — you pay the full price of the new tier immediately, not a partial amount for remaining days in your current cycle.
+-   Upgrades take effect immediately, and your billing cycle resets to the date of the upgrade.
 -   You receive the **full** Actions and Data Credits for your new plan right away.
--   Unused Actions from your previous plan are not carried over (Actions reset each billing cycle and do not roll over).
--   Your existing unused Data Credits are preserved when you upgrade.
+-   **Self-serve upgrades are prorated:** if you're on a paid self-serve plan that is charged automatically, the first invoice of your new plan includes a credit for the unused Actions and Data Credits from your current billing period. See [Is upgrading my plan prorated?](#is-upgrading-my-plan-prorated) for how the credit is calculated.
+-   Unused Actions never carry over to the new plan — on a prorated upgrade, their value is credited to your invoice instead.
+-   On a prorated upgrade, your Data Credit balance is reset to your new plan's allotment — unused credits are credited to your invoice rather than carried over.
 
 ### Free plan
 
@@ -91,7 +92,7 @@ When your 14-day trial ends, your workspace automatically moves to the Free plan
 
 To downgrade your Clay workspace plan:
 
-1.  Click your profile picture in the top-right corner, then select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar, then select `Settings`.
 2.  Navigate to `Plans & billing` and click `Switch plan`.
 3.  Choose the plan you'd like to downgrade to and confirm your selection.
 
@@ -105,7 +106,7 @@ Clay subscriptions **auto-renew by default** — if you do not cancel before you
 
 To cancel your Clay subscription:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plan & billing`.
 3.  Click the `Plan options` dropdown and select `Cancel plan`.
 
@@ -136,7 +137,7 @@ For instructions on deleting tables and permanently removing them from Trash, se
 
 To update your billing address, payment method, or billing email:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  In the sidebar, navigate to `Plans & billing`.
 3.  Click the `Edit` dropdown.
     -   Select `Edit billing info...` to update your name, billing email, and country. If your billing address is in the United States, this modal also lets you edit your address, city, state, and ZIP code.
@@ -181,11 +182,32 @@ For more details, see our guide on [actions and data credits](https://www.notion
 
 ### Is upgrading my plan prorated?
 
-No. Plan upgrades are not prorated. When you upgrade to a higher tier, you are charged the full price for the new plan immediately — not a partial amount for remaining days in your current billing cycle. In return, you receive the **full** Actions and Data Credits for your new tier right away, not just the incremental difference over your current plan.
+Yes, for self-serve plans. When you upgrade a paid self-serve plan in the middle of a billing period — for example, from Launch to Growth, or to a higher Actions or Data Credits tier — Clay applies a credit to the first invoice of your new plan for the unused Actions and Data Credits from your current billing period. You don't lose the value of Actions you already paid for, even if you upgrade only to get more Data Credits.
 
-Unused Actions from your previous plan are not refunded or carried over (Actions reset each billing cycle and do not roll over). Your existing unused Data Credits are preserved when you upgrade.
+**Who gets a prorated upgrade credit:** Monthly and annual self-serve paid plans (including legacy plans) that are charged automatically and have a paid latest invoice. No prorated credit is applied when:
+
+-   You upgrade from the Free plan or a trial.
+-   You upgrade to or from an Enterprise plan, or your subscription is paid by invoice.
+-   You switch from an annual plan to a monthly plan.
+-   The new plan doesn't cost more in total than your current plan.
+
+**How the upgrade credit is calculated:**
+
+-   **Unused Data Credits:** your remaining Data Credit balance, counted up to one billing period's credit allotment of your current plan, multiplied by your current plan's price per credit.
+-   **Unused Actions:** your remaining Actions for the current billing period, multiplied by your current plan's price per Action. Plans with uncapped or unpriced Actions don't receive an Actions credit.
+-   **Cap:** the credit can't reduce your new plan's first invoice below $1. On annual plans, the credit is also capped at the unused share of your current contract period multiplied by your current subscription price (base plan plus Actions).
+
+For example, if your current Actions tier costs $200 per month for 40,000 Actions (0.5 cents per Action) and you have 33,000 Actions left when you upgrade, the first invoice of your new plan is reduced by $165 for unused Actions (33,000 × $0.005), plus the value of any unused Data Credits.
+
+**What happens to your balance after a prorated upgrade:**
+
+-   You receive the **full** Actions and Data Credits for your new plan right away, not just the incremental difference over your current plan.
+-   Your Data Credit balance is reset to your new plan's allotment. This includes rolled-over plan credits, one-time top-ups, and referral credits — only the unused credits up to one billing period's allotment are credited to your invoice, and the rest of the balance is not carried over. If you have a large balance (for example, from a top-up), consider spending it before you upgrade.
+-   Unused Actions from your previous plan don't carry over; their value is credited to your invoice instead.
 
 Upgrading also resets your billing cycle to the date of the upgrade — for example, if you upgrade on the 15th, your plan will renew on the 15th of the following month.
+
+If you only need more Data Credits for the current billing period, you can buy a one-time top-up without changing your plan — see [What if I need more actions or data credits?](#what-if-i-need-more-actions-or-data-credits).
 
 If you're unsure whether you need a higher tier, check your current usage in `Settings` → `Usage` to see how many Actions and Data Credits you've consumed this billing cycle before committing to an upgrade.
 
@@ -210,7 +232,7 @@ Each fully enriched record typically costs 6-20 data credits (including company 
 
 There is no minimum contract commitment — you can cancel at any time. To cancel:
 
-1.  Click your profile picture in the top-right corner and select `Settings`.
+1.  Click your profile picture in the bottom-left corner of the sidebar and select `Settings`.
 2.  Navigate to `Plans & billing`.
 3.  Click `Cancel plan` and follow the prompts to confirm.
 

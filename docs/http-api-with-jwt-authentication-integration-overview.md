@@ -90,6 +90,12 @@ Standard HTTP API attaches static, pre-stored headers (like an API key or a perm
 
 Clay automatically refreshes the token approximately every 55 minutes. No manual action is needed when a token expires.
 
+### Why am I still getting a 401 error? Shouldn't Clay fetch a new token?
+
+Not right away. A 401 response does not trigger a token refresh. The token refreshes on a schedule: Clay requests a new JWT 5 minutes before the token's `expires_in` runs out, so roughly 55 minutes into a 1-hour token's lifetime. Until that scheduled refresh, Clay keeps using the cached token, and requests that return a 401 will continue to fail.
+
+If the 401 errors persist after the next refresh window, check that the credentials and token endpoint saved in your JWT account are still valid, then rerun the affected rows.
+
 ### What if the token is nested inside the response JSON?
 
 Use dot-notation in the `Location of JWT token in auth response` field. For example, if the token endpoint returns `{"data": {"access_token": "eyJ..."}}`, enter `data.access_token`.

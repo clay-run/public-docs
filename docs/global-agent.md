@@ -81,15 +81,21 @@ See [Knowledge Hub](https://university.clay.com/docs/knowledge-hub) for what liv
 
 ### Saving a workspace skill from a chat
 
-You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires a Workspace Admin.
+You can ask the global agent to save what you worked out in a chat as a workspace skill — for example, “save this as a skill.” Saving a workspace skill from a chat requires the `Admin` or `Editor` role in the workspace.
 
--   **Workspace Admins:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
--   **Everyone else:** the global agent doesn’t save the skill. It tells you to ask a Workspace Admin to add it.
+-   **Admins and Editors:** the global agent saves the skill with a name, a description, and Markdown instructions, then tells you the exact name it was saved under.
+-   **Without access:** if Clay refuses the save, the global agent doesn’t save the skill. It tells you to ask a Workspace Admin for access to Clay’s agent.
 -   **Drafts:** anyone can ask for a skill draft. The global agent shows the draft as formatted text in the chat and doesn’t save it.
 
 A saved workspace skill shows up when you type `$` or `/` in the message box as soon as the run finishes, without reloading the page. If a skill with that name already exists, the new skill is saved under the same name with `-2`, `-3`, and so on added to the end, and the global agent tells you the name it used.
 
 Saving a skill from a chat stores the Markdown instructions only. To upload a skill folder with reference files, scripts, or other assets, use the `Agent skills` page in workspace settings.
+
+### Who can manage workspace skills
+
+Workspace Admins and Editors can create, update, and delete workspace skills — from a chat with the global agent, on the `Agent skills` page in workspace settings, or by adding a skill from the Clay marketplace. A workspace skill saved by any Admin or Editor is available to everyone in the workspace who uses the global agent.
+
+If you open a skill link from the Clay marketplace without Editor access, Clay shows `Editor access required` instead of adding the skill. Ask a Workspace Admin to give you editor access, then open the link again.
 
 ## Permissions and approvals
 
@@ -116,6 +122,18 @@ With `Ask for approval`, the global agent stops and shows you an approval card b
 -   Creating, changing, pausing, resuming, or deleting a signal.
 -   Archiving a segment, deleting a segment field, or deleting a workflow, a workflow alert, or a Claygent.
 -   Accepting or dismissing a suggested change to your Knowledge Hub.
+
+### Why an approval card says "It may change data outside Clay."
+
+A workflow run the global agent asks to start runs every step for real, including steps that write to other tools. When the run includes a step that may change data outside Clay, the approval card adds the sentence `It may change data outside Clay.` Approving that card lets those steps run.
+
+The global agent's approval card counts these workflow steps as ones that may change data outside Clay:
+
+-   An HTTP call that does more than read, such as a `POST`, `PUT`, `PATCH`, or `DELETE` request.
+-   An action that writes to another tool — for example, one that creates, updates, deletes, sends, or enrolls records, such as creating a CRM record or enrolling a contact in a sequence. Sources and writes to Audiences don't count.
+-   A function, or a call into another workflow.
+
+The sentence appears on the cards for `Run workflow`, `Run test data`, and `Re-run workflow runs`. A card for a run with no such steps shows no extra sentence. Cards for resuming a paused run, resuming a trigger, and running a workflow on a trigger's existing records don't add the sentence, so check the workflow's steps before you approve those.
 
 ### What runs without asking under Ask for approval
 
@@ -183,6 +201,8 @@ Free credits don’t cover what the global agent runs for you. Enrichments, work
 ### Keeping an eye on spend
 
 When the global agent stops for your approval, the card carries an `Estimated cost` in credits and action executions before anything runs. Some actions can’t be priced ahead of time, and the card says `Cost can’t be estimated` when that happens.
+
+The `Estimated cost` on an approval card shows the total for the whole request whenever the number of rows, items, or leads is known, for example `~1,938 total`. Hover over the total to see the price per unit, such as credits per row; the hover tooltip is left out when the price per unit equals the total. When the number isn’t known ahead of time, the card shows only the price per unit instead, for example `~1.9 / row`, `/ item` for tool runs, or `/ lead` for sequence launches. Amounts are written in full and start with `~` because they’re estimates; an exact zero has no `~`.
 
 The permission level you set decides how often you see a card at all, so it’s also the lever on how much runs unwatched.
 

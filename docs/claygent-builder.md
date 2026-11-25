@@ -333,6 +333,12 @@ The Lookup Multiple Rows action returns at most 100 matching records per row —
 
 No. You can have up to 10 test cases per Claygent at a time for free. You can delete and add new test inputs to keep testing. Once you deploy and run your agent in a table, standard runs follow your normal billing.
 
+### Can I test a Claygent for free through the Clay CLI?
+
+No. Free Claygent testing happens only in the test panel of Claygent builder in the Clay app. The Clay CLI doesn't have a command for testing a Claygent — the `clay claygents` commands let you list, view (`get`), and delete Claygents.
+
+Work you run through the CLI uses credits the same way it would in the product. For example, testing a Workflow step that contains a Claygent with `clay workflows nodes test` is a real run of that step and is charged like any other Claygent run. To iterate on a Claygent's prompt without spending credits, test it in Claygent builder first, then use it from the CLI or in your Workflows. For more on CLI and API billing, see [Clay API & CLI](clay-api-cli.md).
+
 ### If I re-run a Claygent column on rows that already have results, am I still charged credits?
 
 Yes. Every Claygent run costs credits regardless of whether the new output matches what is already in the cell. Clay does not compare the incoming result against the existing value before charging — a re-run starts from 0 on cost every time.
@@ -369,6 +375,10 @@ Claygent builder has two buttons at the top of the editor: **Save** and **Deploy
 
 -   **Save** stores your edits as a new version of the Claygent. There is no separate draft — the saved version immediately becomes the current version, and every table column already using this Claygent picks it up the next time a cell runs (the column keeps its own model selection — see the note above).
 -   **Deploy** adds the Claygent to a new place (for example, a table you haven't used it in yet). Deploying to a table always creates a new column — it does not update existing columns.
+
+When you open Claygent builder from a workflow step — to create or edit the Claygent that step uses — Claygent builder shows only **Save**. The **Deploy** button is hidden there, and clicking **Save** saves the Claygent and takes you back to the workflow step you came from.
+
+The **Save** and **Deploy** buttons in Claygent builder are disabled while Sculptor is generating changes to your Claygent, including while a Sculptor generation is queued or resuming. Wait for Sculptor to finish, then click **Save**.
 
 To apply prompt or configuration changes to a Claygent column that's already in your table:
 
