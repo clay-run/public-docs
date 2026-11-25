@@ -169,7 +169,16 @@ You can view and manage all campaigns from the **Sequencer** tab in the left sid
 
 In the Sequencer homepage, you can access the `Global inbox` which centralizes replies across all campaigns, giving you one place to review and manage every response. `Global analytics` shows you how all of your campaigns are performing.
 
-Check out the `Email accounts` tab to manage your fleet of sender accounts and `Global blocklist` to add or remove entries.
+Check out the `Email accounts` tab to manage your fleet of sender accounts and the `Blocklist` tab to add or remove entries on your workspace's global blocklist.
+
+To remove multiple entries from your global blocklist at once:
+
+1.  Go to **Sequencer** in the left sidebar and click the `Blocklist` tab.
+2.  Check the box next to each entry you want to remove — or click the header checkbox to select every entry that matches your current search and type filters. Clay shows how many entries you have selected, for example `3 of 40 selected`.
+3.  Click **Remove from blocklist**.
+4.  Confirm in the dialog (titled, for example, `Remove 3 entries?`). The removed entries disappear from the blocklist.
+
+To remove a single entry, open the `...` menu on its row and click **Delete**. Removing blocklist entries is available to workspace members who can create resources.
 
 To duplicate a campaign — for example, to reuse your message sequence and settings for a new persona or messaging variant — open the campaign you want to copy and click its name in the breadcrumb at the top. Select **Duplicate campaign** from the dropdown. Clay creates a new draft campaign named "<original name> (copy)" with the same message sequence, settings, and AI context, then opens it immediately for editing.
 
