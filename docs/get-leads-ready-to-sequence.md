@@ -10,7 +10,7 @@ Everything a lead needs before a sequence can enroll it — a People segment in 
 
 A sequence in Clay doesn't build its own lead list. It draws on the people already in your Audiences, which means the work that decides how many leads reach a send happens upstream, before you open the `Sequence` tab.
 
-**Note:** Leads have to exist in Audiences, with an email address, before a sequence can enroll them. Enrichment happens upstream — in Audiences, in a table, or in a workflow — not inside the sequence. A sequence reads the data that is already there and enrolls whoever is ready.
+**Note:** Leads have to exist in Audiences, with an email address, before a sequence can enroll them. Enrichment happens upstream — in Audiences, in a table, or in a workflow — not inside the sequence. A sequence reads the data that is already there and enrolls whoever is ready. From a workflow, the `Add person to sequence` node saves each person to Audiences for you.
 
 ## What a sequence needs from you
 
@@ -66,7 +66,7 @@ A sequence gets its leads one of two ways, and you choose which when you create 
 |  | Attach a segment | Enroll from a workflow |
 | --- | --- | --- |
 | How leads arrive | Clay pulls from the attached segment on a repeating enrollment run | A workflow pushes one person at a time, when its own logic decides to |
-| How you create it | New sequence then People, then pick a segment | New sequence then Workflow then Create workflow sequence |
+| How you create it | New sequence then People, then pick a segment | New sequence then Workflow then Create workflow sequence, or from an `Add person to sequence` node |
 | What Lead setup shows | The segment and its lead count | Enrolled by a workflow, plus a card listing the workflow nodes enrolling into it |
 | Best for | A list you have already defined, sent at volume | Enrolling off the back of a signal, a form, or an enrichment result |
 
@@ -85,7 +85,26 @@ Eligibility is checked at each run rather than frozen at launch. A lead is enrol
 
 ### Enroll from a workflow
 
-Choose `Workflow` in the `New sequence` modal and Clay creates a sequence with no lead list attached — you write the emails there, then point a workflow at it.
+Choose `Workflow` in the `New sequence` modal and Clay creates a sequence with no lead list attached — you write the emails there, then point a workflow at it. You can also create and edit the sequence from inside the workflow, in the `Add person to sequence` node.
+
+### Add people with the `Add person to sequence` node
+
+The `Add person to sequence` workflow node saves a person to Audiences and adds them to a sequence's lead list in one step. You don't need to upsert the person to Audiences first: the node builds the audience segment the sequence enrolls from, using the people data in the workflow. The `Add person to sequence` node requires both Sequencer and Audiences on your workspace's plan. You can also add it to a workflow from the Global Agent or the CLI.
+
+To set up the `Add person to sequence` node:
+
+1.  In the workflow, add an `Add person to sequence` node.
+2.  Under `Sequence`, choose the sequence to add people to. Only sequences without a lead list of their own are listed. If none qualify, the node shows `No sequences can take leads from this node. Create a new sequence to add people to.`
+3.  Map `Email address` (required). The node uses it to find the person in Audiences, or to create them if they're new.
+4.  Optionally map `Professional profile URL` and `Phone number`, which help the node find the person in Audiences.
+
+The workflow fills in `Lead data` for you, passing the person's enriched data through to Audiences. If the workflow has enriched data that doesn't line up with an existing Audiences field, the `Add person to sequence` node creates a new field in Audiences for it, so your sequence can reference that field.
+
+The `Add person to sequence` node returns its outcome to the workflow, including `Result`, `New person` (whether the person was newly created in Audiences), `Missing required fields`, and `Error message`, so you can branch on what happened.
+
+### Enroll with the `Enroll in sequence` node
+
+`Enroll in sequence` is the earlier workflow node for enrolling leads. Where `Add person to sequence` is available in your workspace, it replaces `Enroll in sequence` in the node list; workspaces without it keep using `Enroll in sequence`.
 
 The `Enroll in sequence` node identifies each lead by an `Entity ID` from Audiences, which you map in from an earlier node's output. Any node upstream of it will do. The ID has to come from somewhere above the enroll node in the graph, but not necessarily from the node immediately above it.
 
@@ -96,7 +115,7 @@ The `Enroll in sequence` node identifies each lead by an `Entity ID` from Audien
 
 **Note:** The `Entity ID` has to come from a node upstream of the `Enroll in sequence` node — a mapping that points anywhere else is rejected with `This input must reference an upstream node.` Upstream is the whole of the constraint, so the two nodes don't have to be adjacent. An enrichment, a conditional, or a delay can sit between the Audiences node and the enroll node without breaking the mapping.
 
-The node reports its outcome back into the workflow, so you can branch on it. Re-running it for someone already in that sequence is safe: it reports them as already enrolled instead of enrolling them twice.
+The `Enroll in sequence` node reports its outcome back into the workflow, so you can branch on it. Re-running it for someone already in that sequence is safe: it reports them as already enrolled instead of enrolling them twice.
 
 When it does decline a lead, the reason is specific:
 
@@ -105,7 +124,7 @@ When it does decline a lead, the reason is specific:
 -   The contact was enrolled in a related sequence too recently
 -   The workspace was short on credits
 
-On the sequence side, `Lead setup` reads `No lead list` until a node enrolls someone, then switches to `1 workflow node` or `N workflow nodes` and lists each node with the number of contacts it has enrolled and an info tooltip explaining what that count covers.
+On the sequence side, `Lead setup` reads `No lead list` until an `Enroll in sequence` node enrolls someone, then switches to `1 workflow node` or `N workflow nodes` and lists each node with the number of contacts it has enrolled and an info tooltip explaining what that count covers.
 
 ## Setting up exclusions before your first send
 

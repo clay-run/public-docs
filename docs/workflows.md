@@ -63,6 +63,7 @@ Some triggers depend on your plan. `On webhook call`, `New member in segment`, a
 | Run function | Calls a reusable Clay function | Reusing governed enrichment or qualification logic | No added credit or action cost — the steps inside it charge as usual |
 | Run Claygent | Runs a Claygent — an agent with a prompt, a model, and its own tools. New Claygents use Auto, which picks a model per task | Work that needs reasoning or judgment | 1 action + credit cost of AI run |
 | Update audience members | Writes results back to a contact or account in Audiences | Persisting what the run produced | Free |
+| Add person to sequence | Saves a person to Audiences and adds them to a Clay sequence's lead list | Sending people from a workflow straight into a sequence | See [Costs, plans, and limits](https://university.clay.com/docs/getting-started-with-sequencer) in Sequencer |
 | Conditional | Branches the graph on rules, code, or an AI judgment | Sending a record down one of several paths | Free for Rules and Code; For AI, same as Run Claygent |
 | Classify | Sorts a record into one of the categories you define | Yes/no or fixed-category decisions on data you already have | Free for a limited time during alpha |
 | Run code | Runs Python for transforms, scoring, and routing logic | Deterministic work between agent and action steps | Free |
@@ -205,6 +206,10 @@ A workflow function has defined inputs and outputs, so each workflow that calls 
 ### `Update audience members`
 
 Writes what the run produced back to the contact or account in Audiences. Results land on the record rather than in the run, so anything you write back is immediately filterable in every other segment. Writing back is free.
+
+### `Add person to sequence`
+
+The `Add person to sequence` node sends a person from a workflow to a Clay sequence. It saves the person to Audiences and builds the segment the sequence enrolls from, so you don't need an `Update audience members` or other Audiences step before it. You can create and edit the sequence from the node itself. The node requires both Sequencer and Audiences on your plan. Setup steps and inputs are in [Get leads ready to sequence](https://university.clay.com/docs/get-leads-ready-to-sequence).
 
 ### `Delay`
 
