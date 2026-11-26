@@ -119,5 +119,5 @@ These runs are refunded, so a company that isn't in Magellan Data's ownership da
 
 Magellan Data draws on its own credit balance, separate from your Clay credits, and the message tells you which balance is short.
 
--   `You are out of credits for this API`: your workspace is running on its own Magellan Data key. Log in to your Magellan Data account to check your balance and top it up.
--   `Clay is out of credits for this API`: you're running on Clay's shared Magellan Data account. Reach out to Clay support and we'll get it topped up.
+-   `You are out of credits for this API`: your workspace is running on its own Magellan Data key. The cell details show `Insufficient Magellan Data API credits`. Log in to your Magellan Data account to check your balance and top it up.
+-   `Error! Please contact Clay support`: you're running on Clay's shared Magellan Data account. The cell details show `This integration couldn’t complete the request. Contact Clay support.` This isn't something you can fix from your workspace, so reach out to Clay support and we'll resolve it on Clay's side.
